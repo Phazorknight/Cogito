@@ -7,9 +7,11 @@ signal brightness_changed(current_value, max_value)
 @export var start_brightness : float = 0
 var current_brightness : float = 0
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	current_brightness = start_brightness
+
 
 func add(amount):
 	current_brightness += amount
@@ -18,7 +20,8 @@ func add(amount):
 		current_brightness = max_brightness
 		
 	brightness_changed.emit(current_brightness, max_brightness)
-		
+
+
 func subtract(amount):
 	current_brightness -= amount
 	

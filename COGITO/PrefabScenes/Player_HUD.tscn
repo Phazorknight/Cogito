@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=28 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://UI/Elements/ProgressBar_FiveUnits.png" id="3_767p8"]
@@ -40,6 +40,9 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cmrj"]
 bg_color = Color(0.0117647, 0.6, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nnlae"]
+bg_color = Color(0.6, 0.509804, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbswy"]
 bg_color = Color(0.6, 0, 0, 1)
 
@@ -60,6 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wdkf")
 default_hint_icon = ExtResource("3_o56n0")
+use_stamina_component = true
 interaction_keyboard = ExtResource("3_cc07q")
 inventory_move_keyboard = ExtResource("12_cyk3l")
 inventory_use_keyboard = ExtResource("11_pcls0")
@@ -227,7 +231,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -104.0
-offset_top = -90.0
+offset_top = -10.0
 offset_right = 104.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -262,6 +266,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StaminaBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 16)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_nnlae")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "50/50"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -338,18 +360,14 @@ offset_right = 21.0
 offset_bottom = -5.0
 grow_vertical = 0
 
-[node name="InfoPanel" type="Panel" parent="InventoryInterface"]
-custom_minimum_size = Vector2(200, 0)
+[node name="InfoPanel" type="PanelContainer" parent="InventoryInterface"]
+custom_minimum_size = Vector2(200, 10)
 layout_mode = 0
 offset_right = 200.0
-offset_bottom = 160.0
+offset_bottom = 110.0
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 110.0
-grow_horizontal = 2
+layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 4
 
@@ -359,13 +377,16 @@ size_flags_vertical = 0
 
 [node name="ItemName" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
 text = "ItemName"
 
-[node name="ItemDescription" type="RichTextLabel" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="ItemDescription" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 14
-text = "Item description going over to lines. Testing overflow as well to make sure this stays. In"
-fit_content = true
+theme_override_constants/line_spacing = 1
+theme_override_font_sizes/font_size = 14
+text = "Item description going over to lines. Testing overflow as well to make sure the panel container extends as needed."
+autowrap_mode = 3
 
 [node name="HBoxUse" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -396,6 +417,7 @@ text = "Move"
 label_settings = SubResource("LabelSettings_0ykfm")
 
 [node name="HBoxDrop" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="BtnDrop" type="TextureRect" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]

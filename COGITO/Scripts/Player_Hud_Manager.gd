@@ -5,6 +5,9 @@ extends Control
 @onready var brightness_bar = $PlayerAttributes/MarginContainer/VBoxContainer/BrightnessBar
 @onready var health_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/HealthBar/Label
 @onready var sanity_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/SanityBar/Label
+@onready var stamina_bar = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar
+@onready var stamina_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar/Label
+
 
 @onready var interaction_button = $ButtonPrompt/HBoxContainer/InteractionButton
 @onready var interaction_text = $ButtonPrompt/HBoxContainer/InteractionText
@@ -31,6 +34,11 @@ var interaction_texture : Texture2D
 # The hint icon that displays when no other icon is passed.
 @export var default_hint_icon : Texture2D
 
+@export_group("Player Components to use")
+@export var use_sanity_component : bool
+@export var use_brightness_component : bool
+@export var use_stamina_component : bool
+
 @export_group("Input Icons")
 @export_subgroup("Input Icons Keyboard")
 @export var interaction_keyboard : Texture2D
@@ -53,19 +61,35 @@ func _ready():
 	# Connect to signal that detecs change of input device/gamepad
 	Input.joy_connection_changed.connect(_joy_connection_changed)
 	
-	# Setting up player attribute values
+	# Setting up health bar
 	health_bar.max_value = player.health_component.max_health
 	health_bar.value = player.health_component.current_health
-	
-	sanity_bar.max_value = player.sanity_component.max_sanity
-	sanity_bar.value = player.sanity_component.current_sanity
-	
-	brightness_bar.max_value = player.brightness_component.max_brightness
-	brightness_bar.value = player.brightness_component.current_brightness
-	
 	health_bar_label.text = str(health_bar.value, "/", health_bar.max_value)
-	sanity_bar_label.text = str(sanity_bar.value, "/", sanity_bar.max_value)
+	player.health_component.health_changed.connect(_on_player_health_changed)
 	
+	# Setting up stamina bar
+	if use_stamina_component:
+		stamina_bar.max_value = player.stamina_component.max_stamina
+		stamina_bar.value = player.stamina_component.current_stamina
+		stamina_bar_label.text = str(stamina_bar.value, "/", stamina_bar.max_value)
+		player.stamina_component.stamina_changed.connect(_on_player_stamina_changed)
+	
+	# Setting up sanity bar
+	if use_sanity_component:
+		sanity_bar.max_value = player.sanity_component.max_sanity
+		sanity_bar.value = player.sanity_component.current_sanity
+		sanity_bar_label.text = str(sanity_bar.value, "/", sanity_bar.max_value)
+		player.sanity_component.sanity_changed.connect(_on_player_sanity_changed)
+	else:
+		sanity_bar.hide()
+	
+	# Setting up brightness bar
+	if use_brightness_component:
+		brightness_bar.max_value = player.brightness_component.max_brightness
+		brightness_bar.value = player.brightness_component.current_brightness
+		player.brightness_component.brightness_changed.connect(_on_player_brightness_changed)
+	else:
+		brightness_bar.hide()
 	
 	# Set up for HUD elements for interactions and wieldables
 	interaction_button.set_texture(empty_texture)
@@ -79,13 +103,11 @@ func _ready():
 	hint_icon.set_texture(empty_texture)
 	hint_text.text = ""
 	
+	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
 	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
 	
 	# Connecting to Signals from Player
-	player.health_component.health_changed.connect(_on_player_health_changed)
-	player.sanity_component.sanity_changed.connect(_on_player_sanity_changed)
-	player.brightness_component.brightness_changed.connect(_on_player_brightness_changed)
 	player.player_interaction_component.interaction_prompt.connect(_on_interaction_prompt)
 	player.player_interaction_component.set_use_prompt.connect(_on_set_use_prompt)
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
@@ -128,8 +150,8 @@ func set_input_icons_to_gamepad():
 	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop/BtnDrop.set_texture(inventory_drop_gamepad)
 	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.show()
 	primary_use_icon.set_texture(wieldable_use_primary_gamepad)
-	
-	
+
+
 func set_input_icons_to_kbm():
 	interaction_texture = interaction_keyboard
 	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse/BtnUse.set_texture(inventory_use_keyboard)
@@ -163,7 +185,7 @@ func _on_interaction_prompt(passed_interaction_prompt):
 	else:
 		interaction_button.set_texture(interaction_texture)
 	interaction_text.text = passed_interaction_prompt
-	
+
 
 # When HUD receives set use prompt signal (usually when equipping a wieldable)
 func _on_set_use_prompt(passed_use_text):
@@ -201,12 +223,18 @@ func _on_hint_timer_timeout():
 	hint_icon.set_texture(empty_texture)
 
 
-
 # Updating player health bar
 func _on_player_health_changed(new_health, max_health):
 	health_bar.max_value = max_health
 	health_bar.value = new_health
 	health_bar_label.text = str(int(health_bar.value), "/", int(health_bar.max_value))
+
+
+# Updating player stamina bar
+func _on_player_stamina_changed(new_stamina, max_stamina):
+	stamina_bar.max_value = max_stamina
+	stamina_bar.value = new_stamina
+	stamina_bar_label.text = str(int(stamina_bar.value), "/", int(stamina_bar.max_value))
 
 
 # Updating player sanity bar
@@ -230,5 +258,3 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	dropped_item.position = player.drop_position.global_position
 	dropped_item.slot_data = slot_data
 	get_parent().add_child(dropped_item)
-
-

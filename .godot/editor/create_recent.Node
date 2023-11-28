@@ -1,15 +1,16 @@
+Label
+PanelContainer
+Timer
 CollisionShape3D
 RigidBody3D
 MeshInstance3D
 Panel
 HBoxContainer
-PanelContainer
 RichTextLabel
 TextureRect
 VBoxContainer
 CSGMesh3D
 MarginContainer
-Timer
 StaticBody3D
 AudioStreamPlayer3D
 AnimatableBody3D
@@ -19,7 +20,6 @@ Node3D
 SpotLight3D
 CSGTorus3D
 CSGCylinder3D
-Label
 TextureButton
 TextureProgressBar
 ProgressBar

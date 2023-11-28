@@ -90,7 +90,7 @@ material = ExtResource("1_lsda4")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_enk60"]
 
-[sub_resource type="Resource" id="Resource_u8wtm"]
+[sub_resource type="Resource" id="Resource_jcsht"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -413,7 +413,7 @@ shape = SubResource("BoxShape3D_enk60")
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -13.7198, 0.8, -1.22878)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_u8wtm")
+inventory_data = SubResource("Resource_jcsht")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")

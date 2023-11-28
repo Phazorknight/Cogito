@@ -1,5 +1,5 @@
 # COGITO
-Version: **Alpha 202311a**
+Version: **Alpha 202311b**
 
 COGITO is a first Person Immersive Sim Template Project for GODOT 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on
@@ -17,6 +17,7 @@ providing a framework for creating interactable objects and items.
 - Basic AudioManager for playing common sounds (needs work)
 - Player attributes (component based)
   - Health
+  - Stamina (still needs some polish)
   - Sanity (drains if not within Safezones)
   - Brightness (aka visibility goes up within Lightzones, cumulative to a limit)
 - Raycast Interaction system
@@ -38,13 +39,13 @@ providing a framework for creating interactable objects and items.
   - Gamepad: Primary use trigger needs refining as the analog input causes multiple triggers.
 
 ### Still to do:
+- Pause/Options Menu:
+  - Invert Y toggle doesn't work yet.
 - Player Attributes:
-  - Stamina (low prio)
   - Action points (low prio)
 - Interactables:
   - Door: Improve door rotation inspector settings
   - Door: Create option to make sliding door
-  - Carriable crate: Improve collision handling / clipping.
 - AudioManager is a unwieldy. Can probably be redone to work better.
  
 

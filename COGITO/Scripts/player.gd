@@ -1,14 +1,16 @@
 extends CharacterBody3D
 
-# Additional var linking to Pause menu
+## Reference to Pause menu node
 @export var pause_menu : NodePath
-# Linking to Player HUD Node
+## Refereence to Player HUD node
 @export var player_hud : NodePath
-
+## Flag if Stamina component isused (as this effects movement)
+@export var is_using_stamina : bool = true
 # Components:
 @onready var health_component = $HealthComponent
 @onready var sanity_component = $SanityComponent
 @onready var brightness_component = $BrightnessComponent
+@onready var stamina_component = $StaminaComponent
 
 @onready var player_interaction_component = $PlayerInteractionComponent
 
@@ -71,12 +73,28 @@ var stand_after_roll = false
 var is_movement_paused = false
 
 
-func increase_attribute(attribute_name: String, value : int):
+func increase_attribute(attribute_name: String, value: int):
 	match attribute_name:
 		"health":
 			health_component.add(value)
 		"sanity":
 			sanity_component.add(value)
+		"stamina":
+			stamina_component.add(value)
+		_:
+			print("Increase attribute failed: no match.")
+
+
+func decrease_attribute(attribute_name: String, value: int):
+	match attribute_name:
+		"health":
+			health_component.subtract(value)
+		"sanity":
+			sanity_component.subtract(value)
+		"stamina":
+			stamina_component.subtract(value)
+		_:
+			print("Decrease attribute failed: no match.")
 
 func take_damage(value):
 	health_component.subtract(value)
@@ -227,7 +245,17 @@ func _physics_process(delta):
 		$StandingCollisionShape.disabled = false
 		$CrouchingCollisionShape.disabled = true
 		$SlidingTimer.stop()
-		if Input.is_action_pressed("sprint"):
+		# Prevent sprinting if player is out of stamina.
+		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
+			if !Input.is_action_pressed("jump"):
+				bunny_hop_speed = SPRINTING_SPEED
+			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
+			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
+			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
+			is_walking = false
+			is_sprinting = true
+			is_crouching = false
+		elif Input.is_action_pressed("sprint") and !is_using_stamina:	
 			if !Input.is_action_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
@@ -293,6 +321,14 @@ func _physics_process(delta):
 			$Neck/Head/Eyes/AnimationPlayer.play("landing")
 	
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
+		
+		# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
+		if is_using_stamina and stamina_component.current_stamina >= stamina_component.jump_exhaustion:
+			decrease_attribute("stamina",stamina_component.jump_exhaustion)
+		else:
+			print("Not enough stamina to jump.")
+			return
+			
 		$Neck/Head/Eyes/AnimationPlayer.play("jump")
 		AudioManagerPd.play_audio("jump")
 		if !$SlidingTimer.is_stopped():

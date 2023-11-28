@@ -109,7 +109,7 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 		print("Attempt to combine!")
 		# Check if there's room for charge
 		if slot_data.inventory_item.charge_max - slot_data.inventory_item.charge_current >= grabbed_slot_data.inventory_item.power:
-			print("Charging ", slot_data.inventory_item.name, " by ", grabbed_slot_data.inventory_item.power )
+			get_local_scene().player_interaction_component.send_hint(null,"Charging " + slot_data.inventory_item.name + " by " + str(grabbed_slot_data.inventory_item.power))
 			slot_data.inventory_item.add(grabbed_slot_data.inventory_item.power)
 			grabbed_slot_data.quantity -= 1
 		
