@@ -14,3 +14,4 @@ res://COGITO/EasyMenus/Scenes/pause_menu.tscn
 res://COGITO/DemoScenes/COGITO_MainMenu.tscn
 res://COGITO/EasyMenus/Scripts/menu_template_manager.gd
 res://COGITO/EasyMenus/Scripts/options_menu_controller.gd
+res://Readme.md

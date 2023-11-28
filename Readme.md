@@ -1,4 +1,6 @@
-# Cogito
+# COGITO
+Version: **Alpha 202311a**
+
 COGITO is a first Person Immersive Sim Template Project for GODOT 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on
 providing a framework for creating interactable objects and items.
@@ -22,10 +24,10 @@ providing a framework for creating interactable objects and items.
   - Carryable crate
   - Door (unlockable)
   - Items:
-    - Flashlight (combine with batteries to recharge)
-    - Battery (used to recharge Flashlight by combining them)
-    - Health Potion
-    - Key to unlock door
+	- Flashlight (combine with batteries to recharge)
+	- Battery (used to recharge Flashlight by combining them)
+	- Health Potion
+	- Key to unlock door
 
 ### Known bugs:
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
@@ -139,10 +141,10 @@ Items -> Slots -> Inventories.
   - Wieldable Data Icon: Icon that is displayed in the HUD next to the item's data when item is wielded. Used for showing a battery icon on the Flashlight, or a magazine icon for the ammo display.
   - Charge Max: Charge refers to the highest value this wieldable can contain. Examples: flashlight battery capacity or weapon magazine capacity.
   - Charge current: The current charge. Examples: Flashlight current battery level. Amount of bullets left in the magazine.
-    
+	
 - Combinable settings:
   - Target item: Reference to item resource this item can be combined with. If this item is a Battery, then the target item would be the Flashlight for example. If this was pistol ammo, then the target item would be the Pistol.
-    
+	
 - Key settings:
   - Discard after use: Bool. If this is checked, the item will be destroyed after it's been used on a door.
   - HINT: If you're looking for where to set up which door this key opens: This reference is set on the door object itself.
