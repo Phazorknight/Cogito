@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://8wkt5k4dl40u"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/pick_up.gd" id="1_j6fdk"]
+[ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="2_06n2f"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_62irs"]
+
+[sub_resource type="Resource" id="Resource_hxnye"]
+script = ExtResource("3_62irs")
+inventory_item = ExtResource("2_06n2f")
+quantity = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_mrywu"]
+size = Vector3(0.1, 0.03, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_beoyg"]
+albedo_color = Color(1, 0.709804, 0.329412, 1)
+metallic = 0.9
+metallic_specular = 0.8
+
+[sub_resource type="PrismMesh" id="PrismMesh_2wfk7"]
+size = Vector3(0.05, 0.05, 0.025)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j3342"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.04
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sossu"]
+albedo_color = Color(1, 0.709804, 0.329412, 1)
+metallic = 0.9
+metallic_specular = 0.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xkwxe"]
+size = Vector3(0.2, 0.04, 0.43)
+
+[node name="Pickup_Key" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_j6fdk")
+slot_data = SubResource("Resource_hxnye")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0894358)
+mesh = SubResource("BoxMesh_mrywu")
+skeleton = NodePath("../MeshInstance3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_beoyg")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 0.0735495, 0, 0.129631)
+mesh = SubResource("PrismMesh_2wfk7")
+skeleton = NodePath("../MeshInstance3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_beoyg")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 0.0524784, 0, 0.0832898)
+mesh = SubResource("PrismMesh_2wfk7")
+skeleton = NodePath("../MeshInstance3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_beoyg")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 1, 4.37114e-08, 4.37114e-08, -4.37114e-08, 1, 1, 0, -4.37114e-08, 0.0524784, 0, 0.181884)
+mesh = SubResource("PrismMesh_2wfk7")
+skeleton = NodePath("../MeshInstance3D")
+surface_material_override/0 = SubResource("StandardMaterial3D_beoyg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.116485)
+mesh = SubResource("CylinderMesh_j3342")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_sossu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("BoxShape3D_xkwxe")

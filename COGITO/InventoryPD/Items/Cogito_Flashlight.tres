@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://ckvdkigvwowm5"]
+
+[ext_resource type="Texture2D" uid="uid://heih3rs4r4gt" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoFlashlight.png" id="1_f43pq"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_ir7an"]
+[ext_resource type="Texture2D" uid="uid://4xstvhrf4r2h" path="res://COGITO/Assets/Graphics/BatteryIcon.png" id="3_ea2qf"]
+
+[resource]
+script = ExtResource("1_ir7an")
+id = 0
+item_type = 1
+name = "Flashlight"
+descpription = "Shines a light."
+icon = ExtResource("1_f43pq")
+power = 0.0
+is_stackable = false
+stack_size = 0
+use_sound = ""
+drop_scene = "res://COGITO/PrefabScenes/pickup_flashlight.tscn"
+hint_text_on_use = ""
+attribute_name = ""
+primary_use_prompt = "Switch on/off"
+secondary_use_prompt = ""
+wieldable_data_icon = ExtResource("3_ea2qf")
+charge_max = 100.0
+charge_current = 100.0
+discard_after_use = false

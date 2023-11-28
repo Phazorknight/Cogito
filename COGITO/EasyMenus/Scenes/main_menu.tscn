@@ -1,0 +1,94 @@
+[gd_scene load_steps=5 format=3 uid="uid://dq6tvhqcy2aps"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/main_menu_controller.gd" id="1_lbw7r"]
+[ext_resource type="Script" path="res://COGITO/AudioManagerPD/Btn_Ui_Sounds.gd" id="2_mguy7"]
+[ext_resource type="PackedScene" uid="uid://qlskttl1wjr7" path="res://COGITO/EasyMenus/Scenes/options_menu.tscn" id="2_pwqpr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wrn81"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lbw7r")
+
+[node name="Content" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -117.5
+offset_top = 67.0
+offset_right = 117.5
+offset_bottom = 328.0
+grow_horizontal = 2
+theme_override_constants/separation = 15
+metadata/_edit_group_ = true
+
+[node name="Title" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "COGITO"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Philip Drobar 2023"
+label_settings = SubResource("LabelSettings_wrn81")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Content"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="StartGameButton" type="Button" parent="Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+focus_next = NodePath("../OptionsButton")
+focus_previous = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 30
+text = "Start"
+script = ExtResource("2_mguy7")
+
+[node name="OptionsButton" type="Button" parent="Content"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../StartGameButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+focus_next = NodePath("../QuitButton")
+focus_previous = NodePath("../StartGameButton")
+theme_override_font_sizes/font_size = 30
+text = "Options"
+script = ExtResource("2_mguy7")
+
+[node name="QuitButton" type="Button" parent="Content"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../StartGameButton")
+focus_next = NodePath("../StartGameButton")
+focus_previous = NodePath("../OptionsButton")
+theme_override_font_sizes/font_size = 30
+text = "Quit"
+script = ExtResource("2_mguy7")
+
+[node name="OptionsMenu" parent="." instance=ExtResource("2_pwqpr")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Content/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="Content/OptionsButton" to="." method="open_options"]
+[connection signal="pressed" from="Content/QuitButton" to="." method="quit"]
+[connection signal="close" from="OptionsMenu" to="." method="close_options"]

@@ -1,0 +1,226 @@
+[gd_scene load_steps=7 format=3 uid="uid://qlskttl1wjr7"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/options_menu_controller.gd" id="1_h6k46"]
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="2_l3n3h"]
+[ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://COGITO/EasyMenus/Nodes/slider_w_labels.tscn" id="3_xghjq"]
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/option_button_input_propagator.gd" id="4_02jwa"]
+[ext_resource type="PackedScene" uid="uid://cqniig2ks0xs2" path="res://COGITO/EasyMenus/Nodes/gamepad_closable.tscn" id="5_k4nlh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x77mt"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h6k46")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+script = ExtResource("2_l3n3h")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="OptionsTitle" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Options"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeSlider" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_xghjq")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "SFX Volume"
+
+[node name="Title" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="0"]
+text = "SFX Volume"
+
+[node name="HSlider" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.1
+
+[node name="MusicVolumeSlider" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_xghjq")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "Music Volume"
+
+[node name="Title" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="0"]
+text = "Music Volume"
+
+[node name="HSlider" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.1
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="FullscreenCheckButton" type="CheckButton" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 25
+text = "Fullscreen"
+
+[node name="VSyncCheckButton" type="CheckButton" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
+theme_override_font_sizes/font_size = 25
+text = "V-Sync"
+
+[node name="InvertYAxisCheckButton" type="CheckButton" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Inverts looking up and down direction."
+theme_override_font_sizes/font_size = 25
+text = "Invert Y Axis"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+tooltip_text = "Scale Less than 1 to get performance improve. 
+Scale to more than 1 to improve image quality."
+
+[node name="RenderScaleLabel" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Render Scale"
+horizontal_alignment = 1
+
+[node name="RenderScaleSlider" type="HSlider" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="RenderScaleCurrentValueLabel" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AntiAliasing2DLabel" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "2D Anti Aliasing"
+horizontal_alignment = 1
+
+[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Smooth out edges of 2D objects"
+item_count = 4
+selected = 0
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+script = ExtResource("4_02jwa")
+
+[node name="GamepadClosable" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" instance=ExtResource("5_k4nlh")]
+
+[node name="AntiAliasing3DLabel" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "3D Anti Aliasing"
+horizontal_alignment = 1
+
+[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Smooths out edges of 3D objects"
+item_count = 4
+selected = 0
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+script = ExtResource("4_02jwa")
+
+[node name="GamepadClosable" parent="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" instance=ExtResource("5_k4nlh")]
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxEmpty_x77mt")
+
+[node name="BackButton" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 25
+text = "Back"
+
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/VBoxContainer/FullscreenCheckButton" to="." method="_on_fullscreen_check_button_toggled"]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/VBoxContainer/VSyncCheckButton" to="." method="_on_v_sync_check_button_toggled"]
+[connection signal="toggled" from="MarginContainer/ScrollContainer/VBoxContainer/InvertYAxisCheckButton" to="." method="_on_v_sync_check_button_toggled"]
+[connection signal="value_changed" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer/RenderScaleSlider" to="." method="_on_render_scale_slider_value_changed"]
+[connection signal="item_selected" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" to="." method="_on_anti_aliasing_2d_option_button_item_selected"]
+[connection signal="item_selected" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" to="." method="_on_anti_aliasing_3d_option_button_item_selected"]
+[connection signal="pressed" from="MarginContainer/ScrollContainer/VBoxContainer/BackButton" to="." method="go_back"]
+
+[editable path="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
+[editable path="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

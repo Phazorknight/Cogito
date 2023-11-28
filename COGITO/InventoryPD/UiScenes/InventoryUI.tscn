@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtdjlu4dtm6wh"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/InventoryUI.gd" id="1_qgor6"]
+
+[node name="InventoryUI" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_qgor6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Label"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 4
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

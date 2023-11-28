@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4arko3ktkygh"]
+
+[ext_resource type="PackedScene" uid="uid://dq6tvhqcy2aps" path="res://COGITO/EasyMenus/Scenes/main_menu.tscn" id="1_jlj1d"]
+[ext_resource type="Script" path="res://COGITO/Scripts/scene_switcher.gd" id="2_tnhbh"]
+
+[node name="01_MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" parent="." instance=ExtResource("1_jlj1d")]
+layout_mode = 1
+
+[node name="SceneSwitcher" type="Node" parent="."]
+script = ExtResource("2_tnhbh")
+main_menu_scene = "res://COGITO/DemoScenes/COGITO_MainMenu.tscn"
+start_game_scene = "res://COGITO/DemoScenes/COGITO_Demo_01.tscn"
+
+[connection signal="start_game_pressed" from="MainMenu" to="SceneSwitcher" method="_on_main_menu_start_game_pressed"]

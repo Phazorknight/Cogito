@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InventoryPD" load_steps=2 format=3 uid="uid://ev2xuamhfojm"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="1_vgg6i"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_vgg6i")
+inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])

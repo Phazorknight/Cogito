@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=3 format=3 uid="uid://d4gdqvqsiiqs5"]
+
+[ext_resource type="Texture2D" uid="uid://bsf2bc116o1oi" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoKey.png" id="1_n8yj5"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_uohgs"]
+
+[resource]
+script = ExtResource("1_uohgs")
+id = 0
+item_type = 3
+name = "Key"
+descpription = "Opens a locked door."
+icon = ExtResource("1_n8yj5")
+power = 0.0
+is_stackable = false
+stack_size = 1
+use_sound = ""
+drop_scene = "res://COGITO/PrefabScenes/pickup_key.tscn"
+hint_text_on_use = ""
+attribute_name = ""
+primary_use_prompt = ""
+secondary_use_prompt = ""
+charge_max = 0.0
+charge_current = 0.0
+discard_after_use = true

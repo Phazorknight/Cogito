@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dy3tudla5p2nc"]
+
+[ext_resource type="Script" path="res://COGITO/Components/PlayerInteractionComponent.gd" id="1_8fdwf"]
+
+[node name="PlayerInteractionComponent" type="Node3D"]
+script = ExtResource("1_8fdwf")

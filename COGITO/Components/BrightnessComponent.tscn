@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkbudpcayf2jc"]
+
+[ext_resource type="Script" path="res://COGITO/Components/BrightnessComponent.gd" id="1_mm7c5"]
+
+[node name="BrightnessComponent" type="Node"]
+script = ExtResource("1_mm7c5")

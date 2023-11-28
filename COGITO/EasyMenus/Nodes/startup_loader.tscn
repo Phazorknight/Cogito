@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c56b7kxfiaj3r"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/startup_loader.gd" id="1_kuh74"]
+
+[node name="StartupLoader" type="Node"]
+script = ExtResource("1_kuh74")

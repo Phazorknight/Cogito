@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://0fj068bj0csc"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/pick_up.gd" id="1_mwmfj"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_4pii1"]
+[ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres" id="2_j2eoi"]
+
+[sub_resource type="Resource" id="Resource_210ma"]
+script = ExtResource("2_4pii1")
+inventory_item = ExtResource("2_j2eoi")
+quantity = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jf5x7"]
+top_radius = 0.07
+bottom_radius = 0.15
+height = 0.4
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnne2"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x4wsa"]
+top_radius = 0.025
+bottom_radius = 0.15
+height = 0.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6k4s"]
+transparency = 1
+blend_mode = 1
+cull_mode = 1
+albedo_color = Color(0.815686, 1, 1, 0.196078)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tvmxx"]
+height = 0.4
+radius = 0.15
+
+[node name="HealthPotion" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_mwmfj")
+slot_data = SubResource("Resource_210ma")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.685, 0, 0, 0, 0.685, 0, 0, 0, 0.685, 0, -0.1043, 0)
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+mesh = SubResource("CylinderMesh_x4wsa")
+material = SubResource("StandardMaterial3D_a6k4s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0656812, 0)
+visible = false
+shape = SubResource("CylinderShape3D_tvmxx")

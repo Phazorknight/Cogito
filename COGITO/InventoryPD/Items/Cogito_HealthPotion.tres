@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://cpqxudfjtjw66"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_4qe1t"]
+[ext_resource type="Texture2D" uid="uid://d0so3oo1yk4kh" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Heart.png" id="1_5eqwj"]
+[ext_resource type="Texture2D" uid="uid://bmg715kqyjb77" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoHealthPotion.png" id="1_net5f"]
+
+[resource]
+script = ExtResource("1_4qe1t")
+id = 0
+item_type = 0
+name = "Health Potion"
+descpription = "Tastes better than it looks."
+icon = ExtResource("1_net5f")
+power = 10.0
+is_stackable = true
+stack_size = 5
+use_sound = "use_potion"
+drop_scene = "res://COGITO/PrefabScenes/pickup_health_potion.tscn"
+hint_icon_on_use = ExtResource("1_5eqwj")
+hint_text_on_use = "Recovered 10 HP."
+attribute_name = "health"
+primary_use_prompt = ""
+secondary_use_prompt = ""
+charge_max = 0.0
+charge_current = 0.0
+discard_after_use = false

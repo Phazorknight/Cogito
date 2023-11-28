@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://cupby6uqaftvv"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_am3vi"]
+[ext_resource type="Texture2D" uid="uid://c0h1s1g4g1q56" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoBattery.png" id="1_fjosn"]
+[ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="3_myi62"]
+
+[resource]
+script = ExtResource("1_am3vi")
+id = 0
+item_type = 2
+name = "Battery"
+descpription = "Can be combined with the Flashlight. Non-rechargeable."
+icon = ExtResource("1_fjosn")
+power = 30.0
+is_stackable = true
+stack_size = 5
+use_sound = ""
+drop_scene = "res://COGITO/PrefabScenes/pickup_battery.tscn"
+hint_text_on_use = ""
+attribute_name = ""
+primary_use_prompt = ""
+secondary_use_prompt = ""
+charge_max = 0.0
+charge_current = 0.0
+target_item = ExtResource("3_myi62")
+discard_after_use = false

@@ -1,0 +1,71 @@
+[gd_scene load_steps=16 format=3 uid="uid://1qw2lu4oikfr"]
+
+[ext_resource type="Script" path="res://COGITO/AudioManagerPD/AudioManagerPD.gd" id="1_q3jn2"]
+[ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_ce64r"]
+[ext_resource type="Script" path="res://COGITO/AudioManagerPD/CustomResources/AudioObject.gd" id="3_7gvf2"]
+[ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="4_1og5g"]
+[ext_resource type="Resource" uid="uid://l3wskh4t8ucq" path="res://COGITO/AudioManagerPD/AudioObject.tres" id="5_cjrh3"]
+[ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="7_klnyd"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="8_ohqkt"]
+[ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="9_vbbcr"]
+[ext_resource type="AudioStream" uid="uid://bna1nc66vw053" path="res://COGITO/Assets/Audio/Kenney/phaserUp5.ogg" id="10_a4oea"]
+
+[sub_resource type="Resource" id="Resource_jjy3w"]
+script = ExtResource("3_7gvf2")
+name = "btn_hover"
+audio_file = ExtResource("2_ce64r")
+volume = 1.0
+is_music = false
+
+[sub_resource type="Resource" id="Resource_bqmjg"]
+script = ExtResource("3_7gvf2")
+name = "btn_pressed"
+audio_file = ExtResource("4_1og5g")
+volume = 1.0
+is_music = false
+
+[sub_resource type="Resource" id="Resource_y2qe7"]
+script = ExtResource("3_7gvf2")
+name = "error"
+audio_file = ExtResource("9_vbbcr")
+volume = 1.0
+is_music = false
+
+[sub_resource type="Resource" id="Resource_xyy7d"]
+script = ExtResource("3_7gvf2")
+name = "jump"
+audio_file = ExtResource("7_klnyd")
+volume = 0.6
+is_music = false
+
+[sub_resource type="Resource" id="Resource_dok6d"]
+script = ExtResource("3_7gvf2")
+name = "pick_up"
+audio_file = ExtResource("8_ohqkt")
+volume = 1.0
+is_music = false
+
+[sub_resource type="Resource" id="Resource_5tv23"]
+script = ExtResource("3_7gvf2")
+name = "use_potion"
+audio_file = ExtResource("10_a4oea")
+volume = 1.0
+is_music = false
+
+[node name="AudioManagerPD" type="Node"]
+script = ExtResource("1_q3jn2")
+audio_objects = {
+"btn_hover": SubResource("Resource_jjy3w"),
+"btn_pressed": SubResource("Resource_bqmjg"),
+"error": SubResource("Resource_y2qe7"),
+"item_drop": ExtResource("5_cjrh3"),
+"jump": SubResource("Resource_xyy7d"),
+"pick_up": SubResource("Resource_dok6d"),
+"use_potion": SubResource("Resource_5tv23")
+}
+
+[node name="PlayerSFX" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="PlayerMusic" type="AudioStreamPlayer" parent="."]
+bus = &"Music"

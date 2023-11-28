@@ -1,0 +1,171 @@
+[gd_scene load_steps=20 format=3 uid="uid://kicjwmh02uwf"]
+
+[ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
+[ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
+[ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="4_d51ss"]
+[ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="5_6htai"]
+[ext_resource type="Script" path="res://COGITO/Scripts/SoundGroup.gd" id="5_dfldp"]
+[ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="6_nrttm"]
+[ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="7_swbyy"]
+[ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="8_2tp8b"]
+[ext_resource type="PackedScene" uid="uid://bkbudpcayf2jc" path="res://COGITO/Components/BrightnessComponent.tscn" id="9_x4tef"]
+[ext_resource type="PackedScene" uid="uid://c4p6cl0xvfdar" path="res://COGITO/Components/HealthComponent.tscn" id="11_ms07f"]
+[ext_resource type="PackedScene" uid="uid://ctdx2bs6fji20" path="res://COGITO/Components/SanityComponent.tscn" id="12_tv46k"]
+[ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_26tbo"]
+radius = 0.4
+height = 1.6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgxde"]
+radius = 0.4
+height = 0.8
+
+[sub_resource type="Animation" id="Animation_et2q2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0yaf5"]
+resource_name = "jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1.62451, 0.435276),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0, -0.0349066), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eqtd2"]
+resource_name = "landing"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1.62451, 0.435276),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.0523599, 0, -0.0349066), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_s7f04"]
+resource_name = "roll"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1),
+"transitions": PackedFloat32Array(1, 0.5, 1, 2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-3.14159, 0, 0), Vector3(-6.45772, 0, 0), Vector3(-6.28319, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8twm5"]
+_data = {
+"RESET": SubResource("Animation_et2q2"),
+"jump": SubResource("Animation_0yaf5"),
+"landing": SubResource("Animation_eqtd2"),
+"roll": SubResource("Animation_s7f04")
+}
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+script = ExtResource("1_wkneb")
+inventory_data = ExtResource("2_qleua")
+
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_26tbo")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+shape = SubResource("CapsuleShape3D_fgxde")
+disabled = true
+
+[node name="RayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, 1.6, 0)
+collision_mask = 3
+
+[node name="CarryablePosition" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.2, 0.341, -0.3)
+
+[node name="DropPosition" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.2)
+
+[node name="Neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Head" type="Node3D" parent="Neck"]
+
+[node name="Eyes" type="Node3D" parent="Neck/Head"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Neck/Head/Eyes"]
+libraries = {
+"": SubResource("AnimationLibrary_8twm5")
+}
+
+[node name="Camera" type="Camera3D" parent="Neck/Head/Eyes"]
+
+[node name="InteractionRaycast" type="RayCast3D" parent="Neck/Head/Eyes/Camera"]
+target_position = Vector3(0, 0, -2.5)
+collision_mask = 2
+
+[node name="SlidingTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488251, 0)
+volume_db = -40.0
+unit_size = 8.0
+max_db = 0.0
+max_polyphony = 2
+bus = &"SFX"
+script = ExtResource("5_dfldp")
+footsteps = [ExtResource("4_d51ss"), ExtResource("5_6htai"), ExtResource("6_nrttm"), ExtResource("7_swbyy"), ExtResource("8_2tp8b")]
+randomize_pitch = true
+pitch_variance = 0.2
+
+[node name="FootstepTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("11_ms07f")]
+max_health = 100.0
+start_health = 80.0
+no_sanity_damage = 1.0
+
+[node name="SanityComponent" parent="." instance=ExtResource("12_tv46k")]
+start_sanity = 30.0
+
+[node name="BrightnessComponent" parent="." instance=ExtResource("9_x4tef")]
+
+[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position") instance=ExtResource("13_rawn6")]
+interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
+carryable_position = NodePath("../CarryablePosition")
+
+[connection signal="animation_finished" from="Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]

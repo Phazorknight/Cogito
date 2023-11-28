@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InventoryPD" load_steps=5 format=3 uid="uid://b7mkykos46gnt"]
+
+[ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="1_wd11c"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="1_wxkif"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_83f1b"]
+
+[sub_resource type="Resource" id="Resource_4h4d1"]
+script = ExtResource("2_83f1b")
+inventory_item = ExtResource("1_wd11c")
+quantity = 1
+
+[resource]
+script = ExtResource("1_wxkif")
+inventory_slots = Array[ExtResource("2_83f1b")]([SubResource("Resource_4h4d1"), null, null, null, null])
