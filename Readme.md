@@ -1,5 +1,5 @@
 # COGITO
-Version: **Alpha 202311b**
+Version: **Alpha 202311c**
 
 COGITO is a first Person Immersive Sim Template Project for GODOT 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on
@@ -17,17 +17,19 @@ providing a framework for creating interactable objects and items.
 - Basic AudioManager for playing common sounds (needs work)
 - Player attributes (component based)
   - Health
-  - Stamina (still needs some polish)
+  - Stamina
   - Sanity (drains if not within Safezones)
   - Brightness (aka visibility goes up within Lightzones, cumulative to a limit)
 - Raycast Interaction system
 - Included Prefabs for:
   - Carryable crate
   - Door (unlockable)
+  - Chest (item container)
   - Items:
 	- Flashlight (combine with batteries to recharge)
 	- Battery (used to recharge Flashlight by combining them)
 	- Health Potion
+	- Stamina extension potion (increases max stamina)
 	- Key to unlock door
 
 ### Known bugs:
@@ -134,7 +136,8 @@ Items -> Slots -> Inventories.
 - Hint Text on Use: Text that is displayed for the hint that is displayed when the item is used. If left blank, no hint will be displayed.
 
 - Consumable settings:
-  - Attribute Name: String that is sent to Player script to change the according attribute. For example, enter "health" if you're making a health potion.
+  - Attribute Name: String that is sent to Player script to change the according attribute. For example, enter "health", and the player current health will be increased by the power value. "health_max" will increase the maximum health of the player.
+	This gets sent to the player.gd script, if you want to edit this.
 
 - Wieldable settings:
   - Primary Use Prompt: Text that is displayed in the HUD for primary action (left mouse click, gamepad right trigger). Usually stuff like shoot, toggle on/off.

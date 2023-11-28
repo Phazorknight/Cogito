@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://060gqm74tdlk"]
+
+[ext_resource type="Texture2D" uid="uid://xdrsyodejj36" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Drop.png" id="1_1g5jd"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_j6fph"]
+[ext_resource type="Texture2D" uid="uid://ra2d8abru67o" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_StaminaExtension.png" id="2_ylptx"]
+
+[resource]
+script = ExtResource("1_j6fph")
+id = 0
+item_type = 0
+name = "Stamina Extension"
+descpription = "Drinking this permanently increases your maximum stamina."
+icon = ExtResource("2_ylptx")
+power = 25.0
+is_stackable = true
+stack_size = 5
+use_sound = "use_potion"
+drop_scene = "res://COGITO/PrefabScenes/pickup_stamina_extension.tscn"
+hint_icon_on_use = ExtResource("1_1g5jd")
+hint_text_on_use = "Max stamina increased by 25."
+attribute_name = "stamina_max"
+primary_use_prompt = ""
+secondary_use_prompt = ""
+charge_max = 0.0
+charge_current = 0.0
+discard_after_use = false

@@ -16,3 +16,7 @@ res://COGITO/DemoScenes/COGITO_Demo_01.tscn
 res://COGITO/Scripts/player.gd
 res://COGITO/Components/BrightnessComponent.tscn
 res://COGITO/Components/BrightnessComponent.gd
+res://COGITO/PrefabScenes/pickup_potion.tscn
+res://COGITO/PrefabScenes/container.tscn
+res://COGITO/PrefabScenes/pickup_stamina_extension.tscn
+res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres

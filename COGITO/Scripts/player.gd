@@ -81,6 +81,8 @@ func increase_attribute(attribute_name: String, value: int):
 			sanity_component.add(value)
 		"stamina":
 			stamina_component.add(value)
+		"stamina_max":
+			stamina_component.max_stamina += value
 		_:
 			print("Increase attribute failed: no match.")
 

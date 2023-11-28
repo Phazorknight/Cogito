@@ -1,8 +1,9 @@
+StaticBody3D
+RigidBody3D
 Label
 PanelContainer
 Timer
 CollisionShape3D
-RigidBody3D
 MeshInstance3D
 Panel
 HBoxContainer
@@ -11,7 +12,6 @@ TextureRect
 VBoxContainer
 CSGMesh3D
 MarginContainer
-StaticBody3D
 AudioStreamPlayer3D
 AnimatableBody3D
 CSGBox3D

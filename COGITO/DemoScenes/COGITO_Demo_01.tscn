@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=45 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -13,6 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://COGITO/PrefabScenes/pickup_key.tscn" id="9_qv8nx"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/pickup_health_potion.tscn" id="12_2vt2n"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://COGITO/PrefabScenes/pickup_battery.tscn" id="13_6m0er"]
+[ext_resource type="PackedScene" uid="uid://3okedyf5glns" path="res://COGITO/PrefabScenes/container.tscn" id="14_d7sxi"]
+[ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres" id="15_86b07"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="16_fg1wi"]
+[ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="17_nl6sa"]
+[ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/pickup_stamina_extension.tscn" id="18_pobhb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -90,10 +95,10 @@ material = ExtResource("1_lsda4")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_enk60"]
 
-[sub_resource type="Resource" id="Resource_jcsht"]
+[sub_resource type="Resource" id="Resource_ui4nn"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
-inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
+inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_x600l"]
 size = Vector3(1.5, 3, 1.5)
@@ -106,6 +111,20 @@ rim = 0.0
 rim_tint = 0.0
 backlight = Color(0.509804, 0.294118, 0.294118, 1)
 disable_receive_shadows = true
+
+[sub_resource type="Resource" id="Resource_wdflo"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("15_86b07")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_hpi7r"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_nar8x"]
+script = ExtResource("2_chxar")
+inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
 
 [node name="COGITO_Demo_01" type="Node3D"]
 
@@ -366,6 +385,16 @@ text = "Crouch under this wall."
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0.48994, 1.71944, -4.99625)
 text = "This crate is carriable."
 
+[node name="Txt_Container" type="Label3D" parent="StaticEnvironment"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.79473, 1.41944, 0.20375)
+text = "You can open this crate
+to find more items."
+
+[node name="Txt_Stamina" type="Label3D" parent="StaticEnvironment"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.79473, 1.89234, 8.91294)
+text = "Read the description to
+find out what this potion does!"
+
 [node name="Shelf" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.328985, 1.06589, 14.5785)
 
@@ -409,11 +438,23 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
+[node name="MeterBox2" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/MeterBox2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_jlrlq")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/MeterBox2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_enk60")
+
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, -13.7198, 0.8, -1.22878)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_jcsht")
+inventory_data = SubResource("Resource_ui4nn")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -467,5 +508,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1866, 0.119064, 14.0786)
 
 [node name="Pickup_Battery4" parent="." instance=ExtResource("13_6m0er")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9751, 0.119064, 14.4325)
+
+[node name="Chest" parent="." groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.28242, 1.8999e-07, 0.259694)
+inventory_data = SubResource("Resource_nar8x")
+
+[node name="Pickup_StaminaExtension" parent="." instance=ExtResource("18_pobhb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.65468, 1.00138, 9.00549)
 
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
