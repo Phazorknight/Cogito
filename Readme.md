@@ -1,7 +1,8 @@
 # COGITO
-Version: **Alpha 202311c**
+Version: **Alpha 202311d**
+Runs on Godot **4.1.2 stable**
 
-COGITO is a first Person Immersive Sim Template Project for GODOT 4.
+COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on
 providing a framework for creating interactable objects and items.
 
@@ -14,7 +15,7 @@ providing a framework for creating interactable objects and items.
 ### Current working features:
 - First person player controller
 - Main Menu + Pause Menu
-- Basic AudioManager for playing common sounds (needs work)
+- Basic AudioManager for playing common sounds (needs rework)
 - Player attributes (component based)
   - Health
   - Stamina
@@ -42,7 +43,7 @@ providing a framework for creating interactable objects and items.
 
 ### Still to do:
 - Pause/Options Menu:
-  - Invert Y toggle doesn't work yet.
+  - Invert Y toggle doesn't work yet. But can be set in the Player.gd script in the inspector.
 - Player Attributes:
   - Action points (low prio)
 - Interactables:
@@ -58,6 +59,9 @@ Make sure that two Autoloads are set up in your project:
 - //COGITO/AudioManagerPD/Autoload/AudioManagerPD.tscn
 - //COGITO/EsayMenus/Nodes/menu_template_manager.tscn
 
+*** Open and run res://COGITO/DemoScenes/COGITO_Demo_01.tscn to try out everything that comes with COGITO
+
+
 ### Scene set-up
 To fully work, you need 3 Prefab Scenes in your scene + the following references set up in their inspector:
 - player.tscn
@@ -72,8 +76,22 @@ PauseMenu and MainMenu Scenes contain SceneSwitchers that need paths to the *.ts
 Also be aware of node order for Player_HUD and PauseMenu. Player_HUD node should be above PauseMenu node, so PauseMenu is "on top". 
 
 ## Interactables
-For an interactable to work, it needs to be a 3D collision shape and be on layer 2 for the raycast to detect it. Then simply attach one of the provided scripts, set some parameters and you're good to go.
+For an interactable to work, it needs to be a 3D collision shape and be on **layer 2** for the raycast to detect it. Then simply attach one of the provided scripts, set some parameters and you're good to go.
 Feel free to create new kinds of interactables based on the scripts provided.
+
+### Creating your own interactables
+If you want to set up your own, just create a 3D Node that has a Collision Shape on Layer 2. Attach a script that has a function called "interact" and which gets passed the player.
+It should also have a string variable called "interaction_text" which contains what the HUD displays when the player interaction raycast hits it.
+
+So the most basic script would look like this:
+```
+@export var interaction_text : String = "Interact with me"
+
+func interact(playernode):
+	# What happens when player interacts.
+	pass
+```
+
 
 ### Carryable.gd
 This is used for boxes, crates etc.

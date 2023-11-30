@@ -15,6 +15,7 @@ var look_vector : Vector3
 var is_reset : bool  = true
 var device_id : int = -1
 
+
 func _process(delta):
 	if interaction_raycast.is_colliding():
 		var interactable = interaction_raycast.get_collider()
@@ -28,7 +29,6 @@ func _process(delta):
 
 	else:
 		if !is_reset:
-			print("Resetting prompt to empty.")
 			emit_signal("interaction_prompt", "")
 			is_reset = true
 		
@@ -42,7 +42,6 @@ func _input(event):
 		
 		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
-			print("COLLIDING with ", interactable.get_name() )
 			if interactable.has_method("interact"):
 				interactable.interact(self)
 			elif carried_object != null:

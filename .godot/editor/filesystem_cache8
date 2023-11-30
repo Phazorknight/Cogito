@@ -1,10 +1,9 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1701212901
+::res://::1701360676
 default_bus_layout.tres::AudioBusLayout::1709295361023036547::1697841242::0::1::::<><>::
 export_presets.cfg::TextFile::-1::1701037873::0::1::::<><>::
-Readme.md::TextFile::-1::1701195923::0::1::::<><>::
-::res://addons/::1701186687
-::res://COGITO/::1701186687
+Readme.md::TextFile::-1::1701214476::0::1::::<><>::
+::res://COGITO/::1701214663
 COGITO_Card.png::CompressedTexture2D::286966206874779828::1700593901::1700595789::1::::<><>::
 COGITO_icon.png::CompressedTexture2D::3563364314707769936::1700588302::1700588306::1::::<><>::
 ::res://COGITO/Assets/::1701205640
@@ -75,15 +74,15 @@ Mouse_Left.png::CompressedTexture2D::1812028688057210286::1700580047::1700580092
 RightBumper.png::CompressedTexture2D::3975348677350383527::1701035660::1701035692::1::::<><>::
 RightThumbStick.png::CompressedTexture2D::5705281101341359362::1700683738::1700683816::1::::<><>::
 RightTrigger.png::CompressedTexture2D::2050050473508024432::1701035614::1701035692::1::::<><>::
-::res://COGITO/Assets/Graphics/ItemIcons/::1701213293
+::res://COGITO/Assets/Graphics/ItemIcons/::1701213296
 CogitoBattery.png::CompressedTexture2D::6543625264920263339::1701115212::1701115222::1::::<><>::
 CogitoFlashlight.png::CompressedTexture2D::500079150754704171::1700510351::1700510366::1::::<><>::
 CogitoHealthPotion.png::CompressedTexture2D::3243064040191845804::1700687002::1700687006::1::::<><>::
 CogitoKey.png::CompressedTexture2D::3661783048981525612::1700582017::1700582438::1::::<><>::
 Cogito_StaminaExtension.png::CompressedTexture2D::1194856791372490650::1701213293::1701213296::1::::<><>::
-::res://COGITO/Assets/Materials/::1701187835
-Prototype_DarkGrey.tres::StandardMaterial3D::231282361941417180::1701187835::0::1::::<><>::uid://dfhr6s2ux8t0i::::res://COGITO/Assets/Textures/Prototype Textures/PNG/Dark/texture_01.png
-Prototype_Orange.tres::StandardMaterial3D::506233474606081502::1701187835::0::1::::<><>::uid://bdm400hlsqfgf::::res://COGITO/Assets/Textures/Prototype Textures/PNG/Orange/texture_01.png
+::res://COGITO/Assets/Materials/::1701273931
+Prototype_DarkGrey.tres::StandardMaterial3D::231282361941417180::1701273931::0::1::::<><>::uid://dfhr6s2ux8t0i::::res://COGITO/Assets/Textures/Prototype Textures/PNG/Dark/texture_01.png
+Prototype_Orange.tres::StandardMaterial3D::506233474606081502::1701273931::0::1::::<><>::uid://bdm400hlsqfgf::::res://COGITO/Assets/Textures/Prototype Textures/PNG/Orange/texture_01.png
 ::res://COGITO/Assets/Models/::1701211893
 Bottle-col.gltf::PackedScene::5608511426280920193::1701209046::1701209062::1::::<><>::
 SimpleChest-col.gltf::PackedScene::3623026331135801285::1701211854::1701211888::1::::<><>::
@@ -181,8 +180,8 @@ texture_13.png::CompressedTexture2D::6161522137940336760::1700674516::1700674517
 AudioManagerPD.gd::GDScript::-1::1697843757::0::1::::<>Node<>::
 AudioObject.tres::Resource/Resource::831248312654650556::1700591907::0::1::::<><>::uid://1w0db1u6lv7t
 Btn_Ui_Sounds.gd::GDScript::-1::1697843735::0::1::::<>Button<>::
-::res://COGITO/AudioManagerPD/Autoload/::1701212527
-AudioManagerPD.tscn::PackedScene::1859324578919694883::1701212527::0::1::::<><>::res://COGITO/AudioManagerPD/AudioManagerPD.gd<>uid://cr3bcp0u6w1pl::::res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg<>res://COGITO/AudioManagerPD/CustomResources/AudioObject.gd<>uid://kbw2s407quul::::res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg<>uid://l3wskh4t8ucq::::res://COGITO/AudioManagerPD/AudioObject.tres<>uid://ba8gpptnnapyh::::res://COGITO/Assets/Audio/Kenney/cloth2.ogg<>uid://npav2p2tk10i::::res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg<>uid://bnqnuewmntcyp::::res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg<>uid://bna1nc66vw053::::res://COGITO/Assets/Audio/Kenney/phaserUp5.ogg
+::res://COGITO/AudioManagerPD/Autoload/::1701276052
+AudioManagerPD.tscn::PackedScene::1859324578919694883::1701276052::0::1::::<><>::res://COGITO/AudioManagerPD/AudioManagerPD.gd<>uid://cr3bcp0u6w1pl::::res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg<>res://COGITO/AudioManagerPD/CustomResources/AudioObject.gd<>uid://kbw2s407quul::::res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg<>uid://l3wskh4t8ucq::::res://COGITO/AudioManagerPD/AudioObject.tres<>uid://ba8gpptnnapyh::::res://COGITO/Assets/Audio/Kenney/cloth2.ogg<>uid://npav2p2tk10i::::res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg<>uid://bnqnuewmntcyp::::res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg<>uid://bna1nc66vw053::::res://COGITO/Assets/Audio/Kenney/phaserUp5.ogg
 ::res://COGITO/AudioManagerPD/CustomResources/::1701186687
 AudioObject.gd::GDScript::-1::1700591451::0::1::::AudioObjectPD<>Resource<>::
 ::res://COGITO/AudioManagerPD/TestSounds/::1701186687
@@ -202,8 +201,8 @@ SanityComponent.gd::GDScript::-1::1699659827::0::1::::SanityComponent<>Node<>::
 SanityComponent.tscn::PackedScene::6114067318785430983::1700231559::0::1::::<><>::res://COGITO/Components/SanityComponent.gd
 StaminaComponent.gd::GDScript::-1::1701212568::0::1::::StaminaComponent<>Node<>::
 StaminaComponent.tscn::PackedScene::4419196734855217418::1701212568::0::1::::<><>::res://COGITO/Components/StaminaComponent.gd
-::res://COGITO/DemoScenes/::1701213125
-COGITO_Demo_01.tscn::PackedScene::6184771577929813841::1701213125::0::1::::<><>::uid://kicjwmh02uwf::::res://COGITO/PrefabScenes/player.tscn<>uid://dkbgl3p3ffd1::::res://COGITO/Assets/Materials/Prototype_DarkGrey.tres<>uid://cwd3g16ep0idw::::res://COGITO/PrefabScenes/pickup_flashlight.tscn<>uid://hhhudvarh7gk::::res://COGITO/Assets/Materials/Prototype_Orange.tres<>res://COGITO/InventoryPD/InventoryPD.gd<>uid://rw7gdui8lu3n::::res://COGITO/EasyMenus/Scenes/pause_menu.tscn<>uid://0c32kepv0ahx::::res://COGITO/PrefabScenes/Player_HUD.tscn<>uid://d3m4ni301eso7::::res://COGITO/PrefabScenes/carriable_box.tscn<>uid://bdyukj85qkut0::::res://COGITO/PrefabScenes/door.tscn<>uid://d4gdqvqsiiqs5::::res://COGITO/InventoryPD/Items/Cogito_Key.tres<>uid://8wkt5k4dl40u::::res://COGITO/PrefabScenes/pickup_key.tscn<>uid://0fj068bj0csc::::res://COGITO/PrefabScenes/pickup_health_potion.tscn<>uid://bab56bf0vqfss::::res://COGITO/PrefabScenes/pickup_battery.tscn<>uid://3okedyf5glns::::res://COGITO/PrefabScenes/container.tscn<>uid://cpqxudfjtjw66::::res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres<>res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd<>uid://cupby6uqaftvv::::res://COGITO/InventoryPD/Items/Cogito_Battery.tres<>uid://sfypssn0rllo::::res://COGITO/PrefabScenes/pickup_stamina_extension.tscn
+::res://COGITO/DemoScenes/::1701276313
+COGITO_Demo_01.tscn::PackedScene::6184771577929813841::1701276313::0::1::::<><>::uid://kicjwmh02uwf::::res://COGITO/PrefabScenes/player.tscn<>uid://dkbgl3p3ffd1::::res://COGITO/Assets/Materials/Prototype_DarkGrey.tres<>uid://cwd3g16ep0idw::::res://COGITO/PrefabScenes/pickup_flashlight.tscn<>uid://hhhudvarh7gk::::res://COGITO/Assets/Materials/Prototype_Orange.tres<>res://COGITO/InventoryPD/InventoryPD.gd<>uid://rw7gdui8lu3n::::res://COGITO/EasyMenus/Scenes/pause_menu.tscn<>uid://0c32kepv0ahx::::res://COGITO/PrefabScenes/Player_HUD.tscn<>uid://d3m4ni301eso7::::res://COGITO/PrefabScenes/carriable_box.tscn<>uid://bdyukj85qkut0::::res://COGITO/PrefabScenes/door.tscn<>uid://d4gdqvqsiiqs5::::res://COGITO/InventoryPD/Items/Cogito_Key.tres<>uid://8wkt5k4dl40u::::res://COGITO/PrefabScenes/pickup_key.tscn<>uid://0fj068bj0csc::::res://COGITO/PrefabScenes/pickup_health_potion.tscn<>uid://bab56bf0vqfss::::res://COGITO/PrefabScenes/pickup_battery.tscn<>uid://3okedyf5glns::::res://COGITO/PrefabScenes/container.tscn<>uid://cpqxudfjtjw66::::res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres<>res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd<>uid://cupby6uqaftvv::::res://COGITO/InventoryPD/Items/Cogito_Battery.tres<>uid://sfypssn0rllo::::res://COGITO/PrefabScenes/pickup_stamina_extension.tscn
 COGITO_MainMenu.tscn::PackedScene::6809368658766811379::1701130375::0::1::::<><>::uid://dq6tvhqcy2aps
 ::res://COGITO/EasyMenus/::1701186687
 ::res://COGITO/EasyMenus/Nodes/::1701186687
@@ -239,11 +238,12 @@ InventorySlotPD.gd::GDScript::-1::1700763852::0::1::::InventorySlotPD<>Resource<
 ::res://COGITO/InventoryPD/Inventories/::1701186687
 PlayerInventory.tres::Resource/Resource::325788790473687310::1700234544::0::1::::<><>::res://COGITO/InventoryPD/InventoryPD.gd
 TestInventory.tres::Resource/Resource::4657886789858817261::1700613029::0::1::::<><>::uid://d4gdqvqsiiqs5
-::res://COGITO/InventoryPD/Items/::1701187835
-Cogito_Battery.tres::Resource/InventoryItemPD::6207689142351359187::1701187835::0::1::::<><>::res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://c0h1s1g4g1q56::::res://COGITO/Assets/Graphics/ItemIcons/CogitoBattery.png<>uid://ckvdkigvwowm5::::res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres
-Cogito_Flashlight.tres::Resource/InventoryItemPD::5518282175958876670::1701187835::0::1::::<><>::uid://heih3rs4r4gt::::res://COGITO/Assets/Graphics/ItemIcons/CogitoFlashlight.png<>res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://4xstvhrf4r2h::::res://COGITO/Assets/Graphics/BatteryIcon.png
-Cogito_HealthPotion.tres::Resource/InventoryItemPD::5860136438462132845::1701187835::0::1::::<><>::res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://d0so3oo1yk4kh::::res://COGITO/Assets/Graphics/HintIcons/Hint_Heart.png<>uid://bmg715kqyjb77::::res://COGITO/Assets/Graphics/ItemIcons/CogitoHealthPotion.png
-Cogito_Key.tres::Resource/InventoryItemPD::9207336635323464258::1701187835::0::1::::<><>::uid://bsf2bc116o1oi::::res://COGITO/Assets/Graphics/ItemIcons/CogitoKey.png<>res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd
+::res://COGITO/InventoryPD/Items/::1701273931
+Cogito_Battery.tres::Resource/InventoryItemPD::6207689142351359187::1701273931::0::1::::<><>::res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://c0h1s1g4g1q56::::res://COGITO/Assets/Graphics/ItemIcons/CogitoBattery.png<>uid://ckvdkigvwowm5::::res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres
+Cogito_Flashlight.tres::Resource/InventoryItemPD::5518282175958876670::1701273931::0::1::::<><>::uid://heih3rs4r4gt::::res://COGITO/Assets/Graphics/ItemIcons/CogitoFlashlight.png<>res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://4xstvhrf4r2h::::res://COGITO/Assets/Graphics/BatteryIcon.png
+Cogito_HealthPotion.tres::Resource/InventoryItemPD::5860136438462132845::1701273931::0::1::::<><>::res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://d0so3oo1yk4kh::::res://COGITO/Assets/Graphics/HintIcons/Hint_Heart.png<>uid://bmg715kqyjb77::::res://COGITO/Assets/Graphics/ItemIcons/CogitoHealthPotion.png
+Cogito_Key.tres::Resource/InventoryItemPD::9207336635323464258::1701273931::0::1::::<><>::uid://bsf2bc116o1oi::::res://COGITO/Assets/Graphics/ItemIcons/CogitoKey.png<>res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd
+Cogito_StaminaExtension.tres::Resource/InventoryItemPD::1820246301313946868::1701273931::0::1::::<><>::uid://xdrsyodejj36::::res://COGITO/Assets/Graphics/HintIcons/Hint_Drop.png<>res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd<>uid://ra2d8abru67o::::res://COGITO/Assets/Graphics/ItemIcons/Cogito_StaminaExtension.png
 ::res://COGITO/InventoryPD/UiScenes/::1701194704
 HotBarInventoryUi.tscn::PackedScene::2794096874058288580::1701115452::0::1::::<><>::res://COGITO/InventoryPD/UiScenes/hot_bar_inventory.gd<>uid://sd1u3qpwgmxi
 hot_bar_inventory.gd::GDScript::-1::1701037862::0::1::::<>PanelContainer<>::
@@ -252,7 +252,7 @@ InventoryUI.tscn::PackedScene::8499610405560485663::1700231998::0::1::::<><>::re
 inventory_interface.gd::GDScript::-1::1701023154::0::1::::<>Control<>::
 Slot.gd::GDScript::-1::1701118361::0::1::::<>PanelContainer<>::
 Slot.tscn::PackedScene::5255460739590049030::1701194704::0::1::::<><>::res://COGITO/InventoryPD/UiScenes/Slot.gd
-::res://COGITO/PrefabScenes/::1701212901
+::res://COGITO/PrefabScenes/::1701276053
 carriable_box.tscn::PackedScene::9151106678716052004::1701039448::0::1::::<><>::res://COGITO/Scripts/Carriable.gd<>uid://cqgsihtcw0gl4
 container.tscn::PackedScene::1994803418437900456::1701212528::0::1::::<><>::res://COGITO/InventoryPD/external_inventory.gd
 door.tscn::PackedScene::2647765003572569023::1701035710::0::1::::<><>::res://COGITO/Scripts/Interact_Door.gd<>uid://bipwc8kk30bub
@@ -260,14 +260,14 @@ pickup_battery.tscn::PackedScene::2390361992253162682::1701115452::0::1::::<><>:
 pickup_flashlight.tscn::PackedScene::6324901264944803604::1701115452::0::1::::<><>::res://COGITO/Scripts/Flashlight.gd<>uid://ckvdkigvwowm5
 pickup_health_potion.tscn::PackedScene::1765635756764477222::1700687190::0::1::::<><>::res://COGITO/InventoryPD/pick_up.gd<>res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd<>uid://cpqxudfjtjw66
 pickup_key.tscn::PackedScene::2362290843126892930::1700585601::0::1::::<><>::res://COGITO/InventoryPD/pick_up.gd<>uid://d4gdqvqsiiqs5
-pickup_stamina_extension.tscn::PackedScene::1275206042841382632::1701212880::0::1::::<><>::res://COGITO/InventoryPD/pick_up.gd<>uid://cpqxudfjtjw66::::res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres<>res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd
-player.tscn::PackedScene::718542138947376649::1701212527::0::1::::<><>::res://COGITO/Scripts/player.gd<>uid://ev2xuamhfojm::::res://COGITO/InventoryPD/Inventories/PlayerInventory.tres<>uid://up2hfhgq1qx6::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg<>uid://crj07wq4oocwi::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg<>res://COGITO/Scripts/SoundGroup.gd<>uid://dewyukd562k37::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg<>uid://c5kfw4o57foju::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg<>uid://b4mt1tuxo2144::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg<>uid://bkbudpcayf2jc::::res://COGITO/Components/BrightnessComponent.tscn<>uid://b37xr3nyh6aog::::res://COGITO/Components/StaminaComponent.tscn<>uid://c4p6cl0xvfdar::::res://COGITO/Components/HealthComponent.tscn<>uid://ctdx2bs6fji20::::res://COGITO/Components/SanityComponent.tscn<>uid://dy3tudla5p2nc::::res://COGITO/Components/PlayerInteractionComponent.tscn
-Player_HUD.tscn::PackedScene::1760598670815118717::1701212527::0::1::::<><>::res://COGITO/Scripts/Player_Hud_Manager.gd<>uid://0tbm6xivmc85::::res://UI/Elements/ProgressBar_FiveUnits.png<>uid://cqlqo6ga2f71s::::res://COGITO/Assets/Graphics/Crosshair.png<>uid://ryhle5u4d4mn::::res://COGITO/Assets/Graphics/InputIcons/Keyboard_F.png<>uid://dtdjlu4dtm6wh::::res://COGITO/InventoryPD/UiScenes/InventoryUI.tscn<>res://COGITO/InventoryPD/UiScenes/inventory_interface.gd<>uid://dgvti6embqgw3::::res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png<>uid://c0ic5coqtrecl::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Left.png<>uid://cg41w2fijcp4q::::res://COGITO/InventoryPD/UiScenes/Slot.tscn<>uid://bf2qmquc7ys81::::res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn<>uid://cs2c2v0kkysjk::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Bottom.png<>uid://da3c5wfdmeyt1::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Right.png<>uid://jekoyd2ibst3::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Top.png<>uid://4hcbc0gf3uou::::res://COGITO/Assets/Graphics/InputIcons/RightTrigger.png<>uid://brxmtxnpock1t::::res://COGITO/Assets/Graphics/InputIcons/MouseRight.png<>uid://02033aa8j18m::::res://COGITO/Assets/Graphics/InputIcons/Mouse_Left.png
-::res://COGITO/Scripts/::1701194701
+pickup_stamina_extension.tscn::PackedScene::1275206042841382632::1701276053::0::1::::<><>::res://COGITO/InventoryPD/pick_up.gd<>uid://060gqm74tdlk::::res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres<>res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd
+player.tscn::PackedScene::718542138947376649::1701276052::0::1::::<><>::res://COGITO/Scripts/player.gd<>uid://ev2xuamhfojm::::res://COGITO/InventoryPD/Inventories/PlayerInventory.tres<>uid://up2hfhgq1qx6::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg<>uid://crj07wq4oocwi::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg<>res://COGITO/Scripts/SoundGroup.gd<>uid://dewyukd562k37::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg<>uid://c5kfw4o57foju::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg<>uid://b4mt1tuxo2144::::res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg<>uid://bkbudpcayf2jc::::res://COGITO/Components/BrightnessComponent.tscn<>uid://b37xr3nyh6aog::::res://COGITO/Components/StaminaComponent.tscn<>uid://c4p6cl0xvfdar::::res://COGITO/Components/HealthComponent.tscn<>uid://ctdx2bs6fji20::::res://COGITO/Components/SanityComponent.tscn<>uid://dy3tudla5p2nc::::res://COGITO/Components/PlayerInteractionComponent.tscn
+Player_HUD.tscn::PackedScene::1760598670815118717::1701276052::0::1::::<><>::res://COGITO/Scripts/Player_Hud_Manager.gd<>uid://0tbm6xivmc85::::res://UI/Elements/ProgressBar_FiveUnits.png<>uid://cqlqo6ga2f71s::::res://COGITO/Assets/Graphics/Crosshair.png<>uid://ryhle5u4d4mn::::res://COGITO/Assets/Graphics/InputIcons/Keyboard_F.png<>uid://dtdjlu4dtm6wh::::res://COGITO/InventoryPD/UiScenes/InventoryUI.tscn<>res://COGITO/InventoryPD/UiScenes/inventory_interface.gd<>uid://dgvti6embqgw3::::res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png<>uid://c0ic5coqtrecl::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Left.png<>uid://cg41w2fijcp4q::::res://COGITO/InventoryPD/UiScenes/Slot.tscn<>uid://bf2qmquc7ys81::::res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn<>uid://cs2c2v0kkysjk::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Bottom.png<>uid://da3c5wfdmeyt1::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Right.png<>uid://jekoyd2ibst3::::res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Top.png<>uid://4hcbc0gf3uou::::res://COGITO/Assets/Graphics/InputIcons/RightTrigger.png<>uid://brxmtxnpock1t::::res://COGITO/Assets/Graphics/InputIcons/MouseRight.png<>uid://02033aa8j18m::::res://COGITO/Assets/Graphics/InputIcons/Mouse_Left.png
+::res://COGITO/Scripts/::1701213848
 Carriable.gd::GDScript::-1::1701039448::0::1::::<>RigidBody3D<>::
 Flashlight.gd::GDScript::-1::1701113450::0::1::::<>RigidBody3D<>::
 Interact_Door.gd::GDScript::-1::1700683051::0::1::::<>Node3D<>::
-player.gd::GDScript::-1::1701194701::0::1::::<>CharacterBody3D<>::
+player.gd::GDScript::-1::1701213848::0::1::::<>CharacterBody3D<>::
 Player_Hud_Manager.gd::GDScript::-1::1701189778::0::1::::<>Control<>::
 Safezone.gd::GDScript::-1::1699660792::0::1::::<>Area3D<>::
 scene_switcher.gd::GDScript::-1::1700237995::0::1::::<>Node<>::

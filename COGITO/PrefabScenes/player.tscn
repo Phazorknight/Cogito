@@ -154,14 +154,14 @@ pitch_variance = 0.2
 [node name="FootstepTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position") instance=ExtResource("13_rawn6")]
+interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
+carryable_position = NodePath("../CarryablePosition")
+
 [node name="HealthComponent" parent="." instance=ExtResource("11_ms07f")]
 max_health = 100.0
 start_health = 80.0
 no_sanity_damage = 1.0
-
-[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position") instance=ExtResource("13_rawn6")]
-interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
-carryable_position = NodePath("../CarryablePosition")
 
 [node name="StaminaComponent" parent="." instance=ExtResource("11_cbmdm")]
 max_stamina = 30.0

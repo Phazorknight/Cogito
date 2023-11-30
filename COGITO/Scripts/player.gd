@@ -73,12 +73,35 @@ var stand_after_roll = false
 var is_movement_paused = false
 
 
+func _ready():
+	randomize()
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	config = load(OptionsConstants.config_file_name)
+	if config != null:
+		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+	
+	if pause_menu:
+		get_node(pause_menu).close_pause_menu()
+	else:
+		print("Player has no reference to pause menu.")
+		
+	initial_carryable_height = carryable_position.position.y
+	
+	# Hookup brightness component signal
+	brightness_component.brightness_changed.connect(_on_brightness_changed)
+
+
 func increase_attribute(attribute_name: String, value: int):
 	match attribute_name:
 		"health":
 			health_component.add(value)
+		"health_max":
+			health_component.max_health += value
 		"sanity":
 			sanity_component.add(value)
+		"sanity_max":
+			sanity_component.max_sanity += value
 		"stamina":
 			stamina_component.add(value)
 		"stamina_max":
@@ -103,26 +126,7 @@ func take_damage(value):
 	
 func add_sanity(value):
 	sanity_component.add(value)
-	
 
-func _ready():
-	randomize()
-	
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	config = load(OptionsConstants.config_file_name)
-	if config != null:
-		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
-	
-	if pause_menu:
-		get_node(pause_menu).close_pause_menu()
-	else:
-		print("Player has no reference to pause menu.")
-		
-	initial_carryable_height = carryable_position.position.y
-	
-	# Hookup brightness component signal
-	brightness_component.brightness_changed.connect(_on_brightness_changed)
-		
 
 func _on_brightness_changed(current_brightness,max_brightness):
 	print("Brightness changed to ", current_brightness)
@@ -192,6 +196,7 @@ func _input(event):
 
 
 func _process(delta): 
+	# If SanityComponent is used, this decreases health when sanity is 0.
 	if sanity_component.current_sanity <= 0:
 		take_damage(health_component.no_sanity_damage * delta)
 
@@ -204,7 +209,7 @@ func _physics_process(delta):
 	carryable_position.rotation.z = lerp_angle(carryable_position.rotation.z, $Neck/Head.rotation.x, 5 * delta)
 	
 	# Processing analog stick mouselook
-	if joystick_v_event:
+	if joystick_v_event and !is_movement_paused:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
 					$Neck/Head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
@@ -212,11 +217,10 @@ func _physics_process(delta):
 					$Neck/Head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				$Neck/Head.rotation.x = clamp($Neck/Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 				
-	if joystick_h_event:
+	if joystick_h_event and !is_movement_paused:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
 			$Neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
 			$Neck.rotation.y = clamp($Neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
-
 	
 	if stand_after_roll:
 		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * LERP_SPEED)
