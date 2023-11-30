@@ -1,3 +1,4 @@
+![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
 Version: **Alpha 202311d**
 Runs on Godot **4.1.2 stable**
@@ -8,7 +9,7 @@ providing a framework for creating interactable objects and items.
 
 **Credits:**
 - Player controller is based on Like475's First Person Controller Advanced: https://github.com/Like475/fpc-godot
-- Menus are based on SavoVuksan's EasyMenus: https://github.com/SavoVuksan/EasyMenus
+- Menus are based on SavoVuksan's EasyMenus (also see this link for documentation): https://github.com/SavoVuksan/EasyMenus
 - Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC
 
 ## Overview
@@ -37,7 +38,6 @@ providing a framework for creating interactable objects and items.
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 - Inventory / items:
   - Sometimes stackable item counts gets tripped somehow, resulting in picking up one item, but the stack goes up by 2, etc.
-
 - Wieldables:
   - Gamepad: Primary use trigger needs refining as the analog input causes multiple triggers.
 
@@ -49,7 +49,7 @@ providing a framework for creating interactable objects and items.
 - Interactables:
   - Door: Improve door rotation inspector settings
   - Door: Create option to make sliding door
-- AudioManager is a unwieldy. Can probably be redone to work better.
+- AudioManager is unwieldy. Can probably be redone to work better.
  
 
 ## Set-Up
@@ -59,7 +59,7 @@ Make sure that two Autoloads are set up in your project:
 - //COGITO/AudioManagerPD/Autoload/AudioManagerPD.tscn
 - //COGITO/EsayMenus/Nodes/menu_template_manager.tscn
 
-*** Open and run res://COGITO/DemoScenes/COGITO_Demo_01.tscn to try out everything that comes with COGITO
+**Open and run res://COGITO/DemoScenes/COGITO_Demo_01.tscn to try out everything that comes with COGITO**
 
 
 ### Scene set-up
@@ -127,7 +127,7 @@ Then attach the **Interact_Door.gd** to your AnimatableBody3D.
 
 
 ## Inventory System
-The inventory system is largely resource based. The inventory system and the inventory are independent and the UI elements get updated via signals.
+The inventory system is largely resource based. The inventory system and the inventory UI are independent form each other. UI elements get updated via signals.
 
 ### Overview
 The Inventory System contains of 3 main resources:
@@ -183,3 +183,4 @@ The two reference each other: Pick Up scene <-> Inventory Item resource
 
 ### Pickup_Flashlight.gd
 Used for the Cogito_Flashlight item/prefab. Use the one provided or attach this script to your own flashlight model.
+
