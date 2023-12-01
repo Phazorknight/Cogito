@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=54 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -18,8 +18,7 @@
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="16_fg1wi"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="17_nl6sa"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/pickup_stamina_extension.tscn" id="18_pobhb"]
-[ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://COGITO/PrefabScenes/heal_zone.tscn" id="19_2mngh"]
-[ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PrefabScenes/hazard_zone.tscn" id="20_dgnbq"]
+[ext_resource type="Script" path="res://COGITO/Scripts/hazard_zone.gd" id="19_xkhqc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -123,7 +122,7 @@ material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
-[sub_resource type="Resource" id="Resource_ficrv"]
+[sub_resource type="Resource" id="Resource_5yka4"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -141,6 +140,21 @@ quantity = 2
 [sub_resource type="Resource" id="Resource_nar8x"]
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_in244"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x600l"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84cqo"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0, 0, 0.392157)
+rim = 0.0
+rim_tint = 0.0
+backlight = Color(0.509804, 0.294118, 0.294118, 1)
+disable_receive_shadows = true
 
 [node name="COGITO_Demo_01" type="Node3D"]
 
@@ -526,20 +540,6 @@ template."
 horizontal_alignment = 0
 vertical_alignment = 0
 
-[node name="Txt_ZoneHazard" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -18.2568, 2.45602, 12.8823)
-text = "HAZARD ZONE
-drains your health
-over time."
-vertical_alignment = 0
-
-[node name="Txt_ZoneHeal" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -20.2069, 2.45602, 12.8823)
-text = " HAZARD ZONE
-can also be set
-to heal you."
-vertical_alignment = 0
-
 [node name="Txt_Key" type="Label3D" parent="StaticEnvironment"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.329, 1.71944, 14.7981)
 text = "Use this KEY
@@ -648,7 +648,7 @@ transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 
 transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.21833, 0.8, -2.61706)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_ficrv")
+inventory_data = SubResource("Resource_5yka4")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -685,10 +685,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1.5, 4.5)
 use_collision = true
 material = ExtResource("2_4ig6i")
 
-[node name="HealZone" parent="." instance=ExtResource("19_2mngh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2487, 1.505, 13.7451)
+[node name="HazardZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7487, 1.505, 1.5451)
+script = ExtResource("19_xkhqc")
+player_attribute = "stamina"
 
-[node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.2487, 1.505, 13.7451)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HazardZone"]
+shape = SubResource("BoxShape3D_in244")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="HazardZone"]
+mesh = SubResource("BoxMesh_x600l")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_84cqo")
 
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
+[connection signal="body_entered" from="HazardZone" to="HazardZone" method="_on_body_entered"]
+[connection signal="body_exited" from="HazardZone" to="HazardZone" method="_on_body_exited"]

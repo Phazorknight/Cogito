@@ -92,7 +92,7 @@ func _ready():
 	brightness_component.brightness_changed.connect(_on_brightness_changed)
 
 
-func increase_attribute(attribute_name: String, value: int):
+func increase_attribute(attribute_name: String, value: float):
 	match attribute_name:
 		"health":
 			health_component.add(value)
@@ -110,7 +110,7 @@ func increase_attribute(attribute_name: String, value: int):
 			print("Increase attribute failed: no match.")
 
 
-func decrease_attribute(attribute_name: String, value: int):
+func decrease_attribute(attribute_name: String, value: float):
 	match attribute_name:
 		"health":
 			health_component.subtract(value)

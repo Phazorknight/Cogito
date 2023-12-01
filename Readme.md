@@ -1,6 +1,6 @@
 ![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
-Version: **Alpha 202311d**
+Version: **Alpha 202312a**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -27,6 +27,7 @@ providing a framework for creating interactable objects and items.
   - Carryable crate
   - Door (unlockable)
   - Chest (item container)
+  - Hazard Zone (Area3D that drains a player attribute)
   - Items:
 	- Flashlight (combine with batteries to recharge)
 	- Battery (used to recharge Flashlight by combining them)

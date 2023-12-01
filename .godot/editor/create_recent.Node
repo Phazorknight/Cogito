@@ -1,6 +1,7 @@
+CollisionShape3D
+Area3D
 CSGBox3D
 CSGPolygon3D
-CollisionShape3D
 CSGMesh3D
 Node
 StaticBody3D
@@ -27,6 +28,5 @@ TextureProgressBar
 ProgressBar
 NinePatchRect
 FogVolume
-Area3D
 Control
 CanvasLayer
