@@ -1,6 +1,6 @@
 ![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
-Version: **Alpha 202312b**
+Version: **Alpha 202312c**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -27,6 +27,7 @@ providing a framework for creating interactable objects and items.
 - Included Prefabs for:
   - Carryable crate
   - Door (unlockable)
+  - Lamp (switchable)
   - Chest (item container)
   - Hazard Zone (Area3D that drains a player attribute)
   - Items:
@@ -62,6 +63,9 @@ Make sure that two Autoloads are set up in your project:
 - //COGITO/AudioManagerPD/Autoload/AudioManagerPD.tscn
 - //COGITO/EsayMenus/Nodes/menu_template_manager.tscn
 
+Make sure you have this plug-in set up in your project:
+- Input Helper (currently v4.2.2)
+
 **Open and run res://COGITO/DemoScenes/COGITO_Demo_01.tscn to try out everything that comes with COGITO**
 
 
@@ -94,6 +98,20 @@ func interact(playernode):
 	# What happens when player interacts.
 	pass
 ```
+
+### switchable.gd
+This is used to create interactive objects with a clear on/off state. Most common examples are lamps and lights.
+Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be set to layer 2 so the Player Interaction system can pick it up.
+It works by going through a list of nodes and flipping their visible state every time the player switches the object.
+PRO-TIP: The objects you switch do not have to be part of the switchable object. For example if you wanna have a ceiling lamp thats controlled by a lightswitch, make the lightswitch the switchable and add all the ceiling lamps to the objects to switch list.
+
+**Switchable settings:**
+- Is On: Start state of the switchable.
+- Interaction Text When On: Self explanatory.
+- Interaction Text When On: Self explanatory.
+- Switch sound: AudioStream that gets played when switched.
+- Objects to Switch: Array of NodePaths. Add all the nodes of your scene that you want to get switched here. Each node added will get their visibility flipped when switched. Please not that the nodes current status is assumed as the start status.
+  For example: If you add a SpotLight node and you want the light to be OFF as its initial state, you need to hide the light. If you want the light to be ON as it's initial state, the Spotlight needs to be visible and is_on should be flagged.
 
 
 ### Carryable.gd

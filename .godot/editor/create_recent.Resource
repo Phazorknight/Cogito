@@ -1,4 +1,4 @@
+StandardMaterial3D
 InventoryItemPD
 InventoryPD
-StandardMaterial3D
 Resource

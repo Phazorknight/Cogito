@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=53 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -17,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres" id="15_86b07"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="16_fg1wi"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="17_nl6sa"]
+[ext_resource type="PackedScene" uid="uid://d1rq8gm20sjo1" path="res://COGITO/PrefabScenes/lamp_standing.tscn" id="18_oxm1j"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/pickup_stamina_extension.tscn" id="18_pobhb"]
 [ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://COGITO/PrefabScenes/heal_zone.tscn" id="19_2mngh"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PrefabScenes/hazard_zone.tscn" id="20_dgnbq"]
@@ -667,6 +668,8 @@ inventory_data = SubResource("Resource_nar8x")
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -14.9, 0, 9.2)
 open_rotation = 1.6
 closed_rotation = 0.0
+
+[node name="Lamp_Standing" parent="." instance=ExtResource("18_oxm1j")]
 
 [node name="DoorLocked" parent="." instance=ExtResource("8_xabdk")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -24.9, 0, 9.2)

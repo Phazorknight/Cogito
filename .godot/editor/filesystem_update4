@@ -16,3 +16,6 @@ res://COGITO/InventoryPD/InventoryPD.gd
 res://COGITO/Scripts/Flashlight.gd
 res://Readme.md
 res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn
+res://COGITO/Assets/Materials/Lamp_Stand.tres
+res://COGITO/Assets/Materials/Lamp_Shade.tres
+res://COGITO/Scripts/switchable.gd
