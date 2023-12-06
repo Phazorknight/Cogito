@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7mst0qu7vjk1"]
+
+[ext_resource type="Script" path="res://addons/input_helper/components/download_update_panel.gd" id="1_4tm1k"]
+[ext_resource type="Texture2D" uid="uid://ddixs2ish5bi6" path="res://addons/input_helper/assets/update.svg" id="2_j7shv"]
+
+[node name="DownloadUpdatePanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4tm1k")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = 9.0
+offset_right = -1.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Logo" type="TextureRect" parent="VBox"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(300, 80)
+layout_mode = 2
+texture = ExtResource("2_j7shv")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBox"]
+layout_mode = 2
+text = "v1.2.3 is available for download."
+horizontal_alignment = 1
+
+[node name="Center" type="CenterContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="DownloadButton" type="Button" parent="VBox/Center"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Download and install update"
+
+[node name="Center2" type="CenterContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="NotesButton" type="LinkButton" parent="VBox/Center2"]
+layout_mode = 2
+text = "Read release notes..."
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="pressed" from="VBox/Center/DownloadButton" to="." method="_on_download_button_pressed"]
+[connection signal="pressed" from="VBox/Center2/NotesButton" to="." method="_on_notes_button_pressed"]

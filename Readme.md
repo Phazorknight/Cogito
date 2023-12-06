@@ -1,6 +1,6 @@
 ![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
-Version: **Alpha 202312a**
+Version: **Alpha 202312b**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -11,6 +11,7 @@ providing a framework for creating interactable objects and items.
 - Player controller is based on Like475's First Person Controller Advanced: https://github.com/Like475/fpc-godot
 - Menus are based on SavoVuksan's EasyMenus (also see this link for documentation): https://github.com/SavoVuksan/EasyMenus
 - Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC
+- InputHelper by Nathan Hoad (also see this link for documentation): https://github.com/nathanhoad/godot_input_helper
 
 ## Overview
 ### Current working features:
@@ -36,6 +37,7 @@ providing a framework for creating interactable objects and items.
 	- Key to unlock door
 
 ### Known bugs:
+- The current implementation for the InputHelper broke the Mouse Interaction with Inventory Items. (Items can be used by right click, but no longer picked up and dropped by mouse left click.)
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 - Inventory / items:
   - Sometimes stackable item counts gets tripped somehow, resulting in picking up one item, but the stack goes up by 2, etc.

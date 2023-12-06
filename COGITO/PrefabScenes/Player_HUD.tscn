@@ -1,21 +1,16 @@
-[gd_scene load_steps=28 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=23 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://UI/Elements/ProgressBar_FiveUnits.png" id="3_767p8"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
-[ext_resource type="Texture2D" uid="uid://ryhle5u4d4mn" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard_F.png" id="3_cc07q"]
 [ext_resource type="PackedScene" uid="uid://dtdjlu4dtm6wh" path="res://COGITO/InventoryPD/UiScenes/InventoryUI.tscn" id="3_krf2d"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
 [ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="3_o56n0"]
-[ext_resource type="Texture2D" uid="uid://c0ic5coqtrecl" path="res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Left.png" id="4_viquv"]
+[ext_resource type="Texture2D" uid="uid://ryhle5u4d4mn" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Keyboard_F.png" id="4_2dtpt"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
-[ext_resource type="Texture2D" uid="uid://cs2c2v0kkysjk" path="res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Bottom.png" id="7_4u1i2"]
-[ext_resource type="Texture2D" uid="uid://da3c5wfdmeyt1" path="res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Right.png" id="8_dfhdc"]
-[ext_resource type="Texture2D" uid="uid://jekoyd2ibst3" path="res://COGITO/Assets/Graphics/InputIcons/Facebuttons_Top.png" id="9_12ket"]
-[ext_resource type="Texture2D" uid="uid://4hcbc0gf3uou" path="res://COGITO/Assets/Graphics/InputIcons/RightTrigger.png" id="10_n53v1"]
-[ext_resource type="Texture2D" uid="uid://brxmtxnpock1t" path="res://COGITO/Assets/Graphics/InputIcons/MouseRight.png" id="11_pcls0"]
-[ext_resource type="Texture2D" uid="uid://02033aa8j18m" path="res://COGITO/Assets/Graphics/InputIcons/Mouse_Left.png" id="12_cyk3l"]
+[ext_resource type="Texture2D" uid="uid://02033aa8j18m" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Mouse_Left.png" id="11_c625v"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qgnac"]
 font_size = 18
@@ -64,15 +59,6 @@ grow_vertical = 2
 script = ExtResource("1_0wdkf")
 default_hint_icon = ExtResource("3_o56n0")
 use_stamina_component = true
-interaction_keyboard = ExtResource("3_cc07q")
-inventory_move_keyboard = ExtResource("12_cyk3l")
-inventory_use_keyboard = ExtResource("11_pcls0")
-wieldable_use_primary_keyboard = ExtResource("12_cyk3l")
-interaction_gamepad = ExtResource("4_viquv")
-inventory_move_gamepad = ExtResource("8_dfhdc")
-inventory_use_gamepad = ExtResource("7_4u1i2")
-inventory_drop_gamepad = ExtResource("9_12ket")
-wieldable_use_primary_gamepad = ExtResource("10_n53v1")
 
 [node name="Crosshair" type="Control" parent="."]
 layout_mode = 1
@@ -124,11 +110,27 @@ offset_right = 37.0
 offset_bottom = 40.0
 grow_horizontal = 2
 
-[node name="InteractionButton" type="TextureRect" parent="ButtonPrompt/HBoxContainer"]
+[node name="InteractionButton_old" type="TextureRect" parent="ButtonPrompt/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-texture = ExtResource("3_cc07q")
+texture = ExtResource("4_2dtpt")
 expand_mode = 2
+
+[node name="Container" type="MarginContainer" parent="ButtonPrompt/HBoxContainer"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="InteractionButton" parent="ButtonPrompt/HBoxContainer/Container" instance=ExtResource("12_jgxar")]
+position = Vector2(0, 0)
+scale = Vector2(0.4, 0.4)
+centered = false
+frame = 6
+action_name = "interact"
 
 [node name="InteractionText" type="Label" parent="ButtonPrompt/HBoxContainer"]
 layout_mode = 2
@@ -192,10 +194,23 @@ alignment = 2
 layout_mode = 2
 alignment = 2
 
-[node name="PrimaryUseIcon" type="TextureRect" parent="UseBar/HBoxContainer/WieldablePrimaryUse"]
+[node name="PrimaryUseIconOLD" type="TextureRect" parent="UseBar/HBoxContainer/WieldablePrimaryUse"]
+visible = false
 layout_mode = 2
 texture = SubResource("CompressedTexture2D_pmb1v")
 expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UseBar/HBoxContainer/WieldablePrimaryUse"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PrimaryUseIcon" parent="UseBar/HBoxContainer/WieldablePrimaryUse/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(20, 20)
+scale = Vector2(0.4, 0.4)
+action_name = "action_primary"
 
 [node name="PrimaryUseLabel" type="Label" parent="UseBar/HBoxContainer/WieldablePrimaryUse"]
 layout_mode = 2
@@ -391,11 +406,18 @@ autowrap_mode = 3
 [node name="HBoxUse" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="BtnUse" type="TextureRect" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-texture = ExtResource("11_pcls0")
-expand_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnUse" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "inventory_use_item"
 
 [node name="TextUse" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
 layout_mode = 2
@@ -406,10 +428,24 @@ label_settings = SubResource("LabelSettings_ppm7e")
 layout_mode = 2
 
 [node name="BtnMove" type="TextureRect" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
+visible = false
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-texture = ExtResource("12_cyk3l")
+texture = ExtResource("11_c625v")
 expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnMove" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "inventory_move_item"
 
 [node name="TextMove" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
 layout_mode = 2
@@ -417,14 +453,27 @@ text = "Move"
 label_settings = SubResource("LabelSettings_0ykfm")
 
 [node name="HBoxDrop" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="BtnDrop" type="TextureRect" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
+visible = false
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-texture = ExtResource("3_cc07q")
+texture = ExtResource("4_2dtpt")
 expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnDrop" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "inventory_drop_item"
 
 [node name="TextDrop" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
 layout_mode = 2

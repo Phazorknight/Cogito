@@ -1,3 +1,7 @@
+MarginContainer
+Control
+Container
+Sprite2D
 CollisionShape3D
 Area3D
 CSGBox3D
@@ -15,7 +19,6 @@ HBoxContainer
 RichTextLabel
 TextureRect
 VBoxContainer
-MarginContainer
 AudioStreamPlayer3D
 AnimatableBody3D
 Label3D
@@ -27,6 +30,3 @@ TextureButton
 TextureProgressBar
 ProgressBar
 NinePatchRect
-FogVolume
-Control
-CanvasLayer

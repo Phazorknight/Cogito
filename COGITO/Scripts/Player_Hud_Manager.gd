@@ -8,8 +8,7 @@ extends Control
 @onready var stamina_bar = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar
 @onready var stamina_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar/Label
 
-
-@onready var interaction_button = $ButtonPrompt/HBoxContainer/InteractionButton
+@onready var interaction_button = $ButtonPrompt/HBoxContainer/Container/InteractionButton
 @onready var interaction_text = $ButtonPrompt/HBoxContainer/InteractionText
 
 @onready var hint_icon = $HintPrompt/MarginContainer/HBoxContainer/HintIcon
@@ -17,12 +16,13 @@ extends Control
 @onready var hint_timer = $HintTimer
 @onready var inventory_interface = $InventoryInterface
 
-@onready var primary_use_icon = $UseBar/HBoxContainer/WieldablePrimaryUse/PrimaryUseIcon
+@onready var primary_use_icon = $UseBar/HBoxContainer/WieldablePrimaryUse/MarginContainer/PrimaryUseIcon
 @onready var primary_use_label = $UseBar/HBoxContainer/WieldablePrimaryUse/PrimaryUseLabel
 
 @onready var wieldable_icon = $UseBar/HBoxContainer/WieldableData/WieldableIcon
 @onready var wieldable_text = $UseBar/HBoxContainer/WieldableData/WieldableText
 
+## Reference to the Node that has the player.gd script.
 @export var player : Node
 
 var is_inventory_open : bool = false
@@ -39,27 +39,12 @@ var interaction_texture : Texture2D
 @export var use_brightness_component : bool
 @export var use_stamina_component : bool
 
-@export_group("Input Icons")
-@export_subgroup("Input Icons Keyboard")
-@export var interaction_keyboard : Texture2D
-@export var inventory_move_keyboard : Texture2D
-@export var inventory_use_keyboard : Texture2D
-@export var wieldable_use_primary_keyboard : Texture2D
-
-@export_subgroup("Input Icons Gamepad")
-@export var interaction_gamepad : Texture2D
-@export var inventory_move_gamepad : Texture2D
-@export var inventory_use_gamepad : Texture2D
-@export var inventory_drop_gamepad : Texture2D
-@export var wieldable_use_primary_gamepad : Texture2D
-
 
 func _ready():
-	# Call this function once to set interaction_texture:
-	_joy_connection_changed(device_id,false)
-	
-	# Connect to signal that detecs change of input device/gamepad
-	Input.joy_connection_changed.connect(_joy_connection_changed)
+	# Connect to signal that detects change of input device
+	InputHelper.device_changed.connect(_on_input_device_change)
+	# Calling this function once to set proper input icons
+	_on_input_device_change(InputHelper.device,InputHelper.device_index)
 	
 	# Setting up health bar
 	health_bar.max_value = player.health_component.max_health
@@ -92,7 +77,7 @@ func _ready():
 		brightness_bar.hide()
 	
 	# Set up for HUD elements for interactions and wieldables
-	interaction_button.set_texture(empty_texture)
+	interaction_button.hide()
 	interaction_text.text = ""
 	primary_use_label.text = ""
 	primary_use_icon.hide()
@@ -120,21 +105,6 @@ func _ready():
 		node.toggle_inventory.connect(toggle_inventory_interface)
 
 
-func _joy_connection_changed(passed_device_id : int, connected : bool):
-	print("Joy connection changed: passed_device_id=",passed_device_id,". connected=", connected, ".")
-	if connected:
-		device_id = passed_device_id
-	elif _is_steam_deck():
-		device_id = 1
-	else:
-		device_id = -1
-		
-	if device_id == -1:
-		set_input_icons_to_kbm()
-	else:
-		set_input_icons_to_gamepad()
-
-
 func _is_steam_deck() -> bool:
 	if RenderingServer.get_rendering_device().get_device_name().contains("RADV VANGOGH") \
 	or OS.get_processor_name().contains("AMD CUSTOM APU 0405"):
@@ -143,21 +113,11 @@ func _is_steam_deck() -> bool:
 		return false
 
 
-func set_input_icons_to_gamepad():
-	interaction_texture = interaction_gamepad
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse/BtnUse.set_texture(inventory_use_gamepad)
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove/BtnMove.set_texture(inventory_move_gamepad)
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop/BtnDrop.set_texture(inventory_drop_gamepad)
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.show()
-	primary_use_icon.set_texture(wieldable_use_primary_gamepad)
-
-
-func set_input_icons_to_kbm():
-	interaction_texture = interaction_keyboard
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse/BtnUse.set_texture(inventory_use_keyboard)
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove/BtnMove.set_texture(inventory_move_keyboard)
-	$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.hide()
-	primary_use_icon.set_texture(wieldable_use_primary_keyboard)
+func _on_input_device_change(_device, _device_index):
+	if _device == "keyboard":
+		$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.hide()
+	else:
+		$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.show()
 
 
 func toggle_inventory_interface(external_inventory_owner = null):
@@ -181,9 +141,11 @@ func toggle_inventory_interface(external_inventory_owner = null):
 # When HUD receives interaction prompt signal (usually if player interaction raycast hits an object on layer 2)
 func _on_interaction_prompt(passed_interaction_prompt):
 	if(passed_interaction_prompt == ""):
-		interaction_button.set_texture(empty_texture)
+		interaction_button.hide()
+#		interaction_button.set_texture(empty_texture)
 	else:
-		interaction_button.set_texture(interaction_texture)
+#		interaction_button.set_texture(interaction_texture)
+		interaction_button.show()
 	interaction_text.text = passed_interaction_prompt
 
 

@@ -1,28 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://bf2qmquc7ys81"]
+[gd_scene load_steps=7 format=3 uid="uid://bf2qmquc7ys81"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/hot_bar_inventory.gd" id="1_0qfsu"]
-[ext_resource type="Texture2D" uid="uid://sd1u3qpwgmxi" path="res://COGITO/Assets/Graphics/InputIcons/DPad_Up.png" id="3_2gjpj"]
-[ext_resource type="Texture2D" uid="uid://v5n8ollqt3qt" path="res://COGITO/Assets/Graphics/InputIcons/DPad_Left.png" id="3_du2y1"]
-[ext_resource type="Texture2D" uid="uid://ebik12lcrif" path="res://COGITO/Assets/Graphics/InputIcons/DPad_Uppng.png" id="4_nsf1s"]
-[ext_resource type="Texture2D" uid="uid://c2bynu0pq88st" path="res://COGITO/Assets/Graphics/InputIcons/DPad_Down.png" id="5_02kii"]
-[ext_resource type="Texture2D" uid="uid://cv0phb0f2xlns" path="res://COGITO/Assets/Graphics/InputIcons/DPad_Right.png" id="6_fau5g"]
-[ext_resource type="Texture2D" uid="uid://b1gggn6xujkss" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard_1.png" id="6_yguks"]
-[ext_resource type="Texture2D" uid="uid://iued074wuiky" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard_2.png" id="7_s6wky"]
-[ext_resource type="Texture2D" uid="uid://bhslxh7456tc3" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard_3.png" id="8_b0ulm"]
-[ext_resource type="Texture2D" uid="uid://dr6dg2bswa3t1" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard_4.png" id="9_o8pp1"]
+[ext_resource type="Texture2D" uid="uid://v5n8ollqt3qt" path="res://COGITO/Assets/Graphics/InputIcons/Gamepad/DPad_Left.png" id="3_xr4j1"]
+[ext_resource type="Texture2D" uid="uid://ebik12lcrif" path="res://COGITO/Assets/Graphics/InputIcons/Gamepad/DPad_Uppng.png" id="4_s68ar"]
+[ext_resource type="Texture2D" uid="uid://c2bynu0pq88st" path="res://COGITO/Assets/Graphics/InputIcons/Gamepad/DPad_Down.png" id="5_2cv2u"]
+[ext_resource type="Texture2D" uid="uid://cv0phb0f2xlns" path="res://COGITO/Assets/Graphics/InputIcons/Gamepad/DPad_Right.png" id="6_swbt2"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="10_ipb46"]
 
 [node name="HotBarInventory" type="PanelContainer"]
 offset_right = 160.0
 offset_bottom = 48.0
 script = ExtResource("1_0qfsu")
-keyboard_hotkey_1 = ExtResource("6_yguks")
-keyboard_hotkey_2 = ExtResource("7_s6wky")
-keyboard_hotkey_3 = ExtResource("8_b0ulm")
-keyboard_hotkey_4 = ExtResource("9_o8pp1")
-gamepad_hotkey_1 = ExtResource("3_du2y1")
-gamepad_hotkey_2 = ExtResource("3_2gjpj")
-gamepad_hotkey_3 = ExtResource("5_02kii")
-gamepad_hotkey_4 = ExtResource("6_fau5g")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -43,26 +31,78 @@ layout_mode = 2
 theme_override_constants/separation = 46
 alignment = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer" instance=ExtResource("10_ipb46")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "quickslot_1"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer2" instance=ExtResource("10_ipb46")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "quickslot_2"
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer3" instance=ExtResource("10_ipb46")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "quickslot_3"
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer4" instance=ExtResource("10_ipb46")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "quickslot_4"
+
 [node name="Button1" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
+visible = false
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-texture = ExtResource("3_du2y1")
+texture = ExtResource("3_xr4j1")
 expand_mode = 5
 
 [node name="Button2" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
+visible = false
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-texture = ExtResource("4_nsf1s")
+texture = ExtResource("4_s68ar")
 expand_mode = 5
 
 [node name="Button3" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
+visible = false
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-texture = ExtResource("5_02kii")
+texture = ExtResource("5_2cv2u")
 expand_mode = 5
 
 [node name="Button4" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
+visible = false
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-texture = ExtResource("6_fau5g")
+texture = ExtResource("6_swbt2")
 expand_mode = 5

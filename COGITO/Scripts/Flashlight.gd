@@ -22,6 +22,7 @@ extends RigidBody3D
 var is_being_wielded : bool
 # Stores the player interaction component
 var wielder
+var trigger_has_been_pressed : bool = false
 
 
 func _ready():
@@ -82,8 +83,21 @@ func pick_up(player_interaction_component):
 
 func _input(event):
 	if wielder != null and !wielder.get_parent().is_movement_paused:
-		if is_being_wielded and event.get_action_strength("right_trigger") >= 0.5:
-			toggle_on_off()
+		if is_being_wielded and event.is_action_pressed("right_trigger"):
+			if InputHelper.device != "keyboard":
+				# Trying to get the Trigger axis to behave more like a button. Not really successfull yet...
+				var trigger_value = event.get_action_strength("right_trigger")
+				print("Trigger value: ", trigger_value)
+				if !trigger_has_been_pressed:
+					toggle_on_off()
+					
+				if trigger_value > 0.05:
+					trigger_has_been_pressed = false
+				else:
+					trigger_has_been_pressed = true
+				
+				
+					
 		if is_being_wielded and event.is_action_pressed("action_primary"):
 			toggle_on_off()
 
