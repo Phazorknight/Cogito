@@ -6,5 +6,5 @@ var is_open : bool = false
 
 signal toggle_inventory(external_inventory_owner)
 
-func interact(interactor):
+func interact(_player):
 	toggle_inventory.emit(self)

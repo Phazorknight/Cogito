@@ -124,7 +124,7 @@ material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
-[sub_resource type="Resource" id="Resource_nfwsh"]
+[sub_resource type="Resource" id="Resource_wsm0s"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -649,7 +649,7 @@ transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 
 transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.21833, 0.8, -2.61706)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_nfwsh")
+inventory_data = SubResource("Resource_wsm0s")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -661,13 +661,12 @@ transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -1
 collision_layer = 3
 
 [node name="Chest" parent="." groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -7.38936, 0.0425703, 14.5453)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -7.38936, 0.0425703, 14.1453)
 inventory_data = SubResource("Resource_nar8x")
 
 [node name="Door" parent="." instance=ExtResource("8_xabdk")]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -14.9, 0, 9.2)
-open_rotation = 1.6
-closed_rotation = 0.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
+open_rotation_deg = -95.0
 
 [node name="Lamp_Standing" parent="." instance=ExtResource("18_oxm1j")]
 
@@ -675,8 +674,8 @@ closed_rotation = 0.0
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -24.9, 0, 9.2)
 is_locked = true
 key = ExtResource("9_g1bqh")
-open_rotation = 1.6
-closed_rotation = 0.0
+key_hint = "Locked. Is there a key nearby?"
+open_rotation_deg = -95.0
 
 [node name="SimpleBox" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.5, 4.5)

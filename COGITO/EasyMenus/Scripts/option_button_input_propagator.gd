@@ -6,10 +6,6 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func propagate_input(event):
 	if MenuTemplateManager.ControllerEchoInputGenerator:
 		MenuTemplateManager.ControllerEchoInputGenerator._input(event)

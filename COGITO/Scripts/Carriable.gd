@@ -17,7 +17,7 @@ func carry(player):
 	else:
 		hold()
 
-func _process(delta):
+func _process(_delta):
 	if is_being_carried:
 		global_position = holder.carryable_position.global_position
 		global_rotation = holder.carryable_position.global_rotation

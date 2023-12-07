@@ -1,6 +1,6 @@
 ![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
-Version: **Alpha 202312c**
+Version: **Alpha 202312d**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -38,7 +38,6 @@ providing a framework for creating interactable objects and items.
 	- Key to unlock door
 
 ### Known bugs:
-- The current implementation for the InputHelper broke the Mouse Interaction with Inventory Items. (Items can be used by right click, but no longer picked up and dropped by mouse left click.)
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 - Inventory / items:
   - Sometimes stackable item counts gets tripped somehow, resulting in picking up one item, but the stack goes up by 2, etc.
@@ -138,12 +137,13 @@ Then attach the **Interact_Door.gd** to your AnimatableBody3D.
   - Unlock Sound: Plays when the player interacts with the door status changes from locked to unlocked. Uses the AudioStreamPlayer3D.
   
 - Door Parameters:
-  - Interaction text: Sets the text that appears if the player crosshair hovers over the door object.
+  - Interaction text when closed: Sets the text that appears if the player crosshair hovers over the door object when door is closed.
+  - Interaction text when open: Sets the text that appears if the player crosshair hovers over the door object when door is open.
   - Is locked: Set the locked stats of the door.
   - Key: Reference to the item that needs to be in the player's inventory to unlock the door. Hint: This can be any item resource, doesn't need to be of type KEY_ITEM.
   - Key hint: The hint that appears if player tries to open the door but doesn't have the key item. If this is empty, no hint will appear.
-  - Open Rotation: Sets object rotation for open position. In global radians, not great, needs improvement.
-  - Closed Rotation: Sets object rotation for closed position. In global radians, not great, needs improvement.
+  - Open Rotation Deg: Sets object rotation for open position. In global degrees, this matches/influences the door object transform.
+  - Closed Rotation Deg: Sets object rotation for closed position. In global degrees, this matches/influences the door object transform.
   - Door Speed: Speed of opening/closing.
 
 

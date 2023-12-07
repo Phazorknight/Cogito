@@ -21,7 +21,7 @@ func _ready():
 	else:
 		interaction_text = interaction_text_when_off
 
-func interact(body):
+func interact(_player):
 	audio_stream_player_3d.play()
 	switch()
 

@@ -32,7 +32,7 @@ script = ExtResource("1_v6apr")
 open_sound = ExtResource("2_syv37")
 close_sound = ExtResource("3_mv414")
 unlock_sound = ExtResource("4_amxf0")
-closed_rotation = 1.572
+key_hint = "Key needed."
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.5)

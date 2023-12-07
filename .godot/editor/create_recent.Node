@@ -1,3 +1,5 @@
+MeshInstance3D
+AnimatableBody3D
 AudioStreamPlayer3D
 SpotLight3D
 CollisionShape3D
@@ -16,13 +18,11 @@ RigidBody3D
 Label
 PanelContainer
 Timer
-MeshInstance3D
 Panel
 HBoxContainer
 RichTextLabel
 TextureRect
 VBoxContainer
-AnimatableBody3D
 Label3D
 Node3D
 CSGTorus3D

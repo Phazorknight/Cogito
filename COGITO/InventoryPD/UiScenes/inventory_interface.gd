@@ -30,6 +30,10 @@ func open_inventory():
 		inventory_ui.slot_array[0].grab_focus()
 #		inventory_interface.grabbed_slot.show()
 #		inventory_interface.external_inventory_ui.show()
+
+		for slot_panel in inventory_ui.slot_array:
+			print("Connecting ", slot_panel, " mouse exit signal...")
+			slot_panel.mouse_exited.connect(_slot_on_mouse_exit)
 	hot_bar_inventory.hide()
 	
 func close_inventory():
@@ -59,7 +63,13 @@ func _on_focus_changed(control: Control):
 	if grabbed_slot.visible:
 		grabbed_slot.global_position = control_in_focus.global_position + control_in_focus.size
 
-func _physics_process(delta):
+
+func _slot_on_mouse_exit():
+	info_panel.hide()		
+
+# DEPRECATED. Was used to move the grabbed slot icon with the mouse cursor.
+# Could bring this back later and make it conditional to mouse/kb input.
+func _physics_process(_delta):
 	if grabbed_slot.visible:
 		pass
 #		grabbed_slot.global_position = get_global_mouse_position() + Vector2(5, 5)
@@ -70,7 +80,7 @@ func set_external_inventory(_external_inventory_owner):
 	external_inventory_owner = _external_inventory_owner
 	var inventory_data = external_inventory_owner.inventory_data
 	
-	inventory_data.inventory_interact.connect(on_inventory_interact)
+#	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	external_inventory_ui.inventory_name = external_inventory_owner.name
 	external_inventory_ui.set_inventory_data(inventory_data)
@@ -82,7 +92,7 @@ func clear_external_inventory():
 	if external_inventory_owner:
 		var inventory_data = external_inventory_owner.inventory_data
 		
-		inventory_data.inventory_interact.disconnect(on_inventory_interact)
+#		inventory_data.inventory_interact.disconnect(on_inventory_interact)
 		inventory_data.inventory_button_press.disconnect(on_inventory_button_press)
 		external_inventory_ui.inventory_name = ""
 		external_inventory_ui.clear_inventory_data(inventory_data)
@@ -91,7 +101,7 @@ func clear_external_inventory():
 
 
 func set_player_inventory_data(inventory_data : InventoryPD):
-	inventory_data.inventory_interact.connect(on_inventory_interact)
+#	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	inventory_ui.set_inventory_data(inventory_data)
 
@@ -122,17 +132,17 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 	inventory_ui.slot_array[index].grab_focus()
 	update_grabbed_slot()
 
-# Inventory handling on mouse buttons
-func on_inventory_interact(inventory_data: InventoryPD, index: int, mouse_button: int):
-	match [grabbed_slot_data, mouse_button]:
-		[null, MOUSE_BUTTON_LEFT]:
-			grabbed_slot_data = inventory_data.grab_slot_data(index)
-		[_, MOUSE_BUTTON_LEFT]:
-			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
-		[null, MOUSE_BUTTON_RIGHT]:
-			inventory_data.use_slot_data(index)
-		[_, MOUSE_BUTTON_RIGHT]:
-			grabbed_slot_data = inventory_data.drop_single_slot_data(grabbed_slot_data, index)
+# DEPRECATED Inventory handling on mouse buttons
+#func on_inventory_interact(inventory_data: InventoryPD, index: int, mouse_button: int):
+#	match [grabbed_slot_data, mouse_button]:
+#		[null, MOUSE_BUTTON_LEFT]:
+#			grabbed_slot_data = inventory_data.grab_slot_data(index)
+#		[_, MOUSE_BUTTON_LEFT]:
+#			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
+#		[null, MOUSE_BUTTON_RIGHT]:
+#			inventory_data.use_slot_data(index)
+#		[_, MOUSE_BUTTON_RIGHT]:
+#			grabbed_slot_data = inventory_data.drop_single_slot_data(grabbed_slot_data, index)
 			
 	print(grabbed_slot_data)
 	update_grabbed_slot()

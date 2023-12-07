@@ -16,7 +16,7 @@ var is_reset : bool  = true
 var device_id : int = -1
 
 
-func _process(delta):
+func _process(_delta):
 	if interaction_raycast.is_colliding():
 		var interactable = interaction_raycast.get_collider()
 		is_reset = false

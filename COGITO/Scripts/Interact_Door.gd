@@ -1,8 +1,5 @@
 extends Node3D
 
-var is_open : bool = false
-var is_moving : bool = false
-
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
 @export_group("Audio")
@@ -12,19 +9,34 @@ var is_moving : bool = false
 @export var unlock_sound : AudioStream
 
 @export_group("Door Parameters")
-## Text that appears on the interaction prompt
-@export var interaction_text : String = "Open door"
+## Start state of the door (usually closed).
+@export var is_open : bool = false
+## Text that appears on the interaction prompt when closed.
+@export var interaction_text_when_closed : String = "Open"
+## Text that appears on the interaction prompt when open.
+@export var interaction_text_when_open : String = "Close"
 @export var is_locked : bool = false
 ## Item resources that is needed to unlock the door.
 @export var key : InventoryItemPD
 ## Hint that is displayed if the player attempts to open the door but doesn't have the key item.
 @export var key_hint : String
-@export var open_rotation : float = 0.0
-@export var closed_rotation : float = 0.0
+## Rotation Y when the door is open. In degrees.
+@export var open_rotation_deg : float = 0.0
+## Rotation Y when the door is closed. In degrees.
+@export var closed_rotation_deg : float = 0.0
 ## Speed in which the door moves between open and closed position. Usually around 0.1.
 @export var door_speed : float = .1
 
-var target_rotation : float = rotation.y
+var interaction_text : String
+var is_moving : bool = false
+var target_rotation_rad : float = rotation.y
+
+func _ready():
+	if is_open:
+		interaction_text = interaction_text_when_open
+	else:
+		interaction_text = interaction_text_when_closed
+
 
 func interact(interactor):
 	if !is_locked:
@@ -37,6 +49,14 @@ func interact(interactor):
 		audio_stream_player_3d.play()
 		
 		check_for_key(interactor)
+
+
+func _physics_process(_delta):
+	if is_moving:
+		rotation.y = lerp_angle(rotation.y, target_rotation_rad, door_speed)
+		
+	if  abs(rotation.y - target_rotation_rad) <= 0.01: 
+		is_moving = false
 	
 	
 func check_for_key(interactor):
@@ -59,26 +79,20 @@ func unlock_door():
 	is_locked = false
 	
 	
-func _physics_process(delta):
-	if is_moving:
-		rotation.y = lerp_angle(rotation.y, target_rotation, door_speed)
-		
-	if  abs(rotation.y - target_rotation) <= 0.01: 
-		is_moving = false
-	
-	
 func open_door():
 	audio_stream_player_3d.stream = open_sound
 	audio_stream_player_3d.play()
 	
-	target_rotation = open_rotation
+	target_rotation_rad = deg_to_rad(open_rotation_deg)
 	is_moving = true
 	is_open = true
+	interaction_text = interaction_text_when_open
 	
 func close_door():
 	audio_stream_player_3d.stream = close_sound
 	audio_stream_player_3d.play()
 	
-	target_rotation = closed_rotation
+	target_rotation_rad = deg_to_rad(closed_rotation_deg)
 	is_moving = true
 	is_open = false
+	interaction_text = interaction_text_when_closed
