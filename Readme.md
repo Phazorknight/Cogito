@@ -1,6 +1,6 @@
 ![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
-Version: **Alpha 202312d**
+Version: **Alpha 202312e**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -29,6 +29,7 @@ providing a framework for creating interactable objects and items.
   - Door (unlockable)
   - Lamp (switchable)
   - Chest (item container)
+  - Wheel (press and hold interactable)
   - Hazard Zone (Area3D that drains a player attribute)
   - Items:
 	- Flashlight (combine with batteries to recharge)
@@ -40,17 +41,21 @@ providing a framework for creating interactable objects and items.
 ### Known bugs:
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 - Inventory / items:
-  - Sometimes stackable item counts gets tripped somehow, resulting in picking up one item, but the stack goes up by 2, etc.
+  - Stackable item counts gets tripped somehow, resulting in picking up one item, but the stack goes up by 2, etc.
 - Wieldables:
   - Gamepad: Primary use trigger needs refining as the analog input causes multiple triggers.
+- Combinables:
+  - Name is misleading, will change this to something like ammo
 
 ### Still to do:
 - Pause/Options Menu:
   - Invert Y toggle doesn't work yet. But can be set in the Player.gd script in the inspector.
 - Player Attributes:
   - Action points (low prio)
+- Inventory / Items:
+  - Option to take all items from a container.
+  - Item type COMBINABLE (true combinable, not like the current implementation): Checks if an item is used with a different item, both get destroyed and a new item gets added to player inventory.
 - Interactables:
-  - Door: Improve door rotation inspector settings
   - Door: Create option to make sliding door
 - AudioManager is unwieldy. Can probably be redone to work better.
  
@@ -113,6 +118,9 @@ PRO-TIP: The objects you switch do not have to be part of the switchable object.
   For example: If you add a SpotLight node and you want the light to be OFF as its initial state, you need to hide the light. If you want the light to be ON as it's initial state, the Spotlight needs to be visible and is_on should be flagged.
 
 
+### press_and_hold
+To be added.
+
 ### Carryable.gd
 This is used for boxes, crates etc.
 Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be set to layer 2 so the Player Interaction system can pick it up.
@@ -128,6 +136,7 @@ See under **Inventory** below on how pick ups are setup.
 ### Doors
 I recommend just making a copy of the included Door Prefab and modifying it to fit your needs. But you can also set up doors yourself by creating a AnimatableBody3D with your mesh etc in it as well as a Collision shape and an AudioStreamPlayer3D. Make sure it is set to layer 2 so the Player Interaction raycast can pick it up.
 Then attach the **Interact_Door.gd** to your AnimatableBody3D.
+**Pro Tip:** If you want to make a door thats triggered by a different object (like a remote switch), just DON'T set it to collission layer 2. Instead set a reference to your door at your other object (like a press_and_hold). See the draw bridge in the test scene for an example.
 
 **Interact_Door Settings:**
 - Audio:

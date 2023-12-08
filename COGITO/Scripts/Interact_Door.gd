@@ -20,6 +20,8 @@ extends Node3D
 @export var key : InventoryItemPD
 ## Hint that is displayed if the player attempts to open the door but doesn't have the key item.
 @export var key_hint : String
+## Rotation axis to use. True = use Z axis. False = use Y axis:
+@export var use_z_axis : bool = false
 ## Rotation Y when the door is open. In degrees.
 @export var open_rotation_deg : float = 0.0
 ## Rotation Y when the door is closed. In degrees.
@@ -29,9 +31,13 @@ extends Node3D
 
 var interaction_text : String
 var is_moving : bool = false
-var target_rotation_rad : float = rotation.y
+var target_rotation_rad : float 
 
 func _ready():
+	if use_z_axis:
+		target_rotation_rad = rotation.z
+	else:
+		target_rotation_rad = rotation.y
 	if is_open:
 		interaction_text = interaction_text_when_open
 	else:
@@ -53,9 +59,14 @@ func interact(interactor):
 
 func _physics_process(_delta):
 	if is_moving:
-		rotation.y = lerp_angle(rotation.y, target_rotation_rad, door_speed)
-		
-	if  abs(rotation.y - target_rotation_rad) <= 0.01: 
+		if use_z_axis:
+			rotation.z = lerp_angle(rotation.z, target_rotation_rad, door_speed)
+		else:
+			rotation.y = lerp_angle(rotation.y, target_rotation_rad, door_speed)
+	
+	if use_z_axis and abs(rotation.z - target_rotation_rad) <= 0.01: 
+		is_moving = false
+	if !use_z_axis and abs(rotation.y - target_rotation_rad) <= 0.01: 
 		is_moving = false
 	
 	

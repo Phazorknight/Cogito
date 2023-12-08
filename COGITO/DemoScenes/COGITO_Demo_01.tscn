@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=59 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/pickup_stamina_extension.tscn" id="18_pobhb"]
 [ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://COGITO/PrefabScenes/heal_zone.tscn" id="19_2mngh"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PrefabScenes/hazard_zone.tscn" id="20_dgnbq"]
+[ext_resource type="PackedScene" uid="uid://bnygtkw3tvet6" path="res://COGITO/PrefabScenes/press_and_hold_wheel.tscn" id="22_ni6um"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Interact_Door.gd" id="23_rfav8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -119,12 +121,19 @@ material = ExtResource("1_lsda4")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_enk60"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_20e8y"]
+material = ExtResource("1_lsda4")
+size = Vector3(1, 1.4, 0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7ifeg"]
+points = PackedVector3Array(-0.5, -0.7, -0.05, -0.5, -0.7, 0.05, -0.5, 0.699863, -0.05, 0.5, -0.7, -0.05, 0.5, -0.7, 0.05, -0.5, 0.699863, 0.05, 0.5, 0.699863, -0.05, 0.5, 0.699863, 0.05)
+
 [sub_resource type="PrismMesh" id="PrismMesh_fghv1"]
 material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
-[sub_resource type="Resource" id="Resource_wsm0s"]
+[sub_resource type="Resource" id="Resource_0r6o2"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -142,6 +151,13 @@ quantity = 2
 [sub_resource type="Resource" id="Resource_nar8x"]
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
+
+[sub_resource type="BoxMesh" id="BoxMesh_w1o4d"]
+material = ExtResource("2_4ig6i")
+size = Vector3(4, 0.1, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hq8yc"]
+points = PackedVector3Array(-2, -0.05, -1, -2, 0.05, -1, 2, -0.05, -1, -2, -0.05, 1, -2, 0.05, 1, 2, 0.05, -1, 2, -0.05, 1, 2, 0.05, 1)
 
 [node name="COGITO_Demo_01" type="Node3D"]
 
@@ -201,6 +217,16 @@ metadata/_edit_group_ = true
 mesh = SubResource("BoxMesh_upbim")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor5"]
+shape = SubResource("ConvexPolygonShape3D_vdh4p")
+
+[node name="Floor6" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.05, 10)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor6"]
+mesh = SubResource("BoxMesh_upbim")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor6"]
 shape = SubResource("ConvexPolygonShape3D_vdh4p")
 
 [node name="Floor4" type="StaticBody3D" parent="StaticEnvironment"]
@@ -566,6 +592,26 @@ these potions."
 font_size = 24
 horizontal_alignment = 0
 
+[node name="BoxPressAndHold" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.5, 0, 7.5)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxPressAndHold"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.400002)
+mesh = SubResource("BoxMesh_20e8y")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxPressAndHold"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.400002)
+shape = SubResource("ConvexPolygonShape3D_7ifeg")
+
+[node name="Txt_Weel" type="Label3D" parent="StaticEnvironment/BoxPressAndHold"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.38994, 1.19408, 0.344856)
+text = "Hold to turn
+the wheel."
+font_size = 24
+horizontal_alignment = 0
+
 [node name="BoxStamina" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0, 6.99101)
 metadata/_edit_group_ = true
@@ -646,10 +692,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7516, 1.03198, 7.04623)
 transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 0.707107, 0.603448, 0.368578, -10.3056, 1.21477, 14.5379)
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
-transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.21833, 0.8, -2.61706)
+transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -29.5744, 0.8, 7.55362)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_wsm0s")
+inventory_data = SubResource("Resource_0r6o2")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -692,5 +738,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2487, 1.505, 13.7451)
 
 [node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.2487, 1.505, 13.7451)
+
+[node name="PressAndHold" parent="." instance=ExtResource("22_ni6um")]
+rotate_while_holding = true
+
+[node name="RampA" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-0.0871558, -0.996195, 0, 0.996195, -0.0871558, 0, 0, 0, 1, -35.0232, 0, 10)
+script = ExtResource("23_rfav8")
+use_z_axis = true
+open_rotation_deg = 180.0
+closed_rotation_deg = 95.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RampA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_w1o4d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_hq8yc")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RampA"]
+
+[node name="RampB" type="AnimatableBody3D" parent="."]
+transform = Transform3D(0.0871558, 0.996195, -1.50996e-07, 0.996195, -0.0871558, 0, -1.31602e-08, -1.50421e-07, -1, -43.0232, 0, 10)
+script = ExtResource("23_rfav8")
+use_z_axis = true
+open_rotation_deg = 180.0
+closed_rotation_deg = 95.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RampB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_w1o4d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RampB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_hq8yc")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RampB"]
 
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
