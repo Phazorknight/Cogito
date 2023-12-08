@@ -1,4 +1,3 @@
-res://COGITO/DemoScenes/COGITO_Demo_01.tscn
 res://COGITO/Assets/Materials/Prototype_DarkGrey.tres
 res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres
 res://COGITO/Assets/Materials/Prototype_Orange.tres
@@ -8,12 +7,15 @@ res://COGITO/InventoryPD/Items/Cogito_Battery.tres
 res://COGITO/Assets/Materials/Lamp_Stand.tres
 res://COGITO/Assets/Materials/Lamp_Shade.tres
 res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres
-res://COGITO/DemoScenes/press_and_hold.gd
+res://COGITO/Components/LightzoneComponent.gd
+res://COGITO/Components/LightzoneComponent.tscn
+res://COGITO/DemoScenes/COGITO_Demo_01.tscn
 res://COGITO/PrefabScenes/Player_HUD.tscn
 res://COGITO/PrefabScenes/player.tscn
 res://COGITO/AudioManagerPD/Autoload/AudioManagerPD.tscn
 res://COGITO/Components/DynamicInputIcon.tscn
-res://COGITO/PrefabScenes/door.tscn
-res://COGITO/Scripts/Interact_Door.gd
 res://COGITO/PrefabScenes/press_and_hold_wheel.tscn
+res://COGITO/Components/SanityComponent.tscn
+res://COGITO/Components/SafezoneComponent.tscn
+res://COGITO/PrefabScenes/container.tscn
 res://Readme.md
