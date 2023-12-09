@@ -1,9 +1,8 @@
 extends Resource
 class_name InventoryItemPD
 
-@export var id : int
 #@export_enum("Consumable", "Wieldable", "Combinable", "Key") var item_type
-enum ItemType {CONSUMABLE, WIELDABLE, COMBINABLE, KEY}
+enum ItemType {CONSUMABLE, WIELDABLE, COMBINABLE, KEY, AMMO}
 @export var item_type: ItemType
 
 ## Name of Item as it appears in game.
@@ -27,6 +26,9 @@ enum ItemType {CONSUMABLE, WIELDABLE, COMBINABLE, KEY}
 @export_group("Consumable settings")
 ## Name of attribute that the item is going to replenish. (For example "health")
 @export var attribute_name : String
+## The change amount that gets applied to the attribute. (For example 25 to heal 25hp. Allows negative values too.)
+@export var attribute_change_amount : float
+
 @export_group("Wieldable settings")
 # Signal that gets sent when the wiedlable charge changes. Currently used to update Slot UI
 signal charge_changed()
@@ -37,12 +39,22 @@ signal charge_changed()
 ## Icon that is displayed on the HUD when item is wielded.
 @export var wieldable_data_icon : Texture2D
 var wieldable_data_text : String
-
 ## The maximum charge of the item (this equals fully charged battery in a flashlight or magazine size in guns)
 @export var charge_max : float
 @export var charge_current : float
+
 @export_group("Combinable settings")
-@export var target_item : InventoryItemPD = null
+## The item that this item combines with
+@export var target_item_combine : InventoryItemPD = null
+## The item that gets created when this item is combined with the one above.
+@export var resulting_item : InventorySlotPD = null
+
+@export_group("Ammo settings")
+## The item that this item is ammunition for.
+@export var target_item_ammo : InventoryItemPD = null
+## The amount one item addes to the target item charge. For bullets this should be 1.
+@export var reload_amount : int = 1
+
 @export_group("Key settings")
 # If this is checked, the key item will be removed from the inventory after it's been used on the target object.
 @export var discard_after_use : bool = false
@@ -78,9 +90,14 @@ func use(target):
 		ItemType.COMBINABLE:
 			if hint_text_on_use != "":
 				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
+				
+		ItemType.AMMO:
+			if hint_text_on_use != "":
+				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
 		
 		ItemType.KEY:
-			print("Inventory item: Using key ", name)
+			if hint_text_on_use != "":
+				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
 		
 		_: # DEFAULT
 			print("Inventory item: item type match hit default.")

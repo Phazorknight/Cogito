@@ -1,6 +1,6 @@
 ![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
 # COGITO
-Version: **Alpha 202312f**
+Version: **Alpha 202312g**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -38,6 +38,7 @@ providing a framework for creating interactable objects and items.
 	- Health Potion
 	- Stamina extension potion (increases max stamina)
 	- Key to unlock door
+	- Diamond Key A and B (combinable to create Diamond Key)
 
 ### Known bugs:
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
@@ -46,7 +47,7 @@ providing a framework for creating interactable objects and items.
 - Wieldables:
   - Gamepad: Primary use trigger needs refining as the analog input causes multiple triggers.
 - Combinables:
-  - Name is misleading, will change this to something like ammo
+  - Currently only work in "one direction". You can set Item A to be combinable with item B, but then you can't set Item B to be combinable with Item A, Godot throws a recursion error.
 
 ### Still to do:
 - Pause/Options Menu:
@@ -55,7 +56,6 @@ providing a framework for creating interactable objects and items.
   - Action points (low prio)
 - Inventory / Items:
   - Option to take all items from a container.
-  - Item type COMBINABLE (true combinable, not like the current implementation): Checks if an item is used with a different item, both get destroyed and a new item gets added to player inventory.
 - Interactables:
   - Door: Create option to make sliding door
 - AudioManager is unwieldy. Can probably be redone to work better.
@@ -115,8 +115,12 @@ PRO-TIP: The objects you switch do not have to be part of the switchable object.
 - Interaction Text When On: Self explanatory.
 - Interaction Text When On: Self explanatory.
 - Switch sound: AudioStream that gets played when switched.
-- Objects to Switch: Array of NodePaths. Add all the nodes of your scene that you want to get switched here. Each node added will get their visibility flipped when switched. Please not that the nodes current status is assumed as the start status.
+- Needs item to Operate: If this is on, the player can only switch this if the required item is in their inventory.
+- Required item: Self explanatory.
+- Item hint: Gets displayed if the player does NOT have the required item in their inventory.
+- Objects toggle visibility: Array of NodePaths. Add all the nodes of your scene that will get their visibility flipped when switched. Please not that the nodes current status is assumed as the start status.
   For example: If you add a SpotLight node and you want the light to be OFF as its initial state, you need to hide the light. If you want the light to be ON as it's initial state, the Spotlight needs to be visible and is_on should be flagged.
+- Objects Call Interact: Array of NodePaths. Add all the nodes you want to call interact on. For example if you add a door here, the door gets opened/closed when you interact with the switchable.
 
 
 ### press_and_hold

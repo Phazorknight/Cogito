@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=71 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -24,6 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://bnygtkw3tvet6" path="res://COGITO/PrefabScenes/press_and_hold_wheel.tscn" id="22_ni6um"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Interact_Door.gd" id="23_rfav8"]
 [ext_resource type="PackedScene" uid="uid://3gwo23kpr58f" path="res://COGITO/PrefabScenes/lightzone_lamp.tscn" id="24_p17c7"]
+[ext_resource type="PackedScene" uid="uid://bc52bohkbf1yp" path="res://COGITO/PrefabScenes/pickup_diamond_key_a.tscn" id="25_w5f1m"]
+[ext_resource type="PackedScene" uid="uid://djfg6ea5cbhyv" path="res://COGITO/PrefabScenes/pickup_diamond_key_b.tscn" id="26_1prk2"]
+[ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://COGITO/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="27_0a6c2"]
+[ext_resource type="Script" path="res://COGITO/Scripts/switchable.gd" id="27_r5oie"]
+[ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="28_3r4lg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -65,6 +70,13 @@ size = Vector3(10, 0.1, 10)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vdh4p"]
 points = PackedVector3Array(-5, -0.05, -5, -5, 0.05, -5, 5, -0.05, -5, -5, -0.05, 5, -5, 0.05, 5, 5, 0.05, -5, 5, -0.05, 5, 5, 0.05, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xwnhq"]
+material = ExtResource("1_lsda4")
+size = Vector3(10, 0.1, 15)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mikgw"]
+points = PackedVector3Array(5, 0.05, 7.5, 5, -0.05, 7.5, 5, 0.05, -7.5, -5, 0.05, 7.5, -5, -0.05, 7.5, 5, -0.05, -7.5, -5, 0.05, -7.5, -5, -0.05, -7.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gv32u"]
 material = ExtResource("2_4ig6i")
@@ -134,7 +146,7 @@ material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
-[sub_resource type="Resource" id="Resource_0cl53"]
+[sub_resource type="Resource" id="Resource_d61og"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -159,6 +171,24 @@ size = Vector3(4, 0.1, 2)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hq8yc"]
 points = PackedVector3Array(-2, -0.05, -1, -2, 0.05, -1, 2, -0.05, -1, -2, -0.05, 1, -2, 0.05, 1, 2, 0.05, -1, 2, -0.05, 1, 2, 0.05, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rixwv"]
+material = ExtResource("2_4ig6i")
+size = Vector3(1, 2, 0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qb88g"]
+points = PackedVector3Array(-0.5, -1, -0.05, -0.5, -1, 0.05, -0.5, 1, -0.05, 0.5, -1, -0.05, 0.5, -1, 0.05, -0.5, 1, 0.05, 0.5, 1, -0.05, 0.5, 1, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r708p"]
+albedo_texture = ExtResource("27_0a6c2")
+emission_enabled = true
+emission = Color(0.12549, 0.690196, 0.384314, 1)
+emission_energy_multiplier = 0.8
+emission_operator = 1
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qu2im"]
+size = Vector3(0.5, 0.5, 0.33057)
 
 [node name="COGITO_Demo_01" type="Node3D"]
 
@@ -225,10 +255,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.05, 10)
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor6"]
-mesh = SubResource("BoxMesh_upbim")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+mesh = SubResource("BoxMesh_xwnhq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor6"]
-shape = SubResource("ConvexPolygonShape3D_vdh4p")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+shape = SubResource("ConvexPolygonShape3D_mikgw")
 
 [node name="Floor4" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3.05, 10)
@@ -611,6 +643,32 @@ these potions."
 font_size = 24
 horizontal_alignment = 0
 
+[node name="BoxCombineA" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -39, 0, 11.5)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxCombineA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_jlrlq")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxCombineA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_enk60")
+
+[node name="BoxCombineB" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -39, 0, 8.5)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxCombineB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_jlrlq")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxCombineB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_enk60")
+
 [node name="BoxPressAndHold" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.5, 0, 7.5)
 metadata/_edit_group_ = true
@@ -653,6 +711,13 @@ find out what this potion does!"
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 1.55, 2.5)
 use_collision = true
 mesh = SubResource("PrismMesh_fghv1")
+
+[node name="GateDiamondKey" type="CSGPolygon3D" parent="StaticEnvironment"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -33, 0, 5)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 3, 10, 3, 10, 0, 4, 0, 4, 2, 2, 2, 2, 0)
+depth = 0.2
+material = ExtResource("1_lsda4")
 
 [node name="GateMovement" type="CSGPolygon3D" parent="StaticEnvironment"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.01737, 0, -4.98627)
@@ -711,10 +776,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7516, 1.03198, 7.04623)
 transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 0.707107, 0.603448, 0.368578, -10.3056, 1.21477, 14.5379)
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
-transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -6.56248, 0.8, -3.16803)
+transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.2698, 0.799999, -3.03953)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_0cl53")
+inventory_data = SubResource("Resource_d61og")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -735,6 +800,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
 open_rotation_deg = -95.0
 
 [node name="Lamp_Standing" parent="." instance=ExtResource("18_oxm1j")]
+
+[node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
 
 [node name="DoorLocked" parent="." instance=ExtResource("8_xabdk")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -24.9, 0, 9.2)
@@ -786,6 +853,79 @@ shape = SubResource("ConvexPolygonShape3D_hq8yc")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RampB"]
 
-[node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
+[node name="DiamondKeyA" parent="." instance=ExtResource("25_w5f1m")]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -48.826, 1.15805, 11.5805)
+
+[node name="DiamondKeyB" parent="." instance=ExtResource("26_1prk2")]
+transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, -48.8403, 1.07184, 8.62943)
+
+[node name="GateA" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 5.1)
+script = ExtResource("23_rfav8")
+open_rotation_deg = 90.0
+door_speed = 0.02
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GateA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+mesh = SubResource("BoxMesh_rixwv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GateA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_qb88g")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="GateA"]
+
+[node name="GateB" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -45, 0, 5.1)
+script = ExtResource("23_rfav8")
+open_rotation_deg = 90.0
+closed_rotation_deg = 180.0
+door_speed = 0.02
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GateB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+mesh = SubResource("BoxMesh_rixwv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GateB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_qb88g")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="GateB"]
+
+[node name="SocketForDiamondKey" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.2321, 0.9, 5.32853)
+collision_layer = 3
+script = ExtResource("27_r5oie")
+interaction_text_when_on = "Remove"
+interaction_text_when_off = "Place"
+needs_item_to_operate = true
+required_item = ExtResource("28_3r4lg")
+item_hint = "Something can be placed here."
+objects_toggle_visibility = Array[NodePath]([NodePath("SlottedDiamond")])
+objects_call_interact = Array[NodePath]([NodePath("../GateA"), NodePath("../GateB")])
+
+[node name="SpotLight3D" type="OmniLight3D" parent="SocketForDiamondKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215919, 0.212826, 0.0388637)
+omni_range = 1.0
+
+[node name="SlottedDiamond" type="CSGPolygon3D" parent="SocketForDiamondKey"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+visible = false
+polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
+depth = 0.02
+material = SubResource("StandardMaterial3D_r708p")
+
+[node name="InteractionShape" type="CollisionShape3D" parent="SocketForDiamondKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23629, 0.125816, 0.000281334)
+shape = SubResource("BoxShape3D_qu2im")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SocketForDiamondKey"]
+bus = &"SFX"
+
+[node name="SocketMesh" type="CSGPolygon3D" parent="SocketForDiamondKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284077, -0.899999, 0.094192)
+polygon = PackedVector2Array(0, 0, 0, 1, 0.3, 1, 0.5, 0.85, 0.7, 1, 1, 1, 1, 0)
+depth = 0.2
+material = ExtResource("1_lsda4")
 
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]

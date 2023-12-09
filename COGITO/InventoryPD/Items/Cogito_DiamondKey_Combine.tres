@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://gu1buq254o4l"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_ac5tt"]
+[ext_resource type="Texture2D" uid="uid://b026nu4btecpx" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_DiamondKey_Complete.png" id="1_iq57n"]
+[ext_resource type="Texture2D" uid="uid://dlsbl1glpswk5" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Question.png" id="1_okpun"]
+
+[resource]
+script = ExtResource("1_ac5tt")
+item_type = 3
+name = "Diamond Key"
+descpription = "This looks like it could fit into something."
+icon = ExtResource("1_iq57n")
+power = 0.0
+is_stackable = false
+stack_size = 0
+use_sound = ""
+drop_scene = "res://COGITO/PrefabScenes/pickup_diamond_key_complete.tscn"
+hint_icon_on_use = ExtResource("1_okpun")
+hint_text_on_use = "Now where does this fit?"
+attribute_name = ""
+attribute_change_amount = 0.0
+primary_use_prompt = ""
+secondary_use_prompt = ""
+charge_max = 0.0
+charge_current = 0.0
+reload_amount = 1
+discard_after_use = false

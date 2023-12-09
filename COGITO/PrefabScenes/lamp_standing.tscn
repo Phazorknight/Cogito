@@ -28,7 +28,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5066, 0, 5.95227)
 collision_layer = 3
 script = ExtResource("1_tccsv")
 switch_sound = ExtResource("2_1ogwg")
-objects_to_switch = [NodePath("SpotLight3D"), NodePath("Lamp_Shade_OFF"), NodePath("Lamp_Shade_ON")]
+objects_toggle_visibility = Array[NodePath]([NodePath("Lamp_Shade_OFF"), NodePath("Lamp_Shade_ON"), NodePath("SpotLight3D")])
 
 [node name="Lamp_Foot" type="CSGCylinder3D" parent="."]
 material_override = ExtResource("3_tvw1v")

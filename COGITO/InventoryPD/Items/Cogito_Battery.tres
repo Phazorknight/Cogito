@@ -7,20 +7,22 @@
 [resource]
 script = ExtResource("1_am3vi")
 id = 0
-item_type = 2
+item_type = 4
 name = "Battery"
 descpription = "Can be combined with the Flashlight. Non-rechargeable."
 icon = ExtResource("1_fjosn")
-power = 30.0
+power = 0.0
 is_stackable = true
 stack_size = 5
 use_sound = ""
 drop_scene = "res://COGITO/PrefabScenes/pickup_battery.tscn"
 hint_text_on_use = ""
 attribute_name = ""
+attribute_change_amount = 0.0
 primary_use_prompt = ""
 secondary_use_prompt = ""
 charge_max = 0.0
 charge_current = 0.0
-target_item = ExtResource("3_myi62")
+target_item_ammo = ExtResource("3_myi62")
+reload_amount = 10
 discard_after_use = false

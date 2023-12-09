@@ -32,7 +32,6 @@ func open_inventory():
 #		inventory_interface.external_inventory_ui.show()
 
 		for slot_panel in inventory_ui.slot_array:
-			print("Connecting ", slot_panel, " mouse exit signal...")
 			slot_panel.mouse_exited.connect(_slot_on_mouse_exit)
 	hot_bar_inventory.hide()
 	
