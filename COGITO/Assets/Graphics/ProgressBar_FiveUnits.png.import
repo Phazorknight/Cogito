@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6agx4isjq0yo"
-path="res://.godot/imported/Slider06_Color2_FillArea.png-2e3b5649e187ffc962bb792e6a854d91.ctex"
+uid="uid://0tbm6xivmc85"
+path="res://.godot/imported/ProgressBar_FiveUnits.png-6ab49f6156e7b591297da0639f5dbda1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Elements/Slider06_Color2_FillArea.png"
-dest_files=["res://.godot/imported/Slider06_Color2_FillArea.png-2e3b5649e187ffc962bb792e6a854d91.ctex"]
+source_file="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png"
+dest_files=["res://.godot/imported/ProgressBar_FiveUnits.png-6ab49f6156e7b591297da0639f5dbda1.ctex"]
 
 [params]
 

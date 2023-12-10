@@ -1,6 +1,7 @@
-![COGITO_Card](https://github.com/Phazorknight/Cogito/assets/70389309/c9928f69-9e2e-4446-b93b-9b8c0fd039bf)
+![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
-Version: **Alpha 202312g**
+By Philip Drobar
+Version: **Alpha 202312h**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -46,8 +47,6 @@ providing a framework for creating interactable objects and items.
   - Stackable item counts gets tripped somehow, resulting in picking up one item, but the stack goes up by 2, etc.
 - Wieldables:
   - Gamepad: Primary use trigger needs refining as the analog input causes multiple triggers.
-- Combinables:
-  - Currently only work in "one direction". You can set Item A to be combinable with item B, but then you can't set Item B to be combinable with Item A, Godot throws a recursion error.
 
 ### Still to do:
 - Pause/Options Menu:
@@ -177,10 +176,13 @@ Items -> Slots -> Inventories.
 - Item Type: Defines how this item is treated for certain interactions.
   - Consumable: This item changes a player attribute on use. Usually used for items like health potions, etc.
   - Wieldable: This item can be "held" by the player. Used for Flashlight but also for stuff like weapons.
+  - Combinable: Item that can be combined with another item to create a new one.
+  - Key: Used as an item used with interactables like doors or switchers. They will check if said item is in the player inventory and only work if it is. Can be set to be discarded after use.
+  - Ammo: Used to reload/recharge wieldables. For examples Batteries are Ammo for the Flashlight.
 - Name: What the item is called in the HUD.
 - Description: Displayed when selected in the inventory UI. Shouldn't be longer than 2 lines (for now).
 - Icon: The icon that is displayed in the Slot UI and on certain hint notifications.
-- Power: A value that is used when the item is used. This is very ambigious and will prob be removed.
+- Power: A value that is used when the item is used. This is very ambigious and will prob be renamed.
 - Is Stackable: Flag if an item can be stacked. Usually you don't want this for wieldables.
 - Stack size: How many items can be stacked max. If this is exceeded, the item will need to be put in it's own slot.
 - Use sound: String that plays that sound from the AudioManager on use, if it is found.

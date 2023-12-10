@@ -30,6 +30,7 @@ primary_use_prompt = ""
 secondary_use_prompt = ""
 charge_max = 0.0
 charge_current = 0.0
+target_item_combine = "Diamond Half A"
 resulting_item = SubResource("Resource_8pnh0")
 reload_amount = 1
 discard_after_use = false

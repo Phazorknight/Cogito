@@ -113,7 +113,7 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 			slot_data.inventory_item.add(grabbed_slot_data.inventory_item.reload_amount)
 			grabbed_slot_data.quantity -= 1
 	# Check if grabbed item is a combinable AND check if slot item is the target combine item:
-	elif grabbed_slot_data.inventory_item.item_type == 2 and slot_data.inventory_item == grabbed_slot_data.inventory_item.target_item_combine :
+	elif grabbed_slot_data.inventory_item.item_type == 2 and slot_data.inventory_item.name == grabbed_slot_data.inventory_item.target_item_combine :
 		# Reduce/destroy both items.
 		remove_slot_data(slot_data)
 		grabbed_slot_data.quantity -= 1
@@ -124,10 +124,10 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 	inventory_updated.emit(self)
 	
 	if grabbed_slot_data.quantity > 0:
-		print("swapping items")
+		# Swapping items
 		return grabbed_slot_data
 	else:
-		print("placing items")
+		# Placing items
 		return null
 
 

@@ -6,7 +6,6 @@
 
 [resource]
 script = ExtResource("1_j6fph")
-id = 0
 item_type = 0
 name = "Stamina Extension"
 descpription = "Drinking this permanently increases your maximum stamina."

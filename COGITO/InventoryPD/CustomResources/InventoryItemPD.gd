@@ -44,8 +44,8 @@ var wieldable_data_text : String
 @export var charge_current : float
 
 @export_group("Combinable settings")
-## The item that this item combines with
-@export var target_item_combine : InventoryItemPD = null
+## The name of the item that this item combines with. Caution: String has to be a perfect match, so watch casing and space.
+@export var target_item_combine : String = ""
 ## The item that gets created when this item is combined with the one above.
 @export var resulting_item : InventorySlotPD = null
 

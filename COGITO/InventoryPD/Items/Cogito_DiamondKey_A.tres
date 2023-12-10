@@ -1,11 +1,10 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=8 format=3 uid="uid://bqsqec7nngw3b"]
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=7 format=3 uid="uid://bqsqec7nngw3b"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_pt8xc"]
 [ext_resource type="Texture2D" uid="uid://clxom1rnn3dew" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_DiamondKey_A.png" id="1_xkbwk"]
 [ext_resource type="Texture2D" uid="uid://bttj6m78b6odm" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Cog.png" id="1_xojlq"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="3_apbvy"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_docv3"]
-[ext_resource type="Resource" uid="uid://1sito351mi08" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_B.tres" id="5_csv76"]
 
 [sub_resource type="Resource" id="Resource_sh87e"]
 script = ExtResource("4_docv3")
@@ -31,7 +30,7 @@ primary_use_prompt = ""
 secondary_use_prompt = ""
 charge_max = 0.0
 charge_current = 0.0
-target_item_combine = ExtResource("5_csv76")
+target_item_combine = "Diamond Half B"
 resulting_item = SubResource("Resource_sh87e")
 reload_amount = 1
 discard_after_use = false

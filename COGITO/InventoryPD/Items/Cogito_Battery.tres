@@ -6,7 +6,6 @@
 
 [resource]
 script = ExtResource("1_am3vi")
-id = 0
 item_type = 4
 name = "Battery"
 descpription = "Can be combined with the Flashlight. Non-rechargeable."

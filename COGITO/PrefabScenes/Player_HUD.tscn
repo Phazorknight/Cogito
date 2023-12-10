@@ -1,7 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
-[ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://UI/Elements/ProgressBar_FiveUnits.png" id="3_767p8"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
 [ext_resource type="PackedScene" uid="uid://dtdjlu4dtm6wh" path="res://COGITO/InventoryPD/UiScenes/InventoryUI.tscn" id="3_krf2d"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
@@ -9,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ryhle5u4d4mn" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Keyboard_F.png" id="4_2dtpt"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
+[ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png" id="6_f5jpm"]
 [ext_resource type="Texture2D" uid="uid://02033aa8j18m" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Mouse_Left.png" id="11_c625v"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
 
@@ -265,7 +265,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
 value = 40.0
-texture_progress = ExtResource("3_767p8")
+texture_progress = ExtResource("6_f5jpm")
 
 [node name="SanityBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 16)

@@ -6,7 +6,6 @@
 
 [resource]
 script = ExtResource("1_4qe1t")
-id = 0
 item_type = 0
 name = "Health Potion"
 descpription = "Tastes better than it looks."
