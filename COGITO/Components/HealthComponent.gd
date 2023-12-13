@@ -2,6 +2,7 @@ extends Node
 class_name HealthComponent
 
 signal health_changed(current_value, max_value)
+signal death()
 
 @export var max_health : float = 5
 @export var start_health : float
@@ -24,5 +25,6 @@ func subtract(amount):
 	
 	if current_health < 0:
 		current_health = 0
+		emit_signal("death")
 	
 	emit_signal("health_changed", current_health, max_health)

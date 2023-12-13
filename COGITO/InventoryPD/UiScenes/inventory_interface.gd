@@ -10,6 +10,9 @@ signal drop_slot_data(slot_data : InventorySlotPD)
 @onready var item_name = $InfoPanel/MarginContainer/VBoxContainer/ItemName
 @onready var item_description = $InfoPanel/MarginContainer/VBoxContainer/ItemDescription
 
+## Sound that plays as a generic error.
+@export var sound_error : AudioStream
+
 var is_inventory_open : bool
 var grabbed_slot_data: InventorySlotPD
 var external_inventory_owner : Node
@@ -120,7 +123,7 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 			grabbed_slot_data = inventory_data.get_slot_data(index)
 			if grabbed_slot_data:
 				if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
-					AudioManagerPd.play_audio("error")
+					Audio.play_sound(sound_error)
 					print("Can't drop while wielding this item.")
 				else:
 					print("Dropping slot data via gamepad")
@@ -162,7 +165,7 @@ func _on_gui_input(event):
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
-						AudioManagerPd.play_audio("error")
+						Audio.play_sound(sound_error)
 						print("Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data)
@@ -171,7 +174,7 @@ func _on_gui_input(event):
 					
 				MOUSE_BUTTON_RIGHT:
 					if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
-						AudioManagerPd.play_audio("error")
+						Audio.play_sound(sound_error)
 						print("Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data.create_single_slot_data())

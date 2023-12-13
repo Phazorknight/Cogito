@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **Alpha 202312h**
+Version: **Alpha 202312i**
 Runs on Godot **4.1.2 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -13,6 +13,7 @@ providing a framework for creating interactable objects and items.
 - Menus are based on SavoVuksan's EasyMenus (also see this link for documentation): https://github.com/SavoVuksan/EasyMenus
 - Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC
 - InputHelper by Nathan Hoad (also see this link for documentation): https://github.com/nathanhoad/godot_input_helper
+- QuickAudio by Bryce Dixon (https://github.com/BtheDestroyer/Godot_QuickAudio)
 
 ## Overview
 ### Current working features:
@@ -40,6 +41,7 @@ providing a framework for creating interactable objects and items.
 	- Stamina extension potion (increases max stamina)
 	- Key to unlock door
 	- Diamond Key A and B (combinable to create Diamond Key)
+	- Nerv Pistol (work in progress)
 
 ### Known bugs:
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
@@ -57,17 +59,17 @@ providing a framework for creating interactable objects and items.
   - Option to take all items from a container.
 - Interactables:
   - Door: Create option to make sliding door
-- AudioManager is unwieldy. Can probably be redone to work better.
  
 
 ## Set-Up
 It is recommended to use the whole project as a starting point for your game, though everything needed should be contained within the COGITO folder within the project.
 
 Make sure that two Autoloads are set up in your project:
-- //COGITO/AudioManagerPD/Autoload/AudioManagerPD.tscn
+
 - //COGITO/EsayMenus/Nodes/menu_template_manager.tscn
 
 Make sure you have this plug-in set up in your project:
+- Quick Audio (currently v1.0)
 - Input Helper (currently v4.2.2)
 
 **Open and run res://COGITO/DemoScenes/COGITO_Demo_01.tscn to try out everything that comes with COGITO**
@@ -123,7 +125,7 @@ PRO-TIP: The objects you switch do not have to be part of the switchable object.
 
 
 ### press_and_hold
-To be added.
+[To be added.]
 
 ### Carryable.gd
 This is used for boxes, crates etc.

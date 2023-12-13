@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=24 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
 [ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png" id="6_f5jpm"]
+[ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="Texture2D" uid="uid://02033aa8j18m" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Mouse_Left.png" id="11_c625v"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
 
@@ -327,6 +328,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_lyywb")
+sound_error = ExtResource("8_bxpra")
 
 [node name="InventoryUI" parent="InventoryInterface" instance=ExtResource("3_krf2d")]
 visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=72 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://COGITO/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="27_0a6c2"]
 [ext_resource type="Script" path="res://COGITO/Scripts/switchable.gd" id="27_r5oie"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="28_3r4lg"]
+[ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://COGITO/PrefabScenes/pickup_pistol.tscn" id="30_a7v26"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -146,7 +147,7 @@ material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
-[sub_resource type="Resource" id="Resource_iqhx6"]
+[sub_resource type="Resource" id="Resource_yagr5"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -779,7 +780,7 @@ transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 
 transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.2698, 0.799999, -3.03953)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_iqhx6")
+inventory_data = SubResource("Resource_yagr5")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -927,5 +928,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284077, -0.899999, 0.09419
 polygon = PackedVector2Array(0, 0, 0, 1, 0.3, 1, 0.5, 0.85, 0.7, 1, 1, 1, 1, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
+
+[node name="pickup_pistol" parent="." instance=ExtResource("30_a7v26")]
+transform = Transform3D(1, 0, 0, 0, 0.418533, -0.908202, 0, 0.908202, 0.418533, -13.4786, 0.453089, 0.733408)
+projectile_prefab = null
 
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]

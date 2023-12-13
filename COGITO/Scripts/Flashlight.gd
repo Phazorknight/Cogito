@@ -11,15 +11,11 @@ extends RigidBody3D
 @export var drain_rate : float = 1
 
 @export_group("Audio")
-@export var pick_up_sound : AudioStream
-@export var drop_sound : AudioStream
 @export var switch_sound : AudioStream
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var spot_light_3d = $SpotLight3D
 
-# Status if the player is holding the flashlight
-var is_being_wielded : bool
 # Stores the player interaction component
 var wielder
 var trigger_has_been_pressed : bool = false
@@ -33,12 +29,16 @@ func _ready():
 
 
 func _process(delta):
-	if is_being_wielded:
-		global_position = wielder.carryable_position.global_position
-		global_rotation = wielder.carryable_position.global_rotation
-
 	if is_on:
 		slot_data.inventory_item.subtract(delta * drain_rate)
+		if slot_data.inventory_item.charge_current == 0:
+			turn_off()
+			is_on = false
+
+
+# Action called by the Player Interaction Component when flashlight is wielded.
+func action_primary():
+	toggle_on_off()
 
 # Function to explicitly turn it off for use when battery is depleted.
 func turn_off():
@@ -61,66 +61,15 @@ func toggle_on_off():
 		is_on = true
 
 
+## Picking up the Flashlight on player interaction
 func interact(body):
 	if body.get_parent().inventory_data.pick_up_slot_data(slot_data):
-		AudioManagerPd.play_audio("pick_up") # Playing a sound via the AudioManager
+		Audio.play_sound(slot_data.inventory_item.sound_pickup)
 		body.send_hint(slot_data.inventory_item.icon, slot_data.inventory_item.name + " added to inventory.") # Sending a hint that uses the default icon
 		queue_free()
-
-
-func pick_up(player_interaction_component):
-	wielder = player_interaction_component
-
-	if wielder.carried_object == null:
-		if is_being_wielded:
-			leave()
-		else:
-
-			hold()
-	else:
-		print("Can't wield while holding an object.")
-
-
-func _input(event):
-	if wielder != null and !wielder.get_parent().is_movement_paused:
-		if is_being_wielded and event.is_action_pressed("right_trigger"):
-			if InputHelper.device != "keyboard":
-				# Trying to get the Trigger axis to behave more like a button. Not really successfull yet...
-				var trigger_value = event.get_action_strength("right_trigger")
-				print("Trigger value: ", trigger_value)
-				if !trigger_has_been_pressed:
-					toggle_on_off()
-					
-				if trigger_value > 0.05:
-					trigger_has_been_pressed = false
-				else:
-					trigger_has_been_pressed = true
-				
-				
-					
-		if is_being_wielded and event.is_action_pressed("action_primary"):
-			toggle_on_off()
-
-func hold():
-	$CollisionShape3D.set_disabled(true)
-	wielder.carried_object = self
-	
-	# Play Pick up sound.
-	audio_stream_player_3d.stream = pick_up_sound
-	audio_stream_player_3d.play()
-	
-	self.set_freeze_enabled(true)
-	is_being_wielded = true
-
-func leave():
-	$CollisionShape3D.set_disabled(false)
-	wielder.carried_object = null
-	self.set_freeze_enabled(false)
-	is_being_wielded = false
+		
 	
 func throw(power):
-	leave()
-	if drop_sound != null:
-		audio_stream_player_3d.stream = drop_sound
-		audio_stream_player_3d.play()
+	audio_stream_player_3d.stream = slot_data.inventory_item.sound_drop
+	audio_stream_player_3d.play()
 	apply_central_impulse(wielder.look_vector * Vector3(power, power, power))

@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=5 format=3 uid="uid://lc5uq2e6ldah"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_ihdk3"]
+[ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="1_t40ae"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_13okb"]
+[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="3_rr2e5"]
+
+[resource]
+script = ExtResource("1_ihdk3")
+item_type = 1
+name = "Pistol"
+descpription = "Doesn't look very dangerous."
+icon = ExtResource("1_t40ae")
+power = 0.0
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/PrefabScenes/pickup_pistol.tscn"
+hint_text_on_use = ""
+sound_pickup = ExtResource("3_13okb")
+sound_drop = ExtResource("3_rr2e5")
+attribute_name = ""
+attribute_change_amount = 0.0
+primary_use_prompt = "Shoot"
+secondary_use_prompt = ""
+charge_max = 10.0
+charge_current = 10.0
+wieldable_range = 10.0
+equip_anim = "Pistol_equip"
+unequip_anim = "Pistol_unequip"
+reload_anim = "Pistol_reload"
+use_anim = "Pistol_shoot"
+target_item_combine = ""
+discard_after_use = false
+reload_amount = 1

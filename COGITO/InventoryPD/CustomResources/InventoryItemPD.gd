@@ -14,14 +14,18 @@ enum ItemType {CONSUMABLE, WIELDABLE, COMBINABLE, KEY, AMMO}
 @export var power : float
 @export var is_stackable : bool = false
 @export_range(1, 99) var stack_size : int
-## Name of sound in SoundManager that will play when item is used
-@export var use_sound : String = ""
 ## Path to Scene that will be spawned when item is removed from inventory to be dropped into the world.
 @export_file("*.tscn") var drop_scene
 ## Icon that is displayed with the hint that pops up when used. If left blank, the default hint icon is shown.
 @export var hint_icon_on_use : Texture2D
 ## Hint that is displayed when used. For example "Potion replenished 10 HP!"
 @export var hint_text_on_use : String
+
+@export_subgroup("Audio")
+## Audio that plays when item is used.
+@export var sound_use : AudioStream
+@export var sound_pickup : AudioStream
+@export var sound_drop : AudioStream
 
 @export_group("Consumable settings")
 ## Name of attribute that the item is going to replenish. (For example "health")
@@ -42,6 +46,16 @@ var wieldable_data_text : String
 ## The maximum charge of the item (this equals fully charged battery in a flashlight or magazine size in guns)
 @export var charge_max : float
 @export var charge_current : float
+## Used for weapons
+@export var wieldable_range : float
+## Used for weapons
+@export var wieldable_damage : float
+@export_subgroup("Animations")
+@export var equip_anim : String
+@export var unequip_anim : String
+@export var reload_anim : String
+@export var use_anim : String
+
 
 @export_group("Combinable settings")
 ## The name of the item that this item combines with. Caution: String has to be a perfect match, so watch casing and space.
@@ -49,15 +63,17 @@ var wieldable_data_text : String
 ## The item that gets created when this item is combined with the one above.
 @export var resulting_item : InventorySlotPD = null
 
+@export_group("Key settings")
+# If this is checked, the key item will be removed from the inventory after it's been used on the target object.
+@export var discard_after_use : bool = false
+
 @export_group("Ammo settings")
 ## The item that this item is ammunition for.
 @export var target_item_ammo : InventoryItemPD = null
 ## The amount one item addes to the target item charge. For bullets this should be 1.
 @export var reload_amount : int = 1
 
-@export_group("Key settings")
-# If this is checked, the key item will be removed from the inventory after it's been used on the target object.
-@export var discard_after_use : bool = false
+
 
 # Variables for Wielded Items
 var wielder
@@ -69,22 +85,26 @@ func use(target):
 	match item_type:
 		ItemType.CONSUMABLE:
 			print("Inventory item: Target ", target, " is using ", self)
-			AudioManagerPd.play_audio(use_sound)
+			Audio.play_sound(sound_use)
 			if hint_text_on_use != "":
 				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
 			target.increase_attribute(attribute_name, power)
 		
 		ItemType.WIELDABLE:
 			wielder = target.player_interaction_component
-			print("Inventory item: ", wielder, " is using wieldable ", name)
+			if wielder.carried_object != null:
+				wielder.send_hint(null,"Can't equip item while carrying.")
+				return
 			if is_being_wielded:
 				wielder.emit_signal("set_use_prompt", "")
 				wielder.emit_signal("update_wieldable_data", null, "")
+				print("Inventory item: ", wielder, " is putting away wieldable ", name)
 				put_away()
 			else:
 				wielder.emit_signal("set_use_prompt", primary_use_prompt)
 				wieldable_data_text = str(int(charge_current)) + "/" + str(int(charge_max))
 				wielder.emit_signal("update_wieldable_data", wieldable_data_icon, wieldable_data_text)
+				print("Inventory item: ", wielder, " is taking out wieldable ", name)
 				take_out()
 		
 		ItemType.COMBINABLE:
@@ -107,22 +127,25 @@ func use(target):
 # Functions for WIELDABLES
 func take_out():
 	print("Taking out ", name)
-	var scene_to_wield = load(drop_scene)
-	wielded_item = scene_to_wield.instantiate()
-	wielder.get_parent().add_child(wielded_item)
-	wielded_item.pick_up(wielder)
+	wielder.change_wieldable_to(self)
+#	var scene_to_wield = load(drop_scene)
+#	wielded_item = scene_to_wield.instantiate()
+#	wielder.get_parent().add_child(wielded_item)
+#	wielded_item.pick_up(wielder)
 	is_being_wielded = true
 	
 func put_away():
 	print("Putting away ", name)
+	wielder.change_wieldable_to(null)
 	is_being_wielded = false
-	wielded_item.queue_free()
+#	if wielded_item != null:
+#		wielded_item.queue_free()
 
 func subtract(amount):
 	charge_current -= amount
 	if charge_current < 0:
 		charge_current = 0
-		wielded_item.turn_off()
+		wielder.send_hint(null, name + " is out of battery.")
 	
 	if is_being_wielded:
 		wieldable_data_text = str(int(charge_current)) + "/" + str(int(charge_max))

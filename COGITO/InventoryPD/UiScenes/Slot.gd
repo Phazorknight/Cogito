@@ -4,7 +4,10 @@ extends PanelContainer
 @onready var quantity_label = $QuantityLabel
 @onready var charge_label = $ChargeLabel
 @onready var selection_panel = $Selected
+
 @export var highlight_color : Color
+## AudioStream that plays when slot gets highlighted.
+@export var sound_highlight : AudioStream
 var item_data = null
 
 
@@ -63,7 +66,7 @@ func _on_hidden():
 	release_focus()
 
 func _on_focus_entered() -> void:
-	AudioManagerPd.play_audio("btn_hover")
+	Audio.play_sound(sound_highlight)
 	$Panel.show()
 	selection_panel.show()
 

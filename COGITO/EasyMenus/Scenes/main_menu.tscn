@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dq6tvhqcy2aps"]
 
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/main_menu_controller.gd" id="1_lbw7r"]
-[ext_resource type="Script" path="res://COGITO/AudioManagerPD/Btn_Ui_Sounds.gd" id="2_mguy7"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Btn_Ui_Sounds.gd" id="2_mguy7"]
 [ext_resource type="PackedScene" uid="uid://qlskttl1wjr7" path="res://COGITO/EasyMenus/Scenes/options_menu.tscn" id="2_pwqpr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wrn81"]

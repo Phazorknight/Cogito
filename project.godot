@@ -21,8 +21,8 @@ config/icon="res://COGITO/COGITO_icon.png"
 [autoload]
 
 MenuTemplateManager="*res://COGITO/EasyMenus/Nodes/menu_template_manager.tscn"
-AudioManagerPd="*res://COGITO/AudioManagerPD/Autoload/AudioManagerPD.tscn"
 InputHelper="*res://addons/input_helper/input_helper.gd"
+Audio="*res://addons/quick_audio/./Audio.gd"
 
 [display]
 
@@ -32,7 +32,7 @@ window/size/initial_position_type=3
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/input_helper/plugin.cfg")
+enabled=PackedStringArray("res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
 
 [importer_defaults]
 

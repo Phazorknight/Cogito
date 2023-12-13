@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cg41w2fijcp4q"]
+[gd_scene load_steps=5 format=3 uid="uid://cg41w2fijcp4q"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/Slot.gd" id="1_hcuh3"]
+[ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_qlqw8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tjqsb"]
 bg_color = Color(1, 1, 1, 0.196078)
@@ -23,6 +24,7 @@ offset_bottom = 40.0
 focus_mode = 2
 script = ExtResource("1_hcuh3")
 highlight_color = Color(1, 1, 1, 1)
+sound_highlight = ExtResource("2_qlqw8")
 
 [node name="Panel" type="Panel" parent="."]
 visible = false

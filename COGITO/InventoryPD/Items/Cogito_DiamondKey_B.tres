@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=7 format=3 uid="uid://1sito351mi08"]
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=10 format=3 uid="uid://1sito351mi08"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_6j7dg"]
 [ext_resource type="Texture2D" uid="uid://bcabonpdkte7d" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_DiamondKey_B.png" id="1_gdixu"]
 [ext_resource type="Texture2D" uid="uid://bttj6m78b6odm" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Cog.png" id="1_txwkg"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="3_pk5ng"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_ki7lq"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="6_de5x0"]
+[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="6_uqyp5"]
+[ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="7_m8rd7"]
 
 [sub_resource type="Resource" id="Resource_8pnh0"]
 script = ExtResource("4_ki7lq")
@@ -20,17 +23,23 @@ icon = ExtResource("1_gdixu")
 power = 0.0
 is_stackable = false
 stack_size = 0
-use_sound = ""
 drop_scene = "res://COGITO/PrefabScenes/pickup_diamond_key_b.tscn"
 hint_icon_on_use = ExtResource("1_txwkg")
 hint_text_on_use = "Can't be used by itself."
+sound_use = ExtResource("7_m8rd7")
+sound_pickup = ExtResource("6_de5x0")
+sound_drop = ExtResource("6_uqyp5")
 attribute_name = ""
 attribute_change_amount = 0.0
 primary_use_prompt = ""
 secondary_use_prompt = ""
 charge_max = 0.0
 charge_current = 0.0
+equip_anim = ""
+unequip_anim = ""
+reload_anim = ""
+use_anim = ""
 target_item_combine = "Diamond Half A"
 resulting_item = SubResource("Resource_8pnh0")
-reload_amount = 1
 discard_after_use = false
+reload_amount = 1

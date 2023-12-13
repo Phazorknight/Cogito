@@ -1,9 +1,14 @@
 extends CharacterBody3D
 
+signal toggle_inventory_interface()
+
+
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
 ## Refereence to Player HUD node
 @export var player_hud : NodePath
+
+
 ## Flag if Stamina component isused (as this effects movement)
 @export var is_using_stamina : bool = true
 # Components:
@@ -14,14 +19,17 @@ extends CharacterBody3D
 
 @onready var player_interaction_component = $PlayerInteractionComponent
 
+## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
 @onready var drop_position = $DropPosition
-signal toggle_inventory_interface()
-
 
 # Adding carryable position for item control.
 @onready var carryable_position = %CarryablePosition
 @onready var footstep_player = $FootstepPlayer
+
+@export_group("Audio")
+## AudioStream that gets played when the player jumps.
+@export var jump_sound : AudioStream
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY = 4.5
@@ -336,7 +344,7 @@ func _physics_process(delta):
 			return
 			
 		$Neck/Head/Eyes/AnimationPlayer.play("jump")
-		AudioManagerPd.play_audio("jump")
+		Audio.play_sound(jump_sound)
 		if !$SlidingTimer.is_stopped():
 			velocity.y = JUMP_VELOCITY * 1.5
 			$SlidingTimer.stop()
@@ -381,10 +389,9 @@ func _physics_process(delta):
 	# FOOTSTEP SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if $FootstepTimer.time_left <= 0:
-			# Grab a random number with the range being the ammount of sound effects that can be used.
-			var random_index = randi() % footstep_player.footsteps.size()
-			footstep_player.play_sfx(random_index)
-			if velocity.length() >= 3.2:
+			footstep_player.play()
+			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
+			if velocity.length() >= 3.4:
 				$FootstepTimer.start(.3)
 			else:
 				$FootstepTimer.start(.6)

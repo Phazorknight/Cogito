@@ -215,7 +215,7 @@ func _on_player_brightness_changed(new_brightness, max_brightness):
 # On Inventory UI Item Drop
 func _on_inventory_interface_drop_slot_data(slot_data):
 	var scene_to_drop = load(slot_data.inventory_item.drop_scene)
-	AudioManagerPd.play_audio("item_drop")
+	Audio.play_sound(slot_data.inventory_item.sound_drop)
 	var dropped_item = scene_to_drop.instantiate()
 	dropped_item.position = player.drop_position.global_position
 	dropped_item.slot_data = slot_data

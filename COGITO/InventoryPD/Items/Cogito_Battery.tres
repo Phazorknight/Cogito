@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://cupby6uqaftvv"]
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=6 format=3 uid="uid://cupby6uqaftvv"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_am3vi"]
 [ext_resource type="Texture2D" uid="uid://c0h1s1g4g1q56" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoBattery.png" id="1_fjosn"]
+[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="3_218ed"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_lxwux"]
 [ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="3_myi62"]
 
 [resource]
@@ -13,15 +15,21 @@ icon = ExtResource("1_fjosn")
 power = 0.0
 is_stackable = true
 stack_size = 5
-use_sound = ""
 drop_scene = "res://COGITO/PrefabScenes/pickup_battery.tscn"
 hint_text_on_use = ""
+sound_pickup = ExtResource("3_lxwux")
+sound_drop = ExtResource("3_218ed")
 attribute_name = ""
 attribute_change_amount = 0.0
 primary_use_prompt = ""
 secondary_use_prompt = ""
 charge_max = 0.0
 charge_current = 0.0
+equip_anim = ""
+unequip_anim = ""
+reload_anim = ""
+use_anim = ""
+target_item_combine = ""
+discard_after_use = false
 target_item_ammo = ExtResource("3_myi62")
 reload_amount = 10
-discard_after_use = false
