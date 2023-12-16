@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("1_ihdk3")
 item_type = 1
-name = "Pistol"
-descpription = "Doesn't look very dangerous."
+name = "Foam Pistol"
+descpription = "There's a reason it looks like a toy. Shoots foam bullets."
 icon = ExtResource("1_t40ae")
 power = 0.0
 is_stackable = false
@@ -23,8 +23,10 @@ attribute_change_amount = 0.0
 primary_use_prompt = "Shoot"
 secondary_use_prompt = ""
 charge_max = 10.0
+ammo_item_name = "Foam Bullets"
 charge_current = 10.0
 wieldable_range = 10.0
+wieldable_damage = 1.0
 equip_anim = "Pistol_equip"
 unequip_anim = "Pistol_unequip"
 reload_anim = "Pistol_reload"

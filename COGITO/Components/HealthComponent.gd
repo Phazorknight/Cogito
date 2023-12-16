@@ -9,6 +9,8 @@ signal death()
 @export var no_sanity_damage : float
 var current_health : float
 
+@export var destroy_on_death : Array[NodePath]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	current_health = start_health
@@ -23,8 +25,13 @@ func add(amount):
 func subtract(amount):
 	current_health -= amount
 	
-	if current_health < 0:
+	if current_health <= 0:
 		current_health = 0
 		emit_signal("death")
+		on_death()
 	
 	emit_signal("health_changed", current_health, max_health)
+
+func on_death():
+	for nodepath in destroy_on_death:
+		get_node(nodepath).queue_free()

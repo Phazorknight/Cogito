@@ -9,3 +9,4 @@ run_exhaustion_speed = 3.0
 jump_exhaustion = 5.0
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true

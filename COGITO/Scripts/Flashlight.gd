@@ -37,7 +37,7 @@ func _process(delta):
 
 
 # Action called by the Player Interaction Component when flashlight is wielded.
-func action_primary():
+func action_primary(_camera_collision:Vector3):
 	toggle_on_off()
 
 # Function to explicitly turn it off for use when battery is depleted.

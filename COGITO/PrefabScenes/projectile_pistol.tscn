@@ -1,6 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1umit2vtv22v"]
+[gd_scene load_steps=8 format=3 uid="uid://c1umit2vtv22v"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/self_destruct_with_timer.gd" id="1_x2r1b"]
+[ext_resource type="Script" path="res://COGITO/Scripts/projectile.gd" id="1_6pqxf"]
+[ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://COGITO/InventoryPD/Items/Cogito_FoamBullets.tres" id="3_7etap"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_tbkmk"]
+
+[sub_resource type="Resource" id="Resource_4wave"]
+script = ExtResource("4_tbkmk")
+inventory_item = ExtResource("3_7etap")
+quantity = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sn251"]
 albedo_color = Color(1, 0, 0, 1)
@@ -16,21 +23,31 @@ radial_segments = 8
 rings = 1
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wm252"]
-height = 0.2
-radius = 0.03
+height = 0.25
+radius = 0.05
 
 [node name="projectile_pistol" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 top_level = true
-collision_layer = 3
+collision_layer = 2
 collision_mask = 3
 mass = 0.1
 continuous_cd = true
 max_contacts_reported = 10
 contact_monitor = true
-script = ExtResource("1_x2r1b")
+script = ExtResource("1_6pqxf")
+is_pickup = true
+slot_data = SubResource("Resource_4wave")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_f0413")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_f0413")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("CylinderMesh_f0413")
 
@@ -39,7 +56,7 @@ transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.371
 shape = SubResource("CylinderShape3D_wm252")
 
 [node name="Lifespan" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 30.0
 autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -45,6 +45,9 @@ signal charge_changed()
 var wieldable_data_text : String
 ## The maximum charge of the item (this equals fully charged battery in a flashlight or magazine size in guns)
 @export var charge_max : float
+## Name of item this item uses as Ammo.
+@export var ammo_item_name : String
+## Current charge of item (aka how much is in the magazine).
 @export var charge_current : float
 ## Used for weapons
 @export var wieldable_range : float
@@ -102,8 +105,7 @@ func use(target):
 				put_away()
 			else:
 				wielder.emit_signal("set_use_prompt", primary_use_prompt)
-				wieldable_data_text = str(int(charge_current)) + "/" + str(int(charge_max))
-				wielder.emit_signal("update_wieldable_data", wieldable_data_icon, wieldable_data_text)
+				update_wieldable_data()
 				print("Inventory item: ", wielder, " is taking out wieldable ", name)
 				take_out()
 		
@@ -141,6 +143,23 @@ func put_away():
 #	if wielded_item != null:
 #		wielded_item.queue_free()
 
+
+func get_item_amount_in_inventory(item_name_to_check_for:String) -> int:
+	var item_count : int = 0
+	if wielder.get_parent().inventory_data != null:
+		var inventory_to_check = wielder.get_parent().inventory_data
+		for slot in inventory_to_check.inventory_slots:
+			if slot != null and slot.inventory_item.name == item_name_to_check_for:
+				item_count += slot.quantity
+				
+	return item_count
+
+
+func update_wieldable_data():
+	wieldable_data_text = str(int(charge_current)) + "|" + str(get_item_amount_in_inventory(ammo_item_name))
+	wielder.emit_signal("update_wieldable_data", wieldable_data_icon, wieldable_data_text)
+
+
 func subtract(amount):
 	charge_current -= amount
 	if charge_current < 0:
@@ -148,8 +167,7 @@ func subtract(amount):
 		wielder.send_hint(null, name + " is out of battery.")
 	
 	if is_being_wielded:
-		wieldable_data_text = str(int(charge_current)) + "/" + str(int(charge_max))
-		wielder.emit_signal("update_wieldable_data", wieldable_data_icon, wieldable_data_text)
+		update_wieldable_data()
 	
 	charge_changed.emit()
 	
@@ -160,6 +178,5 @@ func add(amount):
 		charge_current = charge_max
 	
 	if is_being_wielded:
-		wieldable_data_text = str(int(charge_current)) + "/" + str(int(charge_max))
-		wielder.emit_signal("update_wieldable_data", wieldable_data_icon, wieldable_data_text)
+		update_wieldable_data()
 	charge_changed.emit()

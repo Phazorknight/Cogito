@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=73 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="3_q2rvv"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="4_1ofwa"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="6_cy1m6"]
+[ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://COGITO/PrefabScenes/target_destructable.tscn" id="8_tk621"]
 [ext_resource type="PackedScene" uid="uid://bdyukj85qkut0" path="res://COGITO/PrefabScenes/door.tscn" id="8_xabdk"]
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="9_g1bqh"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://COGITO/PrefabScenes/pickup_key.tscn" id="9_qv8nx"]
@@ -74,10 +75,10 @@ points = PackedVector3Array(-5, -0.05, -5, -5, 0.05, -5, 5, -0.05, -5, -5, -0.05
 
 [sub_resource type="BoxMesh" id="BoxMesh_xwnhq"]
 material = ExtResource("1_lsda4")
-size = Vector3(10, 0.1, 15)
+size = Vector3(10, 0.1, 20)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mikgw"]
-points = PackedVector3Array(5, 0.05, 7.5, 5, -0.05, 7.5, 5, 0.05, -7.5, -5, 0.05, 7.5, -5, -0.05, 7.5, 5, -0.05, -7.5, -5, 0.05, -7.5, -5, -0.05, -7.5)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gkga4"]
+points = PackedVector3Array(5, 0.05, 10, 5, -0.05, 10, 5, 0.05, -10, -5, 0.05, 10, -5, -0.05, 10, 5, -0.05, -10, -5, 0.05, -10, -5, -0.05, -10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gv32u"]
 material = ExtResource("2_4ig6i")
@@ -147,7 +148,7 @@ material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
-[sub_resource type="Resource" id="Resource_yagr5"]
+[sub_resource type="Resource" id="Resource_jr5dy"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -256,12 +257,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.05, 10)
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 mesh = SubResource("BoxMesh_xwnhq")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
-shape = SubResource("ConvexPolygonShape3D_mikgw")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticEnvironment/Floor6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+shape = SubResource("ConvexPolygonShape3D_gkga4")
 
 [node name="Floor4" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3.05, 10)
@@ -430,6 +431,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_yxsbf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("ConvexPolygonShape3D_jksjg")
+
+[node name="Wall16" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -42.9, 0, 0)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_yxsbf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall16"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("ConvexPolygonShape3D_jksjg")
 
@@ -670,6 +683,19 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
+[node name="BoxCombineB2" type="StaticBody3D" parent="StaticEnvironment"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -38, 0, -0.1)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxCombineB2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_jlrlq")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxCombineB2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_enk60")
+
 [node name="BoxPressAndHold" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.5, 0, 7.5)
 metadata/_edit_group_ = true
@@ -780,7 +806,7 @@ transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 
 transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.2698, 0.799999, -3.03953)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_yagr5")
+inventory_data = SubResource("Resource_jr5dy")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
@@ -930,7 +956,20 @@ depth = 0.2
 material = ExtResource("1_lsda4")
 
 [node name="pickup_pistol" parent="." instance=ExtResource("30_a7v26")]
-transform = Transform3D(1, 0, 0, 0, 0.418533, -0.908202, 0, 0.908202, 0.418533, -13.4786, 0.453089, 0.733408)
+transform = Transform3D(-0.476652, -0.798393, -0.367929, 0, 0.418533, -0.908202, 0.879092, -0.432897, -0.199495, -47.835, 1.13928, -0.122585)
 projectile_prefab = null
 
+[node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -50.6318, 1.47946, -0.377396)
+
+[node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -52.7296, 2.27151, -2.4023)
+
+[node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -51.945, 1.65236, 2.12979)
+
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
+
+[editable path="TargetDestructable"]
+[editable path="TargetDestructable2"]
+[editable path="TargetDestructable3"]

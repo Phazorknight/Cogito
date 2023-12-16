@@ -1,8 +1,8 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **Alpha 202312i**
-Runs on Godot **4.1.2 stable**
+Version: **Alpha 202312j**
+Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on

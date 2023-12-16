@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Cogito"
 run/main_scene="res://COGITO/DemoScenes/COGITO_MainMenu.tscn"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=120
 boot_splash/image="res://COGITO/COGITO_icon.png"
 boot_splash/fullsize=false
@@ -167,3 +167,8 @@ quickslot_4={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":12,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+
+[layer_names]
+
+3d_physics/layer_1="Environment"
+3d_physics/layer_2="Interactables"

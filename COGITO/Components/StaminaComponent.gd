@@ -31,17 +31,18 @@ func _process(delta):
 			is_regenerating = false
 	
 	# Decreases stamina during sprinting
-	if !is_regenerating and regen_timer.is_stopped() and current_stamina < max_stamina:
-		regen_timer.start()
 	elif player.is_sprinting and player.current_speed > player.WALKING_SPEED:
 		regen_timer.stop()
 		is_regenerating = false
 		subtract(run_exhaustion_speed * delta)
+		
+	if !is_regenerating and regen_timer.is_stopped() and current_stamina < max_stamina and !player.is_sprinting:
+		regen_timer.start()
 
 
 func _on_regen_timer_timeout():
-	print("starting stamina regeneration")
-	is_regenerating = true
+	if !is_regenerating:
+		is_regenerating = true
 
 
 func add(amount):

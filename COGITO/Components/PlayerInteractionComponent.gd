@@ -56,6 +56,8 @@ func _input(event):
 			var interactable = interaction_raycast.get_collider()
 			if interactable.has_method("interact"):
 				interactable.interact(self)
+				if is_wielding:
+					equipped_wieldable_item.update_wieldable_data()
 			elif equipped_wieldable_item != null:
 				if interactable.has_method("carry"):
 					send_hint(null,"Can't carry an object while wielding.")
