@@ -4,7 +4,8 @@
 [ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://COGITO/InventoryPD/Items/Cogito_FoamBullets.tres" id="3_7etap"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_tbkmk"]
 
-[sub_resource type="Resource" id="Resource_4wave"]
+[sub_resource type="Resource" id="Resource_vooro"]
+resource_local_to_scene = true
 script = ExtResource("4_tbkmk")
 inventory_item = ExtResource("3_7etap")
 quantity = 1
@@ -37,7 +38,7 @@ max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_6pqxf")
 is_pickup = true
-slot_data = SubResource("Resource_4wave")
+slot_data = SubResource("Resource_vooro")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)

@@ -210,6 +210,9 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	if is_movement_paused:
+		return
+		
 	# Getting input direction
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	

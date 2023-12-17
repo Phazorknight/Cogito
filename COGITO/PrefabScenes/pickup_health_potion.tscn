@@ -5,6 +5,7 @@
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres" id="2_j2eoi"]
 
 [sub_resource type="Resource" id="Resource_210ma"]
+resource_local_to_scene = true
 script = ExtResource("2_4pii1")
 inventory_item = ExtResource("2_j2eoi")
 quantity = 1

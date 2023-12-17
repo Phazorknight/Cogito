@@ -25,6 +25,7 @@ attribute_change_amount = 0.0
 primary_use_prompt = ""
 secondary_use_prompt = ""
 charge_max = 0.0
+ammo_item_name = ""
 charge_current = 0.0
 wieldable_range = 0.0
 wieldable_damage = 0.0

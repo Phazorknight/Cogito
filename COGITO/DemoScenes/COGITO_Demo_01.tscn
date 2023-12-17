@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=84 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="6_cy1m6"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://COGITO/PrefabScenes/target_destructable.tscn" id="8_tk621"]
 [ext_resource type="PackedScene" uid="uid://bdyukj85qkut0" path="res://COGITO/PrefabScenes/door.tscn" id="8_xabdk"]
+[ext_resource type="Resource" uid="uid://060gqm74tdlk" path="res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres" id="8_yqvna"]
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="9_g1bqh"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://COGITO/PrefabScenes/pickup_key.tscn" id="9_qv8nx"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/pickup_health_potion.tscn" id="12_2vt2n"]
@@ -147,6 +148,58 @@ points = PackedVector3Array(-0.5, -0.7, -0.05, -0.5, -0.7, 0.05, -0.5, 0.699863,
 material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
+
+[sub_resource type="Resource" id="Resource_2eq5d"]
+resource_local_to_scene = true
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_q21gv"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_op7ip"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_6sppo"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_itbno"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_5a5sb"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_k2gss"]
+resource_local_to_scene = true
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("8_yqvna")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_a1xk0"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("15_86b07")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_g6hy2"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("15_86b07")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_db2dq"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("15_86b07")
+quantity = 1
 
 [sub_resource type="Resource" id="Resource_jr5dy"]
 resource_local_to_scene = true
@@ -775,32 +828,48 @@ font_size = 48
 [node name="Pickup_Key" parent="ITEM_PICKUPS" instance=ExtResource("9_qv8nx")]
 transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -20.3432, 1.15447, 14.5198)
 
-[node name="HealthPotion" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6475, 1.25671, 10.8067)
-
-[node name="HealthPotion2" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.323, 1.25671, 10.8892)
-
-[node name="HealthPotion3" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5597, 1.25671, 11.1386)
-
 [node name="Pickup_Battery" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2699, 0.119063, 14.5188)
+slot_data = SubResource("Resource_2eq5d")
 
 [node name="Pickup_Battery2" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4613, 0.119063, 14.3279)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5666, 0.119063, 14.5188)
+slot_data = SubResource("Resource_q21gv")
 
 [node name="Pickup_Battery3" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1866, 0.119064, 14.0786)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9551, 0.119063, 14.5188)
+slot_data = SubResource("Resource_op7ip")
 
 [node name="Pickup_Battery4" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9751, 0.119064, 14.4325)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3779, 0.119063, 14.2832)
+slot_data = SubResource("Resource_6sppo")
+
+[node name="Pickup_Battery5" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1819, 0.119063, 13.9579)
+slot_data = SubResource("Resource_itbno")
+
+[node name="Pickup_Battery6" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1179, 0.119063, 14.2832)
+slot_data = SubResource("Resource_5a5sb")
 
 [node name="Pickup_StaminaExtension" parent="ITEM_PICKUPS" instance=ExtResource("18_pobhb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7516, 1.03198, 7.04623)
+slot_data = SubResource("Resource_k2gss")
 
 [node name="Pickup_Flashlight" parent="ITEM_PICKUPS" instance=ExtResource("1_oweej")]
 transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 0.707107, 0.603448, 0.368578, -10.3056, 1.21477, 14.5379)
+
+[node name="HealthPotion" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7123, 1.30439, 10.6794)
+slot_data = SubResource("Resource_a1xk0")
+
+[node name="HealthPotion2" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3539, 1.30439, 10.9876)
+slot_data = SubResource("Resource_g6hy2")
+
+[node name="HealthPotion3" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6422, 1.30439, 11.1829)
+slot_data = SubResource("Resource_db2dq")
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.2698, 0.799999, -3.03953)

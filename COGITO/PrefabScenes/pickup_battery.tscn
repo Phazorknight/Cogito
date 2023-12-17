@@ -4,7 +4,8 @@
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="2_hmjxw"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_12bow"]
 
-[sub_resource type="Resource" id="Resource_ocmqh"]
+[sub_resource type="Resource" id="Resource_h2ijv"]
+resource_local_to_scene = true
 script = ExtResource("3_12bow")
 inventory_item = ExtResource("2_hmjxw")
 quantity = 1
@@ -49,7 +50,7 @@ radius = 0.1
 [node name="Pickup_Battery" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_7e57d")
-slot_data = SubResource("Resource_ocmqh")
+slot_data = SubResource("Resource_h2ijv")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_jpa6y")

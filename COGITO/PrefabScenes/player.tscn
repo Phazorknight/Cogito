@@ -158,7 +158,8 @@ collision_mask = 2
 [node name="Wieldables" type="Node3D" parent="Neck/Head"]
 
 [node name="Flashlight" type="RigidBody3D" parent="Neck/Head/Wieldables"]
-transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.325805, -0.279839, -0.531526)
+transform = Transform3D(-2.56068e-07, -3.61092e-06, 1, -0.997495, 0.0707372, 0, -0.0707372, -0.997495, -3.61999e-06, 0.325805, -0.8, -0.531526)
+visible = false
 collision_layer = 3
 mass = 2.0
 freeze = true

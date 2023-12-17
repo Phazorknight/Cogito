@@ -132,11 +132,11 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 
 
 func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
-	
 	for index in inventory_slots.size():
 		if inventory_slots[index] and inventory_slots[index].can_fully_merge_with(slot_data) :
 			inventory_slots[index].fully_merge_with(slot_data)
 			inventory_updated.emit(self)
+			
 			return true
 	
 	for index in inventory_slots.size():
