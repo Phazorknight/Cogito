@@ -204,6 +204,7 @@ slot_data = SubResource("Resource_jll6o")
 interaction_text = "Pick up Pistol"
 projectile_prefab = ExtResource("11_ydo45")
 projectile_velocity = 50.0
+default_position = Vector3(0.329, -0.264, -0.535)
 sound_primary_use = ExtResource("11_45f3g")
 
 [node name="pistol_mesh" type="MeshInstance3D" parent="Neck/Head/Wieldables/Foam Pistol"]

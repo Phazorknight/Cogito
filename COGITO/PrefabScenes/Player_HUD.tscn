@@ -57,7 +57,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wdkf")
 default_hint_icon = ExtResource("3_o56n0")
-use_stamina_component = true
 
 [node name="Crosshair" type="Control" parent="."]
 layout_mode = 1

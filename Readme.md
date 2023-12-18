@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **Alpha 202312k**
+Version: **Alpha 202312l**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -45,8 +45,7 @@ providing a framework for creating interactable objects and items.
 
 ### Known bugs:
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
-- Wieldables:
-  - Gamepad: Primary use trigger needs refining as the analog input causes multiple triggers.
+
 
 ### Still to do:
 - Pause/Options Menu:

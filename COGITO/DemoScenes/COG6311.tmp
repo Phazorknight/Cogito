@@ -261,7 +261,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
 
 [node name="Floor" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.05, 0)
-collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor"]
@@ -308,7 +307,6 @@ shape = SubResource("ConvexPolygonShape3D_vdh4p")
 
 [node name="Floor6" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.05, 10)
-collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor6"]
@@ -427,7 +425,6 @@ shape = SubResource("ConvexPolygonShape3D_jksjg")
 
 [node name="WallCrate" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.1, 0, 5.4)
-collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallCrate"]
@@ -504,7 +501,6 @@ shape = SubResource("ConvexPolygonShape3D_jksjg")
 
 [node name="WallSmaller" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.9, 0, 10)
-collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallSmaller"]
@@ -517,7 +513,6 @@ shape = SubResource("ConvexPolygonShape3D_75rur")
 
 [node name="WallSmaller2" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.9, 0, 4.4)
-collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallSmaller2"]
@@ -530,7 +525,6 @@ shape = SubResource("ConvexPolygonShape3D_8rj2a")
 
 [node name="CeilingGap" type="StaticBody3D" parent="StaticEnvironment"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.9, 2.5, 9.7)
-collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/CeilingGap"]
@@ -801,7 +795,6 @@ mesh = SubResource("PrismMesh_fghv1")
 [node name="GateDiamondKey" type="CSGPolygon3D" parent="StaticEnvironment"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -33, 0, 5)
 use_collision = true
-collision_layer = 3
 polygon = PackedVector2Array(0, 0, 0, 3, 10, 3, 10, 0, 4, 0, 4, 2, 2, 2, 2, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
@@ -821,7 +814,6 @@ font_size = 48
 [node name="Gate2" type="CSGPolygon3D" parent="StaticEnvironment"]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -4.81737, 0, 3.01373)
 use_collision = true
-collision_layer = 3
 polygon = PackedVector2Array(0, 0, 0, 3, 9.6, 3, 9.6, 0, 4, 0, 4, 2, 1, 2, 1, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
@@ -880,14 +872,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6422, 1.30439, 11.1829)
 slot_data = SubResource("Resource_db2dq")
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
-transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.43716, 0.8, -2.86949)
+transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -44.7477, 0.8, -2.24086)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
 inventory_data = SubResource("Resource_jr5dy")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
-use_stamina_component = true
+use_brightness_component = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_q2rvv")]
 
@@ -902,8 +894,6 @@ inventory_data = SubResource("Resource_nar8x")
 [node name="Door" parent="." instance=ExtResource("8_xabdk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
 open_rotation_deg = -95.0
-closed_position = Vector3(-14.9, 0, 9.2)
-open_position = Vector3(-14.9, 0, 8.309)
 
 [node name="Lamp_Standing" parent="." instance=ExtResource("18_oxm1j")]
 

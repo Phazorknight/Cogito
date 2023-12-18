@@ -49,15 +49,23 @@ func update_input_icon():
 			print("DynamicInputIcon: Action=", action_name, ". No primary keyboard/mouse input map assigned.")
 			frame = 0
 		
-
 	else:
 		var joypad_input = InputHelper.get_joypad_input_for_action(action_name)
 		if joypad_input:
 			print("DynamicInputIcon: Action=", action_name, ". Joypad btn=", joypad_input.button_index)
 			set_texture(gamepad_icons)
 			frame = joypad_input.button_index
-		else:
-			print("DynamicInputIcon: Joypad input for action ", action_name, " was null.")
+			
+		var joypad_motion = InputHelper.get_joypad_motion_for_action(action_name)
+		if joypad_motion:
+			print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
+			set_texture(gamepad_icons)
+			if joypad_motion.axis == 5:
+				frame = 18 #Sets icon to RT
+			if joypad_motion.axis == 4:
+				frame = 17 #Sets icon to LT
+
+
 
 func keycode_to_sprite_frame_index(key_code_string: String) -> int:
 	match key_code_string:
@@ -93,8 +101,18 @@ func keycode_to_sprite_frame_index(key_code_string: String) -> int:
 			return 12
 		"M":
 			return 13
-		"N:":
+		"N":
 			return 14
+		"O":
+			return 15
+		"P":
+			return 16
+		"Q":
+			return 17
+		"R":
+			return 18
+		"S":
+			return 19
 		"Space":
 			return 40
 		"Tab":

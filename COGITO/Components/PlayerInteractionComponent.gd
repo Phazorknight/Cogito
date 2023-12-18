@@ -71,15 +71,17 @@ func _input(event):
 
 	# Wieldable primary Action Input
 	if !get_parent().is_movement_paused:	
-		if is_wielding and event.is_action_pressed("right_trigger"):
-			if InputHelper.device != "keyboard":
-				# Trying to get the Trigger axis to behave more like a button. Not really successfull yet...
-				var trigger_value = event.get_action_strength("right_trigger")
-				print("Trigger value: ", trigger_value)
-				attempt_action_primary()
-
-		if is_wielding and event.is_action_pressed("action_primary"):
+		if is_wielding and Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary()
+		
+		if is_wielding and Input.is_action_just_pressed("action_secondary"):
+			attempt_action_secondary(false)
+		if is_wielding and Input.is_action_just_released("action_secondary"):
+			attempt_action_secondary(true)
+		
+		if is_wielding and event.is_action_pressed("reload"):
+			attempt_reload()
+		
 
 
 ### Wieldable Management
@@ -118,6 +120,57 @@ func attempt_action_primary():
 			wieldable_animation_player.play(equipped_wieldable_item.use_anim)
 			equipped_wieldable_item.subtract(1)
 			equipped_wieldable_node.action_primary(Get_Camera_Collision())
+
+
+func attempt_action_secondary(is_released:bool):
+	if equipped_wieldable_node == null:
+		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
+		return
+	else:
+		equipped_wieldable_node.action_secondary(is_released)
+
+
+func attempt_reload():
+	
+	var inventory = get_parent().inventory_data
+	# Some safety checks if reload should even be triggered.
+	if inventory == null:
+		print("Player inventory was null!")
+		return
+		
+	var ammo_needed : int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)
+	if ammo_needed <= 0:
+		print("Wieldable is fully charged.")
+		return
+		
+	if equipped_wieldable_item.get_item_amount_in_inventory(equipped_wieldable_item.ammo_item_name) <= 0:
+		print("You have no ammo for this wieldable.")
+		return
+		
+	if !wieldable_animation_player.is_playing(): #Make sure reload isn't interrupting another animation.
+		wieldable_animation_player.play(equipped_wieldable_item.reload_anim)
+		Audio.play_sound_3d(equipped_wieldable_node.sound_reload).global_position = equipped_wieldable_node.global_position
+		
+		while ammo_needed > 0:
+			if equipped_wieldable_item.get_item_amount_in_inventory(equipped_wieldable_item.ammo_item_name) <=0:
+				print("No more ammo in inventory.")
+				break
+			for slot in inventory.inventory_slots:
+				if slot != null and slot.inventory_item.name == equipped_wieldable_item.ammo_item_name and ammo_needed > 0:
+					inventory.remove_item_from_stack(slot)
+					ammo_needed -= slot.inventory_item.reload_amount
+					if ammo_needed < 0:
+						ammo_needed = 0
+						
+					equipped_wieldable_item.charge_current += slot.inventory_item.reload_amount
+					if equipped_wieldable_item.charge_current > equipped_wieldable_item.charge_max:
+						equipped_wieldable_item.charge_current = equipped_wieldable_item.charge_max
+					
+					print("RELOAD: Found ", slot.inventory_item.name, ". Removed one and added ", slot.inventory_item.reload_amount, " charge. Still needed: ", ammo_needed)
+		
+		inventory.inventory_updated.emit(inventory)
+		equipped_wieldable_item.update_wieldable_data()
+
 
 
 # Function called by interactables if they need to send a hint. The signal sent here gets picked up by the Player_Hud_Manager.

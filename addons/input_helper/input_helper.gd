@@ -267,6 +267,20 @@ func get_joypad_input_for_action(action: String) -> InputEventJoypadButton:
 	return null if buttons.is_empty() else buttons[0]
 
 
+## Get the first motion for an action
+func get_joypad_motion_for_action(action: String) -> InputEventJoypadMotion:
+	var buttons: Array[InputEventJoypadMotion] = get_joypad_motions_for_action(action)
+	return null if buttons.is_empty() else buttons[0]
+
+## Get all motions used for an action
+func get_joypad_motions_for_action(action: String) -> Array[InputEventJoypadMotion]:
+	var inputs: Array[InputEventJoypadMotion]
+	for event in InputMap.action_get_events(action):
+		if event is InputEventJoypadMotion:
+			inputs.append(event)
+	return inputs
+
+
 ## Set the button for an action
 func set_joypad_input_for_action(action: String, input: InputEventJoypadButton, swap_if_taken: bool = true) -> Error:
 	return _update_joypad_input_for_action(action, input, swap_if_taken, null)

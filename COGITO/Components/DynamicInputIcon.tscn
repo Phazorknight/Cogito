@@ -6,10 +6,10 @@
 
 [node name="DynamicInputIcon" type="Sprite2D"]
 position = Vector2(50, 50)
-texture = ExtResource("1_0ifdx")
+texture = ExtResource("3_hxvpc")
 hframes = 10
 vframes = 10
-frame = 28
+frame = 18
 region_rect = Rect2(0, 0, 100, 100)
 script = ExtResource("1_7t81w")
 gamepad_icons = ExtResource("3_hxvpc")

@@ -4,6 +4,10 @@ extends Node3D
 
 ## Sets if object starts as on or off.
 @export var is_on : bool = false
+## Toggle if switchable can be interacted with repeatedly or not.
+@export var allows_repeated_interaction : bool = true
+## Hint that displays after this has been used.
+@export var has_been_used_hint : String
 @export var interaction_text_when_on : String = "Switch off"
 @export var interaction_text_when_off : String = "Switch on"
 ## Sound that plays when switched.
@@ -30,15 +34,17 @@ func _ready():
 
 func interact(_player):
 	interactor = _player
+	if !allows_repeated_interaction and is_on:
+		interactor.send_hint(null, has_been_used_hint)
+		return
 	if needs_item_to_operate:
 		if check_for_item() == true:
 			switch()
-			audio_stream_player_3d.play()
 	else:
-		audio_stream_player_3d.play()
 		switch()
 
 func switch():
+	audio_stream_player_3d.play()
 	is_on = !is_on
 	
 	for nodepath in objects_toggle_visibility:

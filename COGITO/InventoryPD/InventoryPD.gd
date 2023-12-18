@@ -83,6 +83,19 @@ func remove_slot_data(slot_data_to_remove: InventorySlotPD):
 		inventory_updated.emit(self)
 
 
+func remove_item_from_stack(slot_data: InventorySlotPD):
+	var index = inventory_slots.find(slot_data,0)
+	if index == -1:
+		print("Couldn't remove item from item stack as it wasn't found.")
+		return
+	else:
+		print("Removing ", slot_data, " at index ", index)
+		inventory_slots[index].quantity -= 1
+		if inventory_slots[index].quantity <= 0:
+			inventory_slots[index] = null
+		inventory_updated.emit(self)
+
+
 func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	

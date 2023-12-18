@@ -32,13 +32,15 @@ func hold():
 		audio_stream_player_3d.stream = pick_up_sound
 		audio_stream_player_3d.play()
 	
-	self.set_freeze_enabled(true)
+	self.set_sleeping(true)
+	#self.set_freeze_enabled(true)
 	is_being_carried = true
 
 func leave():
 	$CollisionShape3D.set_disabled(false)
 	holder.carried_object = null
-	self.set_freeze_enabled(false)
+	self.set_sleeping(false)
+	#self.set_freeze_enabled(false)
 	is_being_carried = false
 
 
