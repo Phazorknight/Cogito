@@ -112,6 +112,7 @@ stream_4/weight = 1.0
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 script = ExtResource("1_wkneb")
+fall_damage = 10
 inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
 

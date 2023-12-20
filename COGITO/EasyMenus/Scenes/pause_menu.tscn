@@ -62,9 +62,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Options"
-script = ExtResource("2_3y18l")
-sfx_pressed = ExtResource("3_arj7o")
-sfx_hover = ExtResource("4_cpqh0")
 
 [node name="BackToMenuButton" type="Button" parent="Content"]
 custom_minimum_size = Vector2(350, 0)
@@ -72,9 +69,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Back to Main Menu"
-script = ExtResource("2_3y18l")
-sfx_pressed = ExtResource("3_arj7o")
-sfx_hover = ExtResource("4_cpqh0")
 
 [node name="QuitButton" type="Button" parent="Content"]
 custom_minimum_size = Vector2(350, 0)
@@ -82,9 +76,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Quit"
-script = ExtResource("2_3y18l")
-sfx_pressed = ExtResource("3_arj7o")
-sfx_hover = ExtResource("4_cpqh0")
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_ejh0f")]
 unique_name_in_owner = true

@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://COGITO/Components/HealthComponent.gd" id="1_pflpc"]
 
-[node name="HealthComponent" type="Node2D"]
+[node name="HealthComponent" type="Node3D"]
 script = ExtResource("1_pflpc")

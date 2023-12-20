@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dq6tvhqcy2aps"]
+[gd_scene load_steps=4 format=3 uid="uid://dq6tvhqcy2aps"]
 
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/main_menu_controller.gd" id="1_lbw7r"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Btn_Ui_Sounds.gd" id="2_mguy7"]
 [ext_resource type="PackedScene" uid="uid://qlskttl1wjr7" path="res://COGITO/EasyMenus/Scenes/options_menu.tscn" id="2_pwqpr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wrn81"]
@@ -21,11 +20,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -117.5
+offset_left = -175.0
 offset_top = 67.0
-offset_right = 117.5
-offset_bottom = 328.0
+offset_right = 175.0
+offset_bottom = 398.0
 grow_horizontal = 2
+pivot_offset = Vector2(182, 90)
 theme_override_constants/separation = 15
 metadata/_edit_group_ = true
 
@@ -38,7 +38,7 @@ horizontal_alignment = 1
 [node name="Subtitle" type="Label" parent="Content"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
-text = "Philip Drobar 2023"
+text = "Template by Philip Drobar - 2023"
 label_settings = SubResource("LabelSettings_wrn81")
 horizontal_alignment = 1
 
@@ -57,7 +57,6 @@ focus_next = NodePath("../OptionsButton")
 focus_previous = NodePath("../QuitButton")
 theme_override_font_sizes/font_size = 30
 text = "Start"
-script = ExtResource("2_mguy7")
 
 [node name="OptionsButton" type="Button" parent="Content"]
 custom_minimum_size = Vector2(350, 0)
@@ -69,7 +68,6 @@ focus_next = NodePath("../QuitButton")
 focus_previous = NodePath("../StartGameButton")
 theme_override_font_sizes/font_size = 30
 text = "Options"
-script = ExtResource("2_mguy7")
 
 [node name="QuitButton" type="Button" parent="Content"]
 custom_minimum_size = Vector2(350, 0)
@@ -81,7 +79,6 @@ focus_next = NodePath("../StartGameButton")
 focus_previous = NodePath("../OptionsButton")
 theme_override_font_sizes/font_size = 30
 text = "Quit"
-script = ExtResource("2_mguy7")
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_pwqpr")]
 unique_name_in_owner = true

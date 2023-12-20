@@ -33,7 +33,8 @@ func _ready():
 
 func _physics_process(delta):
 	if is_holding:
-		audio_stream_player_3d.play()
+		if !audio_stream_player_3d.playing:
+			audio_stream_player_3d.play()
 		progress_bar.value = hold_timer.time_left / hold_time * 100
 		if rotate_while_holding:
 			rotate(rotation_axis, delta * rotation_speed)

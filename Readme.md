@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **Alpha 202312l**
+Version: **Alpha 202312m**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -54,8 +54,6 @@ providing a framework for creating interactable objects and items.
   - Action points (low prio)
 - Inventory / Items:
   - Option to take all items from a container.
-- Interactables:
-  - Door: Create option to make sliding door
  
 
 ## Set-Up

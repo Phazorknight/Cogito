@@ -37,10 +37,9 @@ func update_input_icon():
 		set_texture(keyboard_icons)
 		var keyboard_input = InputHelper.get_keyboard_input_for_action(action_name)
 		if keyboard_input is InputEventKey:
-			print("DynamicInputIcon: Action=", action_name, ". Physical keycode=", keyboard_input.get_physical_keycode(), ". Keycode string=", OS.get_keycode_string(keyboard_input.get_physical_keycode()))
+			#print("DynamicInputIcon: Action=", action_name, ". Physical keycode=", keyboard_input.get_physical_keycode(), ". Keycode string=", OS.get_keycode_string(keyboard_input.get_physical_keycode()))
 			frame = keycode_to_sprite_frame_index(OS.get_keycode_string(keyboard_input.get_physical_keycode()))
 		elif keyboard_input is InputEventMouseButton:
-			print("DynamicInputIcon: Action=", action_name, ". Mouse button=", keyboard_input.get_button_index(), ".")
 			if keyboard_input.get_button_index() == 2:
 				frame = keycode_to_sprite_frame_index("Mouse Right")
 			if keyboard_input.get_button_index() == 1:
@@ -52,13 +51,13 @@ func update_input_icon():
 	else:
 		var joypad_input = InputHelper.get_joypad_input_for_action(action_name)
 		if joypad_input:
-			print("DynamicInputIcon: Action=", action_name, ". Joypad btn=", joypad_input.button_index)
+			#print("DynamicInputIcon: Action=", action_name, ". Joypad btn=", joypad_input.button_index)
 			set_texture(gamepad_icons)
 			frame = joypad_input.button_index
 			
 		var joypad_motion = InputHelper.get_joypad_motion_for_action(action_name)
 		if joypad_motion:
-			print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
+			#print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
 			set_texture(gamepad_icons)
 			if joypad_motion.axis == 5:
 				frame = 18 #Sets icon to RT

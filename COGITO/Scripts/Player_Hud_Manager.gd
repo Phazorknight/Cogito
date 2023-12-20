@@ -5,6 +5,8 @@ extends Control
 @onready var brightness_bar = $PlayerAttributes/MarginContainer/VBoxContainer/BrightnessBar
 @onready var health_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/HealthBar/Label
 @onready var sanity_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/SanityBar/Label
+@onready var damage_overlay = $DamageOverlay
+
 @onready var stamina_bar = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar
 @onready var stamina_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar/Label
 
@@ -24,6 +26,8 @@ extends Control
 
 ## Reference to the Node that has the player.gd script.
 @export var player : Node
+
+var hurt_tween : Tween
 
 var is_inventory_open : bool = false
 var device_id : int = -1
@@ -51,6 +55,8 @@ func _ready():
 	health_bar.value = player.health_component.current_health
 	health_bar_label.text = str(health_bar.value, "/", health_bar.max_value)
 	player.health_component.health_changed.connect(_on_player_health_changed)
+	player.health_component.damage_taken.connect(_on_player_damage_taken)
+	damage_overlay.modulate = Color.TRANSPARENT
 	
 	# Setting up stamina bar
 	if use_stamina_component:
@@ -190,6 +196,14 @@ func _on_player_health_changed(new_health, max_health):
 	health_bar.max_value = max_health
 	health_bar.value = new_health
 	health_bar_label.text = str(int(health_bar.value), "/", int(health_bar.max_value))
+	
+
+func _on_player_damage_taken():
+	damage_overlay.modulate = Color.WHITE
+	if hurt_tween:
+		hurt_tween.kill()
+	hurt_tween = create_tween()
+	hurt_tween.tween_property(damage_overlay,"modulate", Color.TRANSPARENT, .3)
 
 
 # Updating player stamina bar

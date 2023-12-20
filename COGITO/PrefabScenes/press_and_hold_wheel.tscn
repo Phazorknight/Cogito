@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bnygtkw3tvet6"]
 
-[ext_resource type="Script" path="res://COGITO/DemoScenes/press_and_hold.gd" id="1_t4xfa"]
+[ext_resource type="Script" path="res://COGITO/Scripts/press_and_hold.gd" id="1_t4xfa"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_yqbba"]
 top_radius = 0.3
@@ -58,4 +58,5 @@ value = 50.0
 show_percentage = false
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -20.0
 bus = &"SFX"

@@ -106,7 +106,7 @@ func open_door():
 	else:
 		# Sliding door open.
 		var tween_door = get_tree().create_tween()
-		tween_door.tween_property(self,"position", open_position, .2)
+		tween_door.tween_property(self,"position", open_position, door_speed)
 		
 	is_open = true
 	interaction_text = interaction_text_when_open
@@ -121,6 +121,6 @@ func close_door():
 	else:
 		# Sliding door close
 		var tween_door = get_tree().create_tween()
-		tween_door.tween_property(self,"position", closed_position, .2)
+		tween_door.tween_property(self,"position", closed_position, door_speed)
 	is_open = false
 	interaction_text = interaction_text_when_closed

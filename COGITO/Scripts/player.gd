@@ -8,6 +8,8 @@ signal toggle_inventory_interface()
 ## Refereence to Player HUD node
 @export var player_hud : NodePath
 
+## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
+@export var fall_damage : int
 
 ## Flag if Stamina component isused (as this effects movement)
 @export var is_using_stamina : bool = true
@@ -336,6 +338,10 @@ func _physics_process(delta):
 			$Neck/Head/Eyes/AnimationPlayer.play("roll")
 		elif last_velocity.y <= -5.0:
 			$Neck/Head/Eyes/AnimationPlayer.play("landing")
+		
+		# Taking fall damage
+		if fall_damage > 0 and last_velocity.y <= -5:
+			health_component.subtract(fall_damage)
 	
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=84 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=116 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -26,12 +26,16 @@
 [ext_resource type="PackedScene" uid="uid://bnygtkw3tvet6" path="res://COGITO/PrefabScenes/press_and_hold_wheel.tscn" id="22_ni6um"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Interact_Door.gd" id="23_rfav8"]
 [ext_resource type="PackedScene" uid="uid://3gwo23kpr58f" path="res://COGITO/PrefabScenes/lightzone_lamp.tscn" id="24_p17c7"]
+[ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://COGITO/Assets/Audio/Kenney/stoneDrag4.ogg" id="25_3nnou"]
 [ext_resource type="PackedScene" uid="uid://bc52bohkbf1yp" path="res://COGITO/PrefabScenes/pickup_diamond_key_a.tscn" id="25_w5f1m"]
 [ext_resource type="PackedScene" uid="uid://djfg6ea5cbhyv" path="res://COGITO/PrefabScenes/pickup_diamond_key_b.tscn" id="26_1prk2"]
 [ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://COGITO/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="27_0a6c2"]
 [ext_resource type="Script" path="res://COGITO/Scripts/switchable.gd" id="27_r5oie"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="28_3r4lg"]
+[ext_resource type="AudioStream" uid="uid://bfmqga66x7l1k" path="res://COGITO/Assets/Audio/Kenney/rockHit2.ogg" id="30_42jtk"]
 [ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://COGITO/PrefabScenes/pickup_pistol.tscn" id="30_a7v26"]
+[ext_resource type="PackedScene" uid="uid://dbtarejfetahc" path="res://COGITO/PrefabScenes/Cabinet_prefab.tscn" id="35_ee66c"]
+[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="36_42jeg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -53,12 +57,43 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
+[sub_resource type="BoxMesh" id="BoxMesh_l3y0e"]
+size = Vector3(2, 0.05, 2)
+
 [sub_resource type="BoxMesh" id="BoxMesh_thwr4"]
 material = ExtResource("1_lsda4")
-size = Vector3(20, 0.1, 20)
+size = Vector3(30, 0.1, 20)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_dh0sm"]
-points = PackedVector3Array(-10, -0.05, -10, -10, 0.05, -10, 10, -0.05, -10, -10, -0.05, 10, -10, 0.05, 10, 10, 0.05, -10, 10, -0.05, 10, 10, 0.05, 10)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yawpu"]
+points = PackedVector3Array(-15, -0.05, -10, -15, 0.05, -10, 15, -0.05, -10, -15, -0.05, 10, -15, 0.05, 10, 15, 0.05, -10, 15, -0.05, 10, 15, 0.05, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rvtuv"]
+material = ExtResource("1_lsda4")
+size = Vector3(0.2, 3, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ai2ln"]
+points = PackedVector3Array(-0.1, -1.5, -5, 0.1, -1.5, -5, -0.1, -1.5, 5, -0.1, 1.5, -5, 0.1, 1.5, -5, 0.1, -1.5, 5, -0.1, 1.5, 5, 0.1, 1.5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cx70k"]
+material = ExtResource("1_lsda4")
+size = Vector3(10, 0.1, 9.8)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_22r6n"]
+points = PackedVector3Array(-5, -0.05, -4.9, -5, 0.05, -4.9, 5, -0.05, -4.9, -5, -0.05, 4.9, -5, 0.05, 4.9, 5, 0.05, -4.9, 5, -0.05, 4.9, 5, 0.05, 4.9)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xwnhq"]
+material = ExtResource("1_lsda4")
+size = Vector3(10, 0.1, 14)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_k2toe"]
+points = PackedVector3Array(5, 0.05, 7, 5, -0.05, 7, 5, 0.05, -7, -5, 0.05, 7, -5, -0.05, 7, 5, -0.05, -7, -5, 0.05, -7, -5, -0.05, -7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_upbim"]
+material = ExtResource("1_lsda4")
+size = Vector3(10.2, 0.1, 9.8)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ghnbv"]
+points = PackedVector3Array(-5.1, -0.05, -4.9, -5.1, 0.05, -4.9, 5.1, -0.05, -4.9, -5.1, -0.05, 4.9, -5.1, 0.05, 4.9, 5.1, 0.05, -4.9, 5.1, -0.05, 4.9, 5.1, 0.05, 4.9)
 
 [sub_resource type="BoxMesh" id="BoxMesh_yxsbf"]
 material = ExtResource("1_lsda4")
@@ -67,19 +102,18 @@ size = Vector3(0.2, 3, 10)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jksjg"]
 points = PackedVector3Array(-0.1, -1.5, -5, 0.1, -1.5, -5, -0.1, -1.5, 5, -0.1, 1.5, -5, 0.1, 1.5, -5, 0.1, -1.5, 5, -0.1, 1.5, 5, 0.1, 1.5, 5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_upbim"]
+[sub_resource type="BoxMesh" id="BoxMesh_x6n4g"]
 material = ExtResource("1_lsda4")
-size = Vector3(10, 0.1, 10)
+size = Vector3(0.2, 3, 10.2)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vdh4p"]
-points = PackedVector3Array(-5, -0.05, -5, -5, 0.05, -5, 5, -0.05, -5, -5, -0.05, 5, -5, 0.05, 5, 5, 0.05, -5, 5, -0.05, 5, 5, 0.05, 5)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_41tst"]
+points = PackedVector3Array(-0.1, -1.5, -5.1, 0.1, -1.5, -5.1, -0.1, -1.5, 5.1, -0.1, 1.5, -5.1, 0.1, 1.5, -5.1, 0.1, -1.5, 5.1, -0.1, 1.5, 5.1, 0.1, 1.5, 5.1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_xwnhq"]
-material = ExtResource("1_lsda4")
-size = Vector3(10, 0.1, 20)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6ef7x"]
+points = PackedVector3Array(-0.1, -1.5, -4.9, 0.1, -1.5, -4.9, -0.1, -1.5, 4.9, -0.1, 1.5, -4.9, 0.1, 1.5, -4.9, 0.1, -1.5, 4.9, -0.1, 1.5, 4.9, 0.1, 1.5, 4.9)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gkga4"]
-points = PackedVector3Array(5, 0.05, 10, 5, -0.05, 10, 5, 0.05, -10, -5, 0.05, 10, -5, -0.05, 10, 5, -0.05, -10, -5, 0.05, -10, -5, -0.05, -10)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cabjl"]
+points = PackedVector3Array(-0.1, -1.5, -4.9, 0.1, -1.5, -4.9, -0.1, -1.5, 4.9, -0.1, 1.5, -4.9, 0.1, 1.5, -4.9, 0.1, -1.5, 4.9, -0.1, 1.5, 4.9, 0.1, 1.5, 4.9)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gv32u"]
 material = ExtResource("2_4ig6i")
@@ -101,6 +135,20 @@ size = Vector3(0.2, 2, 4)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_raq3r"]
 points = PackedVector3Array(-0.1, -1, -2, 0.1, -1, -2, -0.1, -1, 2, -0.1, 1, -2, 0.1, 1, -2, 0.1, -1, 2, -0.1, 1, 2, 0.1, 1, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8hfs4"]
+material = ExtResource("1_lsda4")
+size = Vector3(0.2, 3, 30)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vnr22"]
+points = PackedVector3Array(-0.1, -1.5, -15, 0.1, -1.5, -15, -0.1, -1.5, 15, -0.1, 1.5, -15, 0.1, 1.5, -15, 0.1, -1.5, 15, -0.1, 1.5, 15, 0.1, 1.5, 15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fccbs"]
+material = ExtResource("1_lsda4")
+size = Vector3(0.2, 3, 19.6)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ni8hy"]
+points = PackedVector3Array(-0.1, -1.5, -9.8, 0.1, -1.5, -9.8, -0.1, -1.5, 9.8, -0.1, 1.5, -9.8, 0.1, 1.5, -9.8, 0.1, -1.5, 9.8, -0.1, 1.5, 9.8, 0.1, 1.5, 9.8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_vvuw2"]
 material = ExtResource("1_lsda4")
@@ -148,6 +196,81 @@ points = PackedVector3Array(-0.5, -0.7, -0.05, -0.5, -0.7, 0.05, -0.5, 0.699863,
 material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_woscm"]
+size = Vector3(0.3, 0.3, 0.1)
+
+[sub_resource type="Resource" id="Resource_wdflo"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("15_86b07")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_hpi7r"]
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 2
+
+[sub_resource type="Resource" id="Resource_nar8x"]
+script = ExtResource("2_chxar")
+inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
+
+[sub_resource type="BoxMesh" id="BoxMesh_w1o4d"]
+material = ExtResource("2_4ig6i")
+size = Vector3(4, 0.1, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hq8yc"]
+points = PackedVector3Array(-2, -0.05, -1, -2, 0.05, -1, 2, -0.05, -1, -2, -0.05, 1, -2, 0.05, 1, 2, 0.05, -1, 2, -0.05, 1, 2, 0.05, 1)
+
+[sub_resource type="Resource" id="Resource_1m0cj"]
+resource_local_to_scene = true
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_ogqmk"]
+resource_local_to_scene = true
+script = ExtResource("16_fg1wi")
+inventory_item = ExtResource("17_nl6sa")
+quantity = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_rixwv"]
+material = ExtResource("2_4ig6i")
+size = Vector3(1, 2, 0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qb88g"]
+points = PackedVector3Array(-0.5, -1, -0.05, -0.5, -1, 0.05, -0.5, 1, -0.05, 0.5, -1, -0.05, 0.5, -1, 0.05, -0.5, 1, 0.05, 0.5, 1, -0.05, 0.5, 1, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r708p"]
+albedo_texture = ExtResource("27_0a6c2")
+emission_enabled = true
+emission = Color(0.12549, 0.690196, 0.384314, 1)
+emission_energy_multiplier = 0.8
+emission_operator = 1
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qu2im"]
+size = Vector3(0.5, 0.5, 0.33057)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_50xya"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kj7uj"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_204vo"]
+material = SubResource("StandardMaterial3D_kj7uj")
+radius = 0.1
+height = 0.2
+radial_segments = 12
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_7pweo"]
+material = ExtResource("2_4ig6i")
+size = Vector3(2, 0.1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xr44e"]
+size = Vector3(2, 0.1, 2)
 
 [sub_resource type="Resource" id="Resource_2eq5d"]
 resource_local_to_scene = true
@@ -201,49 +324,33 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("15_86b07")
 quantity = 1
 
+[sub_resource type="BoxMesh" id="BoxMesh_ebsqj"]
+size = Vector3(0.1, 1.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m64r0"]
+size = Vector3(0.1, 1.5, 0.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i0gq6"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_3y43p"]
+size = Vector3(1, 0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xxnqw"]
+size = Vector3(1, 0.1, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bhd5a"]
+size = Vector3(1.5, 0.01, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_el7ru"]
+size = Vector3(1.5, 0.01, 1.5)
+
 [sub_resource type="Resource" id="Resource_jr5dy"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
-
-[sub_resource type="Resource" id="Resource_wdflo"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("15_86b07")
-quantity = 2
-
-[sub_resource type="Resource" id="Resource_hpi7r"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 2
-
-[sub_resource type="Resource" id="Resource_nar8x"]
-script = ExtResource("2_chxar")
-inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
-
-[sub_resource type="BoxMesh" id="BoxMesh_w1o4d"]
-material = ExtResource("2_4ig6i")
-size = Vector3(4, 0.1, 2)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hq8yc"]
-points = PackedVector3Array(-2, -0.05, -1, -2, 0.05, -1, 2, -0.05, -1, -2, -0.05, 1, -2, 0.05, 1, 2, 0.05, -1, 2, -0.05, 1, 2, 0.05, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_rixwv"]
-material = ExtResource("2_4ig6i")
-size = Vector3(1, 2, 0.1)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qb88g"]
-points = PackedVector3Array(-0.5, -1, -0.05, -0.5, -1, 0.05, -0.5, 1, -0.05, 0.5, -1, -0.05, 0.5, -1, 0.05, -0.5, 1, 0.05, 0.5, 1, -0.05, 0.5, 1, 0.05)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r708p"]
-albedo_texture = ExtResource("27_0a6c2")
-emission_enabled = true
-emission = Color(0.12549, 0.690196, 0.384314, 1)
-emission_energy_multiplier = 0.8
-emission_operator = 1
-uv1_triplanar = true
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_qu2im"]
-size = Vector3(0.5, 0.5, 0.33057)
 
 [node name="COGITO_Demo_01" type="Node3D"]
 
@@ -256,411 +363,405 @@ shadow_opacity = 0.8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_11v21")
 
-[node name="StaticEnvironment" type="Node3D" parent="."]
+[node name="STATIC_ENVIRONMENT" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
 
-[node name="Floor" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="LightzoneCeiling" type="MeshInstance3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 13.8, 2.975, 5.3)
+material_override = ExtResource("1_lsda4")
+mesh = SubResource("BoxMesh_l3y0e")
+skeleton = NodePath("../Txt_Lightzone")
+
+[node name="Floor" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.05, 0)
 collision_layer = 3
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9, 0, 4.8)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 4.8)
 mesh = SubResource("BoxMesh_thwr4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9, 0, 4.8)
-shape = SubResource("ConvexPolygonShape3D_dh0sm")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 4.8)
+shape = SubResource("ConvexPolygonShape3D_yawpu")
 
-[node name="Wall12" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Wall12" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 0)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall12"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
+mesh = SubResource("BoxMesh_rvtuv")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall12"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
+shape = SubResource("ConvexPolygonShape3D_ai2ln")
 
-[node name="Wall2" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9, 0, 0)
-metadata/_edit_group_ = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
-
-[node name="Floor5" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Floor5" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -0.05, 10)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor5"]
-mesh = SubResource("BoxMesh_upbim")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Floor5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0999994)
+mesh = SubResource("BoxMesh_cx70k")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor5"]
-shape = SubResource("ConvexPolygonShape3D_vdh4p")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Floor5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0999994)
+shape = SubResource("ConvexPolygonShape3D_22r6n")
 
-[node name="Floor6" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.05, 10)
+[node name="Floor6" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38, -0.05, 20)
 collision_layer = 3
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Floor6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
 mesh = SubResource("BoxMesh_xwnhq")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticEnvironment/Floor6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-shape = SubResource("ConvexPolygonShape3D_gkga4")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Floor6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+shape = SubResource("ConvexPolygonShape3D_k2toe")
 
-[node name="Floor4" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Floor4" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3.05, 10)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Floor4"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Floor4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, -0.1)
 mesh = SubResource("BoxMesh_upbim")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Floor4"]
-shape = SubResource("ConvexPolygonShape3D_vdh4p")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Floor4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, -0.1)
+shape = SubResource("ConvexPolygonShape3D_ghnbv")
 
-[node name="Wall3" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 14.9)
+[node name="Wall3" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 14.7)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_yxsbf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("ConvexPolygonShape3D_jksjg")
 
-[node name="Wall8" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 0, 14.9)
+[node name="Wall8" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 0, 14.7)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall8"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_yxsbf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall8"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("ConvexPolygonShape3D_jksjg")
 
-[node name="Wall6" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Wall6" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.8, 0, 5.1)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.1)
+mesh = SubResource("BoxMesh_x6n4g")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.1)
+shape = SubResource("ConvexPolygonShape3D_41tst")
 
-[node name="Wall10" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Wall10" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 5.1)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall10"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_yxsbf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall10"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("ConvexPolygonShape3D_jksjg")
 
-[node name="Wall11" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 14.9)
+[node name="Wall11" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 14.7)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall11"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_yxsbf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall11"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("ConvexPolygonShape3D_jksjg")
 
-[node name="Wall4" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9, 0, 10)
+[node name="Wall13" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9, 3.1, 10)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.1)
 mesh = SubResource("BoxMesh_yxsbf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.1)
+shape = SubResource("ConvexPolygonShape3D_6ef7x")
 
-[node name="Wall13" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1, 3.1, 10)
+[node name="Wall14" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 3.1, 9.9)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall13"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall14"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 mesh = SubResource("BoxMesh_yxsbf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall13"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall14"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
+shape = SubResource("ConvexPolygonShape3D_cabjl")
 
-[node name="Wall14" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 3.1, 10)
-metadata/_edit_group_ = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall14"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall14"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
-
-[node name="WallCrate" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="WallCrate" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.1, 0, 5.4)
 collision_layer = 3
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallCrate"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallCrate"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.1)
 mesh = SubResource("BoxMesh_gv32u")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticEnvironment/WallCrate"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallCrate"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.9, 1, -2.5)
 mesh = SubResource("BoxMesh_i5303")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticEnvironment/WallCrate"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallCrate"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.9, 1, -2.5)
 shape = SubResource("ConvexPolygonShape3D_da5av")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/WallCrate"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallCrate"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.1)
 shape = SubResource("ConvexPolygonShape3D_sr0li")
 
-[node name="Txt_WallCrateHint" type="Label3D" parent="StaticEnvironment/WallCrate"]
+[node name="Txt_WallCrateHint" type="Label3D" parent="STATIC_ENVIRONMENT/WallCrate"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.1019, 1.21944, 0.0710106)
 text = "Use the crate to get over this wall."
 
-[node name="WallCrouch" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="WallCrouch" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -11.4105, 1, -2.89699)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallCrouch"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallCrouch"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.1)
 mesh = SubResource("BoxMesh_xp63a")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/WallCrouch"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallCrouch"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.1)
 shape = SubResource("ConvexPolygonShape3D_raq3r")
 
-[node name="Txt_CrouchHint" type="Label3D" parent="StaticEnvironment/WallCrouch"]
+[node name="Txt_CrouchHint" type="Label3D" parent="STATIC_ENVIRONMENT/WallCrouch"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.107498, 0.21944, 0.78648)
 text = "Crouch under this wall."
 
-[node name="Wall5" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Wall5" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -5.1)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall5"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
+mesh = SubResource("BoxMesh_8hfs4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall5"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
+shape = SubResource("ConvexPolygonShape3D_vnr22")
 
-[node name="Wall15" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 0, -5.1)
+[node name="Wall16" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 14.9, 0, 0)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall15"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 4.8)
+mesh = SubResource("BoxMesh_fccbs")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall15"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 4.8)
+shape = SubResource("ConvexPolygonShape3D_ni8hy")
 
-[node name="Wall16" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -42.9, 0, 0)
-metadata/_edit_group_ = true
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Wall16"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_yxsbf")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Wall16"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_jksjg")
-
-[node name="WallSmaller" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="WallSmaller" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.9, 0, 10)
 collision_layer = 3
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallSmaller"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallSmaller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.5)
 mesh = SubResource("BoxMesh_vvuw2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/WallSmaller"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallSmaller"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.5)
 shape = SubResource("ConvexPolygonShape3D_75rur")
 
-[node name="WallSmaller2" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="WallSmaller2" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.9, 0, 4.4)
 collision_layer = 3
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallSmaller2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallSmaller2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.8)
 mesh = SubResource("BoxMesh_bjkal")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/WallSmaller2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallSmaller2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.8)
 shape = SubResource("ConvexPolygonShape3D_8rj2a")
 
-[node name="CeilingGap" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="CeilingGap" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4.9, 2.5, 9.7)
 collision_layer = 3
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/CeilingGap"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/CeilingGap"]
 mesh = SubResource("BoxMesh_odmxg")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/CeilingGap"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/CeilingGap"]
 shape = SubResource("ConvexPolygonShape3D_p2jdc")
 
-[node name="WallSmaller3" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="WallSmaller3" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -14.9, 0, 10)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallSmaller3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallSmaller3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.5)
 mesh = SubResource("BoxMesh_vvuw2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/WallSmaller3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallSmaller3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.5)
 shape = SubResource("ConvexPolygonShape3D_75rur")
 
-[node name="WallSmaller4" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="WallSmaller4" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -14.9, 0, 4.4)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/WallSmaller4"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/WallSmaller4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.8)
 mesh = SubResource("BoxMesh_bjkal")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/WallSmaller4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/WallSmaller4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.8)
 shape = SubResource("ConvexPolygonShape3D_8rj2a")
 
-[node name="CeilingGap2" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="CeilingGap2" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -14.9, 2.5, 9.7)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/CeilingGap2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/CeilingGap2"]
 mesh = SubResource("BoxMesh_odmxg")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/CeilingGap2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/CeilingGap2"]
 shape = SubResource("ConvexPolygonShape3D_p2jdc")
 
-[node name="Shelf" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.328985, 1.06589, 14.5785)
+[node name="Shelf" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.25794, 1.06589, 0.745962)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Shelf"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Shelf"]
 mesh = SubResource("BoxMesh_ycjwp")
 surface_material_override/0 = SubResource("StandardMaterial3D_gdv3w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Shelf"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Shelf"]
 shape = SubResource("ConvexPolygonShape3D_r233h")
 
-[node name="Shelf2" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.329, 1.06589, 14.5785)
+[node name="Shelf2" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.329, 1.06589, 14.3785)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/Shelf2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Shelf2"]
 mesh = SubResource("BoxMesh_ycjwp")
 surface_material_override/0 = SubResource("StandardMaterial3D_gdv3w")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/Shelf2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Shelf2"]
 shape = SubResource("ConvexPolygonShape3D_r233h")
 
-[node name="SimpleBox" type="CSGBox3D" parent="StaticEnvironment"]
+[node name="SimpleBox" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.5, 4.5)
 use_collision = true
 material = ExtResource("2_4ig6i")
 
-[node name="SimpleBox2" type="CSGBox3D" parent="StaticEnvironment"]
+[node name="SimpleBox2" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.5, 4.5)
 use_collision = true
 material = ExtResource("2_4ig6i")
 
-[node name="Txt_Flashlight" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.328985, 1.71944, 14.7981)
+[node name="Txt_Flashlight" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5.03834, 1.71944, 0.745962)
 text = "You can pick up and
 wield this FLASHLIGHT"
 
-[node name="Txt_Batteries" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.72898, 1.71944, 14.7981)
+[node name="Txt_Batteries" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5.01753, 1.71944, 3.0981)
 text = "Use these BATTERIES
 to recharge the Flashlight"
 
-[node name="Txt_CarriableBox" type="Label3D" parent="StaticEnvironment"]
+[node name="Txt_CarriableBox" type="Label3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.7952, 1.71944, 6.42556)
 text = "This crate is carriable."
 
-[node name="FloatingPlattformSprint" type="CSGBox3D" parent="StaticEnvironment"]
+[node name="Txt_DoorBasic" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.7952, 2.21944, 9.62556)
+text = "This is a basic door."
+
+[node name="Txt_DoorBasic2" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.5952, 4.81944, 6.82556)
+text = "Work in progress."
+
+[node name="Txt_Switchable" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -10.2081, 2.21944, 5.32556)
+text = "This lamp is a \"Switchable\" object."
+
+[node name="Txt_CombinedObjects" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -19.7592, 2.21944, 5.32556)
+text = "By connecting objects with different scripts
+you can create more complex  behaviours.
+
+For example: this drawbridge was created by connecting
+a press-and-hold object with two \"doors\"."
+
+[node name="FloatingPlattformSprint" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1, 3, 22.4)
 use_collision = true
 size = Vector3(3, 0.2, 3)
 material = ExtResource("2_4ig6i")
 
-[node name="FloatingPlattformSprintWall" type="CSGBox3D" parent="StaticEnvironment/FloatingPlattformSprint"]
+[node name="FloatingPlattformSprintWall" type="CSGBox3D" parent="STATIC_ENVIRONMENT/FloatingPlattformSprint"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.4)
 use_collision = true
 size = Vector3(3, 1, 0.2)
 material = ExtResource("2_4ig6i")
 
-[node name="FloatingPlattformJump" type="CSGBox3D" parent="StaticEnvironment"]
+[node name="FloatingPlattformJump" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.16775, 3, 20.4)
 use_collision = true
 size = Vector3(3, 0.2, 3)
 material = ExtResource("2_4ig6i")
 
-[node name="FloatingPlattformJumpWall" type="CSGBox3D" parent="StaticEnvironment/FloatingPlattformJump"]
+[node name="FloatingPlattformJumpWall" type="CSGBox3D" parent="STATIC_ENVIRONMENT/FloatingPlattformJump"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 1.4)
 use_collision = true
 size = Vector3(3, 1, 0.2)
 material = ExtResource("2_4ig6i")
 
-[node name="Txt_FarPlattformSprint" type="Label3D" parent="StaticEnvironment"]
+[node name="Txt_FarPlattformSprint" type="Label3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -12.0101, 5.38871, 16.5037)
 text = "Sprint and jump
 to reach this plattform."
 font_size = 48
 
-[node name="Txt_FarPlattformJump" type="Label3D" parent="StaticEnvironment"]
+[node name="Txt_FarPlattformJump" type="Label3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -7.0101, 5.38871, 16.5037)
 text = "Jump to reach
 this plattform."
 font_size = 48
 
-[node name="Txt_Container" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.79473, 1.71944, 14.7823)
+[node name="Txt_Container" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5.08419, 1.71944, 5.85584)
 text = "You can open this crate
 to find more items."
 
-[node name="Txt_Welcome" type="Label3D" parent="StaticEnvironment"]
+[node name="Txt_Welcome" type="Label3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.59312, 2.45602, 2.7823)
 text = "Welcome to COGITO
 This scene contains examples
@@ -669,218 +770,632 @@ template."
 horizontal_alignment = 0
 vertical_alignment = 0
 
-[node name="Txt_ZoneHazard" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -18.2568, 2.45602, 12.8823)
-text = "HAZARD ZONE
-drains your health
-over time."
+[node name="Txt_DoorInfo" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1.00688, 2.15602, 14.5823)
+text = "The Door.gd script can be used to
+create more complex furniture
+like  this dresser."
+horizontal_alignment = 0
 vertical_alignment = 0
 
-[node name="Txt_ZoneHeal" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -20.2069, 2.45602, 12.8823)
-text = " HAZARD ZONE
-can also be set
-to heal you."
-vertical_alignment = 0
-
-[node name="Txt_Key" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.329, 1.71944, 14.7981)
+[node name="Txt_Key" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -10.329, 1.71944, 14.5981)
 text = "Use this KEY
 to open the next door."
 
-[node name="Txt_Lightzone" type="Label3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -11.9035, 1.71944, 5.2268)
+[node name="Txt_Combine" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -40.829, 1.75934, 14.4981)
+text = "Combine the two items found here
+to create the key item needed for this socket."
+
+[node name="Txt_Lightzone" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 14.7977, 1.71944, 5.27125)
 text = "LIGHTZONE
 If the Player is using
 a BrightnessComponent,
 it will increase while
 within the Lightzone."
 
-[node name="BoxPotions" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 11)
+[node name="BoxPotions" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9, 0, 0.8)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxPotions"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxPotions"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_jlrlq")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxPotions"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/BoxPotions"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
-[node name="Txt_Potions" type="Label3D" parent="StaticEnvironment/BoxPotions"]
+[node name="Txt_Potions" type="Label3D" parent="STATIC_ENVIRONMENT/BoxPotions"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.51006, 0.812286, -0.412926)
 text = "Pick up
 these potions."
 font_size = 24
 horizontal_alignment = 0
 
-[node name="BoxCombineA" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Box" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.3, 0, 7.3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_jlrlq")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_enk60")
+
+[node name="BoxCombineA" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -39, 0, 11.5)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxCombineA"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxCombineA"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_jlrlq")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxCombineA"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/BoxCombineA"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
-[node name="BoxCombineB" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="BoxCombineB" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -39, 0, 8.5)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxCombineB"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxCombineB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_jlrlq")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxCombineB"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/BoxCombineB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
-[node name="BoxCombineB2" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -38, 0, -0.1)
+[node name="Box_FoamPistol" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 7.8)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxCombineB2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Box_FoamPistol"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_jlrlq")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxCombineB2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Box_FoamPistol"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
-[node name="BoxPressAndHold" type="StaticBody3D" parent="StaticEnvironment"]
+[node name="Txt_Foam" type="Label3D" parent="STATIC_ENVIRONMENT/Box_FoamPistol"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.412926, 0.812286, 0.51006)
+text = "Pick up
+this toy pistol."
+font_size = 24
+horizontal_alignment = 0
+
+[node name="BoxPressAndHold" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.5, 0, 7.5)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxPressAndHold"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxPressAndHold"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.400002)
 mesh = SubResource("BoxMesh_20e8y")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxPressAndHold"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/BoxPressAndHold"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.400002)
 shape = SubResource("ConvexPolygonShape3D_7ifeg")
 
-[node name="Txt_Weel" type="Label3D" parent="StaticEnvironment/BoxPressAndHold"]
+[node name="Txt_Weel" type="Label3D" parent="STATIC_ENVIRONMENT/BoxPressAndHold"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.38994, 1.19408, 0.344856)
 text = "Hold to turn
 the wheel."
 font_size = 24
 horizontal_alignment = 0
 
-[node name="BoxStamina" type="StaticBody3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3, 0, 6.99101)
+[node name="BoxStamina" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 14.3071, 0, 1.99101)
 metadata/_edit_group_ = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticEnvironment/BoxStamina"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxStamina"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_jlrlq")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticEnvironment/BoxStamina"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/BoxStamina"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_enk60")
 
-[node name="Txt_Stamina" type="Label3D" parent="StaticEnvironment/BoxStamina"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.489239, 1.76776, -0.612146)
+[node name="Txt_Stamina" type="Label3D" parent="STATIC_ENVIRONMENT/BoxStamina"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.489239, 1.76776, -0.0121455)
 text = "Read the description to
 find out what this potion does!"
 
-[node name="Ramp" type="CSGMesh3D" parent="StaticEnvironment"]
+[node name="Ramp" type="CSGMesh3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 1.55, 2.5)
 use_collision = true
 mesh = SubResource("PrismMesh_fghv1")
 
-[node name="GateDiamondKey" type="CSGPolygon3D" parent="StaticEnvironment"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -33, 0, 5)
+[node name="GateDiamondKey" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -33, 0, 14.5)
 use_collision = true
 collision_layer = 3
 polygon = PackedVector2Array(0, 0, 0, 3, 10, 3, 10, 0, 4, 0, 4, 2, 2, 2, 2, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
 
-[node name="GateMovement" type="CSGPolygon3D" parent="StaticEnvironment"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.01737, 0, -4.98627)
+[node name="GateMovement" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 0, -5)
 use_collision = true
 polygon = PackedVector2Array(0, 0, 0, 3, 10, 3, 10, 0, 4, 0, 4, 2, 1, 2, 1, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
 
-[node name="Txt_MovementArea" type="Label3D" parent="StaticEnvironment/GateMovement"]
+[node name="Txt_MovementArea" type="Label3D" parent="STATIC_ENVIRONMENT/GateMovement"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.49002, 2.18871, -0.20731)
 text = "MOVEMENT TEST AREA"
 font_size = 48
 
-[node name="Gate2" type="CSGPolygon3D" parent="StaticEnvironment"]
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -4.81737, 0, 3.01373)
+[node name="Gate2" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -4.8, 0, 3)
 use_collision = true
 collision_layer = 3
 polygon = PackedVector2Array(0, 0, 0, 3, 9.6, 3, 9.6, 0, 4, 0, 4, 2, 1, 2, 1, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
 
-[node name="Txt_Item" type="Label3D" parent="StaticEnvironment/Gate2"]
+[node name="Txt_Item" type="Label3D" parent="STATIC_ENVIRONMENT/Gate2"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.52371, 2.18871, -0.203554)
+text = "INTERACTIVE OBJECTS"
+font_size = 48
+
+[node name="Gate4" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.8, 0, 14.6)
+use_collision = true
+collision_layer = 3
+polygon = PackedVector2Array(0, 0, 0, 3, 9.6, 3, 9.6, 0, 4, 0, 4, 2, 1, 2, 1, 0)
+depth = 0.2
+material = ExtResource("1_lsda4")
+
+[node name="Gate3" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.8, 0, -5)
+use_collision = true
+collision_layer = 3
+polygon = PackedVector2Array(0, 0, 0, 3, 19.8, 3, 19.8, 0, 4, 0, 4, 2, 1, 2, 1, 0)
+depth = 0.2
+material = ExtResource("1_lsda4")
+
+[node name="Txt_Item" type="Label3D" parent="STATIC_ENVIRONMENT/Gate3"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 2.52371, 2.18871, 0.00344944)
 text = "ITEMS AND INVENTORY "
 font_size = 48
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.27629, 2.18871, 2.79645)
+
+[node name="Railing" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 0, 19)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Railing6" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -43, 0, 16.7)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Railing7" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -43, 0, 14.7)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Railing2" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41, 0, 19)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Railing3" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39, 0, 19)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Railing4" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 19)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Railing5" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, 19)
+use_collision = true
+polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
+depth = 0.1
+material = ExtResource("1_lsda4")
+
+[node name="Corner" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.8, 0.6, 18.8)
+size = Vector3(0.4, 1.2, 0.4)
+material = ExtResource("1_lsda4")
+
+[node name="Corner2" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2, 0.6, 18.8)
+size = Vector3(0.4, 1.2, 0.4)
+material = ExtResource("1_lsda4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, -33.2, 1.2, 18.6)
+mesh = SubResource("BoxMesh_woscm")
+skeleton = NodePath("../..")
+
+[node name="INTERACTIVE_OBJECTS" type="Node" parent="."]
+
+[node name="Door_A" parent="INTERACTIVE_OBJECTS" instance=ExtResource("8_xabdk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
+open_rotation_deg = -95.0
+closed_position = Vector3(-14.9, 0, 9.2)
+open_position = Vector3(-14.9, 0, 8.309)
+
+[node name="Lamp_Standing" parent="INTERACTIVE_OBJECTS" instance=ExtResource("18_oxm1j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.2066, 0, 5.95227)
+
+[node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
+transform = Transform3D(-0.125576, 0, 0.992084, 0, 1, 0, -0.992084, 0, -0.125576, -4.38933, 0.0425703, 5.97176)
+inventory_data = SubResource("Resource_nar8x")
+
+[node name="PressAndHold" parent="INTERACTIVE_OBJECTS" instance=ExtResource("22_ni6um")]
+rotate_while_holding = true
+hold_audio_stream = ExtResource("25_3nnou")
+
+[node name="RampA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(-0.0871558, -0.996195, 0, 0.996195, -0.0871558, 0, 0, 0, 1, -35.0232, 0, 10)
+script = ExtResource("23_rfav8")
+use_z_axis = true
+open_rotation_deg = 180.0
+closed_rotation_deg = 95.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/RampA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_w1o4d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/RampA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_hq8yc")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/RampA"]
+
+[node name="RampB" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(0.0871558, 0.996195, -1.50996e-07, 0.996195, -0.0871558, 0, -1.31602e-08, -1.50421e-07, -1, -43.0232, 0, 10)
+script = ExtResource("23_rfav8")
+use_z_axis = true
+open_rotation_deg = 180.0
+closed_rotation_deg = 95.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/RampB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+mesh = SubResource("BoxMesh_w1o4d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/RampB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_hq8yc")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/RampB"]
+
+[node name="DoorLocked" parent="INTERACTIVE_OBJECTS" instance=ExtResource("8_xabdk")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -24.9, 0, 9.2)
+is_locked = true
+key = ExtResource("9_g1bqh")
+key_hint = "Locked. Is there a key nearby?"
+open_rotation_deg = -95.0
+
+[node name="Cabinet_Prefab" parent="INTERACTIVE_OBJECTS" instance=ExtResource("35_ee66c")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -12.0996, 0.600001, 14.2231)
+
+[node name="Pickup_Battery" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab" instance=ExtResource("13_6m0er")]
+transform = Transform3D(-3.5715e-08, -0.817064, 0.576546, 1, -4.37114e-08, 0, 2.52016e-08, 0.576546, 0.817064, -0.136503, 0.434938, -0.0415781)
+mass = 0.5
+slot_data = SubResource("Resource_1m0cj")
+
+[node name="MeshInstance3D2" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+skeleton = NodePath("../../../..")
+
+[node name="MeshInstance3D3" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="1"]
+transform = Transform3D(0.5, -1.77636e-15, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.0747194, 0)
+skeleton = NodePath("../../../..")
+
+[node name="MeshInstance3D4" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="2"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.104715, 0)
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0306714, 0)
+
+[node name="Pickup_Battery2" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab" instance=ExtResource("13_6m0er")]
+transform = Transform3D(-3.5715e-08, -0.817064, 0.576546, 1, -4.37114e-08, 0, 2.52016e-08, 0.576546, 0.817064, 0.215507, 0.434938, -0.0547223)
+slot_data = SubResource("Resource_ogqmk")
+
+[node name="MeshInstance3D2" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="0"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+skeleton = NodePath("../../../..")
+
+[node name="MeshInstance3D3" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="1"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.0747198, 0)
+skeleton = NodePath("../../../..")
+
+[node name="MeshInstance3D4" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="2"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.104715, 0)
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0306714, 0)
+
+[node name="CarriableBox" parent="INTERACTIVE_OBJECTS" instance=ExtResource("6_cy1m6")]
+transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -14.3178, 0.748613, 6.31014)
+collision_layer = 3
+
+[node name="GateA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -45, 0, 14.6)
+script = ExtResource("23_rfav8")
+open_rotation_deg = -80.0
+closed_rotation_deg = -180.0
+door_speed = 0.02
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/GateA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+mesh = SubResource("BoxMesh_rixwv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/GateA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_qb88g")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/GateA"]
+
+[node name="GateB" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 14.6)
+script = ExtResource("23_rfav8")
+open_rotation_deg = -100.0
+door_speed = 0.02
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/GateB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+mesh = SubResource("BoxMesh_rixwv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/GateB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_qb88g")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/GateB"]
+
+[node name="SocketForDiamondKey" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.2321, 0.9, 14.3285)
+collision_layer = 3
+script = ExtResource("27_r5oie")
+allows_repeated_interaction = false
+has_been_used_hint = "I'm done with this."
+interaction_text_when_on = "Remove"
+interaction_text_when_off = "Place"
+switch_sound = ExtResource("30_42jtk")
+needs_item_to_operate = true
+required_item = ExtResource("28_3r4lg")
+item_hint = "Something can be placed here."
+objects_toggle_visibility = Array[NodePath]([NodePath("SlottedDiamond")])
+objects_call_interact = Array[NodePath]([NodePath("../GateA"), NodePath("../GateB")])
+
+[node name="SpotLight3D" type="OmniLight3D" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215919, 0.212826, 0.0388637)
+omni_range = 1.0
+
+[node name="SlottedDiamond" type="CSGPolygon3D" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+visible = false
+polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
+depth = 0.02
+material = SubResource("StandardMaterial3D_r708p")
+
+[node name="InteractionShape" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23629, 0.125816, 0.000281334)
+shape = SubResource("BoxShape3D_qu2im")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey"]
+bus = &"SFX"
+
+[node name="SocketMesh" type="CSGPolygon3D" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284077, -0.899999, 0.094192)
+polygon = PackedVector2Array(0, 0, 0, 1, 0.3, 1, 0.5, 0.85, 0.7, 1, 1, 1, 1, 0)
+depth = 0.2
+material = ExtResource("1_lsda4")
+
+[node name="Button" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.2, 1.23087, 18.5756)
+collision_layer = 3
+script = ExtResource("27_r5oie")
+interaction_text_when_on = "Activate Platform"
+interaction_text_when_off = "Activate Platform"
+switch_sound = ExtResource("36_42jeg")
+objects_call_interact = Array[NodePath]([NodePath("../MovingPlattform")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/Button"]
+shape = SubResource("CapsuleShape3D_50xya")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/Button"]
+mesh = SubResource("CapsuleMesh_204vo")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/Button"]
+bus = &"SFX"
+
+[node name="MovingPlattform" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -0.05, 17.5)
+script = ExtResource("23_rfav8")
+is_sliding = true
+closed_position = Vector3(-42, -0.05, 17.5)
+open_position = Vector3(-7.8, -0.05, 15.8)
+door_speed = 15.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/MovingPlattform"]
+mesh = SubResource("BoxMesh_7pweo")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/MovingPlattform"]
+shape = SubResource("BoxShape3D_xr44e")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/MovingPlattform"]
 
 [node name="ITEM_PICKUPS" type="Node" parent="."]
 
 [node name="Pickup_Key" parent="ITEM_PICKUPS" instance=ExtResource("9_qv8nx")]
-transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -20.3432, 1.15447, 14.5198)
+transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -20.3432, 1.15447, 14.3198)
 
 [node name="Pickup_Battery" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2699, 0.119063, 14.5188)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 2.84064)
 slot_data = SubResource("Resource_2eq5d")
 
 [node name="Pickup_Battery2" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5666, 0.119063, 14.5188)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 2.54394)
 slot_data = SubResource("Resource_q21gv")
 
 [node name="Pickup_Battery3" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9551, 0.119063, 14.5188)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 3.15544)
 slot_data = SubResource("Resource_op7ip")
 
 [node name="Pickup_Battery4" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.3779, 0.119063, 14.2832)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.5813, 0.119063, 2.73264)
 slot_data = SubResource("Resource_6sppo")
 
 [node name="Pickup_Battery5" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1819, 0.119063, 13.9579)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.256, 0.119063, 2.92864)
 slot_data = SubResource("Resource_itbno")
 
 [node name="Pickup_Battery6" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1179, 0.119063, 14.2832)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.5813, 0.119063, 2.99264)
 slot_data = SubResource("Resource_5a5sb")
 
 [node name="Pickup_StaminaExtension" parent="ITEM_PICKUPS" instance=ExtResource("18_pobhb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7516, 1.03198, 7.04623)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23053, 1.03198, 2.01634)
 slot_data = SubResource("Resource_k2gss")
 
 [node name="Pickup_Flashlight" parent="ITEM_PICKUPS" instance=ExtResource("1_oweej")]
-transform = Transform3D(0.707107, -0.603448, -0.368578, 0, 0.521248, -0.853405, 0.707107, 0.603448, 0.368578, -10.3056, 1.21477, 14.5379)
+transform = Transform3D(0.707107, 0.603448, 0.368578, 0, 0.521248, -0.853405, -0.707107, 0.603448, 0.368578, -4.73354, 1.21477, 0.740502)
 
 [node name="HealthPotion" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7123, 1.30439, 10.6794)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2123, 1.30439, 0.479401)
 slot_data = SubResource("Resource_a1xk0")
 
 [node name="HealthPotion2" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3539, 1.30439, 10.9876)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8539, 1.30439, 0.787601)
 slot_data = SubResource("Resource_g6hy2")
 
 [node name="HealthPotion3" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6422, 1.30439, 11.1829)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1422, 1.30439, 0.982901)
 slot_data = SubResource("Resource_db2dq")
 
+[node name="pickup_pistol" parent="ITEM_PICKUPS" instance=ExtResource("30_a7v26")]
+transform = Transform3D(-0.476652, -0.798393, -0.367929, 0, 0.418533, -0.908202, 0.879092, -0.432897, -0.199495, 0.0763087, 1.13928, 7.81337)
+projectile_prefab = null
+
+[node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.93876, 2.9, 5.23346)
+
+[node name="HealZone" parent="." instance=ExtResource("19_2mngh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -1.4549)
+
+[node name="Txt_ZoneHeal" type="Label3D" parent="HealZone"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.0417995, 0.95102, -0.8628)
+text = " HAZARD ZONE
+can also be set
+to heal you."
+vertical_alignment = 0
+
+[node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -3.4549)
+
+[node name="Txt_ZoneHazard" type="Label3D" parent="HazardZone"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.00810051, 0.95102, -0.8628)
+text = "HAZARD ZONE
+drains your health
+over time."
+vertical_alignment = 0
+
+[node name="DiamondKeyA" parent="." instance=ExtResource("25_w5f1m")]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -48.826, 1.15805, 11.5805)
+
+[node name="DiamondKeyB" parent="." instance=ExtResource("26_1prk2")]
+transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, -48.8403, 1.07184, 8.62943)
+
+[node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.359148, 1.47946, 12.0464)
+
+[node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.38405, 2.27151, 14.1442)
+
+[node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.14804, 1.65236, 13.3596)
+
+[node name="RotatingLift" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.6928, 3.8552, 8.98188)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RotatingLift"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RotatingLift/StaticBody3D"]
+mesh = SubResource("BoxMesh_ebsqj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RotatingLift/StaticBody3D"]
+shape = SubResource("BoxShape3D_m64r0")
+
+[node name="HingeJoint3D_A" type="HingeJoint3D" parent="RotatingLift"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -0.231401)
+node_a = NodePath("../Arm")
+node_b = NodePath("../StaticBody3D")
+motor/enable = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RotatingLift/HingeJoint3D_A"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.16604)
+mesh = SubResource("CylinderMesh_i0gq6")
+
+[node name="Arm" type="RigidBody3D" parent="RotatingLift"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.528, 0.75, -0.113401)
+axis_lock_linear_x = true
+gravity_scale = 0.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RotatingLift/Arm"]
+mesh = SubResource("BoxMesh_3y43p")
+skeleton = NodePath("../../HingeJoint3D_A")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RotatingLift/Arm"]
+shape = SubResource("BoxShape3D_xxnqw")
+
+[node name="HingeJoint3D_B" type="HingeJoint3D" parent="RotatingLift"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.98009, 0.75, -0.178101)
+node_a = NodePath("Platform")
+node_b = NodePath("../Arm")
+
+[node name="Platform" type="RigidBody3D" parent="RotatingLift/HingeJoint3D_B"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = 0.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RotatingLift/HingeJoint3D_B/Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.747252)
+mesh = SubResource("BoxMesh_bhd5a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RotatingLift/HingeJoint3D_B/Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.747252)
+shape = SubResource("BoxShape3D_el7ru")
+
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
-transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -7.43716, 0.8, -2.86949)
+transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -6.3045, 0.8, -2.51063)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
 inventory_data = SubResource("Resource_jr5dy")
@@ -891,166 +1406,10 @@ use_stamina_component = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_q2rvv")]
 
-[node name="CarriableBox" parent="." instance=ExtResource("6_cy1m6")]
-transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -14.3178, 0.748613, 6.7137)
-collision_layer = 3
-
-[node name="Chest" parent="." groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -7.38936, 0.0425703, 14.1453)
-inventory_data = SubResource("Resource_nar8x")
-
-[node name="Door" parent="." instance=ExtResource("8_xabdk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
-open_rotation_deg = -95.0
-closed_position = Vector3(-14.9, 0, 9.2)
-open_position = Vector3(-14.9, 0, 8.309)
-
-[node name="Lamp_Standing" parent="." instance=ExtResource("18_oxm1j")]
-
-[node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
-
-[node name="DoorLocked" parent="." instance=ExtResource("8_xabdk")]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -24.9, 0, 9.2)
-is_locked = true
-key = ExtResource("9_g1bqh")
-key_hint = "Locked. Is there a key nearby?"
-open_rotation_deg = -95.0
-
-[node name="HealZone" parent="." instance=ExtResource("19_2mngh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.2487, 1.505, 13.7451)
-
-[node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.2487, 1.505, 13.7451)
-
-[node name="PressAndHold" parent="." instance=ExtResource("22_ni6um")]
-rotate_while_holding = true
-
-[node name="RampA" type="AnimatableBody3D" parent="."]
-transform = Transform3D(-0.0871558, -0.996195, 0, 0.996195, -0.0871558, 0, 0, 0, 1, -35.0232, 0, 10)
-script = ExtResource("23_rfav8")
-use_z_axis = true
-open_rotation_deg = 180.0
-closed_rotation_deg = 95.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RampA"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-mesh = SubResource("BoxMesh_w1o4d")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RampA"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_hq8yc")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RampA"]
-
-[node name="RampB" type="AnimatableBody3D" parent="."]
-transform = Transform3D(0.0871558, 0.996195, -1.50996e-07, 0.996195, -0.0871558, 0, -1.31602e-08, -1.50421e-07, -1, -43.0232, 0, 10)
-script = ExtResource("23_rfav8")
-use_z_axis = true
-open_rotation_deg = 180.0
-closed_rotation_deg = 95.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RampB"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-mesh = SubResource("BoxMesh_w1o4d")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RampB"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_hq8yc")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RampB"]
-
-[node name="DiamondKeyA" parent="." instance=ExtResource("25_w5f1m")]
-transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -48.826, 1.15805, 11.5805)
-
-[node name="DiamondKeyB" parent="." instance=ExtResource("26_1prk2")]
-transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, -48.8403, 1.07184, 8.62943)
-
-[node name="GateA" type="AnimatableBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 5.1)
-script = ExtResource("23_rfav8")
-open_rotation_deg = 90.0
-door_speed = 0.02
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GateA"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
-mesh = SubResource("BoxMesh_rixwv")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GateA"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
-shape = SubResource("ConvexPolygonShape3D_qb88g")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="GateA"]
-
-[node name="GateB" type="AnimatableBody3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -45, 0, 5.1)
-script = ExtResource("23_rfav8")
-open_rotation_deg = 90.0
-closed_rotation_deg = 180.0
-door_speed = 0.02
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GateB"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
-mesh = SubResource("BoxMesh_rixwv")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GateB"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
-shape = SubResource("ConvexPolygonShape3D_qb88g")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="GateB"]
-
-[node name="SocketForDiamondKey" type="AnimatableBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.2321, 0.9, 5.32853)
-collision_layer = 3
-script = ExtResource("27_r5oie")
-allows_repeated_interaction = false
-has_been_used_hint = "I'm done with this."
-interaction_text_when_on = "Remove"
-interaction_text_when_off = "Place"
-needs_item_to_operate = true
-required_item = ExtResource("28_3r4lg")
-item_hint = "Something can be placed here."
-objects_toggle_visibility = Array[NodePath]([NodePath("SlottedDiamond")])
-objects_call_interact = Array[NodePath]([NodePath("../GateA"), NodePath("../GateB")])
-
-[node name="SpotLight3D" type="OmniLight3D" parent="SocketForDiamondKey"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.215919, 0.212826, 0.0388637)
-omni_range = 1.0
-
-[node name="SlottedDiamond" type="CSGPolygon3D" parent="SocketForDiamondKey"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
-visible = false
-polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
-depth = 0.02
-material = SubResource("StandardMaterial3D_r708p")
-
-[node name="InteractionShape" type="CollisionShape3D" parent="SocketForDiamondKey"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23629, 0.125816, 0.000281334)
-shape = SubResource("BoxShape3D_qu2im")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SocketForDiamondKey"]
-bus = &"SFX"
-
-[node name="SocketMesh" type="CSGPolygon3D" parent="SocketForDiamondKey"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284077, -0.899999, 0.094192)
-polygon = PackedVector2Array(0, 0, 0, 1, 0.3, 1, 0.5, 0.85, 0.7, 1, 1, 1, 1, 0)
-depth = 0.2
-material = ExtResource("1_lsda4")
-
-[node name="pickup_pistol" parent="." instance=ExtResource("30_a7v26")]
-transform = Transform3D(-0.476652, -0.798393, -0.367929, 0, 0.418533, -0.908202, 0.879092, -0.432897, -0.199495, -47.835, 1.13928, -0.122585)
-projectile_prefab = null
-
-[node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -50.6318, 1.47946, -0.377396)
-
-[node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -52.7296, 2.27151, -2.4023)
-
-[node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -51.945, 1.65236, 2.12979)
-
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
 
+[editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery"]
+[editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2"]
 [editable path="TargetDestructable"]
 [editable path="TargetDestructable2"]
 [editable path="TargetDestructable3"]

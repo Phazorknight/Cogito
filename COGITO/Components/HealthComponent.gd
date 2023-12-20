@@ -2,6 +2,7 @@ extends Node
 class_name HealthComponent
 
 signal health_changed(current_value, max_value)
+signal damage_taken()
 signal death()
 
 @export var max_health : float = 5
@@ -9,6 +10,7 @@ signal death()
 @export var no_sanity_damage : float
 var current_health : float
 
+@export var sound_on_death : AudioStream
 @export var destroy_on_death : Array[NodePath]
 
 # Called when the node enters the scene tree for the first time.
@@ -29,9 +31,11 @@ func subtract(amount):
 		current_health = 0
 		emit_signal("death")
 		on_death()
-	
+	emit_signal("damage_taken")
 	emit_signal("health_changed", current_health, max_health)
 
 func on_death():
+	if sound_on_death:
+		Audio.play_sound_3d(sound_on_death).global_position = self.global_position
 	for nodepath in destroy_on_death:
 		get_node(nodepath).queue_free()
