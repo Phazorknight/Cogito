@@ -5,7 +5,46 @@ signal back_to_main_pressed
 @onready var content : VBoxContainer = $%Content
 @onready var options_menu : Control = $%OptionsMenu
 @onready var resume_game_button: Button = $%ResumeGameButton
-	
+
+#region UI AUDIO
+@export var sound_hover : AudioStream
+@export var sound_click : AudioStream
+var playback : AudioStreamPlaybackPolyphonic
+
+
+func _enter_tree() -> void:
+	# Create an audio player
+	var player = AudioStreamPlayer.new()
+	add_child(player)
+
+	# Create a polyphonic stream so we can play sounds directly from it
+	var stream = AudioStreamPolyphonic.new()
+	stream.polyphony = 32
+	player.stream = stream
+	player.play()
+	# Get the polyphonic playback stream to play sounds
+	playback = player.get_stream_playback()
+
+	get_tree().node_added.connect(_on_node_added)
+
+
+func _on_node_added(node:Node) -> void:
+	if node is Button:
+		# If the added node is a button we connect to its mouse_entered and pressed signals
+		# and play a sound
+		node.mouse_entered.connect(_play_hover)
+		node.pressed.connect(_play_pressed)
+
+
+func _play_hover() -> void:
+	playback.play_stream(sound_hover, 0, 0, 1)
+
+
+func _play_pressed() -> void:
+	playback.play_stream(sound_click, 0, 0, 1)
+#endregion
+
+
 func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true

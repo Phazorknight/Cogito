@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bho0nwh5rlnua"]
+[gd_scene load_steps=7 format=3 uid="uid://bho0nwh5rlnua"]
 
 [ext_resource type="PackedScene" uid="uid://byjrem8of8uuo" path="res://COGITO/Assets/Models/target.glb" id="1_cqnhi"]
 [ext_resource type="PackedScene" uid="uid://c4p6cl0xvfdar" path="res://COGITO/Components/HealthComponent.tscn" id="2_c71ki"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="3_4xfw8"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="4_k2oo6"]
+[ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://COGITO/PrefabScenes/simple_particle_puff.tscn" id="5_7b67m"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wfwft"]
 margin = 0.0
@@ -26,3 +27,4 @@ max_health = 1.0
 start_health = 1.0
 sound_on_death = ExtResource("4_k2oo6")
 destroy_on_death = Array[NodePath]([NodePath("..")])
+spawn_on_death = ExtResource("5_7b67m")

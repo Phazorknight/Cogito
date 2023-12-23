@@ -16,6 +16,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5etq0")
+sound_hover = ExtResource("4_cpqh0")
+sound_click = ExtResource("3_arj7o")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

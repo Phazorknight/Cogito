@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **Alpha 202312m**
+Version: **BETA 202312.1**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -41,17 +41,15 @@ providing a framework for creating interactable objects and items.
 	- Stamina extension potion (increases max stamina)
 	- Key to unlock door
 	- Diamond Key A and B (combinable to create Diamond Key)
-	- Nerv Pistol (work in progress)
+	- Foam Pistol
 
 ### Known bugs:
 - No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 
 
-### Still to do:
+### To-Do's that are next in line:
 - Pause/Options Menu:
   - Invert Y toggle doesn't work yet. But can be set in the Player.gd script in the inspector.
-- Player Attributes:
-  - Action points (low prio)
 - Inventory / Items:
   - Option to take all items from a container.
  

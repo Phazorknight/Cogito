@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=26 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
@@ -51,6 +51,9 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_0ykfm"]
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbke8"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Player_HUD" type="Control"]
 layout_mode = 3
@@ -502,7 +505,58 @@ layout_mode = 2
 text = "Drop"
 label_settings = SubResource("LabelSettings_0ykfm")
 
+[node name="DeathScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rbke8")
+
+[node name="BoxContainer" type="BoxContainer" parent="DeathScreen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -49.5
+offset_right = 175.0
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen/Panel/BoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DeathScreen/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeathScreen/Panel/BoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "You died."
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="DeathScreen/Panel/BoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Restart"
+
 [connection signal="timeout" from="HintTimer" to="." method="_on_hint_timer_timeout"]
 [connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
 [connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]
+[connection signal="pressed" from="DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

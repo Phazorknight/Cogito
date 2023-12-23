@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4arko3ktkygh"]
+[gd_scene load_steps=5 format=3 uid="uid://c4arko3ktkygh"]
 
 [ext_resource type="PackedScene" uid="uid://dq6tvhqcy2aps" path="res://COGITO/EasyMenus/Scenes/main_menu.tscn" id="1_jlj1d"]
+[ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_m15dl"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_switcher.gd" id="2_tnhbh"]
+[ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="3_wbihg"]
 
 [node name="01_MainMenu" type="Control"]
 layout_mode = 3
@@ -13,6 +15,8 @@ grow_vertical = 2
 
 [node name="MainMenu" parent="." instance=ExtResource("1_jlj1d")]
 layout_mode = 1
+sound_hover = ExtResource("2_m15dl")
+sound_click = ExtResource("3_wbihg")
 
 [node name="SceneSwitcher" type="Node" parent="."]
 script = ExtResource("2_tnhbh")

@@ -10,6 +10,8 @@ signal toggle_inventory_interface()
 
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
+## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
+@export var fall_damage_threshold : float = -5
 
 ## Flag if Stamina component isused (as this effects movement)
 @export var is_using_stamina : bool = true
@@ -81,6 +83,7 @@ var bunny_hop_speed = SPRINTING_SPEED
 var last_velocity = Vector3.ZERO
 var stand_after_roll = false
 var is_movement_paused = false
+var is_dead : bool = false
 
 
 func _ready():
@@ -97,6 +100,9 @@ func _ready():
 		print("Player has no reference to pause menu.")
 		
 	initial_carryable_height = carryable_position.position.y
+	
+	# Hookup HealthComponent signal on player death
+	health_component.death.connect(_on_death)
 	
 	# Hookup brightness component signal
 	brightness_component.brightness_changed.connect(_on_brightness_changed)
@@ -136,6 +142,10 @@ func take_damage(value):
 	
 func add_sanity(value):
 	sanity_component.add(value)
+
+
+func _on_death():
+	is_dead = true
 
 
 func _on_brightness_changed(current_brightness,max_brightness):
@@ -196,12 +206,12 @@ func _input(event):
 	
 	# Opens Pause Menu if Menu button is proessed.
 	if event.is_action_pressed("menu"):
-		if !is_movement_paused:
+		if !is_movement_paused and !is_dead:
 			_on_pause_movement()
 			get_node(pause_menu).open_pause_menu()
 	
 	# Open/closes Inventory if Inventory button is pressed
-	if event.is_action_pressed("inventory"):
+	if event.is_action_pressed("inventory") and !is_dead:
 		toggle_inventory_interface.emit()
 
 
@@ -340,7 +350,7 @@ func _physics_process(delta):
 			$Neck/Head/Eyes/AnimationPlayer.play("landing")
 		
 		# Taking fall damage
-		if fall_damage > 0 and last_velocity.y <= -5:
+		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			health_component.subtract(fall_damage)
 	
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():

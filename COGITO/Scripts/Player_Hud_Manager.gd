@@ -56,6 +56,8 @@ func _ready():
 	health_bar_label.text = str(health_bar.value, "/", health_bar.max_value)
 	player.health_component.health_changed.connect(_on_player_health_changed)
 	player.health_component.damage_taken.connect(_on_player_damage_taken)
+	player.health_component.death.connect(_on_player_death)
+	$DeathScreen.hide()
 	damage_overlay.modulate = Color.TRANSPARENT
 	
 	# Setting up stamina bar
@@ -198,12 +200,24 @@ func _on_player_health_changed(new_health, max_health):
 	health_bar_label.text = str(int(health_bar.value), "/", int(health_bar.max_value))
 	
 
+# Function that controls damage vignette when damage taken.
 func _on_player_damage_taken():
 	damage_overlay.modulate = Color.WHITE
 	if hurt_tween:
 		hurt_tween.kill()
 	hurt_tween = create_tween()
 	hurt_tween.tween_property(damage_overlay,"modulate", Color.TRANSPARENT, .3)
+
+
+# Function called when player dies.
+func _on_player_death():
+	player._on_pause_movement()
+	$DeathScreen.show()
+	$DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton.grab_focus()
+
+
+func _on_restart_button_pressed():
+	get_tree().reload_current_scene()
 
 
 # Updating player stamina bar
@@ -234,3 +248,5 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	dropped_item.position = player.drop_position.global_position
 	dropped_item.slot_data = slot_data
 	get_parent().add_child(dropped_item)
+
+

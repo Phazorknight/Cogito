@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=117 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="3_q2rvv"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="4_1ofwa"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="6_cy1m6"]
+[ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PrefabScenes/ceiling_lamp.tscn" id="7_3y6g2"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://COGITO/PrefabScenes/target_destructable.tscn" id="8_tk621"]
 [ext_resource type="PackedScene" uid="uid://bdyukj85qkut0" path="res://COGITO/PrefabScenes/door.tscn" id="8_xabdk"]
 [ext_resource type="Resource" uid="uid://060gqm74tdlk" path="res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres" id="8_yqvna"]
@@ -197,6 +198,20 @@ material = ExtResource("2_4ig6i")
 left_to_right = 1.0
 size = Vector3(5, 3.1, 2)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_50xya"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kj7uj"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_204vo"]
+material = SubResource("StandardMaterial3D_kj7uj")
+radius = 0.1
+height = 0.2
+radial_segments = 12
+rings = 1
+
 [sub_resource type="BoxMesh" id="BoxMesh_woscm"]
 size = Vector3(0.3, 0.3, 0.1)
 
@@ -250,20 +265,6 @@ uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qu2im"]
 size = Vector3(0.5, 0.5, 0.33057)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_50xya"]
-radius = 0.1
-height = 0.2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kj7uj"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_204vo"]
-material = SubResource("StandardMaterial3D_kj7uj")
-radius = 0.1
-height = 0.2
-radial_segments = 12
-rings = 1
 
 [sub_resource type="BoxMesh" id="BoxMesh_7pweo"]
 material = ExtResource("2_4ig6i")
@@ -709,7 +710,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.59
 text = "Work in progress."
 
 [node name="Txt_Switchable" type="Label3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -10.2081, 2.21944, 5.32556)
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -6.6081, 2.21944, 5.32556)
 text = "This lamp is a \"Switchable\" object."
 
 [node name="Txt_CombinedObjects" type="Label3D" parent="STATIC_ENVIRONMENT"]
@@ -1029,15 +1030,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.8, 0.6, 18.8)
 size = Vector3(0.4, 1.2, 0.4)
 material = ExtResource("1_lsda4")
 
+[node name="Corner3" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.2, 0.6, 6.3)
+size = Vector3(0.2, 1.2, 0.2)
+material = ExtResource("1_lsda4")
+
 [node name="Corner2" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2, 0.6, 18.8)
 size = Vector3(0.4, 1.2, 0.4)
 material = ExtResource("1_lsda4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, -33.2, 1.2, 18.6)
-mesh = SubResource("BoxMesh_woscm")
-skeleton = NodePath("../..")
 
 [node name="INTERACTIVE_OBJECTS" type="Node" parent="."]
 
@@ -1048,7 +1049,37 @@ closed_position = Vector3(-14.9, 0, 9.2)
 open_position = Vector3(-14.9, 0, 8.309)
 
 [node name="Lamp_Standing" parent="INTERACTIVE_OBJECTS" instance=ExtResource("18_oxm1j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.2066, 0, 5.95227)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.7066, 0, 5.95227)
+
+[node name="ButtonChain" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20.1377, 1.22332, 6.3)
+collision_layer = 3
+script = ExtResource("27_r5oie")
+switch_sound = ExtResource("36_42jeg")
+objects_call_interact = Array[NodePath]([NodePath("../CeilingLamp3"), NodePath("../CeilingLamp2"), NodePath("../CeilingLamp")])
+objects_call_delay = 0.3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="INTERACTIVE_OBJECTS/ButtonChain"]
+shape = SubResource("CapsuleShape3D_50xya")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/ButtonChain"]
+mesh = SubResource("CapsuleMesh_204vo")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/ButtonChain"]
+bus = &"SFX"
+
+[node name="Button_Case" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/ButtonChain"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, -0.03087, 0.0244007)
+mesh = SubResource("BoxMesh_woscm")
+skeleton = NodePath("../../..")
+
+[node name="CeilingLamp" parent="INTERACTIVE_OBJECTS" instance=ExtResource("7_3y6g2")]
+
+[node name="CeilingLamp2" parent="INTERACTIVE_OBJECTS" instance=ExtResource("7_3y6g2")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -22.7641, 1.7, 5.40424)
+
+[node name="CeilingLamp3" parent="INTERACTIVE_OBJECTS" instance=ExtResource("7_3y6g2")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -21.5641, 1.7, 5.40424)
 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(-0.125576, 0, 0.992084, 0, 1, 0, -0.992084, 0, -0.125576, -4.38933, 0.0425703, 5.97176)
@@ -1235,6 +1266,11 @@ mesh = SubResource("CapsuleMesh_204vo")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/Button"]
 bus = &"SFX"
 
+[node name="Button_Case" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/Button"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, -0.03087, 0.0244007)
+mesh = SubResource("BoxMesh_woscm")
+skeleton = NodePath("../../..")
+
 [node name="MovingPlattform" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -0.05, 17.5)
 script = ExtResource("23_rfav8")
@@ -1304,44 +1340,6 @@ slot_data = SubResource("Resource_db2dq")
 transform = Transform3D(-0.476652, -0.798393, -0.367929, 0, 0.418533, -0.908202, 0.879092, -0.432897, -0.199495, 0.0763087, 1.13928, 7.81337)
 projectile_prefab = null
 
-[node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.93876, 2.9, 5.23346)
-
-[node name="HealZone" parent="." instance=ExtResource("19_2mngh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -1.4549)
-
-[node name="Txt_ZoneHeal" type="Label3D" parent="HealZone"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.0417995, 0.95102, -0.8628)
-text = " HAZARD ZONE
-can also be set
-to heal you."
-vertical_alignment = 0
-
-[node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -3.4549)
-
-[node name="Txt_ZoneHazard" type="Label3D" parent="HazardZone"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.00810051, 0.95102, -0.8628)
-text = "HAZARD ZONE
-drains your health
-over time."
-vertical_alignment = 0
-
-[node name="DiamondKeyA" parent="." instance=ExtResource("25_w5f1m")]
-transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -48.826, 1.15805, 11.5805)
-
-[node name="DiamondKeyB" parent="." instance=ExtResource("26_1prk2")]
-transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, -48.8403, 1.07184, 8.62943)
-
-[node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.359148, 1.47946, 12.0464)
-
-[node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.38405, 2.27151, 14.1442)
-
-[node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.14804, 1.65236, 13.3596)
-
 [node name="RotatingLift" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.6928, 3.8552, 8.98188)
 
@@ -1394,8 +1392,46 @@ mesh = SubResource("BoxMesh_bhd5a")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.747252)
 shape = SubResource("BoxShape3D_el7ru")
 
+[node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.93876, 2.9, 5.23346)
+
+[node name="HealZone" parent="." instance=ExtResource("19_2mngh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -1.4549)
+
+[node name="Txt_ZoneHeal" type="Label3D" parent="HealZone"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.0417995, 0.95102, -0.8628)
+text = " HAZARD ZONE
+can also be set
+to heal you."
+vertical_alignment = 0
+
+[node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -3.4549)
+
+[node name="Txt_ZoneHazard" type="Label3D" parent="HazardZone"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.00810051, 0.95102, -0.8628)
+text = "HAZARD ZONE
+drains your health
+over time."
+vertical_alignment = 0
+
+[node name="DiamondKeyA" parent="." instance=ExtResource("25_w5f1m")]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -48.826, 1.15805, 11.5805)
+
+[node name="DiamondKeyB" parent="." instance=ExtResource("26_1prk2")]
+transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, -48.8403, 1.07184, 8.62943)
+
+[node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.359148, 1.47946, 12.0464)
+
+[node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.38405, 2.27151, 14.1442)
+
+[node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.14804, 1.65236, 13.3596)
+
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
-transform = Transform3D(-0.707106, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707106, -6.3045, 0.8, -2.51063)
+transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -8.41436, 0.482223, -3.82946)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
 inventory_data = SubResource("Resource_jr5dy")

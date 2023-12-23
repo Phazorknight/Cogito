@@ -26,8 +26,8 @@ var wielder
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
 func action_primary(_camera_collision:Vector3):
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
-	var Projectile = projectile_prefab.instantiate()
 	
+	var Projectile = projectile_prefab.instantiate()
 	bullet_point.add_child(Projectile)
 	Projectile.damage_amount = slot_data.inventory_item.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)

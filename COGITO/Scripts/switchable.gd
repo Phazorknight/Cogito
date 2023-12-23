@@ -20,7 +20,7 @@ extends Node3D
 ## Typed Array of NodePaths. Drag the objects you want switched in here from your scene hierarchy. Their visibility will be flipped when switched. This means you have to set them to the correct starting visibility.
 @export var objects_toggle_visibility : Array[NodePath]
 @export var objects_call_interact : Array[NodePath]
-
+@export var objects_call_delay : float = 0.0
 var interaction_text : String 
 var interactor
 
@@ -53,6 +53,7 @@ func switch():
 			object.visible = !object.visible
 			
 	for nodepath in objects_call_interact:
+		await get_tree().create_timer(objects_call_delay).timeout
 		if nodepath != null:
 			var object = get_node(nodepath)
 			object.interact(interactor)
