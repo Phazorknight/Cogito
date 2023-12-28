@@ -63,15 +63,15 @@ func _input(event):
 					send_hint(null,"Can't carry an object while wielding.")
 			elif interactable.has_method("carry"):
 				interactable.carry(self)
-
-		else:
-			if carried_object != null and carried_object.has_method("carry"):
-				emit_signal("set_use_prompt", "")
-				carried_object.throw(throw_power)	
-
+	
 	# Wieldable primary Action Input
 	if !get_parent().is_movement_paused:	
-		if is_wielding and Input.is_action_just_pressed("action_primary"):
+		# if carrying an object, drop it in response to action_primary.
+		if carried_object and event.is_action_pressed("action_primary"):
+			emit_signal("set_use_prompt", "")
+			carried_object.throw(throw_power)
+			carried_object = null
+		elif is_wielding and Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary()
 		
 		if is_wielding and Input.is_action_just_pressed("action_secondary"):
