@@ -232,7 +232,7 @@ func _physics_process(delta):
 	carryable_position.rotation.z = lerp_angle(carryable_position.rotation.z, $Neck/Head.rotation.x, 5 * delta)
 	
 	# Processing analog stick mouselook
-	if joystick_v_event and !is_movement_paused:
+	if joystick_h_event and !is_movement_paused:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
 					$Neck/Head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
@@ -240,7 +240,7 @@ func _physics_process(delta):
 					$Neck/Head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				$Neck/Head.rotation.x = clamp($Neck/Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 				
-	if joystick_h_event and !is_movement_paused:
+	if joystick_v_event and !is_movement_paused:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
 			$Neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
 			$Neck.rotation.y = clamp($Neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
