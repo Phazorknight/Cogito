@@ -130,31 +130,31 @@ namespace NathanHoad
 
     #region Joypad
 
-    public static Array<InputEventJoypadButton> GetJoypadInputsForAction(string action)
+    public static Array<InputEvent> GetJoypadInputsForAction(string action)
     {
-      return (Array<InputEventJoypadButton>)Instance.Call("get_joypad_inputs_for_action", action);
+      return (Array<InputEvent>)Instance.Call("get_joypad_inputs_for_action", action);
     }
 
 
     public static InputEvent GetJoypadInputForAction(string action)
     {
-      return (InputEventJoypadButton)Instance.Call("get_joypad_input_for_action", action);
+      return (InputEvent)Instance.Call("get_joypad_input_for_action", action);
     }
 
 
-    public static void SetJoypadInputForAction(string action, InputEventJoypadButton input, bool swapIfTaken = true)
+    public static void SetJoypadInputForAction(string action, InputEvent input, bool swapIfTaken = true)
     {
       Instance.Call("set_joypad_input_for_action", action, input, swapIfTaken);
     }
 
 
-    public static void ReplaceJoypadInputForAction(string action, InputEventJoypadButton currentInput, InputEventJoypadButton input, bool swapIfTaken = true)
+    public static void ReplaceJoypadInputForAction(string action, InputEvent currentInput, InputEvent input, bool swapIfTaken = true)
     {
       Instance.Call("replace_joypad_input_for_action", action, currentInput, input, swapIfTaken);
     }
 
 
-    public static void ReplaceJoypadInputAtIndex(string action, int index, InputEventJoypadButton input, bool swapIfTaken = true)
+    public static void ReplaceJoypadInputAtIndex(string action, int index, InputEvent input, bool swapIfTaken = true)
     {
       Instance.Call("replace_joypad_input_at_index", action, index, input, swapIfTaken);
     }

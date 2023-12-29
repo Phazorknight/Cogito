@@ -33,7 +33,7 @@ func _input(event: InputEvent) -> void:
 	var next_device_index: int = device_index
 
 	# Did we just press a key on the keyboard?
-	if event is InputEventKey:
+	if event is InputEventKey or event is InputEventMouse:
 		next_device = DEVICE_KEYBOARD
 		next_device_index = -1
 
@@ -116,7 +116,7 @@ func get_keyboard_or_joypad_input_for_action(action: String) -> InputEvent:
 	if device == DEVICE_KEYBOARD:
 		return get_keyboard_input_for_action(action)
 	else:
-		return get_joypad_input_for_action(action) as InputEvent
+		return get_joypad_input_for_action(action)
 
 
 ## Get the key or button for a given action depending on the current device
@@ -124,10 +124,7 @@ func get_keyboard_or_joypad_inputs_for_action(action: String) -> Array[InputEven
 	if device == DEVICE_KEYBOARD:
 		return get_keyboard_inputs_for_action(action)
 	else:
-		var inputs: Array[InputEvent] = []
-		for input in get_joypad_inputs_for_action(action):
-			inputs.append(input as InputEvent)
-		return inputs
+		return get_joypad_inputs_for_action(action)
 
 
 ## Get a text label for a given input
@@ -155,9 +152,10 @@ func get_label_for_input(input: InputEvent) -> String:
 	return input.as_text()
 
 
-## Serialize a list of action inputs to string
+## Serialize a list of action inputs to string. If actions is empty then it will serialize
+## all actions.
 func serialize_inputs_for_actions(actions: PackedStringArray = []) -> String:
-	if actions == null or actions.size() == 0:
+	if actions == null or actions.is_empty():
 		actions = InputMap.get_actions()
 
 	var map: Dictionary = {}
@@ -170,14 +168,25 @@ func serialize_inputs_for_actions(actions: PackedStringArray = []) -> String:
 		}
 		for input in inputs:
 			if input is InputEventKey:
-				var s: String = OS.get_keycode_string(input.keycode)
-				if s == "":
-					s = OS.get_keycode_string(input.physical_keycode)
+				var s: String = get_label_for_input(input)
+				var modifiers: Array[String] = []
+				if input.alt_pressed:
+					modifiers.append("alt")
+				if input.shift_pressed:
+					modifiers.append("shift")
+				if input.ctrl_pressed:
+					modifiers.append("ctrl")
+				if input.meta_pressed:
+					modifiers.append("meta")
+				if not modifiers.is_empty():
+					s += "|" + ",".join(modifiers)
 				action_map["keyboard"].append(s)
 			elif input is InputEventMouseButton:
 				action_map["mouse"].append(input.button_index)
 			elif input is InputEventJoypadButton:
 				action_map["joypad"].append(input.button_index)
+			elif input is InputEventJoypadMotion:
+				action_map["joypad"].append("%d|%d" % [input.axis, input.axis_value])
 
 		map[action] = action_map
 
@@ -193,7 +202,20 @@ func deserialize_inputs_for_actions(string: String) -> void:
 
 		for key in map[action]["keyboard"]:
 			var keyboard_input = InputEventKey.new()
-			keyboard_input.keycode = OS.find_keycode_from_string(key)
+			if "|" in key:
+				var bits = key.split("|")
+				keyboard_input.keycode = OS.find_keycode_from_string(bits[0])
+				bits = bits[1].split(",")
+				if bits.has("alt"):
+					keyboard_input.alt_pressed = true
+				if bits.has("shift"):
+					keyboard_input.shift_pressed = true
+				if bits.has("ctrl"):
+					keyboard_input.ctrl_pressed = true
+				if bits.has("meta"):
+					keyboard_input.meta_pressed = true
+			else:
+				keyboard_input.keycode = OS.find_keycode_from_string(key)
 			InputMap.action_add_event(action, keyboard_input)
 
 		for button_index in map[action]["mouse"]:
@@ -201,10 +223,17 @@ func deserialize_inputs_for_actions(string: String) -> void:
 			mouse_input.button_index = int(button_index)
 			InputMap.action_add_event(action, mouse_input)
 
-		for button_index in map[action]["joypad"]:
-			var joypad_input = InputEventJoypadButton.new()
-			joypad_input.button_index = int(button_index)
-			InputMap.action_add_event(action, joypad_input)
+		for button_index_or_motion in map[action]["joypad"]:
+			if "|" in str(button_index_or_motion):
+				var joypad_motion_input = InputEventJoypadMotion.new()
+				var bits = button_index_or_motion.split("|")
+				joypad_motion_input.axis = int(bits[0])
+				joypad_motion_input.axis_value = float(bits[1])
+				InputMap.action_add_event(action, joypad_motion_input)
+			else:
+				var joypad_input = InputEventJoypadButton.new()
+				joypad_input.button_index = int(button_index_or_motion)
+				InputMap.action_add_event(action, joypad_input)
 
 
 ### Keyboard/mouse input
@@ -253,55 +282,39 @@ func _update_keyboard_input_for_action(action: String, input: InputEvent, swap_i
 
 
 ## Get all buttons used for an action
-func get_joypad_inputs_for_action(action: String) -> Array[InputEventJoypadButton]:
-	var inputs: Array[InputEventJoypadButton]
-	for event in InputMap.action_get_events(action):
-		if event is InputEventJoypadButton:
-			inputs.append(event)
-	return inputs
+func get_joypad_inputs_for_action(action: String) -> Array[InputEvent]:
+	return InputMap.action_get_events(action).filter(func(event):
+		return event is InputEventJoypadButton or event is InputEventJoypadMotion
+	)
 
 
 ## Get the first button for an action
-func get_joypad_input_for_action(action: String) -> InputEventJoypadButton:
-	var buttons: Array[InputEventJoypadButton] = get_joypad_inputs_for_action(action)
+func get_joypad_input_for_action(action: String) -> InputEvent:
+	var buttons: Array[InputEvent] = get_joypad_inputs_for_action(action)
 	return null if buttons.is_empty() else buttons[0]
-
-
-## Get the first motion for an action
-func get_joypad_motion_for_action(action: String) -> InputEventJoypadMotion:
-	var buttons: Array[InputEventJoypadMotion] = get_joypad_motions_for_action(action)
-	return null if buttons.is_empty() else buttons[0]
-
-## Get all motions used for an action
-func get_joypad_motions_for_action(action: String) -> Array[InputEventJoypadMotion]:
-	var inputs: Array[InputEventJoypadMotion]
-	for event in InputMap.action_get_events(action):
-		if event is InputEventJoypadMotion:
-			inputs.append(event)
-	return inputs
 
 
 ## Set the button for an action
-func set_joypad_input_for_action(action: String, input: InputEventJoypadButton, swap_if_taken: bool = true) -> Error:
+func set_joypad_input_for_action(action: String, input: InputEvent, swap_if_taken: bool = true) -> Error:
 	return _update_joypad_input_for_action(action, input, swap_if_taken, null)
 
 
 ## Replace a specific button for an action
-func replace_joypad_input_for_action(action: String, current_input: InputEventJoypadButton, input: InputEventJoypadButton, swap_if_taken: bool = true) -> Error:
+func replace_joypad_input_for_action(action: String, current_input: InputEvent, input: InputEventJoypadButton, swap_if_taken: bool = true) -> Error:
 	return _update_joypad_input_for_action(action, input, swap_if_taken, current_input)
 
 
 ## Replace a button, given its index
-func replace_joypad_input_at_index(action: String, index: int, input: InputEventJoypadButton, swap_if_taken: bool = true) -> Error:
-	var inputs: Array[InputEventJoypadButton] = get_joypad_inputs_for_action(action)
+func replace_joypad_input_at_index(action: String, index: int, input: InputEvent, swap_if_taken: bool = true) -> Error:
+	var inputs: Array[InputEvent] = get_joypad_inputs_for_action(action)
 	var replacing_input = InputEventJoypadButton.new() if (inputs.is_empty() or inputs.size() <= index) else inputs[index]
 	return _update_joypad_input_for_action(action, input, swap_if_taken, replacing_input)
 
 
 ## Set the action used for a button
-func _update_joypad_input_for_action(action: String, input: InputEventJoypadButton, swap_if_taken: bool = true, replacing_input: InputEventJoypadButton = null) -> Error:
+func _update_joypad_input_for_action(action: String, input: InputEvent, swap_if_taken: bool = true, replacing_input: InputEvent = null) -> Error:
 	var is_valid_keyboard_event = func(event):
-		return event is InputEventJoypadButton
+		return event is InputEventJoypadButton or event is InputEventJoypadMotion
 
 	return _update_input_for_action(action, input, swap_if_taken, replacing_input, is_valid_keyboard_event, joypad_input_changed)
 
