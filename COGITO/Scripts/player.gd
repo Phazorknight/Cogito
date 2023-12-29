@@ -90,10 +90,7 @@ func _ready():
 	randomize()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	config = load(OptionsConstants.config_file_name)
-	if config != null:
-		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
-	
+
 	if pause_menu:
 		get_node(pause_menu).close_pause_menu()
 	else:
@@ -173,9 +170,15 @@ func _on_resume_movement():
 		is_movement_paused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+# reload options user may have changed while paused.
+func _reload_options():
+	var err = config.load(OptionsConstants.config_file_name)
+	if err == 0:
+		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 
 # Signal from Pause Menu
 func _on_pause_menu_resume():
+	_reload_options()
 	_on_resume_movement()
 
 # Signal from Inventory
