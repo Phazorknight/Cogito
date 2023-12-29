@@ -1,4 +1,0 @@
-InventoryItemPD
-InventoryPD
-StandardMaterial3D
-Resource
