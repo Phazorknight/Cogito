@@ -368,7 +368,7 @@ environment = SubResource("Environment_11v21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
 
 [node name="LightzoneCeiling" type="MeshInstance3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 13.8, 2.975, 5.3)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -6, 2.975, 3.8)
 material_override = ExtResource("1_lsda4")
 mesh = SubResource("BoxMesh_l3y0e")
 skeleton = NodePath("../Txt_Lightzone")
@@ -790,7 +790,7 @@ text = "Combine the two items found here
 to create the key item needed for this socket."
 
 [node name="Txt_Lightzone" type="Label3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 14.7977, 1.71944, 5.27125)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -5.0023, 1.71944, 3.67125)
 text = "LIGHTZONE
 If the Player is using
 a BrightnessComponent,
@@ -798,7 +798,7 @@ it will increase while
 within the Lightzone."
 
 [node name="BoxPotions" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9, 0, 0.8)
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 14.3, 0, -2.7)
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxPotions"]
@@ -897,7 +897,7 @@ font_size = 24
 horizontal_alignment = 0
 
 [node name="BoxStamina" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 14.3071, 0, 1.99101)
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 14.3071, 0, 0.79101)
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxStamina"]
@@ -1318,22 +1318,22 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.581
 slot_data = SubResource("Resource_5a5sb")
 
 [node name="Pickup_StaminaExtension" parent="ITEM_PICKUPS" instance=ExtResource("18_pobhb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23053, 1.03198, 2.01634)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23053, 1.03198, 0.820036)
 slot_data = SubResource("Resource_k2gss")
 
 [node name="Pickup_Flashlight" parent="ITEM_PICKUPS" instance=ExtResource("1_oweej")]
 transform = Transform3D(0.707107, 0.603448, 0.368578, 0, 0.521248, -0.853405, -0.707107, 0.603448, 0.368578, -4.73354, 1.21477, 0.740502)
 
 [node name="HealthPotion" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2123, 1.30439, 0.479401)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.04485, 1.30439, -2.94002)
 slot_data = SubResource("Resource_a1xk0")
 
 [node name="HealthPotion2" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8539, 1.30439, 0.787601)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.40325, 1.30439, -2.63182)
 slot_data = SubResource("Resource_g6hy2")
 
 [node name="HealthPotion3" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1422, 1.30439, 0.982901)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.11495, 1.30439, -2.43652)
 slot_data = SubResource("Resource_db2dq")
 
 [node name="pickup_pistol" parent="ITEM_PICKUPS" instance=ExtResource("30_a7v26")]
@@ -1393,10 +1393,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.747252)
 shape = SubResource("BoxShape3D_el7ru")
 
 [node name="Lightzone_Lamp" parent="." instance=ExtResource("24_p17c7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.93876, 2.9, 5.23346)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1612, 2.9, 3.73346)
 
 [node name="HealZone" parent="." instance=ExtResource("19_2mngh")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -1.4549)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15.7487, 4.505, 9.1451)
 
 [node name="Txt_ZoneHeal" type="Label3D" parent="HealZone"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.0417995, 0.95102, -0.8628)
@@ -1406,7 +1406,7 @@ to heal you."
 vertical_alignment = 0
 
 [node name="HazardZone" parent="." instance=ExtResource("20_dgnbq")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.7513, 1.505, -3.4549)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15.7487, 4.505, 7.1451)
 
 [node name="Txt_ZoneHazard" type="Label3D" parent="HazardZone"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.00810051, 0.95102, -0.8628)

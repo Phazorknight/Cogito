@@ -1,4 +1,4 @@
-res://COGITO/EasyMenus/Scenes/pause_menu.tscn
+res://COGITO/DemoScenes/COGITO_Demo_01.tscn
 res://COGITO/InventoryPD/Inventories/PlayerInventory.tres
 res://COGITO/Assets/Animations/player_eyes.tres
 res://COGITO/Assets/Animations/anim_wieldable_pistol.es.tres
@@ -17,17 +17,6 @@ res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres
 res://COGITO/InventoryPD/Items/Cogito_DiamondKey_A.tres
 res://COGITO/Assets/Materials/Prototype_Green.tres
 res://COGITO/InventoryPD/Items/Cogito_DiamondKey_B.tres
-res://COGITO/EasyMenus/Scripts/pause_menu_controller.gd
 res://COGITO/PrefabScenes/Player_HUD.tscn
-res://COGITO/DemoScenes/COGITO_Demo_01.tscn
 res://COGITO/PrefabScenes/player.tscn
-res://COGITO/Scripts/player.gd
-res://COGITO/PrefabScenes/target_destructable.tscn
-res://COGITO/Scripts/particle_controller.gd
-res://COGITO/Components/HealthComponent.gd
-res://COGITO/Components/HealthComponent.tscn
-res://COGITO/PrefabScenes/simple_particle_puff.tscn
-res://COGITO/Scripts/pistol.gd
 res://COGITO/DemoScenes/COGITO_MainMenu.tscn
-res://COGITO/EasyMenus/Scripts/main_menu_controller.gd
-res://Readme.md
