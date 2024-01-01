@@ -11,6 +11,8 @@ extends Node3D
 @export_group("Door Parameters")
 ## Start state of the door (usually closed).
 @export var is_open : bool = false
+## Text that appears on the interaction prompt when locked.
+@export var interaction_text_when_locked : String = "Unlock"
 ## Text that appears on the interaction prompt when closed.
 @export var interaction_text_when_closed : String = "Open"
 ## Text that appears on the interaction prompt when open.
@@ -45,6 +47,8 @@ func _ready():
 		target_rotation_rad = rotation.y
 	if is_open:
 		interaction_text = interaction_text_when_open
+	elif is_locked:
+		interaction_text = interaction_text_when_locked
 	else:
 		interaction_text = interaction_text_when_closed
 
@@ -94,7 +98,7 @@ func unlock_door():
 	audio_stream_player_3d.stream = unlock_sound
 	audio_stream_player_3d.play()
 	is_locked = false
-	
+	interaction_text = interaction_text_when_closed	
 	
 func open_door():
 	audio_stream_player_3d.stream = open_sound
