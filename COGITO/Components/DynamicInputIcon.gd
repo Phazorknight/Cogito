@@ -50,18 +50,17 @@ func update_input_icon():
 		
 	else:
 		var joypad_input = InputHelper.get_joypad_input_for_action(action_name)
-		if joypad_input:
+		if joypad_input is InputEventJoypadButton:
 			#print("DynamicInputIcon: Action=", action_name, ". Joypad btn=", joypad_input.button_index)
 			set_texture(gamepad_icons)
 			frame = joypad_input.button_index
 			
-		var joypad_motion = InputHelper.get_joypad_motion_for_action(action_name)
-		if joypad_motion:
+		elif joypad_input is InputEventJoypadMotion:
 			#print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
 			set_texture(gamepad_icons)
-			if joypad_motion.axis == 5:
+			if joypad_input.axis == 5:
 				frame = 18 #Sets icon to RT
-			if joypad_motion.axis == 4:
+			if joypad_input.axis == 4:
 				frame = 17 #Sets icon to LT
 
 
