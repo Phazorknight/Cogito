@@ -29,7 +29,10 @@ func _ready():
 		node.hide()
 
 func _process(_delta):
-	if interaction_raycast.is_colliding():
+	# when carrying object, disable all other prompts.
+	if carried_object:
+		emit_signal("interaction_prompt", "Drop")
+	elif interaction_raycast.is_colliding():
 		var interactable = interaction_raycast.get_collider()
 		is_reset = false
 		if interactable != null and interactable.has_method("interact"):
@@ -52,6 +55,11 @@ func _process(_delta):
 func _input(event):
 	if event.is_action_pressed("interact"):
 		
+		# if carrying an object, drop it.
+		if carried_object:
+			carried_object.throw(throw_power)
+			carried_object = null
+			
 		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
 			if interactable.has_method("interact"):
@@ -63,14 +71,9 @@ func _input(event):
 					send_hint(null,"Can't carry an object while wielding.")
 			elif interactable.has_method("carry"):
 				interactable.carry(self)
-
-		else:
-			if carried_object != null and carried_object.has_method("carry"):
-				emit_signal("set_use_prompt", "")
-				carried_object.throw(throw_power)	
-
+	
 	# Wieldable primary Action Input
-	if !get_parent().is_movement_paused:	
+	if !get_parent().is_movement_paused:
 		if is_wielding and Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary()
 		
