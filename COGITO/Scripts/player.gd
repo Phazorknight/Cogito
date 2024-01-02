@@ -55,6 +55,21 @@ signal toggle_inventory_interface()
 @export var BUNNY_HOP_ACCELERATION = 0.1
 @export var INVERT_Y_AXIS : bool = true
 
+## STAIR HANDLING STUFF
+@export_group("Stair Handling")
+var is_step : bool = false
+var step_check_height : Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
+var gravity_vec : Vector3 = Vector3.ZERO
+@onready var head = $Neck/Head
+var head_offset : Vector3 = Vector3.ZERO
+var snap : Vector3 = Vector3.ZERO
+@export var step_height_camera_lerp : float = 2.5
+@export var STEP_HEIGHT_DEFAULT : Vector3 = Vector3(0, 0.5, 0)
+const STEP_MAX_SLOPE_DEGREE : float = 0.0
+const STEP_CHECK_COUNT : int = 2
+const WALL_MARGIN : float = 0.001
+
+
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
 @export var JOY_V_SENS : int = 3
@@ -90,6 +105,7 @@ func _ready():
 	randomize()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 
 	if pause_menu:
 		get_node(pause_menu).close_pause_menu()
@@ -224,10 +240,20 @@ func _process(delta):
 		take_damage(health_component.no_sanity_damage * delta)
 
 
+func params(transform3d, motion):
+	var params : PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
+	params.from = transform3d
+	params.motion = motion
+	params.recovery_as_collision = true
+	return params
+
+
 func _physics_process(delta):
 	if is_movement_paused:
 		return
 		
+	var is_falling: bool = false	
+	
 	# Getting input direction
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	
@@ -254,7 +280,7 @@ func _physics_process(delta):
 		$CrouchingCollisionShape.disabled = false
 		stand_after_roll = false
 	
-	if Input.is_action_pressed("crouch") and !is_movement_paused or $RayCast.is_colliding():
+	if Input.is_action_pressed("crouch") and !is_movement_paused or $CrouchRayCast.is_colliding():
 		if is_on_floor():
 			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
 		$Neck/Head.position.y = lerp($Neck/Head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
@@ -326,8 +352,22 @@ func _physics_process(delta):
 			delta*LERP_SPEED
 		)
 	
+	
+	### STAIR FLOOR SNAP
+		#jumping and gravity
+	if is_on_floor():
+		snap = -get_floor_normal()
+		gravity_vec = Vector3.ZERO
+	else:
+		snap = Vector3.DOWN
+		gravity_vec = Vector3.DOWN * gravity * delta
+	###
+	
+	
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		#snap = Vector3.DOWN
+		#velocity.y -= gravity * delta
+		pass
 	elif $SlidingTimer.is_stopped() and input_dir != Vector2.ZERO:
 		wiggle_vector.y = sin(wiggle_index)
 		wiggle_vector.x = sin(wiggle_index / 2) + 0.5
@@ -342,6 +382,7 @@ func _physics_process(delta):
 			delta * LERP_SPEED
 		)
 	else:
+		snap = -get_floor_normal()
 		$Neck/Head/Eyes.position.y = lerp($Neck/Head/Eyes.position.y, 0.0, delta * LERP_SPEED)
 		$Neck/Head/Eyes.position.x = lerp($Neck/Head/Eyes.position.x, 0.0, delta * LERP_SPEED)
 		if last_velocity.y <= -7.5:
@@ -357,7 +398,8 @@ func _physics_process(delta):
 			health_component.subtract(fall_damage)
 	
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
-		
+		snap = Vector3.ZERO
+		is_falling = true
 		# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
 		if is_using_stamina and stamina_component.current_stamina >= stamina_component.jump_exhaustion:
 			decrease_attribute("stamina",stamina_component.jump_exhaustion)
@@ -405,10 +447,129 @@ func _physics_process(delta):
 	
 	last_velocity = velocity
 
+
+	# STAIR HANDLING
+	is_step = false
+	
+	if gravity_vec.y >= 0:
+		for i in range(STEP_CHECK_COUNT):
+			var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+			
+			var step_height: Vector3 = STEP_HEIGHT_DEFAULT - i * step_check_height
+			var transform3d: Transform3D = global_transform
+			var motion: Vector3 = step_height
+			
+			var is_player_collided: bool = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+			
+			if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).y < 0:
+				continue
+				
+			if not is_player_collided:
+				transform3d.origin += step_height
+				motion = velocity * delta
+				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+				if not is_player_collided:
+					transform3d.origin += motion
+					motion = -step_height
+					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					if is_player_collided:
+						if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
+							head_offset = -test_motion_result.get_remainder()
+							is_step = true
+							global_transform.origin += -test_motion_result.get_remainder()
+							break
+				else:
+					var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal(0)
+
+					transform3d.origin += test_motion_result.get_collision_normal(0) * WALL_MARGIN
+					motion = (velocity * delta).slide(wall_collision_normal)
+					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					if not is_player_collided:
+						transform3d.origin += motion
+						motion = -step_height
+						is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+						if is_player_collided:
+							if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
+								head_offset = -test_motion_result.get_remainder()
+								is_step = true
+								global_transform.origin += -test_motion_result.get_remainder()
+								break
+			else:
+				var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal(0)
+				transform3d.origin += test_motion_result.get_collision_normal(0) * WALL_MARGIN
+				motion = step_height
+				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+				if not is_player_collided:
+					transform3d.origin += step_height
+					motion = (velocity * delta).slide(wall_collision_normal)
+					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					if not is_player_collided:
+						transform3d.origin += motion
+						motion = -step_height
+						is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+						if is_player_collided:
+							if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
+								head_offset = -test_motion_result.get_remainder()
+								is_step = true
+								global_transform.origin += -test_motion_result.get_remainder()
+								break
+
+	
+	
+	if not is_step and is_on_floor():
+		var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+		var step_height: Vector3 = STEP_HEIGHT_DEFAULT
+		var transform3d: Transform3D = global_transform
+		var motion: Vector3 = velocity * delta
+		var is_player_collided: bool = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+		
+		if not is_player_collided:
+			transform3d.origin += motion
+			motion = -step_height
+			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+			if is_player_collided:
+				if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
+					head_offset = test_motion_result.get_travel()
+					is_step = true
+					global_transform.origin += test_motion_result.get_travel()
+			else:
+				is_falling = true
+		else:
+			if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).y == 0:
+				var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal(0)
+				transform3d.origin += test_motion_result.get_collision_normal(0) * WALL_MARGIN
+				motion = (velocity * delta).slide(wall_collision_normal)
+				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+				if not is_player_collided:
+					transform3d.origin += motion
+					motion = -step_height
+					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					if is_player_collided:
+						if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
+							head_offset = test_motion_result.get_travel()
+							is_step = true
+							global_transform.origin += test_motion_result.get_travel()
+					else:
+						is_falling = true
+	
+	
+	if is_step and !is_falling:
+		head.position -= head_offset
+		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * step_height_camera_lerp)
+	else:
+		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
+		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * step_height_camera_lerp)
+		
+	velocity += gravity_vec
+
+	if is_falling:
+		snap = Vector3.ZERO
+
+
 	if !is_movement_paused:
 		move_and_slide()
 	
-	# FOOTSTEP SYSTEM = CHECK IF ON GROUND AND MOVING
+	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if $FootstepTimer.time_left <= 0:
 			footstep_player.play()

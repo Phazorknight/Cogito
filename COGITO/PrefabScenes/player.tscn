@@ -24,9 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://ctdx2bs6fji20" path="res://COGITO/Components/SanityComponent.tscn" id="12_tv46k"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_26tbo"]
-radius = 0.4
-height = 1.6
+[sub_resource type="BoxShape3D" id="BoxShape3D_4774a"]
+size = Vector3(0.8, 1.6, 0.8)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgxde"]
 radius = 0.4
@@ -117,14 +116,18 @@ inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_26tbo")
+shape = SubResource("BoxShape3D_4774a")
 
 [node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
 shape = SubResource("CapsuleShape3D_fgxde")
 disabled = true
 
-[node name="RayCast" type="RayCast3D" parent="."]
+[node name="StaircheckRayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, -0.5, 0)
+
+[node name="CrouchRayCast" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
 target_position = Vector3(0, 1.6, 0)
 collision_mask = 3

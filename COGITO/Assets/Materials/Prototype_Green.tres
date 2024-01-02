@@ -5,3 +5,4 @@
 [resource]
 albedo_texture = ExtResource("1_fy3pj")
 uv1_triplanar = true
+uv1_world_triplanar = true
