@@ -63,9 +63,12 @@ var gravity_vec : Vector3 = Vector3.ZERO
 @onready var head = $Neck/Head
 var head_offset : Vector3 = Vector3.ZERO
 var snap : Vector3 = Vector3.ZERO
+## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
 @export var step_height_camera_lerp : float = 2.5
+## This sets the height of what is still considered a step (instead of a wall/edge)
 @export var STEP_HEIGHT_DEFAULT : Vector3 = Vector3(0, 0.5, 0)
-const STEP_MAX_SLOPE_DEGREE : float = 0.0
+## This sets the step slope degree check. When set to 0, tiny edges etc might stop the player in it's tracks. 1 seems to work fine.
+@export var STEP_MAX_SLOPE_DEGREE : float = 0.0
 const STEP_CHECK_COUNT : int = 2
 const WALL_MARGIN : float = 0.001
 
@@ -506,7 +509,7 @@ func _physics_process(delta):
 			
 			if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).y < 0:
 				continue
-				
+			
 			if not is_player_collided:
 				transform3d.origin += step_height
 				motion = velocity * delta
@@ -602,7 +605,8 @@ func _physics_process(delta):
 	else:
 		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
 		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * step_height_camera_lerp)
-		
+	
+	print("Is_step:", is_step)
 	velocity += gravity_vec
 
 	if is_falling:
