@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=127 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
@@ -220,12 +220,6 @@ size = Vector3(2, 0.05, 2)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hs75h"]
 points = PackedVector3Array(-1, -0.025, -1, -1, 0.025, -1, 1, -0.025, -1, -1, -0.025, 1, -1, 0.025, 1, 1, 0.025, -1, 1, -0.025, 1, 1, 0.025, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ow56r"]
-size = Vector3(2, 0.1, 2)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7sd6h"]
-points = PackedVector3Array(-1, -0.05, -1, -1, 0.05, -1, 1, -0.05, -1, -1, -0.05, 1, -1, 0.05, 1, 1, 0.05, -1, 1, -0.05, 1, 1, 0.05, 1)
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_50xya"]
 radius = 0.1
 height = 0.2
@@ -382,10 +376,10 @@ script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rj7xk"]
-size = Vector3(0.139, 3.148, 0.8)
+size = Vector3(0.6, 3.2, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xagqk"]
-size = Vector3(0.8, 3.03359, 0.1)
+size = Vector3(0.8, 3.2, 0.1)
 
 [node name="COGITO_Demo_01" type="Node3D"]
 
@@ -1069,57 +1063,16 @@ size = Vector3(0.4, 1.2, 0.4)
 material = ExtResource("1_lsda4")
 
 [node name="LightzoneCeiling" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -6, 2.975, 3.8)
 
-[node name="LightzoneCeiling2" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/LightzoneCeiling"]
+[node name="LightzoneCeiling" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/LightzoneCeiling"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -6, 2.975, 3.8)
 material_override = ExtResource("1_lsda4")
 mesh = SubResource("BoxMesh_l3y0e")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/LightzoneCeiling"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -6, 2.975, 3.8)
 shape = SubResource("ConvexPolygonShape3D_hs75h")
-
-[node name="Plattform" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -8.5, 2.95, -6.2)
-
-[node name="Floor" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Plattform"]
-material_override = ExtResource("1_lsda4")
-mesh = SubResource("BoxMesh_ow56r")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Plattform"]
-shape = SubResource("ConvexPolygonShape3D_7sd6h")
-
-[node name="Corner4" type="CSGBox3D" parent="STATIC_ENVIRONMENT/Plattform"]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1, 0.6, 0.9)
-size = Vector3(0.2, 1.1, 0.2)
-material = ExtResource("1_lsda4")
-
-[node name="Corner5" type="CSGBox3D" parent="STATIC_ENVIRONMENT/Plattform"]
-transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1, 0.6, -0.900002)
-size = Vector3(0.2, 1.1, 0.2)
-material = ExtResource("1_lsda4")
-
-[node name="Railing9" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT/Plattform"]
-transform = Transform3D(-8.74228e-08, 0, -1, 0, 1, 0, 1, 0, -8.74228e-08, -0.999999, 0.05, -1.00001)
-use_collision = true
-polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
-depth = 0.1
-material = ExtResource("1_lsda4")
-
-[node name="Railing10" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT/Plattform"]
-transform = Transform3D(-1, 0, 1.31134e-07, 0, 1, 0, -1.31134e-07, 0, -1, 1, 0.05, -1.00001)
-use_collision = true
-polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
-depth = 0.1
-material = ExtResource("1_lsda4")
-
-[node name="Railing11" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT/Plattform"]
-transform = Transform3D(-1, 0, 1.31134e-07, 0, 1, 0, -1.31134e-07, 0, -1, 1, 0.05, 0.899994)
-use_collision = true
-polygon = PackedVector2Array(0, 0.9, 0, 1, 2, 1, 2, 0.9, 1.05, 0.9, 1.05, 0, 0.95, 0, 0.95, 0.9)
-depth = 0.1
-material = ExtResource("1_lsda4")
 
 [node name="INTERACTIVE_OBJECTS" type="Node" parent="."]
 
@@ -1584,21 +1537,23 @@ size = Vector3(2, 0.3, 2)
 material = ExtResource("38_l5vpp")
 
 [node name="Ladder" type="Area3D" parent="."]
-transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -18.4395, 1.6, -4.87125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6591, 1.6, 0.0287483)
 script = ExtResource("39_ferka")
 
 [node name="ladderArea" type="CollisionShape3D" parent="Ladder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.357512, -0.00396729, 0.0406739)
 shape = SubResource("BoxShape3D_rj7xk")
 
 [node name="ladder" parent="Ladder" instance=ExtResource("39_ri7bt")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder/ladder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00152588, -0.0832032, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00152588, 0, 0)
 shape = SubResource("BoxShape3D_xagqk")
 
 [connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
+[connection signal="body_entered" from="Ladder" to="Ladder" method="_on_body_entered"]
+[connection signal="body_exited" from="Ladder" to="Ladder" method="_on_body_exited"]
 
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery"]
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2"]

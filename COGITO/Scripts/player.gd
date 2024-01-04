@@ -70,6 +70,10 @@ const STEP_CHECK_COUNT : int = 2
 const WALL_MARGIN : float = 0.001
 
 
+@export_group("Ladder Handling")
+var on_ladder : bool = false
+@export var ladder_speed : float = 2.0
+
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
 @export var JOY_V_SENS : int = 3
@@ -247,9 +251,48 @@ func params(transform3d, motion):
 	params.recovery_as_collision = true
 	return params
 
+### LADDER MOVEMENT
+func _process_on_ladder(delta):
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+
+	var jump = Input.is_action_pressed("jump")
+
+	# Processing analog stick mouselook
+	if joystick_h_event:
+			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
+				if INVERT_Y_AXIS:
+					$Neck/Head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				else:
+					$Neck/Head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				$Neck/Head.rotation.x = clamp($Neck/Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+				
+	if joystick_v_event:
+		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
+			$Neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
+			$Neck.rotation.y = clamp($Neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+
+	# Applying ladder input_dir to direction
+	direction = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
+	velocity = direction * ladder_speed
+
+	var look_vector = $Neck/Head/Eyes/Camera.get_camera_transform().basis
+	if jump:
+		velocity += look_vector * Vector3(JUMP_VELOCITY, JUMP_VELOCITY, JUMP_VELOCITY)
+	
+	print("Input_dir:", input_dir, ". direction:", direction)
+	move_and_slide()
+	
+	#Step off ladder when on ground
+	if is_on_floor():
+		on_ladder = false
+
 
 func _physics_process(delta):
 	if is_movement_paused:
+		return
+		
+	if on_ladder:
+		_process_on_ladder(delta)
 		return
 		
 	var is_falling: bool = false	
