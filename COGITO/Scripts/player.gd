@@ -255,7 +255,7 @@ func params(transform3d, motion):
 	return params
 
 ### LADDER MOVEMENT
-func _process_on_ladder(delta):
+func _process_on_ladder(_delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 
 	var jump = Input.is_action_pressed("jump")
@@ -606,7 +606,6 @@ func _physics_process(delta):
 		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
 		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * step_height_camera_lerp)
 	
-	print("Is_step:", is_step)
 	velocity += gravity_vec
 
 	if is_falling:

@@ -22,6 +22,11 @@ extends Node3D
 @export var key : InventoryItemPD
 ## Hint that is displayed if the player attempts to open the door but doesn't have the key item.
 @export var key_hint : String
+## Other doors that should sync their state (locked, unlocked, open, closed) with this door. Useful for double-doors, etc.
+@export var doors_to_sync_with : Array[NodePath]
+
+## Use these if you don't have an animation.
+@export_subgroup("Tween Parameters")
 ## Set this to true if you're making a sliding instead of a rotating door.
 @export var is_sliding : bool
 ## Rotation axis to use. True = use Z axis. False = use Y axis:
@@ -30,17 +35,31 @@ extends Node3D
 @export var open_rotation_deg : float = 0.0
 ## Rotation Y when the door is closed. In degrees.
 @export var closed_rotation_deg : float = 0.0
-
+## Local position of transform when closed
 @export var closed_position : Vector3
+## Local position of transform when open
 @export var open_position : Vector3
 ## Speed in which the door moves between open and closed position. Usually around 0.1.
 @export var door_speed : float = .1
+
+@export_subgroup("Animation Parameters")
+@export var is_animation_based : bool = false
+@export var animation_player : NodePath
+@export var opening_animation : String
+@export var reverse_opening_anim_for_close : bool = true
+@export var closing_animation : String
+var anim_player : AnimationPlayer
+
+
 
 var interaction_text : String
 var is_moving : bool = false
 var target_rotation_rad : float 
 
 func _ready():
+	if is_animation_based:
+		anim_player = get_node(animation_player)
+	
 	if use_z_axis:
 		target_rotation_rad = rotation.z
 	else:
@@ -57,8 +76,18 @@ func interact(interactor):
 	if !is_locked:
 		if !is_open:
 			open_door()
+			
+			for nodepath in doors_to_sync_with:
+				if nodepath != null:
+					var object = get_node(nodepath)
+					object.open_door()
 		else:
 			close_door()
+			
+			for nodepath in doors_to_sync_with:
+				if nodepath != null:
+					var object = get_node(nodepath)
+					object.close_door()
 	else:
 		audio_stream_player_3d.stream = rattle_sound
 		audio_stream_player_3d.play()
@@ -88,6 +117,11 @@ func check_for_key(interactor):
 			if slot_data.inventory_item.discard_after_use:
 				inventory.remove_slot_data(slot_data)
 			unlock_door()
+			
+			for nodepath in doors_to_sync_with:
+				if nodepath != null:
+					var object = get_node(nodepath)
+					object.unlock_door()
 			return
 	
 	if key_hint != "":
@@ -104,14 +138,15 @@ func open_door():
 	audio_stream_player_3d.stream = open_sound
 	audio_stream_player_3d.play()
 
-	if !is_sliding:
+	if is_animation_based:
+		anim_player.play(opening_animation)
+	elif !is_sliding:
 		target_rotation_rad = deg_to_rad(open_rotation_deg)
 		is_moving = true
 	else:
-		# Sliding door open.
 		var tween_door = get_tree().create_tween()
 		tween_door.tween_property(self,"position", open_position, door_speed)
-		
+	
 	is_open = true
 	interaction_text = interaction_text_when_open
 	
@@ -119,7 +154,12 @@ func close_door():
 	audio_stream_player_3d.stream = close_sound
 	audio_stream_player_3d.play()
 	
-	if !is_sliding:
+	if is_animation_based:
+		if reverse_opening_anim_for_close:
+			anim_player.play_backwards(opening_animation)
+		else:
+			anim_player.play(closing_animation)
+	elif !is_sliding:
 		target_rotation_rad = deg_to_rad(closed_rotation_deg)
 		is_moving = true
 	else:

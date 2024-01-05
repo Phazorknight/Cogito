@@ -1520,7 +1520,6 @@ pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
 inventory_data = SubResource("Resource_jr5dy")
 step_height_camera_lerp = 1.5
-STEP_MAX_SLOPE_DEGREE = 1.0
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
