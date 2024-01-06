@@ -306,7 +306,7 @@ func _process_on_ladder(_delta):
 	if jump:
 		velocity += look_vector * Vector3(JUMP_VELOCITY, JUMP_VELOCITY, JUMP_VELOCITY)
 	
-	print("Input_dir:", input_dir, ". direction:", direction)
+	# print("Input_dir:", input_dir, ". direction:", direction)
 	move_and_slide()
 	
 	#Step off ladder when on ground
