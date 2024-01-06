@@ -1604,8 +1604,6 @@ use_collision = true
 size = Vector3(2, 0.3, 0.5)
 material = ExtResource("38_l5vpp")
 
-[connection signal="resume" from="PauseMenu" to="Player" method="_on_pause_menu_resume"]
-
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery"]
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2"]
 [editable path="TargetDestructable"]

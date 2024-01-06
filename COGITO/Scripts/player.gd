@@ -21,6 +21,7 @@ signal toggle_inventory_interface()
 @onready var brightness_component = $BrightnessComponent
 @onready var stamina_component = $StaminaComponent
 
+# Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
 @onready var neck: Node3D = $Neck
 @onready var head: Node3D = $Neck/Head
@@ -28,11 +29,11 @@ signal toggle_inventory_interface()
 @onready var camera: Camera3D = $Neck/Head/Eyes/Camera
 @onready var animationPlayer: AnimationPlayer = $Neck/Head/Eyes/AnimationPlayer
 
-@onready var standingCollisionShape: CollisionShape3D = $StandingCollisionShape
-@onready var crouchingCollisionShape: CollisionShape3D = $CrouchingCollisionShape
-@onready var crouchRayCast: RayCast3D = $CrouchRayCast
-@onready var slidingTimer: Timer = $SlidingTimer
-@onready var footstepTimer: Timer = $FootstepTimer
+@onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
+@onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
+@onready var crouch_raycast: RayCast3D = $CrouchRayCast
+@onready var sliding_timer: Timer = $SlidingTimer
+@onready var footstep_timer: Timer = $FootstepTimer
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
@@ -123,9 +124,14 @@ func _ready():
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-
+	# Pause Menu setup
 	if pause_menu:
-		get_node(pause_menu).close_pause_menu()
+		var pause_menu_node = get_node(pause_menu)
+		# Hookup resume signal from Pause Menu
+		pause_menu_node.resume.connect(_on_pause_menu_resume)
+	
+		# Making sure pause menu is closed on player scene load
+		pause_menu_node.close_pause_menu()
 	else:
 		print("Player has no reference to pause menu.")
 		
@@ -332,33 +338,33 @@ func _physics_process(delta):
 	
 	if stand_after_roll:
 		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-		standingCollisionShape.disabled = true
-		crouchingCollisionShape.disabled = false
+		standing_collision_shape.disabled = true
+		crouching_collision_shape.disabled = false
 		stand_after_roll = false
 	
-	if Input.is_action_pressed("crouch") and !is_movement_paused or crouchRayCast.is_colliding():
+	if Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding():
 		if is_on_floor():
 			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
 		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height-.8, delta * LERP_SPEED)
-		standingCollisionShape.disabled = true
-		crouchingCollisionShape.disabled = false
+		standing_collision_shape.disabled = true
+		crouching_collision_shape.disabled = false
 		wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
 		wiggle_index += WIGGLE_ON_CROUCHING_SPEED * delta
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
-			slidingTimer.start()
+			sliding_timer.start()
 			slide_vector = input_dir
 		elif !Input.is_action_pressed("sprint"):
-			slidingTimer.stop()
+			sliding_timer.stop()
 		is_walking = false
 		is_sprinting = false
 		is_crouching = true
 	else:
 		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height, delta * LERP_SPEED)
-		standingCollisionShape.disabled = false
-		crouchingCollisionShape.disabled = true
-		slidingTimer.stop()
+		standing_collision_shape.disabled = false
+		crouching_collision_shape.disabled = true
+		sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
 			if !Input.is_action_pressed("jump"):
@@ -386,9 +392,9 @@ func _physics_process(delta):
 			is_sprinting = false
 			is_crouching = false
 	
-	if Input.is_action_pressed("free_look") or !slidingTimer.is_stopped():
+	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped():
 		is_free_looking = true
-		if slidingTimer.is_stopped():
+		if sliding_timer.is_stopped():
 			eyes.rotation.z = -deg_to_rad(
 				neck.rotation.y * FREE_LOOK_TILT_AMOUNT
 			)
@@ -424,7 +430,7 @@ func _physics_process(delta):
 		#snap = Vector3.DOWN
 		#velocity.y -= gravity * delta
 		pass
-	elif slidingTimer.is_stopped() and input_dir != Vector2.ZERO:
+	elif sliding_timer.is_stopped() and input_dir != Vector2.ZERO:
 		wiggle_vector.y = sin(wiggle_index)
 		wiggle_vector.x = sin(wiggle_index / 2) + 0.5
 		eyes.position.y = lerp(
@@ -443,8 +449,8 @@ func _physics_process(delta):
 		eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
 		if last_velocity.y <= -7.5:
 			head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-			standingCollisionShape.disabled = false
-			crouchingCollisionShape.disabled = true
+			standing_collision_shape.disabled = false
+			crouching_collision_shape.disabled = true
 			animationPlayer.play("roll")
 		elif last_velocity.y <= -5.0:
 			animationPlayer.play("landing")
@@ -465,9 +471,9 @@ func _physics_process(delta):
 			
 		animationPlayer.play("jump")
 		Audio.play_sound(jump_sound)
-		if !slidingTimer.is_stopped():
+		if !sliding_timer.is_stopped():
 			velocity.y = JUMP_VELOCITY * 1.5
-			slidingTimer.stop()
+			sliding_timer.stop()
 		else:
 			velocity.y = JUMP_VELOCITY
 		if is_sprinting:
@@ -475,7 +481,7 @@ func _physics_process(delta):
 		else:
 			bunny_hop_speed = SPRINTING_SPEED
 	
-	if slidingTimer.is_stopped():
+	if sliding_timer.is_stopped():
 		if is_on_floor():
 			direction = lerp(
 				direction,
@@ -490,7 +496,7 @@ func _physics_process(delta):
 			)
 	else:
 		direction = (transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
-		current_speed = (slidingTimer.time_left / slidingTimer.wait_time + 0.5) * SLIDING_SPEED
+		current_speed = (sliding_timer.time_left / sliding_timer.wait_time + 0.5) * SLIDING_SPEED
 	
 	current_speed = clamp(current_speed, 3.0, 12.0)
 	
@@ -627,13 +633,13 @@ func _physics_process(delta):
 	
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
-		if footstepTimer.time_left <= 0:
+		if footstep_timer.time_left <= 0:
 			footstep_player.play()
 			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
 			if velocity.length() >= 3.4:
-				footstepTimer.start(.3)
+				footstep_timer.start(.3)
 			else:
-				footstepTimer.start(.6)
+				footstep_timer.start(.6)
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
