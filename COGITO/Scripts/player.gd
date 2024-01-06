@@ -21,7 +21,18 @@ signal toggle_inventory_interface()
 @onready var brightness_component = $BrightnessComponent
 @onready var stamina_component = $StaminaComponent
 
-@onready var player_interaction_component = $PlayerInteractionComponent
+@onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
+@onready var neck: Node3D = $Neck
+@onready var head: Node3D = $Neck/Head
+@onready var eyes: Node3D = $Neck/Head/Eyes
+@onready var camera: Camera3D = $Neck/Head/Eyes/Camera
+@onready var animationPlayer: AnimationPlayer = $Neck/Head/Eyes/AnimationPlayer
+
+@onready var standingCollisionShape: CollisionShape3D = $StandingCollisionShape
+@onready var crouchingCollisionShape: CollisionShape3D = $CrouchingCollisionShape
+@onready var crouchRayCast: RayCast3D = $CrouchRayCast
+@onready var slidingTimer: Timer = $SlidingTimer
+@onready var footstepTimer: Timer = $FootstepTimer
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
@@ -60,7 +71,6 @@ signal toggle_inventory_interface()
 var is_step : bool = false
 var step_check_height : Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
 var gravity_vec : Vector3 = Vector3.ZERO
-@onready var head = $Neck/Head
 var head_offset : Vector3 = Vector3.ZERO
 var snap : Vector3 = Vector3.ZERO
 ## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
@@ -212,16 +222,16 @@ func _on_player_hud_resume():
 func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
 		if is_free_looking:
-			$Neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-			$Neck.rotation.y = clamp($Neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 		else:
 			rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
 		
 		if INVERT_Y_AXIS:
-			$Neck/Head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+			head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
 		else:
-			$Neck/Head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
-		$Neck/Head.rotation.x = clamp($Neck/Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 		
 	# Checking Analog stick input for mouse look
 	if event is InputEventJoypadMotion and !is_movement_paused:
@@ -264,21 +274,21 @@ func _process_on_ladder(_delta):
 	if joystick_h_event:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
-					$Neck/Head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				else:
-					$Neck/Head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
-				$Neck/Head.rotation.x = clamp($Neck/Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 				
 	if joystick_v_event:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
-			$Neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
-			$Neck.rotation.y = clamp($Neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 
 	# Applying ladder input_dir to direction
 	direction = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
 	velocity = direction * ladder_speed
 
-	var look_vector = $Neck/Head/Eyes/Camera.get_camera_transform().basis
+	var look_vector = camera.get_camera_transform().basis
 	if jump:
 		velocity += look_vector * Vector3(JUMP_VELOCITY, JUMP_VELOCITY, JUMP_VELOCITY)
 	
@@ -304,51 +314,51 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	
 	# LERP the up/down rotation of whatever you're carrying.
-	carryable_position.rotation.z = lerp_angle(carryable_position.rotation.z, $Neck/Head.rotation.x, 5 * delta)
+	carryable_position.rotation.z = lerp_angle(carryable_position.rotation.z, head.rotation.x, 5 * delta)
 	
 	# Processing analog stick mouselook
 	if joystick_h_event and !is_movement_paused:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
-					$Neck/Head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				else:
-					$Neck/Head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
-				$Neck/Head.rotation.x = clamp($Neck/Head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 				
 	if joystick_v_event and !is_movement_paused:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
-			$Neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
-			$Neck.rotation.y = clamp($Neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 	
 	if stand_after_roll:
-		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * LERP_SPEED)
-		$StandingCollisionShape.disabled = true
-		$CrouchingCollisionShape.disabled = false
+		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+		standingCollisionShape.disabled = true
+		crouchingCollisionShape.disabled = false
 		stand_after_roll = false
 	
-	if Input.is_action_pressed("crouch") and !is_movement_paused or $CrouchRayCast.is_colliding():
+	if Input.is_action_pressed("crouch") and !is_movement_paused or crouchRayCast.is_colliding():
 		if is_on_floor():
 			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
-		$Neck/Head.position.y = lerp($Neck/Head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
+		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height-.8, delta * LERP_SPEED)
-		$StandingCollisionShape.disabled = true
-		$CrouchingCollisionShape.disabled = false
+		standingCollisionShape.disabled = true
+		crouchingCollisionShape.disabled = false
 		wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
 		wiggle_index += WIGGLE_ON_CROUCHING_SPEED * delta
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
-			$SlidingTimer.start()
+			slidingTimer.start()
 			slide_vector = input_dir
 		elif !Input.is_action_pressed("sprint"):
-			$SlidingTimer.stop()
+			slidingTimer.stop()
 		is_walking = false
 		is_sprinting = false
 		is_crouching = true
 	else:
-		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * LERP_SPEED)
+		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height, delta * LERP_SPEED)
-		$StandingCollisionShape.disabled = false
-		$CrouchingCollisionShape.disabled = true
-		$SlidingTimer.stop()
+		standingCollisionShape.disabled = false
+		crouchingCollisionShape.disabled = true
+		slidingTimer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
 			if !Input.is_action_pressed("jump"):
@@ -376,24 +386,24 @@ func _physics_process(delta):
 			is_sprinting = false
 			is_crouching = false
 	
-	if Input.is_action_pressed("free_look") or !$SlidingTimer.is_stopped():
+	if Input.is_action_pressed("free_look") or !slidingTimer.is_stopped():
 		is_free_looking = true
-		if $SlidingTimer.is_stopped():
-			$Neck/Head/Eyes.rotation.z = -deg_to_rad(
-				$Neck.rotation.y * FREE_LOOK_TILT_AMOUNT
+		if slidingTimer.is_stopped():
+			eyes.rotation.z = -deg_to_rad(
+				neck.rotation.y * FREE_LOOK_TILT_AMOUNT
 			)
 		else:
-			$Neck/Head/Eyes.rotation.z = lerp(
-				$Neck/Head/Eyes.rotation.z,
+			eyes.rotation.z = lerp(
+				eyes.rotation.z,
 				deg_to_rad(4.0), 
 				delta * LERP_SPEED
 			)
 	else:
 		is_free_looking = false
-		rotation.y += $Neck.rotation.y
-		$Neck.rotation.y = 0
-		$Neck/Head/Eyes.rotation.z = lerp(
-			$Neck/Head/Eyes.rotation.z,
+		rotation.y += neck.rotation.y
+		neck.rotation.y = 0
+		eyes.rotation.z = lerp(
+			eyes.rotation.z,
 			0.0,
 			delta*LERP_SPEED
 		)
@@ -414,30 +424,30 @@ func _physics_process(delta):
 		#snap = Vector3.DOWN
 		#velocity.y -= gravity * delta
 		pass
-	elif $SlidingTimer.is_stopped() and input_dir != Vector2.ZERO:
+	elif slidingTimer.is_stopped() and input_dir != Vector2.ZERO:
 		wiggle_vector.y = sin(wiggle_index)
 		wiggle_vector.x = sin(wiggle_index / 2) + 0.5
-		$Neck/Head/Eyes.position.y = lerp(
-			$Neck/Head/Eyes.position.y,
+		eyes.position.y = lerp(
+			eyes.position.y,
 			wiggle_vector.y * (wiggle_current_intensity / 2.0), 
 			delta * LERP_SPEED
 		)
-		$Neck/Head/Eyes.position.x = lerp(
-			$Neck/Head/Eyes.position.x,
+		eyes.position.x = lerp(
+			eyes.position.x,
 			wiggle_vector.x * wiggle_current_intensity, 
 			delta * LERP_SPEED
 		)
 	else:
 		snap = -get_floor_normal()
-		$Neck/Head/Eyes.position.y = lerp($Neck/Head/Eyes.position.y, 0.0, delta * LERP_SPEED)
-		$Neck/Head/Eyes.position.x = lerp($Neck/Head/Eyes.position.x, 0.0, delta * LERP_SPEED)
+		eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
+		eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
 		if last_velocity.y <= -7.5:
-			$Neck/Head.position.y = lerp($Neck/Head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-			$StandingCollisionShape.disabled = false
-			$CrouchingCollisionShape.disabled = true
-			$Neck/Head/Eyes/AnimationPlayer.play("roll")
+			head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
+			standingCollisionShape.disabled = false
+			crouchingCollisionShape.disabled = true
+			animationPlayer.play("roll")
 		elif last_velocity.y <= -5.0:
-			$Neck/Head/Eyes/AnimationPlayer.play("landing")
+			animationPlayer.play("landing")
 		
 		# Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
@@ -453,11 +463,11 @@ func _physics_process(delta):
 			print("Not enough stamina to jump.")
 			return
 			
-		$Neck/Head/Eyes/AnimationPlayer.play("jump")
+		animationPlayer.play("jump")
 		Audio.play_sound(jump_sound)
-		if !$SlidingTimer.is_stopped():
+		if !slidingTimer.is_stopped():
 			velocity.y = JUMP_VELOCITY * 1.5
-			$SlidingTimer.stop()
+			slidingTimer.stop()
 		else:
 			velocity.y = JUMP_VELOCITY
 		if is_sprinting:
@@ -465,7 +475,7 @@ func _physics_process(delta):
 		else:
 			bunny_hop_speed = SPRINTING_SPEED
 	
-	if $SlidingTimer.is_stopped():
+	if slidingTimer.is_stopped():
 		if is_on_floor():
 			direction = lerp(
 				direction,
@@ -480,7 +490,7 @@ func _physics_process(delta):
 			)
 	else:
 		direction = (transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
-		current_speed = ($SlidingTimer.time_left / $SlidingTimer.wait_time + 0.5) * SLIDING_SPEED
+		current_speed = (slidingTimer.time_left / slidingTimer.wait_time + 0.5) * SLIDING_SPEED
 	
 	current_speed = clamp(current_speed, 3.0, 12.0)
 	
@@ -601,10 +611,10 @@ func _physics_process(delta):
 	
 	if is_step and !is_falling:
 		head.position -= head_offset
-		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * step_height_camera_lerp)
+		head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
 	else:
 		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
-		$Neck/Head.position.y = lerp($Neck/Head.position.y, 0.0, delta * step_height_camera_lerp)
+		head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
 	
 	velocity += gravity_vec
 
@@ -617,13 +627,13 @@ func _physics_process(delta):
 	
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
-		if $FootstepTimer.time_left <= 0:
+		if footstepTimer.time_left <= 0:
 			footstep_player.play()
 			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
 			if velocity.length() >= 3.4:
-				$FootstepTimer.start(.3)
+				footstepTimer.start(.3)
 			else:
-				$FootstepTimer.start(.6)
+				footstepTimer.start(.6)
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
