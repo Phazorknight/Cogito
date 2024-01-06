@@ -262,13 +262,21 @@ func _process(delta):
 	if sanity_component.current_sanity <= 0:
 		take_damage(health_component.no_sanity_damage * delta)
 
+# Cache allocation of test motion parameters.
+@onready var _params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
 
 func params(transform3d, motion):
-	var params : PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
+	var params : PhysicsTestMotionParameters3D = _params
 	params.from = transform3d
 	params.motion = motion
 	params.recovery_as_collision = true
 	return params
+
+@onready var self_rid: RID = self.get_rid()
+@onready var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+
+func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
+	return PhysicsServer3D.body_test_motion(self_rid, params(transform3d, motion), test_motion_result)	
 
 ### LADDER MOVEMENT
 func _process_on_ladder(_delta):
@@ -514,14 +522,12 @@ func _physics_process(delta):
 	is_step = false
 	
 	if gravity_vec.y >= 0:
-		for i in range(STEP_CHECK_COUNT):
-			var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
-			
+		for i in range(STEP_CHECK_COUNT):			
 			var step_height: Vector3 = STEP_HEIGHT_DEFAULT - i * step_check_height
 			var transform3d: Transform3D = global_transform
 			var motion: Vector3 = step_height
 			
-			var is_player_collided: bool = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+			var is_player_collided: bool = test_motion(transform3d, motion)
 			
 			if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).y < 0:
 				continue
@@ -529,11 +535,11 @@ func _physics_process(delta):
 			if not is_player_collided:
 				transform3d.origin += step_height
 				motion = velocity * delta
-				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+				is_player_collided = test_motion(transform3d, motion)
 				if not is_player_collided:
 					transform3d.origin += motion
 					motion = -step_height
-					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					is_player_collided = test_motion(transform3d, motion)
 					if is_player_collided:
 						if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 							head_offset = -test_motion_result.get_remainder()
@@ -545,11 +551,11 @@ func _physics_process(delta):
 
 					transform3d.origin += test_motion_result.get_collision_normal(0) * WALL_MARGIN
 					motion = (velocity * delta).slide(wall_collision_normal)
-					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					is_player_collided = test_motion(transform3d, motion)
 					if not is_player_collided:
 						transform3d.origin += motion
 						motion = -step_height
-						is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+						is_player_collided = test_motion(transform3d, motion)
 						if is_player_collided:
 							if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 								head_offset = -test_motion_result.get_remainder()
@@ -560,15 +566,15 @@ func _physics_process(delta):
 				var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal(0)
 				transform3d.origin += test_motion_result.get_collision_normal(0) * WALL_MARGIN
 				motion = step_height
-				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+				is_player_collided = test_motion(transform3d, motion)
 				if not is_player_collided:
 					transform3d.origin += step_height
 					motion = (velocity * delta).slide(wall_collision_normal)
-					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					is_player_collided = test_motion(transform3d, motion)
 					if not is_player_collided:
 						transform3d.origin += motion
 						motion = -step_height
-						is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+						is_player_collided = test_motion(transform3d, motion)
 						if is_player_collided:
 							if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 								head_offset = -test_motion_result.get_remainder()
@@ -579,16 +585,15 @@ func _physics_process(delta):
 	
 	
 	if not is_step and is_on_floor():
-		var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
 		var step_height: Vector3 = STEP_HEIGHT_DEFAULT
 		var transform3d: Transform3D = global_transform
 		var motion: Vector3 = velocity * delta
-		var is_player_collided: bool = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+		var is_player_collided: bool = test_motion(transform3d, motion)
 		
 		if not is_player_collided:
 			transform3d.origin += motion
 			motion = -step_height
-			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+			is_player_collided = test_motion(transform3d, motion)
 			if is_player_collided:
 				if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 					head_offset = test_motion_result.get_travel()
@@ -601,11 +606,11 @@ func _physics_process(delta):
 				var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal(0)
 				transform3d.origin += test_motion_result.get_collision_normal(0) * WALL_MARGIN
 				motion = (velocity * delta).slide(wall_collision_normal)
-				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+				is_player_collided = test_motion(transform3d, motion)
 				if not is_player_collided:
 					transform3d.origin += motion
 					motion = -step_height
-					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), params(transform3d, motion), test_motion_result)
+					is_player_collided = test_motion(transform3d, motion)
 					if is_player_collided:
 						if test_motion_result.get_collision_count() > 0 and test_motion_result.get_collision_normal(0).angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 							head_offset = test_motion_result.get_travel()
