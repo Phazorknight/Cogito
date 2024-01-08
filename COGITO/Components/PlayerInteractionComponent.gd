@@ -57,7 +57,7 @@ func _input(event):
 		
 		# if carrying an object, drop it.
 		if carried_object:
-			carried_object.throw(throw_power)
+			carried_object.drop()
 			carried_object = null
 			
 		if interaction_raycast.is_colliding():
