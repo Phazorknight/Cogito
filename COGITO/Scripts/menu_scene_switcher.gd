@@ -5,12 +5,12 @@ extends Node
 
 func _on_main_menu_start_game_pressed():
 	if start_game_scene: 
-		get_tree().change_scene_to_file(start_game_scene)
+		CogitoSceneManager.load_next_scene(start_game_scene, false)
 	else:
 		print("No start game scene set in the Scene switcher.")
 
 func _on_pause_menu_back_to_main_pressed():
 	if main_menu_scene:
-		get_tree().change_scene_to_file(main_menu_scene)
+		CogitoSceneManager.load_next_scene(main_menu_scene, true)
 	else:
 		print("No main menu scene set in the Scene switcher.")

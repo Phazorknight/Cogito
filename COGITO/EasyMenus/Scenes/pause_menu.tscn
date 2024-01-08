@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://qlskttl1wjr7" path="res://COGITO/EasyMenus/Scenes/options_menu.tscn" id="2_ejh0f"]
 [ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="3_arj7o"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="4_cpqh0"]
-[ext_resource type="Script" path="res://COGITO/Scripts/scene_switcher.gd" id="4_vxssj"]
+[ext_resource type="Script" path="res://COGITO/Scripts/menu_scene_switcher.gd" id="6_dtxsf"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -84,12 +84,12 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
-[node name="SceneSwitcher" type="Node" parent="."]
-script = ExtResource("4_vxssj")
+[node name="MenuSceneSwitcher" type="Node" parent="."]
+script = ExtResource("6_dtxsf")
 main_menu_scene = "res://COGITO/DemoScenes/COGITO_MainMenu.tscn"
 start_game_scene = "res://COGITO/DemoScenes/COGITO_Demo_01.tscn"
 
-[connection signal="back_to_main_pressed" from="." to="SceneSwitcher" method="_on_pause_menu_back_to_main_pressed"]
+[connection signal="back_to_main_pressed" from="." to="MenuSceneSwitcher" method="_on_pause_menu_back_to_main_pressed"]
 [connection signal="pressed" from="Content/ResumeGameButton" to="." method="_on_resume_game_button_pressed"]
 [connection signal="pressed" from="Content/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="Content/BackToMenuButton" to="." method="_on_back_to_menu_button_pressed"]

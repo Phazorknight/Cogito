@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **BETA 202312.1**
+Version: **BETA 202401.6**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -14,6 +14,10 @@ providing a framework for creating interactable objects and items.
 - Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC
 - InputHelper by Nathan Hoad (also see this link for documentation): https://github.com/nathanhoad/godot_input_helper
 - QuickAudio by Bryce Dixon (https://github.com/BtheDestroyer/Godot_QuickAudio)
+- Stairs handling based on GodotStairs by elvisish (https://github.com/elvisish/GodotStairs)
+
+**Thanks:**
+- Thanks to pcbeard for tweaks and bugfixes.
 
 ## Overview
 ### Current working features:
@@ -48,10 +52,7 @@ providing a framework for creating interactable objects and items.
 
 
 ### To-Do's that are next in line:
-- Pause/Options Menu:
-  - Invert Y toggle doesn't work yet. But can be set in the Player.gd script in the inspector.
-- Inventory / Items:
-  - Option to take all items from a container.
+- Please check the GitHub Repo Issues and Discussion pages.
  
 
 ## Set-Up

@@ -9,6 +9,9 @@ extends RigidBody3D
 var is_being_carried
 var holder
 
+func _ready():
+	self.add_to_group("Persist")
+
 func carry(player):
 	holder = player
 
@@ -50,3 +53,19 @@ func throw(power):
 		audio_stream_player_3d.stream = drop_sound
 		audio_stream_player_3d.play()
 	apply_central_impulse(holder.look_vector * Vector3(power, power, power))
+
+
+# Function to handle persistency and saving
+func save():
+	var save_dict = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_path(),
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		
+	}
+	return save_dict

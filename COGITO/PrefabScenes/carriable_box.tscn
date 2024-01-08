@@ -23,6 +23,7 @@ size = Vector3(1, 0.1, 0.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mtcvq"]
 
 [node name="CarriableBox" type="RigidBody3D"]
+collision_layer = 3
 mass = 4.0
 script = ExtResource("1_ufsmk")
 pick_up_sound = ExtResource("2_4d2c8")
