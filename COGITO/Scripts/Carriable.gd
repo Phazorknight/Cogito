@@ -4,52 +4,69 @@ extends RigidBody3D
 @export var interaction_text : String = "Carry"
 @export var pick_up_sound : AudioStream
 @export var drop_sound : AudioStream
+## How close the carriable is being held to the player. Tweak this depending on your carriable size. 1 = raycast interaction length (2.5m by default). 0.75 feels pretty good for most objects. Be aware that objects might collide with the player collider if this is set too close.
+@export var hold_distance_multiplier : float = 1
+## Set if the object should not rotate when being carried. Usually true is preferred.
+@export var lock_rotation_when_carried : bool = true
+## Sets how fast the carriable is being pulled towards the carrying position. The lower, the "floatier" it will feel.
+@export var carrying_velocity_multiplier : float = 10
+
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
+
+@onready var camera : Camera3D = get_viewport().get_camera_3d()
 
 var is_being_carried
 var holder
+# Position the carriable "floats to".
+var carry_position : Vector3
 
 func _ready():
 	self.add_to_group("Persist")
 
-func carry(player):
-	holder = player
+func carry(player_interaction_component):
+	holder = player_interaction_component
 
 	if is_being_carried:
 		leave()
 	else:
 		hold()
 
-func _process(_delta):
+func _physics_process(_delta):
 	if is_being_carried:
-		global_position = holder.carryable_position.global_position
-		global_rotation = holder.carryable_position.global_rotation
-#		set_global_transform(holder.carryable_position.get_global_transform())
+		if holder.interaction_raycast.is_colliding():
+			carry_position = holder.interaction_raycast.get_collision_point()
+		else:
+			carry_position = holder.interaction_raycast.global_position + (holder.interaction_raycast.target_position.z*0.75) * camera.get_global_transform().basis.z
+
+		set_linear_velocity((carry_position - global_position) * carrying_velocity_multiplier)
+		
+		
 
 func hold():
-	$CollisionShape3D.set_disabled(true)
+	if lock_rotation_when_carried:
+		set_lock_rotation_enabled(true)
 	holder.carried_object = self
+	holder.interaction_raycast.add_exception(self)
 	
 	# Play Pick up sound.
 	if pick_up_sound != null:
 		audio_stream_player_3d.stream = pick_up_sound
 		audio_stream_player_3d.play()
 	
-	self.set_sleeping(true)
-	#self.set_freeze_enabled(true)
 	is_being_carried = true
 
 func leave():
-	$CollisionShape3D.set_disabled(false)
+	if lock_rotation_when_carried:
+		set_lock_rotation_enabled(false)
 	holder.carried_object = null
-	self.set_sleeping(false)
-	#self.set_freeze_enabled(false)
+	holder.interaction_raycast.remove_exception(self)
+	
 	is_being_carried = false
 
 
 func throw(power):
 	leave()
-	if drop_sound != null:
+	if drop_sound:
 		audio_stream_player_3d.stream = drop_sound
 		audio_stream_player_3d.play()
 	apply_central_impulse(holder.look_vector * Vector3(power, power, power))

@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **BETA 202401.6**
+Version: **BETA 202401.7**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -48,7 +48,7 @@ providing a framework for creating interactable objects and items.
 	- Foam Pistol
 
 ### Known bugs:
-- No collision check for carryables, wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
+- No collision check for wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 
 
 ### To-Do's that are next in line:
@@ -59,8 +59,8 @@ providing a framework for creating interactable objects and items.
 It is recommended to use the whole project as a starting point for your game, though everything needed should be contained within the COGITO folder within the project.
 
 Make sure that two Autoloads are set up in your project:
-
 - //COGITO/EsayMenus/Nodes/menu_template_manager.tscn
+- //COGITO/SceneManagement/cogito_scene_manager.gd
 
 Make sure you have this plug-in set up in your project:
 - Quick Audio (currently v1.0)
@@ -144,6 +144,10 @@ Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be se
 - Interaction Text: What appears when the player aims the crosshair at the carryable.
 - Pick up Sound: Plays when player picks up the carryable.
 - Drop Sound: Plays when player drops up the carryable.
+- Hold distance: How close the carriable is being held to the player. Tweak this depending on your carriable size. 1 = raycast interaction length (2.5m by default). 0.75 feels pretty good for most objects. Be aware that objects might collide with the player collider if this is set too close.
+- Lock Rotation when carrying: Set if the object should not rotate when being carried. Usually true is preferred.
+- Carrying velocity multiplier: Sets how fast the carriable is being pulled towards the carrying position. The lower, the "floatier" it will feel.
+
 
 ### Item pick ups:
 See under **Inventory** below on how pick ups are setup.
