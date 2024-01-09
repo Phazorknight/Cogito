@@ -15,6 +15,8 @@ extends Area3D
 
 ## Set if the door should close automatically after the player leaves the zone.
 @export var close_door_on_exit : bool = false
+## Set if the door should open automatically when player enters the zone.
+@export var open_door_on_enter : bool = false
 ## Time delay when door closes. Should be at least 1-2 seconds.
 @export var close_delay : float = 3.0
 
@@ -26,9 +28,13 @@ func _ready():
 func _on_body_entered(body: Node3D):
 	if !body.is_in_group("Player"):
 		return
-		
+	
 	if door_to_set != null:
 		var door = get_node(door_to_set)
+		
+		if open_door_on_enter and !door.is_locked:
+			door.open_door()
+		
 		if is_sliding:
 			door.open_position = new_open_pos
 		elif is_using_animations:
