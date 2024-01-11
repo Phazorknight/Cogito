@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **BETA 202401.7**
+Version: **BETA 202401.8**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -46,9 +46,6 @@ providing a framework for creating interactable objects and items.
 	- Key to unlock door
 	- Diamond Key A and B (combinable to create Diamond Key)
 	- Foam Pistol
-
-### Known bugs:
-- No collision check for wieldables or when you drop items. All of these can clip through walls if you stand too close to them.
 
 
 ### To-Do's that are next in line:

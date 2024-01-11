@@ -84,45 +84,60 @@ var is_being_wielded : bool
 var wielded_item
 
 
-func use(target):
+func use(target) -> bool:
+	# Target should always be player? Null check to avoid this.
+	if target == null or target.is_in_group("external_inventory"):
+		print("Target passed was not player: ", target.name)
+		return false
+	
 	match item_type:
 		ItemType.CONSUMABLE:
-			print("Inventory item: Target ", target, " is using ", self)
-			Audio.play_sound(sound_use)
-			if hint_text_on_use != "":
-				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
-			target.increase_attribute(attribute_name, power)
+			if target.increase_attribute(attribute_name, power):
+				print("Inventory item: Target ", target, " is using ", self)
+				Audio.play_sound(sound_use)
+				if hint_text_on_use != "":
+					target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
+				return true
+			else:
+				target.player_interaction_component.send_hint(hint_icon_on_use, str(attribute_name + " is already maxed."))
+				return false
 		
 		ItemType.WIELDABLE:
 			wielder = target.player_interaction_component
 			if wielder.carried_object != null:
 				wielder.send_hint(null,"Can't equip item while carrying.")
-				return
+				return false
 			if is_being_wielded:
 				wielder.emit_signal("set_use_prompt", "")
 				wielder.emit_signal("update_wieldable_data", null, "")
 				print("Inventory item: ", wielder, " is putting away wieldable ", name)
 				put_away()
+				return true
 			else:
 				wielder.emit_signal("set_use_prompt", primary_use_prompt)
 				update_wieldable_data()
 				print("Inventory item: ", wielder, " is taking out wieldable ", name)
 				take_out()
+				return true
 		
 		ItemType.COMBINABLE:
 			if hint_text_on_use != "":
 				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
+			return true
 				
 		ItemType.AMMO:
 			if hint_text_on_use != "":
 				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
+			return true
 		
 		ItemType.KEY:
 			if hint_text_on_use != "":
 				target.player_interaction_component.send_hint(hint_icon_on_use,hint_text_on_use)
+			return true
 		
 		_: # DEFAULT
 			print("Inventory item: item type match hit default.")
+			return false
 		
 
 

@@ -253,7 +253,8 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_nar8x"]
+[sub_resource type="Resource" id="Resource_1n0uc"]
+resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
 
@@ -605,6 +606,7 @@ shape = SubResource("ConvexPolygonShape3D_vnr22")
 
 [node name="Wall16" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 14.9, 0, 0)
+collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall16"]
@@ -830,6 +832,7 @@ within the Lightzone."
 
 [node name="BoxPotions" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 14.3, 0, -2.7)
+collision_layer = 3
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/BoxPotions"]
@@ -1167,7 +1170,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(-0.125576, 0, 0.992084, 0, 1, 0, -0.992084, 0, -0.125576, -4.38933, 0.0425703, 5.97176)
-inventory_data = SubResource("Resource_nar8x")
+inventory_data = SubResource("Resource_1n0uc")
 
 [node name="PressAndHold" parent="INTERACTIVE_OBJECTS" instance=ExtResource("22_ni6um")]
 rotate_while_holding = true
@@ -1257,8 +1260,8 @@ skeleton = NodePath("../../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0306714, 0)
 
 [node name="CarriableBox" parent="INTERACTIVE_OBJECTS" instance=ExtResource("6_cy1m6")]
-transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -14.3178, 0.748613, 6.31014)
-hold_distance_multiplier = 0.75
+transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -14.0048, 0.748613, 6.50097)
+carry_distance_offset = -0.3
 
 [node name="GateA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -45, 0, 14.6)

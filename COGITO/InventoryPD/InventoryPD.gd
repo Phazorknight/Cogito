@@ -60,15 +60,17 @@ func use_slot_data(index: int):
 	
 	print("InventoryPD: Using ", slot_data.inventory_item.name)
 
-	if slot_data.inventory_item.item_type == 0:
+	# THIS USES RESOURCE LOCAL TO SCENE DATA. Local scene in this case is player. If player is persistent, this should work, but might break if not!?
+	# This also throws an error when an item is used out of a container.
+	var use_successful : bool = slot_data.inventory_item.use(get_local_scene())
+	if slot_data.inventory_item.item_type == 0 and use_successful:
 		print("InventoryPD: Item is consumable, reducing quantity.")
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:
 			inventory_slots[index] = null
 	
-	# THIS USES RESOURCE LOCAL TO SCENE DATA. Local scene in this case is player. If player is persistent, this should work, but might break if not!?
-	slot_data.inventory_item.use(get_local_scene())
 	inventory_updated.emit(self)
+	
 	
 # Function to remove a specific item from inventory directly (without picking it up etc)
 # Used for example by KEY items to be discarded after using them

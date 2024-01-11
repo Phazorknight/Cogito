@@ -245,8 +245,6 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	var scene_to_drop = load(slot_data.inventory_item.drop_scene)
 	Audio.play_sound(slot_data.inventory_item.sound_drop)
 	var dropped_item = scene_to_drop.instantiate()
-	dropped_item.position = player.drop_position.global_position
+	dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(0)
 	dropped_item.slot_data = slot_data
 	get_parent().add_child(dropped_item)
-
-

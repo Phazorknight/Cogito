@@ -37,7 +37,6 @@ signal toggle_inventory_interface()
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
-@onready var drop_position = $DropPosition
 
 # Adding carryable position for item control.
 @onready var carryable_position = %CarryablePosition
@@ -144,22 +143,39 @@ func _ready():
 	brightness_component.brightness_changed.connect(_on_brightness_changed)
 
 
-func increase_attribute(attribute_name: String, value: float):
+func increase_attribute(attribute_name: String, value: float) -> bool:
 	match attribute_name:
 		"health":
-			health_component.add(value)
+			if health_component.current_health == health_component.max_health:
+				return false
+			else:
+				print("Adding ", value, " to current_health.")
+				health_component.add(value)
+				return true
 		"health_max":
 			health_component.max_health += value
+			return true
 		"sanity":
-			sanity_component.add(value)
+			if sanity_component.current_sanity == sanity_component.max_sanity:
+				return false
+			else:
+				sanity_component.add(value)
+				return true
 		"sanity_max":
 			sanity_component.max_sanity += value
+			return true
 		"stamina":
-			stamina_component.add(value)
+			if stamina_component.current_stamina == stamina_component.max_stamina:
+				return false
+			else:
+				stamina_component.add(value)
+				return true
 		"stamina_max":
 			stamina_component.max_stamina += value
+			return true
 		_:
 			print("Increase attribute failed: no match.")
+			return false
 
 
 func decrease_attribute(attribute_name: String, value: float):

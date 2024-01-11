@@ -137,9 +137,6 @@ collision_mask = 3
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.2, 0.341, -0.3)
 
-[node name="DropPosition" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.2)
-
 [node name="Neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 

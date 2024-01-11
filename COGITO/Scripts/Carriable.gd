@@ -4,8 +4,8 @@ extends RigidBody3D
 @export var interaction_text : String = "Carry"
 @export var pick_up_sound : AudioStream
 @export var drop_sound : AudioStream
-## How close the carriable is being held to the player. Tweak this depending on your carriable size. 1 = raycast interaction length (2.5m by default). 0.75 feels pretty good for most objects. Be aware that objects might collide with the player collider if this is set too close.
-@export var hold_distance_multiplier : float = 1
+## Use this to adjust the carry position distance from the player. Per default it's the interaction raycast length. Negative values are closer, positive values are further away.
+@export var carry_distance_offset : float = 0
 ## Set if the object should not rotate when being carried. Usually true is preferred.
 @export var lock_rotation_when_carried : bool = true
 ## Sets how fast the carriable is being pulled towards the carrying position. The lower, the "floatier" it will feel.
@@ -33,11 +33,7 @@ func carry(player_interaction_component):
 
 func _physics_process(_delta):
 	if is_being_carried:
-		if holder.interaction_raycast.is_colliding():
-			carry_position = holder.interaction_raycast.get_collision_point()
-		else:
-			carry_position = holder.interaction_raycast.global_position + (holder.interaction_raycast.target_position.z*0.75) * camera.get_global_transform().basis.z
-
+		carry_position = holder.get_interaction_raycast_tip(carry_distance_offset)
 		set_linear_velocity((carry_position - global_position) * carrying_velocity_multiplier)
 		
 		
