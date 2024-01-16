@@ -736,6 +736,10 @@ text = "This crate is carriable."
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.7952, 2.21944, 9.62556)
 text = "This is a basic door."
 
+[node name="Txt_DoorBiDirect" type="Label3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.78901, 2.63174, 9.71411)
+text = "This door swings in both directions"
+
 [node name="Txt_DoorBasic2" type="Label3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.5952, 4.81944, 6.82556)
 text = "Work in progress."
@@ -1071,6 +1075,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.2, 0.6, 18.8)
 size = Vector3(0.4, 1.2, 0.4)
 material = ExtResource("1_lsda4")
 
+[node name="Corner4" type="CSGBox3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47068, 0.6, 9.2)
+size = Vector3(0.2, 1.2, 0.2)
+material = ExtResource("1_lsda4")
+
 [node name="LightzoneCeiling" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -6, 2.975, 3.8)
 
@@ -1128,6 +1137,13 @@ material = ExtResource("1_lsda4")
 
 [node name="Door_A" parent="INTERACTIVE_OBJECTS" instance=ExtResource("8_xabdk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
+open_rotation_deg = -95.0
+closed_position = Vector3(-14.9, 0, 9.2)
+open_position = Vector3(-14.9, 0, 8.309)
+
+[node name="Door_BiDirect1" parent="INTERACTIVE_OBJECTS" instance=ExtResource("8_xabdk")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -7.53747, 0, 9.29669)
+bidirectional_swing = true
 open_rotation_deg = -95.0
 closed_position = Vector3(-14.9, 0, 9.2)
 open_position = Vector3(-14.9, 0, 8.309)
