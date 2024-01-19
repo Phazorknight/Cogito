@@ -1,0 +1,204 @@
+[gd_scene load_steps=25 format=3 uid="uid://c1rwpd0k7ov8"]
+
+[ext_resource type="Script" path="res://COGITO/SaveSystemPD/cogito_scene.gd" id="1_2xpg1"]
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_3gycq"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_l0t74"]
+[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_20bm3"]
+[ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="4_eyy5j"]
+[ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="5_ioaac"]
+[ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="6_1emu1"]
+[ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="6_v67yj"]
+[ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="8_0gn3l"]
+[ext_resource type="PackedScene" uid="uid://bdyukj85qkut0" path="res://COGITO/PrefabScenes/door.tscn" id="9_kel65"]
+[ext_resource type="Script" path="res://COGITO/Scripts/door_setter_zone.gd" id="10_cd1aq"]
+[ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://COGITO/PrefabScenes/pickup_battery.tscn" id="11_d8xat"]
+[ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="12_pi1kx"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="13_fcafo"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pde7s"]
+sky_top_color = Color(0.576471, 0.960784, 1, 1)
+sky_horizon_color = Color(0.745098, 0.779412, 0.785294, 1)
+ground_bottom_color = Color(0.168627, 0.156863, 0.141176, 1)
+ground_horizon_color = Color(0.745098, 0.779412, 0.785294, 1)
+
+[sub_resource type="Sky" id="Sky_6xcgc"]
+sky_material = SubResource("ProceduralSkyMaterial_pde7s")
+
+[sub_resource type="Environment" id="Environment_ai7l5"]
+background_mode = 2
+sky = SubResource("Sky_6xcgc")
+ambient_light_source = 3
+ambient_light_color = Color(0.588235, 0.588235, 0.588235, 1)
+ambient_light_sky_contribution = 0.1
+ambient_light_energy = 0.2
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_upyq8"]
+resource_local_to_scene = true
+script = ExtResource("2_l0t74")
+inventory_slots = Array[ExtResource("13_fcafo")]([null, null, null, null, null, null, null, null])
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qj8p"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rjn5b"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.913725, 0.521569, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2v6k6"]
+size = Vector3(2, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ws0v6"]
+size = Vector3(2, 3, 1)
+
+[sub_resource type="Resource" id="Resource_fn0ea"]
+resource_local_to_scene = true
+script = ExtResource("13_fcafo")
+inventory_item = ExtResource("12_pi1kx")
+quantity = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oo4wy"]
+size = Vector3(2, 3, 2)
+
+[node name="Cogito02SceneTransitionsB" type="Node3D" node_paths=PackedStringArray("connectors")]
+script = ExtResource("1_2xpg1")
+connectors = [NodePath("ConnectorA")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(1, 0.988235, 0.988235, 1)
+shadow_enabled = true
+shadow_opacity = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ai7l5")
+
+[node name="Player" parent="." instance=ExtResource("1_3gycq")]
+transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
+pause_menu = NodePath("../PauseMenu")
+player_hud = NodePath("../Player_HUD")
+inventory_data = SubResource("Resource_upyq8")
+step_height_camera_lerp = 1.5
+
+[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_20bm3")]
+player = NodePath("../Player")
+use_stamina_component = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_eyy5j")]
+
+[node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+use_collision = true
+size = Vector3(20, 0.1, 20)
+material = ExtResource("5_ioaac")
+
+[node name="Wall" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 9.95)
+use_collision = true
+size = Vector3(20, 4, 0.1)
+material = ExtResource("5_ioaac")
+
+[node name="Txt_SceneB" type="Label3D" parent="STATIC ENVIRONMENT/Wall"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.7, 1, -0.149947)
+text = "SCENE B"
+font_size = 128
+
+[node name="Wall2" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -9.95)
+use_collision = true
+size = Vector3(20, 4, 0.1)
+material = ExtResource("5_ioaac")
+
+[node name="Wall3" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.95, 2, 0)
+use_collision = true
+size = Vector3(19.8, 4, 0.1)
+material = ExtResource("5_ioaac")
+
+[node name="Wall4" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.95, 2, 0)
+use_collision = true
+size = Vector3(19.8, 4, 0.1)
+material = ExtResource("5_ioaac")
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.41561e-07, 4, 10)
+visible = false
+material_override = ExtResource("6_v67yj")
+inner_radius = 1.0
+outer_radius = 2.0
+sides = 16
+ring_sides = 12
+material = ExtResource("6_1emu1")
+
+[node name="Wall_w_Door" type="CSGPolygon3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -4, 0, -0.1)
+use_collision = true
+collision_layer = 3
+polygon = PackedVector2Array(0, 0, 0, 3, 9.6, 3, 9.6, 0, 5, 0, 5, 2, 4, 2, 4, 0)
+depth = 0.2
+material = ExtResource("5_ioaac")
+
+[node name="Door" parent="." instance=ExtResource("9_kel65")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -0.2)
+open_rotation_deg = 180.0
+closed_rotation_deg = 90.0
+
+[node name="DoorSetterZoneA" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.4, -1.3)
+script = ExtResource("10_cd1aq")
+door_to_set = NodePath("../Door")
+close_door_on_exit = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DoorSetterZoneA"]
+visible = false
+mesh = SubResource("BoxMesh_8qj8p")
+surface_material_override/0 = SubResource("StandardMaterial3D_rjn5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorSetterZoneA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.48125)
+shape = SubResource("BoxShape3D_2v6k6")
+
+[node name="DoorSetterZoneB" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.4, 0.899999)
+script = ExtResource("10_cd1aq")
+door_to_set = NodePath("../Door")
+new_open_rotation_deg = 180.0
+close_door_on_exit = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DoorSetterZoneB"]
+visible = false
+mesh = SubResource("BoxMesh_8qj8p")
+surface_material_override/0 = SubResource("StandardMaterial3D_rjn5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorSetterZoneB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.470105)
+shape = SubResource("BoxShape3D_ws0v6")
+
+[node name="Pickup_Battery" parent="." instance=ExtResource("11_d8xat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18302, 0.18151, 8.27574)
+slot_data = SubResource("Resource_fn0ea")
+
+[node name="TransitionZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.6, 8.8)
+script = ExtResource("8_0gn3l")
+path_to_new_scene = "res://COGITO/DemoScenes/COGITO_02_SceneTransitionsA.tscn"
+target_connector = "ConnectorA"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TransitionZone"]
+mesh = SubResource("BoxMesh_8qj8p")
+surface_material_override/0 = SubResource("StandardMaterial3D_rjn5b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TransitionZone"]
+shape = SubResource("BoxShape3D_oo4wy")
+
+[node name="ConnectorA" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -4)
+
+[node name="RayCast3D" type="RayCast3D" parent="ConnectorA"]
+target_position = Vector3(0, 0, 1)

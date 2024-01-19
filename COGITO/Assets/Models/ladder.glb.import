@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://q0dk7vxq0i3s"
+uid="uid://c6dn6bn47xyrj"
 path="res://.godot/imported/ladder.glb-c36f821aff9dcab389f41c0b21fae2da.scn"
 
 [deps]
@@ -31,4 +31,4 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={}
 gltf/naming_version=1
-gltf/embedded_image_handling=2
+gltf/embedded_image_handling=1

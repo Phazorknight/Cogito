@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1tj50tt4hw2j"]
+
+[ext_resource type="Script" path="res://COGITO/SceneManagement/loading_screen.gd" id="1_eqjm8"]
+
+[sub_resource type="Gradient" id="Gradient_mxr7g"]
+offsets = PackedFloat32Array(0, 0.995283)
+colors = PackedColorArray(0.054902, 0.533333, 0.478431, 1, 0.207843, 0.631373, 0.843137, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lmuc0"]
+gradient = SubResource("Gradient_mxr7g")
+fill_from = Vector2(0.495726, 0.598291)
+
+[node name="LoadingScene" type="CanvasLayer"]
+script = ExtResource("1_eqjm8")
+keep_delay = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+modulate = Color(0.490196, 0.490196, 0.490196, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_lmuc0")
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.5
+offset_top = -11.5
+offset_right = 36.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "LOADING"

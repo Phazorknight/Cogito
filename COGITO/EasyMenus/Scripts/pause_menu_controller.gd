@@ -84,3 +84,19 @@ func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")) and visible and !options_menu.visible:
 		accept_event()
 		close_pause_menu()
+
+
+func _on_save_button_pressed() -> void:
+	CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
+	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
+	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node,CogitoSceneManager._active_slot)
+	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
+	
+
+func _on_load_button_pressed() -> void:
+	CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
+	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
+	CogitoSceneManager.loading_saved_game(CogitoSceneManager._active_slot)
+	
+	_on_resume_game_button_pressed()
+	

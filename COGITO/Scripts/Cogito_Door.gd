@@ -52,13 +52,13 @@ extends Node3D
 @export var closing_animation : String
 var anim_player : AnimationPlayer
 
-
-
 var interaction_text : String
 var is_moving : bool = false
 var target_rotation_rad : float 
 
 func _ready():
+	add_to_group("Save_object_state")
+	
 	if is_animation_based:
 		anim_player = get_node(animation_player)
 	
@@ -143,6 +143,7 @@ func open_door(interactor: Node3D):
 	if is_animation_based:
 		anim_player.play(opening_animation)
 	elif !is_sliding:
+		target_rotation_rad = deg_to_rad(open_rotation_deg)
 		var swing_direction: int = 1
 
 		if bidirectional_swing:
@@ -159,7 +160,7 @@ func open_door(interactor: Node3D):
 	is_open = true
 	interaction_text = interaction_text_when_open
 	
-func close_door(interactor: Node3D):
+func close_door(_interactor: Node3D):
 	audio_stream_player_3d.stream = close_sound
 	audio_stream_player_3d.play()
 	
@@ -177,3 +178,28 @@ func close_door(interactor: Node3D):
 		tween_door.tween_property(self,"position", closed_position, door_speed)
 	is_open = false
 	interaction_text = interaction_text_when_closed
+	
+	
+func set_state():
+	if is_open:
+		interaction_text = interaction_text_when_open
+	else:
+		interaction_text = interaction_text_when_closed
+	if is_locked:
+		interaction_text = interaction_text_when_locked
+	
+	
+func save():
+	var state_dict = {
+		"node_path" : self.get_path(),
+		"is_locked" : is_locked,
+		"is_open" : is_open,
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		
+	}
+	return state_dict

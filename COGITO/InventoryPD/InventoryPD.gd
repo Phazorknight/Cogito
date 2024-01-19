@@ -8,8 +8,9 @@ signal inventory_updated(inventory_data: InventoryPD)
 @export var inventory_slots : Array[InventorySlotPD]
 @export var first_slot : InventorySlotPD
 
-func _ready():
-	first_slot = inventory_slots[0]
+func _init():
+	if inventory_slots.size() > 0:
+		first_slot = inventory_slots[0]
 
 func on_slot_clicked(index: int, mouse_button: int):
 	inventory_interact.emit(self, index, mouse_button)
@@ -60,15 +61,17 @@ func use_slot_data(index: int):
 	
 	print("InventoryPD: Using ", slot_data.inventory_item.name)
 
-	if slot_data.inventory_item.item_type == 0:
+	# THIS USES RESOURCE LOCAL TO SCENE DATA. Local scene in this case is player. If player is persistent, this should work, but might break if not!?
+	# This also throws an error when an item is used out of a container.
+	var use_successful : bool = slot_data.inventory_item.use(get_local_scene())
+	if slot_data.inventory_item.item_type == 0 and use_successful:
 		print("InventoryPD: Item is consumable, reducing quantity.")
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:
 			inventory_slots[index] = null
 	
-	# THIS USES RESOURCE LOCAL TO SCENE DATA. Local scene in this case is player. If player is persistent, this should work, but might break if not!?
-	slot_data.inventory_item.use(get_local_scene())
 	inventory_updated.emit(self)
+	
 	
 # Function to remove a specific item from inventory directly (without picking it up etc)
 # Used for example by KEY items to be discarded after using them
@@ -159,3 +162,8 @@ func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 			return true
 		
 	return false
+
+
+func force_inventory_update():
+	print("Forced inventory update: ", self)
+	inventory_updated.emit(self)

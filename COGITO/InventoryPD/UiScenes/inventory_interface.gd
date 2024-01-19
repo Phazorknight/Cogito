@@ -84,7 +84,7 @@ func set_external_inventory(_external_inventory_owner):
 	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
-	external_inventory_ui.inventory_name = external_inventory_owner.name
+	external_inventory_ui.inventory_name = external_inventory_owner.inventory_name
 	external_inventory_ui.set_inventory_data(inventory_data)
 	
 	external_inventory_ui.show()
@@ -134,20 +134,6 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 	inventory_ui.slot_array[index].grab_focus()
 	update_grabbed_slot()
 
-# DEPRECATED Inventory handling on mouse buttons
-#func on_inventory_interact(inventory_data: InventoryPD, index: int, mouse_button: int):
-#	match [grabbed_slot_data, mouse_button]:
-#		[null, MOUSE_BUTTON_LEFT]:
-#			grabbed_slot_data = inventory_data.grab_slot_data(index)
-#		[_, MOUSE_BUTTON_LEFT]:
-#			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
-#		[null, MOUSE_BUTTON_RIGHT]:
-#			inventory_data.use_slot_data(index)
-#		[_, MOUSE_BUTTON_RIGHT]:
-#			grabbed_slot_data = inventory_data.drop_single_slot_data(grabbed_slot_data, index)
-			
-	print(grabbed_slot_data)
-	update_grabbed_slot()
 
 func update_grabbed_slot():
 	if grabbed_slot_data:

@@ -23,6 +23,7 @@ config/icon="res://COGITO/COGITO_icon.png"
 MenuTemplateManager="*res://COGITO/EasyMenus/Nodes/menu_template_manager.tscn"
 InputHelper="*res://addons/input_helper/input_helper.gd"
 Audio="*res://addons/quick_audio/./Audio.gd"
+CogitoSceneManager="*res://COGITO/SceneManagement/cogito_scene_manager.gd"
 
 [display]
 

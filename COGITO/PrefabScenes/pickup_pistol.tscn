@@ -1,11 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://o0xgl5obc551"]
+[gd_scene load_steps=11 format=3 uid="uid://o0xgl5obc551"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/pistol.gd" id="1_6i600"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/Cogito_Pickup.gd" id="1_tx87t"]
 [ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="2_7v1hn"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_xoy07"]
-[ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://COGITO/Assets/Audio/Kenney/error_004.ogg" id="4_m14yh"]
 
-[sub_resource type="Resource" id="Resource_jll6o"]
+[sub_resource type="Resource" id="Resource_abxle"]
+resource_local_to_scene = true
 script = ExtResource("3_xoy07")
 inventory_item = ExtResource("2_7v1hn")
 quantity = 1
@@ -61,10 +61,9 @@ size = Vector3(0.0942247, 0.2, 0.0599624)
 
 [node name="pickup_pistol" type="RigidBody3D"]
 collision_layer = 3
-script = ExtResource("1_6i600")
-slot_data = SubResource("Resource_jll6o")
-projectile_prefab = "<null>"
-sound_primary_use = ExtResource("4_m14yh")
+script = ExtResource("1_tx87t")
+slot_data = SubResource("Resource_abxle")
+interaction_text = "Pick up Toy Pistol"
 
 [node name="pistol_mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)

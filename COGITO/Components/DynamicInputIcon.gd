@@ -25,6 +25,9 @@ func update_device(_device, _device_index):
 	update_input_icon()
 	
 func _is_steam_deck() -> bool:
+	if RenderingServer.get_rendering_device() == null:
+		print("No rendering device detected.")
+		return false
 	if RenderingServer.get_rendering_device().get_device_name().contains("RADV VANGOGH") \
 	or OS.get_processor_name().contains("AMD CUSTOM APU 0405"):
 		return true

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bdyukj85qkut0"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Interact_Door.gd" id="1_v6apr"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_v6apr"]
 [ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="2_syv37"]
 [ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="3_mv414"]
 [ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://COGITO/Assets/Audio/Kenney/beltHandle2.ogg" id="4_amxf0"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://d1rq8gm20sjo1"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/switchable.gd" id="1_tccsv"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Switch.gd" id="1_tccsv"]
 [ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_1ogwg"]
 [ext_resource type="Material" uid="uid://duwpnfvdwx8pi" path="res://COGITO/Assets/Materials/Lamp_Stand.tres" id="3_tvw1v"]
 [ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://COGITO/Assets/Materials/Lamp_Shade.tres" id="4_08xoa"]
@@ -23,12 +23,13 @@ radius = 0.3
 height = 0.3
 radius = 0.3
 
-[node name="Lamp_Standing" type="StaticBody3D"]
+[node name="Lamp_Standing" type="StaticBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5066, 0, 5.95227)
 collision_layer = 3
 script = ExtResource("1_tccsv")
 switch_sound = ExtResource("2_1ogwg")
-objects_toggle_visibility = Array[NodePath]([NodePath("Lamp_Shade_OFF"), NodePath("Lamp_Shade_ON"), NodePath("SpotLight3D")])
+nodes_to_show_when_on = [NodePath("SpotLight3D"), NodePath("Lamp_Shade_ON")]
+nodes_to_hide_when_on = [NodePath("Lamp_Shade_OFF")]
 
 [node name="Lamp_Foot" type="CSGCylinder3D" parent="."]
 material_override = ExtResource("3_tvw1v")

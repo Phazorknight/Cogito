@@ -1,16 +1,15 @@
-[gd_scene load_steps=35 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=30 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="3_1sodd"]
-[ext_resource type="Script" path="res://COGITO/Scripts/pistol.gd" id="3_yl83d"]
 [ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="4_d51ss"]
 [ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://COGITO/Assets/Animations/player_eyes.tres" id="4_juktk"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Flashlight.gd" id="4_qn6qa"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="5_4wuc3"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="5_6htai"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Wieldable_Flashlight.gd" id="5_iwnf5"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="6_nrttm"]
 [ext_resource type="AnimationLibrary" uid="uid://cbfutvkb1x3kr" path="res://COGITO/Assets/Animations/anim_wieldable_pistol.es.tres" id="6_nt2qd"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Wieldable_Pistol.gd" id="7_2f3bv"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="7_swbyy"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="8_2tp8b"]
 [ext_resource type="AudioStream" uid="uid://dsp8iwkwq2rlu" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch1.ogg" id="9_omv36"]
@@ -18,9 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://COGITO/Assets/Audio/Kenney/error_004.ogg" id="11_45f3g"]
 [ext_resource type="PackedScene" uid="uid://b37xr3nyh6aog" path="res://COGITO/Components/StaminaComponent.tscn" id="11_cbmdm"]
 [ext_resource type="PackedScene" uid="uid://c4p6cl0xvfdar" path="res://COGITO/Components/HealthComponent.tscn" id="11_ms07f"]
-[ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="11_rsagj"]
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://COGITO/PrefabScenes/projectile_pistol.tscn" id="11_ydo45"]
-[ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="12_puw8k"]
 [ext_resource type="PackedScene" uid="uid://ctdx2bs6fji20" path="res://COGITO/Components/SanityComponent.tscn" id="12_tv46k"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
 
@@ -30,11 +27,6 @@ size = Vector3(0.8, 1.6, 0.8)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgxde"]
 radius = 0.4
 height = 0.8
-
-[sub_resource type="Resource" id="Resource_yujk5"]
-script = ExtResource("5_4wuc3")
-inventory_item = ExtResource("11_rsagj")
-quantity = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbp4w"]
 albedo_color = Color(0.0392157, 0.0431373, 0.0745098, 1)
@@ -46,11 +38,6 @@ roughness = 0.15
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0btuw"]
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
-
-[sub_resource type="Resource" id="Resource_jll6o"]
-script = ExtResource("5_4wuc3")
-inventory_item = ExtResource("12_puw8k")
-quantity = 1
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_r6lnb"]
 _data = PackedByteArray(2, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 2, 0, 0, 0, 115, 66, 19, 0, 77, 0, 72, 115, 204, 0, 0, 0, 209, 226, 4, 0, 0, 1, 0, 0, 1, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 77, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 0, 8, 0, 2, 0, 2, 0, 169, 0, 0, 0, 64, 0, 0, 0, 56, 181, 0, 0, 0, 1, 1, 4, 0, 4, 0, 1, 0, 1, 0, 233, 0, 0, 0, 16, 0, 0, 0, 200, 214, 0, 0, 0, 2, 1, 2, 0, 2, 0, 1, 0, 1, 0, 249, 0, 0, 0, 16, 0, 0, 0, 172, 110, 0, 0, 0, 3, 1, 1, 0, 1, 0, 1, 0, 1, 0, 9, 1, 0, 0, 16, 0, 0, 0, 6, 136, 183, 185, 185, 185, 25, 93, 107, 1, 0, 0, 0, 0, 0, 0, 0, 0, 183, 185, 185, 185, 25, 93, 107, 1, 0, 0, 0, 0, 0, 0, 0, 0, 8, 93, 129, 224, 4, 29, 157, 85, 72, 68, 68, 68, 55, 222, 22, 247, 8, 108, 145, 99, 148, 156, 158, 85, 0, 0, 0, 0, 26, 15, 141, 171, 176, 20, 161, 81, 28, 158, 158, 94, 0, 0, 0, 0, 0, 0, 243, 230, 80, 193, 136, 65, 222, 222, 95, 223, 0, 0, 127, 119, 127, 119, 127, 119, 119, 247, 182, 86, 59, 182, 181, 2, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -137,9 +124,6 @@ collision_mask = 3
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.2, 0.341, -0.3)
 
-[node name="DropPosition" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.2)
-
 [node name="Neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 
@@ -168,8 +152,7 @@ visible = false
 collision_layer = 3
 mass = 2.0
 freeze = true
-script = ExtResource("4_qn6qa")
-slot_data = SubResource("Resource_yujk5")
+script = ExtResource("5_iwnf5")
 drain_rate = 4.0
 switch_sound = ExtResource("9_omv36")
 
@@ -202,11 +185,10 @@ spot_angle = 30.0
 
 [node name="Foam Pistol" type="RigidBody3D" parent="Neck/Head/Wieldables"]
 transform = Transform3D(-3.61999e-06, 0, 0.999999, 0, 1, 0, -1, 0, -3.61999e-06, 0.328536, -0.26394, -0.53488)
+visible = false
 collision_layer = 3
 freeze = true
-script = ExtResource("3_yl83d")
-slot_data = SubResource("Resource_jll6o")
-interaction_text = "Pick up Pistol"
+script = ExtResource("7_2f3bv")
 projectile_prefab = ExtResource("11_ydo45")
 projectile_velocity = 50.0
 default_position = Vector3(0.329, -0.264, -0.535)

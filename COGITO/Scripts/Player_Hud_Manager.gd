@@ -100,17 +100,30 @@ func _ready():
 	inventory_interface.set_player_inventory_data(player.inventory_data)
 	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
 	
+	
 	# Connecting to Signals from Player
 	player.player_interaction_component.interaction_prompt.connect(_on_interaction_prompt)
 	player.player_interaction_component.set_use_prompt.connect(_on_set_use_prompt)
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
+	player.player_state_loaded.connect(_on_player_state_load)
 	player.player_interaction_component.update_wieldable_data.connect(_on_update_wieldable_data)
 
 	# Grabbing external inventories in scene.
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		print("Is in external_inventory group: ", node)
 		node.toggle_inventory.connect(toggle_inventory_interface)
+
+
+func _on_player_state_load():
+	inventory_interface.set_player_inventory_data(player.inventory_data)
+	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
+	
+	# Grabbing external inventories in scene.
+	for node in get_tree().get_nodes_in_group("external_inventory"):
+		print("Is in external_inventory group: ", node)
+		node.toggle_inventory.connect(toggle_inventory_interface)
+
 
 
 func _is_steam_deck() -> bool:
@@ -245,8 +258,6 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	var scene_to_drop = load(slot_data.inventory_item.drop_scene)
 	Audio.play_sound(slot_data.inventory_item.sound_drop)
 	var dropped_item = scene_to_drop.instantiate()
-	dropped_item.position = player.drop_position.global_position
+	dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(0)
 	dropped_item.slot_data = slot_data
 	get_parent().add_child(dropped_item)
-
-

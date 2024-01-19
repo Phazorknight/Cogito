@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://sfypssn0rllo"]
 
-[ext_resource type="Script" path="res://COGITO/InventoryPD/pick_up.gd" id="1_t1b53"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/Cogito_Pickup.gd" id="1_t1b53"]
 [ext_resource type="Resource" uid="uid://060gqm74tdlk" path="res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres" id="2_mm3jo"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_3krbl"]
 

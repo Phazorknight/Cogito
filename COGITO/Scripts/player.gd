@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 signal toggle_inventory_interface()
-
+signal player_state_loaded()
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
@@ -37,7 +37,6 @@ signal toggle_inventory_interface()
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
-@onready var drop_position = $DropPosition
 
 # Adding carryable position for item control.
 @onready var carryable_position = %CarryablePosition
@@ -95,9 +94,8 @@ var on_ladder : bool = false
 
 var joystick_h_event
 var joystick_v_event
-
-# Used to change carryable position based if player is standing or crouching
-var initial_carryable_height
+ 
+var initial_carryable_height #DEPRECATED Used to change carryable position based if player is standing or crouching
 
 var config = ConfigFile.new()
 
@@ -119,7 +117,18 @@ var is_movement_paused = false
 var is_dead : bool = false
 
 
+# Use this to refresh/update when a player state is loaded.
+func _on_player_state_loaded():
+	health_component.health_changed.emit(health_component.current_health,health_component.max_health)
+	stamina_component.stamina_changed.emit(stamina_component.current_stamina,stamina_component.max_stamina)
+	sanity_component.sanity_changed.emit(sanity_component.current_sanity,sanity_component.max_sanity)
+
+
 func _ready():
+	#Some Setup steps
+	CogitoSceneManager._current_player_node = self
+	player_interaction_component.interaction_raycast = $Neck/Head/Eyes/Camera/InteractionRaycast
+	
 	randomize()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -127,39 +136,53 @@ func _ready():
 	# Pause Menu setup
 	if pause_menu:
 		var pause_menu_node = get_node(pause_menu)
-		# Hookup resume signal from Pause Menu
-		pause_menu_node.resume.connect(_on_pause_menu_resume)
-	
-		# Making sure pause menu is closed on player scene load
-		pause_menu_node.close_pause_menu()
+		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
+		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
 		print("Player has no reference to pause menu.")
 		
-	initial_carryable_height = carryable_position.position.y
+	initial_carryable_height = carryable_position.position.y #DEPRECATED
 	
-	# Hookup HealthComponent signal on player death
-	health_component.death.connect(_on_death)
-	
-	# Hookup brightness component signal
-	brightness_component.brightness_changed.connect(_on_brightness_changed)
+	health_component.death.connect(_on_death) # Hookup HealthComponent signal to detect player death
+	brightness_component.brightness_changed.connect(_on_brightness_changed) # Hookup brightness component signal
 
-
-func increase_attribute(attribute_name: String, value: float):
+# Use this function to manipulate player attributes.
+func increase_attribute(attribute_name: String, value: float) -> bool:
 	match attribute_name:
 		"health":
-			health_component.add(value)
+			if health_component.current_health == health_component.max_health:
+				return false
+			else:
+				print("Adding ", value, " to current_health.")
+				health_component.add(value)
+				return true
 		"health_max":
 			health_component.max_health += value
+			health_component.health_changed.emit(health_component.current_health,health_component.max_health)
+			return true
 		"sanity":
-			sanity_component.add(value)
+			if sanity_component.current_sanity == sanity_component.max_sanity:
+				return false
+			else:
+				sanity_component.add(value)
+				return true
 		"sanity_max":
 			sanity_component.max_sanity += value
+			sanity_component.sanity_changed.emit(sanity_component.current_sanity,sanity_component.max_sanity)
+			return true
 		"stamina":
-			stamina_component.add(value)
+			if stamina_component.current_stamina == stamina_component.max_stamina:
+				return false
+			else:
+				stamina_component.add(value)
+				return true
 		"stamina_max":
 			stamina_component.max_stamina += value
+			stamina_component.stamina_changed.emit(stamina_component.current_stamina,stamina_component.max_stamina)
+			return true
 		_:
 			print("Increase attribute failed: no match.")
+			return false
 
 
 func decrease_attribute(attribute_name: String, value: float):
@@ -173,9 +196,11 @@ func decrease_attribute(attribute_name: String, value: float):
 		_:
 			print("Decrease attribute failed: no match.")
 
+
 func take_damage(value):
 	health_component.subtract(value)
-	
+
+
 func add_sanity(value):
 	sanity_component.add(value)
 
