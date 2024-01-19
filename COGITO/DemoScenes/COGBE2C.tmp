@@ -1,7 +1,7 @@
-[gd_scene load_steps=135 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=136 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
-[ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_b15oo"]
+[ext_resource type="Script" path="res://COGITO/SaveSystemPD/cogito_scene.gd" id="1_b15oo"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://COGITO/PrefabScenes/pickup_flashlight.tscn" id="1_oweej"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="2_4ig6i"]
@@ -41,6 +41,7 @@
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="38_l5vpp"]
 [ext_resource type="Script" path="res://COGITO/Scripts/ladder_area.gd" id="39_ferka"]
 [ext_resource type="PackedScene" uid="uid://c6dn6bn47xyrj" path="res://COGITO/Assets/Models/ladder.glb" id="39_ri7bt"]
+[ext_resource type="Script" path="res://COGITO/Scripts/generic_interactable.gd" id="41_uk6of"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="43_bchdf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
@@ -255,7 +256,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_s6nqr"]
+[sub_resource type="Resource" id="Resource_gq7np"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -382,7 +383,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_el7ru"]
 size = Vector3(1.5, 0.01, 1.5)
 
-[sub_resource type="Resource" id="Resource_3llmd"]
+[sub_resource type="Resource" id="Resource_8pnjd"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -1218,7 +1219,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(-0.125576, 0, 0.992084, 0, 1, 0, -0.992084, 0, -0.125576, -4.38933, 0.0425703, 5.97176)
-inventory_data = SubResource("Resource_s6nqr")
+inventory_data = SubResource("Resource_gq7np")
 
 [node name="PressAndHold" parent="INTERACTIVE_OBJECTS" instance=ExtResource("22_ni6um")]
 rotate_while_holding = true
@@ -1569,7 +1570,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_3llmd")
+inventory_data = SubResource("Resource_8pnjd")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
@@ -1654,6 +1655,43 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.75, 
 use_collision = true
 size = Vector3(2, 0.3, 0.5)
 material = ExtResource("38_l5vpp")
+
+[node name="LoadButton" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.33162, 1.3592, 0.413951)
+collision_layer = 3
+script = ExtResource("41_uk6of")
+interaction_text = "Load"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LoadButton"]
+shape = SubResource("CapsuleShape3D_50xya")
+
+[node name="Button_Case" type="MeshInstance3D" parent="LoadButton"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+mesh = SubResource("BoxMesh_woscm")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LoadButton/Button_Case"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00194824, -0.0588716)
+mesh = SubResource("CapsuleMesh_204vo")
+
+[node name="SaveButton" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.33162, 1.3592, 1.41395)
+collision_layer = 3
+script = ExtResource("41_uk6of")
+interaction_text = "Save"
+for_saving = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SaveButton"]
+shape = SubResource("CapsuleShape3D_50xya")
+
+[node name="Button_Case" type="MeshInstance3D" parent="SaveButton"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0)
+mesh = SubResource("BoxMesh_woscm")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SaveButton/Button_Case"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00194824, -0.0588716)
+mesh = SubResource("CapsuleMesh_204vo")
 
 [node name="TransitionZone" type="Area3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10.4, 1.25, -11.6)

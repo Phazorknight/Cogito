@@ -32,8 +32,8 @@ func _ready():
 	else:
 		interaction_text = interaction_text_when_off
 
-func interact(_player):
-	interactor = _player
+func interact(interaction_component):
+	interactor = interaction_component
 	if !allows_repeated_interaction and is_on:
 		interactor.send_hint(null, has_been_used_hint)
 		return

@@ -14,10 +14,11 @@ func interact(body):
 
 # Function to handle persistency and saving
 func save():
-	var save_dict = {
+	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
-		"pos_x" : position.x, # Vector2 is not supported by JSON
+		"slot_data" : slot_data,
+		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,
 		"rot_x" : rotation.x,
@@ -25,4 +26,4 @@ func save():
 		"rot_z" : rotation.z,
 		
 	}
-	return save_dict
+	return node_data

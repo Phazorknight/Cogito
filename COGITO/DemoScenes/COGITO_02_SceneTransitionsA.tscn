@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://dty7vjg3hp68b"]
+[gd_scene load_steps=21 format=3 uid="uid://dty7vjg3hp68b"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_8f7tt"]
+[ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_8th5t"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_w4txe"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_ha28r"]
 [ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="4_75e8i"]
@@ -32,21 +33,10 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_jg7ms"]
+[sub_resource type="Resource" id="Resource_6k7ir"]
 resource_local_to_scene = true
 script = ExtResource("2_w4txe")
 inventory_slots = Array[ExtResource("10_kpi6k")]([null, null, null, null, null, null, null, null])
-
-[sub_resource type="BoxMesh" id="BoxMesh_ntr4m"]
-size = Vector3(2, 3, 2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uigv7"]
-transparency = 1
-blend_mode = 1
-albedo_color = Color(0.913725, 0.521569, 1, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_bsq3r"]
-size = Vector3(2, 3, 2)
 
 [sub_resource type="Resource" id="Resource_mqwj2"]
 resource_local_to_scene = true
@@ -54,7 +44,20 @@ script = ExtResource("10_kpi6k")
 inventory_item = ExtResource("9_dacst")
 quantity = 1
 
-[node name="Cogito02SceneTransitionsA" type="Node3D"]
+[sub_resource type="BoxMesh" id="BoxMesh_ntr4m"]
+size = Vector3(3, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uigv7"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.913725, 0.521569, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bsq3r"]
+size = Vector3(3, 3, 2)
+
+[node name="Cogito02SceneTransitionsA" type="Node3D" node_paths=PackedStringArray("connectors")]
+script = ExtResource("1_8th5t")
+connectors = [NodePath("ConnectorA")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -66,10 +69,10 @@ shadow_opacity = 0.8
 environment = SubResource("Environment_ai7l5")
 
 [node name="Player" parent="." instance=ExtResource("1_8f7tt")]
-transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
+transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.63987, 1.19987, 3.00969)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_jg7ms")
+inventory_data = SubResource("Resource_6k7ir")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ha28r")]
@@ -86,6 +89,12 @@ use_collision = true
 size = Vector3(20, 0.1, 20)
 material = ExtResource("5_5tohn")
 
+[node name="Floor2" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.05, 0)
+use_collision = true
+size = Vector3(20, 0.1, 20)
+material = ExtResource("5_5tohn")
+
 [node name="Wall" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 9.95)
 use_collision = true
@@ -93,7 +102,7 @@ size = Vector3(20, 4, 0.1)
 material = ExtResource("5_5tohn")
 
 [node name="Label3D" type="Label3D" parent="STATIC ENVIRONMENT/Wall"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.7, 1, -0.149947)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.3, 1, -0.149947)
 text = "SCENE A"
 font_size = 128
 
@@ -112,22 +121,45 @@ size = Vector3(20, 4, 0.1)
 material = ExtResource("5_5tohn")
 
 [node name="Wall3" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.95, 2, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.65, 2, 0)
 use_collision = true
 size = Vector3(19.8, 4, 0.1)
 material = ExtResource("5_5tohn")
 
 [node name="Wall4" type="CSGBox3D" parent="STATIC ENVIRONMENT"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.95, 2, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.05, 2, 0)
 use_collision = true
 size = Vector3(19.8, 4, 0.1)
 material = ExtResource("5_5tohn")
 
+[node name="Tunnel" type="CSGPolygon3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, -2.13162e-14, 0, 1, 0, 2.13162e-14, 0, 1, -1.5, 0, -0.2)
+use_collision = true
+collision_layer = 3
+polygon = PackedVector2Array(0, 0, 0, 3, 4, 3, 4, 0, 3.5, 0, 3.5, 2.5, 0.5, 2.5, 0.5, 0, 4, 0, 4, 0)
+depth = 10.0
+material = ExtResource("5_5tohn")
+
+[node name="Wall_w_Door" type="CSGPolygon3D" parent="STATIC ENVIRONMENT"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -4, 0, -0.1)
+use_collision = true
+collision_layer = 3
+polygon = PackedVector2Array(0, 0, 0, 4, 9.6, 4, 9.6, 0, 5, 0, 5, 2, 4, 2, 4, 0)
+depth = 0.2
+material = ExtResource("5_5tohn")
+
+[node name="CarriableBox" parent="." instance=ExtResource("8_4hlpp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71717, 0.823779, 2.91211)
+
+[node name="HealthPotion" parent="." instance=ExtResource("8_vj2ak")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39538, 0.273078, 6.10744)
+slot_data = SubResource("Resource_mqwj2")
+
 [node name="TransitionZone" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.6, 8.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.6, -6.2)
 script = ExtResource("7_34j8q")
-path_to_new_scene = "res://COGITO/DemoScenes/COGITO_03_SceneTransitionsB.tscn"
-ignore_target_scene_state = true
+path_to_new_scene = "res://COGITO/DemoScenes/COGITO_Demo_01.tscn"
+target_connector = "ConnectorA"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TransitionZone"]
 mesh = SubResource("BoxMesh_ntr4m")
@@ -136,9 +168,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_uigv7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TransitionZone"]
 shape = SubResource("BoxShape3D_bsq3r")
 
-[node name="CarriableBox" parent="." instance=ExtResource("8_4hlpp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.823779, 3.57161)
+[node name="ConnectorA" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5, 1, -1.7)
 
-[node name="HealthPotion" parent="." instance=ExtResource("8_vj2ak")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0762751, 0.273078, 7.26735)
-slot_data = SubResource("Resource_mqwj2")
+[node name="RayCast3D" type="RayCast3D" parent="ConnectorA"]
+target_position = Vector3(0, 0, -1)

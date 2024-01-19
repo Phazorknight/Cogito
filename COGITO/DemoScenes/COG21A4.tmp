@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://c1rwpd0k7ov8"]
 
-[ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_2xpg1"]
+[ext_resource type="Script" path="res://COGITO/SaveSystemPD/cogito_scene.gd" id="1_2xpg1"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_3gycq"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_l0t74"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_20bm3"]
@@ -35,7 +35,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_vh637"]
+[sub_resource type="Resource" id="Resource_upyq8"]
 resource_local_to_scene = true
 script = ExtResource("2_l0t74")
 inventory_slots = Array[ExtResource("13_fcafo")]([null, null, null, null, null, null, null, null])
@@ -80,7 +80,7 @@ environment = SubResource("Environment_ai7l5")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_vh637")
+inventory_data = SubResource("Resource_upyq8")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_20bm3")]
@@ -198,7 +198,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_rjn5b")
 shape = SubResource("BoxShape3D_oo4wy")
 
 [node name="ConnectorA" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 1, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -4)
 
 [node name="RayCast3D" type="RayCast3D" parent="ConnectorA"]
-target_position = Vector3(0, 0, -1)
+target_position = Vector3(0, 0, 1)

@@ -8,8 +8,9 @@ signal inventory_updated(inventory_data: InventoryPD)
 @export var inventory_slots : Array[InventorySlotPD]
 @export var first_slot : InventorySlotPD
 
-func _ready():
-	first_slot = inventory_slots[0]
+func _init():
+	if inventory_slots.size() > 0:
+		first_slot = inventory_slots[0]
 
 func on_slot_clicked(index: int, mouse_button: int):
 	inventory_interact.emit(self, index, mouse_button)
@@ -161,3 +162,8 @@ func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 			return true
 		
 	return false
+
+
+func force_inventory_update():
+	print("Forced inventory update: ", self)
+	inventory_updated.emit(self)

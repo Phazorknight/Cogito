@@ -13,8 +13,8 @@ signal update_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
 ## Animation player for wieldables
 @onready var wieldable_animation_player = $"../Neck/Head/Wieldables/WieldableAnimationPlayer"
 @onready var wieldable_audio_stream_player_3d = $"../Neck/Head/Wieldables/WieldableAudioStreamPlayer3D"
-@onready var camera = get_viewport().get_camera_3d()
 
+var camera
 var equipped_wieldable_item = null
 var equipped_wieldable_node = null
 var is_wielding : bool
@@ -23,7 +23,6 @@ var look_vector : Vector3
 var is_reset : bool  = true
 var device_id : int = -1
 var carried_object = null
-
 
 
 func _ready():
@@ -90,7 +89,7 @@ func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
 	if interaction_raycast.is_colliding():
 		return interaction_raycast.get_collision_point()
 	else:
-		var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * camera.get_global_transform().basis.z
+		var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
 		return destination_point
 
 

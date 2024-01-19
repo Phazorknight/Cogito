@@ -9,7 +9,7 @@ signal death()
 @export var start_health : float
 @export var no_sanity_damage : float
 var current_health : float
-var global_position : Vector3
+var global_position : Vector3 # Used for Audio
 
 @export var sound_on_death : AudioStream
 @export var destroy_on_death : Array[NodePath]

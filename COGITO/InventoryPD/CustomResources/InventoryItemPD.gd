@@ -85,10 +85,11 @@ var wielded_item
 
 
 func use(target) -> bool:
-	# Target should always be player? Null check to avoid this.
+	# Target should always be player? Null check to override using the CogitoSceneManager, which stores a reference to current player node
 	if target == null or target.is_in_group("external_inventory"):
-		print("Target passed was not player: ", target.name)
-		return false
+		print("Bad target pass. Setting target to", CogitoSceneManager._current_player_node)
+		target = CogitoSceneManager._current_player_node
+		
 	
 	match item_type:
 		ItemType.CONSUMABLE:

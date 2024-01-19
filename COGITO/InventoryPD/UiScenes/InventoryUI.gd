@@ -41,10 +41,6 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 		if slot_data:
 			slot.set_slot_data(slot_data)
 	
-	# Setting looping navigation for start and end of inventory // NOT WORKING YET
-#	slot_array[0].focus_neighbour_left = slot_array[-1]
-#	slot_array[-1].focus_neighbour_right = slot_array[0]
-
 
 func _on_visibility_changed():
 	# This is here because to prevent a dead end signal error in the inspector.
