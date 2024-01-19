@@ -1,7 +1,6 @@
 extends Node
 
-# This script contains logic on scene name, state and connections to/from other scenes
-
+## List of connector nodes. These are used to place the Player in the correct position when they transition to this scene from a different scene. The Node name needs to match the passed string for this to work.
 @export var connectors : Array[Node3D]
 
 func move_player_to_connector(connector_name:String):

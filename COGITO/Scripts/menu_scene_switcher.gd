@@ -1,6 +1,8 @@
 extends Node
 
+## Filepath to the main menu scene.
 @export_file("*.tscn") var main_menu_scene
+## Filepath to the scene the player should start in, when pressing "Start game" button.
 @export_file("*.tscn") var start_game_scene
 
 func _on_main_menu_start_game_pressed():

@@ -26,13 +26,13 @@
 [ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://COGITO/PrefabScenes/heal_zone.tscn" id="19_2mngh"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PrefabScenes/hazard_zone.tscn" id="20_dgnbq"]
 [ext_resource type="PackedScene" uid="uid://bnygtkw3tvet6" path="res://COGITO/PrefabScenes/press_and_hold_wheel.tscn" id="22_ni6um"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Interact_Door.gd" id="23_rfav8"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="23_rfav8"]
 [ext_resource type="PackedScene" uid="uid://3gwo23kpr58f" path="res://COGITO/PrefabScenes/lightzone_lamp.tscn" id="24_p17c7"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://COGITO/Assets/Audio/Kenney/stoneDrag4.ogg" id="25_3nnou"]
 [ext_resource type="PackedScene" uid="uid://bc52bohkbf1yp" path="res://COGITO/PrefabScenes/pickup_diamond_key_a.tscn" id="25_w5f1m"]
 [ext_resource type="PackedScene" uid="uid://djfg6ea5cbhyv" path="res://COGITO/PrefabScenes/pickup_diamond_key_b.tscn" id="26_1prk2"]
 [ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://COGITO/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="27_0a6c2"]
-[ext_resource type="Script" path="res://COGITO/Scripts/switchable.gd" id="27_r5oie"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Switch.gd" id="27_r5oie"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="28_3r4lg"]
 [ext_resource type="AudioStream" uid="uid://bfmqga66x7l1k" path="res://COGITO/Assets/Audio/Kenney/rockHit2.ogg" id="30_42jtk"]
 [ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://COGITO/PrefabScenes/pickup_pistol.tscn" id="30_a7v26"]
@@ -255,7 +255,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_suwhl"]
+[sub_resource type="Resource" id="Resource_kx0u4"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -382,7 +382,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_el7ru"]
 size = Vector3(1.5, 0.01, 1.5)
 
-[sub_resource type="Resource" id="Resource_rgsq3"]
+[sub_resource type="Resource" id="Resource_kcbjq"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -1218,7 +1218,8 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(-0.125576, 0, 0.992084, 0, 1, 0, -0.992084, 0, -0.125576, -4.38933, 0.0425703, 5.97176)
-inventory_data = SubResource("Resource_suwhl")
+inventory_name = "Chest"
+inventory_data = SubResource("Resource_kx0u4")
 
 [node name="PressAndHold" parent="INTERACTIVE_OBJECTS" instance=ExtResource("22_ni6um")]
 rotate_while_holding = true
@@ -1316,7 +1317,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -45, 0
 script = ExtResource("23_rfav8")
 open_rotation_deg = -80.0
 closed_rotation_deg = -180.0
-door_speed = 0.02
+door_speed = 0.04
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/GateA"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
@@ -1344,7 +1345,7 @@ shape = SubResource("ConvexPolygonShape3D_qb88g")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="INTERACTIVE_OBJECTS/GateB"]
 
-[node name="SocketForDiamondKey" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
+[node name="SocketForDiamondKey" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS" node_paths=PackedStringArray("nodes_to_show_when_on")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48.2321, 0.9, 14.3285)
 collision_layer = 3
 script = ExtResource("27_r5oie")
@@ -1356,7 +1357,7 @@ switch_sound = ExtResource("30_42jtk")
 needs_item_to_operate = true
 required_item = ExtResource("28_3r4lg")
 item_hint = "Something can be placed here."
-objects_toggle_visibility = Array[NodePath]([NodePath("SlottedDiamond")])
+nodes_to_show_when_on = [NodePath("SlottedDiamond")]
 objects_call_interact = Array[NodePath]([NodePath("../GateA"), NodePath("../GateB")])
 
 [node name="SpotLight3D" type="OmniLight3D" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey"]
@@ -1569,7 +1570,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_rgsq3")
+inventory_data = SubResource("Resource_kcbjq")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]

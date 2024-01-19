@@ -1,12 +1,14 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **BETA 202401.9**
+Version: **BETA 202401.10**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on
 providing a framework for creating interactable objects and items.
+
+**Video giving an overview of features: [COGITO Overview](https://www.youtube.com/watch?v=LYBo1_Qfru0)
 
 **Credits:**
 - Player controller is based on Like475's First Person Controller Advanced: https://github.com/Like475/fpc-godot
@@ -23,7 +25,7 @@ providing a framework for creating interactable objects and items.
 ### Current working features:
 - First person player controller
 - Main Menu + Pause Menu
-- Basic AudioManager for playing common sounds (needs rework)
+- Save system for scene persistence and player attributes and inventory (WIP)
 - Player attributes (component based)
   - Health
   - Stamina
@@ -74,10 +76,24 @@ To fully work, you need 3 Prefab Scenes in your scene + the following references
 - Player_HUD.tscn
   - Reference to player node
 - PauseMenu.tscn
+- To enable transitioning between scenes, your scene root node needs to have cogito_scene.gd attached and connector nodes defined (see demo scene).
 
 All signals needed get hooked up via code, so this should work without any extra signal setup.
 PauseMenu and MainMenu Scenes contain SceneSwitchers that need paths to the *.tscn files to work.
 Also be aware of node order for Player_HUD and PauseMenu. Player_HUD node should be above PauseMenu node, so PauseMenu is "on top". 
+
+## Save states and Scene Management
+- Save states are saved per default in dir "user://"
+- Player state and scene states are saved separately. That way the player save doesn't bloat with game size and there's some other minor comforts. 
+- Currently the following objects are saved:
+  - Cogito_Pickup.gd / Cogito_Carriable.gd: Since their existence in the scene can vary, these will be re-instantiated at their saved position if a scene state is loaded. Thus they need to be PackagedScenes to work!
+  - Cogito_Door: These will have their state saved (open/closed/locked)
+  - Cogito_Switch: These will have their state saved (on/off)
+- The following is still WIP or has unpredictable behaviour:
+  - Wieldables: While you re-equip wieldables when transitioning/loading scenes, the ammo/charge is currently not saved correctly. Also the HUD display is incorrect at times.
+  - Wieldable pickups items.
+  - Destructable objects like the target.
+
 
 ## Interactables
 For an interactable to work, it needs to be a 3D collision shape and be on **layer 2** for the raycast to detect it. Then simply attach one of the provided scripts, set some parameters and you're good to go.
@@ -96,13 +112,13 @@ func interact(playernode):
 	pass
 ```
 
-### switchable.gd
+### Cogito_Switch.gd
 This is used to create interactive objects with a clear on/off state. Most common examples are lamps and lights.
 Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be set to layer 2 so the Player Interaction system can pick it up.
 It works by going through a list of nodes and flipping their visible state every time the player switches the object.
 PRO-TIP: The objects you switch do not have to be part of the switchable object. For example if you wanna have a ceiling lamp thats controlled by a lightswitch, make the lightswitch the switchable and add all the ceiling lamps to the objects to switch list.
 
-**switchable.gd settings:**
+**Settings:**
 - Is On: Start state of the switchable.
 - Interaction Text When On: Self explanatory.
 - Interaction Text When On: Self explanatory.
@@ -115,7 +131,7 @@ PRO-TIP: The objects you switch do not have to be part of the switchable object.
 - Objects Call Interact: Array of NodePaths. Add all the nodes you want to call interact on. For example if you add a door here, the door gets opened/closed when you interact with the switchable.
 
 
-### press_and_hold.gd
+### Cogito_Hold.gd
 This is used to create interactive objects on which you need to hold the interact button for a specific amount of time.
 Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be set to layer 2 so the Player Interaction system can pick it up. This one also has/needs a Control node for the "Hold UI", displaying whatever
 you want while the player interacts with it. The PressAndHold PrefabScene includes a typical progressbar that shows how long the player still needs to hold the button.
@@ -123,7 +139,7 @@ If the player lets go of the button before the required time, the timer resets.
 If the player succeeds in holding the button the required time, the "interact" function on all the objects specified in the Objects To Trigger nodepath will be called. This way, the object can easily be hooked up to other
 interactables like switchables or doors.
 
-**press_and_hold.gd settings:** 
+**Settings:** 
 - Interaction Text: The text displayed for the player interaction.
 - Hold time: The duration the interaction button will need to be held in seconds.
 - Rotate While Holding: Check this if you want the press_and_hold object to rotate while the player holds the button. For wheels/cranks etc.
@@ -133,11 +149,11 @@ interactables like switchables or doors.
 - Hold Audio Stream: Audiostream to play while player is holding.
 
 
-### Carryable.gd
+### Cogito_Carriable.gd
 This is used for boxes, crates etc.
 Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be set to layer 2 so the Player Interaction system can pick it up.
 
-**Carryable Settings:**
+**Settings:**
 - Interaction Text: What appears when the player aims the crosshair at the carryable.
 - Pick up Sound: Plays when player picks up the carryable.
 - Drop Sound: Plays when player drops up the carryable.
@@ -149,12 +165,12 @@ Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be se
 ### Item pick ups:
 See under **Inventory** below on how pick ups are setup.
 
-### Doors
+### Cogito_Door.gd
 I recommend just making a copy of the included Door Prefab and modifying it to fit your needs. But you can also set up doors yourself by creating a AnimatableBody3D with your mesh etc in it as well as a Collision shape and an AudioStreamPlayer3D. Make sure it is set to layer 2 so the Player Interaction raycast can pick it up.
 Then attach the **Interact_Door.gd** to your AnimatableBody3D.
 **Pro Tip:** If you want to make a door thats triggered by a different object (like a remote switch), just DON'T set it to collission layer 2. Instead set a reference to your door at your other object (like a press_and_hold). See the draw bridge in the test scene for an example.
 
-**Interact_Door Settings:**
+**Settings:**
 - Audio:
   - Open Sound: Plays when the door opens. Uses the AudioStreamPlayer3D.
   - Close Sound: Plays when the door closes. Uses the AudioStreamPlayer3D.
@@ -162,14 +178,26 @@ Then attach the **Interact_Door.gd** to your AnimatableBody3D.
   - Unlock Sound: Plays when the player interacts with the door status changes from locked to unlocked. Uses the AudioStreamPlayer3D.
   
 - Door Parameters:
+	Interaction text when locked: Sets the text that appears if the player crosshair hovers over the door object when door is locked.
   - Interaction text when closed: Sets the text that appears if the player crosshair hovers over the door object when door is closed.
   - Interaction text when open: Sets the text that appears if the player crosshair hovers over the door object when door is open.
   - Is locked: Set the locked stats of the door.
   - Key: Reference to the item that needs to be in the player's inventory to unlock the door. Hint: This can be any item resource, doesn't need to be of type KEY_ITEM.
   - Key hint: The hint that appears if player tries to open the door but doesn't have the key item. If this is empty, no hint will appear.
-  - Open Rotation Deg: Sets object rotation for open position. In global degrees, this matches/influences the door object transform.
-  - Closed Rotation Deg: Sets object rotation for closed position. In global degrees, this matches/influences the door object transform.
-  - Door Speed: Speed of opening/closing.
+  - Doors to sync with: Array of NodePaths who will sync to this door's state (open/close/locked). Useful for double doors, multi-part gates, etc.
+  - Tween Parameters - use these if your door animation is tween based.
+	- Is Sliding: Set this to true, if your door is sliding instead of rotating (using position parameters instead of rotation parameters)
+	- Use Z Axis: Sets which rotation axis to use. True = Use Z axis. False = Use Y axis.
+	- Bidirectional Swing: If true, the door will change rotation direction, depending on which side it is opened from.
+	- Open Rotation Deg: Sets object rotation for open position. In global degrees, this matches/influences the door object transform.
+	- Closed Rotation Deg: Sets object rotation for closed position. In global degrees, this matches/influences the door object transform.
+	- Door Speed: Speed of opening/closing.
+  - Animation Parameters - use these if your door animation is tween based.
+	- Is Animation Based: Set this to true if your door uses an Animation Player with animations (instead of tweens)
+	- Animation Player: Assign your Animation Player node.
+	- Opening Animation: String name of your opening animation that's present in the animation player.
+	- Reverse Opening Animation for close: If set to true, the opening animation will be played in reverse when the door is closed.
+	- Closing Animation: String name of your closing animmation that's present in the animation player.
 
 
 ## Inventory System
@@ -236,7 +264,7 @@ Items -> Slots -> Inventories.
   - Reload amount: How much one item adds to the charge of the target item. For Bullets this is typically 1. But for example a Battery should probably add a higher amount to the charge of the Flashlight.
 
 
-### Pick_up.gd
+### Cogito_Pickup.gd
 Use this script to create items that are added to the players inventory.
 I usually create this _before_ I create the item resource, but it doesn't matter, aso long as the references are set.
 

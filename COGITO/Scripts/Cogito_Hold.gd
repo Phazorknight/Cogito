@@ -15,8 +15,8 @@ extends AnimatableBody3D
 @export var rotation_axis : Vector3 = Vector3(1,0,0)
 ## Rotation speed.
 @export var rotation_speed : float = 1
-## Typed Array of NodePaths. Drag the objects you want to get triggered in here from your scene hierarchy. Their interact func will be called when hold is complete.
-@export var objects_to_trigger : Array[NodePath]
+## Drag the nodes you want to get triggered in here from your scene hierarchy. Their interact func will be called when hold is complete.
+@export var nodes_to_trigger : Array[Node]
 ## AudioStream to play while holding.
 @export var hold_audio_stream : AudioStream
 
@@ -61,7 +61,5 @@ func _on_hold_complete():
 	
 	audio_stream_player_3d.stop()
 	
-	for nodepath in objects_to_trigger:
-		if nodepath != null:
-			var object = get_node(nodepath)
-			object.interact(null)
+	for node in nodes_to_trigger:
+		node.interact(null)

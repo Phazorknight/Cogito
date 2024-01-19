@@ -14,7 +14,6 @@ signal update_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
 @onready var wieldable_animation_player = $"../Neck/Head/Wieldables/WieldableAnimationPlayer"
 @onready var wieldable_audio_stream_player_3d = $"../Neck/Head/Wieldables/WieldableAudioStreamPlayer3D"
 
-var camera
 var equipped_wieldable_item = null
 var equipped_wieldable_node = null
 var is_wielding : bool
@@ -105,6 +104,7 @@ func equip_wieldable(wieldable_item:InventoryItemPD):
 			if wieldable_node.name == equipped_wieldable_item.name:
 				equipped_wieldable_node = wieldable_node
 				print("Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
+				wieldable_node.wielder = self
 				wieldable_animation_player.queue(equipped_wieldable_item.equip_anim)
 				is_wielding = true
 		
@@ -190,6 +190,7 @@ func send_hint(hint_icon,hint_text):
 
 func Get_Camera_Collision() -> Vector3:
 	var viewport = get_viewport().get_size()
+	var camera = get_viewport().get_camera_3d()
 	
 	var Ray_Origin = camera.project_ray_origin(viewport/2)
 	var Ray_End = Ray_Origin + camera.project_ray_normal(viewport/2)*equipped_wieldable_item.wieldable_range
@@ -204,3 +205,16 @@ func Get_Camera_Collision() -> Vector3:
 		return Ray_End
 	
 	
+func save():
+	var interaction_component_data = {
+	"equipped_wieldable_item": equipped_wieldable_item,
+	"equipped_wieldable_node": equipped_wieldable_node,
+	"is_wielding": is_wielding
+		
+	}
+	return interaction_component_data
+	
+func set_state():
+	if equipped_wieldable_item and is_wielding:
+		change_wieldable_to(equipped_wieldable_item)
+		equipped_wieldable_item.update_wieldable_data()

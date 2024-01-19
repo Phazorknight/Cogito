@@ -77,7 +77,6 @@ var wieldable_data_text : String
 @export var reload_amount : int = 1
 
 
-
 # Variables for Wielded Items
 var wielder
 var is_being_wielded : bool

@@ -1,4 +1,7 @@
 extends CanvasLayer
+# Loading screen script is heavily dependent on Cogito Scene Manager and scene states.
+# MODIFY AT YOUR OWN RISK. Besides the forced_delay, there aren't really any tweakable parameters here.
+
 
 ## Adds a forced wait time to the loading screen. Used to avoid loading screen flickering if load time is too short.
 @export var forced_delay : float = 0.5

@@ -1,13 +1,12 @@
-extends RigidBody3D
+extends Node3D
+
 
 @export_group("Pistol Settings")
-## Matching inventory item resource.
-@export var slot_data : InventorySlotPD
-## The propt that appears when the player hovers on the flashlight.
-@export var interaction_text : String = "Pick up"
 ## Path to the projectile prefab scene
 @export var projectile_prefab : PackedScene
+## Speed the projectile spawns with
 @export var projectile_velocity : float
+## Node the projectile spawns at
 @onready var bullet_point = $Bullet_Point
 
 ## The Field Of View change when aiming down sight. In degrees.
@@ -22,6 +21,10 @@ extends RigidBody3D
 
 # Stores the player interaction component
 var wielder
+var passed_item_reference : InventoryItemPD
+
+func set_item_reference(wieldable_item : InventoryItemPD):
+	passed_item_reference = wieldable_item
 
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
 func action_primary(_camera_collision:Vector3):
@@ -29,7 +32,7 @@ func action_primary(_camera_collision:Vector3):
 	
 	var Projectile = projectile_prefab.instantiate()
 	bullet_point.add_child(Projectile)
-	Projectile.damage_amount = slot_data.inventory_item.wieldable_damage
+	Projectile.damage_amount = passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
 	Audio.play_sound_3d(sound_primary_use).global_position = self.global_position
 	print("Pistol.gd: action_primary called. Self: ", self)
@@ -50,12 +53,3 @@ func action_secondary(is_released:bool):
 		var tween_pistol = get_tree().create_tween()
 		tween_pistol.tween_property(self,"position", Vector3(0,default_position.y,default_position.z), .2)
 		
-
-## Picking up the pistol on player interaction
-func interact(body):
-	if body.get_parent().inventory_data.pick_up_slot_data(slot_data):
-		Audio.play_sound(slot_data.inventory_item.sound_pickup)
-		body.send_hint(slot_data.inventory_item.icon, slot_data.inventory_item.name + " added to inventory.") # Sending a hint that uses the default icon
-		queue_free()
-
-

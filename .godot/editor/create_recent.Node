@@ -1,3 +1,7 @@
+HBoxContainer
+RayCast3D
+Node3D
+AnimatableBody3D
 GPUParticles3D
 BoxContainer
 VBoxContainer
@@ -6,10 +10,6 @@ MarginContainer
 Panel
 Control
 CollisionShape3D
-AnimatableBody3D
 Container
 TextureRect
-Node3D
 MeshInstance3D
-AudioStreamPlayer3D
-Area3D

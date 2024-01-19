@@ -84,7 +84,7 @@ func set_external_inventory(_external_inventory_owner):
 	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
-	external_inventory_ui.inventory_name = external_inventory_owner.name
+	external_inventory_ui.inventory_name = external_inventory_owner.inventory_name
 	external_inventory_ui.set_inventory_data(inventory_data)
 	
 	external_inventory_ui.show()

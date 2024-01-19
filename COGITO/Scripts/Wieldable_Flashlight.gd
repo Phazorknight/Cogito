@@ -1,10 +1,8 @@
-extends RigidBody3D
+extends Node3D
 
 @export_group("Flashlight Settings")
-## Matching inventory item resource.
-@export var slot_data : InventorySlotPD
-## The propt that appears when the player hovers on the flashlight.
-@export var interaction_text : String = "Pick up Flashlight"
+### Matching inventory item resource.
+#var slot_data : InventorySlotPD
 ## Sets if the flashlight is turned on or off on ready()
 @export var is_on : bool
 ## How much the energy depletes per second.
@@ -28,11 +26,10 @@ func _ready():
 	else:
 		spot_light_3d.hide()
 
-
 func _process(delta):
 	if is_on:
-		slot_data.inventory_item.subtract(delta * drain_rate)
-		if slot_data.inventory_item.charge_current == 0:
+		wielder.equipped_wieldable_item.subtract(delta * drain_rate)
+		if wielder.equipped_wieldable_item.charge_current == 0:
 			turn_off()
 			is_on = false
 
@@ -59,22 +56,8 @@ func toggle_on_off():
 	if is_on:
 		spot_light_3d.hide()
 		is_on = false
-	elif slot_data.inventory_item.charge_current == 0:
-		wielder.send_hint(null, slot_data.inventory_item.name + " is out of battery.")
+	elif wielder.equipped_wieldable_item.charge_current == 0:
+		wielder.send_hint(null, wielder.equipped_wieldable_item.name + " is out of battery.")
 	else:
 		spot_light_3d.show()
 		is_on = true
-
-
-## Picking up the Flashlight on player interaction
-func interact(body):
-	if body.get_parent().inventory_data.pick_up_slot_data(slot_data):
-		Audio.play_sound(slot_data.inventory_item.sound_pickup)
-		body.send_hint(slot_data.inventory_item.icon, slot_data.inventory_item.name + " added to inventory.") # Sending a hint that uses the default icon
-		queue_free()
-		
-	
-func throw(power):
-	audio_stream_player_3d.stream = slot_data.inventory_item.sound_drop
-	audio_stream_player_3d.play()
-	apply_central_impulse(wielder.look_vector * Vector3(power, power, power))

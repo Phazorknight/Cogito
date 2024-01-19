@@ -1,7 +1,10 @@
 extends Area3D
 
+## Filepath to scene this zone transitions to.
 @export_file("*.tscn") var path_to_new_scene
+## Name of connector node the player should transition to in target scene. This node needs to exist in the target scene and has to be added to the connector array of the target scene cogito_scene script.
 @export var target_connector : String
+
 var current_scene_statename : String
 var current_scene_filepath : String
 

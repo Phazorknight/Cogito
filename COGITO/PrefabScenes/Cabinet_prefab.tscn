@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://dbtarejfetahc"]
 
 [ext_resource type="PackedScene" uid="uid://cxwwd4mjnn34w" path="res://COGITO/PrefabScenes/Shelf.tscn" id="1_g3pr0"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Interact_Door.gd" id="2_xux4j"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="2_xux4j"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="3_jxcxt"]
 [ext_resource type="AudioStream" uid="uid://ckxotbwm6qtui" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage2.ogg" id="4_4064u"]
 [ext_resource type="PackedScene" uid="uid://cyy2kpk7e36if" path="res://COGITO/PrefabScenes/Shelf_Drawer.tscn" id="5_61f6l"]
