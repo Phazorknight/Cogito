@@ -27,6 +27,7 @@ func loading_saved_game(passed_slot):
 		load_scene_state(_player_state.player_current_scene, passed_slot)
 		load_player_state(_current_player_node, passed_slot)
 		
+		
 	else:
 		# Transition to target scene and then attempt to load the saved game again.
 		load_next_scene(_player_state.player_current_scene_path, "", "temp", true)
@@ -36,9 +37,9 @@ func loading_saved_game(passed_slot):
 #region PLAYER SAVE HANDLING
 func load_player_state(player, passed_slot:String):
 	print("Cogito Scene Manager: loading player state...")
-	if _player_state and _player_state.state_exists(passed_slot):
+	if _player_state and _player_state.state_exists(_active_slot):
 		print("Player State exists. Loading ", _player_state)
-		_player_state = _player_state.load_state(passed_slot) as CogitoPlayerState
+		_player_state = _player_state.load_state(_active_slot) as CogitoPlayerState
 		
 		# Applying the save state to player node.
 		player.inventory_data = _player_state.player_inventory
