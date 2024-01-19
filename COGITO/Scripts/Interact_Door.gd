@@ -31,6 +31,8 @@ extends Node3D
 @export var is_sliding : bool
 ## Rotation axis to use. True = use Z axis. False = use Y axis:
 @export var use_z_axis : bool = false
+## Set this to true if the door should swing opposite the direction of the interactor
+@export var bidirectional_swing : bool = false
 ## Rotation Y when the door is open. In degrees.
 @export var open_rotation_deg : float = 0.0
 ## Rotation Y when the door is closed. In degrees.
@@ -72,17 +74,17 @@ func _ready():
 		interaction_text = interaction_text_when_closed
 
 
-func interact(interactor):
+func interact(interactor: Node3D):
 	if !is_locked:
 		if !is_open:
-			open_door()
+			open_door(interactor)
 			
 			for nodepath in doors_to_sync_with:
 				if nodepath != null:
 					var object = get_node(nodepath)
 					object.open_door()
 		else:
-			close_door()
+			close_door(interactor)
 			
 			for nodepath in doors_to_sync_with:
 				if nodepath != null:
@@ -134,14 +136,21 @@ func unlock_door():
 	is_locked = false
 	interaction_text = interaction_text_when_closed	
 	
-func open_door():
+func open_door(interactor: Node3D):
 	audio_stream_player_3d.stream = open_sound
 	audio_stream_player_3d.play()
 
 	if is_animation_based:
 		anim_player.play(opening_animation)
 	elif !is_sliding:
-		target_rotation_rad = deg_to_rad(open_rotation_deg)
+		var swing_direction: int = 1
+
+		if bidirectional_swing:
+			var offset: Vector3 = interactor.global_transform.origin - global_transform.origin
+			var offset_dot_product: float = offset.dot(global_transform.basis.x)
+			swing_direction = -1 if offset_dot_product < 0 else 1
+
+		target_rotation_rad = deg_to_rad(open_rotation_deg * swing_direction)
 		is_moving = true
 	else:
 		var tween_door = get_tree().create_tween()
@@ -150,7 +159,7 @@ func open_door():
 	is_open = true
 	interaction_text = interaction_text_when_open
 	
-func close_door():
+func close_door(interactor: Node3D):
 	audio_stream_player_3d.stream = close_sound
 	audio_stream_player_3d.play()
 	
