@@ -4,7 +4,7 @@ class_name PlayerInteractionComponent
 signal interaction_prompt(interaction_text : String)
 signal hint_prompt(hint_icon:Texture2D, hint_text: String)
 signal set_use_prompt(use_text:String)
-signal update_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
+signal updated_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast : RayCast3D
@@ -65,7 +65,7 @@ func _input(event):
 			if interactable.has_method("interact"):
 				interactable.interact(self)
 				if is_wielding:
-					equipped_wieldable_item.update_wieldable_data()
+					equipped_wieldable_item.update_wieldable_data(self)
 			elif equipped_wieldable_item != null:
 				if interactable.has_method("carry"):
 					send_hint(null,"Can't carry an object while wielding.")
@@ -107,7 +107,7 @@ func equip_wieldable(wieldable_item:InventoryItemPD):
 			if wieldable_node.name == equipped_wieldable_item.name:
 				equipped_wieldable_node = wieldable_node
 				print("Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
-				wieldable_node.wielder = self
+				equipped_wieldable_node.player_interaction_component = self
 				wieldable_animation_player.queue(equipped_wieldable_item.equip_anim)
 				is_wielding = true
 		
@@ -132,7 +132,7 @@ func attempt_action_primary():
 		if !wieldable_animation_player.is_playing(): # Enforces fire rate.
 			wieldable_animation_player.play(equipped_wieldable_item.use_anim)
 			equipped_wieldable_item.subtract(1)
-			equipped_wieldable_node.action_primary(Get_Camera_Collision())
+			equipped_wieldable_node.action_primary(Get_Camera_Collision(), equipped_wieldable_item)
 
 
 func attempt_action_secondary(is_released:bool):
@@ -144,7 +144,6 @@ func attempt_action_secondary(is_released:bool):
 
 
 func attempt_reload():
-	
 	var inventory = get_parent().inventory_data
 	# Some safety checks if reload should even be triggered.
 	if inventory == null:
@@ -182,7 +181,7 @@ func attempt_reload():
 					print("RELOAD: Found ", slot.inventory_item.name, ". Removed one and added ", slot.inventory_item.reload_amount, " charge. Still needed: ", ammo_needed)
 		
 		inventory.inventory_updated.emit(inventory)
-		equipped_wieldable_item.update_wieldable_data()
+		equipped_wieldable_item.update_wieldable_data(self)
 
 
 
@@ -220,4 +219,4 @@ func save():
 func set_state():
 	if equipped_wieldable_item and is_wielding:
 		change_wieldable_to(equipped_wieldable_item)
-		equipped_wieldable_item.update_wieldable_data()
+		equipped_wieldable_item.update_wieldable_data(self)

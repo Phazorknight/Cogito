@@ -107,7 +107,7 @@ func _ready():
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
 	player.player_state_loaded.connect(_on_player_state_load)
-	player.player_interaction_component.update_wieldable_data.connect(_on_update_wieldable_data)
+	player.player_interaction_component.updated_wieldable_data.connect(_on_update_wieldable_data)
 
 	# Grabbing external inventories in scene.
 	for node in get_tree().get_nodes_in_group("external_inventory"):
@@ -122,7 +122,8 @@ func _on_player_state_load():
 	# Grabbing external inventories in scene.
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		print("Is in external_inventory group: ", node)
-		node.toggle_inventory.connect(toggle_inventory_interface)
+		if !node.is_connected("toggle_inventory",toggle_inventory_interface):
+			node.toggle_inventory.connect(toggle_inventory_interface)
 
 
 

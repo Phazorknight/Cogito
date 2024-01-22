@@ -18,21 +18,17 @@ extends Node3D
 @export var sound_secondary_use : AudioStream
 @export var sound_reload : AudioStream
 
-
 # Stores the player interaction component
-var wielder
-var passed_item_reference : InventoryItemPD
+var player_interaction_component
 
-func set_item_reference(wieldable_item : InventoryItemPD):
-	passed_item_reference = wieldable_item
 
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
-func action_primary(_camera_collision:Vector3):
+func action_primary(_camera_collision:Vector3, _passed_item_reference : InventoryItemPD):
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
 	
 	var Projectile = projectile_prefab.instantiate()
 	bullet_point.add_child(Projectile)
-	Projectile.damage_amount = passed_item_reference.wieldable_damage
+	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
 	Audio.play_sound_3d(sound_primary_use).global_position = self.global_position
 	print("Pistol.gd: action_primary called. Self: ", self)

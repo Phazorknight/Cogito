@@ -78,7 +78,7 @@ var wieldable_data_text : String
 
 
 # Variables for Wielded Items
-var wielder
+var player_interaction_component
 var is_being_wielded : bool
 var wielded_item
 
@@ -103,20 +103,20 @@ func use(target) -> bool:
 				return false
 		
 		ItemType.WIELDABLE:
-			wielder = target.player_interaction_component
-			if wielder.carried_object != null:
-				wielder.send_hint(null,"Can't equip item while carrying.")
+			player_interaction_component = target.player_interaction_component
+			if player_interaction_component.carried_object != null:
+				player_interaction_component.send_hint(null,"Can't equip item while carrying.")
 				return false
 			if is_being_wielded:
-				wielder.emit_signal("set_use_prompt", "")
-				wielder.emit_signal("update_wieldable_data", null, "")
-				print("Inventory item: ", wielder, " is putting away wieldable ", name)
+				player_interaction_component.emit_signal("set_use_prompt", "")
+				player_interaction_component.emit_signal("updated_wieldable_data", null, "")
+				print("Inventory item: ", player_interaction_component, " is putting away wieldable ", name)
 				put_away()
 				return true
 			else:
-				wielder.emit_signal("set_use_prompt", primary_use_prompt)
-				update_wieldable_data()
-				print("Inventory item: ", wielder, " is taking out wieldable ", name)
+				player_interaction_component.emit_signal("set_use_prompt", primary_use_prompt)
+				update_wieldable_data(player_interaction_component)
+				print("Inventory item: ", player_interaction_component, " is taking out wieldable ", name)
 				take_out()
 				return true
 		
@@ -144,7 +144,7 @@ func use(target) -> bool:
 # Functions for WIELDABLES
 func take_out():
 	print("Taking out ", name)
-	wielder.change_wieldable_to(self)
+	player_interaction_component.change_wieldable_to(self)
 #	var scene_to_wield = load(drop_scene)
 #	wielded_item = scene_to_wield.instantiate()
 #	wielder.get_parent().add_child(wielded_item)
@@ -153,7 +153,7 @@ func take_out():
 	
 func put_away():
 	print("Putting away ", name)
-	wielder.change_wieldable_to(null)
+	player_interaction_component.change_wieldable_to(null)
 	is_being_wielded = false
 #	if wielded_item != null:
 #		wielded_item.queue_free()
@@ -161,8 +161,8 @@ func put_away():
 
 func get_item_amount_in_inventory(item_name_to_check_for:String) -> int:
 	var item_count : int = 0
-	if wielder.get_parent().inventory_data != null:
-		var inventory_to_check = wielder.get_parent().inventory_data
+	if player_interaction_component.get_parent().inventory_data != null:
+		var inventory_to_check = player_interaction_component.get_parent().inventory_data
 		for slot in inventory_to_check.inventory_slots:
 			if slot != null and slot.inventory_item.name == item_name_to_check_for:
 				item_count += slot.quantity
@@ -170,19 +170,21 @@ func get_item_amount_in_inventory(item_name_to_check_for:String) -> int:
 	return item_count
 
 
-func update_wieldable_data():
+func update_wieldable_data(_player_interaction_component : PlayerInteractionComponent):
+	if _player_interaction_component: #Only update if something get's passed
+		player_interaction_component = _player_interaction_component
 	wieldable_data_text = str(int(charge_current)) + "|" + str(get_item_amount_in_inventory(ammo_item_name))
-	wielder.emit_signal("update_wieldable_data", wieldable_data_icon, wieldable_data_text)
+	player_interaction_component.emit_signal("updated_wieldable_data", wieldable_data_icon, wieldable_data_text)
 
 
 func subtract(amount):
 	charge_current -= amount
 	if charge_current < 0:
 		charge_current = 0
-		wielder.send_hint(null, name + " is out of battery.")
+		player_interaction_component.send_hint(null, name + " is out of battery.")
 	
 	if is_being_wielded:
-		update_wieldable_data()
+		update_wieldable_data(null)
 	
 	charge_changed.emit()
 	
@@ -193,5 +195,5 @@ func add(amount):
 		charge_current = charge_max
 	
 	if is_being_wielded:
-		update_wieldable_data()
+		update_wieldable_data(null)
 	charge_changed.emit()
