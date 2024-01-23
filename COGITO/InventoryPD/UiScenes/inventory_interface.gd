@@ -35,12 +35,16 @@ func open_inventory():
 #		inventory_interface.external_inventory_ui.show()
 
 		for slot_panel in inventory_ui.slot_array:
-			slot_panel.mouse_exited.connect(_slot_on_mouse_exit)
+			if !slot_panel.mouse_exited.is_connected(_slot_on_mouse_exit):
+				slot_panel.mouse_exited.connect(_slot_on_mouse_exit)
 	hot_bar_inventory.hide()
 	
 func close_inventory():
 	if is_inventory_open:
 		print("Inventory interface: Closing inventory.")
+		if grabbed_slot_data != null: # If the player was holding/moving items, these will be added back to the inventory.
+			get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data)
+			grabbed_slot_data = null
 		is_inventory_open = false
 		get_viewport().gui_focus_changed.disconnect(_on_focus_changed)
 		inventory_ui.hide()
@@ -125,6 +129,7 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 				if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 					Audio.play_sound(sound_error)
 					print("Can't drop while wielding this item.")
+					grabbed_slot_data = null
 				else:
 					print("Dropping slot data via gamepad")
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)

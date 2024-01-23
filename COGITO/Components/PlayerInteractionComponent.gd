@@ -83,7 +83,10 @@ func _input(event):
 			attempt_action_secondary(true)
 		
 		if is_wielding and event.is_action_pressed("reload"):
-			attempt_reload()
+			if interaction_raycast.is_colliding() and interaction_raycast.get_collider().has_method("interact"):
+				return
+			else:
+				attempt_reload()
 
 
 ## Helper function to always get raycast destination point
