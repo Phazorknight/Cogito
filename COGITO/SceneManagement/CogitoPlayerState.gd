@@ -5,6 +5,7 @@ var player_state_dir : String = "user://COGITO_player_state_"
 
 @export var version : int = 1
 @export var player_inventory : InventoryPD
+@export var saved_wieldable_charges : Array
 
 @export var player_current_scene : String
 @export var player_current_scene_path : String
@@ -27,10 +28,15 @@ func add_interaction_component_state_data_to_array(state_data):
 func clear_saved_interaction_component_state():
 	interaction_component_state.clear()
 	
+func append_saved_wieldable_charges(saved_item_data):
+	saved_wieldable_charges.append(saved_item_data)
+	
+func clear_saved_wieldable_charges():
+	saved_wieldable_charges.clear()
 
 func write_state(state_slot : String) -> void:
 	var player_state_file = str(player_state_dir + state_slot + ".res")
-	ResourceSaver.save(self, player_state_file)
+	ResourceSaver.save(self, player_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Player state saved as ", player_state_file)
 
 

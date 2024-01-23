@@ -43,6 +43,17 @@ func load_player_state(player, passed_slot:String):
 		
 		# Applying the save state to player node.
 		player.inventory_data = _player_state.player_inventory
+		# Loading saved charges of wieldables
+		var array_of_wieldable_charges = _player_state.saved_wieldable_charges
+		for data in array_of_wieldable_charges:
+			if data == null:
+				continue
+			else:
+				for slot in player.inventory_data.inventory_slots:
+					if slot and slot.inventory_item and slot.inventory_item == data["resource"]:
+						print("Match found: ", slot.inventory_item)
+						slot.inventory_item.charge_current = data["charge_current"]
+						
 		player.inventory_data.force_inventory_update()
 		
 		player.health_component.current_health = _player_state.player_health.x
@@ -75,6 +86,13 @@ func save_player_state(player, slot:String):
 	
 	# Writing the save state from current player node.
 	_player_state.player_inventory = player.inventory_data
+	
+	_player_state.clear_saved_wieldable_charges()
+	for item_slot in player.inventory_data.inventory_slots:
+		if item_slot and item_slot.inventory_item and item_slot.inventory_item.item_type == 1:
+			var item_save_data = item_slot.inventory_item.save()
+			_player_state.append_saved_wieldable_charges(item_save_data)
+			print("Saved charge for ", item_slot.inventory_item )
 	
 	_player_state.player_current_scene = _current_scene_name
 	_player_state.player_current_scene_path = _current_scene_path

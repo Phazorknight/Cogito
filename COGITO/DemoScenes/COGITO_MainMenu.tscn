@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_tnhbh")
-main_menu_scene = "res://COGITO/DemoScenes/COGITO_01_Demo.tscn"
+main_menu_scene = "res://COGITO/DemoScenes/COGITO_MainMenu.tscn"
 start_game_scene = "res://COGITO/DemoScenes/COGITO_01_Demo.tscn"
 
 [node name="MainMenu" parent="." instance=ExtResource("1_jlj1d")]

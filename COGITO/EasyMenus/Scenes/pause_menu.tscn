@@ -101,7 +101,7 @@ layout_mode = 1
 [node name="MenuSceneSwitcher" type="Node" parent="."]
 script = ExtResource("6_dtxsf")
 main_menu_scene = "res://COGITO/DemoScenes/COGITO_MainMenu.tscn"
-start_game_scene = "res://COGITO/DemoScenes/COGITO_Demo_01.tscn"
+start_game_scene = "res://COGITO/DemoScenes/COGITO_01_Demo.tscn"
 
 [connection signal="back_to_main_pressed" from="." to="MenuSceneSwitcher" method="_on_pause_menu_back_to_main_pressed"]
 [connection signal="pressed" from="Content/ResumeGameButton" to="." method="_on_resume_game_button_pressed"]

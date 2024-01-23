@@ -1,3 +1,4 @@
+@tool
 extends Resource
 class_name InventoryItemPD
 
@@ -197,3 +198,12 @@ func add(amount):
 	if is_being_wielded:
 		update_wieldable_data(null)
 	charge_changed.emit()
+
+
+
+func save():
+	var saved_item_data = {
+		"resource" : self,
+		"charge_current" : charge_current
+	}
+	return saved_item_data

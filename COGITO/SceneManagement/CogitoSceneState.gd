@@ -21,7 +21,7 @@ func add_state_data_to_array(state_data):
 
 func write_state(state_slot : String, scene_name : String) -> void:
 	var scene_state_file = str(scene_state_dir + state_slot + "_" + scene_name + ".res")
-	ResourceSaver.save(self, scene_state_file)
+	ResourceSaver.save(self, scene_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Scene state saved as ", scene_state_file)
 
 
