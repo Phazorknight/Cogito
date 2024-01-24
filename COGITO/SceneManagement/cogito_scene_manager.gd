@@ -12,6 +12,9 @@ extends Node
 @export var _current_scene_path : String
 @export var _scene_state : CogitoSceneState
 
+enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
+@export var scene_load_mode: CogitoSceneLoadMode
+
 
 func loading_saved_game(passed_slot):
 	print("CSM: Loading saved game from slot ", passed_slot)
@@ -21,16 +24,18 @@ func loading_saved_game(passed_slot):
 		
 	_player_state = _player_state.load_state(_active_slot) as CogitoPlayerState
 	
+	print("CSM: Current scene detected as ", get_tree().current_scene.get_name())
 	# Check if player is currently in the same scene as in the game that is being attempted to load:
-	if get_tree().current_scene.get_name() == _player_state.player_current_scene:
+	if _current_scene_name == _player_state.player_current_scene:
+		# ABOVE used to be: get_tree().current_scene.get_name() == 
 		print("CSM: Player state for slot ", passed_slot, " is from current scene.")
 		# Do a simple scene state load and player state load.
 		load_scene_state(_player_state.player_current_scene, passed_slot)
 		load_player_state(_current_player_node, passed_slot)
 	else:
 		# Transition to target scene and then attempt to load the saved game again.
-		print("CSM: Player state for slot ", passed_slot, " is in different scene. Transitioning...")
-		load_next_scene(_player_state.player_current_scene_path, "", passed_slot, true)
+		print("CSM: Player state for slot ", passed_slot, " is in different scene (", _player_state.player_current_scene, "). Transitioning...")
+		load_next_scene(_player_state.player_current_scene_path, "", passed_slot, CogitoSceneLoadMode.LOAD_SAVE) 
 
 
 
@@ -204,12 +209,13 @@ func save_scene_state(_scene_name_to_save, slot: String):
 
 
 # Function to transition to another scene via the loading screen.
-func load_next_scene(target : String, connector_name: String, passed_slot: String, loading_a_save : bool) -> void:
+func load_next_scene(target : String, connector_name: String, passed_slot: String, load_mode: CogitoSceneLoadMode) -> void:
 	var loading_screen = preload("res://COGITO/SceneManagement/LoadingScene.tscn").instantiate()
 	loading_screen.next_scene_path = target
 	loading_screen.connector_name = connector_name
 	loading_screen.passed_slot = passed_slot
-	loading_screen.attempt_to_load_save = loading_a_save
+	#loading_screen.attempt_to_load_save = loading_a_save
+	loading_screen.load_mode = load_mode
 	get_tree().current_scene.add_child(loading_screen)
 
 

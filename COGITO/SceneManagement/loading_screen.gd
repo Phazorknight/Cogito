@@ -10,7 +10,8 @@ var next_scene_path : String
 var connector_name : String
 var next_scene_state_filename : String
 var passed_slot : String
-var attempt_to_load_save : bool
+#var attempt_to_load_save : bool
+var load_mode
 
 func _ready():
 	ResourceLoader.load_threaded_request(next_scene_path) # Start loading the next scene
@@ -26,17 +27,24 @@ func _process(_delta):
 		var current_scene = get_tree().current_scene # Stores currently active scene so it can be set later
 		get_tree().get_root().add_child(new_scene_node) # Adds the instatiated new scene as a node.
 		
-		# At this point the new scene state can be loaded
-		next_scene_state_filename = new_scene_node.get_name()
-		print("Loading screen: Attempting to load scene state: ", next_scene_state_filename)
-		CogitoSceneManager.load_scene_state(next_scene_state_filename,"temp") # Loading temp scene state
+		print("Loading screen: Load_mode is ", load_mode)
+		
+		#If load_mode asks for it, scene state will be loaded.
+		if load_mode != 2: #Checking that load_mode is not set to 2 which would ignore scene states.
+			
+			next_scene_state_filename = new_scene_node.get_name()
+			
+			# This flag is used if the scene transition was called from loading a save
+			if load_mode == 1: #Load_Mode one is attempting to load a save
+				print("Loading screen: Attempting to load a save for passsed_slot ", passed_slot)
+				CogitoSceneManager._current_scene_name = new_scene_node.name #Manually setting new scene name
+				CogitoSceneManager.loading_saved_game(passed_slot)
+			else:
+				print("Loading screen: Attempting to load scene state: ", next_scene_state_filename)
+				CogitoSceneManager.load_scene_state(next_scene_state_filename,"temp") # Loading temp scene state
+				CogitoSceneManager.load_player_state(CogitoSceneManager._current_player_node,"temp") # Loading temp player state.
 		
 		get_tree().current_scene = new_scene_node # Assigns new scene as current scene
-		CogitoSceneManager.load_player_state(CogitoSceneManager._current_player_node,"temp") # Loading temp player state.
-		
-		# This flag is used if the scene transition was called from loading a save (instead of transitioning from one scene to another)
-		if attempt_to_load_save:
-			CogitoSceneManager.loading_saved_game(passed_slot)
 		
 		if connector_name != "": #If a connector name has been passed, move the player to it. This requires the target scene to have a cogito scene script attached to it's root scene node.
 			new_scene_node.move_player_to_connector(connector_name)
