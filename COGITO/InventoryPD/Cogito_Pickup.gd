@@ -12,12 +12,20 @@ func interact(body):
 		Audio.play_sound(slot_data.inventory_item.sound_pickup)
 		queue_free()
 
+
+func get_item_type() -> int:
+	if slot_data and slot_data.inventory_item:
+		return slot_data.inventory_item.item_type
+	else:
+		return -1
+
 # Function to handle persistency and saving
 func save():
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
 		"slot_data" : slot_data,
+		"item_charge" : slot_data.inventory_item.charge_current,
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,
