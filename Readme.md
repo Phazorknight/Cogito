@@ -1,4 +1,4 @@
-![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
+﻿![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
 Version: **BETA 202401.15**
@@ -58,7 +58,7 @@ providing a framework for creating interactable objects and items.
 It is recommended to use the whole project as a starting point for your game, though everything needed should be contained within the COGITO folder within the project.
 
 Make sure that two Autoloads are set up in your project:
-- //COGITO/EsayMenus/Nodes/menu_template_manager.tscn
+- //COGITO/EasyMenus/Nodes/menu_template_manager.tscn
 - //COGITO/SceneManagement/cogito_scene_manager.gd
 
 Make sure you have this plug-in set up in your project:
@@ -116,7 +116,7 @@ func interact(playernode):
 This is used to create interactive objects with a clear on/off state. Most common examples are lamps and lights.
 Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be set to layer 2 so the Player Interaction system can pick it up.
 It works by going through a list of nodes and flipping their visible state every time the player switches the object.
-PRO-TIP: The objects you switch do not have to be part of the switchable object. For example if you wanna have a ceiling lamp thats controlled by a lightswitch, make the lightswitch the switchable and add all the ceiling lamps to the objects to switch list.
+PRO-TIP: The objects you switch do not have to be part of the switchable object. For example if you wanna have a ceiling lamp that's controlled by a light switch, make the light switch the switchable and add all the ceiling lamps to the objects to switch list.
 
 **Settings:**
 - Is On: Start state of the switchable.
@@ -157,9 +157,9 @@ Needs to have a CollisionShape3D and AudioStreamPlayer3D. Collision should be se
 - Interaction Text: What appears when the player aims the crosshair at the carryable.
 - Pick up Sound: Plays when player picks up the carryable.
 - Drop Sound: Plays when player drops up the carryable.
-- Hold distance: How close the carriable is being held to the player. Tweak this depending on your carriable size. 1 = raycast interaction length (2.5m by default). 0.75 feels pretty good for most objects. Be aware that objects might collide with the player collider if this is set too close.
+- Hold distance: How close the carryable is being held to the player. Tweak this depending on your carryable size. 1 = raycast interaction length (2.5m by default). 0.75 feels pretty good for most objects. Be aware that objects might collide with the player collider if this is set too close.
 - Lock Rotation when carrying: Set if the object should not rotate when being carried. Usually true is preferred.
-- Carrying velocity multiplier: Sets how fast the carriable is being pulled towards the carrying position. The lower, the "floatier" it will feel.
+- Carrying velocity multiplier: Sets how fast the carryable is being pulled towards the carrying position. The lower, the "floatier" it will feel.
 
 
 ### Item pick ups:
@@ -168,7 +168,7 @@ See under **Inventory** below on how pick ups are setup.
 ### Cogito_Door.gd
 I recommend just making a copy of the included Door Prefab and modifying it to fit your needs. But you can also set up doors yourself by creating a AnimatableBody3D with your mesh etc in it as well as a Collision shape and an AudioStreamPlayer3D. Make sure it is set to layer 2 so the Player Interaction raycast can pick it up.
 Then attach the **Interact_Door.gd** to your AnimatableBody3D.
-**Pro Tip:** If you want to make a door thats triggered by a different object (like a remote switch), just DON'T set it to collission layer 2. Instead set a reference to your door at your other object (like a press_and_hold). See the draw bridge in the test scene for an example.
+**Pro Tip:** If you want to make a door that’s triggered by a different object (like a remote switch), just DON'T set it to collision layer 2. Instead set a reference to your door at your other object (like a press_and_hold). See the draw bridge in the test scene for an example.
 
 **Settings:**
 - Audio:
@@ -197,7 +197,7 @@ Then attach the **Interact_Door.gd** to your AnimatableBody3D.
 	- Animation Player: Assign your Animation Player node.
 	- Opening Animation: String name of your opening animation that's present in the animation player.
 	- Reverse Opening Animation for close: If set to true, the opening animation will be played in reverse when the door is closed.
-	- Closing Animation: String name of your closing animmation that's present in the animation player.
+	- Closing Animation: String name of your closing animation that's present in the animation player.
 
 
 ## Inventory System
@@ -222,7 +222,7 @@ Items -> Slots -> Inventories.
 - Name: What the item is called in the HUD.
 - Description: Displayed when selected in the inventory UI. Shouldn't be longer than 2 lines (for now).
 - Icon: The icon that is displayed in the Slot UI and on certain hint notifications.
-- Power: A value that is used when the item is used. This is very ambigious and will prob be renamed.
+- Power: A value that is used when the item is used. This is very ambiguous and will prob be renamed.
 - Is Stackable: Flag if an item can be stacked. Usually you don't want this for wieldables.
 - Stack size: How many items can be stacked max. If this is exceeded, the item will need to be put in it's own slot.
 - Use sound: String that plays that sound from the AudioManager on use, if it is found.
@@ -249,7 +249,7 @@ Items -> Slots -> Inventories.
   - Charge current: The current charge. Examples: Flashlight current battery level. Amount of bullets left in the magazine.
   - Wieldable Range: Used for hitscan weapons for some calculations. Also necessary for melee weapons.
   - Wieldable Damage: Damage value that is applied to HealthComponents of Objects with an HitboxComponent.
-  - Animations: Pretty self-explanatory. Stringbased names of the animations that will be called on the WieldableAnimationPlayer inside the Player Scene.
+  - Animations: Pretty self-explanatory. String-based names of the animations that will be called on the WieldableAnimationPlayer inside the Player Scene.
 
 - Combinable settings:
   - Target Item Combine: Name of the item that can be used to charge this item. String needs to be an exact match.
@@ -266,7 +266,7 @@ Items -> Slots -> Inventories.
 
 ### Cogito_Pickup.gd
 Use this script to create items that are added to the players inventory.
-I usually create this _before_ I create the item resource, but it doesn't matter, aso long as the references are set.
+I usually create this _before_ I create the item resource, but it doesn't matter, as long as the references are set.
 
 The basic idea is this:
 Pick up = this is how the item exists in the 3D world.
