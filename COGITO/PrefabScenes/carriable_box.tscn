@@ -25,6 +25,8 @@ size = Vector3(1, 0.1, 0.1)
 [node name="CarriableBox" type="RigidBody3D"]
 collision_layer = 3
 mass = 4.0
+max_contacts_reported = 8
+contact_monitor = true
 script = ExtResource("1_ufsmk")
 pick_up_sound = ExtResource("2_4d2c8")
 drop_sound = ExtResource("3_p1e4y")

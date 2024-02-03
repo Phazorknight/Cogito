@@ -305,8 +305,12 @@ func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 
 ### LADDER MOVEMENT
 func _process_on_ladder(_delta):
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
-
+	var input_dir
+	if !is_movement_paused:
+		input_dir = Input.get_vector("left", "right", "forward", "back")
+	else:
+		input_dir = Vector2.ZERO
+		
 	var jump = Input.is_action_pressed("jump")
 
 	# Processing analog stick mouselook
@@ -340,8 +344,8 @@ func _process_on_ladder(_delta):
 
 
 func _physics_process(delta):
-	if is_movement_paused:
-		return
+	#if is_movement_paused:
+		#return
 		
 	if on_ladder:
 		_process_on_ladder(delta)
@@ -350,7 +354,11 @@ func _physics_process(delta):
 	var is_falling: bool = false	
 	
 	# Getting input direction
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	var input_dir
+	if !is_movement_paused:
+		input_dir = Input.get_vector("left", "right", "forward", "back")
+	else:
+		input_dir = Vector2.ZERO
 	
 	# LERP the up/down rotation of whatever you're carrying.
 	carryable_position.rotation.z = lerp_angle(carryable_position.rotation.z, head.rotation.x, 5 * delta)
@@ -425,7 +433,7 @@ func _physics_process(delta):
 			is_sprinting = false
 			is_crouching = false
 	
-	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped():
+	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() and !is_movement_paused:
 		is_free_looking = true
 		if sliding_timer.is_stopped():
 			eyes.rotation.z = -deg_to_rad(
@@ -658,8 +666,9 @@ func _physics_process(delta):
 		snap = Vector3.ZERO
 
 
-	if !is_movement_paused:
-		move_and_slide()
+	#if !is_movement_paused:
+	move_and_slide()
+	
 	
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:

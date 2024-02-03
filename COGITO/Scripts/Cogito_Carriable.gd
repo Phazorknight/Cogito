@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name CogitoCarriable
 
 @export_group("Carriable Settings")
 @export var interaction_text : String = "Carry"
@@ -12,16 +13,16 @@ extends RigidBody3D
 @export var carrying_velocity_multiplier : float = 10
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
-
 @onready var camera : Camera3D = get_viewport().get_camera_3d()
 
 var is_being_carried
 var holder
-# Position the carriable "floats to".
+# Position the carriable "floats towards".
 var carry_position : Vector3
 
 func _ready():
 	self.add_to_group("Persist")
+	body_entered.connect(_on_body_entered) #Connecting to body entered signal
 
 func carry(player_interaction_component):
 	holder = player_interaction_component
@@ -37,6 +38,10 @@ func _physics_process(_delta):
 		set_linear_velocity((carry_position - global_position) * carrying_velocity_multiplier)
 		
 		
+func _on_body_entered(body):
+	if body.is_in_group("Player") and is_being_carried:
+		leave()
+
 
 func hold():
 	if lock_rotation_when_carried:

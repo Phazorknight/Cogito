@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://leudtt5jh16a"]
+
+[ext_resource type="StyleBox" uid="uid://ca6n4u12q8que" path="res://COGITO/Theme/stylebox_prompts.tres" id="1_73e41"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h30js"]
+bg_color = Color(0, 0, 0, 0.392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[resource]
+HBoxContainer/constants/separation = 4
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_h30js")
+PanelContainer/styles/prompt = ExtResource("1_73e41")

@@ -10,6 +10,7 @@ extends Control
 @onready var stamina_bar = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar
 @onready var stamina_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar/Label
 
+@onready var button_prompt = $ButtonPrompt
 @onready var interaction_button = $ButtonPrompt/HBoxContainer/Container/InteractionButton
 @onready var interaction_text = $ButtonPrompt/HBoxContainer/InteractionText
 
@@ -85,7 +86,7 @@ func _ready():
 		brightness_bar.hide()
 	
 	# Set up for HUD elements for interactions and wieldables
-	interaction_button.hide()
+	button_prompt.hide()
 	interaction_text.text = ""
 	primary_use_label.text = ""
 	primary_use_icon.hide()
@@ -163,10 +164,11 @@ func toggle_inventory_interface(external_inventory_owner = null):
 # When HUD receives interaction prompt signal (usually if player interaction raycast hits an object on layer 2)
 func _on_interaction_prompt(passed_interaction_prompt):
 	if(passed_interaction_prompt == ""):
-		interaction_button.hide()
+		button_prompt.hide()
 #		interaction_button.set_texture(empty_texture)
 	else:
 #		interaction_button.set_texture(interaction_texture)
+		button_prompt.show()
 		interaction_button.show()
 	interaction_text.text = passed_interaction_prompt
 

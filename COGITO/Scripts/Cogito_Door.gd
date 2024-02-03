@@ -1,4 +1,5 @@
 extends Node3D
+class_name CogitoDoor
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=28 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
@@ -7,9 +7,11 @@
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
 [ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="3_o56n0"]
 [ext_resource type="Texture2D" uid="uid://ryhle5u4d4mn" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Keyboard_F.png" id="4_2dtpt"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
 [ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png" id="6_f5jpm"]
+[ext_resource type="StyleBox" uid="uid://ca6n4u12q8que" path="res://COGITO/Theme/stylebox_prompts.tres" id="6_qk6nr"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="Texture2D" uid="uid://02033aa8j18m" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Mouse_Left.png" id="11_c625v"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
@@ -111,7 +113,7 @@ grow_vertical = 2
 texture = ExtResource("3_ahile")
 expand_mode = 1
 
-[node name="ButtonPrompt" type="Control" parent="."]
+[node name="ButtonPrompt" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -123,27 +125,18 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("5_j6s1a")
+theme_override_styles/panel = ExtResource("6_qk6nr")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ButtonPrompt"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -37.0
-offset_right = 37.0
-offset_bottom = 40.0
-grow_horizontal = 2
-
-[node name="InteractionButton_old" type="TextureRect" parent="ButtonPrompt/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
-texture = ExtResource("4_2dtpt")
-expand_mode = 2
+theme = ExtResource("5_j6s1a")
 
 [node name="Container" type="MarginContainer" parent="ButtonPrompt/HBoxContainer"]
 custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_j6s1a")
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
@@ -158,35 +151,8 @@ action_name = "interact"
 
 [node name="InteractionText" type="Label" parent="ButtonPrompt/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("5_j6s1a")
 text = "Interact"
-label_settings = SubResource("LabelSettings_qgnac")
-
-[node name="HintPrompt" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 0
-mouse_filter = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="HintPrompt"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HintPrompt/MarginContainer"]
-layout_mode = 2
-
-[node name="HintIcon" type="TextureRect" parent="HintPrompt/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("3_o56n0")
-expand_mode = 2
-
-[node name="HintText" type="Label" parent="HintPrompt/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "Hint text appears here and can be longer."
 label_settings = SubResource("LabelSettings_qgnac")
 
 [node name="HintTimer" type="Timer" parent="."]
@@ -268,6 +234,7 @@ offset_top = -10.0
 offset_right = 104.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("5_j6s1a")
 
 [node name="MarginContainer" type="MarginContainer" parent="PlayerAttributes"]
 layout_mode = 2
@@ -393,6 +360,7 @@ offset_top = -21.0
 offset_right = 21.0
 offset_bottom = -5.0
 grow_vertical = 0
+theme = ExtResource("5_j6s1a")
 
 [node name="InfoPanel" type="PanelContainer" parent="InventoryInterface"]
 custom_minimum_size = Vector2(200, 10)
@@ -400,6 +368,7 @@ layout_mode = 0
 offset_right = 200.0
 offset_bottom = 110.0
 mouse_filter = 2
+theme = ExtResource("5_j6s1a")
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel"]
 layout_mode = 2
@@ -555,6 +524,34 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Restart"
+
+[node name="HintPrompt" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HintPrompt"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HintPrompt/MarginContainer"]
+layout_mode = 2
+
+[node name="HintIcon" type="TextureRect" parent="HintPrompt/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("3_o56n0")
+expand_mode = 2
+
+[node name="HintText" type="Label" parent="HintPrompt/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Hint text appears here and can be longer."
+label_settings = SubResource("LabelSettings_qgnac")
 
 [connection signal="timeout" from="HintTimer" to="." method="_on_hint_timer_timeout"]
 [connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
