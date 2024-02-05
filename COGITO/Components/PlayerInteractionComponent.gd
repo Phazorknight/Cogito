@@ -6,6 +6,10 @@ signal hint_prompt(hint_icon:Texture2D, hint_text: String)
 signal set_use_prompt(use_text:String)
 signal updated_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
 
+signal interactive_object_detected(interaction_nodes: Array[Node])
+signal nothing_detected()
+signal started_carrying(interaction_node: Node)
+
 ## Raycast3D for interaction check.
 @export var interaction_raycast : RayCast3D
 @export var carryable_position : Node3D
@@ -23,27 +27,33 @@ var is_reset : bool  = true
 var device_id : int = -1
 var carried_object = null
 
+var object_detected : bool
+
 
 func _ready():
 	for node in wieldable_nodes:
 		node.hide()
+		
+	object_detected = false
 
 func _process(_delta):
 	# when carrying object, disable all other prompts.
 	if carried_object:
-		emit_signal("interaction_prompt", "Drop")
+		#emit_signal("interaction_prompt", "Drop")
+		pass
 	elif interaction_raycast.is_colliding():
 		var interactable = interaction_raycast.get_collider()
 		is_reset = false
-		if interactable != null and interactable.has_method("interact"):
-			emit_signal("interaction_prompt", interactable.interaction_text)
-		elif interactable != null and interactable.has_method("carry"):
-			emit_signal("interaction_prompt", interactable.interaction_text)
+		if interactable != null and interactable.is_in_group("interactable") and !object_detected:
+			interactive_object_enter(interactable)
 		else:
+			if interactable == null or !interactable.is_in_group("interactable"):
+				interactive_object_exit()
 			emit_signal("interaction_prompt", "")
 
 	else:
 		if !is_reset:
+			interactive_object_exit()
 			emit_signal("interaction_prompt", "")
 			is_reset = true
 		
@@ -52,25 +62,49 @@ func _process(_delta):
 	look_vector = dir
 
 
+func interactive_object_enter(detected_object:Node3D):
+	interactive_object_detected.emit(detected_object.interaction_nodes)
+	object_detected = true
+
+
+func interactive_object_exit():
+	nothing_detected.emit()
+	object_detected = false
+
+
 func _input(event):
 	if event.is_action_pressed("interact"):
 		
 		# if carrying an object, drop it.
-		if carried_object:
+		if carried_object and carried_object.input_map_action == "interact":
 			carried_object.throw(throw_power)
 			carried_object = null
-			
+		
+		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
 		if interaction_raycast.is_colliding():
 			var interactable = interaction_raycast.get_collider()
-			if interactable.has_method("interact"):
-				interactable.interact(self)
-				if is_wielding:
-					equipped_wieldable_item.update_wieldable_data(self)
-			elif equipped_wieldable_item != null:
-				if interactable.has_method("carry"):
-					send_hint(null,"Can't carry an object while wielding.")
-			elif interactable.has_method("carry"):
-				interactable.carry(self)
+			if interactable.is_in_group("interactable"):
+				for node in interactable.interaction_nodes:
+					if node.input_map_action == "interact":
+						node.interact(self)
+		interactive_object_exit()
+	
+	
+	if event.is_action_pressed("interact2"):
+		# if carrying an object, drop it.
+		if carried_object and carried_object.input_map_action == "interact2":
+			carried_object.throw(throw_power)
+			carried_object = null
+		
+		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
+		if interaction_raycast.is_colliding():
+			var interactable = interaction_raycast.get_collider()
+			if interactable.is_in_group("interactable"):
+				for node in interactable.interaction_nodes:
+					if node.input_map_action == "interact2":
+						node.interact(self)
+		interactive_object_exit()
+	
 	
 	# Wieldable primary Action Input
 	if !get_parent().is_movement_paused:

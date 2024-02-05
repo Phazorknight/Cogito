@@ -26,7 +26,6 @@ func _ready():
 
 func open_inventory():
 	if !is_inventory_open:
-		print("Inventory interface: Opening inventory.")
 		is_inventory_open = true
 		get_viewport().gui_focus_changed.connect(_on_focus_changed)
 		inventory_ui.show()
@@ -41,13 +40,14 @@ func open_inventory():
 	
 func close_inventory():
 	if is_inventory_open:
-		print("Inventory interface: Closing inventory.")
 		if grabbed_slot_data != null: # If the player was holding/moving items, these will be added back to the inventory.
 			get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data)
 			grabbed_slot_data = null
 		is_inventory_open = false
 		get_viewport().gui_focus_changed.disconnect(_on_focus_changed)
 		inventory_ui.hide()
+		if external_inventory_owner:
+			external_inventory_owner.close()
 		grabbed_slot.hide()
 		info_panel.hide()
 		external_inventory_ui.hide()

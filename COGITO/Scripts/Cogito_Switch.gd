@@ -1,5 +1,7 @@
 extends Node3D
 
+signal object_state_updated(interaction_text: String)
+
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
 ## Sets if object starts as on or off.
@@ -27,17 +29,24 @@ extends Node3D
 var interaction_text : String 
 var interactor
 
+var interaction_nodes : Array[Node]
+
 func _ready():
-	add_to_group("Save_object_state")
+	self.add_to_group("interactable")
+	add_to_group("save_object_state")
+	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
+	
 	audio_stream_player_3d.stream = switch_sound
 	
 	if is_on:
 		interaction_text = interaction_text_when_on
 	else:
 		interaction_text = interaction_text_when_off
+	
+	object_state_updated.emit(interaction_text)
 
-func interact(interaction_component):
-	interactor = interaction_component
+func interact(_player_interaction_component):
+	interactor = _player_interaction_component
 	if !allows_repeated_interaction and is_on:
 		interactor.send_hint(null, has_been_used_hint)
 		return
@@ -73,6 +82,8 @@ func switch():
 			node.show()
 			
 		interaction_text = interaction_text_when_off
+	
+	object_state_updated.emit(interaction_text)
 		
 		
 func check_for_item() -> bool:
@@ -106,6 +117,8 @@ func set_state():
 			node.show()
 			
 		interaction_text = interaction_text_when_off
+	
+	object_state_updated.emit(interaction_text)
 	
 
 func save():

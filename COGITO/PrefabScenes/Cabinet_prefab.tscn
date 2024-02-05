@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dbtarejfetahc"]
+[gd_scene load_steps=16 format=3 uid="uid://dbtarejfetahc"]
 
 [ext_resource type="PackedScene" uid="uid://cxwwd4mjnn34w" path="res://COGITO/PrefabScenes/Shelf.tscn" id="1_g3pr0"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="2_xux4j"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://ckxotbwm6qtui" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage2.ogg" id="4_4064u"]
 [ext_resource type="PackedScene" uid="uid://cyy2kpk7e36if" path="res://COGITO/PrefabScenes/Shelf_Drawer.tscn" id="5_61f6l"]
 [ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="6_q1lg4"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="6_vb6qn"]
 [ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="7_takda"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e38y8"]
@@ -65,6 +66,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0111207, -0.309505)
 volume_db = -20.0
 bus = &"SFX"
 
+[node name="BasicInteraction" parent="Drawer" instance=ExtResource("6_vb6qn")]
+
 [node name="Drawer2" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, 0.3)
 collision_layer = 3
@@ -95,6 +98,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0111207, -0.309505)
 volume_db = -20.0
 bus = &"SFX"
 
+[node name="BasicInteraction" parent="Drawer2" instance=ExtResource("6_vb6qn")]
+
 [node name="CabinetDoorA" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.550421, -0.550831, -0.191422)
 collision_layer = 3
@@ -119,6 +124,8 @@ mesh = SubResource("BoxMesh_2037u")
 volume_db = -20.0
 bus = &"SFX"
 
+[node name="BasicInteraction" parent="CabinetDoorA" instance=ExtResource("6_vb6qn")]
+
 [node name="CabinetDoorB" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.553214, -0.550831, -0.191422)
 collision_layer = 3
@@ -142,3 +149,5 @@ mesh = SubResource("BoxMesh_2037u")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CabinetDoorB"]
 volume_db = -20.0
 bus = &"SFX"
+
+[node name="BasicInteraction" parent="CabinetDoorB" instance=ExtResource("6_vb6qn")]

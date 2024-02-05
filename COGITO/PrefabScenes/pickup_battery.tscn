@@ -1,14 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bab56bf0vqfss"]
+[gd_scene load_steps=14 format=3 uid="uid://bab56bf0vqfss"]
 
-[ext_resource type="Script" path="res://COGITO/InventoryPD/Cogito_Pickup.gd" id="1_7e57d"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_ab3qi"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/PickupComponent.tscn" id="2_5yg6i"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="2_hmjxw"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_12bow"]
-
-[sub_resource type="Resource" id="Resource_h2ijv"]
-resource_local_to_scene = true
-script = ExtResource("3_12bow")
-inventory_item = ExtResource("2_hmjxw")
-quantity = 1
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="5_q7tof"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_jpa6y"]
 top_radius = 0.1
@@ -47,10 +43,15 @@ metallic_specular = 0.2
 height = 0.3
 radius = 0.1
 
+[sub_resource type="Resource" id="Resource_62b3v"]
+resource_local_to_scene = true
+script = ExtResource("3_12bow")
+inventory_item = ExtResource("2_hmjxw")
+quantity = 1
+
 [node name="Pickup_Battery" type="RigidBody3D"]
 collision_layer = 3
-script = ExtResource("1_7e57d")
-slot_data = SubResource("Resource_h2ijv")
+script = ExtResource("1_ab3qi")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_jpa6y")
@@ -72,3 +73,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_63ixj")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0504714, 0)
 shape = SubResource("CylinderShape3D_emdw8")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_5yg6i")]
+slot_data = SubResource("Resource_62b3v")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("5_q7tof")]

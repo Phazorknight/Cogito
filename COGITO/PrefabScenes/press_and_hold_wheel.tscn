@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnygtkw3tvet6"]
+[gd_scene load_steps=5 format=3 uid="uid://bnygtkw3tvet6"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Hold.gd" id="1_t4xfa"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Turnwheel.gd" id="1_lrgpg"]
+[ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://COGITO/Components/HoldInteraction.tscn" id="2_3ajd8"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_yqbba"]
 top_radius = 0.3
@@ -12,11 +13,10 @@ rings = 1
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qspks"]
 points = PackedVector3Array(0.259808, 0.05, 0.149941, 0, 0.05, 0.3, 0.259808, -0.05, 0.149941, 0.259808, 0.05, -0.150059, 0, -0.05, 0.3, -0.259808, 0.05, 0.149941, 0.259808, -0.05, -0.150059, 0, 0.05, -0.3, -0.259808, -0.05, 0.149941, -0.259808, 0.05, -0.15, 0, -0.05, -0.3, -0.259808, -0.05, -0.15)
 
-[node name="PressAndHold" type="AnimatableBody3D"]
+[node name="TurnWheel" type="AnimatableBody3D"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -34.7594, 0.763037, 7.5)
 collision_layer = 3
-script = ExtResource("1_t4xfa")
-hold_time = 2.0
+script = ExtResource("1_lrgpg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_yqbba")
@@ -24,38 +24,8 @@ mesh = SubResource("CylinderMesh_yqbba")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_qspks")
 
-[node name="HoldTimer" type="Timer" parent="."]
-
-[node name="HoldUi" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="HoldUi"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -10.0
-offset_right = 50.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-value = 50.0
-show_percentage = false
-
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 volume_db = -20.0
 bus = &"SFX"
+
+[node name="HoldInteraction" parent="." instance=ExtResource("2_3ajd8")]

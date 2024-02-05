@@ -36,8 +36,13 @@ var interaction_texture : Texture2D
 
 ## Used to reset icons etc, useful to have.
 @export var empty_texture : Texture2D
-# The hint icon that displays when no other icon is passed.
+## The hint icon that displays when no other icon is passed.
 @export var default_hint_icon : Texture2D
+
+## PackedScene/Prefab for Interaction Prompts
+@export var prompt_component : PackedScene
+@onready var prompt_area: Control = $PromptArea
+
 
 @export_group("Player Components to use")
 @export var use_sanity_component : bool
@@ -104,6 +109,11 @@ func _ready():
 	
 	# Connecting to Signals from Player
 	player.player_interaction_component.interaction_prompt.connect(_on_interaction_prompt)
+	
+	player.player_interaction_component.interactive_object_detected.connect(set_interaction_prompts)
+	player.player_interaction_component.nothing_detected.connect(delete_interaction_prompts)
+	player.player_interaction_component.started_carrying.connect(set_drop_prompt)
+	
 	player.player_interaction_component.set_use_prompt.connect(_on_set_use_prompt)
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
@@ -148,12 +158,12 @@ func toggle_inventory_interface(external_inventory_owner = null):
 		player._on_pause_movement()
 		inventory_interface.open_inventory()
 		if external_inventory_owner:
-			external_inventory_owner.interaction_text = "Close"
+			external_inventory_owner.open()
 	else:
 		inventory_interface.close_inventory()
 		player._on_resume_movement()
 		if external_inventory_owner:
-			external_inventory_owner.interaction_text = "Open"
+			external_inventory_owner.close()
 		
 	if external_inventory_owner and inventory_interface.is_inventory_open:
 		inventory_interface.set_external_inventory(external_inventory_owner)
@@ -171,6 +181,31 @@ func _on_interaction_prompt(passed_interaction_prompt):
 		button_prompt.show()
 		interaction_button.show()
 	interaction_text.text = passed_interaction_prompt
+	
+	
+### ATTEMPTING NEW PROMPT SYSTEM:
+func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
+	for node in passed_interaction_nodes:
+		var instanced_prompt = prompt_component.instantiate()
+		prompt_area.add_child(instanced_prompt)
+		instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
+	
+	
+func delete_interaction_prompts():
+	var current_prompts = prompt_area.get_children()
+	if current_prompts:
+		for prompt in current_prompts:
+			prompt.queue_free()
+
+func set_drop_prompt(_carrying_node):
+	var current_prompts = prompt_area.get_children()
+	if current_prompts:
+		for prompt in current_prompts:
+			prompt.queue_free()
+			
+	var instanced_prompt = prompt_component.instantiate()
+	prompt_area.add_child(instanced_prompt)
+	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
 
 
 # When HUD receives set use prompt signal (usually when equipping a wieldable)
@@ -262,5 +297,8 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	Audio.play_sound(slot_data.inventory_item.sound_drop)
 	var dropped_item = scene_to_drop.instantiate()
 	dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(0)
-	dropped_item.slot_data = slot_data
+	for node in dropped_item.interaction_nodes:
+		if node is PickupComponent:
+			node.slot_data = slot_data
+	#dropped_item.slot_data = slot_data
 	get_parent().add_child(dropped_item)

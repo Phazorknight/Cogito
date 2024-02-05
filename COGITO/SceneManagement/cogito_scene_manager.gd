@@ -150,7 +150,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 				print("Setting charge of ", new_object, " to ", node_data["item_charge"])
 				new_object.slot_data.inventory_item.charge_current = node_data["item_charge"]
 		
-		#Loading states of objects in Save_object_state
+		#Loading states of objects in save_object_state
 		var array_of_state_data = _scene_state.saved_states
 		for state_data in array_of_state_data:
 			var node_to_set = get_node(state_data["node_path"])
@@ -192,9 +192,9 @@ func save_scene_state(_scene_name_to_save, slot: String):
 			_scene_state.add_node_data_to_array(node.save())
 	
 	# Saving states of objects
-	var state_nodes = get_tree().get_nodes_in_group("Save_object_state")
+	var state_nodes = get_tree().get_nodes_in_group("save_object_state")
 	if !state_nodes:
-		print("No nodes in Save_object_state group!")
+		print("No nodes in save_object_state group!")
 	else:
 		_scene_state.clear_saved_states()
 		

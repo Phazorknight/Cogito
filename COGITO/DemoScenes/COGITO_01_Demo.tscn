@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=128 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_b15oo"]
@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="6_cy1m6"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PrefabScenes/ceiling_lamp.tscn" id="7_3y6g2"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://COGITO/PrefabScenes/target_destructable.tscn" id="8_tk621"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="8_wnjgg"]
 [ext_resource type="PackedScene" uid="uid://bdyukj85qkut0" path="res://COGITO/PrefabScenes/door.tscn" id="8_xabdk"]
-[ext_resource type="Resource" uid="uid://060gqm74tdlk" path="res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres" id="8_yqvna"]
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="9_g1bqh"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://COGITO/PrefabScenes/pickup_key.tscn" id="9_qv8nx"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/pickup_health_potion.tscn" id="12_2vt2n"]
@@ -34,10 +34,8 @@
 [ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://COGITO/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="27_0a6c2"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Switch.gd" id="27_r5oie"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="28_3r4lg"]
-[ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="28_ihguh"]
 [ext_resource type="AudioStream" uid="uid://bfmqga66x7l1k" path="res://COGITO/Assets/Audio/Kenney/rockHit2.ogg" id="30_42jtk"]
 [ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://COGITO/PrefabScenes/pickup_pistol.tscn" id="30_a7v26"]
-[ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="31_clh1y"]
 [ext_resource type="PackedScene" uid="uid://dbtarejfetahc" path="res://COGITO/PrefabScenes/Cabinet_prefab.tscn" id="35_ee66c"]
 [ext_resource type="Script" path="res://COGITO/Scripts/hazard_zone.gd" id="35_hq7gn"]
 [ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://COGITO/Assets/Graphics/HintIcons/Hint_X.png" id="36_7nev7"]
@@ -259,7 +257,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_t7w23"]
+[sub_resource type="Resource" id="Resource_x1ayo"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -274,13 +272,13 @@ size = Vector3(4, 0.1, 2)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_hq8yc"]
 points = PackedVector3Array(-2, -0.05, -1, -2, 0.05, -1, 2, -0.05, -1, -2, -0.05, 1, -2, 0.05, 1, 2, 0.05, -1, 2, -0.05, 1, 2, 0.05, 1)
 
-[sub_resource type="Resource" id="Resource_1m0cj"]
+[sub_resource type="Resource" id="Resource_2sx6f"]
 resource_local_to_scene = true
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 1
 
-[sub_resource type="Resource" id="Resource_ogqmk"]
+[sub_resource type="Resource" id="Resource_u8yjv"]
 resource_local_to_scene = true
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
@@ -311,70 +309,6 @@ size = Vector3(2, 0.1, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xr44e"]
 size = Vector3(2, 0.1, 2)
 
-[sub_resource type="Resource" id="Resource_2eq5d"]
-resource_local_to_scene = true
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_q21gv"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_op7ip"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_6sppo"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_itbno"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_5a5sb"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_k2gss"]
-resource_local_to_scene = true
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("8_yqvna")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_h0rmt"]
-resource_local_to_scene = true
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("28_ihguh")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_a1xk0"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("15_86b07")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_g6hy2"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("15_86b07")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_db2dq"]
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("15_86b07")
-quantity = 1
-
-[sub_resource type="Resource" id="Resource_rr3od"]
-resource_local_to_scene = true
-script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("31_clh1y")
-quantity = 1
-
 [sub_resource type="BoxMesh" id="BoxMesh_ebsqj"]
 size = Vector3(0.1, 1.5, 0.1)
 
@@ -401,7 +335,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_vuoit"]
+[sub_resource type="Resource" id="Resource_rbwdj"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -1228,6 +1162,8 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 
 mesh = SubResource("BoxMesh_woscm")
 skeleton = NodePath("../../..")
 
+[node name="BasicInteraction" parent="INTERACTIVE_OBJECTS/ButtonChain" instance=ExtResource("8_wnjgg")]
+
 [node name="CeilingLamp" parent="INTERACTIVE_OBJECTS" instance=ExtResource("7_3y6g2")]
 
 [node name="CeilingLamp2" parent="INTERACTIVE_OBJECTS" instance=ExtResource("7_3y6g2")]
@@ -1237,12 +1173,13 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -21.5641, 1.7, 5.40424)
 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
-transform = Transform3D(-0.125576, 0, 0.992084, 0, 1, 0, -0.992084, 0, -0.125576, -4.38933, 0.0425703, 5.97176)
+transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_t7w23")
+inventory_data = SubResource("Resource_x1ayo")
+uses_animation = true
+open_animation = "open"
 
-[node name="PressAndHold" parent="INTERACTIVE_OBJECTS" node_paths=PackedStringArray("nodes_to_trigger") instance=ExtResource("22_ni6um")]
-rotate_while_holding = true
+[node name="Turnwheel" parent="INTERACTIVE_OBJECTS" node_paths=PackedStringArray("nodes_to_trigger") instance=ExtResource("22_ni6um")]
 nodes_to_trigger = [NodePath("../RampA"), NodePath("../RampB")]
 hold_audio_stream = ExtResource("25_3nnou")
 
@@ -1293,7 +1230,6 @@ transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -12.0996
 [node name="Pickup_Battery" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-3.5715e-08, -0.817064, 0.576546, 1, -4.37114e-08, 0, 2.52016e-08, 0.576546, 0.817064, -0.136503, 0.434938, -0.0415781)
 mass = 0.5
-slot_data = SubResource("Resource_1m0cj")
 
 [node name="MeshInstance3D2" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -1310,9 +1246,11 @@ skeleton = NodePath("../../../..")
 [node name="CollisionShape3D" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0306714, 0)
 
+[node name="PickupComponent" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery" index="4"]
+slot_data = SubResource("Resource_2sx6f")
+
 [node name="Pickup_Battery2" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-3.5715e-08, -0.817064, 0.576546, 1, -4.37114e-08, 0, 2.52016e-08, 0.576546, 0.817064, 0.215507, 0.434938, -0.0547223)
-slot_data = SubResource("Resource_ogqmk")
 
 [node name="MeshInstance3D2" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -1329,9 +1267,11 @@ skeleton = NodePath("../../../..")
 [node name="CollisionShape3D" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0306714, 0)
 
+[node name="PickupComponent" parent="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2" index="4"]
+slot_data = SubResource("Resource_u8yjv")
+
 [node name="CarriableBox" parent="INTERACTIVE_OBJECTS" instance=ExtResource("6_cy1m6")]
 transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -14.0048, 0.748613, 6.50097)
-carry_distance_offset = -0.3
 
 [node name="GateA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -45, 0, 14.6)
@@ -1405,6 +1345,8 @@ polygon = PackedVector2Array(0, 0, 0, 1, 0.3, 1, 0.5, 0.85, 0.7, 1, 1, 1, 1, 0)
 depth = 0.2
 material = ExtResource("1_lsda4")
 
+[node name="BasicInteraction" parent="INTERACTIVE_OBJECTS/SocketForDiamondKey" instance=ExtResource("8_wnjgg")]
+
 [node name="Button" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.2, 1.23087, 18.5756)
 collision_layer = 3
@@ -1427,6 +1369,8 @@ bus = &"SFX"
 transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, -0.03087, 0.0244007)
 mesh = SubResource("BoxMesh_woscm")
 skeleton = NodePath("../../..")
+
+[node name="BasicInteraction" parent="INTERACTIVE_OBJECTS/Button" instance=ExtResource("8_wnjgg")]
 
 [node name="MovingPlattform" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -0.05, 17.5)
@@ -1452,51 +1396,39 @@ transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819
 
 [node name="Pickup_Battery" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 2.84064)
-slot_data = SubResource("Resource_2eq5d")
 
 [node name="Pickup_Battery2" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 2.54394)
-slot_data = SubResource("Resource_q21gv")
 
 [node name="Pickup_Battery3" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 3.15544)
-slot_data = SubResource("Resource_op7ip")
 
 [node name="Pickup_Battery4" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.5813, 0.119063, 2.73264)
-slot_data = SubResource("Resource_6sppo")
 
 [node name="Pickup_Battery5" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.256, 0.119063, 2.92864)
-slot_data = SubResource("Resource_itbno")
 
 [node name="Pickup_Battery6" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.5813, 0.119063, 2.99264)
-slot_data = SubResource("Resource_5a5sb")
 
 [node name="Pickup_StaminaExtension" parent="ITEM_PICKUPS" instance=ExtResource("18_pobhb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23053, 1.03198, 0.820036)
-slot_data = SubResource("Resource_k2gss")
 
 [node name="Pickup_Flashlight" parent="ITEM_PICKUPS" instance=ExtResource("1_oweej")]
 transform = Transform3D(0.707107, 0.603448, 0.368578, 0, 0.521248, -0.853405, -0.707107, 0.603448, 0.368578, -4.73354, 1.21477, 0.740502)
-slot_data = SubResource("Resource_h0rmt")
 
 [node name="HealthPotion" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.04485, 1.30439, -2.94002)
-slot_data = SubResource("Resource_a1xk0")
 
 [node name="HealthPotion2" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.40325, 1.30439, -2.63182)
-slot_data = SubResource("Resource_g6hy2")
 
 [node name="HealthPotion3" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.11495, 1.30439, -2.43652)
-slot_data = SubResource("Resource_db2dq")
 
 [node name="pickup_pistol" parent="ITEM_PICKUPS" instance=ExtResource("30_a7v26")]
 transform = Transform3D(-0.476652, -0.798393, -0.367929, 0, 0.418533, -0.908202, 0.879092, -0.432897, -0.199495, 0.0763087, 1.13928, 7.81337)
-slot_data = SubResource("Resource_rr3od")
 
 [node name="RotatingLift" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.6928, 3.8552, 8.98188)
@@ -1603,7 +1535,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_vuoit")
+inventory_data = SubResource("Resource_rbwdj")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]

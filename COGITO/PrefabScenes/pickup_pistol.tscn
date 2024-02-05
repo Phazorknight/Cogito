@@ -1,14 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://o0xgl5obc551"]
+[gd_scene load_steps=13 format=3 uid="uid://o0xgl5obc551"]
 
-[ext_resource type="Script" path="res://COGITO/InventoryPD/Cogito_Pickup.gd" id="1_tx87t"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_jxpu1"]
 [ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="2_7v1hn"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/PickupComponent.tscn" id="2_okim2"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_xoy07"]
-
-[sub_resource type="Resource" id="Resource_abxle"]
-resource_local_to_scene = true
-script = ExtResource("3_xoy07")
-inventory_item = ExtResource("2_7v1hn")
-quantity = 1
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="5_cx8or"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_r6lnb"]
 _data = PackedByteArray(2, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 2, 0, 0, 0, 115, 66, 19, 0, 77, 0, 72, 115, 204, 0, 0, 0, 209, 226, 4, 0, 0, 1, 0, 0, 1, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 77, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 0, 8, 0, 2, 0, 2, 0, 169, 0, 0, 0, 64, 0, 0, 0, 56, 181, 0, 0, 0, 1, 1, 4, 0, 4, 0, 1, 0, 1, 0, 233, 0, 0, 0, 16, 0, 0, 0, 200, 214, 0, 0, 0, 2, 1, 2, 0, 2, 0, 1, 0, 1, 0, 249, 0, 0, 0, 16, 0, 0, 0, 172, 110, 0, 0, 0, 3, 1, 1, 0, 1, 0, 1, 0, 1, 0, 9, 1, 0, 0, 16, 0, 0, 0, 6, 136, 183, 185, 185, 185, 25, 93, 107, 1, 0, 0, 0, 0, 0, 0, 0, 0, 183, 185, 185, 185, 25, 93, 107, 1, 0, 0, 0, 0, 0, 0, 0, 0, 8, 93, 129, 224, 4, 29, 157, 85, 72, 68, 68, 68, 55, 222, 22, 247, 8, 108, 145, 99, 148, 156, 158, 85, 0, 0, 0, 0, 26, 15, 141, 171, 176, 20, 161, 81, 28, 158, 158, 94, 0, 0, 0, 0, 0, 0, 243, 230, 80, 193, 136, 65, 222, 222, 95, 223, 0, 0, 127, 119, 127, 119, 127, 119, 119, 247, 182, 86, 59, 182, 181, 2, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -59,11 +55,14 @@ size = Vector3(0.439306, 0.0828058, 0.0807639)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5prt8"]
 size = Vector3(0.0942247, 0.2, 0.0599624)
 
+[sub_resource type="Resource" id="Resource_vcolb"]
+script = ExtResource("3_xoy07")
+inventory_item = ExtResource("2_7v1hn")
+quantity = 1
+
 [node name="pickup_pistol" type="RigidBody3D"]
 collision_layer = 3
-script = ExtResource("1_tx87t")
-slot_data = SubResource("Resource_abxle")
-interaction_text = "Pick up Toy Pistol"
+script = ExtResource("1_jxpu1")
 
 [node name="pistol_mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -80,3 +79,8 @@ shape = SubResource("BoxShape3D_5prt8")
 
 [node name="Bullet_Point" type="Node3D" parent="."]
 transform = Transform3D(1, 0, -1.81899e-12, 0, 1, 0, 0, 0, 1, 0.277335, 0.0601448, 0.00182778)
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_okim2")]
+slot_data = SubResource("Resource_vcolb")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("5_cx8or")]

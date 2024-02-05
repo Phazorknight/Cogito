@@ -1,6 +1,8 @@
 extends Node3D
 class_name CogitoDoor
 
+signal object_state_updated(interaction_text:String)
+
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
 @export_group("Audio")
@@ -52,13 +54,16 @@ class_name CogitoDoor
 @export var reverse_opening_anim_for_close : bool = true
 @export var closing_animation : String
 var anim_player : AnimationPlayer
-
-var interaction_text : String
 var is_moving : bool = false
 var target_rotation_rad : float 
+var interaction_text
+
+var interaction_nodes : Array[Node]
 
 func _ready():
-	add_to_group("Save_object_state")
+	add_to_group("interactable")
+	add_to_group("save_object_state")
+	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	
 	if is_animation_based:
 		anim_player = get_node(animation_player)
@@ -73,6 +78,8 @@ func _ready():
 		interaction_text = interaction_text_when_locked
 	else:
 		interaction_text = interaction_text_when_closed
+		
+	object_state_updated.emit(interaction_text)
 
 
 func interact(interactor: Node3D):
@@ -136,6 +143,7 @@ func unlock_door():
 	audio_stream_player_3d.play()
 	is_locked = false
 	interaction_text = interaction_text_when_closed	
+	object_state_updated.emit(interaction_text)
 	
 func open_door(interactor: Node3D):
 	audio_stream_player_3d.stream = open_sound
@@ -160,6 +168,7 @@ func open_door(interactor: Node3D):
 	
 	is_open = true
 	interaction_text = interaction_text_when_open
+	object_state_updated.emit(interaction_text)
 	
 func close_door(_interactor: Node3D):
 	audio_stream_player_3d.stream = close_sound
@@ -179,6 +188,7 @@ func close_door(_interactor: Node3D):
 		tween_door.tween_property(self,"position", closed_position, door_speed)
 	is_open = false
 	interaction_text = interaction_text_when_closed
+	object_state_updated.emit(interaction_text)
 	
 	
 func set_state():
@@ -188,7 +198,8 @@ func set_state():
 		interaction_text = interaction_text_when_closed
 	if is_locked:
 		interaction_text = interaction_text_when_locked
-	
+	object_state_updated.emit(interaction_text)
+		
 	
 func save():
 	var state_dict = {
