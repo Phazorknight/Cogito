@@ -37,10 +37,18 @@ func _process(delta):
 # Action called by the Player Interaction Component when flashlight is wielded.
 func action_primary(_camera_collision:Vector3, _passed_item_reference:InventoryItemPD):
 	toggle_on_off()
-	
+
+
 func action_secondary(_is_released: bool):
 	print("Flashlight doesn't have a secondary action.")
 	pass
+
+
+# Function called when wieldable is unequipped.
+func unequip():
+	if is_on:
+		turn_off()
+		
 
 # Function to explicitly turn it off for use when battery is depleted.
 func turn_off():

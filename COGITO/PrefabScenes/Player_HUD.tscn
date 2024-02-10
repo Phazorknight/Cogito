@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -7,23 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://b45endup5sujv" path="res://COGITO/Assets/Textures/CameraDamageVignette.png" id="3_lb6l4"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
 [ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="3_o56n0"]
-[ext_resource type="Texture2D" uid="uid://ryhle5u4d4mn" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Keyboard_F.png" id="4_2dtpt"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
 [ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png" id="6_f5jpm"]
-[ext_resource type="StyleBox" uid="uid://ca6n4u12q8que" path="res://COGITO/Theme/stylebox_prompts.tres" id="6_qk6nr"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
-[ext_resource type="Texture2D" uid="uid://02033aa8j18m" path="res://COGITO/Assets/Graphics/InputIcons/Keyboard/Mouse_Left.png" id="11_c625v"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
+[ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI_HintComponent.tscn" id="17_bidre"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1f12m"]
 blend_mode = 1
-
-[sub_resource type="LabelSettings" id="LabelSettings_qgnac"]
-font_size = 18
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_r3e1p"]
 font_size = 18
@@ -47,13 +40,12 @@ bg_color = Color(0.6, 0.509804, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbswy"]
 bg_color = Color(0.6, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_ppm7e"]
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_0ykfm"]
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eka6m"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.784314)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbke8"]
 bg_color = Color(0, 0, 0, 1)
@@ -68,6 +60,7 @@ grow_vertical = 2
 script = ExtResource("1_0wdkf")
 default_hint_icon = ExtResource("3_o56n0")
 prompt_component = ExtResource("3_06ipe")
+hint_component = ExtResource("17_bidre")
 
 [node name="DamageOverlay" type="Control" parent="."]
 layout_mode = 1
@@ -121,49 +114,7 @@ offset_left = 740.0
 offset_top = 360.0
 offset_right = 740.0
 offset_bottom = 360.0
-theme_override_constants/separation = 5
-
-[node name="ButtonPrompt" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_j6s1a")
-theme_override_styles/panel = ExtResource("6_qk6nr")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ButtonPrompt"]
-layout_mode = 2
-theme = ExtResource("5_j6s1a")
-
-[node name="Container" type="MarginContainer" parent="ButtonPrompt/HBoxContainer"]
-custom_minimum_size = Vector2(40, 30)
-layout_mode = 2
-size_flags_vertical = 4
-theme = ExtResource("5_j6s1a")
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="InteractionButton" parent="ButtonPrompt/HBoxContainer/Container" instance=ExtResource("12_jgxar")]
-position = Vector2(0, 0)
-scale = Vector2(0.4, 0.4)
-centered = false
-frame = 6
-action_name = "interact"
-
-[node name="InteractionText" type="Label" parent="ButtonPrompt/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("5_j6s1a")
-text = "Interact"
-label_settings = SubResource("LabelSettings_qgnac")
+theme_override_constants/separation = 2
 
 [node name="HintTimer" type="Timer" parent="."]
 wait_time = 3.5
@@ -180,6 +131,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
+theme = ExtResource("5_j6s1a")
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
@@ -208,6 +160,8 @@ action_name = "action_primary"
 
 [node name="PrimaryUseLabel" type="Label" parent="UseBar/HBoxContainer/WieldablePrimaryUse"]
 layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
 text = "Primary Use"
 label_settings = SubResource("LabelSettings_r3e1p")
 
@@ -229,6 +183,8 @@ expand_mode = 3
 
 [node name="WieldableText" type="Label" parent="UseBar/HBoxContainer/WieldableData"]
 layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
 text = "00/00"
 label_settings = SubResource("LabelSettings_ossw8")
 
@@ -245,6 +201,7 @@ offset_right = 104.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
 
 [node name="MarginContainer" type="MarginContainer" parent="PlayerAttributes"]
 layout_mode = 2
@@ -276,8 +233,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
+text = "50|100"
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="StaminaBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 16)
@@ -293,9 +253,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "50/50"
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
+text = "50|100"
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="HealthBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 18)
@@ -311,8 +273,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
+text = "50|100"
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="InventoryInterface" type="Control" parent="."]
 layout_mode = 1
@@ -372,6 +337,7 @@ offset_right = 21.0
 offset_bottom = -5.0
 grow_vertical = 0
 theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
 
 [node name="InfoPanel" type="PanelContainer" parent="InventoryInterface"]
 custom_minimum_size = Vector2(200, 10)
@@ -380,12 +346,16 @@ offset_right = 200.0
 offset_bottom = 110.0
 mouse_filter = 2
 theme = ExtResource("5_j6s1a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_eka6m")
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel"]
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer"]
 layout_mode = 2
@@ -394,12 +364,14 @@ mouse_filter = 2
 
 [node name="ItemName" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"PromptLabel"
 text = "ItemName"
 
 [node name="ItemDescription" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/line_spacing = 1
 theme_override_font_sizes/font_size = 14
 text = "Item description going over to lines. Testing overflow as well to make sure the panel container extends as needed."
@@ -407,6 +379,7 @@ autowrap_mode = 3
 
 [node name="HBoxUse" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
@@ -425,18 +398,11 @@ action_name = "inventory_use_item"
 [node name="TextUse" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
 layout_mode = 2
 text = "Use"
-label_settings = SubResource("LabelSettings_ppm7e")
 
 [node name="HBoxMove" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
-
-[node name="BtnMove" type="TextureRect" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
-visible = false
-custom_minimum_size = Vector2(25, 0)
-layout_mode = 2
-texture = ExtResource("11_c625v")
-expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
 custom_minimum_size = Vector2(25, 0)
@@ -454,18 +420,11 @@ action_name = "inventory_move_item"
 [node name="TextMove" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
 layout_mode = 2
 text = "Move"
-label_settings = SubResource("LabelSettings_0ykfm")
 
 [node name="HBoxDrop" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
-
-[node name="BtnDrop" type="TextureRect" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
-visible = false
-custom_minimum_size = Vector2(25, 0)
-layout_mode = 2
-texture = ExtResource("4_2dtpt")
-expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
 custom_minimum_size = Vector2(25, 0)
@@ -483,7 +442,6 @@ action_name = "inventory_drop_item"
 [node name="TextDrop" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
 layout_mode = 2
 text = "Drop"
-label_settings = SubResource("LabelSettings_0ykfm")
 
 [node name="DeathScreen" type="Control" parent="."]
 visible = false
@@ -536,34 +494,10 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
 text = "Restart"
 
-[node name="HintPrompt" type="Control" parent="."]
+[node name="HintArea" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 0
-mouse_filter = 2
-metadata/_edit_lock_ = true
-
-[node name="MarginContainer" type="MarginContainer" parent="HintPrompt"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HintPrompt/MarginContainer"]
-layout_mode = 2
-
-[node name="HintIcon" type="TextureRect" parent="HintPrompt/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture = ExtResource("3_o56n0")
-expand_mode = 2
-
-[node name="HintText" type="Label" parent="HintPrompt/MarginContainer/HBoxContainer"]
-layout_mode = 2
-text = "Hint text appears here and can be longer."
-label_settings = SubResource("LabelSettings_qgnac")
+offset_bottom = 5.0
+theme = ExtResource("5_j6s1a")
 
 [connection signal="timeout" from="HintTimer" to="." method="_on_hint_timer_timeout"]
 [connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]

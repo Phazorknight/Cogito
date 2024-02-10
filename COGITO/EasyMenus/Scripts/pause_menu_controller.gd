@@ -33,6 +33,7 @@ func _on_node_added(node:Node) -> void:
 		# If the added node is a button we connect to its mouse_entered and pressed signals
 		# and play a sound
 		node.mouse_entered.connect(_play_hover)
+		node.focus_entered.connect(_play_hover)
 		node.pressed.connect(_play_pressed)
 
 

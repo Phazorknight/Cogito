@@ -88,6 +88,8 @@ func _input(event):
 					if node.input_map_action == "interact":
 						node.interact(self)
 		interactive_object_exit()
+	if is_wielding:
+		equipped_wieldable_item.update_wieldable_data(self)
 	
 	
 	if event.is_action_pressed("interact2"):
@@ -104,6 +106,8 @@ func _input(event):
 					if node.input_map_action == "interact2":
 						node.interact(self)
 		interactive_object_exit()
+		if is_wielding:
+			equipped_wieldable_item.update_wieldable_data(self)
 	
 	
 	# Wieldable primary Action Input
@@ -153,6 +157,7 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 	if equipped_wieldable_item != null:
 		wieldable_animation_player.queue(equipped_wieldable_item.unequip_anim)
 		equipped_wieldable_item.is_being_wielded = false
+		equipped_wieldable_node.unequip()
 	equipped_wieldable_node = null
 	equipped_wieldable_item = null
 	is_wielding = false

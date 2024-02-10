@@ -10,13 +10,6 @@ extends Control
 @onready var stamina_bar = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar
 @onready var stamina_bar_label = $PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar/Label
 
-@onready var button_prompt = $ButtonPrompt
-@onready var interaction_button = $ButtonPrompt/HBoxContainer/Container/InteractionButton
-@onready var interaction_text = $ButtonPrompt/HBoxContainer/InteractionText
-
-@onready var hint_icon = $HintPrompt/MarginContainer/HBoxContainer/HintIcon
-@onready var hint_text = $HintPrompt/MarginContainer/HBoxContainer/HintText
-@onready var hint_timer = $HintTimer
 @onready var inventory_interface = $InventoryInterface
 
 @onready var primary_use_icon = $UseBar/HBoxContainer/WieldablePrimaryUse/MarginContainer/PrimaryUseIcon
@@ -43,6 +36,10 @@ var interaction_texture : Texture2D
 @export var prompt_component : PackedScene
 @onready var prompt_area: Control = $PromptArea
 
+## PackedScene/Prefab for Hints
+@export var hint_component : PackedScene
+@onready var hint_area: Control = $HintArea
+
 
 @export_group("Player Components to use")
 @export var use_sanity_component : bool
@@ -59,7 +56,7 @@ func _ready():
 	# Setting up health bar
 	health_bar.max_value = player.health_component.max_health
 	health_bar.value = player.health_component.current_health
-	health_bar_label.text = str(health_bar.value, "/", health_bar.max_value)
+	health_bar_label.text = str(health_bar.value, "|", health_bar.max_value)
 	player.health_component.health_changed.connect(_on_player_health_changed)
 	player.health_component.damage_taken.connect(_on_player_damage_taken)
 	player.health_component.death.connect(_on_player_death)
@@ -70,14 +67,14 @@ func _ready():
 	if use_stamina_component:
 		stamina_bar.max_value = player.stamina_component.max_stamina
 		stamina_bar.value = player.stamina_component.current_stamina
-		stamina_bar_label.text = str(stamina_bar.value, "/", stamina_bar.max_value)
+		stamina_bar_label.text = str(stamina_bar.value, "|", stamina_bar.max_value)
 		player.stamina_component.stamina_changed.connect(_on_player_stamina_changed)
 	
 	# Setting up sanity bar
 	if use_sanity_component:
 		sanity_bar.max_value = player.sanity_component.max_sanity
 		sanity_bar.value = player.sanity_component.current_sanity
-		sanity_bar_label.text = str(sanity_bar.value, "/", sanity_bar.max_value)
+		sanity_bar_label.text = str(sanity_bar.value, "|", sanity_bar.max_value)
 		player.sanity_component.sanity_changed.connect(_on_player_sanity_changed)
 	else:
 		sanity_bar.hide()
@@ -90,26 +87,17 @@ func _ready():
 	else:
 		brightness_bar.hide()
 	
-	# Set up for HUD elements for interactions and wieldables
-	button_prompt.hide()
-	interaction_text.text = ""
+	# Set up for HUD elements for wieldables
 	primary_use_label.text = ""
 	primary_use_icon.hide()
 	wieldable_icon.set_texture(empty_texture)
 	wieldable_text.text = ""
 	
-	# Set up for HUD elements for hints
-	hint_icon.set_texture(empty_texture)
-	hint_text.text = ""
-	
 	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
 	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
 	
-	
-	# Connecting to Signals from Player
-	player.player_interaction_component.interaction_prompt.connect(_on_interaction_prompt)
-	
+
 	player.player_interaction_component.interactive_object_detected.connect(set_interaction_prompts)
 	player.player_interaction_component.nothing_detected.connect(delete_interaction_prompts)
 	player.player_interaction_component.started_carrying.connect(set_drop_prompt)
@@ -171,21 +159,10 @@ func toggle_inventory_interface(external_inventory_owner = null):
 		inventory_interface.clear_external_inventory()
 
 
-# When HUD receives interaction prompt signal (usually if player interaction raycast hits an object on layer 2)
-func _on_interaction_prompt(passed_interaction_prompt):
-	if(passed_interaction_prompt == ""):
-		button_prompt.hide()
-#		interaction_button.set_texture(empty_texture)
-	else:
-#		interaction_button.set_texture(interaction_texture)
-		button_prompt.show()
-		interaction_button.show()
-	interaction_text.text = passed_interaction_prompt
-	
-	
-### ATTEMPTING NEW PROMPT SYSTEM:
+### Interaction Prompt UI:
 func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 	for node in passed_interaction_nodes:
+		#await get_tree().create_timer(.1).timeout
 		var instanced_prompt = prompt_component.instantiate()
 		prompt_area.add_child(instanced_prompt)
 		instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
@@ -195,13 +172,13 @@ func delete_interaction_prompts():
 	var current_prompts = prompt_area.get_children()
 	if current_prompts:
 		for prompt in current_prompts:
-			prompt.queue_free()
+			prompt.discard_prompt()
 
 func set_drop_prompt(_carrying_node):
 	var current_prompts = prompt_area.get_children()
 	if current_prompts:
 		for prompt in current_prompts:
-			prompt.queue_free()
+			prompt.discard_prompt()
 			
 	var instanced_prompt = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
@@ -226,29 +203,18 @@ func _on_update_wieldable_data(passed_wieldable_icon, passed_wieldable_text):
 		wieldable_icon.set_texture(empty_texture)
 
 
-# When the HUD receives hint prompt signal
-func _on_set_hint_prompt(passed_hint_icon, passed_hint_text):
-	hint_text.text = passed_hint_text
-	if passed_hint_icon != null:
-		hint_icon.set_texture(passed_hint_icon)
-	else:
-		hint_icon.set_texture(default_hint_icon)
-		
-	# Starts the timer that sets how long the hint is going to be displayed.
-	hint_timer.start()
-	
-
-# Resetting the hint display when hint timer runs out.
-func _on_hint_timer_timeout():
-	hint_text.text = ""
-	hint_icon.set_texture(empty_texture)
+# NEW Hint System
+func _on_set_hint_prompt(passed_int_icon, passed_hint_text):
+	var instanced_hint = hint_component.instantiate()
+	hint_area.add_child(instanced_hint)
+	instanced_hint.set_hint(passed_int_icon,passed_hint_text)
 
 
 # Updating player health bar
 func _on_player_health_changed(new_health, max_health):
 	health_bar.max_value = max_health
 	health_bar.value = new_health
-	health_bar_label.text = str(int(health_bar.value), "/", int(health_bar.max_value))
+	health_bar_label.text = str(int(health_bar.value), "|", int(health_bar.max_value))
 	
 
 # Function that controls damage vignette when damage taken.
@@ -275,14 +241,14 @@ func _on_restart_button_pressed():
 func _on_player_stamina_changed(new_stamina, max_stamina):
 	stamina_bar.max_value = max_stamina
 	stamina_bar.value = new_stamina
-	stamina_bar_label.text = str(int(stamina_bar.value), "/", int(stamina_bar.max_value))
+	stamina_bar_label.text = str(int(stamina_bar.value), "|", int(stamina_bar.max_value))
 
 
 # Updating player sanity bar
 func _on_player_sanity_changed(new_sanity, max_sanity):
 	sanity_bar.value = new_sanity
 	sanity_bar.max_value = max_sanity
-	sanity_bar_label.text = str(int(sanity_bar.value), "/", int(sanity_bar.max_value))
+	sanity_bar_label.text = str(int(sanity_bar.value), "|", int(sanity_bar.max_value))
 	
 	
 # Updating player brightness bar
