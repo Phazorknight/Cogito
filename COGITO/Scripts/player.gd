@@ -45,6 +45,9 @@ signal player_state_loaded()
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
 @export var jump_sound : AudioStream
+@export var walk_volume_db : float = -38.0
+@export var sprint_volume_db : float = -30.0
+@export var crouch_volume_db : float = -60.0
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY = 4.5
@@ -673,6 +676,12 @@ func _physics_process(delta):
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if footstep_timer.time_left <= 0:
+			if is_walking:
+				footstep_player.volume_db = walk_volume_db
+			elif is_crouching:
+				footstep_player.volume_db = crouch_volume_db
+			elif is_sprinting:
+				footstep_player.volume_db = sprint_volume_db
 			footstep_player.play()
 			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
 			if velocity.length() >= 3.4:
