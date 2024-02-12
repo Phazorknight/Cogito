@@ -38,6 +38,7 @@ player_hud = NodePath("../Player_HUD")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
 player = NodePath("../Player")
+use_stamina_component = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_y02ri")]
 
