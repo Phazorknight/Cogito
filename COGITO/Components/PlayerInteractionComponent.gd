@@ -27,7 +27,10 @@ var is_reset : bool  = true
 var device_id : int = -1
 var carried_object = null
 
+# Various variables used for interaction raycast checks.
 var object_detected : bool
+var interactable
+var previous_interactable
 
 
 func _ready():
@@ -39,22 +42,19 @@ func _ready():
 func _process(_delta):
 	# when carrying object, disable all other prompts.
 	if carried_object:
-		#emit_signal("interaction_prompt", "Drop")
 		pass
 	elif interaction_raycast.is_colliding():
-		var interactable = interaction_raycast.get_collider()
+		interactable = interaction_raycast.get_collider()
 		is_reset = false
 		if interactable != null and interactable.is_in_group("interactable") and !object_detected:
 			interactive_object_enter(interactable)
 		else:
-			if interactable == null or !interactable.is_in_group("interactable"):
+			if interactable == null or !interactable.is_in_group("interactable") or interactable != previous_interactable:
 				interactive_object_exit()
-			emit_signal("interaction_prompt", "")
 
 	else:
 		if !is_reset:
 			interactive_object_exit()
-			emit_signal("interaction_prompt", "")
 			is_reset = true
 		
 	# VECTOR 3 for where the player is currently looking
@@ -63,6 +63,7 @@ func _process(_delta):
 
 
 func interactive_object_enter(detected_object:Node3D):
+	previous_interactable = detected_object
 	interactive_object_detected.emit(detected_object.interaction_nodes)
 	object_detected = true
 
@@ -82,7 +83,7 @@ func _input(event):
 		
 		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
 		if interaction_raycast.is_colliding():
-			var interactable = interaction_raycast.get_collider()
+			interactable = interaction_raycast.get_collider()
 			if interactable.is_in_group("interactable"):
 				for node in interactable.interaction_nodes:
 					if node.input_map_action == "interact":
@@ -100,7 +101,7 @@ func _input(event):
 		
 		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
 		if interaction_raycast.is_colliding():
-			var interactable = interaction_raycast.get_collider()
+			interactable = interaction_raycast.get_collider()
 			if interactable.is_in_group("interactable"):
 				for node in interactable.interaction_nodes:
 					if node.input_map_action == "interact2":
