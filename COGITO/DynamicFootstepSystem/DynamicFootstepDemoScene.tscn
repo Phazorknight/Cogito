@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dsy656cbv0ceu"]
+[gd_scene load_steps=26 format=3 uid="uid://dsy656cbv0ceu"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_0sk3n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="3_m4tao"]
 [ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="3_y02ri"]
+[ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="4_3jw5d"]
 [ext_resource type="Material" uid="uid://bncvwxye2x1uq" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Prototype_Brown.tres" id="4_s46n3"]
 [ext_resource type="AudioStream" uid="uid://btuqyu2y70emf" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/grass_footstep_profile.tres" id="4_su3si"]
 [ext_resource type="AudioStream" uid="uid://bcn2jyeulv0j0" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/wood_footstep_profile.tres" id="6_344wp"]
@@ -16,6 +17,14 @@
 [ext_resource type="Material" uid="uid://c80clyg0d6m4n" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Prototype_LightGrey.tres" id="11_m87hf"]
 [ext_resource type="Material" uid="uid://c4rvflucftsrl" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Wood.tres" id="12_2coni"]
 [ext_resource type="Material" uid="uid://bnepeulvkh40w" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Dirt.tres" id="13_ndygr"]
+[ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="18_kbomt"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4k1rk"]
+material = ExtResource("1_xlgi6")
+size = Vector3(10.2, 0.1, 9.8)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jl0ny"]
+points = PackedVector3Array(-5.1, -0.05, -4.9, -5.1, 0.05, -4.9, 5.1, -0.05, -4.9, -5.1, -0.05, 4.9, -5.1, 0.05, 4.9, 5.1, 0.05, -4.9, 5.1, -0.05, 4.9, 5.1, 0.05, 4.9)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_43gic"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -30,17 +39,42 @@ sky = SubResource("Sky_8ouh4")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="BoxMesh" id="BoxMesh_k1wyk"]
+material = ExtResource("12_2coni")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dapfv"]
+
 [node name="DemoScene" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_0sk3n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69453, 0.8, 0)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
 player = NodePath("../Player")
+use_brightness_component = true
 use_stamina_component = true
 
 [node name="PauseMenu" parent="." instance=ExtResource("3_y02ri")]
+
+[node name="Floor4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, -0.1)
+mesh = SubResource("BoxMesh_4k1rk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, -0.1)
+shape = SubResource("ConvexPolygonShape3D_jl0ny")
+
+[node name="CarriableBox" parent="." instance=ExtResource("4_3jw5d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.10118, 0, -3.71212)
+
+[node name="CarriableBox2" parent="." instance=ExtResource("4_3jw5d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.59443, 0, -3.71212)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ent7f")
@@ -49,9 +83,9 @@ environment = SubResource("Environment_ent7f")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Floor - FootstepSurface" type="Node3D" parent="."]
+[node name="By FootstepSurface Samples" type="Node3D" parent="."]
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="Floor - FootstepSurface"]
+[node name="CSGBox3D2" type="CSGBox3D" parent="By FootstepSurface Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, -5)
 use_collision = true
 size = Vector3(10, 1, 10)
@@ -59,7 +93,7 @@ material = ExtResource("2_pwdxr")
 script = ExtResource("3_f002f")
 footstep_profile = ExtResource("4_su3si")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="Floor - FootstepSurface"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="By FootstepSurface Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, -5)
 use_collision = true
 size = Vector3(10, 1, 10)
@@ -67,7 +101,7 @@ material = ExtResource("3_m4tao")
 script = ExtResource("3_f002f")
 footstep_profile = ExtResource("6_344wp")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="Floor - FootstepSurface"]
+[node name="CSGBox3D4" type="CSGBox3D" parent="By FootstepSurface Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, -15)
 use_collision = true
 size = Vector3(10, 1, 10)
@@ -75,7 +109,7 @@ material = ExtResource("4_s46n3")
 script = ExtResource("3_f002f")
 footstep_profile = ExtResource("8_1jua2")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="Floor - FootstepSurface"]
+[node name="CSGBox3D5" type="CSGBox3D" parent="By FootstepSurface Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, -15)
 use_collision = true
 size = Vector3(10, 1, 10)
@@ -83,37 +117,75 @@ material = ExtResource("11_m87hf")
 script = ExtResource("3_f002f")
 footstep_profile = ExtResource("10_wfvip")
 
-[node name="Floor - By Material" type="Node3D" parent="."]
+[node name="Box2" type="StaticBody3D" parent="By FootstepSurface Samples"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17.9833, -0.49591, -12.045)
+script = ExtResource("3_f002f")
+footstep_profile = ExtResource("6_344wp")
+metadata/_edit_group_ = true
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="Floor - By Material"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="By FootstepSurface Samples/Box2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00337362, 0.511929, -0.00559425)
+material_override = ExtResource("3_m4tao")
+mesh = SubResource("BoxMesh_k1wyk")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="By FootstepSurface Samples/Box2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_dapfv")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="By FootstepSurface Samples"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4637, -0.0552711, -12.1299)
+material_override = ExtResource("11_m87hf")
+use_collision = true
+height = 1.0
+material = ExtResource("11_m87hf")
+script = ExtResource("3_f002f")
+footstep_profile = ExtResource("10_wfvip")
+
+[node name="By Material Samples" type="Node3D" parent="."]
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="By Material Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, 15)
 use_collision = true
 size = Vector3(10, 1, 10)
 material = ExtResource("11_jiq17")
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="Floor - By Material"]
+[node name="CSGBox3D7" type="CSGBox3D" parent="By Material Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, 15)
 use_collision = true
 size = Vector3(10, 1, 10)
 material = ExtResource("12_2coni")
 
-[node name="CSGBox3D8" type="CSGBox3D" parent="Floor - By Material"]
+[node name="CSGBox3D8" type="CSGBox3D" parent="By Material Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, 5)
 use_collision = true
 size = Vector3(10, 1, 10)
 material = ExtResource("13_ndygr")
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="Floor - By Material"]
+[node name="CSGBox3D9" type="CSGBox3D" parent="By Material Samples"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, 5)
 use_collision = true
 size = Vector3(10, 1, 10)
-material = ExtResource("11_m87hf")
+material = ExtResource("18_kbomt")
 
-[node name="GenericFloor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+[node name="Box" type="StaticBody3D" parent="By Material Samples"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17.9833, -0.49591, 7.25382)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="By Material Samples/Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00337362, 0.511929, -0.00559425)
+mesh = SubResource("BoxMesh_k1wyk")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="By Material Samples/Box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_dapfv")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="By Material Samples"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4637, -0.0552711, 7.16892)
 use_collision = true
-size = Vector3(10, 1, 10)
-material = ExtResource("1_xlgi6")
+height = 1.0
+material = ExtResource("18_kbomt")
 
 [node name="Walls" type="CSGCombiner3D" parent="."]
 use_collision = true
@@ -231,3 +303,25 @@ transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 
 text = "Wood
 "
 font_size = 120
+
+[node name="Label3D9" type="Label3D" parent="Labels"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.07838, 1.46405, -4.74093)
+text = "Rigidbody Sample"
+
+[node name="Label3D10" type="Label3D" parent="Labels"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -17.4876, 0.283676, 7.17502)
+text = "Static Body Sample
+"
+
+[node name="Label3D11" type="Label3D" parent="Labels"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -11.9614, 0.283676, 7.1651)
+text = "CSG Shape Sample"
+
+[node name="Label3D12" type="Label3D" parent="Labels"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -17.4876, 0.283676, -12.1238)
+text = "Static Body Sample
+"
+
+[node name="Label3D13" type="Label3D" parent="Labels"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -11.9614, 0.283676, -12.1337)
+text = "CSG Shape Sample"

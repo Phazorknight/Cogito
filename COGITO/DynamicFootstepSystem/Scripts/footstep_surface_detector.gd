@@ -17,18 +17,36 @@ func play_footstep():
 		if result.collider is FootstepSurface and result.collider.footstep_profile:
 			_play_footstep(result.collider.footstep_profile)
 		# if no footstep surface, see if we can get a material
-		elif footstep_material_library and result.collider.material:
-			#get a profile from our library
-			var footstep_profile = footstep_material_library.get_footstep_profile_by_material(result.collider.material)
-			#found profile, use it
-			if footstep_profile:
-				_play_footstep(footstep_profile)
+		elif footstep_material_library:
+			#find surface material
+			var material : Material = find_surface_material(result.collider)
+			#if a material was found
+			if material:
+				#get a profile from our library
+				var footstep_profile = footstep_material_library.get_footstep_profile_by_material(material)
+				#found profile, use it
+				if footstep_profile:
+					_play_footstep(footstep_profile)
 				#did not find profile, play generic
+				else:
+					_play_footstep(generic_fallback_footstep_profile)
+			#no material was found, fallback to generic
 			else:
 				_play_footstep(generic_fallback_footstep_profile)
 		#if no material, play generics
 		else:
 			_play_footstep(generic_fallback_footstep_profile)
+
+func find_surface_material(collider : Node3D) -> Material:
+	if collider is CSGShape3D:
+		return collider.material
+	elif collider is StaticBody3D:
+		#find all children of the collider static body that are of type "MeshInstance3D"
+		#if there are multiple materials, just default to the first one found
+		return collider.find_children("", "MeshInstance3D")[0].mesh.material
+	elif collider is RigidBody3D:
+		print("rigidbody")
+	return null
 
 func _play_footstep(footstep_profile : AudioStreamRandomizer):
 	stream = footstep_profile

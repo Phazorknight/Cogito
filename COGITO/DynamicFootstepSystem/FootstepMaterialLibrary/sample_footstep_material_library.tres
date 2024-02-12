@@ -21,16 +21,16 @@ script = ExtResource("3_vy2xc")
 material = ExtResource("5_6oyqq")
 footstep_profile = ExtResource("4_t0jwh")
 
-[sub_resource type="Resource" id="Resource_u5pd8"]
-script = ExtResource("3_vy2xc")
-material = ExtResource("7_2iaw6")
-footstep_profile = ExtResource("6_137fl")
-
 [sub_resource type="Resource" id="Resource_fcs08"]
 script = ExtResource("3_vy2xc")
 material = ExtResource("9_2in8a")
 footstep_profile = ExtResource("8_ll3r2")
 
+[sub_resource type="Resource" id="Resource_2qijc"]
+script = ExtResource("3_vy2xc")
+material = ExtResource("7_2iaw6")
+footstep_profile = ExtResource("6_137fl")
+
 [resource]
 script = ExtResource("1_7wxnt")
-footstep_material_library = Array[ExtResource("3_vy2xc")]([SubResource("Resource_d5jea"), SubResource("Resource_ye3dh"), SubResource("Resource_u5pd8"), SubResource("Resource_fcs08")])
+footstep_material_library = Array[ExtResource("3_vy2xc")]([SubResource("Resource_d5jea"), SubResource("Resource_ye3dh"), SubResource("Resource_fcs08"), SubResource("Resource_2qijc")])
