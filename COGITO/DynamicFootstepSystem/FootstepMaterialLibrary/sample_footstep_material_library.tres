@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="FootstepMaterialLibrary" load_steps=15 format=3 uid="uid://ca0q2t6w08ubh"]
+
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_material_library.gd" id="1_7wxnt"]
+[ext_resource type="AudioStream" uid="uid://dbmjsd7o6tdw6" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/dirt_footstep_profile.tres" id="1_hgopr"]
+[ext_resource type="Material" uid="uid://bnepeulvkh40w" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Dirt.tres" id="2_ay811"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_material_profile.gd" id="3_vy2xc"]
+[ext_resource type="AudioStream" uid="uid://btuqyu2y70emf" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/grass_footstep_profile.tres" id="4_t0jwh"]
+[ext_resource type="Material" uid="uid://bisv0mrr2to0o" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Grass.tres" id="5_6oyqq"]
+[ext_resource type="AudioStream" uid="uid://crct05slcrgcq" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/stone_footstep_profile.tres" id="6_137fl"]
+[ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="7_2iaw6"]
+[ext_resource type="AudioStream" uid="uid://bcn2jyeulv0j0" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/wood_footstep_profile.tres" id="8_ll3r2"]
+[ext_resource type="Material" uid="uid://c4rvflucftsrl" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Wood.tres" id="9_2in8a"]
+
+[sub_resource type="Resource" id="Resource_d5jea"]
+script = ExtResource("3_vy2xc")
+material = ExtResource("2_ay811")
+footstep_profile = ExtResource("1_hgopr")
+
+[sub_resource type="Resource" id="Resource_ye3dh"]
+script = ExtResource("3_vy2xc")
+material = ExtResource("5_6oyqq")
+footstep_profile = ExtResource("4_t0jwh")
+
+[sub_resource type="Resource" id="Resource_fcs08"]
+script = ExtResource("3_vy2xc")
+material = ExtResource("9_2in8a")
+footstep_profile = ExtResource("8_ll3r2")
+
+[sub_resource type="Resource" id="Resource_2qijc"]
+script = ExtResource("3_vy2xc")
+material = ExtResource("7_2iaw6")
+footstep_profile = ExtResource("6_137fl")
+
+[resource]
+script = ExtResource("1_7wxnt")
+footstep_material_library = Array[ExtResource("3_vy2xc")]([SubResource("Resource_d5jea"), SubResource("Resource_ye3dh"), SubResource("Resource_fcs08"), SubResource("Resource_2qijc")])

@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c80clyg0d6m4n"]
+
+[ext_resource type="Texture2D" uid="uid://pgn0ph0lqvqx" path="res://COGITO/Assets/Textures/Prototype Textures/PNG/Light/texture_12.png" id="1_x75yu"]
+
+[resource]
+albedo_texture = ExtResource("1_x75yu")
+uv1_triplanar = true
