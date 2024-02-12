@@ -33,6 +33,12 @@ func _process(_delta: float) -> void:
 	if is_holding:
 		is_being_held.emit(hold_timer.time_left)
 		progress_bar.value = hold_timer.time_left / hold_time * 100
+		
+		var interaction_distance = (parent_node.global_position - player_interaction_component.global_position).length()
+		if interaction_distance >= player_interaction_component.interaction_raycast.target_position.length() :
+			hold_timer.stop()
+			hold_ui.hide()
+			is_holding = false
 
 func _on_object_state_change(_interaction_text: String):
 	interaction_text = _interaction_text

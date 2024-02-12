@@ -10,6 +10,8 @@ class_name CarryableComponent
 @export var lock_rotation_when_carried : bool = true
 ## Sets how fast the carriable is being pulled towards the carrying position. The lower, the "floatier" it will feel.
 @export var carrying_velocity_multiplier : float = 10
+## Sets how far away the carried object needs to be from the carry_position before it gets dropped.
+@export var drop_distance : float = 1.5
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var camera : Camera3D = get_viewport().get_camera_3d()
@@ -43,6 +45,9 @@ func _physics_process(_delta):
 	if is_being_carried:
 		carry_position = player_interaction_component.get_interaction_raycast_tip(carry_distance_offset)
 		parent_object.set_linear_velocity((carry_position - parent_object.global_position) * carrying_velocity_multiplier)
+		
+		if(carry_position-parent_object.global_position).length() >= drop_distance:
+			leave()
 		
 		
 func _on_body_entered(body):
