@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://m82ivreg3ugd"]
+
+[ext_resource type="Script" path="res://COGITO/Components/ImpactSounds.gd" id="1_srthb"]
+[ext_resource type="AudioStream" uid="uid://dvbd46d7c28ee" path="res://COGITO/Assets/Audio/Kenney/bookPlace1.ogg" id="2_e3bur"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jv74l"]
+random_pitch = 1.1
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("2_e3bur")
+stream_0/weight = 1.0
+
+[node name="ImpactSounds" type="Node3D"]
+script = ExtResource("1_srthb")
+impact_sounds = SubResource("AudioStreamRandomizer_jv74l")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+max_distance = 5.0
+max_polyphony = 3
+bus = &"SFX"
