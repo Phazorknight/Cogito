@@ -110,11 +110,13 @@ expand_mode = 1
 
 [node name="PromptArea" type="VBoxContainer" parent="."]
 layout_mode = 1
-offset_left = 740.0
-offset_top = 360.0
-offset_right = 740.0
-offset_bottom = 360.0
+anchors_preset = -1
+anchor_left = 0.578125
+anchor_top = 0.5
+anchor_right = 0.578125
+anchor_bottom = 0.5
 theme_override_constants/separation = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="HintTimer" type="Timer" parent="."]
 wait_time = 3.5

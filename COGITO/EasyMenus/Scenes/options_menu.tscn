@@ -217,7 +217,6 @@ text = "Back"
 [connection signal="value_changed" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
 [connection signal="toggled" from="MarginContainer/ScrollContainer/VBoxContainer/FullscreenCheckButton" to="." method="_on_fullscreen_check_button_toggled"]
 [connection signal="toggled" from="MarginContainer/ScrollContainer/VBoxContainer/VSyncCheckButton" to="." method="_on_v_sync_check_button_toggled"]
-[connection signal="toggled" from="MarginContainer/ScrollContainer/VBoxContainer/InvertYAxisCheckButton" to="." method="_on_v_sync_check_button_toggled"]
 [connection signal="value_changed" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer/RenderScaleSlider" to="." method="_on_render_scale_slider_value_changed"]
 [connection signal="item_selected" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" to="." method="_on_anti_aliasing_2d_option_button_item_selected"]
 [connection signal="item_selected" from="MarginContainer/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" to="." method="_on_anti_aliasing_3d_option_button_item_selected"]
