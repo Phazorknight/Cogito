@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://dsy656cbv0ceu"]
 
-[ext_resource type="PackedScene" uid="uid://drnisavusthxw" path="res://COGITO/DynamicFootstepSystem/player.tscn" id="1_jnphu"]
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_0sk3n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="2_pwdxr"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="2_y6kid"]
@@ -32,9 +32,14 @@ glow_enabled = true
 
 [node name="DemoScene" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_jnphu")]
+[node name="Player" parent="." instance=ExtResource("1_0sk3n")]
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
+
+[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
+player = NodePath("../Player")
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_y02ri")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ent7f")
@@ -42,11 +47,6 @@ environment = SubResource("Environment_ent7f")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-
-[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
-player = NodePath("../Player")
-
-[node name="PauseMenu" parent="." instance=ExtResource("3_y02ri")]
 
 [node name="Floor - FootstepSurface" type="Node3D" parent="."]
 

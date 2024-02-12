@@ -41,6 +41,7 @@ signal player_state_loaded()
 # Adding carryable position for item control.
 @onready var carryable_position = %CarryablePosition
 @onready var footstep_player = $FootstepPlayer
+@onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
@@ -48,7 +49,6 @@ signal player_state_loaded()
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
-@export var footstep_surface_detector : FootstepSurfaceDetector
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY = 4.5
@@ -684,12 +684,7 @@ func _physics_process(delta):
 				footstep_player.volume_db = crouch_volume_db
 			elif is_sprinting:
 				footstep_player.volume_db = sprint_volume_db
-			#dynamic footsteps
-			if footstep_surface_detector:
-				footstep_surface_detector.play_footstep()
-			#generic footsteps
-			else:
-				footstep_player.play()
+			footstep_surface_detector.play_footstep()
 			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
 			if velocity.length() >= 3.4:
 				footstep_timer.start(.3)

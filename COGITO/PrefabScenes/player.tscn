@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=33 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
@@ -20,6 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://COGITO/PrefabScenes/projectile_pistol.tscn" id="11_ydo45"]
 [ext_resource type="PackedScene" uid="uid://ctdx2bs6fji20" path="res://COGITO/Components/SanityComponent.tscn" id="12_tv46k"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="16_a6uam"]
+[ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="17_rmtvn"]
+[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="18_q6u2l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bvi11"]
 size = Vector3(0.8, 1.6, 0.8)
@@ -223,6 +226,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488, 0)
 stream = SubResource("AudioStreamRandomizer_af0lu")
 volume_db = -38.0
 bus = &"SFX"
+script = ExtResource("16_a6uam")
+generic_fallback_footstep_profile = ExtResource("17_rmtvn")
+footstep_material_library = ExtResource("18_q6u2l")
 
 [node name="FootstepTimer" type="Timer" parent="."]
 one_shot = true
