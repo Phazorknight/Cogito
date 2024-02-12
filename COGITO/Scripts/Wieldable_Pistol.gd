@@ -29,6 +29,7 @@ func action_primary(_camera_collision:Vector3, _passed_item_reference : Inventor
 	bullet_point.add_child(Projectile)
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
+	Projectile.reparent(get_tree().get_current_scene())
 	Audio.play_sound_3d(sound_primary_use).global_position = self.global_position
 	print("Pistol.gd: action_primary called. Self: ", self)
 
