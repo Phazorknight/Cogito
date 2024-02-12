@@ -1,14 +1,8 @@
 # Dynamic Footstep System for Cogito
 By AC-Arcana
 
-## player.gd
-The player was modified to suppor this system. There is an assignable variable in audio for a Footstep Surface Detector. If this is not assigned, the footsteps will fallback to the generic system that was already in the player script.
-
-## Player scene
-This example includes its own player scene. There is just one script added to the FootstepPlayer node. The script is a Footstep Surface Detector.
-
 ## Footstep Surface Detector
-It uses a ray query to find the collider below the player. The ray is cast 1 meter from the point of the node the script is assigned to. It is called by the player script. It must be on an AudioStreamPlayer3D
+This is in the default player scene.
 - Generic Fallback Footstep Profile - If detection for a footstep sound fails, this sound profile will be used
 - Footstep Material Library - If assigned, the system will look up any material the player is standing on in this library to find a footstep profile for it. If a material is not found in the library, it will fall back to the generic fallback footstep profile
 
@@ -29,6 +23,7 @@ The profiles are not a new class. They are an AudioStreamRandomizer. I recommend
 ### Footstep Surface
 When this script is attached to an object in the scene it will determine what footstep sounds will be played when stepping on that object.
 You must assign a footstep profile or you will still get a generic footstep sound.
+These can also be assigned to children in the case of a StaticBody3D or Rigidbody3D
 
 ### Footstep Material Library
 A resource that contains an array of Footstep Material Profiles. I recommend saving this as a resource. 
