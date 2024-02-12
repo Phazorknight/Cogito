@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=5 format=3 uid="uid://btuqyu2y70emf"]
+
+[ext_resource type="AudioStream" uid="uid://d1te488gvcb7q" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Grass/footstep_Grass-01.ogg" id="1_l6iqh"]
+[ext_resource type="AudioStream" uid="uid://bdct8miu1fqlv" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Grass/footstep_Grass-02.ogg" id="2_28ypc"]
+[ext_resource type="AudioStream" uid="uid://c0m1w5vv8r43j" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Grass/footstep_Grass-03.ogg" id="3_cwkqq"]
+[ext_resource type="AudioStream" uid="uid://cmy315y7l1nhf" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Grass/footstep_Grass-04.ogg" id="4_o51yo"]
+
+[resource]
+streams_count = 4
+stream_0/stream = ExtResource("1_l6iqh")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_28ypc")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_cwkqq")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_o51yo")
+stream_3/weight = 1.0

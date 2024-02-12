@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://drnisavusthxw"]
+
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_up8oa"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="2_lwoes"]
+[ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="3_l74o2"]
+[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="4_mxtj2"]
+
+[node name="Player" node_paths=PackedStringArray("footstep_surface_detector") instance=ExtResource("1_up8oa")]
+footstep_surface_detector = NodePath("FootstepPlayer")
+
+[node name="FootstepPlayer" parent="." index="7"]
+script = ExtResource("2_lwoes")
+generic_fallback_footstep_profile = ExtResource("3_l74o2")
+footstep_material_library = ExtResource("4_mxtj2")

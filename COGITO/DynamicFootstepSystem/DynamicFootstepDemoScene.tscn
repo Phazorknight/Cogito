@@ -1,0 +1,232 @@
+[gd_scene load_steps=20 format=3 uid="uid://dsy656cbv0ceu"]
+
+[ext_resource type="PackedScene" uid="uid://drnisavusthxw" path="res://COGITO/DynamicFootstepSystem/player.tscn" id="1_jnphu"]
+[ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
+[ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="2_pwdxr"]
+[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="2_y6kid"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
+[ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="3_m4tao"]
+[ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="3_y02ri"]
+[ext_resource type="Material" uid="uid://bncvwxye2x1uq" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Prototype_Brown.tres" id="4_s46n3"]
+[ext_resource type="AudioStream" uid="uid://btuqyu2y70emf" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/grass_footstep_profile.tres" id="4_su3si"]
+[ext_resource type="AudioStream" uid="uid://bcn2jyeulv0j0" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/wood_footstep_profile.tres" id="6_344wp"]
+[ext_resource type="AudioStream" uid="uid://dbmjsd7o6tdw6" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/dirt_footstep_profile.tres" id="8_1jua2"]
+[ext_resource type="AudioStream" uid="uid://crct05slcrgcq" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/stone_footstep_profile.tres" id="10_wfvip"]
+[ext_resource type="Material" uid="uid://bisv0mrr2to0o" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Grass.tres" id="11_jiq17"]
+[ext_resource type="Material" uid="uid://c80clyg0d6m4n" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Prototype_LightGrey.tres" id="11_m87hf"]
+[ext_resource type="Material" uid="uid://c4rvflucftsrl" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Wood.tres" id="12_2coni"]
+[ext_resource type="Material" uid="uid://bnepeulvkh40w" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Dirt.tres" id="13_ndygr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_43gic"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8ouh4"]
+sky_material = SubResource("ProceduralSkyMaterial_43gic")
+
+[sub_resource type="Environment" id="Environment_ent7f"]
+background_mode = 2
+sky = SubResource("Sky_8ouh4")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="DemoScene" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_jnphu")]
+pause_menu = NodePath("../PauseMenu")
+player_hud = NodePath("../Player_HUD")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ent7f")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
+player = NodePath("../Player")
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_y02ri")]
+
+[node name="Floor - FootstepSurface" type="Node3D" parent="."]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Floor - FootstepSurface"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, -5)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("2_pwdxr")
+script = ExtResource("3_f002f")
+footstep_profile = ExtResource("4_su3si")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Floor - FootstepSurface"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, -5)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("3_m4tao")
+script = ExtResource("3_f002f")
+footstep_profile = ExtResource("6_344wp")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Floor - FootstepSurface"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, -15)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("4_s46n3")
+script = ExtResource("3_f002f")
+footstep_profile = ExtResource("8_1jua2")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Floor - FootstepSurface"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, -15)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("11_m87hf")
+script = ExtResource("3_f002f")
+footstep_profile = ExtResource("10_wfvip")
+
+[node name="Floor - By Material" type="Node3D" parent="."]
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Floor - By Material"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, 15)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("11_jiq17")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Floor - By Material"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, 15)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("12_2coni")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Floor - By Material"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, 5)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("13_ndygr")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Floor - By Material"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -1, 5)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("11_m87hf")
+
+[node name="GenericFloor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("1_xlgi6")
+
+[node name="Walls" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000555038, 1, 4.95086)
+use_collision = true
+size = Vector3(10.5, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1, 20)
+use_collision = true
+size = Vector3(20.5, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1, -20)
+use_collision = true
+size = Vector3(20.5, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1, 0)
+use_collision = true
+size = Vector3(20.5, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -5)
+use_collision = true
+size = Vector3(10.5, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 1, 0)
+use_collision = true
+size = Vector3(10, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -25, 1, 0)
+use_collision = true
+size = Vector3(40, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 1, 11.5)
+use_collision = true
+size = Vector3(17, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 1, -11.5)
+use_collision = true
+size = Vector3(17, 4, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 2.5, 0)
+use_collision = true
+size = Vector3(6, 1, 0.5)
+material = ExtResource("1_xlgi6")
+
+[node name="Label3D" type="Label3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.74863, 2.5, -1.56379)
+text = "Footstep Surface Sample"
+
+[node name="Label3D2" type="Label3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.74863, 2.5, 1.50784)
+text = "Material Selection Sample"
+
+[node name="Labels" type="Node3D" parent="."]
+
+[node name="Label3D" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -9.9943, -0.488416, 5.19313)
+text = "Dirt"
+font_size = 120
+
+[node name="Label3D2" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -20.0477, -0.488416, 5.19313)
+text = "Stone
+"
+font_size = 120
+
+[node name="Label3D3" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -9.9943, -0.488416, 15.4335)
+text = "Grass"
+font_size = 120
+
+[node name="Label3D4" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -20.0477, -0.488416, 15.4335)
+text = "Wood
+"
+font_size = 120
+
+[node name="Label3D5" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -9.9943, -0.488416, -15.2065)
+text = "Dirt"
+font_size = 120
+
+[node name="Label3D6" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -20.0477, -0.488416, -15.2065)
+text = "Stone
+"
+font_size = 120
+
+[node name="Label3D7" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -9.9943, -0.488416, -4.96611)
+text = "Grass"
+font_size = 120
+
+[node name="Label3D8" type="Label3D" parent="Labels"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -20.0477, -0.488416, -4.96611)
+text = "Wood
+"
+font_size = 120
