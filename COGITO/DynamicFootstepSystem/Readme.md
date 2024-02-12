@@ -7,7 +7,7 @@ The player was modified to suppor this system. There is an assignable variable i
 ## Player scene
 This example includes its own player scene. There is just one script added to the FootstepPlayer node. The script is a Footstep Surface Detector.
 
-## Footstep Surfcae Detector
+## Footstep Surface Detector
 It uses a ray query to find the collider below the player. The ray is cast 1 meter from the point of the node the script is assigned to. It is called by the player script. It must be on an AudioStreamPlayer3D
 - Generic Fallback Footstep Profile - If detection for a footstep sound fails, this sound profile will be used
 - Footstep Material Library - If assigned, the system will look up any material the player is standing on in this library to find a footstep profile for it. If a material is not found in the library, it will fall back to the generic fallback footstep profile
@@ -27,12 +27,17 @@ The profiles are not a new class. They are an AudioStreamRandomizer. I recommend
 	- You also can adjust their weights individually. Higher weights are more likely to be selected
 
 ### Footstep Surface
-When placed on an object in the scene it will determine what footstep sounds will be played when stepping on that object.
-You must assign a footstep profile or you will get a generic footstep sound.
+When this script is attached to an object in the scene it will determine what footstep sounds will be played when stepping on that object.
+You must assign a footstep profile or you will still get a generic footstep sound.
 
 ### Footstep Material Library
-A resource that contains an array of Footstep Material Profiles. I recommend saving this as a resource.
+A resource that contains an array of Footstep Material Profiles. I recommend saving this as a resource. 
+You can create them in a similar way to how I described creating Footstep Profiles
 The Footstep Material Profiles don't necessarily have to be saved as resources, they can be created inside the Footstep Material Library.
+- Click Add Element
+- Click the down arrow and click "New Footstep Material Profile"
+- Click the footstep material profile
+- Assign a material to detect and a footstep profile
 
 ### Footstep Material Profile
 Contains a material and a Footstep Profile. When the specified material is detected the specified Footstep Profile will be used.

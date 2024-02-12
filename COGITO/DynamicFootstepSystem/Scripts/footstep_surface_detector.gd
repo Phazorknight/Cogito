@@ -14,7 +14,7 @@ func play_footstep():
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	if result:
 		#handle footstep surface settings
-		if result.collider is FootstepSurface:
+		if result.collider is FootstepSurface and result.collider.footstep_profile:
 			_play_footstep(result.collider.footstep_profile)
 		# if no footstep surface, see if we can get a material
 		elif footstep_material_library and result.collider.material:
