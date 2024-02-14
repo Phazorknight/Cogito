@@ -25,7 +25,7 @@ func set_slot_data(slot_data: InventorySlotPD):
 		quantity_label.hide()
 		
 	# Check if item is a WIELDABLE
-	if item_data.item_type == 1:
+	if item_data.has_signal("charge_changed"):
 		charge_label.text = str(int(item_data.charge_current))
 		if !item_data.charge_changed.is_connected(_on_charge_changed):
 			item_data.charge_changed.connect(_on_charge_changed)

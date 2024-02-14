@@ -126,7 +126,8 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 		[_, "inventory_drop_item"]:
 			grabbed_slot_data = inventory_data.get_slot_data(index)
 			if grabbed_slot_data:
-				if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
+				if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
+				#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 					Audio.play_sound(sound_error)
 					print("Can't drop while wielding this item.")
 					grabbed_slot_data = null
@@ -155,7 +156,8 @@ func _on_gui_input(event):
 			
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
-					if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
+					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
+					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
 						print("Can't drop while wielding this item.")
 					else:
@@ -164,7 +166,8 @@ func _on_gui_input(event):
 						print("Dropping ", grabbed_slot_data)
 					
 				MOUSE_BUTTON_RIGHT:
-					if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
+					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
+					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
 						print("Can't drop while wielding this item.")
 					else:

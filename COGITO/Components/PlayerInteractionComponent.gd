@@ -10,32 +10,34 @@ signal interactive_object_detected(interaction_nodes: Array[Node])
 signal nothing_detected()
 signal started_carrying(interaction_node: Node)
 
+var look_vector : Vector3
+
+var device_id : int = -1  #Used for displaying correct input prompts depending on input device.
+
 ## Raycast3D for interaction check.
 @export var interaction_raycast : RayCast3D
-@export var carryable_position : Node3D
-@export var wieldable_nodes : Array[Node]
-## Animation player for wieldables
-@onready var wieldable_animation_player = $"../Neck/Head/Wieldables/WieldableAnimationPlayer"
-@onready var wieldable_audio_stream_player_3d = $"../Neck/Head/Wieldables/WieldableAudioStreamPlayer3D"
-
-var equipped_wieldable_item = null
-var equipped_wieldable_node = null
-var is_wielding : bool
-var throw_power : float = 1.5
-var look_vector : Vector3
-var is_reset : bool  = true
-var device_id : int = -1
-var carried_object = null
-
 # Various variables used for interaction raycast checks.
+var is_reset : bool  = true
 var object_detected : bool
 var interactable
 var previous_interactable
 
+## Node3D for carryables. Carryables will be pulled toward this position when being carried.
+@export var carryable_position : Node3D
+var carried_object = null  #Used for carryable handling.
+var throw_power : float = 1.5
+
+## List of Wieldable nodes
+@export var wieldable_nodes : Array[Node]
+# Various variables used for wieldable handling
+var equipped_wieldable_item = null
+var equipped_wieldable_node = null
+var is_wielding : bool
+
 
 func _ready():
-	for node in wieldable_nodes:
-		node.hide()
+	#for node in wieldable_nodes:
+		#node.hide()
 		
 	object_detected = false
 
@@ -89,8 +91,8 @@ func _input(event):
 					if node.input_map_action == "interact":
 						node.interact(self)
 		interactive_object_exit()
-	if is_wielding:
-		equipped_wieldable_item.update_wieldable_data(self)
+		if is_wielding:
+			equipped_wieldable_item.update_wieldable_data(self)
 	
 	
 	if event.is_action_pressed("interact2"):
@@ -139,28 +141,28 @@ func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
 
 
 ### Wieldable Management
-func equip_wieldable(wieldable_item:InventoryItemPD):
+func equip_wieldable(wieldable_item:WieldableItemPD):
 	if wieldable_item != null:
-		print("Attempting to equip ", wieldable_item)
-		# Set Inventory Item reference
-		equipped_wieldable_item = wieldable_item
+		equipped_wieldable_item = wieldable_item #Set Inventory Item reference
 		# Set Wieldable node reference
 		for wieldable_node in wieldable_nodes:
-			if wieldable_node.name == equipped_wieldable_item.name:
+			if wieldable_node.item_reference == equipped_wieldable_item:
 				equipped_wieldable_node = wieldable_node
-				print("Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
-				equipped_wieldable_node.player_interaction_component = self
-				wieldable_animation_player.queue(equipped_wieldable_item.equip_anim)
+				print("PIC: Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
+				equipped_wieldable_node.equip(self)
 				is_wielding = true
-		
+
+				
 		
 func change_wieldable_to(next_wieldable: InventoryItemPD):
 	if equipped_wieldable_item != null:
-		wieldable_animation_player.queue(equipped_wieldable_item.unequip_anim)
 		equipped_wieldable_item.is_being_wielded = false
-		equipped_wieldable_node.unequip()
-	equipped_wieldable_node = null
+		if equipped_wieldable_node != null:
+			equipped_wieldable_node.unequip()
+			if equipped_wieldable_node.animation_player.is_playing(): #Wait until unequip animation finishes.
+				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout 
 	equipped_wieldable_item = null
+	equipped_wieldable_node = null
 	is_wielding = false
 	equip_wieldable(next_wieldable)
 
@@ -172,8 +174,7 @@ func attempt_action_primary():
 	if equipped_wieldable_item.charge_current == 0:
 		send_hint(null, equipped_wieldable_item.name + " is out of ammo.")
 	else:
-		if !wieldable_animation_player.is_playing(): # Enforces fire rate.
-			wieldable_animation_player.play(equipped_wieldable_item.use_anim)
+		if !equipped_wieldable_node.animation_player.is_playing(): # Enforces fire rate.
 			equipped_wieldable_item.subtract(1)
 			equipped_wieldable_node.action_primary(Get_Camera_Collision(), equipped_wieldable_item)
 
@@ -202,9 +203,8 @@ func attempt_reload():
 		print("You have no ammo for this wieldable.")
 		return
 		
-	if !wieldable_animation_player.is_playing(): #Make sure reload isn't interrupting another animation.
-		wieldable_animation_player.play(equipped_wieldable_item.reload_anim)
-		Audio.play_sound_3d(equipped_wieldable_node.sound_reload).global_position = equipped_wieldable_node.global_position
+	if !equipped_wieldable_node.animation_player.is_playing(): #Make sure reload isn't interrupting another animation.
+		equipped_wieldable_node.reload()
 		
 		while ammo_needed > 0:
 			if equipped_wieldable_item.get_item_amount_in_inventory(equipped_wieldable_item.ammo_item_name) <=0:
@@ -261,5 +261,7 @@ func save():
 	
 func set_state():
 	if equipped_wieldable_item and is_wielding:
-		change_wieldable_to(equipped_wieldable_item)
+		equip_wieldable(equipped_wieldable_item)
+		equipped_wieldable_item.player_interaction_component = self
+		set_use_prompt.emit(equipped_wieldable_item.primary_use_prompt)
 		equipped_wieldable_item.update_wieldable_data(self)

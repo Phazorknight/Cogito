@@ -1,38 +1,21 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=6 format=3 uid="uid://bqhbrpnp2tt08"]
+[gd_resource type="Resource" script_class="AmmoItemPD" load_steps=6 format=3 uid="uid://bqhbrpnp2tt08"]
 
 [ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="1_efcmi"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_gtmr3"]
-[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="3_qxx1c"]
+[ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://COGITO/Assets/Graphics/HintIcons/Hint_X.png" id="1_p472b"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/AmmoItemPD.gd" id="3_fjkqh"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_2hhqx"]
 [ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="5_cl3nd"]
 
 [resource]
-script = ExtResource("1_gtmr3")
-item_type = 4
+script = ExtResource("3_fjkqh")
+target_item_ammo = ExtResource("5_cl3nd")
+reload_amount = 1
 name = "Foam Bullets"
 descpription = "Very visible but not very dangerous. Have a tendency to vanish."
 icon = ExtResource("1_efcmi")
-power = 0.0
 is_stackable = true
 stack_size = 50
 drop_scene = "res://COGITO/PrefabScenes/projectile_pistol.tscn"
-hint_text_on_use = ""
+hint_icon_on_use = ExtResource("1_p472b")
+hint_text_on_use = "Can't be used by itself."
 sound_pickup = ExtResource("4_2hhqx")
-sound_drop = ExtResource("3_qxx1c")
-attribute_name = ""
-attribute_change_amount = 0.0
-primary_use_prompt = ""
-secondary_use_prompt = ""
-charge_max = 0.0
-ammo_item_name = ""
-charge_current = 0.0
-wieldable_range = 0.0
-wieldable_damage = 0.0
-equip_anim = ""
-unequip_anim = ""
-reload_anim = ""
-use_anim = ""
-target_item_combine = ""
-discard_after_use = false
-target_item_ammo = ExtResource("5_cl3nd")
-reload_amount = 1

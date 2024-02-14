@@ -1,27 +1,13 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=6 format=3 uid="uid://ckvdkigvwowm5"]
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://ckvdkigvwowm5"]
 
 [ext_resource type="Texture2D" uid="uid://heih3rs4r4gt" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoFlashlight.png" id="1_f43pq"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_ir7an"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_h6bnx"]
 [ext_resource type="Texture2D" uid="uid://4xstvhrf4r2h" path="res://COGITO/Assets/Graphics/BatteryIcon.png" id="3_ea2qf"]
-[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="3_t2bec"]
-[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_twgda"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_f88a5"]
 
 [resource]
-script = ExtResource("1_ir7an")
-item_type = 1
-name = "Flashlight"
-descpription = "Shines a light."
-icon = ExtResource("1_f43pq")
-power = 0.0
-is_stackable = false
-stack_size = 0
-drop_scene = "res://COGITO/PrefabScenes/pickup_flashlight.tscn"
-hint_text_on_use = ""
-sound_pickup = ExtResource("3_twgda")
-sound_drop = ExtResource("3_t2bec")
-attribute_name = ""
-attribute_change_amount = 0.0
-primary_use_prompt = "Switch on/off"
+script = ExtResource("2_h6bnx")
+primary_use_prompt = "Turn on/off"
 secondary_use_prompt = ""
 wieldable_data_icon = ExtResource("3_ea2qf")
 charge_max = 100.0
@@ -29,10 +15,11 @@ ammo_item_name = "Battery"
 charge_current = 100.0
 wieldable_range = 0.0
 wieldable_damage = 0.0
-equip_anim = "Flashlight_equip"
-unequip_anim = "Flashlight_unequip"
-reload_anim = "Flashlight_reload"
-use_anim = "Flashlight_use"
-target_item_combine = ""
-discard_after_use = false
-reload_amount = 1
+name = "Flashlight"
+descpription = "Eats batteries like it it's job."
+icon = ExtResource("1_f43pq")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/PrefabScenes/Pickups/pickup_flashlight.tscn"
+hint_text_on_use = ""
+sound_pickup = ExtResource("3_f88a5")

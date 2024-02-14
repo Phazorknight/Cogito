@@ -58,14 +58,11 @@ func use_slot_data(index: int):
 	
 	if not slot_data:
 		return
-	
-	print("InventoryPD: Using ", slot_data.inventory_item.name)
 
 	# THIS USES RESOURCE LOCAL TO SCENE DATA. Local scene in this case is player. If player is persistent, this should work, but might break if not!?
 	# This also throws an error when an item is used out of a container.
 	var use_successful : bool = slot_data.inventory_item.use(get_local_scene())
-	if slot_data.inventory_item.item_type == 0 and use_successful:
-		print("InventoryPD: Item is consumable, reducing quantity.")
+	if slot_data.inventory_item.has_method("is_consumable") and use_successful:
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:
 			inventory_slots[index] = null
@@ -121,15 +118,14 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 	elif slot_data.can_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data())
 	# Logic for ammo items
-	elif slot_data.inventory_item == grabbed_slot_data.inventory_item.target_item_ammo:
-		print("Attempt to reload!")
+	elif slot_data.inventory_item.has_method("update_wieldable_data") and slot_data.inventory_item == grabbed_slot_data.inventory_item.target_item_ammo:
 		# Check if there's room for charge
 		if slot_data.inventory_item.charge_max - slot_data.inventory_item.charge_current >= grabbed_slot_data.inventory_item.reload_amount:
 			get_local_scene().player_interaction_component.send_hint(null,"Charging " + slot_data.inventory_item.name + " by " + str(grabbed_slot_data.inventory_item.reload_amount))
 			slot_data.inventory_item.add(grabbed_slot_data.inventory_item.reload_amount)
 			grabbed_slot_data.quantity -= 1
 	# Check if grabbed item is a combinable AND check if slot item is the target combine item:
-	elif grabbed_slot_data.inventory_item.item_type == 2 and slot_data.inventory_item.name == grabbed_slot_data.inventory_item.target_item_combine :
+	elif grabbed_slot_data.inventory_item.has_method("is_combinable") and slot_data.inventory_item.name == grabbed_slot_data.inventory_item.target_item_combine :
 		# Reduce/destroy both items.
 		remove_slot_data(slot_data)
 		grabbed_slot_data.quantity -= 1

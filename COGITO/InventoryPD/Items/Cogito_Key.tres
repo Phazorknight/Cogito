@@ -1,38 +1,19 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=6 format=3 uid="uid://d4gdqvqsiiqs5"]
+[gd_resource type="Resource" script_class="KeyItemPD" load_steps=5 format=3 uid="uid://d4gdqvqsiiqs5"]
 
-[ext_resource type="Texture2D" uid="uid://dlsbl1glpswk5" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Question.png" id="1_2gikt"]
+[ext_resource type="Texture2D" uid="uid://bttj6m78b6odm" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Cog.png" id="1_17jgp"]
 [ext_resource type="Texture2D" uid="uid://bsf2bc116o1oi" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoKey.png" id="1_n8yj5"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_uohgs"]
-[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="4_gyo6u"]
-[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_juwop"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="3_2pl2b"]
+[ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://COGITO/Assets/Audio/Kenney/beltHandle2.ogg" id="4_7b7vh"]
 
 [resource]
-script = ExtResource("1_uohgs")
-item_type = 3
+script = ExtResource("3_2pl2b")
+discard_after_use = true
 name = "Key"
 descpription = "Opens a locked door."
 icon = ExtResource("1_n8yj5")
-power = 0.0
 is_stackable = false
 stack_size = 1
-drop_scene = "res://COGITO/PrefabScenes/pickup_key.tscn"
-hint_icon_on_use = ExtResource("1_2gikt")
+drop_scene = "res://COGITO/PrefabScenes/Pickups/pickup_key.tscn"
+hint_icon_on_use = ExtResource("1_17jgp")
 hint_text_on_use = "This should fit a door around here."
-sound_pickup = ExtResource("4_juwop")
-sound_drop = ExtResource("4_gyo6u")
-attribute_name = ""
-attribute_change_amount = 0.0
-primary_use_prompt = ""
-secondary_use_prompt = ""
-charge_max = 0.0
-ammo_item_name = ""
-charge_current = 0.0
-wieldable_range = 0.0
-wieldable_damage = 0.0
-equip_anim = ""
-unequip_anim = ""
-reload_anim = ""
-use_anim = ""
-target_item_combine = ""
-discard_after_use = true
-reload_amount = 1
+sound_pickup = ExtResource("4_7b7vh")

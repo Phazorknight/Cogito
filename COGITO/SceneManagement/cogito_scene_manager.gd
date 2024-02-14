@@ -94,7 +94,7 @@ func save_player_state(player, slot:String):
 	
 	_player_state.clear_saved_wieldable_charges()
 	for item_slot in player.inventory_data.inventory_slots:
-		if item_slot and item_slot.inventory_item and item_slot.inventory_item.item_type == 1:
+		if item_slot and item_slot.inventory_item and item_slot.inventory_item.has_method("update_wieldable_data"): #Checking for wieldables.
 			var item_save_data = item_slot.inventory_item.save()
 			_player_state.append_saved_wieldable_charges(item_save_data)
 			print("Saved charge for ", item_slot.inventory_item )
@@ -146,7 +146,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 					continue
 				new_object.set(data, node_data[data])
 			
-			if new_object.has_method("get_item_type") and new_object.get_item_type() == 1: #Check if item is wieldable
+			if new_object.has_method("update_wieldable_data"): #Check if item is wieldable
 				print("Setting charge of ", new_object, " to ", node_data["item_charge"])
 				new_object.slot_data.inventory_item.charge_current = node_data["item_charge"]
 		

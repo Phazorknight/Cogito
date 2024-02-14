@@ -196,7 +196,11 @@ func _on_set_use_prompt(passed_use_text):
 
 # Updating HUD wieldable data, used for stuff like flashlight battery charge, ammo display, etc
 func _on_update_wieldable_data(passed_wieldable_icon, passed_wieldable_text):
-	wieldable_text.text = passed_wieldable_text
+	if passed_wieldable_text:
+		wieldable_text.text = passed_wieldable_text
+	else:
+		wieldable_text.text = ""
+		
 	if passed_wieldable_icon != null:
 		wieldable_icon.set_texture(passed_wieldable_icon)
 	else:

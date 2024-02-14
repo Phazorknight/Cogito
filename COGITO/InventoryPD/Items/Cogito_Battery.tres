@@ -1,38 +1,23 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=6 format=3 uid="uid://cupby6uqaftvv"]
+[gd_resource type="Resource" script_class="AmmoItemPD" load_steps=7 format=3 uid="uid://cupby6uqaftvv"]
 
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_am3vi"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/AmmoItemPD.gd" id="1_3ov2u"]
+[ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://COGITO/Assets/Graphics/HintIcons/Hint_X.png" id="1_54cn8"]
 [ext_resource type="Texture2D" uid="uid://c0h1s1g4g1q56" path="res://COGITO/Assets/Graphics/ItemIcons/CogitoBattery.png" id="1_fjosn"]
-[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="3_218ed"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_lxwux"]
 [ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="3_myi62"]
+[ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="5_tfubv"]
 
 [resource]
-script = ExtResource("1_am3vi")
-item_type = 4
+script = ExtResource("1_3ov2u")
+target_item_ammo = ExtResource("3_myi62")
+reload_amount = 10
 name = "Battery"
 descpription = "Can be combined with the Flashlight. Non-rechargeable."
 icon = ExtResource("1_fjosn")
-power = 0.0
 is_stackable = true
 stack_size = 5
-drop_scene = "res://COGITO/PrefabScenes/pickup_battery.tscn"
-hint_text_on_use = ""
+drop_scene = "res://COGITO/PrefabScenes/Pickups/pickup_battery.tscn"
+hint_icon_on_use = ExtResource("1_54cn8")
+hint_text_on_use = "Can't use this by itself."
+sound_use = ExtResource("5_tfubv")
 sound_pickup = ExtResource("3_lxwux")
-sound_drop = ExtResource("3_218ed")
-attribute_name = ""
-attribute_change_amount = 0.0
-primary_use_prompt = ""
-secondary_use_prompt = ""
-charge_max = 0.0
-ammo_item_name = ""
-charge_current = 0.0
-wieldable_range = 0.0
-wieldable_damage = 0.0
-equip_anim = ""
-unequip_anim = ""
-reload_anim = ""
-use_anim = ""
-target_item_combine = ""
-discard_after_use = false
-target_item_ammo = ExtResource("3_myi62")
-reload_amount = 10

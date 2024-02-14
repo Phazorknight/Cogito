@@ -1,38 +1,19 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=6 format=3 uid="uid://gu1buq254o4l"]
+[gd_resource type="Resource" script_class="KeyItemPD" load_steps=5 format=3 uid="uid://gu1buq254o4l"]
 
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_ac5tt"]
 [ext_resource type="Texture2D" uid="uid://b026nu4btecpx" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_DiamondKey_Complete.png" id="1_iq57n"]
 [ext_resource type="Texture2D" uid="uid://dlsbl1glpswk5" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Question.png" id="1_okpun"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="3_5ndf1"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_n11fw"]
-[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="4_oqy18"]
 
 [resource]
-script = ExtResource("1_ac5tt")
-item_type = 3
+script = ExtResource("3_5ndf1")
+discard_after_use = true
 name = "Diamond Key"
 descpription = "This looks like it could fit into something."
 icon = ExtResource("1_iq57n")
-power = 0.0
 is_stackable = false
 stack_size = 0
-drop_scene = "res://COGITO/PrefabScenes/pickup_diamond_key_complete.tscn"
+drop_scene = "res://COGITO/PrefabScenes/Pickups/pickup_diamond_key_complete.tscn"
 hint_icon_on_use = ExtResource("1_okpun")
 hint_text_on_use = "Now where does this fit?"
 sound_pickup = ExtResource("4_n11fw")
-sound_drop = ExtResource("4_oqy18")
-attribute_name = ""
-attribute_change_amount = 0.0
-primary_use_prompt = ""
-secondary_use_prompt = ""
-charge_max = 0.0
-ammo_item_name = ""
-charge_current = 0.0
-wieldable_range = 0.0
-wieldable_damage = 0.0
-equip_anim = ""
-unequip_anim = ""
-reload_anim = ""
-use_anim = ""
-target_item_combine = ""
-discard_after_use = true
-reload_amount = 1

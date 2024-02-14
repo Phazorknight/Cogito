@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="3_3mis5"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/PickupComponent.tscn" id="3_v5e5e"]
 
-[sub_resource type="Resource" id="Resource_wr1q3"]
+[sub_resource type="Resource" id="Resource_w022u"]
 resource_local_to_scene = true
 script = ExtResource("2_rpoee")
 inventory_item = ExtResource("2_j4by2")
@@ -28,4 +28,4 @@ polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.15, 0)
 margin = 0.02
 
 [node name="PickupComponent" parent="." instance=ExtResource("3_v5e5e")]
-slot_data = SubResource("Resource_wr1q3")
+slot_data = SubResource("Resource_w022u")
