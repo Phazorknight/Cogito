@@ -525,9 +525,15 @@ func _physics_process(delta):
 				sliding_timer.stop()
 			else:
 				velocity.y = JUMP_VELOCITY
-				
-			var platformY = get_platform_velocity().y # inherit any platform upwards velocity
-			velocity.y += platformY
+			
+			if platform_on_leave != PLATFORM_ON_LEAVE_DO_NOTHING:
+				var platform_velocity = get_platform_velocity()
+				# TODO: Make PLATFORM_ON_LEAVE_ADD_VELOCITY work... somehow. 
+				# Velocity X and Z gets overridden later, so you immediately lose the velocity
+				if PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY:
+					platform_velocity.x = 0
+					platform_velocity.z = 0
+				velocity += platform_velocity
 			
 			if is_sprinting:
 				bunny_hop_speed += BUNNY_HOP_ACCELERATION
