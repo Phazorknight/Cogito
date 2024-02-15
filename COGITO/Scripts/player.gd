@@ -57,6 +57,7 @@ signal player_state_loaded()
 @export var SPRINTING_SPEED = 8.0
 @export var CROUCHING_SPEED = 3.0
 @export var CROUCHING_DEPTH = -0.9
+@export var CAN_CROUCH_JUMP = true
 @export var MOUSE_SENS = 0.25
 @export var LERP_SPEED = 10.0
 @export var AIR_LERP_SPEED = 6.0
@@ -506,10 +507,11 @@ func _physics_process(delta):
 			health_component.subtract(fall_damage)
 	
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
-		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
 		jump_timer.start() # prevent spam
+		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
+		var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
 		
-		if doesnt_need_stamina:
+		if doesnt_need_stamina and crouch_jump:
 			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
 			if is_using_stamina:
 				decrease_attribute("stamina",stamina_component.jump_exhaustion)
@@ -531,6 +533,11 @@ func _physics_process(delta):
 				bunny_hop_speed += BUNNY_HOP_ACCELERATION
 			else:
 				bunny_hop_speed = SPRINTING_SPEED
+			
+			if is_crouching:
+				#temporarily switch colliders to process jump correctly
+				standing_collision_shape.disabled = false
+				crouching_collision_shape.disabled = true
 		else:
 			print("Not enough stamina to jump.")
 
