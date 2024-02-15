@@ -5,7 +5,6 @@ signal player_state_loaded()
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
-var pause_menu_node : Node
 ## Refereence to Player HUD node
 @export var player_hud : NodePath
 
@@ -35,6 +34,7 @@ var pause_menu_node : Node
 @onready var crouch_raycast: RayCast3D = $CrouchRayCast
 @onready var sliding_timer: Timer = $SlidingTimer
 @onready var footstep_timer: Timer = $FootstepTimer
+@onready var jump_timer: Timer = $JumpCooldownTimer
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
@@ -57,6 +57,7 @@ var pause_menu_node : Node
 @export var SPRINTING_SPEED = 8.0
 @export var CROUCHING_SPEED = 3.0
 @export var CROUCHING_DEPTH = -0.9
+@export var CAN_CROUCH_JUMP = true
 @export var MOUSE_SENS = 0.25
 @export var LERP_SPEED = 10.0
 @export var AIR_LERP_SPEED = 6.0
@@ -140,7 +141,7 @@ func _ready():
 
 	# Pause Menu setup
 	if pause_menu:
-		pause_menu_node = get_node(pause_menu)
+		var pause_menu_node = get_node(pause_menu)
 		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
@@ -280,7 +281,7 @@ func _input(event):
 	if event.is_action_pressed("menu"):
 		if !is_movement_paused and !is_dead:
 			_on_pause_movement()
-			pause_menu_node.open_pause_menu()
+			get_node(pause_menu).open_pause_menu()
 	
 	# Open/closes Inventory if Inventory button is pressed
 	if event.is_action_pressed("inventory") and !is_dead:
@@ -316,7 +317,7 @@ func _process_on_ladder(_delta):
 	else:
 		input_dir = Vector2.ZERO
 		
-	var jump = Input.is_action_just_pressed("jump")
+	var jump = Input.is_action_pressed("jump")
 
 	# Processing analog stick mouselook
 	if joystick_h_event:
@@ -413,7 +414,7 @@ func _physics_process(delta):
 		sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
-			if !Input.is_action_just_pressed("jump"):
+			if !Input.is_action_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
@@ -422,7 +423,7 @@ func _physics_process(delta):
 			is_sprinting = true
 			is_crouching = false
 		elif Input.is_action_pressed("sprint") and !is_using_stamina:	
-			if !Input.is_action_just_pressed("jump"):
+			if !Input.is_action_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
@@ -505,28 +506,47 @@ func _physics_process(delta):
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			health_component.subtract(fall_damage)
 	
-	if Input.is_action_just_pressed("jump") and !is_movement_paused and is_on_floor():
-		snap = Vector3.ZERO
-		is_falling = true
-		# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
-		if is_using_stamina and stamina_component.current_stamina >= stamina_component.jump_exhaustion:
-			decrease_attribute("stamina",stamina_component.jump_exhaustion)
-		else:
-			print("Not enough stamina to jump.")
-			return
+	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
+		jump_timer.start() # prevent spam
+		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
+		var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
+		
+		if doesnt_need_stamina and crouch_jump:
+			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
+			if is_using_stamina:
+				decrease_attribute("stamina",stamina_component.jump_exhaustion)
+			snap = Vector3.ZERO
+			is_falling = true
 			
-		animationPlayer.play("jump")
-		Audio.play_sound(jump_sound)
-		if !sliding_timer.is_stopped():
-			velocity.y = JUMP_VELOCITY * 1.5
-			sliding_timer.stop()
-		else:
-			velocity.y = JUMP_VELOCITY
-		if is_sprinting:
-			bunny_hop_speed += BUNNY_HOP_ACCELERATION
-		else:
-			bunny_hop_speed = SPRINTING_SPEED
-	
+			animationPlayer.play("jump")
+			Audio.play_sound(jump_sound)
+			if !sliding_timer.is_stopped():
+				velocity.y = JUMP_VELOCITY * 1.5
+				sliding_timer.stop()
+			else:
+				velocity.y = JUMP_VELOCITY
+			
+			if platform_on_leave != PLATFORM_ON_LEAVE_DO_NOTHING:
+				var platform_velocity = get_platform_velocity()
+				# TODO: Make PLATFORM_ON_LEAVE_ADD_VELOCITY work... somehow. 
+				# Velocity X and Z gets overridden later, so you immediately lose the velocity
+				if PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY:
+					platform_velocity.x = 0
+					platform_velocity.z = 0
+				velocity += platform_velocity
+			
+			if is_sprinting:
+				bunny_hop_speed += BUNNY_HOP_ACCELERATION
+			else:
+				bunny_hop_speed = SPRINTING_SPEED
+			
+			if is_crouching:
+				#temporarily switch colliders to process jump correctly
+				standing_collision_shape.disabled = false
+				crouching_collision_shape.disabled = true
+		elif not doesnt_need_stamina:
+			print("Not enough stamina to jump.")
+
 	if sliding_timer.is_stopped():
 		if is_on_floor():
 			direction = lerp(
