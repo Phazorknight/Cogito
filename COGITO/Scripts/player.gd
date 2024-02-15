@@ -538,7 +538,7 @@ func _physics_process(delta):
 				#temporarily switch colliders to process jump correctly
 				standing_collision_shape.disabled = false
 				crouching_collision_shape.disabled = true
-		else:
+		elif not doesnt_need_stamina:
 			print("Not enough stamina to jump.")
 
 	if sliding_timer.is_stopped():
