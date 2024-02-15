@@ -503,29 +503,31 @@ func _physics_process(delta):
 		# Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			health_component.subtract(fall_damage)
-	
+
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
-		snap = Vector3.ZERO
-		is_falling = true
-		# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
-		if is_using_stamina and stamina_component.current_stamina >= stamina_component.jump_exhaustion:
-			decrease_attribute("stamina",stamina_component.jump_exhaustion)
+		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
+		
+		if doesnt_need_stamina:
+			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
+			if is_using_stamina:
+				decrease_attribute("stamina",stamina_component.jump_exhaustion)
+			snap = Vector3.ZERO
+			is_falling = true
+				
+			animationPlayer.play("jump")
+			Audio.play_sound(jump_sound)
+			if !sliding_timer.is_stopped():
+				velocity.y = JUMP_VELOCITY * 1.5
+				sliding_timer.stop()
+			else:
+				velocity.y = JUMP_VELOCITY
+			if is_sprinting:
+				bunny_hop_speed += BUNNY_HOP_ACCELERATION
+			else:
+				bunny_hop_speed = SPRINTING_SPEED
 		else:
 			print("Not enough stamina to jump.")
-			return
-			
-		animationPlayer.play("jump")
-		Audio.play_sound(jump_sound)
-		if !sliding_timer.is_stopped():
-			velocity.y = JUMP_VELOCITY * 1.5
-			sliding_timer.stop()
-		else:
-			velocity.y = JUMP_VELOCITY
-		if is_sprinting:
-			bunny_hop_speed += BUNNY_HOP_ACCELERATION
-		else:
-			bunny_hop_speed = SPRINTING_SPEED
-	
+
 	if sliding_timer.is_stopped():
 		if is_on_floor():
 			direction = lerp(
