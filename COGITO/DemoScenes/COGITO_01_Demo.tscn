@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://COGITO/PrefabScenes/Pickups/pickup_flashlight.tscn" id="1_oweej"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="2_4ig6i"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_chxar"]
-[ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="3_q2rvv"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="4_1ofwa"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="6_cy1m6"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PrefabScenes/ceiling_lamp.tscn" id="7_3y6g2"]
@@ -43,6 +42,7 @@
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="38_l5vpp"]
 [ext_resource type="Script" path="res://COGITO/Scripts/ladder_area.gd" id="39_ferka"]
 [ext_resource type="PackedScene" uid="uid://c6dn6bn47xyrj" path="res://COGITO/Assets/Models/ladder.glb" id="39_ri7bt"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/tab_menu.tscn" id="40_6m7mg"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="43_bchdf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
@@ -257,7 +257,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_flbun"]
+[sub_resource type="Resource" id="Resource_hfmo1"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -335,7 +335,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_vsbl0"]
+[sub_resource type="Resource" id="Resource_p0q8m"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -1176,7 +1176,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_flbun")
+inventory_data = SubResource("Resource_hfmo1")
 uses_animation = true
 open_animation = "open"
 
@@ -1534,16 +1534,17 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
-pause_menu = NodePath("../PauseMenu")
+pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_vsbl0")
+inventory_data = SubResource("Resource_p0q8m")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
 use_stamina_component = true
 
-[node name="PauseMenu" parent="." instance=ExtResource("3_q2rvv")]
+[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("40_6m7mg")]
+nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/FullscreenCheckButton"), NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="Ladder" type="Area3D" parent="."]
 transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -18.4395, 1.6, -4.87125)

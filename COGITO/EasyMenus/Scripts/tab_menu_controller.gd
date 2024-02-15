@@ -3,8 +3,11 @@ signal resume
 signal back_to_main_pressed
 
 @onready var content : VBoxContainer = $%Content
-@onready var options_menu : Control = $%OptionsMenu
+@onready var tab_container: TabContainer = $Content/TabContainer
 @onready var resume_game_button: Button = %ResumeGameButton
+@onready var tab_menu_options: Control = $TabMenuOptions
+
+@export var nodes_to_focus: Array[Control]
 
 #region UI AUDIO
 @export var sound_hover : AudioStream
@@ -49,10 +52,14 @@ func _play_pressed() -> void:
 func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true
+	tab_menu_options.on_open()
+	tab_container.set_current_tab(0)
 	show()
-	resume_game_button.grab_focus()
+	resume_game_button.grab_focus.call_deferred()
+	
 	
 func close_pause_menu():
+	print("TabMenu: close_pause_menu called.")
 	get_tree().paused = false
 	hide()
 	emit_signal("resume")
@@ -60,17 +67,6 @@ func close_pause_menu():
 func _on_resume_game_button_pressed():
 	close_pause_menu()
 
-
-func _on_options_button_pressed():
-	content.hide()
-	options_menu.show()
-	options_menu.on_open()
-
-
-func _on_options_menu_close():
-	options_menu.hide()
-	content.show()
-	resume_game_button.grab_focus()
 
 func _on_quit_button_pressed():
 	get_tree().quit()
@@ -81,10 +77,32 @@ func _on_back_to_menu_button_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	emit_signal("back_to_main_pressed")
 
+
 func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")) and visible:
 		accept_event()
 		close_pause_menu()
+	
+	#Tab navigation
+	if (event.is_action_pressed("ui_next_tab")):
+		if tab_container.current_tab + 1 == tab_container.get_tab_count():
+			tab_container.current_tab = 0
+		else:
+			tab_container.current_tab += 1
+			
+		if nodes_to_focus[tab_container.current_tab]:
+			print("Grabbing focus of : ", tab_container.current_tab, " - ", nodes_to_focus[tab_container.current_tab])
+			nodes_to_focus[tab_container.current_tab].grab_focus.call_deferred()
+		
+	if (event.is_action_pressed("ui_prev_tab")):
+		if tab_container.current_tab  == 0:
+			tab_container.current_tab = tab_container.get_tab_count()-1
+		else:
+			tab_container.current_tab -= 1
+			
+		if nodes_to_focus[tab_container.current_tab]:
+			print("Grabbing focus of : ", tab_container.current_tab, " - ", nodes_to_focus[tab_container.current_tab])
+			nodes_to_focus[tab_container.current_tab].grab_focus.call_deferred()
 
 
 func _on_save_button_pressed() -> void:
@@ -92,6 +110,8 @@ func _on_save_button_pressed() -> void:
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
 	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node,CogitoSceneManager._active_slot)
 	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
+	
+	_on_resume_game_button_pressed()
 	
 
 func _on_load_button_pressed() -> void:

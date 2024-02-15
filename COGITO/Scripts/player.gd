@@ -5,6 +5,7 @@ signal player_state_loaded()
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
+var pause_menu_node : Node
 ## Refereence to Player HUD node
 @export var player_hud : NodePath
 
@@ -139,7 +140,7 @@ func _ready():
 
 	# Pause Menu setup
 	if pause_menu:
-		var pause_menu_node = get_node(pause_menu)
+		pause_menu_node = get_node(pause_menu)
 		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
@@ -279,7 +280,7 @@ func _input(event):
 	if event.is_action_pressed("menu"):
 		if !is_movement_paused and !is_dead:
 			_on_pause_movement()
-			get_node(pause_menu).open_pause_menu()
+			pause_menu_node.open_pause_menu()
 	
 	# Open/closes Inventory if Inventory button is pressed
 	if event.is_action_pressed("inventory") and !is_dead:
@@ -315,7 +316,7 @@ func _process_on_ladder(_delta):
 	else:
 		input_dir = Vector2.ZERO
 		
-	var jump = Input.is_action_pressed("jump")
+	var jump = Input.is_action_just_pressed("jump")
 
 	# Processing analog stick mouselook
 	if joystick_h_event:
@@ -412,7 +413,7 @@ func _physics_process(delta):
 		sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
-			if !Input.is_action_pressed("jump"):
+			if !Input.is_action_just_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
@@ -421,7 +422,7 @@ func _physics_process(delta):
 			is_sprinting = true
 			is_crouching = false
 		elif Input.is_action_pressed("sprint") and !is_using_stamina:	
-			if !Input.is_action_pressed("jump"):
+			if !Input.is_action_just_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
@@ -504,7 +505,7 @@ func _physics_process(delta):
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			health_component.subtract(fall_damage)
 	
-	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
+	if Input.is_action_just_pressed("jump") and !is_movement_paused and is_on_floor():
 		snap = Vector3.ZERO
 		is_falling = true
 		# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
