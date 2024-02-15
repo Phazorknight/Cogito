@@ -129,5 +129,9 @@ start_sanity = 30.0
 
 [node name="BrightnessComponent" parent="." instance=ExtResource("9_x4tef")]
 
+[node name="JumpCooldownTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="animation_finished" from="Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]

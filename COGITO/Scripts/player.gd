@@ -34,6 +34,7 @@ signal player_state_loaded()
 @onready var crouch_raycast: RayCast3D = $CrouchRayCast
 @onready var sliding_timer: Timer = $SlidingTimer
 @onready var footstep_timer: Timer = $FootstepTimer
+@onready var jump_timer: Timer = $JumpCooldownTimer
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
@@ -503,9 +504,10 @@ func _physics_process(delta):
 		# Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			health_component.subtract(fall_damage)
-
-	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
+	
+	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
 		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
+		jump_timer.start() # prevent spam
 		
 		if doesnt_need_stamina:
 			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
@@ -513,7 +515,7 @@ func _physics_process(delta):
 				decrease_attribute("stamina",stamina_component.jump_exhaustion)
 			snap = Vector3.ZERO
 			is_falling = true
-				
+			
 			animationPlayer.play("jump")
 			Audio.play_sound(jump_sound)
 			if !sliding_timer.is_stopped():
@@ -521,6 +523,10 @@ func _physics_process(delta):
 				sliding_timer.stop()
 			else:
 				velocity.y = JUMP_VELOCITY
+				
+			var platformY = get_platform_velocity().y # inherit any platform upwards velocity
+			velocity.y += platformY
+			
 			if is_sprinting:
 				bunny_hop_speed += BUNNY_HOP_ACCELERATION
 			else:
