@@ -14,8 +14,8 @@ signal object_state_updated(interaction_text:String)
 @export_group("Keypad Settings")
 ## The code that needs to be entered to unlock. Needs to be just numbers.
 @export var passcode : String
-## The length of the code. Usually 4 but can be longer or shorter.
-@export var passcode_digit_length : int = 4
+## If on, code will be checked immediately once the right amount of digits is entered. if OFF, the player needs to press the E button first.
+@export var check_when_entered : bool
 ## This prompt appears when the keypad is still locked.
 @export var interaction_text_when_locked : String = "Enter Code"
 ## This prompt appears when the keypad has been unlocked.
@@ -45,12 +45,11 @@ var is_open: bool #Used to show/hide ui.
 var is_locked : bool = true #Used to check if unlocked or not.
 var interaction_nodes : Array[Node]
 var entered_code: String
-var entered_code_array: Array[int]
 var player_interaction_component
 
 
 func _ready():
-	entered_code_array.clear()
+	code_display.text = ""
 	
 	add_to_group("interactable")
 	add_to_group("save_object_state")
@@ -84,39 +83,19 @@ func _on_button_received(_passed_string:String):
 		return
 	
 	match _passed_string:
-		"0":
-			append_to_entered_code(0)
-		"1":
-			append_to_entered_code(1)
-		"2":
-			append_to_entered_code(2)
-		"3":
-			append_to_entered_code(3)
-		"4":
-			append_to_entered_code(4)
-		"5":
-			append_to_entered_code(5)
-		"6":
-			append_to_entered_code(6)
-		"7":
-			append_to_entered_code(7)
-		"8":
-			append_to_entered_code(8)
-		"9":
-			append_to_entered_code(9)
 		"C":
 			clear_entered_code()
 		"E":
 			check_entered_code()
 		_:
-			pass
+			append_to_entered_code(_passed_string)
 
-func append_to_entered_code(_code_digit:int):
-	if entered_code_array.size() <= passcode_digit_length - 1:
-		entered_code_array.append(_code_digit)
-		entered_code = entered_code + str(_code_digit)
+
+func append_to_entered_code(_code_digit:String):
+	if entered_code.length() < passcode.length():
+		entered_code = entered_code + _code_digit
 		update_code_display()
-		if entered_code_array.size() == passcode_digit_length:
+		if entered_code.length() == passcode.length():
 			check_entered_code()
 	else:
 		print("Maximum code length reached")
@@ -124,6 +103,16 @@ func append_to_entered_code(_code_digit:int):
 
 func update_code_display():
 	code_display.text = entered_code
+	
+
+func check_entered_code():
+	if entered_code == passcode and is_locked:
+		unlock_keypad()
+	else:
+		Audio.play_sound(wrong_code_entered_sound)
+		lock_color.modulate = wrong_code_color
+		await get_tree().create_timer(unlock_wait_time).timeout
+		clear_entered_code()
 
 
 func unlock_keypad():
@@ -148,17 +137,7 @@ func unlock_keypad():
 	player_interaction_component.get_parent()._on_resume_movement()
 	is_open = false
 
-
-func check_entered_code():
-	if entered_code == passcode and is_locked:
-		unlock_keypad()
-	else:
-		Audio.play_sound(wrong_code_entered_sound)
-		lock_color.modulate = wrong_code_color
-
-
 func clear_entered_code():
-	entered_code_array.clear()
 	entered_code = ""
 	code_display.text = ""
 
