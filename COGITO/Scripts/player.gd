@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 signal toggle_inventory_interface()
 signal player_state_loaded()
+signal toggled_interface(is_active:bool) #Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
@@ -15,6 +16,7 @@ signal player_state_loaded()
 
 ## Flag if Stamina component isused (as this effects movement)
 @export var is_using_stamina : bool = true
+@export var is_using_sanity : bool = true
 # Components:
 @onready var health_component = $HealthComponent
 @onready var sanity_component = $SanityComponent
@@ -159,7 +161,6 @@ func increase_attribute(attribute_name: String, value: float) -> bool:
 			if health_component.current_health == health_component.max_health:
 				return false
 			else:
-				print("Adding ", value, " to current_health.")
 				health_component.add(value)
 				return true
 		"health_max":
@@ -217,12 +218,12 @@ func _on_death():
 
 func _on_brightness_changed(current_brightness,max_brightness):
 	print("Brightness changed to ", current_brightness)
-	if current_brightness <= 0:
+	if current_brightness <= 0 and is_using_sanity:
 		if sanity_component.is_recovering:
 			sanity_component.stop_recovery()
 		else:
 			sanity_component.start_decay()
-	else:
+	elif is_using_sanity:
 		sanity_component.stop_decay()
 		print("Checking if ", (sanity_component.current_sanity/sanity_component.max_sanity), " < ", (current_brightness/max_brightness))
 		if (sanity_component.current_sanity/sanity_component.max_sanity) < (current_brightness/max_brightness):
@@ -290,7 +291,8 @@ func _input(event):
 
 func _process(delta): 
 	# If SanityComponent is used, this decreases health when sanity is 0.
-	if sanity_component.current_sanity <= 0:
+	if is_using_sanity and sanity_component.current_sanity <= 0:
+		print("Taking damage due to 0 sanity.")
 		take_damage(health_component.no_sanity_damage * delta)
 
 # Cache allocation of test motion parameters.

@@ -1,6 +1,7 @@
 extends Node3D
 
 signal object_state_updated(interaction_text: String)
+signal switched(is_on)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
@@ -59,6 +60,8 @@ func interact(_player_interaction_component):
 func switch():
 	audio_stream_player_3d.play()
 	is_on = !is_on
+	
+	switched.emit(is_on) #emitting signal
 	
 	for nodepath in objects_call_interact:
 		await get_tree().create_timer(objects_call_delay).timeout

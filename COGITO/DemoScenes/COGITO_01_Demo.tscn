@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=141 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_b15oo"]
@@ -44,6 +44,10 @@
 [ext_resource type="PackedScene" uid="uid://c6dn6bn47xyrj" path="res://COGITO/Assets/Models/ladder.glb" id="39_ri7bt"]
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/tab_menu.tscn" id="40_6m7mg"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="43_bchdf"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="45_ubu8v"]
+[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/ReadableComponent.tscn" id="46_tumg2"]
+[ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="47_34dsu"]
+[ext_resource type="PackedScene" uid="uid://i4rqcx7lyrfd" path="res://COGITO/PrefabScenes/keypad_prefab.tscn" id="48_150m3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -257,7 +261,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_ti4lm"]
+[sub_resource type="Resource" id="Resource_wnfx7"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -335,7 +339,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_yooc7"]
+[sub_resource type="Resource" id="Resource_ffwkm"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -356,6 +360,36 @@ albedo_color = Color(0.913725, 0.521569, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uobrk"]
 size = Vector3(3, 2.5, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k5ubr"]
+size = Vector3(0.3, 0.02, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vcta0"]
+margin = 0.01
+size = Vector3(0.3, 0.06, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pfhrt"]
+size = Vector3(0.07, 1.8, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okhh2"]
+albedo_color = Color(0.619608, 0.552941, 0.494118, 1)
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_br66c"]
+size = Vector3(0.1, 2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxkv6"]
+albedo_color = Color(0.729412, 0.615686, 0.603922, 1)
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_hyokq"]
+size = Vector3(0.1, 0.1, 2.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_co2vf"]
+size = Vector3(0.1, 0.1, 2.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mvqfg"]
+size = Vector3(0.1, 2, 3)
 
 [node name="COGITO_Demo_01" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_b15oo")
@@ -1176,7 +1210,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_ti4lm")
+inventory_data = SubResource("Resource_wnfx7")
 uses_animation = true
 open_animation = "open"
 
@@ -1536,15 +1570,16 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_yooc7")
+is_using_sanity = false
+inventory_data = SubResource("Resource_ffwkm")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
 player = NodePath("../Player")
+use_brightness_component = true
 use_stamina_component = true
 
-[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("40_6m7mg")]
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/FullscreenCheckButton"), NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+[node name="TabMenu" parent="." instance=ExtResource("40_6m7mg")]
 
 [node name="Ladder" type="Area3D" parent="."]
 transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -18.4395, 1.6, -4.87125)
@@ -1641,6 +1676,84 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10.5,
 
 [node name="RayCast3D" type="RayCast3D" parent="ConnectorA"]
 target_position = Vector3(0, 0, -1)
+
+[node name="Document" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -9.4669, 1.43739, 2.7927)
+collision_layer = 3
+script = ExtResource("45_ubu8v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Document"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_k5ubr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Document"]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -0.00130868, -4.76837e-07)
+shape = SubResource("BoxShape3D_vcta0")
+
+[node name="ReadableComponent" parent="Document" instance=ExtResource("46_tumg2")]
+interact_sound = ExtResource("47_34dsu")
+readable_title = "Readable Component"
+readable_content = "COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on providing a framework for creating interactable objects and items.
+
+Also the code is 0451."
+
+[node name="Door_for_Keypad" type="AnimatableBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.8, 0, 2.91)
+script = ExtResource("23_rfav8")
+is_locked = true
+key_hint = "Key needed."
+is_sliding = true
+closed_rotation_deg = -90.0
+closed_position = Vector3(-10.8, 0, 2.91)
+open_position = Vector3(-10.8, -2.1, 2.91)
+door_speed = 0.9
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Door_for_Keypad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.5)
+mesh = SubResource("BoxMesh_pfhrt")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_okhh2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Door_for_Keypad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 1, 2.95)
+mesh = SubResource("BoxMesh_br66c")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Door_for_Keypad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.05)
+mesh = SubResource("BoxMesh_br66c")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Door_for_Keypad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 1.5)
+mesh = SubResource("BoxMesh_hyokq")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Door_for_Keypad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 1.5)
+mesh = SubResource("BoxMesh_co2vf")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door_for_Keypad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.5)
+shape = SubResource("BoxShape3D_mvqfg")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Door_for_Keypad"]
+volume_db = -26.0
+bus = &"SFX"
+
+[node name="BasicInteraction" parent="Door_for_Keypad" instance=ExtResource("8_wnjgg")]
+interaction_text = "Interact"
+
+[node name="Keypad" parent="." node_paths=PackedStringArray("doors_to_unlock") instance=ExtResource("48_150m3")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -10.5, 1.4, 2.8)
+passcode = "0451"
+doors_to_unlock = [NodePath("../Door_for_Keypad")]
+open_when_unlocked = true
 
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
 [connection signal="body_exited" from="KillZone" to="KillZone" method="_on_body_exited"]

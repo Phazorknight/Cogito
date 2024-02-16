@@ -1,6 +1,8 @@
 extends Button
 class_name CogitoButton
 
+signal pressed_string(text:String)
+
 var tween_time : float = 0.2
 var tween_stylebox : StyleBoxFlat
 var styleboxes : Dictionary = {}
@@ -12,6 +14,7 @@ func _ready() -> void:
 	#Attempt to make this work with focus
 	self.focus_entered.connect(_on_focus_entered)
 	self.focus_exited.connect(_on_focus_exited)
+	self.pressed.connect(_on_pressed)
 	
 	# Duplicate the normal stylebox. We are going to use it as our base stylebox
 	tween_stylebox = get_theme_stylebox('normal').duplicate()
@@ -67,3 +70,7 @@ func _on_focus_exited() -> void:
 	tween.tween_property(tween_stylebox, "bg_color", target.bg_color, tween_time)
 	tween.tween_property(tween_stylebox, "border_color", target.border_color, tween_time)
 	tween.tween_property(tween_stylebox, "border_width_left", target.border_width_left, tween_time)
+
+
+func _on_pressed():
+	pressed_string.emit(text)
