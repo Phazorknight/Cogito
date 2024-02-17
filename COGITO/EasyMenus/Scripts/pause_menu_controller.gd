@@ -4,7 +4,7 @@ signal back_to_main_pressed
 
 @onready var content : VBoxContainer = $%Content
 @onready var options_menu : Control = $%OptionsMenu
-@onready var resume_game_button: Button = $%ResumeGameButton
+@onready var resume_game_button: Button = %ResumeGameButton
 
 #region UI AUDIO
 @export var sound_hover : AudioStream
@@ -82,7 +82,7 @@ func _on_back_to_menu_button_pressed():
 	emit_signal("back_to_main_pressed")
 
 func _input(event):
-	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")) and visible and !options_menu.visible:
+	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")) and visible:
 		accept_event()
 		close_pause_menu()
 

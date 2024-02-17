@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 signal toggle_inventory_interface()
 signal player_state_loaded()
+signal toggled_interface(is_active:bool) #Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
@@ -15,6 +16,7 @@ signal player_state_loaded()
 
 ## Flag if Stamina component isused (as this effects movement)
 @export var is_using_stamina : bool = true
+@export var is_using_sanity : bool = true
 # Components:
 @onready var health_component = $HealthComponent
 @onready var sanity_component = $SanityComponent
@@ -34,6 +36,7 @@ signal player_state_loaded()
 @onready var crouch_raycast: RayCast3D = $CrouchRayCast
 @onready var sliding_timer: Timer = $SlidingTimer
 @onready var footstep_timer: Timer = $FootstepTimer
+@onready var jump_timer: Timer = $JumpCooldownTimer
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
@@ -56,6 +59,7 @@ signal player_state_loaded()
 @export var SPRINTING_SPEED = 8.0
 @export var CROUCHING_SPEED = 3.0
 @export var CROUCHING_DEPTH = -0.9
+@export var CAN_CROUCH_JUMP = true
 @export var MOUSE_SENS = 0.25
 @export var LERP_SPEED = 10.0
 @export var AIR_LERP_SPEED = 6.0
@@ -157,7 +161,6 @@ func increase_attribute(attribute_name: String, value: float) -> bool:
 			if health_component.current_health == health_component.max_health:
 				return false
 			else:
-				print("Adding ", value, " to current_health.")
 				health_component.add(value)
 				return true
 		"health_max":
@@ -215,12 +218,12 @@ func _on_death():
 
 func _on_brightness_changed(current_brightness,max_brightness):
 	print("Brightness changed to ", current_brightness)
-	if current_brightness <= 0:
+	if current_brightness <= 0 and is_using_sanity:
 		if sanity_component.is_recovering:
 			sanity_component.stop_recovery()
 		else:
 			sanity_component.start_decay()
-	else:
+	elif is_using_sanity:
 		sanity_component.stop_decay()
 		print("Checking if ", (sanity_component.current_sanity/sanity_component.max_sanity), " < ", (current_brightness/max_brightness))
 		if (sanity_component.current_sanity/sanity_component.max_sanity) < (current_brightness/max_brightness):
@@ -288,7 +291,8 @@ func _input(event):
 
 func _process(delta): 
 	# If SanityComponent is used, this decreases health when sanity is 0.
-	if sanity_component.current_sanity <= 0:
+	if is_using_sanity and sanity_component.current_sanity <= 0:
+		print("Taking damage due to 0 sanity.")
 		take_damage(health_component.no_sanity_damage * delta)
 
 # Cache allocation of test motion parameters.
@@ -504,28 +508,47 @@ func _physics_process(delta):
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			health_component.subtract(fall_damage)
 	
-	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor():
-		snap = Vector3.ZERO
-		is_falling = true
-		# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
-		if is_using_stamina and stamina_component.current_stamina >= stamina_component.jump_exhaustion:
-			decrease_attribute("stamina",stamina_component.jump_exhaustion)
-		else:
-			print("Not enough stamina to jump.")
-			return
+	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
+		jump_timer.start() # prevent spam
+		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
+		var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
+		
+		if doesnt_need_stamina and crouch_jump:
+			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
+			if is_using_stamina:
+				decrease_attribute("stamina",stamina_component.jump_exhaustion)
+			snap = Vector3.ZERO
+			is_falling = true
 			
-		animationPlayer.play("jump")
-		Audio.play_sound(jump_sound)
-		if !sliding_timer.is_stopped():
-			velocity.y = JUMP_VELOCITY * 1.5
-			sliding_timer.stop()
-		else:
-			velocity.y = JUMP_VELOCITY
-		if is_sprinting:
-			bunny_hop_speed += BUNNY_HOP_ACCELERATION
-		else:
-			bunny_hop_speed = SPRINTING_SPEED
-	
+			animationPlayer.play("jump")
+			Audio.play_sound(jump_sound)
+			if !sliding_timer.is_stopped():
+				velocity.y = JUMP_VELOCITY * 1.5
+				sliding_timer.stop()
+			else:
+				velocity.y = JUMP_VELOCITY
+			
+			if platform_on_leave != PLATFORM_ON_LEAVE_DO_NOTHING:
+				var platform_velocity = get_platform_velocity()
+				# TODO: Make PLATFORM_ON_LEAVE_ADD_VELOCITY work... somehow. 
+				# Velocity X and Z gets overridden later, so you immediately lose the velocity
+				if PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY:
+					platform_velocity.x = 0
+					platform_velocity.z = 0
+				velocity += platform_velocity
+			
+			if is_sprinting:
+				bunny_hop_speed += BUNNY_HOP_ACCELERATION
+			else:
+				bunny_hop_speed = SPRINTING_SPEED
+			
+			if is_crouching:
+				#temporarily switch colliders to process jump correctly
+				standing_collision_shape.disabled = false
+				crouching_collision_shape.disabled = true
+		elif not doesnt_need_stamina:
+			print("Not enough stamina to jump.")
+
 	if sliding_timer.is_stopped():
 		if is_on_floor():
 			direction = lerp(

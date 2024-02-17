@@ -129,7 +129,7 @@ func set_msaa(mode, index):
 		3:
 			get_viewport().set(mode,Viewport.MSAA_8X)
 
-func _input(event):
-	if event.is_action_pressed("ui_cancel") && visible:
-		accept_event()
-		go_back()
+#func _input(event):
+	#if event.is_action_pressed("ui_cancel") && visible:
+		#accept_event()
+		#go_back()
