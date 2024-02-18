@@ -1,0 +1,2 @@
+extends CogitoQuestGroup
+class_name CompletedQuestsGroup

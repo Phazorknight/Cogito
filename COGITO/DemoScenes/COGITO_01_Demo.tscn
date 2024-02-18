@@ -1,4 +1,4 @@
-[gd_scene load_steps=141 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=149 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_b15oo"]
@@ -48,6 +48,9 @@
 [ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/ReadableComponent.tscn" id="46_tumg2"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="47_34dsu"]
 [ext_resource type="PackedScene" uid="uid://i4rqcx7lyrfd" path="res://COGITO/PrefabScenes/keypad_prefab.tscn" id="48_150m3"]
+[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="49_obvm3"]
+[ext_resource type="Resource" uid="uid://yb7k8evveqdp" path="res://COGITO/QuestSystemPD/Quests/QuestA.tres" id="50_blav1"]
+[ext_resource type="Resource" uid="uid://bmkcm7tkpqjwb" path="res://COGITO/QuestSystemPD/Quests/QuestB.tres" id="51_cmhea"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -168,6 +171,13 @@ size = Vector3(0.2, 3, 10.2)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_8jyx7"]
 points = PackedVector3Array(-0.1, -1.5, -5.1, 0.1, -1.5, -5.1, -0.1, -1.5, 5.1, -0.1, 1.5, -5.1, 0.1, 1.5, -5.1, 0.1, -1.5, 5.1, -0.1, 1.5, 5.1, 0.1, 1.5, 5.1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_sjsod"]
+material = ExtResource("1_lsda4")
+size = Vector3(0.2, 3, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_msc2o"]
+size = Vector3(0.2, 3, 0.6)
+
 [sub_resource type="BoxMesh" id="BoxMesh_fccbs"]
 material = ExtResource("1_lsda4")
 size = Vector3(0.2, 3, 19.6)
@@ -261,7 +271,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_wnfx7"]
+[sub_resource type="Resource" id="Resource_anrlp"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -339,7 +349,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_ffwkm"]
+[sub_resource type="Resource" id="Resource_eh8s1"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -391,6 +401,21 @@ size = Vector3(0.1, 0.1, 2.8)
 [sub_resource type="BoxShape3D" id="BoxShape3D_mvqfg"]
 size = Vector3(0.1, 2, 3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_ijtgs"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x0tj6"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7lhxu"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.184314, 0.588235, 0.701961, 0.392157)
+rim = 0.0
+rim_tint = 0.0
+backlight = Color(0.509804, 0.294118, 0.294118, 1)
+disable_receive_shadows = true
+
 [node name="COGITO_Demo_01" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_b15oo")
 connectors = [NodePath("ConnectorA")]
@@ -441,6 +466,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0999994)
 mesh = SubResource("BoxMesh_cx70k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Floor5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0999994)
+shape = SubResource("ConvexPolygonShape3D_22r6n")
+
+[node name="Floor7" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8, -0.05, -10)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Floor7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0999994)
+mesh = SubResource("BoxMesh_cx70k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Floor7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0999994)
 shape = SubResource("ConvexPolygonShape3D_22r6n")
 
@@ -599,6 +636,19 @@ transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 4.59655,
 text = "SCENE TRANSITION"
 font_size = 48
 
+[node name="Wall_w_Door2" type="CSGPolygon3D" parent="STATIC_ENVIRONMENT"]
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 4.8, 0, -5)
+use_collision = true
+collision_layer = 3
+polygon = PackedVector2Array(0, 0, 0, 3, 9.6, 3, 9.6, 0, 5, 0, 5, 2, 4, 2, 4, 0)
+depth = 0.2
+material = ExtResource("1_lsda4")
+
+[node name="Txt_Quests" type="Label3D" parent="STATIC_ENVIRONMENT/Wall_w_Door2"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 4.59655, 2.18871, 0.0237131)
+text = "QUEST MANAGER"
+font_size = 48
+
 [node name="WallCrouch" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -11.4105, 1, -2.89699)
 metadata/_edit_group_ = true
@@ -632,12 +682,12 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.9, 0
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="STATIC_ENVIRONMENT/Wall7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-mesh = SubResource("BoxMesh_ukt6d")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -4.8)
+mesh = SubResource("BoxMesh_sjsod")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="STATIC_ENVIRONMENT/Wall7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("ConvexPolygonShape3D_8jyx7")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -4.8)
+shape = SubResource("BoxShape3D_msc2o")
 
 [node name="Wall16" type="StaticBody3D" parent="STATIC_ENVIRONMENT"]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 14.9, 0, 0)
@@ -1210,7 +1260,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_wnfx7")
+inventory_data = SubResource("Resource_anrlp")
 uses_animation = true
 open_animation = "open"
 
@@ -1571,7 +1621,7 @@ transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.537
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
 is_using_sanity = false
-inventory_data = SubResource("Resource_ffwkm")
+inventory_data = SubResource("Resource_eh8s1")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
@@ -1755,8 +1805,113 @@ passcode = "0451"
 doors_to_unlock = [NodePath("../Door_for_Keypad")]
 open_when_unlocked = true
 
+[node name="QuestTriggerAStart" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.54229, -6.6)
+script = ExtResource("49_obvm3")
+quest_to_update = ExtResource("50_blav1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QuestTriggerAStart"]
+shape = SubResource("BoxShape3D_ijtgs")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="QuestTriggerAStart"]
+mesh = SubResource("BoxMesh_x0tj6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7lhxu")
+
+[node name="Txt_QuestTrigger" type="Label3D" parent="QuestTriggerAStart"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+text = "Start Quest A"
+vertical_alignment = 0
+
+[node name="QuestTriggerAComplete" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.54229, -8.6)
+script = ExtResource("49_obvm3")
+quest_to_update = ExtResource("50_blav1")
+update_type = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QuestTriggerAComplete"]
+shape = SubResource("BoxShape3D_ijtgs")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="QuestTriggerAComplete"]
+mesh = SubResource("BoxMesh_x0tj6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7lhxu")
+
+[node name="Txt_QuestTrigger" type="Label3D" parent="QuestTriggerAComplete"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+text = "Complete Quest A"
+vertical_alignment = 0
+
+[node name="QuestTriggerBStart" type="Area3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.2, 1.54229, -6.6)
+script = ExtResource("49_obvm3")
+quest_to_update = ExtResource("51_cmhea")
+update_type = 3
+counter_change = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QuestTriggerBStart"]
+shape = SubResource("BoxShape3D_ijtgs")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="QuestTriggerBStart"]
+mesh = SubResource("BoxMesh_x0tj6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7lhxu")
+
+[node name="Txt_QuestTrigger" type="Label3D" parent="QuestTriggerBStart"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+text = "Increase Quest B
+Counter"
+vertical_alignment = 0
+
+[node name="QuestTriggerBprogress" type="Area3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.2, 1.54229, -8.6)
+script = ExtResource("49_obvm3")
+quest_to_update = ExtResource("51_cmhea")
+update_type = 3
+counter_change = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QuestTriggerBprogress"]
+shape = SubResource("BoxShape3D_ijtgs")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="QuestTriggerBprogress"]
+mesh = SubResource("BoxMesh_x0tj6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7lhxu")
+
+[node name="Txt_QuestTrigger" type="Label3D" parent="QuestTriggerBprogress"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+text = "Increase Quest B
+Counter"
+vertical_alignment = 0
+
+[node name="QuestTriggerBprogress2" type="Area3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.2, 1.54229, -10.7)
+script = ExtResource("49_obvm3")
+quest_to_update = ExtResource("51_cmhea")
+update_type = 3
+counter_change = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="QuestTriggerBprogress2"]
+shape = SubResource("BoxShape3D_ijtgs")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="QuestTriggerBprogress2"]
+mesh = SubResource("BoxMesh_x0tj6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_7lhxu")
+
+[node name="Txt_QuestTrigger" type="Label3D" parent="QuestTriggerBprogress2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+text = "Increase Quest B
+Counter"
+vertical_alignment = 0
+
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
 [connection signal="body_exited" from="KillZone" to="KillZone" method="_on_body_exited"]
+[connection signal="body_entered" from="QuestTriggerAStart" to="QuestTriggerAStart" method="_on_body_entered"]
+[connection signal="body_entered" from="QuestTriggerAComplete" to="QuestTriggerAComplete" method="_on_body_entered"]
+[connection signal="body_entered" from="QuestTriggerBStart" to="QuestTriggerBStart" method="_on_body_entered"]
+[connection signal="body_entered" from="QuestTriggerBprogress" to="QuestTriggerBprogress" method="_on_body_entered"]
+[connection signal="body_entered" from="QuestTriggerBprogress2" to="QuestTriggerBprogress2" method="_on_body_entered"]
 
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery"]
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2"]

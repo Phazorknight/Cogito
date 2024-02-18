@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=27 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png" id="6_f5jpm"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
+[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/Ui_QuestHUD.gd" id="15_kn51k"]
+[ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://COGITO/QuestSystemPD/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI_HintComponent.tscn" id="17_bidre"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1f12m"]
@@ -500,6 +502,55 @@ text = "Restart"
 layout_mode = 1
 offset_bottom = 5.0
 theme = ExtResource("5_j6s1a")
+
+[node name="QuestHUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_bottom = 5.0
+grow_horizontal = 2
+theme = ExtResource("5_j6s1a")
+script = ExtResource("15_kn51k")
+send_quest_notifications = true
+quest_entry = ExtResource("16_qsjbq")
+
+[node name="QuestDisplay" type="PanelContainer" parent="QuestHUD"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 166.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestHUD/QuestDisplay"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="QuestHUD/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"PromptLabel"
+theme_override_font_sizes/font_size = 24
+text = "Quests"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="QuestHUD/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+
+[node name="Active" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="QuestEntry" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
+layout_mode = 2
+
+[node name="Completed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Failed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
 
 [connection signal="timeout" from="HintTimer" to="." method="_on_hint_timer_timeout"]
 [connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]

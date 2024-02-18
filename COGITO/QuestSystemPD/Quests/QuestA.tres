@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="QuestPD" load_steps=2 format=3 uid="uid://yb7k8evveqdp"]
+
+[ext_resource type="Script" path="res://COGITO/QuestSystemPD/CustomResources/CogitoQuest.gd" id="1_t4vbj"]
+
+[resource]
+script = ExtResource("1_t4vbj")
+id = 0
+quest_name = "quest_a"
+quest_title = "Test Quest A"
+quest_description = "We gotta test this somehow."
+quest_counter_current = 0
+quest_counter_goal = 0

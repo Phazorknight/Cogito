@@ -55,6 +55,10 @@ func close_inventory():
 
 
 func _on_focus_changed(control: Control):
+	if !control.has_method("set_slot_data"):
+		print("Not a slot. returning.")
+		return
+	
 	if control != null:
 		control_in_focus = control
 		

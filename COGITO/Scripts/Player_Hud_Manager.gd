@@ -1,5 +1,8 @@
 extends Control
 
+signal show_inventory
+signal hide_inventory
+
 @onready var health_bar = $PlayerAttributes/MarginContainer/VBoxContainer/HealthBar
 @onready var sanity_bar = $PlayerAttributes/MarginContainer/VBoxContainer/SanityBar
 @onready var brightness_bar = $PlayerAttributes/MarginContainer/VBoxContainer/BrightnessBar
@@ -147,11 +150,15 @@ func toggle_inventory_interface(external_inventory_owner = null):
 		inventory_interface.open_inventory()
 		if external_inventory_owner:
 			external_inventory_owner.open()
+			
+		show_inventory.emit()
 	else:
 		inventory_interface.close_inventory()
 		player._on_resume_movement()
 		if external_inventory_owner:
 			external_inventory_owner.close()
+			
+		hide_inventory.emit()
 		
 	if external_inventory_owner and inventory_interface.is_inventory_open:
 		inventory_interface.set_external_inventory(external_inventory_owner)
