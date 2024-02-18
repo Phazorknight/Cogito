@@ -47,7 +47,23 @@ func load_player_state(player, passed_slot:String):
 		_player_state = _player_state.load_state(passed_slot) as CogitoPlayerState
 		
 		# Applying the save state to player node.
-		player.inventory_data = _player_state.player_inventory
+		
+		player.inventory_data = _player_state.player_inventory #Loading inventory data from saved player state to current player inventory.
+		
+		# Loading quests from player state:
+		CogitoQuestManager.active.clear_group()
+		for quest in _player_state.player_active_quests:
+			CogitoQuestManager.active.add_quest(quest)
+		
+		CogitoQuestManager.completed.clear_group()
+		for quest in _player_state.player_completed_quests:
+			CogitoQuestManager.completed.add_quest(quest)
+		
+		CogitoQuestManager.failed.clear_group()
+		for quest in _player_state.player_failed_quests:
+			CogitoQuestManager.failed.add_quest(quest)
+		
+		
 		# Loading saved charges of wieldables
 		var array_of_wieldable_charges = _player_state.saved_wieldable_charges
 		for data in array_of_wieldable_charges:
@@ -90,7 +106,22 @@ func save_player_state(player, slot:String):
 		_player_state = CogitoPlayerState.new()
 	
 	# Writing the save state from current player node.
-	_player_state.player_inventory = player.inventory_data
+	
+	_player_state.player_inventory = player.inventory_data #Saving player inventory
+	
+	# Saving current quests to player state.
+	_player_state.player_active_quests.clear()
+	for quest in CogitoQuestManager.active.quests:
+		_player_state.player_active_quests.append(quest)
+		
+	_player_state.player_completed_quests.clear()
+	for quest in CogitoQuestManager.completed.quests:
+		_player_state.player_completed_quests.append(quest)
+		
+	_player_state.player_failed_quests.clear()
+	for quest in CogitoQuestManager.failed.quests:
+		_player_state.player_completed_quests.append(quest)
+	
 	
 	_player_state.clear_saved_wieldable_charges()
 	for item_slot in player.inventory_data.inventory_slots:

@@ -13,10 +13,13 @@ signal object_state_updated(interaction_text : String)
 ## AudioStream to play while holding.
 @export var hold_audio_stream : AudioStream
 
+var has_been_turned: bool = false
 var interaction_nodes : Array[Node]
 
 func _ready():
+	self.add_to_group("save_object_state")
 	self.add_to_group("interactable")
+	
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	audio_stream_player_3d.stream = hold_audio_stream
 	
@@ -26,11 +29,36 @@ func _ready():
 
 
 func _is_being_turned(_time_remaining:float):
-	self.rotate(rotation_axis,rotation_speed)
+	if !audio_stream_player_3d.playing:
+		audio_stream_player_3d.play()
+		
+	if has_been_turned:
+		self.rotate(rotation_axis * -1,rotation_speed)
+	else:
+		self.rotate(rotation_axis,rotation_speed)
 	
 
 func interact(_player_interaction_component):
 	audio_stream_player_3d.stop()
-	
+	has_been_turned = !has_been_turned
+	print("Turnwheel has been turned: ", has_been_turned)
 	for node in nodes_to_trigger:
 		node.interact(null)
+
+
+func set_state():
+	pass
+
+func save():
+	var state_dict = {
+		"node_path" : self.get_path(),
+		"has_been_turned" : has_been_turned,
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		
+	}
+	return state_dict

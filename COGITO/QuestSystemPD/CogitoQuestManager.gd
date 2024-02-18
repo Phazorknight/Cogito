@@ -213,48 +213,47 @@ func reset_group(group_name: String) -> void:
 	return
 
 
-## Some dictionary methods:
-
-func quests_as_dict() -> Dictionary:
-	var quest_dict: Dictionary = {}
-
-	for pool in get_children():
-		quest_dict[pool.name.to_lower()] = pool.get_ids_from_quests()
-
-	return quest_dict
-
-
-func dict_to_quests(dict: Dictionary, quests: Array[CogitoQuest]) -> void:
-	for group in get_children():
-
-		# Make sure to iterate only for available pools
-		if !dict.has(group.name.to_lower()): continue
-
-		# Match quest with their ids and insert them into the quest pool
-		var quest_with_id: Dictionary = {}
-		var group_ids: Array[int]
-		group_ids.append_array(dict[group.name.to_lower()])
-		for quest in quests:
-			if quest.id in group_ids:
-				group.add_quest(quest)
-				quests.erase(quest)
-
-
-func serialize_quests(group: String) -> Dictionary:
-	var group_node: CogitoQuestGroup = get_node_or_null(group)
-
-	if group_node == null: return {}
-
-	var quest_dictionary: Dictionary = {}
-	for quests in group_node.quests:
-		var quest_data: Dictionary
-		for name in quests.get_script().get_script_property_list():
-
-			# Filter only defined properties
-			if name.usage & PROPERTY_USAGE_STORAGE or name.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
-				quest_data[name["name"]] = quests.get(name["name"])
-
-		quest_data.erase("id")
-		quest_dictionary[quests.id] = quest_data
-
-	return quest_dictionary
+## Extra QuestManager methods that are currently not really needed.
+#func quests_as_dict() -> Dictionary:
+	#var quest_dict: Dictionary = {}
+#
+	#for group in get_children():
+		#quest_dict[group.name.to_lower()] = group.get_ids_from_quests()
+#
+	#return quest_dict
+#
+#
+#func dict_to_quests(dict: Dictionary, quests: Array[CogitoQuest]) -> void:
+	#for group in get_children():
+#
+		## Make sure to iterate only for available pools
+		#if !dict.has(group.name.to_lower()): continue
+#
+		## Match quest with their ids and insert them into the quest pool
+		#var quest_with_id: Dictionary = {}
+		#var group_ids: Array[int]
+		#group_ids.append_array(dict[group.name.to_lower()])
+		#for quest in quests:
+			#if quest.id in group_ids:
+				#group.add_quest(quest)
+				#quests.erase(quest)
+#
+#
+#func serialize_quests(group: String) -> Dictionary:
+	#var group_node: CogitoQuestGroup = get_node_or_null(group)
+#
+	#if group_node == null: return {}
+#
+	#var quest_dictionary: Dictionary = {}
+	#for quests in group_node.quests:
+		#var quest_data: Dictionary
+		#for name in quests.get_script().get_script_property_list():
+#
+			## Filter only defined properties
+			#if name.usage & PROPERTY_USAGE_STORAGE or name.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
+				#quest_data[name["name"]] = quests.get(name["name"])
+#
+		#quest_data.erase("id")
+		#quest_dictionary[quests.id] = quest_data
+#
+	#return quest_dictionary

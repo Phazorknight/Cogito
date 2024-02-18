@@ -504,22 +504,25 @@ offset_bottom = 5.0
 theme = ExtResource("5_j6s1a")
 
 [node name="QuestHUD" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_bottom = 5.0
-grow_horizontal = 2
+anchors_preset = 0
+anchor_left = 0.683594
+anchor_top = 0.0138889
+anchor_right = 0.683594
+anchor_bottom = 0.0138889
+pivot_offset = Vector2(400, 0)
 theme = ExtResource("5_j6s1a")
 script = ExtResource("15_kn51k")
 send_quest_notifications = true
 quest_entry = ExtResource("16_qsjbq")
+metadata/_edit_use_anchors_ = true
 
 [node name="QuestDisplay" type="PanelContainer" parent="QuestHUD"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 166.0
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="QuestHUD/QuestDisplay"]
 layout_mode = 2
@@ -539,9 +542,13 @@ theme = ExtResource("5_j6s1a")
 
 [node name="Active" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
 layout_mode = 2
+theme = ExtResource("5_j6s1a")
 theme_override_constants/separation = 4
 
 [node name="QuestEntry" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
+layout_mode = 2
+
+[node name="QuestEntry2" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
 layout_mode = 2
 
 [node name="Completed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]

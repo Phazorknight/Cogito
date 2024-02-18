@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **BETA 202402.14**
+Version: **BETA 202402.15**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -18,6 +18,7 @@ providing a framework for creating interactable objects and items.
 - QuickAudio by Bryce Dixon (https://github.com/BtheDestroyer/Godot_QuickAudio)
 - Stairs handling based on GodotStairs by elvisish (https://github.com/elvisish/GodotStairs)
 - DynamicFootstepSystem by AC-Arcana.
+- Cogito Quest System based on shomykohai's Godot 4 quest system.
 
 **Thanks:**
 - Thanks to pcbeard for tweaks and bugfixes.
@@ -33,7 +34,7 @@ providing a framework for creating interactable objects and items.
   - Sanity (drains if not within Safezones)
   - Brightness (aka visibility goes up within Lightzones, cumulative to a limit)
 - Raycast Interaction system
-- Included Prefabs for:
+- Included Examples:
   - Carryable crate
   - Door (unlockable)
   - Lamp (switchable)
@@ -41,6 +42,9 @@ providing a framework for creating interactable objects and items.
   - Wheel (press and hold interactable)
   - Hazard Zone (Area3D that drains a player attribute)
   - Lightzone (Area that adds to player brightness)
+  - Keypad
+  - Simple readable objects
+  - Basic Quests/Objectives
   - Items:
 	- Flashlight (combine with batteries to recharge)
 	- Battery (used to recharge Flashlight by combining them)

@@ -20,6 +20,10 @@ var player_state_dir : String = "user://COGITO_player_state_"
 #Saving parameters from the player interaction component
 @export var interaction_component_state : Array
 
+#Saving quests:
+@export var player_active_quests : Array[CogitoQuest]
+@export var player_completed_quests : Array[CogitoQuest]
+@export var player_failed_quests : Array[CogitoQuest]
 
 func add_interaction_component_state_data_to_array(state_data):
 	interaction_component_state.append(state_data)
@@ -33,6 +37,7 @@ func append_saved_wieldable_charges(saved_item_data):
 	
 func clear_saved_wieldable_charges():
 	saved_wieldable_charges.clear()
+
 
 func write_state(state_slot : String) -> void:
 	var player_state_file = str(player_state_dir + state_slot + ".res")
