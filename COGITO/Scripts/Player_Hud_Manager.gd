@@ -100,10 +100,11 @@ func _ready():
 	inventory_interface.set_player_inventory_data(player.inventory_data)
 	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
 	
-
 	player.player_interaction_component.interactive_object_detected.connect(set_interaction_prompts)
 	player.player_interaction_component.nothing_detected.connect(delete_interaction_prompts)
 	player.player_interaction_component.started_carrying.connect(set_drop_prompt)
+	
+	player.toggled_interface.connect(_on_external_ui_toggle)
 	
 	player.player_interaction_component.set_use_prompt.connect(_on_set_use_prompt)
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
@@ -146,18 +147,16 @@ func _on_input_device_change(_device, _device_index):
 
 func toggle_inventory_interface(external_inventory_owner = null):
 	if !inventory_interface.is_inventory_open:
-		player._on_pause_movement()
 		inventory_interface.open_inventory()
+		_on_external_ui_toggle(true)
 		if external_inventory_owner:
 			external_inventory_owner.open()
-			
 		show_inventory.emit()
 	else:
 		inventory_interface.close_inventory()
-		player._on_resume_movement()
 		if external_inventory_owner:
 			external_inventory_owner.close()
-			
+		_on_external_ui_toggle(false)
 		hide_inventory.emit()
 		
 	if external_inventory_owner and inventory_interface.is_inventory_open:
@@ -181,6 +180,7 @@ func delete_interaction_prompts():
 		for prompt in current_prompts:
 			prompt.discard_prompt()
 
+
 func set_drop_prompt(_carrying_node):
 	var current_prompts = prompt_area.get_children()
 	if current_prompts:
@@ -190,6 +190,18 @@ func set_drop_prompt(_carrying_node):
 	var instanced_prompt = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
 	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
+
+
+#What happens when an external UI is shown (like inventory, readbale document, keypad, external inventory)
+func _on_external_ui_toggle(is_showing:bool):
+	if is_showing:
+		player._on_pause_movement()
+		player.is_showing_ui = true
+		prompt_area.hide()
+	else:
+		player._on_resume_movement()
+		player.is_showing_ui = false
+		prompt_area.show()
 
 
 # When HUD receives set use prompt signal (usually when equipping a wieldable)

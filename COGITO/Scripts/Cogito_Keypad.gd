@@ -67,14 +67,24 @@ func _ready():
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component
 	if is_open:
-		keypad_ui.hide()
-		_player_interaction_component.get_parent()._on_resume_movement()
-		is_open = false
+		close(_player_interaction_component)
 	else:
-		_player_interaction_component.get_parent()._on_pause_movement()
-		keypad_ui.show()
-		grab_focus_button.grab_focus()
-		is_open = true
+		open(_player_interaction_component)
+
+
+func open(_player_interaction_component):
+	_player_interaction_component.get_parent().toggled_interface.emit(true)
+	_player_interaction_component.get_parent().menu_pressed.connect(close) #Connecting input action menu to close function.
+	keypad_ui.show()
+	grab_focus_button.grab_focus()
+	is_open = true
+	
+	
+func close(_player_interaction_component):
+	keypad_ui.hide()
+	_player_interaction_component.get_parent().menu_pressed.disconnect(close)
+	_player_interaction_component.get_parent().toggled_interface.emit(false)
+	is_open = false
 
 
 func _on_button_received(_passed_string:String):
@@ -133,9 +143,8 @@ func unlock_keypad():
 			if open_when_unlocked:
 				door.open_door(player_interaction_component)
 	
-	keypad_ui.hide()
-	player_interaction_component.get_parent()._on_resume_movement()
-	is_open = false
+	close(player_interaction_component)
+	
 
 func clear_entered_code():
 	entered_code = ""

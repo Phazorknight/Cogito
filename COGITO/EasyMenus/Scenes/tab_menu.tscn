@@ -66,10 +66,8 @@ custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("5_7fnwn")
-current_tab = 1
 
 [node name="Game" type="MarginContainer" parent="Content/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -81,12 +79,14 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="GameTitle" type="Label" parent="Content/TabContainer/Game/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Game"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Game/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -127,6 +127,7 @@ text = "Quit"
 script = ExtResource("6_a8sll")
 
 [node name="Gameplay" type="MarginContainer" parent="Content/TabContainer"]
+visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
 theme_override_constants/margin_left = 0
@@ -147,12 +148,14 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
 [node name="GameplayTitle" type="Label" parent="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Gameplay"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -197,12 +200,14 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
 [node name="OptionsTitle" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Options"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 10
@@ -344,12 +349,14 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
 [node name="AudioTitle" type="Label" parent="Content/TabContainer/Audio/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Audio"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Audio/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -412,6 +419,7 @@ text = "Coming soon"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Bindings/ScrollContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
