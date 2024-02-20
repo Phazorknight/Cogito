@@ -21,16 +21,25 @@ func _ready():
 	label_content.text = readable_content
  
 
-func interact(_player_interaction_component):
+func interact(_player_interaction_component: PlayerInteractionComponent):
 	
 	Audio.play_sound_3d(interact_sound).global_position = self.global_position
 	
 	if is_open:
-		readable_ui.hide()
-		_player_interaction_component.get_parent()._on_resume_movement()
-		is_open = false
+		close(_player_interaction_component)
 	else:
-		_player_interaction_component.get_parent()._on_pause_movement()
-		readable_ui.show()
-		has_been_read.emit()
-		is_open = true
+		open(_player_interaction_component)
+
+
+func open(_player_interaction_component: PlayerInteractionComponent):
+	_player_interaction_component.get_parent().toggled_interface.emit(true)
+	_player_interaction_component.get_parent().menu_pressed.connect(close) #Connecting input action menu to close function.
+	readable_ui.show()
+	has_been_read.emit()
+	is_open = true
+
+func close(_player_interaction_component: PlayerInteractionComponent):
+	readable_ui.hide()
+	_player_interaction_component.get_parent().menu_pressed.disconnect(close)
+	is_open = false
+	_player_interaction_component.get_parent().toggled_interface.emit(false)

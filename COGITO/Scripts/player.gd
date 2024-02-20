@@ -1,13 +1,16 @@
 extends CharacterBody3D
 
+signal menu_pressed(player_interaction_component: PlayerInteractionComponent) #Used to exit out other interfaces when ESC/Menu is pressed.
 signal toggle_inventory_interface()
 signal player_state_loaded()
-signal toggled_interface(is_active:bool) #Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
+signal toggled_interface(is_showing_ui:bool) #Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
 ## Refereence to Player HUD node
 @export var player_hud : NodePath
+# Used for handling input when UI is open/displayed
+var is_showing_ui : bool
 
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
@@ -252,10 +255,6 @@ func _on_pause_menu_resume():
 	_reload_options()
 	_on_resume_movement()
 
-# Signal from Inventory
-func _on_player_hud_resume():
-	_on_resume_movement()
-
 
 func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
@@ -280,13 +279,20 @@ func _input(event):
 	
 	# Opens Pause Menu if Menu button is proessed.
 	if event.is_action_pressed("menu"):
-		if !is_movement_paused and !is_dead:
+		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
+			menu_pressed.emit(player_interaction_component)
+			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
+				toggle_inventory_interface.emit()
+		elif !is_movement_paused and !is_dead:
 			_on_pause_movement()
 			get_node(pause_menu).open_pause_menu()
 	
 	# Open/closes Inventory if Inventory button is pressed
 	if event.is_action_pressed("inventory") and !is_dead:
-		toggle_inventory_interface.emit()
+		if !is_showing_ui: #Making sure now external UI is open.
+			toggle_inventory_interface.emit()
+		elif is_showing_ui and get_node(player_hud).inventory_interface.is_inventory_open: #Making sure Inventory is open, and if yes, close it.
+			toggle_inventory_interface.emit()
 
 
 func _process(delta): 
