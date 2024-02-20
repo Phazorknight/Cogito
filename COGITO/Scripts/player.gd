@@ -68,9 +68,12 @@ var is_showing_ui : bool
 @export var AIR_LERP_SPEED = 6.0
 @export var FREE_LOOK_TILT_AMOUNT = 5.0
 @export var SLIDING_SPEED = 5.0
-@export var WIGGLE_ON_WALKING_SPEED = 14.0
-@export var WIGGLE_ON_SPRINTING_SPEED = 22.0
-@export var WIGGLE_ON_CROUCHING_SPEED = 10.0
+
+@export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
+var WIGGLE_ON_WALKING_SPEED = 14.0
+var WIGGLE_ON_SPRINTING_SPEED = 22.0
+var WIGGLE_ON_CROUCHING_SPEED = 10.0
+
 @export var WIGGLE_ON_WALKING_INTENSITY = 0.1
 @export var WIGGLE_ON_SPRINTING_INTENSITY = 0.2
 @export var WIGGLE_ON_CROUCHING_INTENSITY = 0.05
@@ -143,6 +146,11 @@ func _ready():
 	randomize()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+	#Set the Headbobble for real, as we can not manipulate vars while their created :/
+	WIGGLE_ON_WALKING_SPEED = HEADBOBBLE * 2
+	WIGGLE_ON_SPRINTING_SPEED = HEADBOBBLE * 3
+	WIGGLE_ON_CROUCHING_SPEED = HEADBOBBLE * 1.5
 
 	# Pause Menu setup
 	if pause_menu:
