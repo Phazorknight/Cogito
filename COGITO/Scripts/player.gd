@@ -52,6 +52,7 @@ var is_showing_ui : bool
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
 @export var jump_sound : AudioStream
+#FIXME
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
@@ -67,13 +68,16 @@ var is_showing_ui : bool
 @export var LERP_SPEED = 10.0
 @export var AIR_LERP_SPEED = 6.0
 @export var FREE_LOOK_TILT_AMOUNT = 5.0
+#FIXME
 @export var SLIDING_SPEED = 5.0
+@export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
 @export var WIGGLE_ON_WALKING_SPEED = 14.0
 @export var WIGGLE_ON_SPRINTING_SPEED = 22.0
 @export var WIGGLE_ON_CROUCHING_SPEED = 10.0
 @export var WIGGLE_ON_WALKING_INTENSITY = 0.1
 @export var WIGGLE_ON_SPRINTING_INTENSITY = 0.2
 @export var WIGGLE_ON_CROUCHING_INTENSITY = 0.05
+#FIXME
 @export var BUNNY_HOP_ACCELERATION = 0.1
 @export var INVERT_Y_AXIS : bool = true
 
@@ -143,6 +147,11 @@ func _ready():
 	randomize()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+	#Set the Headbobble for real, as we can not manipulate vars while their created :/
+	WIGGLE_ON_WALKING_SPEED = HEADBOBBLE * 2
+	WIGGLE_ON_SPRINTING_SPEED = HEADBOBBLE * 3
+	WIGGLE_ON_CROUCHING_SPEED = HEADBOBBLE * 1.5
 
 	# Pause Menu setup
 	if pause_menu:
