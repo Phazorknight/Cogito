@@ -1,17 +1,18 @@
 extends Node3D
 class_name PlayerInteractionComponent
 
+# Signals for UI/HUD use
 signal interaction_prompt(interaction_text : String)
 signal hint_prompt(hint_icon:Texture2D, hint_text: String)
 signal set_use_prompt(use_text:String)
 signal updated_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
 
+# Signals for Interaction raycast system
 signal interactive_object_detected(interaction_nodes: Array[Node])
 signal nothing_detected()
 signal started_carrying(interaction_node: Node)
 
 var look_vector : Vector3
-
 var device_id : int = -1  #Used for displaying correct input prompts depending on input device.
 
 ## Raycast3D for interaction check.
@@ -38,7 +39,6 @@ var is_wielding : bool
 func _ready():
 	#for node in wieldable_nodes:
 		#node.hide()
-		
 	object_detected = false
 
 func _process(_delta):

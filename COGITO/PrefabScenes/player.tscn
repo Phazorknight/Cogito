@@ -46,6 +46,7 @@ script = ExtResource("1_wkneb")
 fall_damage = 10
 inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
+HEADBOBBLE = 7
 STEP_MAX_SLOPE_DEGREE = 1.0
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]

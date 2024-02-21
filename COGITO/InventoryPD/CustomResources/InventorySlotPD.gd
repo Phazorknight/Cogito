@@ -15,11 +15,13 @@ func set_quantity(value: int):
 		push_error("%s is not stackable, setting quantity to 1" % inventory_item.name )
 
 func can_merge_with(other_slot_data: InventorySlotPD) -> bool:
+	print("can_merge_with")
 	return inventory_item == other_slot_data.inventory_item \
 			and inventory_item.is_stackable \
-			and quantity <= inventory_item.stack_size
+			and quantity < inventory_item.stack_size
 
 func can_fully_merge_with(other_slot_data: InventorySlotPD) -> bool:
+	print("can_fully_merge_with")
 	return inventory_item == other_slot_data.inventory_item \
 			and inventory_item.is_stackable \
 			and quantity + other_slot_data.quantity <= inventory_item.stack_size
