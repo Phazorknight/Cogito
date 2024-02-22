@@ -553,6 +553,7 @@ func _physics_process(delta):
 			animationPlayer.play("jump")
 			Audio.play_sound(jump_sound)
 			if !sliding_timer.is_stopped():
+				# if we're doing a slide jump, use our standard JUMP_VELOCITY
 				velocity.y = JUMP_VELOCITY * 1.5
 				jumped_from_slide = true
 				sliding_timer.stop()
