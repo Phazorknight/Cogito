@@ -441,6 +441,7 @@ func _physics_process(delta):
 		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height, delta * LERP_SPEED)
 		if head.position.y < CROUCHING_DEPTH/4:
+			# still transitioning from state
 			crouching_collision_shape.disabled = false
 			standing_collision_shape.disabled = true
 		else:
@@ -736,7 +737,10 @@ func _physics_process(delta):
 	
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
-		if footstep_timer.time_left <= 0:
+		if not sliding_timer.is_stopped():
+			# TODO: Add slide sound effects. For now, mute it
+			pass
+		elif footstep_timer.time_left <= 0:
 			#dynamic volume for footsteps
 			if is_walking:
 				footstep_player.volume_db = walk_volume_db
