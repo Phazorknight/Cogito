@@ -440,8 +440,12 @@ func _physics_process(delta):
 	else:
 		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height, delta * LERP_SPEED)
-		standing_collision_shape.disabled = false
-		crouching_collision_shape.disabled = true
+		if head.position.y < CROUCHING_DEPTH/4:
+			crouching_collision_shape.disabled = false
+			standing_collision_shape.disabled = true
+		else:
+			standing_collision_shape.disabled = false
+			crouching_collision_shape.disabled = true
 		sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
