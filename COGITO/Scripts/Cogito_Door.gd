@@ -1,3 +1,4 @@
+@icon("res://COGITO/Assets/Graphics/Editor/CogitoNodeIcon.svg")
 extends Node3D
 class_name CogitoDoor
 

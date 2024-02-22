@@ -21,7 +21,7 @@
 [ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="18_q6u2l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bvi11"]
-size = Vector3(0.8, 1.6, 0.8)
+size = Vector3(0.7, 1.6, 0.7)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgxde"]
 radius = 0.4

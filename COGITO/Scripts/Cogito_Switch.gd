@@ -1,6 +1,6 @@
 extends Node3D
 
-signal object_state_updated(interaction_text: String)
+signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal switched(is_on)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
@@ -24,11 +24,12 @@ signal switched(is_on)
 @export var nodes_to_show_when_on : Array[Node]
 ## Nodes that will become hidden when switch is ON. These will show again when switch is OFF.
 @export var nodes_to_hide_when_on : Array[Node]
-
+## Nodes that will have their interact function called when this switch is used.
 @export var objects_call_interact : Array[NodePath]
 @export var objects_call_delay : float = 0.0
+
 var interaction_text : String 
-var interactor
+var player_interaction_component
 
 var interaction_nodes : Array[Node]
 
@@ -40,16 +41,15 @@ func _ready():
 	audio_stream_player_3d.stream = switch_sound
 	
 	if is_on:
-		interaction_text = interaction_text_when_on
+		switch_on()
 	else:
-		interaction_text = interaction_text_when_off
-	
-	object_state_updated.emit(interaction_text)
+		switch_off()
+		
 
 func interact(_player_interaction_component):
-	interactor = _player_interaction_component
+	player_interaction_component = _player_interaction_component
 	if !allows_repeated_interaction and is_on:
-		interactor.send_hint(null, has_been_used_hint)
+		player_interaction_component.send_hint(null, has_been_used_hint)
 		return
 	if needs_item_to_operate:
 		if check_for_item() == true:
@@ -59,47 +59,58 @@ func interact(_player_interaction_component):
 
 func switch():
 	audio_stream_player_3d.play()
-	is_on = !is_on
 	
-	switched.emit(is_on) #emitting signal
+	if !is_on:
+		switch_on()
+	else:
+		switch_off()
 	
+	if !objects_call_interact:
+		return
 	for nodepath in objects_call_interact:
 		await get_tree().create_timer(objects_call_delay).timeout
 		if nodepath != null:
 			var object = get_node(nodepath)
-			object.interact(interactor)
-	
-	if is_on:
-		for node in nodes_to_show_when_on:
-			node.show()
+			object.interact(player_interaction_component)
+
+
+func switch_on():
+	for node in nodes_to_show_when_on:
+		node.show()
 		
-		for node in nodes_to_hide_when_on:
-			node.hide()
+	for node in nodes_to_hide_when_on:
+		node.hide()
 			
-		interaction_text = interaction_text_when_on
-	else:
-		for node in nodes_to_show_when_on:
-			node.hide()
-		
-		for node in nodes_to_hide_when_on:
-			node.show()
-			
-		interaction_text = interaction_text_when_off
-	
+	is_on = true
+	interaction_text = interaction_text_when_on
 	object_state_updated.emit(interaction_text)
+	switched.emit(is_on)
+
+
+func switch_off():
+	for node in nodes_to_show_when_on:
+		node.hide()
 		
+	for node in nodes_to_hide_when_on:
+		node.show()
+	
+	is_on = false
+	interaction_text = interaction_text_when_off
+	object_state_updated.emit(interaction_text)
+	switched.emit(is_on)
+
 		
 func check_for_item() -> bool:
-	var inventory = interactor.get_parent().inventory_data
+	var inventory = player_interaction_component.get_parent().inventory_data
 	for slot_data in inventory.inventory_slots:
 		if slot_data != null and slot_data.inventory_item == required_item:
-			interactor.send_hint(null, required_item.name + " used.") # Sends a hint with the key item name.
+			player_interaction_component.send_hint(null, required_item.name + " used.") # Sends a hint with the key item name.
 			if slot_data.inventory_item.discard_after_use:
 				inventory.remove_slot_data(slot_data)
 			return true
 	
 	if item_hint != "":
-		interactor.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
+		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
 	
 	

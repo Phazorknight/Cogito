@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://drmtc0tqmwquk"]
+
+[ext_resource type="Script" path="res://COGITO/QuestSystemPD/CustomResources/CogitoQuest.gd" id="1_53ru2"]
+
+[resource]
+script = ExtResource("1_53ru2")
+id = 771
+quest_name = "demo_access_archive"
+quest_title = "Gain access to the archive."
+quest_description = "You won't be able to just walk in, but I'm sure you'll find a way."
+quest_counter_current = 0
+quest_counter_goal = 0
