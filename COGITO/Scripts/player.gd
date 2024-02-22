@@ -69,6 +69,7 @@ var is_showing_ui : bool
 @export var AIR_LERP_SPEED = 6.0
 @export var FREE_LOOK_TILT_AMOUNT = 5.0
 @export var SLIDING_SPEED = 5.0
+@export var SLIDE_JUMP_MOD = 1.5
 
 @export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
 var WIGGLE_ON_WALKING_SPEED = 14.0
@@ -554,7 +555,7 @@ func _physics_process(delta):
 			Audio.play_sound(jump_sound)
 			if !sliding_timer.is_stopped():
 				# if we're doing a slide jump, use our standard JUMP_VELOCITY
-				velocity.y = JUMP_VELOCITY * 1.5
+				velocity.y = JUMP_VELOCITY * SLIDE_JUMP_MOD
 				jumped_from_slide = true
 				sliding_timer.stop()
 			else:
