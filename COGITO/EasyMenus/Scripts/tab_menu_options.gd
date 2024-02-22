@@ -1,28 +1,63 @@
 extends Control
-signal  options_updated
+signal options_updated
 
 const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd")
 
 @onready var sfx_volume_slider : HSliderWLabel = $%SFXVolumeSlider
 @onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
-@onready var fullscreen_check_button: CheckButton = $%FullscreenCheckButton
-@onready var render_scale_current_value_label: Label = $%RenderScaleCurrentValueLabel
-@onready var render_scale_slider: HSlider = $%RenderScaleSlider
-@onready var vsync_check_button: CheckButton = $%VSyncCheckButton
-@onready var invert_y_check_button: CheckButton = $%InvertYAxisCheckButton
+@onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
+@onready var render_scale_slider: HSlider = %RenderScaleSlider
+@onready var vsync_check_button: CheckButton = %VSyncCheckButton
+@onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
+@onready var window_mode_option_button: OptionButton = %WindowModeOptionButton
 
 var sfx_bus_index
 var music_bus_index
 var config = ConfigFile.new()
 
+# Array to set window modes.
+const WINDOW_MODE_ARRAY : Array[String] = [
+	"Full screen",
+	"Exclusive full screen",
+	"Windowed",
+	"Borderless windowed",	
+]
+
+
+func _ready() -> void:
+	add_window_mode_items()
+	window_mode_option_button.item_selected.connect(on_window_mode_selected)
 
 # Called from outside initializes the options menu
 func on_open():
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
+	
 	load_options()
+
+
+# Adding window modes to the window mode button.
+func add_window_mode_items() -> void:
+	for mode in WINDOW_MODE_ARRAY:
+		window_mode_option_button.add_item(mode)
+
+
+# Function to change window modes. Hooked up to the window_mode_option_button
+func on_window_mode_selected(index: int) -> void:
+	match index:
+		0: #Full screen
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+		1: #Exclusive full screen
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		2: #Windowed
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+		3: #Borderless windowed
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 
 
 func _on_sfx_volume_slider_value_changed(value):
@@ -43,9 +78,9 @@ func set_volume(bus_index, value):
 
 # Saves the options when the options menu is closed
 func save_options():
-	config.set_value(OptionsConstants.section_name,OptionsConstants.sfx_volume_key_name, sfx_volume_slider.hslider.value)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, sfx_volume_slider.hslider.value)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, music_volume_slider.hslider.value)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_key_name, fullscreen_check_button.button_pressed)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
@@ -60,7 +95,7 @@ func load_options():
 	
 	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
 	var music_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1)
-	var fullscreen = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_key_name, false)
+	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
@@ -69,7 +104,7 @@ func load_options():
 
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
-	fullscreen_check_button.button_pressed = fullscreen
+	window_mode_option_button._select_int(window_mode)
 	render_scale_slider.value = render_scale
 	
 	# Need to set it like that to guarantee signal to be triggered
@@ -84,14 +119,6 @@ func load_options():
 	anti_aliasing_3d_option_button.selected = msaa_3d
 	anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
 
-func _on_fullscreen_check_button_toggled(button_pressed):
-	if button_pressed:
-		if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-	else:
-		if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_WINDOWED:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-
 
 func _on_render_scale_slider_value_changed(value):
 	get_viewport().scaling_3d_scale = value
@@ -100,8 +127,7 @@ func _on_render_scale_slider_value_changed(value):
 
 func _on_v_sync_check_button_toggled(button_pressed):
 	# There are multiple V-Sync Methods supported by Godot 
-	# For now we just use the simple ones could be worth a consideration to 
-	# add the others
+	# For now we just use the simple ones could be worth a consideration to add the others
 	# Just sets V-Sync for the first window. So no support for multi window games
 	if button_pressed:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
@@ -131,4 +157,5 @@ func set_msaa(mode, index):
 
 func _on_apply_changes_pressed() -> void:
 	save_options()
+	print("Options saved.")
 	emit_signal("options_updated")

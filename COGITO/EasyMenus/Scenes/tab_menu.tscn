@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_1djt0")
 script = ExtResource("2_473pa")
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/FullscreenCheckButton"), NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath(""), NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 sound_hover = ExtResource("3_cekij")
 sound_click = ExtResource("4_ccwo8")
 
@@ -66,8 +66,10 @@ custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("5_7fnwn")
+current_tab = 3
 
 [node name="Game" type="MarginContainer" parent="Content/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -147,18 +149,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="GameplayTitle" type="Label" parent="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Gameplay"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 10
-
 [node name="InvertYAxisCheckButton" type="CheckButton" parent="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
@@ -181,7 +171,6 @@ script = ExtResource("6_a8sll")
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/FullscreenCheckButton")
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 0
@@ -199,86 +188,37 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="OptionsTitle" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-visible = false
+[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Options"
-horizontal_alignment = 1
+theme = ExtResource("1_1djt0")
 
-[node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-visible = false
+[node name="WindowMode" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 10
+size_flags_horizontal = 0
+text = "Window Mode"
 
-[node name="FullscreenCheckButton" type="CheckButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+[node name="WindowModeOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer_AA2D" type="HBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="AntiAliasing2DLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 25
-text = "Fullscreen"
-
-[node name="VSyncCheckButton" type="CheckButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
-theme_override_font_sizes/font_size = 25
-text = "V-Sync"
-
-[node name="MarginContainer2" type="MarginContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer2"]
-layout_mode = 2
-tooltip_text = "Scale Less than 1 to get performance improve. 
-Scale to more than 1 to improve image quality."
-
-[node name="RenderScaleLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Render Scale"
-horizontal_alignment = 1
-
-[node name="RenderScaleSlider" type="HSlider" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_force_pass_scroll_events = false
-min_value = 0.25
-max_value = 2.0
-step = 0.05
-value = 1.0
-
-[node name="RenderScaleCurrentValueLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1"
-horizontal_alignment = 1
-
-[node name="MarginContainer3" type="MarginContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="AntiAliasing2DLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "2D Anti Aliasing"
-horizontal_alignment = 1
 
-[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 10
 tooltip_text = "Smooth out edges of 2D objects"
 item_count = 4
 selected = 0
@@ -292,17 +232,22 @@ popup/item_3/text = "8x"
 popup/item_3/id = 3
 script = ExtResource("9_acc2n")
 
-[node name="GamepadClosable" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" instance=ExtResource("10_op1sx")]
+[node name="GamepadClosable" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" instance=ExtResource("10_op1sx")]
 
-[node name="AntiAliasing3DLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="HBoxContainer_AA3D" type="HBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+
+[node name="AntiAliasing3DLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 text = "3D Anti Aliasing"
-horizontal_alignment = 1
 
-[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 10
 tooltip_text = "Smooths out edges of 3D objects"
 item_count = 4
 selected = 0
@@ -316,7 +261,45 @@ popup/item_3/text = "8x"
 popup/item_3/id = 3
 script = ExtResource("9_acc2n")
 
-[node name="GamepadClosable" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" instance=ExtResource("10_op1sx")]
+[node name="GamepadClosable" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("10_op1sx")]
+
+[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="RenderScaleLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Render Scale"
+
+[node name="RenderScaleSlider" type="HSlider" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="RenderScaleCurrentValueLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+
+[node name="VSyncCheckButton" type="CheckButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
+theme_override_font_sizes/font_size = 25
+text = "V-Sync"
 
 [node name="ApplyChanges" type="Button" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
@@ -328,7 +311,6 @@ text = "Apply changes"
 script = ExtResource("6_a8sll")
 
 [node name="Audio" type="MarginContainer" parent="Content/TabContainer"]
-visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
 theme_override_constants/margin_left = 0
@@ -347,18 +329,6 @@ transition_time = 0.15
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
-
-[node name="AudioTitle" type="Label" parent="Content/TabContainer/Audio/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Audio"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Audio/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 10
 
 [node name="MarginContainer" type="MarginContainer" parent="Content/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -443,11 +413,10 @@ start_game_scene = "res://COGITO/DemoScenes/COGITO_01_Demo.tscn"
 [connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/BackToMenuButton" to="." method="_on_back_to_menu_button_pressed"]
 [connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="TabMenuOptions" method="_on_apply_changes_pressed"]
-[connection signal="toggled" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/FullscreenCheckButton" to="Content/TabContainer/Graphics" method="_on_fullscreen_check_button_toggled"]
-[connection signal="toggled" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/VSyncCheckButton" to="Content/TabContainer/Graphics" method="_on_v_sync_check_button_toggled"]
-[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer2/VBoxContainer/RenderScaleSlider" to="Content/TabContainer/Graphics" method="_on_render_scale_slider_value_changed"]
-[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing2DOptionButton" to="Content/TabContainer/Graphics" method="_on_anti_aliasing_2d_option_button_item_selected"]
-[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/MarginContainer3/VBoxContainer/AntiAliasing3DOptionButton" to="Content/TabContainer/Graphics" method="_on_anti_aliasing_3d_option_button_item_selected"]
+[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" to="TabMenuOptions" method="_on_anti_aliasing_2d_option_button_item_selected"]
+[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" to="TabMenuOptions" method="_on_anti_aliasing_3d_option_button_item_selected"]
+[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale/RenderScaleSlider" to="TabMenuOptions" method="_on_render_scale_slider_value_changed"]
+[connection signal="toggled" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/VSyncCheckButton" to="TabMenuOptions" method="_on_v_sync_check_button_toggled"]
 [connection signal="pressed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="TabMenuOptions" method="_on_apply_changes_pressed"]
 [connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="TabMenuOptions" method="_on_sfx_volume_slider_value_changed"]
 [connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="TabMenuOptions" method="_on_music_volume_slider_value_changed"]
