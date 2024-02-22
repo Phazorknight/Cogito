@@ -416,7 +416,7 @@ func _physics_process(delta):
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
 		crouched_jump = is_crouching and not jumped_from_slide
 	
-	if crouched_jump or (not jumped_from_slide and Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding()):
+	if crouched_jump or (not jumped_from_slide and is_on_floor() and Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding()):
 		# should we be sliding?
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
 			sliding_timer.start()
