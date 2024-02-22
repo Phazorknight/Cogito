@@ -58,6 +58,7 @@ var is_showing_ui : bool
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY = 4.5
+@export var CROUCH_JUMP_VELOCITY = 3.0
 @export var WALKING_SPEED = 5.0
 @export var SPRINTING_SPEED = 8.0
 @export var CROUCHING_SPEED = 3.0
@@ -364,6 +365,7 @@ func _process_on_ladder(_delta):
 	if is_on_floor():
 		on_ladder = false
 
+var jumped_from_slide = false
 
 func _physics_process(delta):
 	#if is_movement_paused:
@@ -372,7 +374,7 @@ func _physics_process(delta):
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
-		
+	
 	var is_falling: bool = false	
 	
 	# Getting input direction
@@ -405,20 +407,32 @@ func _physics_process(delta):
 		crouching_collision_shape.disabled = false
 		stand_after_roll = false
 	
-	if Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding():
-		if is_on_floor():
+	var crouched_jump = false
+	if is_on_floor():
+		# reset our slide-jump state
+		jumped_from_slide = false
+	else:
+		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
+		crouched_jump = is_crouching and not jumped_from_slide
+	
+	if crouched_jump or (not jumped_from_slide and Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding()):
+		# should we be sliding?
+		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
+			sliding_timer.start()
+			slide_vector = input_dir
+		elif !Input.is_action_pressed("sprint"):
+			sliding_timer.stop()
+		
+		# are we sliding or slide-jumping? if so, don't adjust our speed
+		if not jumped_from_slide and sliding_timer.is_stopped():
 			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
+		
 		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height-.8, delta * LERP_SPEED)
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false
 		wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
 		wiggle_index += WIGGLE_ON_CROUCHING_SPEED * delta
-		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
-			sliding_timer.start()
-			slide_vector = input_dir
-		elif !Input.is_action_pressed("sprint"):
-			sliding_timer.stop()
 		is_walking = false
 		is_sprinting = false
 		is_crouching = true
@@ -527,6 +541,8 @@ func _physics_process(delta):
 		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
 		var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
 		
+		var jump_vel = CROUCH_JUMP_VELOCITY if is_crouching else JUMP_VELOCITY
+		
 		if doesnt_need_stamina and crouch_jump:
 			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
 			if is_using_stamina:
@@ -538,9 +554,10 @@ func _physics_process(delta):
 			Audio.play_sound(jump_sound)
 			if !sliding_timer.is_stopped():
 				velocity.y = JUMP_VELOCITY * 1.5
+				jumped_from_slide = true
 				sliding_timer.stop()
 			else:
-				velocity.y = JUMP_VELOCITY
+				velocity.y = jump_vel
 			
 			if platform_on_leave != PLATFORM_ON_LEAVE_DO_NOTHING:
 				var platform_velocity = get_platform_velocity()
