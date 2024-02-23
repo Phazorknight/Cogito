@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://i4rqcx7lyrfd"]
+[gd_scene load_steps=50 format=3 uid="uid://i4rqcx7lyrfd"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Keypad.gd" id="1_iwk1o"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="2_5i70k"]
@@ -28,6 +28,133 @@ size = Vector3(0.3, 0.06, 0.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqlw7"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_2e4oq"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="InputEventKey" id="InputEventKey_tyspr"]
+keycode = 4194439
+
+[sub_resource type="Shortcut" id="Shortcut_wq2ju"]
+events = [SubResource("InputEventKey_2e4oq"), SubResource("InputEventKey_tyspr")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_bvlui"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="InputEventKey" id="InputEventKey_xd6rk"]
+keycode = 4194440
+
+[sub_resource type="Shortcut" id="Shortcut_1s2p8"]
+events = [SubResource("InputEventKey_bvlui"), SubResource("InputEventKey_xd6rk")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_18fcb"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="InputEventKey" id="InputEventKey_qwqix"]
+keycode = 4194441
+
+[sub_resource type="Shortcut" id="Shortcut_yqbel"]
+events = [SubResource("InputEventKey_18fcb"), SubResource("InputEventKey_qwqix")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ehlrf"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="InputEventKey" id="InputEventKey_e2wyl"]
+keycode = 4194442
+
+[sub_resource type="Shortcut" id="Shortcut_ik0et"]
+events = [SubResource("InputEventKey_ehlrf"), SubResource("InputEventKey_e2wyl")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_0i8nx"]
+device = -1
+keycode = 53
+unicode = 53
+
+[sub_resource type="InputEventKey" id="InputEventKey_c6hnb"]
+keycode = 4194443
+
+[sub_resource type="Shortcut" id="Shortcut_0j1pw"]
+events = [SubResource("InputEventKey_0i8nx"), SubResource("InputEventKey_c6hnb")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_e5ehg"]
+device = -1
+keycode = 54
+unicode = 54
+
+[sub_resource type="InputEventKey" id="InputEventKey_xfh20"]
+keycode = 4194444
+
+[sub_resource type="Shortcut" id="Shortcut_ekah0"]
+events = [SubResource("InputEventKey_e5ehg"), SubResource("InputEventKey_xfh20")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_8pe7w"]
+device = -1
+keycode = 55
+unicode = 55
+
+[sub_resource type="InputEventKey" id="InputEventKey_tar3q"]
+keycode = 4194445
+
+[sub_resource type="Shortcut" id="Shortcut_w80ll"]
+events = [SubResource("InputEventKey_8pe7w"), SubResource("InputEventKey_tar3q")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_eaxnm"]
+device = -1
+keycode = 56
+unicode = 56
+
+[sub_resource type="InputEventKey" id="InputEventKey_0lmq7"]
+keycode = 4194446
+
+[sub_resource type="Shortcut" id="Shortcut_32785"]
+events = [SubResource("InputEventKey_eaxnm"), SubResource("InputEventKey_0lmq7")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_1ro47"]
+device = -1
+keycode = 57
+unicode = 57
+
+[sub_resource type="InputEventKey" id="InputEventKey_n7u6p"]
+keycode = 4194447
+
+[sub_resource type="Shortcut" id="Shortcut_cujgu"]
+events = [SubResource("InputEventKey_1ro47"), SubResource("InputEventKey_n7u6p")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_mpn15"]
+device = -1
+keycode = 4194308
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_u520m"]
+button_index = 1
+
+[sub_resource type="Shortcut" id="Shortcut_pdj7m"]
+events = [SubResource("InputEventKey_mpn15"), SubResource("InputEventJoypadButton_u520m")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_se7no"]
+keycode = 48
+physical_keycode = 48
+key_label = 48
+
+[sub_resource type="InputEventKey" id="InputEventKey_klrbc"]
+keycode = 4194438
+
+[sub_resource type="Shortcut" id="Shortcut_bv5yc"]
+events = [SubResource("InputEventKey_se7no"), SubResource("InputEventKey_klrbc")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_rrpqx"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_1xuph"]
+events = [SubResource("InputEventKey_rrpqx")]
 
 [node name="Keypad" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -183,6 +310,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_wq2ju")
 text = "1"
 script = ExtResource("6_ebwkh")
 
@@ -192,6 +320,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_1s2p8")
 text = "2"
 script = ExtResource("6_ebwkh")
 
@@ -201,6 +330,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_yqbel")
 text = "3"
 script = ExtResource("6_ebwkh")
 
@@ -210,6 +340,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_ik0et")
 text = "4"
 script = ExtResource("6_ebwkh")
 
@@ -219,6 +350,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_0j1pw")
 text = "5"
 script = ExtResource("6_ebwkh")
 
@@ -228,6 +360,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_ekah0")
 text = "6"
 script = ExtResource("6_ebwkh")
 
@@ -237,6 +370,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_w80ll")
 text = "7"
 script = ExtResource("6_ebwkh")
 
@@ -246,6 +380,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_32785")
 text = "8"
 script = ExtResource("6_ebwkh")
 
@@ -255,6 +390,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_cujgu")
 text = "9"
 script = ExtResource("6_ebwkh")
 
@@ -264,6 +400,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_pdj7m")
 text = "C"
 script = ExtResource("6_ebwkh")
 
@@ -273,6 +410,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_bv5yc")
 text = "0"
 script = ExtResource("6_ebwkh")
 
@@ -282,6 +420,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 28
+shortcut = SubResource("Shortcut_1xuph")
 text = "E"
 script = ExtResource("6_ebwkh")
 
