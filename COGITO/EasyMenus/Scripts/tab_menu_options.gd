@@ -12,6 +12,7 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
 @onready var window_mode_option_button: OptionButton = %WindowModeOptionButton
+@onready var resolution_option_button: OptionButton = %ResolutionOptionButton
 
 var sfx_bus_index
 var music_bus_index
@@ -26,25 +27,46 @@ const WINDOW_MODE_ARRAY : Array[String] = [
 ]
 
 
+const RESOUTION_DICTIONARY : Dictionary = {
+	"1280x720 (16:9)" : Vector2i(1280,720),
+	"1280x800 (16:10)" : Vector2i(1280,800),
+	"1366x768 (16:9)" : Vector2i(1366,768),
+	"1440x900 (16:10)" : Vector2i(1440,900),
+	"1600x900 (16:9)" : Vector2i(1600,900),
+	"1920x1080 (16:9)" : Vector2i(1920,1080),
+	"2560x1440 (16:9)" : Vector2i(2560,1440),
+	"3840x2160 (16:9)" : Vector2i(3840,2160),
+}
+
+
 func _ready() -> void:
 	add_window_mode_items()
+	add_resolution_items()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
-
-# Called from outside initializes the options menu
-func on_open():
+	resolution_option_button.item_selected.connect(on_resolution_selected)
+	
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
 	
-	load_options()
+	load_options.call_deferred()
+
+# Called from outside initializes the options menu
+func on_open():
+	pass
 
 
 # Adding window modes to the window mode button.
 func add_window_mode_items() -> void:
 	for mode in WINDOW_MODE_ARRAY:
 		window_mode_option_button.add_item(mode)
+		
+# Adding resolutions to the resolution button.
+func add_resolution_items() -> void:
+	for resolution_text in RESOUTION_DICTIONARY:
+		resolution_option_button.add_item(resolution_text)
 
 
-# Function to change window modes. Hooked up to the window_mode_option_button
+# Function to change window modes. Hooked up to the window_mode_option_button.
 func on_window_mode_selected(index: int) -> void:
 	match index:
 		0: #Full screen
@@ -58,6 +80,11 @@ func on_window_mode_selected(index: int) -> void:
 		3: #Borderless windowed
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+
+
+# Function to change resolution. Hooked up to the resolution_option_button.
+func on_resolution_selected(index:int) -> void:
+	DisplayServer.window_set_size(RESOUTION_DICTIONARY.values()[index])
 
 
 func _on_sfx_volume_slider_value_changed(value):
@@ -81,6 +108,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, sfx_volume_slider.hslider.value)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, music_volume_slider.hslider.value)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
@@ -92,10 +120,13 @@ func save_options():
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
 func load_options():
 	var err = config.load(OptionsConstants.config_file_name)
+	if err != 0:
+		print("Loading options config failed. Using defaults.")
 	
 	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
 	var music_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1)
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
+	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
@@ -104,7 +135,6 @@ func load_options():
 
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
-	window_mode_option_button._select_int(window_mode)
 	render_scale_slider.value = render_scale
 	
 	# Need to set it like that to guarantee signal to be triggered
@@ -118,6 +148,11 @@ func load_options():
 	anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 	anti_aliasing_3d_option_button.selected = msaa_3d
 	anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
+	
+	window_mode_option_button.selected = window_mode
+	window_mode_option_button.item_selected.emit(window_mode)
+	resolution_option_button.selected = resolution_index
+	resolution_option_button.item_selected.emit(resolution_index)
 
 
 func _on_render_scale_slider_value_changed(value):
@@ -157,5 +192,4 @@ func set_msaa(mode, index):
 
 func _on_apply_changes_pressed() -> void:
 	save_options()
-	print("Options saved.")
 	emit_signal("options_updated")

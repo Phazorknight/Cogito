@@ -1,7 +1,8 @@
+@icon("res://COGITO/Assets/Graphics/Editor/CogitoNodeIcon.svg")
 extends Node3D
 
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
-signal switched(is_on)
+signal switched(is_on: bool)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 

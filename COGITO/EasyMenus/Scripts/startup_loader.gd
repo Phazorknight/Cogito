@@ -15,7 +15,7 @@ func load_settings():
 	var music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
 	var sfx_volume = linear_to_db(config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1))
 	var music_volume = linear_to_db(config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1))
-	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
+	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 2)
 	#var fullscreen = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_key_name, false)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)

@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_1djt0")
 script = ExtResource("2_473pa")
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath(""), NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 sound_hover = ExtResource("3_cekij")
 sound_click = ExtResource("4_ccwo8")
 
@@ -66,7 +66,7 @@ custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("5_7fnwn")
-current_tab = 3
+current_tab = 2
 
 [node name="Game" type="MarginContainer" parent="Content/TabContainer"]
 visible = false
@@ -169,7 +169,6 @@ script = ExtResource("6_a8sll")
 
 [node name="Graphics" type="MarginContainer" parent="Content/TabContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -200,6 +199,23 @@ size_flags_horizontal = 0
 text = "Window Mode"
 
 [node name="WindowModeOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer_Resolution" type="HBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_1djt0")
+
+[node name="ResolutionLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Resolution"
+
+[node name="ResolutionOptionButton" type="OptionButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
@@ -311,6 +327,7 @@ text = "Apply changes"
 script = ExtResource("6_a8sll")
 
 [node name="Audio" type="MarginContainer" parent="Content/TabContainer"]
+visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
 theme_override_constants/margin_left = 0

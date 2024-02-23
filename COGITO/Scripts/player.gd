@@ -256,6 +256,7 @@ func _on_resume_movement():
 func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err == 0:
+		print("Player.gd: Options reloaded.")
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 
 # Signal from Pause Menu

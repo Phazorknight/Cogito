@@ -11,6 +11,7 @@ const sfx_volume_key_name = "sfx_volume"
 const music_volume_key_name = "music_volume" 
 # Graphics options
 const windowmode_key_name = "window_mode"
+const resolution_index_key_name = "resolution_index"
 const render_scale_key = "render_scale"
 const vsync_key = "vsync"
 const msaa_2d_key = "msaa_2d" 
