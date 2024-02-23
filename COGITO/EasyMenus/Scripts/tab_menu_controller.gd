@@ -52,7 +52,7 @@ func _play_pressed() -> void:
 func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true
-	tab_menu_options.on_open()
+	#tab_menu_options.load_options()
 	tab_container.set_current_tab(0)
 	show()
 	resume_game_button.grab_focus.call_deferred()
