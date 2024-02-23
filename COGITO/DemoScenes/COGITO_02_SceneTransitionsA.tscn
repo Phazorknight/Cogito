@@ -1,17 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://dty7vjg3hp68b"]
+[gd_scene load_steps=18 format=3 uid="uid://dty7vjg3hp68b"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_8f7tt"]
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_8th5t"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_w4txe"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_ha28r"]
-[ext_resource type="PackedScene" uid="uid://rw7gdui8lu3n" path="res://COGITO/EasyMenus/Scenes/pause_menu.tscn" id="4_75e8i"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="5_5tohn"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/tab_menu.tscn" id="5_gcqc7"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="6_jn18d"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="7_34j8q"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="8_4hlpp"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/Pickups/pickup_health_potion.tscn" id="8_vj2ak"]
-[ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres" id="9_dacst"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="10_kpi6k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pde7s"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
@@ -33,16 +31,10 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_xffy4"]
+[sub_resource type="Resource" id="Resource_qcsrc"]
 resource_local_to_scene = true
 script = ExtResource("2_w4txe")
-inventory_slots = Array[ExtResource("10_kpi6k")]([null, null, null, null, null, null, null, null])
-
-[sub_resource type="Resource" id="Resource_mqwj2"]
-resource_local_to_scene = true
-script = ExtResource("10_kpi6k")
-inventory_item = ExtResource("9_dacst")
-quantity = 1
+inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_ntr4m"]
 size = Vector3(3, 3, 2)
@@ -70,16 +62,17 @@ environment = SubResource("Environment_ai7l5")
 
 [node name="Player" parent="." instance=ExtResource("1_8f7tt")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.63987, 1.19987, 3.00969)
-pause_menu = NodePath("../PauseMenu")
+pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_xffy4")
+inventory_data = SubResource("Resource_qcsrc")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ha28r")]
 player = NodePath("../Player")
 use_stamina_component = true
 
-[node name="PauseMenu" parent="." instance=ExtResource("4_75e8i")]
+[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("5_gcqc7")]
+nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
 
@@ -153,7 +146,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71717, 0.823779, 2.91211)
 
 [node name="HealthPotion" parent="." instance=ExtResource("8_vj2ak")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39538, 0.273078, 6.10744)
-slot_data = SubResource("Resource_mqwj2")
 
 [node name="TransitionZone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.6, -6.2)
