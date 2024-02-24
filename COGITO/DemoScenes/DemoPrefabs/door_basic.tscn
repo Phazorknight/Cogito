@@ -91,6 +91,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.428089, 0.978461, 0.0009276
 shape = SubResource("BoxShape3D_jg0ik")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Door"]
-volume_db = -9.0
+volume_db = -26.0
+bus = &"SFX"
 
 [node name="BasicInteraction" parent="Door" instance=ExtResource("2_tt6sh")]

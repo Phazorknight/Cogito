@@ -191,7 +191,7 @@ transform = Transform3D(0.999998, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 0.9999
 shape = SubResource("BoxShape3D_fgbqg")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="LeftDoor"]
-volume_db = -9.0
+volume_db = -26.0
 bus = &"SFX"
 
 [node name="BasicInteraction" parent="LeftDoor" instance=ExtResource("2_pg8bu")]
@@ -213,7 +213,7 @@ transform = Transform3D(0.999998, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 0.9999
 shape = SubResource("BoxShape3D_fgbqg")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="RightDoor"]
-volume_db = -9.0
+volume_db = -26.0
 bus = &"SFX"
 
 [node name="BasicInteraction" parent="RightDoor" instance=ExtResource("2_pg8bu")]

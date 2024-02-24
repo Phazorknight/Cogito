@@ -89,12 +89,12 @@ func on_resolution_selected(index:int) -> void:
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
-	_on_apply_changes_pressed()
+	#_on_apply_changes_pressed()
 
 
 func _on_music_volume_slider_value_changed(value):
 	set_volume(music_bus_index, value)
-	_on_apply_changes_pressed()
+	#_on_apply_changes_pressed()
 
 
 # Sets the volume for the given audio bus
@@ -192,4 +192,4 @@ func set_msaa(mode, index):
 
 func _on_apply_changes_pressed() -> void:
 	save_options()
-	emit_signal("options_updated")
+	options_updated.emit()
