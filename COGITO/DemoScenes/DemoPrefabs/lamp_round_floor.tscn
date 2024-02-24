@@ -79,6 +79,7 @@ emission = Color(1, 0.960784, 0.792157, 1)
 
 [node name="lampRoundFloor" type="AnimatableBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.71507, -4.84288e-08, -9.94791)
+collision_layer = 3
 script = ExtResource("1_s2xvf")
 switch_sound = ExtResource("2_d5l8n")
 nodes_to_show_when_on = [NodePath("lampRoundFloor_on"), NodePath("OmniLight3D")]

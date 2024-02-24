@@ -43,7 +43,13 @@ func _ready():
 	wieldable_mesh.hide()
 
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
-func action_primary(_camera_collision:Vector3, _passed_item_reference : InventoryItemPD):
+func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool):
+	if _is_released:
+		return
+	
+	# Gettting camera_collision pos from player interaction component:
+	var _camera_collision = player_interaction_component.Get_Camera_Collision()
+	
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
 	animation_player.play(anim_action_primary)
 	var Projectile = projectile_prefab.instantiate()

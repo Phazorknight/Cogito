@@ -54,7 +54,10 @@ func _process(delta):
 
 
 # Primary action called by the Player Interaction Component when flashlight is wielded.
-func action_primary(_camera_collision:Vector3, _passed_item_reference:InventoryItemPD):
+func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
+	if _is_released:
+		return
+		
 	animation_player.play(anim_action_primary)
 	toggle_on_off()
 
