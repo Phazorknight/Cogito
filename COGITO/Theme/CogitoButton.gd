@@ -86,7 +86,11 @@ func _on_focus_entered() -> void:
 
 func in_context() -> bool:
 	var context = get_viewport().gui_get_focus_owner()
-	return context and shortcut_context and context.get_parent_control() == shortcut_context
+	if context:
+		var context_owner = context.shortcut_context or context.get_parent_control()
+		var our_context = shortcut_context or get_parent_control()
+		return context_owner == our_context
+	return false
 
 func _on_focus_exited() -> void:
 	if get_viewport().gui_get_focus_owner() == null:
