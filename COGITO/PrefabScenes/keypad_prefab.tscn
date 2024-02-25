@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://i4rqcx7lyrfd"]
+[gd_scene load_steps=48 format=3 uid="uid://i4rqcx7lyrfd"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Keypad.gd" id="1_iwk1o"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="2_5i70k"]
@@ -149,13 +149,6 @@ keycode = 4194438
 [sub_resource type="Shortcut" id="Shortcut_bv5yc"]
 events = [SubResource("InputEventKey_se7no"), SubResource("InputEventKey_klrbc")]
 
-[sub_resource type="InputEventKey" id="InputEventKey_rrpqx"]
-device = -1
-keycode = 4194309
-
-[sub_resource type="Shortcut" id="Shortcut_1xuph"]
-events = [SubResource("InputEventKey_rrpqx")]
-
 [node name="Keypad" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 collision_layer = 3
@@ -304,125 +297,137 @@ theme_override_constants/separation = 10
 layout_mode = 2
 columns = 3
 
-[node name="1" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="1" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_wq2ju")
 text = "1"
 script = ExtResource("6_ebwkh")
 
-[node name="2" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="2" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_1s2p8")
 text = "2"
 script = ExtResource("6_ebwkh")
 
-[node name="3" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="3" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_yqbel")
 text = "3"
 script = ExtResource("6_ebwkh")
 
-[node name="4" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="4" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_ik0et")
 text = "4"
 script = ExtResource("6_ebwkh")
 
-[node name="5" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="5" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_0j1pw")
 text = "5"
 script = ExtResource("6_ebwkh")
 
-[node name="6" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="6" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_ekah0")
 text = "6"
 script = ExtResource("6_ebwkh")
 
-[node name="7" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="7" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_w80ll")
 text = "7"
 script = ExtResource("6_ebwkh")
 
-[node name="8" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="8" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_32785")
 text = "8"
 script = ExtResource("6_ebwkh")
 
-[node name="9" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="9" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_cujgu")
 text = "9"
 script = ExtResource("6_ebwkh")
 
-[node name="Clear" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="Clear" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_pdj7m")
 text = "C"
 script = ExtResource("6_ebwkh")
 
-[node name="0" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="0" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
 shortcut = SubResource("Shortcut_bv5yc")
 text = "0"
 script = ExtResource("6_ebwkh")
 
-[node name="Enter" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer"]
+[node name="Enter" type="Button" parent="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer" node_paths=PackedStringArray("shortcut_context")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+shortcut_context = NodePath("..")
 theme_override_font_sizes/font_size = 28
-shortcut = SubResource("Shortcut_1xuph")
 text = "E"
 script = ExtResource("6_ebwkh")
+accepts_contextual_enter = true
 
 [connection signal="pressed_string" from="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer/1" to="." method="_on_button_received"]
 [connection signal="pressed_string" from="KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer/2" to="." method="_on_button_received"]
