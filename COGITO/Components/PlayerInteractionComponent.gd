@@ -117,7 +117,7 @@ func _input(event):
 	if !get_parent().is_movement_paused:
 		if is_wielding and Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary(false)
-		if is_wielding and Input.is_action_just_released("action_secondary"):
+		if is_wielding and Input.is_action_just_released("action_primary"):
 			attempt_action_primary(true)
 		
 		if is_wielding and Input.is_action_just_pressed("action_secondary"):
@@ -134,10 +134,13 @@ func _input(event):
 
 ## Helper function to always get raycast destination point
 func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
+	var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
 	if interaction_raycast.is_colliding():
-		return interaction_raycast.get_collision_point()
+		if destination_point == interaction_raycast.get_collision_point():
+			return interaction_raycast.get_collision_point()
+		else:
+			return destination_point
 	else:
-		var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
 		return destination_point
 
 
@@ -177,7 +180,8 @@ func attempt_action_primary(is_released:bool):
 		send_hint(null, equipped_wieldable_item.name + " is out of ammo.")
 	else:
 		if !equipped_wieldable_node.animation_player.is_playing(): # Enforces fire rate.
-			equipped_wieldable_item.subtract(1)
+			if is_released == false: #Only reduce ammo on down press.
+				equipped_wieldable_item.subtract(1)
 			equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
 
 
