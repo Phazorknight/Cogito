@@ -6,7 +6,7 @@ const Slot = preload("res://COGITO/InventoryPD/UiScenes/Slot.tscn")
 @onready var h_box_container = $MarginContainer/VBoxContainer/TopRow
 
 
-func _input(event):
+func _unhandled_input(event):
 	# Handles Gamepad Hotbar input
 	if not visible:
 		return

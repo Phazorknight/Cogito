@@ -47,6 +47,8 @@ var interaction_nodes : Array[Node]
 var entered_code: String
 var player_interaction_component
 
+var in_focus : bool
+
 
 func _ready():
 	code_display.text = ""
@@ -62,7 +64,10 @@ func _ready():
 		interaction_text = interaction_text_when_locked
 		
 	object_state_updated.emit(interaction_text)
+	get_viewport().connect("gui_focus_changed", self._on_focus_changed)
 
+func _on_focus_changed(control:Control):
+	in_focus = is_open and control.owner == self
 
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component
@@ -77,6 +82,7 @@ func open(_player_interaction_component):
 	_player_interaction_component.get_parent().menu_pressed.connect(close) #Connecting input action menu to close function.
 	keypad_ui.show()
 	grab_focus_button.grab_focus()
+	in_focus = true
 	is_open = true
 	
 	
@@ -85,6 +91,7 @@ func close(_player_interaction_component):
 	_player_interaction_component.get_parent().menu_pressed.disconnect(close)
 	_player_interaction_component.get_parent().toggled_interface.emit(false)
 	is_open = false
+	in_focus = false
 
 
 func _on_button_received(_passed_string:String):
@@ -159,6 +166,9 @@ func set_state():
 	
 	object_state_updated.emit(interaction_text)
 
+func _unhandled_input(event):
+	if in_focus:
+		get_viewport().set_input_as_handled()
 
 func save():
 	var state_dict = {
