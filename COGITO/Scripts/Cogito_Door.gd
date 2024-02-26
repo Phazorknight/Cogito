@@ -29,6 +29,9 @@ signal object_state_updated(interaction_text:String)
 ## Other doors that should sync their state (locked, unlocked, open, closed) with this door. Useful for double-doors, etc.
 @export var doors_to_sync_with : Array[NodePath]
 
+## If higher than zero, the door will auto-close after this amount of time has passed.
+@export var auto_close_time: float
+
 ## Use these if you don't have an animation.
 @export_subgroup("Tween Parameters")
 ## Set this to true if you're making a sliding instead of a rotating door.
@@ -58,6 +61,7 @@ var anim_player : AnimationPlayer
 var is_moving : bool = false
 var target_rotation_rad : float 
 var interaction_text
+var close_timer : Timer #Used for auto-close
 
 var interaction_nodes : Array[Node]
 
@@ -172,7 +176,24 @@ func open_door(interactor: Node3D):
 	interaction_text = interaction_text_when_open
 	object_state_updated.emit(interaction_text)
 	
+	# Only used if there's an auto close time set.
+	if auto_close_time > 0:
+		close_timer = Timer.new()
+		add_child(close_timer)
+		close_timer.wait_time = auto_close_time
+		close_timer.one_shot = true
+		close_timer.start()
+		close_timer.timeout.connect(on_auto_close_time)
+		
+		
+func on_auto_close_time():
+	close_door(null)
+	
+	
 func close_door(_interactor: Node3D):
+	if close_timer: #If there's an auto_close_timer, destroy it.
+		close_timer.queue_free()
+	
 	audio_stream_player_3d.stream = close_sound
 	audio_stream_player_3d.play()
 	
