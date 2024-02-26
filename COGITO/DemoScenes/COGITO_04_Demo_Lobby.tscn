@@ -1,4 +1,4 @@
-[gd_scene load_steps=329 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=330 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ddjbxllw044a3" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorCornerRound.glb" id="10_4csde"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="10_wbxwm"]
 [ext_resource type="PackedScene" uid="uid://br3vumdotavq0" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorHalf.glb" id="11_7indd"]
+[ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="11_je61h"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_72tca"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="13_5x4ip"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="14_qtguo"]
@@ -92,7 +93,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_73y14"]
+[sub_resource type="Resource" id="Resource_46rwx"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -120,7 +121,7 @@ resource_name = "metalDark"
 albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
 emission_enabled = true
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_yu45y"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_qyi1g"]
 _surfaces = [{
 "aabb": AABB(0, 0, -0.1, 2, 2.57906, 0.1),
 "format": 34896613377,
@@ -194,7 +195,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 0, 0, 255, 255, 84, 213, 255, 255, 0, 0, 0, 0, 84, 213, 255, 255, 0, 0, 255, 255, 84, 213, 0, 0, 255, 255, 255, 255, 84, 213, 0, 0, 255, 255, 0, 0, 84, 213, 255, 255, 255, 255, 255, 255, 84, 213, 255, 255, 255, 255, 0, 0, 84, 213, 0, 0, 255, 255, 255, 255, 84, 213, 0, 0, 0, 0, 255, 255, 84, 213, 0, 0, 255, 255, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 255, 255, 0, 0, 84, 213, 0, 0, 0, 0, 255, 255, 84, 213, 255, 255, 0, 0, 255, 255, 84, 213, 255, 255, 255, 255, 255, 255, 84, 213, 255, 255, 0, 0, 0, 0, 84, 213, 255, 255, 255, 255, 0, 0, 84, 213, 255, 255, 0, 0, 0, 0, 84, 213, 255, 255, 255, 255, 255, 255, 84, 213, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 255, 255, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255)
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_yu45y")
+shadow_mesh = SubResource("ArrayMesh_qyi1g")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ecok4"]
 size = Vector3(2, 2.6, 0.1)
@@ -577,7 +578,7 @@ shadow_mesh = SubResource("ArrayMesh_uoxpw")
 points = PackedVector3Array(0.98344, 2.54954, 6.93889e-18, -0.0204691, -0.020469, -0.120469, -1.66533e-16, 0.0319319, -0.000111047, -0.0204691, 2.59957, -0.120469, 1.00298, -0.020469, -0.120469, 1.00298, 2.59957, -0.120469, 0.98344, 0.0295629, 6.93889e-18, -1.66533e-16, 2.54717, -0.000111047)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2v3r"]
-size = Vector3(2.1, 3, 2.3)
+size = Vector3(2.1, 3, 1.78258)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tng1d"]
 resource_name = "metal"
@@ -3255,7 +3256,7 @@ transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.0307
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
 is_using_sanity = false
-inventory_data = SubResource("Resource_73y14")
+inventory_data = SubResource("Resource_46rwx")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -3511,6 +3512,18 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.3, -0.0500011)
 shape = SubResource("BoxShape3D_ecok4")
 
+[node name="Wall89" type="StaticBody3D" parent="MAIN_LOBBY/LAB_CONNECTOR"]
+transform = Transform3D(-1, 0, 8.74226e-08, 0, 1, 0, -8.74226e-08, 0, -1, -14.1, 0, -4)
+metadata/_edit_group_ = true
+
+[node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/LAB_CONNECTOR/Wall89"]
+mesh = SubResource("ArrayMesh_wjscr")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAIN_LOBBY/LAB_CONNECTOR/Wall89"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.3, -0.0500011)
+shape = SubResource("BoxShape3D_ecok4")
+
 [node name="Wall81" type="StaticBody3D" parent="MAIN_LOBBY/LAB_CONNECTOR"]
 transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, -12, 0, -2)
 metadata/_edit_group_ = true
@@ -3617,16 +3630,20 @@ skeleton = NodePath("")
 shape = SubResource("ConvexPolygonShape3D_6kwp2")
 
 [node name="TransitionZone_LAB" type="Area3D" parent="MAIN_LOBBY/LAB_CONNECTOR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.043, 1.5, -2.85195)
 script = ExtResource("10_wbxwm")
 path_to_new_scene = "res://COGITO/DemoScenes/COGITO_05_Demo_Laboratory.tscn"
 target_connector = "ConnectorFromLobby"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MAIN_LOBBY/LAB_CONNECTOR/TransitionZone_LAB"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.043, 1.5, -1.9438)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.25871)
 shape = SubResource("BoxShape3D_s2v3r")
 
 [node name="ConnectorFromLab" type="Node3D" parent="MAIN_LOBBY/LAB_CONNECTOR"]
-transform = Transform3D(0.0871558, 0, -0.996195, 0, 1, 0, 0.996195, 0, 0.0871558, -10.7, 0.5, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -12.9731, 1, -0.523336)
+
+[node name="KSI_wall_doorway_painted" parent="MAIN_LOBBY/LAB_CONNECTOR" instance=ExtResource("11_je61h")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -16, 0, -7)
 
 [node name="stairsOpenSingle" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.4, 0, -4.34634)
@@ -6208,6 +6225,13 @@ transform = Transform3D(-1, 0, -8.19564e-08, 0, 1, 0, 8.19564e-08, 0, -1, -5.896
 [node name="ARCHIVE" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.1, 0, 7.9)
 
+[node name="ArchiveDoor" parent="ARCHIVE" instance=ExtResource("17_2lcsn")]
+transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332, 0, -4.53017)
+
+[node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
+interaction_text_when_locked = "Locked."
+is_locked = true
+
 [node name="Wall81" type="StaticBody3D" parent="ARCHIVE"]
 metadata/_edit_group_ = true
 
@@ -6299,13 +6323,6 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.3, -0.0500011)
 shape = SubResource("BoxShape3D_ecok4")
 
-[node name="ArchiveDoor" parent="ARCHIVE" instance=ExtResource("17_2lcsn")]
-transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332, 0, -4.53017)
-
-[node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
-interaction_text_when_locked = "Locked."
-is_locked = true
-
 [node name="wallDoorway3" type="StaticBody3D" parent="ARCHIVE"]
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.1, 0, -5.1)
 metadata/_edit_group_ = true
@@ -6322,6 +6339,18 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.9, 0
 
 [node name="bookcaseClosedWide5" parent="ARCHIVE" instance=ExtResource("29_rqlpo")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.55094, 0, -4.61938)
+
+[node name="computerKeyboard" parent="ARCHIVE/bookcaseClosedWide5" instance=ExtResource("51_ysw6n")]
+transform = Transform3D(-0.999913, 0, -0.0132114, 0, 1, 0, 0.0132114, 0, -0.999913, 1.41613, 0.623836, -0.340215)
+
+[node name="computerKeyboard2" parent="ARCHIVE/bookcaseClosedWide5" instance=ExtResource("51_ysw6n")]
+transform = Transform3D(0.999971, -0.000839805, 0.00768556, -5.82077e-11, 0.994083, 0.108624, -0.0077313, -0.108621, 0.994054, 0.865242, 0.684367, -0.0990133)
+
+[node name="computerKeyboard3" parent="ARCHIVE/bookcaseClosedWide5" instance=ExtResource("51_ysw6n")]
+transform = Transform3D(-0.999682, -0.000977083, 0.0252162, 0, 0.99925, 0.0387192, -0.0252351, 0.0387068, -0.998932, 1.41613, 0.718816, -0.340215)
+
+[node name="computerKeyboard4" parent="ARCHIVE/bookcaseClosedWide5" instance=ExtResource("51_ysw6n")]
+transform = Transform3D(0.986137, -0.000839805, 0.165932, -0.0172004, 0.994083, 0.107254, -0.16504, -0.108621, 0.980288, 0.908393, 0.776775, -0.0708055)
 
 [node name="bookcaseClosedWide6" parent="ARCHIVE" instance=ExtResource("29_rqlpo")]
 transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 1.95094, 0, -3.61938)
@@ -6442,6 +6471,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dg8i0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ARCHIVE/table2"]
 shape = SubResource("ConcavePolygonShape3D_e53hs")
+
+[node name="computerScreen" parent="ARCHIVE" instance=ExtResource("52_8322x")]
+transform = Transform3D(-0.187793, 0, 0.982209, 0, 1, 0, -0.982209, 0, -0.187793, -0.228199, 1.58288, -3.73791)
+
+[node name="computerScreen2" parent="ARCHIVE" instance=ExtResource("52_8322x")]
+transform = Transform3D(0.0382832, 0, 0.999267, 0, 1, 0, -0.999267, 0, 0.0382832, 0.00355792, 1.58288, -3.71214)
+
+[node name="computerScreen3" parent="ARCHIVE" instance=ExtResource("52_8322x")]
+transform = Transform3D(-0.0396609, 0, 0.999213, 0, 1, 0, -0.999213, 0, -0.0396609, 0.308809, 1.58288, -3.71114)
+
+[node name="computerScreen4" parent="ARCHIVE" instance=ExtResource("52_8322x")]
+transform = Transform3D(0.0213438, 0, -0.999772, 0, 1, 0, 0.999772, 0, 0.0213438, 0.358765, 1.57892, -4.3582)
+
+[node name="computerScreen5" parent="ARCHIVE" instance=ExtResource("52_8322x")]
+transform = Transform3D(0.0213438, 0, -0.999772, 0, 1, 0, 0.999772, 0, 0.0213438, 0.596934, 1.57892, -4.51492)
 
 [node name="BREAK_ROOM" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0997177, 0, -9.01854)

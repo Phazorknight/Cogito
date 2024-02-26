@@ -1,8 +1,7 @@
-[gd_scene load_steps=48 format=3 uid="uid://i4rqcx7lyrfd"]
+[gd_scene load_steps=51 format=3 uid="uid://i4rqcx7lyrfd"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Keypad.gd" id="1_iwk1o"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="2_5i70k"]
-[ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="2_eg3nd"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="2_hg75d"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="3_aoa7n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="3_u3a7f"]
@@ -11,20 +10,39 @@
 [ext_resource type="Script" path="res://COGITO/Theme/CogitoButton.gd" id="6_ebwkh"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_14uds"]
-material = ExtResource("2_eg3nd")
-size = Vector3(0.3, 0.02, 0.5)
+size = Vector3(0.2, 0.02, 0.3)
 
-[sub_resource type="BoxMesh" id="BoxMesh_guoqg"]
-material = ExtResource("3_u3a7f")
-size = Vector3(0.17, 0.01, 0.05)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lguga"]
+resource_name = "metalDark"
+albedo_color = Color(0.297, 0.33, 0.33, 1)
+emission_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ojq3g"]
+size = Vector3(0.14, 0.02, 0.04)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xps6a"]
+resource_name = "glass"
+transparency = 4
+albedo_color = Color(0.853244, 0.919941, 0.89044, 0.5)
+emission_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_fd71c"]
 material = ExtResource("3_u3a7f")
-size = Vector3(0.05, 0.01, 0.05)
+size = Vector3(0.05, 0.01, 0.04)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n16tc"]
+resource_name = "metalDark"
+albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
+emission_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m341j"]
+resource_name = "metalDark"
+albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
+emission_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vcta0"]
 margin = 0.01
-size = Vector3(0.3, 0.06, 0.5)
+size = Vector3(0.25, 0.06, 0.35)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqlw7"]
 bg_color = Color(1, 1, 1, 1)
@@ -157,51 +175,77 @@ passcode = "0000"
 correct_code_entered_sound = ExtResource("2_5i70k")
 wrong_code_entered_sound = ExtResource("2_hg75d")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Frame" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_14uds")
+surface_material_override/0 = SubResource("StandardMaterial3D_lguga")
 
-[node name="MiniMesh10" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, 0.0894531)
-mesh = SubResource("BoxMesh_guoqg")
+[node name="Display" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0.1)
+mesh = SubResource("BoxMesh_ojq3g")
+surface_material_override/0 = SubResource("StandardMaterial3D_xps6a")
 
-[node name="MiniMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, -0.0305469)
+[node name="MiniMesh_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, 0.03)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, -0.0305469)
+[node name="MiniMesh_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, 0.03)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, -0.0305469)
+[node name="MiniMesh_3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, 0.03)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh4" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, 0.0294531)
+[node name="MiniMesh_4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, -0.02)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh5" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, 0.0294531)
+[node name="MiniMesh_5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, -0.02)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_m341j")
 
-[node name="MiniMesh6" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, 0.0294531)
+[node name="MiniMesh_6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, -0.02)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh7" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, -0.0905469)
+[node name="MiniMesh_7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, -0.07)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh8" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, -0.0905469)
+[node name="MiniMesh_8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, -0.07)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
-[node name="MiniMesh9" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, -0.0905469)
+[node name="MiniMesh_9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, -0.07)
 mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
+
+[node name="MiniMesh_10" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.015, -0.12)
+mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
+
+[node name="MiniMesh_11" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0153658, -0.12)
+mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
+
+[node name="MiniMesh_12" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.015, -0.12)
+mesh = SubResource("BoxMesh_fd71c")
+surface_material_override/0 = SubResource("StandardMaterial3D_n16tc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0.0177172, 7.74446e-10)
 shape = SubResource("BoxShape3D_vcta0")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_aoa7n")]
