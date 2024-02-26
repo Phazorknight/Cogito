@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bavlamv6h43uw"]
+[gd_scene load_steps=8 format=3 uid="uid://bavlamv6h43uw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwiaa"]
 resource_name = "metalLight"
@@ -91,8 +91,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_yvbj8")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qbr7m"]
-data = PackedVector3Array(0, 3, -3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, 0, 3, -3, 0.5625, 0, -3, 0, 0, -3, 0, 0, 0, 0, 0, 0, 0.5625, 0, 0, 0.5625, 0, -3, 0.75, 2.625, -3, 0.75, 2.625, 0, 0.75, 3, 0, 0.75, 3, 0, 0.75, 3, -3, 0.75, 2.625, -3, 0.75, 3, 0, 0, 3, 0, 0, 3, -3, 0, 3, -3, 0.75, 3, -3, 0.75, 3, 0, 0, 0, -3, 0.5625, 0, -3, 0.375, 0.375, -3, 0.375, 0.375, -3, 0, 3, -3, 0, 0, -3, 0.375, 0.375, -3, 0.375, 0.8437, -3, 0, 3, -3, 0.375, 0.8437, -3, 0.375, 1.3125, -3, 0, 3, -3, 0.375, 1.3125, -3, 0.375, 2.25, -3, 0, 3, -3, 0.375, 2.25, -3, 0.75, 2.625, -3, 0, 3, -3, 0.75, 2.625, -3, 0.75, 3, -3, 0, 3, -3, 0.5625, 0.375, -3, 0.375, 0.375, -3, 0.5625, 0, -3, 0.5625, 0.375, 0, 0.5625, 0, 0, 0, 0, 0, 0, 0, 0, 0.375, 0.375, 0, 0.5625, 0.375, 0, 0, 0, 0, 0, 3, 0, 0.375, 0.375, 0, 0, 3, 0, 0.375, 0.8437, 0, 0.375, 0.375, 0, 0, 3, 0, 0.375, 1.3125, 0, 0.375, 0.8437, 0, 0, 3, 0, 0.375, 2.25, 0, 0.375, 1.3125, 0, 0, 3, 0, 0.75, 2.625, 0, 0.375, 2.25, 0, 0, 3, 0, 0.75, 3, 0, 0.75, 2.625, 0, 0.75, 2.625, -3, 0.375, 2.25, -3, 0.375, 2.25, 0, 0.375, 2.25, 0, 0.75, 2.625, 0, 0.75, 2.625, -3, 0.5625, 0, -3, 0.5625, 0, 0, 0.5625, 0.375, 0, 0.5625, 0.375, 0, 0.5625, 0.375, -3, 0.5625, 0, -3, 0.5625, 0.375, 0, 0.375, 0.375, 0, 0.375, 0.375, -3, 0.375, 0.375, -3, 0.5625, 0.375, -3, 0.5625, 0.375, 0, 0.375, 1.3125, -3, 0.375, 1.3125, 0, 0.375, 2.25, 0, 0.375, 2.25, 0, 0.375, 2.25, -3, 0.375, 1.3125, -3, 0.375, 0.375, -3, 0.375, 0.375, 0, 0.375, 0.8437, 0, 0.375, 0.8437, 0, 0.375, 0.8437, -3, 0.375, 0.375, -3, 0.375, 0.8437, -3, 0.375, 0.8437, 0, 0.375, 1.3125, 0, 0.375, 1.3125, 0, 0.375, 1.3125, -3, 0.375, 0.8437, -3)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fi6yw"]
+resource_name = "metalDark"
+albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
+emission_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gdsoc"]
+size = Vector3(0.56, 3, 3)
 
 [node name="KSI_wall_painted" type="StaticBody3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9, 0, -4)
@@ -100,6 +105,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9, 0, 
 [node name="object_042" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_a2ovj")
 skeleton = NodePath("")
+surface_material_override/2 = SubResource("StandardMaterial3D_fi6yw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConcavePolygonShape3D_qbr7m")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 1.5, -1.5)
+shape = SubResource("BoxShape3D_gdsoc")

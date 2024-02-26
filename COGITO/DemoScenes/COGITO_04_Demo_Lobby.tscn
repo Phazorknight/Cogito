@@ -91,7 +91,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_bagq1"]
+[sub_resource type="Resource" id="Resource_0psj2"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -3064,7 +3064,7 @@ transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.0307
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
 is_using_sanity = false
-inventory_data = SubResource("Resource_bagq1")
+inventory_data = SubResource("Resource_0psj2")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
