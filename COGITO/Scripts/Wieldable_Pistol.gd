@@ -47,18 +47,22 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	if _is_released:
 		return
 	
+	# Sound and animation
+	animation_player.play(anim_action_primary)
+	audio_stream_player_3d.stream = sound_primary_use
+	audio_stream_player_3d.play()
+	
 	# Gettting camera_collision pos from player interaction component:
 	var _camera_collision = player_interaction_component.Get_Camera_Collision()
-	
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
-	animation_player.play(anim_action_primary)
+	
+	# Spawning projectile
 	var Projectile = projectile_prefab.instantiate()
 	bullet_point.add_child(Projectile)
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
 	Projectile.reparent(get_tree().get_current_scene())
-	audio_stream_player_3d.stream = sound_primary_use
-	audio_stream_player_3d.play()
+	
 
 
 func action_secondary(is_released:bool):

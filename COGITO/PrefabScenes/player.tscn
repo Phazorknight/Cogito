@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=24 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://5r8icl42jumy" path="res://COGITO/Wieldables/flashlight.tscn" id="5_ukw1v"]
 [ext_resource type="PackedScene" uid="uid://dgtjml2t3hdvx" path="res://COGITO/Wieldables/toy_pistol.tscn" id="6_lwwgx"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="6_nrttm"]
+[ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://COGITO/Wieldables/laser_rifle.tscn" id="7_cn6iu"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="7_swbyy"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="8_2tp8b"]
 [ext_resource type="PackedScene" uid="uid://bkbudpcayf2jc" path="res://COGITO/Components/BrightnessComponent.tscn" id="9_x4tef"]
@@ -96,6 +97,8 @@ collision_mask = 2
 
 [node name="Toy Pistol" parent="Neck/Head/Wieldables" instance=ExtResource("6_lwwgx")]
 
+[node name="Laser Rifle" parent="Neck/Head/Wieldables" instance=ExtResource("7_cn6iu")]
+
 [node name="SlidingTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
@@ -115,7 +118,7 @@ one_shot = true
 [node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position", "wieldable_nodes") instance=ExtResource("13_rawn6")]
 interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
 carryable_position = NodePath("../CarryablePosition")
-wieldable_nodes = [NodePath("../Neck/Head/Wieldables/Flashlight"), NodePath("../Neck/Head/Wieldables/Toy Pistol")]
+wieldable_nodes = [NodePath("../Neck/Head/Wieldables/Flashlight"), NodePath("../Neck/Head/Wieldables/Toy Pistol"), NodePath("../Neck/Head/Wieldables/Laser Rifle")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("11_ms07f")]
 max_health = 100.0
