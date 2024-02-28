@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://lsun1f1wjfxl"]
+[gd_scene load_steps=8 format=3 uid="uid://lsun1f1wjfxl"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Switch.gd" id="1_ueccq"]
 [ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_bq20n"]
 [ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://COGITO/Assets/Materials/Lamp_Shade.tres" id="2_va873"]
+[ext_resource type="PackedScene" uid="uid://ctr7n0w3hgys7" path="res://COGITO/Components/LightzoneComponent.tscn" id="4_lybt7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_05p8f"]
 albedo_color = Color(1, 0.890196, 0.631373, 1)
@@ -13,6 +14,10 @@ rim = 0.0
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_n08oq"]
 height = 0.2
 radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0ljm4"]
+height = 2.62204
+radius = 1.0
 
 [node name="CeilingLamp" type="AnimatableBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -23.8641, 1.7, 5.40424)
@@ -50,3 +55,13 @@ bus = &"SFX"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_n08oq")
+
+[node name="LightzoneComponent" parent="." instance=ExtResource("4_lybt7")]
+
+[node name="CollisionShape3D" parent="LightzoneComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5774, 0)
+shape = SubResource("CylinderShape3D_0ljm4")
+
+[connection signal="switched" from="." to="LightzoneComponent/LightzoneSwitchComponent" method="_on_switched"]
+
+[editable path="LightzoneComponent"]
