@@ -1,5 +1,6 @@
 extends Area3D
 
+## Sets if this lightzone should respond to Cogito_Switch "switched" signal.
 @export var switchable: bool = true
 
 func _on_body_entered(body):
