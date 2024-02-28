@@ -105,7 +105,7 @@ emission_energy_multiplier = 2.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_2t3bq"]
 size = Vector3(0.0606506, 0.234888, 0.148291)
 
-[sub_resource type="Resource" id="Resource_bdys4"]
+[sub_resource type="Resource" id="Resource_v26fh"]
 resource_local_to_scene = true
 script = ExtResource("3_tljcd")
 inventory_item = ExtResource("2_g3bxg")
@@ -125,4 +125,4 @@ transform = Transform3D(1, 0, -8.35187e-23, 0, 1, 0, -8.35187e-23, 0, 1, -0.0001
 shape = SubResource("BoxShape3D_2t3bq")
 
 [node name="PickupComponent" parent="." instance=ExtResource("1_prphd")]
-slot_data = SubResource("Resource_bdys4")
+slot_data = SubResource("Resource_v26fh")

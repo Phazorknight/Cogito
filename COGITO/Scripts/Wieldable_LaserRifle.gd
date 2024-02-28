@@ -65,7 +65,10 @@ func _physics_process(_delta: float) -> void:
 			audio_stream_player_3d.stream = sound_primary_use
 			audio_stream_player_3d.play()
 			
-			inventory_item_reference.subtract(1)
+			inventory_item_reference.subtract(1) # Reduce ammo
+			
+			if inventory_item_reference.charge_current <= 0: # Stop firing if out of ammo in clip.
+				is_firing = false
 			
 			firing_cooldown = firing_delay
 
