@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="4_ccwo8"]
 [ext_resource type="FontFile" uid="uid://bfavdpnmorag5" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Regular.ttf" id="5_7fnwn"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/tab_menu_options.gd" id="5_d44ip"]
-[ext_resource type="Script" path="res://COGITO/Theme/CogitoButton.gd" id="6_a8sll"]
+[ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="6_a8sll"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="7_2vb7n"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/option_button_input_propagator.gd" id="9_acc2n"]
 [ext_resource type="PackedScene" uid="uid://cqniig2ks0xs2" path="res://COGITO/EasyMenus/Nodes/gamepad_closable.tscn" id="10_op1sx"]

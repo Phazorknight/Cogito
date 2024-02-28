@@ -6,8 +6,6 @@
 
 [resource]
 script = ExtResource("2_otaa7")
-primary_use_prompt = "Shoot"
-secondary_use_prompt = "Aim"
 charge_max = 10.0
 ammo_item_name = "Foam Bullets"
 charge_current = 10.0

@@ -20,6 +20,7 @@ signal switched(is_on: bool)
 @export var needs_item_to_operate : bool
 ## The item that the player needs to have in their inventory.
 @export var required_item : InventoryItemPD
+## Hint that gets displayed if the switch requires an item that the player currently doesn't have.
 @export var item_hint : String
 ## Nodes that will become visible when switch is ON. These will hide again when switch is OFF.
 @export var nodes_to_show_when_on : Array[Node]
@@ -30,8 +31,7 @@ signal switched(is_on: bool)
 @export var objects_call_delay : float = 0.0
 
 var interaction_text : String 
-var player_interaction_component
-
+var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
 
 func _ready():
@@ -45,7 +45,6 @@ func _ready():
 		switch_on()
 	else:
 		switch_off()
-		
 
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component

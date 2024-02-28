@@ -40,7 +40,7 @@ func subtract(amount):
 
 func on_death():
 	if sound_on_death:
-		Audio.play_sound_3d(sound_on_death).global_position = self.global_position
+		Audio.play_sound_3d(sound_on_death).global_position = global_position
 	
 	if spawn_on_death:
 		var spawned_object = spawn_on_death.instantiate()

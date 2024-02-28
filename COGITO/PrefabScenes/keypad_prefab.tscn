@@ -7,7 +7,7 @@
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="3_u3a7f"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="4_m3tkc"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="5_24u0e"]
-[ext_resource type="Script" path="res://COGITO/Theme/CogitoButton.gd" id="6_ebwkh"]
+[ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="6_ebwkh"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_14uds"]
 size = Vector3(0.2, 0.02, 0.3)

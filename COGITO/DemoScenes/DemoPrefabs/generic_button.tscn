@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://6k5rvlwcpys1"]
+[gd_scene load_steps=8 format=3 uid="uid://cs6raqlyejqul"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Switch.gd" id="1_8r8fc"]
-[ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_m3jxc"]
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Button.gd" id="1_l32yq"]
+[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="3_v8dn1"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
@@ -11,13 +11,8 @@ height = 0.05
 radial_segments = 12
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jc06"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iv5wx"]
-albedo_color = Color(1, 0, 0, 1)
-emission_enabled = true
-emission = Color(1, 0.2, 0.2, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3kl6m"]
+albedo_color = Color(0, 1, 0.184314, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_o2wjq"]
 size = Vector3(0.2, 0.05, 0.2)
@@ -25,22 +20,16 @@ size = Vector3(0.2, 0.05, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nti18"]
 size = Vector3(0.150977, 0.069043, 0.147333)
 
-[node name="GenericButton" type="AnimatableBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 5.72934, 1.10623, -15.8447)
+[node name="GenericButton" type="AnimatableBody3D"]
+transform = Transform3D(-4.37114e-08, 0.5, 0.866025, 1.06581e-14, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, 0.671964, 0.88812, -1.10062)
 collision_layer = 3
-script = ExtResource("1_8r8fc")
-switch_sound = ExtResource("2_m3jxc")
-nodes_to_show_when_on = [NodePath("ButtonMesh_on")]
-nodes_to_hide_when_on = [NodePath("ButtonMesh_off")]
+script = ExtResource("1_l32yq")
+press_sound = ExtResource("2_awyad")
+press_cooldown_time = 1.0
 
 [node name="ButtonMesh_off" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_clo4d")
-surface_material_override/0 = SubResource("StandardMaterial3D_3jc06")
-
-[node name="ButtonMesh_on" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("CylinderMesh_clo4d")
-surface_material_override/0 = SubResource("StandardMaterial3D_iv5wx")
+surface_material_override/0 = SubResource("StandardMaterial3D_3kl6m")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
@@ -49,7 +38,5 @@ mesh = SubResource("BoxMesh_o2wjq")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0041995, -0.0154781, -0.00178528)
 shape = SubResource("BoxShape3D_nti18")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_v8dn1")]

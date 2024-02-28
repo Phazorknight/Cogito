@@ -6,8 +6,6 @@
 
 [resource]
 script = ExtResource("2_o1rdd")
-primary_use_prompt = "Shoot"
-secondary_use_prompt = ""
 charge_max = 100.0
 ammo_item_name = "Laser Ammo"
 charge_current = 100.0

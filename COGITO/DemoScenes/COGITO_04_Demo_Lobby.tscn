@@ -67,7 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/ReadableComponent.tscn" id="63_uggg7"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="64_tfc2i"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="65_cw5kp"]
-[ext_resource type="PackedScene" uid="uid://6k5rvlwcpys1" path="res://COGITO/DemoScenes/DemoPrefabs/generic_button.tscn" id="66_4pwwj"]
+[ext_resource type="PackedScene" uid="uid://6k5rvlwcpys1" path="res://COGITO/DemoScenes/DemoPrefabs/generic_switch.tscn" id="66_4pwwj"]
 [ext_resource type="PackedScene" uid="uid://qxbx5yllijej" path="res://COGITO/DemoScenes/DemoPrefabs/chair_modern_frame_cushion.tscn" id="67_qkgep"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://COGITO/PrefabScenes/Pickups/pickup_key.tscn" id="68_8mqrf"]
 [ext_resource type="PackedScene" uid="uid://celv6uxeksrny" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/rugRound.glb" id="69_gdeob"]
@@ -93,7 +93,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_dgg4v"]
+[sub_resource type="Resource" id="Resource_6ol8j"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -3256,7 +3256,7 @@ transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.0307
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
 is_using_sanity = false
-inventory_data = SubResource("Resource_dgg4v")
+inventory_data = SubResource("Resource_6ol8j")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -7284,7 +7284,7 @@ shape = SubResource("BoxShape3D_3nuis")
 volume_db = -12.0
 bus = &"SFX"
 
-[node name="GenericButton" parent="." instance=ExtResource("66_4pwwj")]
+[node name="GenericSwitch" parent="." instance=ExtResource("66_4pwwj")]
 is_on = true
 objects_call_interact = Array[NodePath]([NodePath("../LIGHTS_CEILING_WALL/lampSquareCeiling8"), NodePath("../LIGHTS_CEILING_WALL/lampSquareCeiling9"), NodePath("../LIGHTS_CEILING_WALL/lampSquareCeiling10"), NodePath("../LIGHTS_CEILING_WALL/lampSquareCeiling11"), NodePath("../LIGHTS_CEILING_WALL/lampSquareCeiling12"), NodePath("../LIGHTS_CEILING_WALL/lampSquareCeiling13")])
 objects_call_delay = 0.3
@@ -7335,7 +7335,7 @@ closed_position = Vector3(-5.017, 0, 7.568)
 open_position = Vector3(-5.017, 2.614, 7.568)
 door_speed = 3.0
 
-[node name="GenericButton" parent="Platform" instance=ExtResource("66_4pwwj")]
+[node name="GenericSwitch" parent="Platform" instance=ExtResource("66_4pwwj")]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.986555, 0.88378, -0.198246)
 sync_to_physics = false
 interaction_text_when_on = "Lift platform"
@@ -7393,4 +7393,4 @@ shape = SubResource("ConvexPolygonShape3D_n4app")
 [editable path="DEMO_HINTS/Hint_04_Breakroom"]
 [editable path="DEMO_HINTS/Hint_05_Platform"]
 [editable path="DEMO_HINTS/Hint_06_AdvancedDoors"]
-[editable path="Platform/GenericButton"]
+[editable path="Platform/GenericSwitch"]

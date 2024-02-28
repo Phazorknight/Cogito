@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://qlskttl1wjr7" path="res://COGITO/EasyMenus/Scenes/options_menu.tscn" id="2_ejh0f"]
 [ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="3_arj7o"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="4_cpqh0"]
-[ext_resource type="Script" path="res://COGITO/Theme/CogitoButton.gd" id="5_e4joy"]
+[ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="5_e4joy"]
 [ext_resource type="Script" path="res://COGITO/Scripts/menu_scene_switcher.gd" id="6_dtxsf"]
 
 [node name="PauseMenu" type="Control"]

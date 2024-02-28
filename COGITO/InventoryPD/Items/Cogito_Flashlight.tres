@@ -7,8 +7,6 @@
 
 [resource]
 script = ExtResource("2_h6bnx")
-primary_use_prompt = "Turn on/off"
-secondary_use_prompt = ""
 wieldable_data_icon = ExtResource("3_ea2qf")
 charge_max = 100.0
 ammo_item_name = "Battery"
