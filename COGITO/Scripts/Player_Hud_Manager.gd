@@ -15,11 +15,8 @@ signal hide_inventory
 
 @onready var inventory_interface = $InventoryInterface
 
-@onready var primary_use_icon = $UseBar/HBoxContainer/WieldablePrimaryUse/MarginContainer/PrimaryUseIcon
-@onready var primary_use_label = $UseBar/HBoxContainer/WieldablePrimaryUse/PrimaryUseLabel
+@onready var wieldable_hud: PanelContainer = $WieldableHud # Displays wieldable icons and data. Hides when no wieldable equipped.
 
-@onready var wieldable_icon = $UseBar/HBoxContainer/WieldableData/WieldableIcon
-@onready var wieldable_text = $UseBar/HBoxContainer/WieldableData/WieldableText
 
 ## Reference to the Node that has the player.gd script.
 @export var player : Node
@@ -91,10 +88,7 @@ func _ready():
 		brightness_bar.hide()
 	
 	# Set up for HUD elements for wieldables
-	primary_use_label.text = ""
-	primary_use_icon.hide()
-	wieldable_icon.set_texture(empty_texture)
-	wieldable_text.text = ""
+	wieldable_hud.hide()
 	
 	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
@@ -106,7 +100,6 @@ func _ready():
 	
 	player.toggled_interface.connect(_on_external_ui_toggle)
 	
-	player.player_interaction_component.set_use_prompt.connect(_on_set_use_prompt)
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
 	player.player_state_loaded.connect(_on_player_state_load)
@@ -206,24 +199,22 @@ func _on_external_ui_toggle(is_showing:bool):
 
 # When HUD receives set use prompt signal (usually when equipping a wieldable)
 func _on_set_use_prompt(passed_use_text):
-	primary_use_label.text = passed_use_text
-	if passed_use_text != "":
-		primary_use_icon.show()
-	else:
-		primary_use_icon.hide()
+	# DEPRECATED: Showing these prompts felt increasingly useless.
+	pass
+	#primary_use_label.text = passed_use_text
+	#if passed_use_text != "":
+		#primary_use_icon.show()
+	#else:
+		#primary_use_icon.hide()
 
 
 # Updating HUD wieldable data, used for stuff like flashlight battery charge, ammo display, etc
-func _on_update_wieldable_data(passed_wieldable_icon, passed_wieldable_text):
-	if passed_wieldable_text:
-		wieldable_text.text = passed_wieldable_text
+func _on_update_wieldable_data(passed_wieldable_item: WieldableItemPD, passed_ammo_in_inventory: int, passed_ammo_item: AmmoItemPD):
+	if passed_wieldable_item:
+		wieldable_hud.show()
+		wieldable_hud.update_wieldable_data(passed_wieldable_item, passed_ammo_in_inventory, passed_ammo_item)
 	else:
-		wieldable_text.text = ""
-		
-	if passed_wieldable_icon != null:
-		wieldable_icon.set_texture(passed_wieldable_icon)
-	else:
-		wieldable_icon.set_texture(empty_texture)
+		wieldable_hud.hide()
 
 
 # NEW Hint System

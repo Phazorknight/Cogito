@@ -4,8 +4,7 @@ class_name PlayerInteractionComponent
 # Signals for UI/HUD use
 signal interaction_prompt(interaction_text : String)
 signal hint_prompt(hint_icon:Texture2D, hint_text: String)
-signal set_use_prompt(use_text:String)
-signal updated_wieldable_data(wieldable_icon:Texture2D, wieldable_text: String)
+signal updated_wieldable_data(wielded_item:WieldableItemPD, ammo_in_inventory: int, ammo_item: AmmoItemPD)
 
 # Signals for Interaction raycast system
 signal interactive_object_detected(interaction_nodes: Array[Node])
@@ -27,6 +26,7 @@ var previous_interactable
 @export var carryable_position : Node3D
 var carried_object = null  #Used for carryable handling.
 var throw_power : float = 1.5
+var is_changing_wieldables : bool = false #Used to avoid any input acitons while wieldables are being swapped
 
 ## List of Wieldable nodes
 @export var wieldable_nodes : Array[Node]
@@ -156,10 +156,15 @@ func equip_wieldable(wieldable_item:WieldableItemPD):
 				print("PIC: Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
 				equipped_wieldable_node.equip(self)
 				is_wielding = true
+				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout
+				is_changing_wieldables = false
+	else:
+		is_changing_wieldables = false
 
-				
-		
+
+
 func change_wieldable_to(next_wieldable: InventoryItemPD):
+	is_changing_wieldables = true
 	if equipped_wieldable_item != null:
 		equipped_wieldable_item.is_being_wielded = false
 		if equipped_wieldable_node != null:
@@ -173,6 +178,8 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 
 
 func attempt_action_primary(is_released:bool):
+	if is_changing_wieldables: #Block action if currently in the process of changing wieldables
+		return
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
 		return
@@ -183,6 +190,8 @@ func attempt_action_primary(is_released:bool):
 
 
 func attempt_action_secondary(is_released:bool):
+	if is_changing_wieldables: #Block action if currently in the process of changing wieldables
+		return
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
 		return
@@ -196,7 +205,11 @@ func attempt_reload():
 	if inventory == null:
 		print("Player inventory was null!")
 		return
-		
+	
+	if equipped_wieldable_node.animation_player.is_playing():
+		print("Can't interrupt current action / animation")
+		return
+	
 	var ammo_needed : int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)
 	if ammo_needed <= 0:
 		print("Wieldable is fully charged.")
@@ -267,5 +280,4 @@ func set_state():
 	if equipped_wieldable_item and is_wielding:
 		equip_wieldable(equipped_wieldable_item)
 		equipped_wieldable_item.player_interaction_component = self
-		set_use_prompt.emit(equipped_wieldable_item.primary_use_prompt)
 		equipped_wieldable_item.update_wieldable_data(self)

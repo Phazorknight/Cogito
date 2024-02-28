@@ -5,11 +5,7 @@ class_name WieldableItemPD
 signal charge_changed()
 
 @export_group("Wieldable settings")
-## HUD text for primary use (for example: shoot, switch on/off etc.)
-@export var primary_use_prompt : String
-## HUD text for secondary use (for example: swing, look down sight, etc.)
-@export var secondary_use_prompt : String
-## Icon that is displayed on the HUD when item is wielded.
+## Icon that is displayed on the HUD when item is wielded. If NULL, the item icon will be used instead.
 @export var wieldable_data_icon : Texture2D
 
 var wieldable_data_text : String
@@ -48,28 +44,31 @@ func use(target) -> bool:
 
 # Functions for WIELDABLES
 func take_out():
+	if player_interaction_component.is_changing_wieldables:
+		return
+		
 	print("Taking out ", name)
 	is_being_wielded = true
 	update_wieldable_data(player_interaction_component)
-	player_interaction_component.set_use_prompt.emit(primary_use_prompt)
 	player_interaction_component.change_wieldable_to(self)
 
 
 func put_away():
+	if player_interaction_component.is_changing_wieldables:
+		return
+		
 	print("Putting away ", name)
 	is_being_wielded = false
 	update_wieldable_data(player_interaction_component)
-	player_interaction_component.set_use_prompt.emit("")
 	player_interaction_component.change_wieldable_to(null)
 
 
 func update_wieldable_data(_player_interaction_component : PlayerInteractionComponent):
 	if _player_interaction_component: #Only update if something get's passed
 		if is_being_wielded:
-			wieldable_data_text = str(int(charge_current)) + "|" + str(get_item_amount_in_inventory(ammo_item_name))
-			_player_interaction_component.updated_wieldable_data.emit(wieldable_data_icon, wieldable_data_text)
+			_player_interaction_component.updated_wieldable_data.emit(self,get_item_amount_in_inventory(ammo_item_name),get_ammo_item(ammo_item_name))
 		else:
-			_player_interaction_component.updated_wieldable_data.emit(null, null)
+			_player_interaction_component.updated_wieldable_data.emit(null, 0, null)
 
 
 func subtract(amount):
@@ -94,6 +93,19 @@ func add(amount):
 	charge_changed.emit()
 
 
+# Function to get the AmmoItemPD
+func get_ammo_item(item_name_to_check_for: String) -> AmmoItemPD:
+	var ammo_item : AmmoItemPD
+	if player_interaction_component.get_parent().inventory_data != null:
+		var inventory_to_check = player_interaction_component.get_parent().inventory_data
+		for slot in inventory_to_check.inventory_slots:
+			if slot != null and slot.inventory_item.name == item_name_to_check_for:
+				ammo_item = slot.inventory_item
+				
+	return ammo_item
+
+
+# Function to get the amount of ammo in the player inventory
 func get_item_amount_in_inventory(item_name_to_check_for: String) -> int:
 	var item_count : int = 0
 	if player_interaction_component.get_parent().inventory_data != null:
