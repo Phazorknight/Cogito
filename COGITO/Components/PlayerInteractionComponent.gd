@@ -179,10 +179,7 @@ func attempt_action_primary(is_released:bool):
 	if equipped_wieldable_item.charge_current == 0:
 		send_hint(null, equipped_wieldable_item.name + " is out of ammo.")
 	else:
-		if !equipped_wieldable_node.animation_player.is_playing(): # Enforces fire rate.
-			if is_released == false: #Only reduce ammo on down press.
-				equipped_wieldable_item.subtract(1)
-			equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
+		equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
 
 
 func attempt_action_secondary(is_released:bool):

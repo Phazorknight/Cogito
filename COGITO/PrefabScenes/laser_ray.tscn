@@ -13,5 +13,6 @@ rim_enabled = true
 [node name="LaserRay" type="Node3D"]
 script = ExtResource("1_s4rtm")
 laser_material = SubResource("ORMMaterial3D_lgwhp")
+lifespan = 2.0
 
 [node name="Timer" type="Timer" parent="."]

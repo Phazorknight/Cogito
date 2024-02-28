@@ -17,9 +17,9 @@
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="11_vcl5j"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_mbvqw"]
 [ext_resource type="PackedScene" uid="uid://v0ugidan8mr1" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_console.glb" id="13_45fd1"]
-[ext_resource type="PackedScene" uid="uid://dnauxhdncgngx" path="res://COGITO/PrefabScenes/laser_ray.tscn" id="15_1hofp"]
 [ext_resource type="PackedScene" uid="uid://c2r7ib4rrrdfj" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_table_long.tscn" id="15_lsmut"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://COGITO/PrefabScenes/target_destructable.tscn" id="15_n0vqj"]
+[ext_resource type="PackedScene" uid="uid://b5ukfmvoxa33e" path="res://COGITO/PrefabScenes/Pickups/pickup_laser_ammo.tscn" id="17_l2vbg"]
 [ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://COGITO/PrefabScenes/Pickups/pickup_pistol.tscn" id="19_1ce0p"]
 [ext_resource type="PackedScene" uid="uid://b4bs2cbb6l773" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_counter_high_painted.glb" id="19_v055q"]
 [ext_resource type="PackedScene" uid="uid://nqyrraqwixxy" path="res://COGITO/DemoScenes/DemoPrefabs/sliding_door.tscn" id="20_t5vwn"]
@@ -2188,8 +2188,6 @@ font_size = 64
 outline_size = 10
 horizontal_alignment = 2
 
-[node name="LaserRay" parent="SHOOTING_RANGE" instance=ExtResource("15_1hofp")]
-
 [node name="TARGETS" type="Node3D" parent="SHOOTING_RANGE"]
 
 [node name="TargetDestructable" parent="SHOOTING_RANGE/TARGETS" instance=ExtResource("15_n0vqj")]
@@ -2209,6 +2207,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2, -27)
 
 [node name="pickup_pistol" parent="SHOOTING_RANGE" instance=ExtResource("19_1ce0p")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.52303, 0.813927, -15.3253)
+
+[node name="pickup_laser_ammo" parent="SHOOTING_RANGE" instance=ExtResource("17_l2vbg")]
+transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 2.60574, 0.821979, -15.3026)
+
+[node name="Pickup_LaserRifle" parent="SHOOTING_RANGE" instance=ExtResource("23_ex3ej")]
+transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 3.22065, 0.821979, -15.3026)
 
 [node name="KSI_table_long" parent="SHOOTING_RANGE" instance=ExtResource("15_lsmut")]
 
@@ -2369,6 +2373,3 @@ horizontal_alignment = 0
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
 
 [node name="SlidingDoor" parent="." instance=ExtResource("20_t5vwn")]
-
-[node name="Pickup_LaserRifle" parent="." instance=ExtResource("23_ex3ej")]
-transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 3.13046, 0.821979, -15.3026)

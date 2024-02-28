@@ -36,8 +36,7 @@ extends Node3D
 ### Every wieldable needs the following functions:
 ### equip(_player_interaction_component), unequip(), action_primary(), action_secondary(), reload()
 
-var player_interaction_component # Stores the player interaction component
-
+var player_interaction_component : PlayerInteractionComponent # Stores the player interaction component
 
 func _ready():
 	wieldable_mesh.hide()
@@ -47,10 +46,16 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	if _is_released:
 		return
 	
+	# Not firing if animation player is playing. This enforces fire rate.
+	if animation_player.is_playing():
+		return
+	
 	# Sound and animation
 	animation_player.play(anim_action_primary)
 	audio_stream_player_3d.stream = sound_primary_use
 	audio_stream_player_3d.play()
+	
+	_passed_item_reference.subtract(1) #Reducing ammo count
 	
 	# Gettting camera_collision pos from player interaction component:
 	var _camera_collision = player_interaction_component.Get_Camera_Collision()

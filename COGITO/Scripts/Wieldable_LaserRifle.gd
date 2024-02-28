@@ -5,16 +5,12 @@ extends Node3D
 @onready var bullet_point: Node3D = $LaserRifleMesh/Bullet_Point
 ## Prefab of laser_ray
 @export var laser_ray_prefab : PackedScene
-
-
 ## How long laser rays linger in the air
 @export var ray_lifespan : float = 5.0
-
 ## The Field Of View change when aiming down sight. In degrees.
 @export var ads_fov = 65
 ## Default position for tweening from ADS
 @export var default_position : Vector3
-
 
 @export_group("Audio")
 @export var sound_primary_use : AudioStream
@@ -40,27 +36,47 @@ extends Node3D
 ### Every wieldable needs the following functions:
 ### equip(_player_interaction_component), unequip(), action_primary(), action_secondary(), reload()
 
-var player_interaction_component # Stores the player interaction component
-var spawn_node
+var player_interaction_component : PlayerInteractionComponent # Stores the player interaction component
+var spawn_node : Node
+var is_firing : bool = false
+var firing_delay : float = 0.2
+var firing_cooldown : float
+
+var inventory_item_reference : WieldableItemPD
+
 
 func _ready():
 	wieldable_mesh.hide()
 	spawn_node = get_tree().get_current_scene()
+	firing_cooldown = 0
 
+
+func _physics_process(_delta: float) -> void:
+	if firing_cooldown > 0:
+		firing_cooldown -= _delta
+		
+	if is_firing:
+		if firing_cooldown <= 0:
+			# Gettting camera_collision pos from player interaction component:
+			var _camera_collision = player_interaction_component.Get_Camera_Collision()
+			hit_scan_collision(_camera_collision) #Do the hitscan
+		
+			animation_player.play(anim_action_primary)
+			audio_stream_player_3d.stream = sound_primary_use
+			audio_stream_player_3d.play()
+			
+			inventory_item_reference.subtract(1)
+			
+			firing_cooldown = firing_delay
 
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
 func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool):
+	inventory_item_reference = _passed_item_reference
+	
 	if _is_released:
-		return
-	
-	# Gettting camera_collision pos from player interaction component:
-	var _camera_collision = player_interaction_component.Get_Camera_Collision()
-	
-	hit_scan_collision(_camera_collision) #Do the hitscan
-	
-	animation_player.play(anim_action_primary)
-	audio_stream_player_3d.stream = sound_primary_use
-	audio_stream_player_3d.play()
+		is_firing = false
+	else:
+		is_firing = true
 
 
 func action_secondary(is_released:bool):
