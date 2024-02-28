@@ -62,6 +62,6 @@ shape = SubResource("CylinderShape3D_n08oq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5774, 0)
 shape = SubResource("CylinderShape3D_0ljm4")
 
-[connection signal="switched" from="." to="LightzoneComponent" method="_on_switched"]
+[connection signal="switched" from="." to="LightzoneComponent/LightzoneSwitchComponent" method="_on_switched"]
 
 [editable path="LightzoneComponent"]
