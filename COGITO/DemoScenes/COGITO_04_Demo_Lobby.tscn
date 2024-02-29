@@ -1,4 +1,4 @@
-[gd_scene load_steps=330 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=337 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -16,6 +16,7 @@
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_72tca"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="13_5x4ip"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="14_qtguo"]
+[ext_resource type="PackedScene" uid="uid://x4wqam8k4bq3" path="res://COGITO/Assets/VFX/dust_particles.tscn" id="15_7saqh"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="15_078vp"]
 [ext_resource type="AudioStream" uid="uid://ckxotbwm6qtui" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage2.ogg" id="16_py2k0"]
 [ext_resource type="PackedScene" uid="uid://btndiyu53mrlk" path="res://COGITO/DemoScenes/DemoPrefabs/windowed_door.tscn" id="17_2lcsn"]
@@ -85,15 +86,27 @@ sky_material = SubResource("PanoramaSkyMaterial_wjbty")
 background_mode = 2
 sky = SubResource("Sky_h3ipr")
 sky_rotation = Vector3(0, 1.74533, 0.174533)
-ambient_light_source = 3
-ambient_light_color = Color(0.588235, 0.588235, 0.588235, 1)
 ambient_light_sky_contribution = 0.1
 ambient_light_energy = 0.2
-tonemap_mode = 2
+tonemap_mode = 1
 ssao_enabled = true
+ssil_enabled = true
 glow_enabled = true
+glow_intensity = 2.5
+glow_strength = 0.37
+glow_bloom = 0.2
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_ambient_inject = 0.1
+volumetric_fog_sky_affect = 0.1
+volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_6ol8j"]
+[sub_resource type="FogMaterial" id="FogMaterial_4avjx"]
+density = 0.04
+albedo = Color(0.694118, 0.694118, 0.694118, 1)
+
+[sub_resource type="Resource" id="Resource_ow2kj"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -835,6 +848,35 @@ size = Vector3(0.05, 0.825, 3.93615)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a2dax"]
 size = Vector3(0.05, 0.825, 7.83)
+
+[sub_resource type="Gradient" id="Gradient_yrb4k"]
+offsets = PackedFloat32Array(0, 0.179153, 0.299674, 0.700326, 0.788274, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.972581, 0.972581, 0.972581, 0.507246, 0.945946, 0.945946, 0.945946, 1, 1, 1, 1, 1, 1, 1, 1, 0.561644, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_emh2m"]
+gradient = SubResource("Gradient_yrb4k")
+
+[sub_resource type="Curve" id="Curve_6bnng"]
+_data = [Vector2(0, 0), 0.0, 2.52403, 0, 0, Vector2(0.488166, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.63376, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_wegib"]
+curve = SubResource("Curve_6bnng")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nbiyf"]
+lifetime_randomness = 0.17
+emission_shape = 3
+emission_box_extents = Vector3(10, 1.5, 14)
+direction = Vector3(10, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_wegib")
+color_ramp = SubResource("GradientTexture1D_emh2m")
+turbulence_enabled = true
+turbulence_noise_strength = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7d5pk"]
 resource_name = "_defaultMat"
@@ -3251,12 +3293,22 @@ shadow_opacity = 0.8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_obnk3")
 
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(0.957077, -0.289834, 0, 0.289834, 0.957077, 0, 0, 0, 1, 4.89011, 2.29206, -7.93362)
+size = Vector3(9.25883, 4.5626, 14.1115)
+material = SubResource("FogMaterial_4avjx")
+
+[node name="FogVolume2" type="FogVolume" parent="."]
+transform = Transform3D(0.957077, -0.289834, 0, 0.289834, 0.957077, 0, 0, 0, 1, 4.89011, 2.29206, 7.70738)
+size = Vector3(9.25883, 4.5626, 14.1115)
+material = SubResource("FogMaterial_4avjx")
+
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
 is_using_sanity = false
-inventory_data = SubResource("Resource_6ol8j")
+inventory_data = SubResource("Resource_ow2kj")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -5867,6 +5919,14 @@ mesh = SubResource("CylinderMesh_yce7c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0492271, 0.456195, -3.96536)
 shape = SubResource("BoxShape3D_a2dax")
 
+[node name="DustParticles" parent="MAIN_LOBBY" instance=ExtResource("15_7saqh")]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 3.34242, 2, 0)
+amount = 150
+speed_scale = 0.3
+visibility_aabb = AABB(-8.9463, -1.52823, -14.4285, 17.8926, 1.40435, 28.857)
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_nbiyf")
+
 [node name="UPPER_OFFICE_A" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2, 2.65, 15.9)
 
@@ -7217,6 +7277,7 @@ shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Hint_05_Platform" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
 transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -2.55377, 1.28785, 7.30465)
+metadata/_edit_group_ = true
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_05_Platform" index="6"]
 readable_title = "Moving Platform"
