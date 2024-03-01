@@ -308,6 +308,35 @@ theme_override_font_sizes/font_size = 20
 text = "1"
 horizontal_alignment = 1
 
+[node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="GUIScaleLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "UI Scale"
+
+[node name="GUIScaleSlider" type="HSlider" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="GUIScaleCurrentValueLabel" type="Label" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+
 [node name="VSyncCheckButton" type="CheckButton" parent="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
@@ -433,6 +462,7 @@ start_game_scene = "res://COGITO/DemoScenes/COGITO_01_Demo.tscn"
 [connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" to="TabMenuOptions" method="_on_anti_aliasing_2d_option_button_item_selected"]
 [connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" to="TabMenuOptions" method="_on_anti_aliasing_3d_option_button_item_selected"]
 [connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale/RenderScaleSlider" to="TabMenuOptions" method="_on_render_scale_slider_value_changed"]
+[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="TabMenuOptions" method="_on_gui_scale_slider_value_changed"]
 [connection signal="toggled" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/VSyncCheckButton" to="TabMenuOptions" method="_on_v_sync_check_button_toggled"]
 [connection signal="pressed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="TabMenuOptions" method="_on_apply_changes_pressed"]
 [connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="TabMenuOptions" method="_on_sfx_volume_slider_value_changed"]
