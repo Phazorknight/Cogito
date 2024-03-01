@@ -106,7 +106,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_ow2kj"]
+[sub_resource type="Resource" id="Resource_7byha"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -3307,14 +3307,11 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-is_using_sanity = false
-inventory_data = SubResource("Resource_ow2kj")
+inventory_data = SubResource("Resource_7byha")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
 player = NodePath("../Player")
-use_brightness_component = true
-use_stamina_component = true
 
 [node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("6_vlp8l")]
 nodes_to_focus = [null, null, null, null, null]

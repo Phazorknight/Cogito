@@ -18,13 +18,12 @@ var is_showing_ui : bool
 @export var fall_damage_threshold : float = -5
 
 ## Flag if Stamina component isused (as this effects movement)
-@export var is_using_stamina : bool = true
-@export var is_using_sanity : bool = true
-# Components:
-@onready var health_component = $HealthComponent
-@onready var sanity_component = $SanityComponent
-@onready var brightness_component = $BrightnessComponent
-@onready var stamina_component = $StaminaComponent
+#@export var is_using_stamina : bool = true
+
+### NEW PLAYER ATTRIBUTE SYSTEM:
+var player_attributes : Array[Node]
+var stamina_attribute : CogitoPlayerAttribute = null
+var visibility_attribute : CogitoPlayerAttribute
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -133,21 +132,33 @@ var is_movement_paused = false
 var is_dead : bool = false
 
 
-# Use this to refresh/update when a player state is loaded.
-func _on_player_state_loaded():
-	health_component.health_changed.emit(health_component.current_health,health_component.max_health)
-	stamina_component.stamina_changed.emit(stamina_component.current_stamina,stamina_component.max_stamina)
-	sanity_component.sanity_changed.emit(sanity_component.current_sanity,sanity_component.max_sanity)
-
-
 func _ready():
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Neck/Head/Eyes/Camera/InteractionRaycast
 	
-	randomize()
+	randomize() 
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+	### NEW PLAYER ATTRIBUTE SETUP:
+	player_attributes = find_children("","CogitoPlayerAttribute",false) #Grabs all attached player attributes
+	for attribute in player_attributes:
+		print("Cogito Player Attribute found: ", attribute.attribute_name)
+		
+		if attribute.attribute_name == "health": # Hookup Health attribute signal to detect player death
+			attribute.death.connect(_on_death)
+			
+		if attribute.attribute_name == "stamina": # Saving reference to stamina attribute for movements that require stamina checks
+			stamina_attribute = attribute
+		
+		if attribute.attribute_name == "visibility": #  Saving reference to visibilty attribute for that require stamina checks
+			visibility_attribute = attribute
+			
+		if attribute.attribute_name == "sanity":
+			if visibility_attribute: # Hooking up sanity attribute to visibility attribute
+				visibility_attribute.attribute_changed.connect(attribute.on_visibility_changed)
+
 
 	#Set the Headbobble for real, as we can not manipulate vars while their created :/
 	WIGGLE_ON_WALKING_SPEED = HEADBOBBLE * 2
@@ -164,84 +175,35 @@ func _ready():
 		
 	initial_carryable_height = carryable_position.position.y #DEPRECATED
 	
-	health_component.death.connect(_on_death) # Hookup HealthComponent signal to detect player death
-	brightness_component.brightness_changed.connect(_on_brightness_changed) # Hookup brightness component signal
 
-# Use this function to manipulate player attributes.
-func increase_attribute(attribute_name: String, value: float) -> bool:
-	match attribute_name:
-		"health":
-			if health_component.current_health == health_component.max_health:
-				return false
-			else:
-				health_component.add(value)
+# Use these functions to manipulate player attributes.
+func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
+	for attribute in player_attributes:
+		if attribute.attribute_name == attribute_name:
+			if value_type == ConsumableItemPD.ValueType.CURRENT:
+				if attribute.value_current == attribute.value_max:
+					return false
+				else:
+					attribute.add(value)
+					return true
+			if value_type == ConsumableItemPD.ValueType.MAX:
+				attribute.value_max += value
+				attribute.add(value)
 				return true
-		"health_max":
-			health_component.max_health += value
-			health_component.health_changed.emit(health_component.current_health,health_component.max_health)
-			return true
-		"sanity":
-			if sanity_component.current_sanity == sanity_component.max_sanity:
-				return false
-			else:
-				sanity_component.add(value)
-				return true
-		"sanity_max":
-			sanity_component.max_sanity += value
-			sanity_component.sanity_changed.emit(sanity_component.current_sanity,sanity_component.max_sanity)
-			return true
-		"stamina":
-			if stamina_component.current_stamina == stamina_component.max_stamina:
-				return false
-			else:
-				stamina_component.add(value)
-				return true
-		"stamina_max":
-			stamina_component.max_stamina += value
-			stamina_component.stamina_changed.emit(stamina_component.current_stamina,stamina_component.max_stamina)
-			return true
-		_:
-			print("Increase attribute failed: no match.")
-			return false
+	
+	print("Player.gd increase attribute: No match in for loop")
+	return false
 
 
 func decrease_attribute(attribute_name: String, value: float):
-	match attribute_name:
-		"health":
-			health_component.subtract(value)
-		"sanity":
-			sanity_component.subtract(value)
-		"stamina":
-			stamina_component.subtract(value)
-		_:
-			print("Decrease attribute failed: no match.")
-
-
-func take_damage(value):
-	health_component.subtract(value)
-
-
-func add_sanity(value):
-	sanity_component.add(value)
+	for attribute in player_attributes:
+		if attribute.attribute_name == attribute_name:
+			attribute.subtract(value)
 
 
 func _on_death():
 	is_dead = true
 
-
-func _on_brightness_changed(current_brightness,max_brightness):
-	print("Brightness changed to ", current_brightness)
-	if current_brightness <= 0 and is_using_sanity:
-		if sanity_component.is_recovering:
-			sanity_component.stop_recovery()
-		else:
-			sanity_component.start_decay()
-	elif is_using_sanity:
-		sanity_component.stop_decay()
-		print("Checking if ", (sanity_component.current_sanity/sanity_component.max_sanity), " < ", (current_brightness/max_brightness))
-		if (sanity_component.current_sanity/sanity_component.max_sanity) < (current_brightness/max_brightness):
-			sanity_component.start_recovery(2.0, (sanity_component.max_sanity/max_brightness) * current_brightness)
-			
 
 # Methods to pause input (for Menu or Dialogues etc)
 func _on_pause_movement():
@@ -305,12 +267,6 @@ func _input(event):
 		elif is_showing_ui and get_node(player_hud).inventory_interface.is_inventory_open: #Making sure Inventory is open, and if yes, close it.
 			toggle_inventory_interface.emit()
 
-
-func _process(delta): 
-	# If SanityComponent is used, this decreases health when sanity is 0.
-	if is_using_sanity and sanity_component.current_sanity <= 0:
-		print("Taking damage due to 0 sanity.")
-		take_damage(health_component.no_sanity_damage * delta)
 
 # Cache allocation of test motion parameters.
 @onready var _params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
@@ -450,7 +406,7 @@ func _physics_process(delta):
 			crouching_collision_shape.disabled = true
 		sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
-		if Input.is_action_pressed("sprint") and is_using_stamina and stamina_component.current_stamina > 0:
+		if Input.is_action_pressed("sprint") and stamina_attribute and stamina_attribute.value_current > 0:
 			if !Input.is_action_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
@@ -459,7 +415,7 @@ func _physics_process(delta):
 			is_walking = false
 			is_sprinting = true
 			is_crouching = false
-		elif Input.is_action_pressed("sprint") and !is_using_stamina:	
+		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
 			if !Input.is_action_pressed("jump"):
 				bunny_hop_speed = SPRINTING_SPEED
 			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
@@ -541,19 +497,20 @@ func _physics_process(delta):
 		
 		# Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
-			health_component.subtract(fall_damage)
+			#health_component.subtract(fall_damage)
+			decrease_attribute("health",fall_damage)
 	
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
 		jump_timer.start() # prevent spam
-		var doesnt_need_stamina = not is_using_stamina or stamina_component.current_stamina >= stamina_component.jump_exhaustion
+		var doesnt_need_stamina = not stamina_attribute or stamina_attribute.value_current >= stamina_attribute.jump_exhaustion
 		var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
 		
 		var jump_vel = CROUCH_JUMP_VELOCITY if is_crouching else JUMP_VELOCITY
 		
 		if doesnt_need_stamina and crouch_jump:
 			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
-			if is_using_stamina:
-				decrease_attribute("stamina",stamina_component.jump_exhaustion)
+			if stamina_attribute:
+				decrease_attribute("stamina",stamina_attribute.jump_exhaustion)
 			snap = Vector3.ZERO
 			is_falling = true
 			
@@ -761,6 +718,3 @@ func _on_sliding_timer_timeout():
 
 func _on_animation_player_animation_finished(anim_name):
 	stand_after_roll = anim_name == 'roll' and !is_crouching
-
-
-

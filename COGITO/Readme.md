@@ -1,7 +1,7 @@
 ![COGITO_banner](https://github.com/Phazorknight/Cogito/assets/70389309/dd5060b1-a28e-40c1-8253-3a7e3e4bc116)
 # COGITO
 By Philip Drobar
-Version: **BETA 202402.19**
+Version: **BETA 202402.20**
 Runs on Godot **4.2.1 stable**
 
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -32,7 +32,7 @@ providing a framework for creating interactable objects and items.
   - Health
   - Stamina
   - Sanity (drains if not within Safezones)
-  - Brightness (aka visibility goes up within Lightzones, cumulative to a limit)
+  - Visibility (goes up within Lightzones, cumulative to a limit)
 - Raycast Interaction system
 - Included Examples:
   - Carryable crate
@@ -53,6 +53,7 @@ providing a framework for creating interactable objects and items.
 	- Key to unlock door
 	- Diamond Key A and B (combinable to create Diamond Key)
 	- Foam Pistol
+	- Laser Rifle (hitscan weapon)
 
 
 ### To-Do's that are next in line:
@@ -74,7 +75,7 @@ Make sure you have this plug-in set up in your project:
 
 
 ### Scene set-up
-To fully work, you need 3 Prefab Scenes in your scene + the following references set up in their inspector:
+To fully work, you need 3 Prefab Scenes in your scene + the following references set up in their inspector. These nodes should be in this order in the scene tree:
 - player.tscn
   - Reference to Pause Menu node
   - Reference to Player_HUD node
@@ -94,9 +95,7 @@ Also be aware of node order for Player_HUD and PauseMenu. Player_HUD node should
   - Cogito_Pickup.gd / Cogito_Carriable.gd: Since their existence in the scene can vary, these will be re-instantiated at their saved position if a scene state is loaded. Thus they need to be PackagedScenes to work!
   - Cogito_Door: These will have their state saved (open/closed/locked)
   - Cogito_Switch: These will have their state saved (on/off)
-- The following is still WIP or has unpredictable behaviour:
-  - Wieldables: While you re-equip wieldables when transitioning/loading scenes, the ammo/charge is currently not saved correctly. Also the HUD display is incorrect at times.
-  - Wieldable pickups items.
+- The following is still WIP or are not being saved:
   - Destructable objects like the target.
 
 
@@ -107,6 +106,7 @@ Interactables consider of two major parts: The object itself and the Interaction
 - Either create your own script or attach one of the included ones:
   - Cogito_Door: For doors, gates, platforms, bridges.
   - Cogito_Object: For pick ups, props, etc.
+  - Cogito_Button: Used for simple triggers. Can be one-time-use or repeated use.
   - Cogito_Switch: For switchable objects like lamps or buttons.
   - Cogito_Turnwheel: More niche, used for objects that rotate, usually combined with a Hold interaction.
 

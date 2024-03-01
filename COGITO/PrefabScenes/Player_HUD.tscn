@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -10,7 +10,6 @@
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
-[ext_resource type="Texture2D" uid="uid://0tbm6xivmc85" path="res://COGITO/Assets/Graphics/ProgressBar_FiveUnits.png" id="6_f5jpm"]
 [ext_resource type="Script" path="res://COGITO/Scripts/UI_WieldableHUD.gd" id="8_2nbvg"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
@@ -19,6 +18,7 @@
 [ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/Ui_QuestHUD.gd" id="15_kn51k"]
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://COGITO/QuestSystemPD/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI_HintComponent.tscn" id="17_bidre"]
+[ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://COGITO/Components/UI_AttributeComponent.tscn" id="20_lscav"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1f12m"]
 blend_mode = 1
@@ -28,15 +28,6 @@ font_size = 36
 
 [sub_resource type="LabelSettings" id="LabelSettings_ossw8"]
 font_size = 24
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cmrj"]
-bg_color = Color(0.0117647, 0.6, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nnlae"]
-bg_color = Color(0.6, 0.509804, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbswy"]
-bg_color = Color(0.6, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eka6m"]
 content_margin_left = 0.0
@@ -59,6 +50,7 @@ script = ExtResource("1_0wdkf")
 default_hint_icon = ExtResource("3_o56n0")
 prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
+ui_attribute_prefab = ExtResource("20_lscav")
 
 [node name="DamageOverlay" type="Control" parent="."]
 layout_mode = 1
@@ -119,164 +111,97 @@ anchor_bottom = 0.5
 theme_override_constants/separation = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="WieldableHud" type="PanelContainer" parent="."]
+[node name="MarginContainer_BottomUI" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -125.0
-offset_top = -100.0
-offset_right = -5.0
-offset_bottom = -5.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="WieldableHud" type="PanelContainer" parent="MarginContainer_BottomUI"]
+layout_mode = 2
+size_flags_horizontal = 8
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
 theme = ExtResource("5_j6s1a")
 theme_type_variation = &"HUDPanel"
 script = ExtResource("8_2nbvg")
 
-[node name="MarginContainer" type="MarginContainer" parent="WieldableHud"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer_BottomUI/WieldableHud"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="WieldableHud/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer"]
 layout_mode = 2
 
-[node name="WieldableData" type="HBoxContainer" parent="WieldableHud/MarginContainer/VBoxContainer"]
+[node name="WieldableData" type="HBoxContainer" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="WieldableIcon" type="TextureRect" parent="WieldableHud/MarginContainer/VBoxContainer/WieldableData"]
+[node name="WieldableIcon" type="TextureRect" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/WieldableData"]
 layout_mode = 2
 texture = ExtResource("9_1l2nt")
 expand_mode = 3
 
-[node name="WieldableChargeLabel" type="Label" parent="WieldableHud/MarginContainer/VBoxContainer/WieldableData"]
+[node name="WieldableChargeLabel" type="Label" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/WieldableData"]
 layout_mode = 2
 theme = ExtResource("5_j6s1a")
 theme_type_variation = &"HUDLabel"
 text = "00"
 label_settings = SubResource("LabelSettings_q4xln")
 
-[node name="HSeparator" type="HSeparator" parent="WieldableHud/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="AmmoData" type="HBoxContainer" parent="WieldableHud/MarginContainer/VBoxContainer"]
+[node name="AmmoData" type="HBoxContainer" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="AmmoIcon" type="TextureRect" parent="WieldableHud/MarginContainer/VBoxContainer/AmmoData"]
+[node name="AmmoIcon" type="TextureRect" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/AmmoData"]
 layout_mode = 2
 texture = ExtResource("10_bnneb")
 expand_mode = 3
 
-[node name="AmmoLabel" type="Label" parent="WieldableHud/MarginContainer/VBoxContainer/AmmoData"]
+[node name="AmmoLabel" type="Label" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/AmmoData"]
 layout_mode = 2
 theme = ExtResource("5_j6s1a")
 theme_type_variation = &"HUDLabel"
 text = "00"
 label_settings = SubResource("LabelSettings_ossw8")
 
-[node name="PlayerAttributes" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -106.0
-offset_right = 104.0
-offset_bottom = -5.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="PlayerAttributes" type="PanelContainer" parent="MarginContainer_BottomUI"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
 theme = ExtResource("5_j6s1a")
 theme_type_variation = &"HUDPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="PlayerAttributes"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer_BottomUI/PlayerAttributes"]
 layout_mode = 2
+size_flags_vertical = 8
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayerAttributes/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer_BottomUI/PlayerAttributes/MarginContainer"]
 layout_mode = 2
-
-[node name="BrightnessBar" type="TextureProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 20)
-layout_mode = 2
-value = 40.0
-texture_progress = ExtResource("6_f5jpm")
-
-[node name="SanityBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 16)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_0cmrj")
-value = 50.0
-show_percentage = false
-
-[node name="Label" type="Label" parent="PlayerAttributes/MarginContainer/VBoxContainer/SanityBar"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_j6s1a")
-theme_type_variation = &"HUDLabel"
-text = "50|100"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="StaminaBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 16)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_nnlae")
-value = 50.0
-show_percentage = false
-
-[node name="Label" type="Label" parent="PlayerAttributes/MarginContainer/VBoxContainer/StaminaBar"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_j6s1a")
-theme_type_variation = &"HUDLabel"
-text = "50|100"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="HealthBar" type="ProgressBar" parent="PlayerAttributes/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(200, 18)
-layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_tbswy")
-value = 50.0
-show_percentage = false
-
-[node name="Label" type="Label" parent="PlayerAttributes/MarginContainer/VBoxContainer/HealthBar"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_j6s1a")
-theme_type_variation = &"HUDLabel"
-text = "50|100"
-horizontal_alignment = 1
-vertical_alignment = 2
+size_flags_vertical = 8
 
 [node name="InventoryInterface" type="Control" parent="."]
 layout_mode = 1
@@ -339,6 +264,7 @@ theme = ExtResource("5_j6s1a")
 theme_type_variation = &"HUDPanel"
 
 [node name="InfoPanel" type="PanelContainer" parent="InventoryInterface"]
+visible = false
 custom_minimum_size = Vector2(200, 10)
 layout_mode = 0
 offset_right = 200.0

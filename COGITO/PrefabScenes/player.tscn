@@ -4,18 +4,18 @@
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="3_1sodd"]
 [ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="4_d51ss"]
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/HealthAttribute.tscn" id="4_h403b"]
 [ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://COGITO/Assets/Animations/player_eyes.tres" id="4_juktk"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="5_6htai"]
+[ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://COGITO/Components/StaminaAttribute.tscn" id="5_dmlhq"]
 [ext_resource type="PackedScene" uid="uid://5r8icl42jumy" path="res://COGITO/Wieldables/flashlight.tscn" id="5_ukw1v"]
+[ext_resource type="PackedScene" uid="uid://wtf1fqndii2p" path="res://COGITO/Components/VisibilityAttribute.tscn" id="6_kao4w"]
 [ext_resource type="PackedScene" uid="uid://dgtjml2t3hdvx" path="res://COGITO/Wieldables/toy_pistol.tscn" id="6_lwwgx"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="6_nrttm"]
 [ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://COGITO/Wieldables/laser_rifle.tscn" id="7_cn6iu"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="7_swbyy"]
+[ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://COGITO/Components/SanityAttribute.tscn" id="7_toa7v"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="8_2tp8b"]
-[ext_resource type="PackedScene" uid="uid://bkbudpcayf2jc" path="res://COGITO/Components/BrightnessComponent.tscn" id="9_x4tef"]
-[ext_resource type="PackedScene" uid="uid://b37xr3nyh6aog" path="res://COGITO/Components/StaminaComponent.tscn" id="11_cbmdm"]
-[ext_resource type="PackedScene" uid="uid://c4p6cl0xvfdar" path="res://COGITO/Components/HealthComponent.tscn" id="11_ms07f"]
-[ext_resource type="PackedScene" uid="uid://ctdx2bs6fji20" path="res://COGITO/Components/SanityComponent.tscn" id="12_tv46k"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="16_a6uam"]
 [ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="17_rmtvn"]
@@ -49,6 +49,14 @@ inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
 HEADBOBBLE = 7
 STEP_MAX_SLOPE_DEGREE = 1.0
+
+[node name="VisibilityAttribute" parent="." instance=ExtResource("6_kao4w")]
+
+[node name="SanityAttribute" parent="." instance=ExtResource("7_toa7v")]
+
+[node name="StaminaAttribute" parent="." instance=ExtResource("5_dmlhq")]
+
+[node name="HealthAttribute" parent="." instance=ExtResource("4_h403b")]
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_bvi11")
@@ -119,19 +127,6 @@ one_shot = true
 interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
 carryable_position = NodePath("../CarryablePosition")
 wieldable_nodes = [NodePath("../Neck/Head/Wieldables/Flashlight"), NodePath("../Neck/Head/Wieldables/Toy Pistol"), NodePath("../Neck/Head/Wieldables/Laser Rifle")]
-
-[node name="HealthComponent" parent="." instance=ExtResource("11_ms07f")]
-max_health = 100.0
-start_health = 80.0
-no_sanity_damage = 1.0
-
-[node name="StaminaComponent" parent="." instance=ExtResource("11_cbmdm")]
-max_stamina = 30.0
-
-[node name="SanityComponent" parent="." instance=ExtResource("12_tv46k")]
-start_sanity = 30.0
-
-[node name="BrightnessComponent" parent="." instance=ExtResource("9_x4tef")]
 
 [node name="JumpCooldownTimer" type="Timer" parent="."]
 wait_time = 0.5

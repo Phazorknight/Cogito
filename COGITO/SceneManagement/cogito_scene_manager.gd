@@ -47,7 +47,6 @@ func load_player_state(player, passed_slot:String):
 		_player_state = _player_state.load_state(passed_slot) as CogitoPlayerState
 		
 		# Applying the save state to player node.
-		
 		player.inventory_data = _player_state.player_inventory #Loading inventory data from saved player state to current player inventory.
 		
 		# Loading quests from player state:
@@ -77,13 +76,12 @@ func load_player_state(player, passed_slot:String):
 						
 		player.inventory_data.force_inventory_update()
 		
-		player.health_component.current_health = _player_state.player_health.x
-		player.health_component.max_health = _player_state.player_health.y
-		player.stamina_component.current_stamina = _player_state.player_stamina.x
-		player.stamina_component.max_stamina = _player_state.player_stamina.y
-		player.sanity_component.current_sanity = _player_state.player_sanity.x
-		player.sanity_component.max_sanity = _player_state.player_sanity.y
-				
+		# New way of loading player attributes:
+		var loaded_attribute_data = _player_state.player_attributes
+		for i in loaded_attribute_data.size():
+			player.player_attributes[i].set_attribute(loaded_attribute_data[i].x,loaded_attribute_data[i].y)
+
+
 		player.global_position = _player_state.player_position
 		player.global_rotation = _player_state.player_rotation
 		
@@ -95,7 +93,6 @@ func load_player_state(player, passed_slot:String):
 			player.player_interaction_component.set_state()
 		
 		player.player_state_loaded.emit()
-		player._on_player_state_loaded()
 	else:
 		print("CSM: Player state of slot ", passed_slot, " doesn't exist.")
 		
@@ -106,7 +103,6 @@ func save_player_state(player, slot:String):
 		_player_state = CogitoPlayerState.new()
 	
 	# Writing the save state from current player node.
-	
 	_player_state.player_inventory = player.inventory_data #Saving player inventory
 	
 	# Saving current quests to player state.
@@ -135,13 +131,13 @@ func save_player_state(player, slot:String):
 	_player_state.player_position = player.global_position
 	_player_state.player_rotation = player.global_rotation
 	
-	_player_state.player_health.x = player.health_component.current_health
-	_player_state.player_health.y = player.health_component.max_health
-	_player_state.player_stamina.x = player.stamina_component.current_stamina
-	_player_state.player_stamina.y = player.stamina_component.max_stamina
-	_player_state.player_sanity.x = player.sanity_component.current_sanity
-	_player_state.player_sanity.y = player.sanity_component.max_sanity
-	
+	## New way of saving attributes:
+	_player_state.clear_saved_attribute_data()
+	for attribute in player.player_attributes:
+		var attribute_data : Vector2 = Vector2(attribute.value_current,attribute.value_max)
+		_player_state.add_player_attribute_to_state_data(attribute_data)
+
+
 	#Writing the state from current player interaction component:
 	var current_player_interaction_component = player.player_interaction_component
 	_player_state.clear_saved_interaction_component_state()

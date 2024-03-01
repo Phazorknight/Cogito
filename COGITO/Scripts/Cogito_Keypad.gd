@@ -166,7 +166,7 @@ func set_state():
 	
 	object_state_updated.emit(interaction_text)
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if in_focus:
 		get_viewport().set_input_as_handled()
 

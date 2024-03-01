@@ -30,6 +30,6 @@ func _on_body_exited(body):
 func _process(delta):
 	if is_within_zone:
 		if is_recovery_zone:
-			player.increase_attribute(player_attribute, drain_amount * delta)
+			player.increase_attribute(player_attribute, drain_amount * delta, ConsumableItemPD.ValueType.CURRENT)
 		else:
 			player.decrease_attribute(player_attribute, drain_amount * delta)
