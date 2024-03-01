@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://5r8icl42jumy"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Wieldable_Flashlight.gd" id="1_pak3j"]
+[ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Flashlight.gd" id="1_pak3j"]
 [ext_resource type="AudioStream" uid="uid://dsp8iwkwq2rlu" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch1.ogg" id="2_dm0bj"]
 [ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="3_2q6j0"]
 [ext_resource type="AnimationLibrary" uid="uid://dtnyvbl2d4lxg" path="res://COGITO/Animations/Wieldables/Wieldable_Flashlight.res" id="4_sk1pk"]

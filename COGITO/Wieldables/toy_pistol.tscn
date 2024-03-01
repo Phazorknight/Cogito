@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dgtjml2t3hdvx"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Wieldable_Pistol.gd" id="1_b1v5k"]
+[ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Pistol.gd" id="1_b1v5k"]
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://COGITO/PrefabScenes/projectile_pistol.tscn" id="2_l6tt4"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://COGITO/Assets/Audio/Kenney/error_004.ogg" id="3_vdfq8"]
 [ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="4_xoq73"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bho0nwh5rlnua"]
 
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/HealthAttribute.tscn" id="1_c1b02"]
 [ext_resource type="PackedScene" uid="uid://byjrem8of8uuo" path="res://COGITO/Assets/Models/target.glb" id="1_cqnhi"]
-[ext_resource type="PackedScene" uid="uid://c4p6cl0xvfdar" path="res://COGITO/Components/HealthComponent.tscn" id="2_c71ki"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="3_4xfw8"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="4_k2oo6"]
 [ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://COGITO/PrefabScenes/simple_particle_puff.tscn" id="5_7b67m"]
@@ -12,19 +12,19 @@ height = 0.1
 
 [node name="TargetDestructable" type="Node3D"]
 
+[node name="HealthAttribute" parent="." instance=ExtResource("1_c1b02")]
+sound_on_death = ExtResource("4_k2oo6")
+destroy_on_death = Array[NodePath]([NodePath("..")])
+spawn_on_death = ExtResource("5_7b67m")
+value_max = 1.0
+value_start = 1.0
+
 [node name="target_mesh" parent="." instance=ExtResource("1_cqnhi")]
 transform = Transform3D(0.085, 0, 0, 0, 0.085, 0, 0, 0, 0.085, 0, 0, 0)
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_4xfw8")]
-health_component = NodePath("../HealthComponent")
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_attribute") instance=ExtResource("3_4xfw8")]
+health_attribute = NodePath("../HealthAttribute")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CylinderShape3D_wfwft")
-
-[node name="HealthComponent" parent="." instance=ExtResource("2_c71ki")]
-max_health = 1.0
-start_health = 1.0
-sound_on_death = ExtResource("4_k2oo6")
-destroy_on_death = Array[NodePath]([NodePath("..")])
-spawn_on_death = ExtResource("5_7b67m")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=4 format=3 uid="uid://bp6xhd3rkh7tl"]
+
+[ext_resource type="Texture2D" uid="uid://h6c4g2wtkb48" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pickaxe.png" id="1_a7clm"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/WieldableItemPD.gd" id="1_fay77"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_5g3cg"]
+
+[resource]
+script = ExtResource("1_fay77")
+charge_max = 1.0
+ammo_item_name = ""
+charge_current = 1.0
+wieldable_range = 5.0
+wieldable_damage = 3.0
+name = "Pickaxe"
+descpription = "Don't go digging for diamonds now."
+icon = ExtResource("1_a7clm")
+is_stackable = false
+stack_size = 0
+drop_scene = null
+hint_text_on_use = ""
+sound_pickup = ExtResource("3_5g3cg")

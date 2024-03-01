@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func spawn_objects():
 	var left_to_spawn = spawn_amount
-	var spawn_point : Vector3
+	var spawn_point : Vector3 = Vector3.ZERO
 	while left_to_spawn > 0:
 		spawn_point.x = randf_range(spawn_area.global_position.x - spawn_area.shape.size.x, spawn_area.global_position.x + spawn_area.shape.size.x )
 		spawn_point.y = randf_range(spawn_area.global_position.y - spawn_area.shape.size.y, spawn_area.global_position.y + spawn_area.shape.size.y )
