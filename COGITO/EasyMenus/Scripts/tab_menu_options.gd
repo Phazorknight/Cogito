@@ -7,6 +7,8 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 @onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
 @onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
 @onready var render_scale_slider: HSlider = %RenderScaleSlider
+@onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
+@onready var gui_scale_slider: HSlider = $GUIScaleSlider
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
@@ -110,6 +112,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
+	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, anti_aliasing_2d_option_button.get_selected_id())
@@ -128,6 +131,7 @@ func load_options():
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
+	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 0.75)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -136,6 +140,7 @@ func load_options():
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
 	render_scale_slider.value = render_scale
+	gui_scale_slider.value = gui_scale
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
@@ -158,6 +163,11 @@ func load_options():
 func _on_render_scale_slider_value_changed(value):
 	get_viewport().scaling_3d_scale = value
 	render_scale_current_value_label.text = str(value)
+
+
+func _on_gui_scale_slider_value_changed(value):
+	get_viewport().content_scale_factor = value
+	gui_scale_current_value_label.text = str(value)
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
