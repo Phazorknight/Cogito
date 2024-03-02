@@ -1,4 +1,5 @@
 extends CogitoPlayerAttribute
+class_name CogitoHealthAttribute
 
 ## Emitted when health is reduced.
 signal damage_taken()
