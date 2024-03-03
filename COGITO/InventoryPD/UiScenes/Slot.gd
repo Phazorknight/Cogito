@@ -31,11 +31,14 @@ func set_slot_data(slot_data: InventorySlotPD):
 			item_data.charge_changed.connect(_on_charge_changed)
 		charge_label.show()
 	else:
+		if item_data.has_signal("charge_changed") and item_data.charge_changed.is_connected(_on_charge_changed):
+			item_data.charge_changed.disconnect(_on_charge_changed)
 		charge_label.hide()
 
 
 func _on_charge_changed():
-	charge_label.text = str(int(item_data.charge_current))
+	if item_data.has_signal("charge_changed"): #Making sure this is a wieldable.
+		charge_label.text = str(int(item_data.charge_current))
  
 
 func _on_gui_input(event):
