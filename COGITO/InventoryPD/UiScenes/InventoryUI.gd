@@ -12,10 +12,12 @@ var first_slot
 func _ready():
 	label.text = inventory_name
 
+
 func set_inventory_data(inventory_data : InventoryPD):
 	inventory_data.inventory_updated.connect(populate_item_grid)
 	label.text = inventory_name
 	populate_item_grid(inventory_data)
+
 
 func clear_inventory_data(inventory_data : InventoryPD):
 	inventory_data.inventory_updated.disconnect(populate_item_grid)
@@ -44,4 +46,4 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 
 func _on_visibility_changed():
 	# This is here because to prevent a dead end signal error in the inspector.
-	pass # Replace with function body.
+	pass

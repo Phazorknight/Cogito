@@ -36,10 +36,6 @@ func _ready():
 	damage_area.body_entered.connect(_on_body_entered)
 
 
-func _process(delta):
-	pass
-
-
 # Primary action called by the Player Interaction Component when flashlight is wielded.
 func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 	if _is_released:

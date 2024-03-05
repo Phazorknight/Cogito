@@ -1,12 +1,22 @@
 extends Resource
 class_name CogitoQuest
 
+## ID number. Should be unique for each quest.
 @export var id: int
+## String name. Should have no spaces or special characters something like "level_quest01_a")
 @export var quest_name: String
+## Quest title as it will be displayed in game.
 @export var quest_title : String
-@export_multiline var quest_description: String
+## Quest description when this quest is active.
+@export_multiline var quest_description_active: String
+## Quest description when this quest was completed successfully.
+@export_multiline var quest_description_completed: String = "You completed this quest."
+## Quest description when this quest was failed.
+@export_multiline var quest_description_failed: String = "You failed this quest."
 @export var quest_counter_current : int = 0
 @export var quest_counter_goal : int
+
+var quest_description : String
 
 var quest_completed : bool = false:
 	set(value):
@@ -23,7 +33,7 @@ var quest_counter : int:
 
 
 func start():
-	pass
+	quest_description = quest_description_active
 
 
 func update() -> void:
@@ -31,8 +41,8 @@ func update() -> void:
 
 
 func complete():
-	pass
+	quest_description = quest_description_completed
 	
 
 func failed():
-	pass
+	quest_description = quest_description_failed

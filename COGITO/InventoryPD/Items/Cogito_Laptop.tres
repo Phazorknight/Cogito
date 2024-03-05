@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=3 format=3 uid="uid://b7myxblvr7lty"]
+
+[ext_resource type="Texture2D" uid="uid://c44ovxwnba2yw" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop.png" id="1_7vnqv"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_ihe42"]
+
+[resource]
+script = ExtResource("1_ihe42")
+name = "Laptop"
+descpription = "Feels light and doesn't turn on.
+Does that matter?"
+icon = ExtResource("1_7vnqv")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop.tscn"
+hint_text_on_use = ""

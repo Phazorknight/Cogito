@@ -34,8 +34,11 @@ func update_quest():
 
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("Player"):
-		print("QuestUpdater triggered.")
 		update_quest()
+
+
+func _on_pickup_component_was_interacted_with(_interaction_text: Variant, _input_map_action: Variant) -> void:
+	update_quest()
 
 
 func set_state():
@@ -54,3 +57,5 @@ func save():
 		
 	}
 	return state_dict
+
+

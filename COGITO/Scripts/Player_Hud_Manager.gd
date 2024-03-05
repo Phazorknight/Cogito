@@ -28,8 +28,9 @@ var interaction_texture : Texture2D
 @export var hint_component : PackedScene
 @onready var hint_area: Control = $HintArea
 
+## This sets how far away from the player dropped items appear. 0 = items appear on the tip of the player interaction raycast. Negative values mean closer, positive values mean further away that this.
+@export var item_drop_distance_offset : float = -1
 
-### TRYOUT FOR NEW ATTRIBUTE SYSTEM
 ## Reference to PackedScene that gets instantiated for each player attribute.
 @export var ui_attribute_prefab : PackedScene
 @onready var ui_attribute_area : VBoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
@@ -166,7 +167,7 @@ func _on_external_ui_toggle(is_showing:bool):
 
 
 # When HUD receives set use prompt signal (usually when equipping a wieldable)
-func _on_set_use_prompt(passed_use_text):
+func _on_set_use_prompt(_passed_use_text):
 	print("Player HUD manager: _on_set_use_prompt called")
 	# DEPRECATED: Showing these prompts felt increasingly useless.
 	pass
@@ -219,7 +220,7 @@ func _on_inventory_interface_drop_slot_data(slot_data):
 	var scene_to_drop = load(slot_data.inventory_item.drop_scene)
 	Audio.play_sound(slot_data.inventory_item.sound_drop)
 	var dropped_item = scene_to_drop.instantiate()
-	dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(0)
+	dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(item_drop_distance_offset)
 	for node in dropped_item.interaction_nodes:
 		if node is PickupComponent:
 			node.slot_data = slot_data

@@ -18,6 +18,7 @@ var grabbed_slot_data: InventorySlotPD
 var external_inventory_owner : Node
 var control_in_focus
 
+
 func _ready():
 	is_inventory_open = false
 	info_panel.hide()
@@ -37,7 +38,8 @@ func open_inventory():
 			if !slot_panel.mouse_exited.is_connected(_slot_on_mouse_exit):
 				slot_panel.mouse_exited.connect(_slot_on_mouse_exit)
 	hot_bar_inventory.hide()
-	
+
+
 func close_inventory():
 	if is_inventory_open:
 		if grabbed_slot_data != null: # If the player was holding/moving items, these will be added back to the inventory.
@@ -151,6 +153,7 @@ func update_grabbed_slot():
 		grabbed_slot.set_slot_data(grabbed_slot_data)
 	else:
 		grabbed_slot.hide()
+
 
 # Grabbed slot data handling for mouse buttons
 func _on_gui_input(event):
