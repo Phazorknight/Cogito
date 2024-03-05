@@ -53,8 +53,8 @@
 
 - [ Game persistence, saving and loading](#game-persistence-saving-and-loading)
   - [ Save data overview](#save-data-overview)
-  - [ Player State]
-  - [ Scene State]
+  - [ Player state](#player-state)
+  - [ Scene state](#scene-state)
 
 - [ Scene Transitions](#scene_transitions)
   - [Overview]
@@ -125,7 +125,7 @@ Cons:
 - Old/misaligned state files can create unexpected behavior or reduced compatibility when updating/changing the player or scenes.
 
 
-## Player State
+## Player state
 The player state contains all data tied to the player:
 - Player position in game scene
 - Player rotation in game scene
@@ -143,7 +143,7 @@ The player state contains all data tied to the player:
 - If the player is transitioning from one scene to another, then the temporarily created player state is loaded, with some data like player position and rotation being overwritten by the scene connector.
 
 
-## Scene State
+## Scene state
 The scene state contains all data relevant for proper persistence of the game scene. Usually you’d have a scene state file for each save slot and game scene present (for example, if your game has 10 game scenes, and 3 save slots, you’d potentially have 30 scene states, 10 scene states for each save slot).
 
 The scene state contains the following data:
@@ -178,6 +178,8 @@ The scene state contains the following data:
 **When is the scene state loaded?**
 - When the player loads a saved game, the scene as well as it’s state that is referenced in the player state is loaded. This works by checking if the player is currently in the scene that the player state has saved as the players location. If NOT, the game transitions to said scene and only then loads the player state and scene state.
 - If it exists, a temporary scene state is loaded when the player transitions into a scene. This is used to keep scene persistency, if the player is returning to this scene when they were previously in it. If no temporary scene state is found, the default scene is loaded.
+
+
 
 
 ### --- OLD DOCUMENTATION BEYOND THIS POINT ---
