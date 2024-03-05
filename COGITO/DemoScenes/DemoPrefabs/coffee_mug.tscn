@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://u2b6ss4xaxp8"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_s8epx"]
-[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="2_gdrhw"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_s8epx"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="2_gdrhw"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="3_0m5f4"]
 [ext_resource type="AudioStream" uid="uid://cl1llyise451u" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_000.ogg" id="4_xv6sm"]
 [ext_resource type="AudioStream" uid="uid://c3ruc72xidtx6" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_001.ogg" id="5_ip6mm"]

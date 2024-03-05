@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://cxof5rvjpgx1l"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_h01uk"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="1_h01uk"]
 [ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="2_6abqm"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="2_tt6sh"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_tt6sh"]
 [ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="3_v470v"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4k1dd"]

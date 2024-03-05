@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://bdyukj85qkut0"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_v6apr"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="1_v6apr"]
 [ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="2_syv37"]
 [ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="3_mv414"]
 [ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://COGITO/Assets/Audio/Kenney/beltHandle2.ogg" id="4_amxf0"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="5_m5t06"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="5_m5t06"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ik1yl"]
 size = Vector3(0.07, 1.8, 0.8)

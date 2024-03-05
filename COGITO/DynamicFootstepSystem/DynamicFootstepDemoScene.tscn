@@ -17,8 +17,8 @@
 [ext_resource type="Material" uid="uid://c4rvflucftsrl" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Wood.tres" id="12_2coni"]
 [ext_resource type="Material" uid="uid://bnepeulvkh40w" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Dirt.tres" id="13_ndygr"]
 [ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="18_kbomt"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="19_j6bha"]
-[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="20_5hoci"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="19_j6bha"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="20_5hoci"]
 [ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="21_0438d"]
 [ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="22_stsjx"]
 

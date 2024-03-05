@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d2dt6mcv83j64"]
 
-[ext_resource type="Script" path="res://COGITO/Components/UI_AttributeComponent.gd" id="1_1g7if"]
+[ext_resource type="Script" path="res://COGITO/Components/UI/UI_AttributeComponent.gd" id="1_1g7if"]
 [ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_s50ws"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="3_cqwdn"]
 

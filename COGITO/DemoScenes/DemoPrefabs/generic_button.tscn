@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://cs6raqlyejqul"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Button.gd" id="1_l32yq"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Button.gd" id="1_l32yq"]
 [ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="3_v8dn1"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
 top_radius = 0.05

@@ -47,7 +47,6 @@ var inventory_item_reference : WieldableItemPD
 
 func _ready():
 	wieldable_mesh.hide()
-	spawn_node = get_tree().get_current_scene()
 	firing_cooldown = 0
 
 
@@ -127,6 +126,7 @@ func reload():
 
 # Function called when wieldable is unequipped.
 func equip(_player_interaction_component: PlayerInteractionComponent):
+	spawn_node = get_tree().get_current_scene()
 	animation_player.play(anim_equip)
 	player_interaction_component = _player_interaction_component
 

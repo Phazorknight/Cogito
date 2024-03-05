@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7ts5d86tl7j2"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_7106a"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_7106a"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="2_wpx8e"]
-[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="3_d3sgd"]
-[ext_resource type="PackedScene" uid="uid://bjko2ni8pfb34" path="res://COGITO/Components/CustomInteraction.tscn" id="4_ethhe"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="3_d3sgd"]
+[ext_resource type="PackedScene" uid="uid://bjko2ni8pfb34" path="res://COGITO/Components/Interactions/CustomInteraction.tscn" id="4_ethhe"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_yb128"]
 material = ExtResource("2_wpx8e")

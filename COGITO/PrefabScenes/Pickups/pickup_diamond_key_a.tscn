@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://bc52bohkbf1yp"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_07h5b"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_07h5b"]
 [ext_resource type="Resource" uid="uid://bqsqec7nngw3b" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_A.tres" id="2_j4by2"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_rpoee"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="3_3mis5"]
-[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/PickupComponent.tscn" id="3_v5e5e"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="3_v5e5e"]
 
 [sub_resource type="Resource" id="Resource_w022u"]
 resource_local_to_scene = true

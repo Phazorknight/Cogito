@@ -1,9 +1,9 @@
 [gd_scene load_steps=51 format=3 uid="uid://i4rqcx7lyrfd"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Keypad.gd" id="1_iwk1o"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Keypad.gd" id="1_iwk1o"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="2_5i70k"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="2_hg75d"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="3_aoa7n"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_aoa7n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="3_u3a7f"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="4_m3tkc"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="5_24u0e"]

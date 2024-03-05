@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://b5ukfmvoxa33e"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_cysft"]
-[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/PickupComponent.tscn" id="1_prphd"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_cysft"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="1_prphd"]
 [ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://COGITO/InventoryPD/Items/Cogito_LaserAmmo.tres" id="2_g3bxg"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_tljcd"]
 

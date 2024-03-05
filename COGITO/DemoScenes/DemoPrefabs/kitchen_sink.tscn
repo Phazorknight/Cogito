@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=3 uid="uid://cnw5nwe4guma2"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_mih5v"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="1_mih5v"]
 [ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="2_m6iug"]
 [ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="3_aagk1"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="4_ddh5t"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="4_ddh5t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q6icp"]
 resource_name = "wood"

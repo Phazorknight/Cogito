@@ -6,14 +6,14 @@ extends Control
 
 @export var bar_stylebox: StyleBoxFlat
 
-var assigned_player_attribute : CogitoPlayerAttribute
+var assigned_player_attribute : CogitoAttribute
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
 
-func initiate_attribute_ui(_player_attribute: CogitoPlayerAttribute):
+func initiate_attribute_ui(_player_attribute: CogitoAttribute):
 	assigned_player_attribute = _player_attribute
 	
 	#Setting up icon, bar and label

@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://nqyrraqwixxy"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_fged4"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="1_fged4"]
 [ext_resource type="AudioStream" uid="uid://wfjccrp1mkra" path="res://COGITO/Assets/Audio/squidge316_sliding-door_01.ogg" id="2_n3bjk"]
 [ext_resource type="AudioStream" uid="uid://rmrsysovlvyo" path="res://COGITO/Assets/Audio/squidge316_sliding-door_02.ogg" id="3_bh3rj"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="4_rvjsd"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="4_rvjsd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bckdv"]
 resource_name = "metalLight"

@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/Player_Hud_Manager.gd" id="1_0wdkf"]
-[ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI_PromptComponent.tscn" id="3_06ipe"]
+[ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
 [ext_resource type="PackedScene" uid="uid://dtdjlu4dtm6wh" path="res://COGITO/InventoryPD/UiScenes/InventoryUI.tscn" id="3_krf2d"]
 [ext_resource type="Texture2D" uid="uid://b45endup5sujv" path="res://COGITO/Assets/Textures/CameraDamageVignette.png" id="3_lb6l4"]
@@ -17,8 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
 [ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/Ui_QuestHUD.gd" id="15_kn51k"]
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://COGITO/QuestSystemPD/Components/QuestEntry.tscn" id="16_qsjbq"]
-[ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI_HintComponent.tscn" id="17_bidre"]
-[ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://COGITO/Components/UI_AttributeComponent.tscn" id="20_lscav"]
+[ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
+[ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://COGITO/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1f12m"]
 blend_mode = 1

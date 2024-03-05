@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://wtf1fqndii2p"]
 
-[ext_resource type="Script" path="res://COGITO/Components/CogitoVisibilityAttribute.gd" id="1_yrrgw"]
+[ext_resource type="Script" path="res://COGITO/Components/Attributes/CogitoVisibilityAttribute.gd" id="1_yrrgw"]
 [ext_resource type="Texture2D" uid="uid://cm1t4hpploi24" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Visibility.png" id="2_f82e1"]
 
 [node name="VisibilityAttribute" type="Node"]

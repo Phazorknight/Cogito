@@ -1,5 +1,5 @@
 extends Node
-class_name CogitoPlayerAttribute
+class_name CogitoAttribute
 
 ## Triggered whenever any of the attribute values changes.
 signal attribute_changed(attribute_name:String, value_current:float, value_max:float, has_increased:bool)

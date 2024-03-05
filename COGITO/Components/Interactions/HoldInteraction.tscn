@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://poem1yjtmt3n"]
 
-[ext_resource type="Script" path="res://COGITO/Components/HoldInteraction.gd" id="1_lawwc"]
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/HoldInteraction.gd" id="1_lawwc"]
 
 [node name="HoldInteraction" type="Node3D"]
 script = ExtResource("1_lawwc")

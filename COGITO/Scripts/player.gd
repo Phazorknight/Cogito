@@ -22,8 +22,8 @@ var is_showing_ui : bool
 
 ### NEW PLAYER ATTRIBUTE SYSTEM:
 var player_attributes : Array[Node]
-var stamina_attribute : CogitoPlayerAttribute = null
-var visibility_attribute : CogitoPlayerAttribute
+var stamina_attribute : CogitoAttribute = null
+var visibility_attribute : CogitoAttribute
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -142,9 +142,9 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
-	player_attributes = find_children("","CogitoPlayerAttribute",false) #Grabs all attached player attributes
+	player_attributes = find_children("","CogitoAttribute",false) #Grabs all attached player attributes
 	for attribute in player_attributes:
-		print("Cogito Player Attribute found: ", attribute.attribute_name)
+		print("Cogito Attribute found: ", attribute.attribute_name)
 		
 		if attribute.attribute_name == "health": # Hookup Health attribute signal to detect player death
 			attribute.death.connect(_on_death)

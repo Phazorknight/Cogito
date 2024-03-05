@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://3okedyf5glns"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/external_inventory.gd" id="1_ovckt"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="2_m2db3"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_m2db3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa0bx"]
 resource_name = "wood"

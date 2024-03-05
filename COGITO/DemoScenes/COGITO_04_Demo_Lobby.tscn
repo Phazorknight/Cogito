@@ -15,8 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://br3vumdotavq0" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorHalf.glb" id="11_7indd"]
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="11_je61h"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_72tca"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="13_5x4ip"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="14_qtguo"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="13_5x4ip"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="14_qtguo"]
 [ext_resource type="PackedScene" uid="uid://x4wqam8k4bq3" path="res://COGITO/Assets/VFX/dust_particles.tscn" id="15_7saqh"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="15_078vp"]
 [ext_resource type="AudioStream" uid="uid://ckxotbwm6qtui" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage2.ogg" id="16_py2k0"]
@@ -25,9 +25,9 @@
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="19_vxibd"]
 [ext_resource type="PackedScene" uid="uid://bdf8go8xjwqqb" path="res://COGITO/DemoScenes/DemoPrefabs/lounge_chair.tscn" id="20_rf47m"]
 [ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://COGITO/DemoScenes/DemoPrefabs/chair_desk.tscn" id="21_o6psl"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Turnwheel.gd" id="22_fgo21"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Turnwheel.gd" id="22_fgo21"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://COGITO/Assets/Audio/Kenney/stoneDrag4.ogg" id="23_q1spm"]
-[ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://COGITO/Components/HoldInteraction.tscn" id="24_7t6yl"]
+[ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://COGITO/Components/Interactions/HoldInteraction.tscn" id="24_7t6yl"]
 [ext_resource type="PackedScene" uid="uid://dkundghktg5ol" path="res://COGITO/DemoScenes/DemoPrefabs/lamp_round_floor.tscn" id="25_ohpwf"]
 [ext_resource type="FontFile" uid="uid://bu5on5evfoljs" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Bold.ttf" id="26_bxlmn"]
 [ext_resource type="PackedScene" uid="uid://c37aefrimpe1e" path="res://COGITO/DemoScenes/DemoPrefabs/lamp_square_ceiling.tscn" id="27_sff27"]
@@ -65,11 +65,11 @@
 [ext_resource type="PackedScene" uid="uid://duxk3xlhddnvt" path="res://COGITO/DemoScenes/DemoPrefabs/potted_plant.tscn" id="56_hferh"]
 [ext_resource type="PackedScene" uid="uid://ba3fh1y300wcs" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/rugRectangle.glb" id="57_bdiep"]
 [ext_resource type="PackedScene" uid="uid://3rlbofuf3x5s" path="res://COGITO/DemoScenes/DemoPrefabs/trashcan.tscn" id="58_no7q4"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="59_7mr36"]
-[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="60_oc6pu"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="59_7mr36"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="60_oc6pu"]
 [ext_resource type="PackedScene" uid="uid://dlhn1jwgx0wjr" path="res://COGITO/DemoScenes/DemoPrefabs/table_coffee_glass.tscn" id="61_jhsd0"]
 [ext_resource type="PackedScene" uid="uid://c2t21qbkevaof" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_demo_hint.tscn" id="62_y3og2"]
-[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/ReadableComponent.tscn" id="63_uggg7"]
+[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/Interactions/ReadableComponent.tscn" id="63_uggg7"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="64_tfc2i"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="65_cw5kp"]
 [ext_resource type="PackedScene" uid="uid://6k5rvlwcpys1" path="res://COGITO/DemoScenes/DemoPrefabs/generic_switch.tscn" id="66_4pwwj"]
@@ -110,7 +110,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_he56o"]
+[sub_resource type="Resource" id="Resource_siv2u"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[ExtResource("33_lg13i")]([null, null, null, null, null, null, null, null])
@@ -3317,7 +3317,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_he56o")
+inventory_data = SubResource("Resource_siv2u")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]

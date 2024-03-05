@@ -1,10 +1,10 @@
 [gd_scene load_steps=30 format=3 uid="uid://sfypssn0rllo"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Object.gd" id="1_kx4rj"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_kx4rj"]
 [ext_resource type="Resource" uid="uid://060gqm74tdlk" path="res://COGITO/InventoryPD/Items/Cogito_StaminaExtension.tres" id="2_mm3jo"]
-[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/PickupComponent.tscn" id="2_nw8cr"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="2_nw8cr"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_3krbl"]
-[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/CarryableComponent.tscn" id="5_j43ql"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="5_j43ql"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="6_gsyan"]
 [ext_resource type="AudioStream" uid="uid://cl1llyise451u" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_000.ogg" id="7_msffk"]
 [ext_resource type="AudioStream" uid="uid://c3ruc72xidtx6" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_001.ogg" id="8_5vewp"]

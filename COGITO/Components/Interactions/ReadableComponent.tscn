@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cct0itdltyppg"]
 
-[ext_resource type="Script" path="res://COGITO/Components/ReadableComponent.gd" id="1_6uwtb"]
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/ReadableComponent.gd" id="1_6uwtb"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="2_kxsxn"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="3_aj2s3"]
 

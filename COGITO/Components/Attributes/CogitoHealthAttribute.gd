@@ -1,4 +1,4 @@
-extends CogitoPlayerAttribute
+extends CogitoAttribute
 class_name CogitoHealthAttribute
 
 ## Emitted when health is reduced.

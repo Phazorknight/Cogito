@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://b006xlpa54mhl"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_52xoq"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="2_oqefg"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="1_52xoq"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_oqefg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_203cy"]
 resource_name = "carpetWhite"

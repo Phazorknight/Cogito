@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bho0nwh5rlnua"]
 
-[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/HealthAttribute.tscn" id="1_c1b02"]
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="1_c1b02"]
 [ext_resource type="PackedScene" uid="uid://byjrem8of8uuo" path="res://COGITO/Assets/Models/target.glb" id="1_cqnhi"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="3_4xfw8"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://COGITO/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="4_k2oo6"]

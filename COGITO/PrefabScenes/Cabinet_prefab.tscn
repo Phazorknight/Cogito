@@ -1,12 +1,12 @@
 [gd_scene load_steps=16 format=3 uid="uid://dbtarejfetahc"]
 
 [ext_resource type="PackedScene" uid="uid://cxwwd4mjnn34w" path="res://COGITO/PrefabScenes/Shelf.tscn" id="1_g3pr0"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="2_xux4j"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Door.gd" id="2_xux4j"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="3_jxcxt"]
 [ext_resource type="AudioStream" uid="uid://ckxotbwm6qtui" path="res://COGITO/Assets/Audio/Kenney/cardTakeOutPackage2.ogg" id="4_4064u"]
 [ext_resource type="PackedScene" uid="uid://cyy2kpk7e36if" path="res://COGITO/PrefabScenes/Shelf_Drawer.tscn" id="5_61f6l"]
 [ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="6_q1lg4"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/BasicInteraction.tscn" id="6_vb6qn"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="6_vb6qn"]
 [ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="7_takda"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e38y8"]
