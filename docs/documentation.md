@@ -7,16 +7,16 @@
 
 **Table of Contents**
 - [Documentation](#documentation)
-- [Intro to COGITO](#intro_to_cogito)]
-  - [COGITO Setup](#cogito_setup)]
-  - [Basic Game Scene Setup](#basic_game_scene_setup)
+- [Intro to COGITO](#intro-to-cogito)
+  - [COGITO Setup](#cogito-setup)
+  - [Basic Game Scene Setup](#basic-game-scene-setup)
 
 - [Player Attributes](#player_attributes)
   - [ Generic attributes](#generic_attributes)
-  - [ Health Attribute]
-  - [ Stamina Attribute]
-  - [ Visibility Attribute]
-  - [ UI Attribute Component]
+  - [ Health Attribute](#health_attributes)
+  - [ Stamina Attribute](#stamina_attribute)
+  - [ Visibility Attribute](#visibility_attribute)
+  - [ UI Attribute Component](#ui_attribute_component)
 
 - [Player Interaction System](#player_interaction_system)
 
@@ -35,7 +35,7 @@
   - [ Readable Component](#readable_component)
   - [ Pickup Component](#pickup_component)
 
-- [Cogito Inventory System]
+- [Cogito Inventory System](#cogito_inventory_system)
   - [ Overview]
   - [ Inventory Item Class]
   - [ Consumable Item]

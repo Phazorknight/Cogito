@@ -1,15 +1,17 @@
 ![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
 # COGITO
 [![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202403-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
-COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [these cool people](https://github.com/Phazorknight/Cogito/graphs/contributors).
+beta 202403.22
 
-v202403.22
-
+## What is it?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on
 providing a framework for creating interactable objects and items.
 
-### Current Features
+COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [these contributors](https://github.com/Phazorknight/Cogito/graphs/contributors).
+
+
+## Current Features
 - First person player controller with:
   - Sprinting, jumping, crouching, sliding, stairs handling, ladder handling
   - Fully customizable attributes like Health, Stamina, Visibility (for stealh) - Component based, so easy to add your own.
@@ -33,11 +35,13 @@ providing a framework for creating interactable objects and items.
 > [!IMPORTANT]  
 > COGITO is still under active develompent. While some features are pretty much set, others might change soon. Use at your own risk and check Issues and Discussion pages for more information.
 
-**(OLD) Video giving an overview of features: [COGITO Overview](https://www.youtube.com/watch?v=LYBo1_Qfru0)
 
 ## [Documentation](docs/documentation.md)
 
+
 ## Videos
+**(OLD) Video giving an overview of features: [COGITO Overview](https://www.youtube.com/watch?v=LYBo1_Qfru0)
+
 [![COGITO Sliding door from scratch](docs/cog_tut_sliding_door.jpg)](https://youtu.be/rLBSxqjXlWY)
 
 ## Thanks and Contributions
