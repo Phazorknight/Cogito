@@ -11,14 +11,16 @@
   - [COGITO Setup](#cogito-setup)
   - [Basic Game Scene Setup](#basic-game-scene-setup)
 
-- [Player Attributes](#player_attributes)
-  - [ Generic attributes](#generic_attributes)
-  - [ Health Attribute](#health_attributes)
-  - [ Stamina Attribute](#stamina_attribute)
-  - [ Visibility Attribute](#visibility_attribute)
-  - [ UI Attribute Component](#ui_attribute_component)
+- [Player Controller](#player-controller)
 
-- [Player Interaction System](#player_interaction_system)
+- [Cogito Attributes](#cogito-attributes)
+  - [ CogitoAttribute base class](#cogitoattribute-base-class)
+  - [ Health attribute](#health-attribute)
+  - [ Stamina attribute](#stamina-attribute)
+  - [ Visibility attribute](#visibility-attribute)
+  - [ UI Attribute component](#ui-attribute-component)
+
+- [Player Interaction System](#player-interaction-system)
 
 - [Cogito Objects](#cogito_objects)
   - [ Cogito Object](#cogito_object)
@@ -98,6 +100,82 @@ To fully work, you need 3 Prefab Scenes in your scene + the following references
 All signals needed get hooked up via code, so this should work without any extra signal setup.
 To enable transitioning between scenes, your scene root node needs to have cogito_scene.gd attached and connector nodes defined (see demo scene). You can read more about this in [Scene Transitions](#scene_transitions).
 
+
+# Player Controller
+(work in progress)
+
+
+# Cogito Attributes
+Cogito Attributes are a custom class used to save and manipulate  data most commonly used to represent some kind of numerical attribute. Most common examples are values like health points, stamina, magic, etc. These are usually tied to the player but not exclusively. For example you can use the health attribute on any objects that you want to receive damage. The included specific attributes come as component nodes you can simply instantiate as child nodes to any object.
+
+## CogitoAttribute base class
+The base class used for any attributes is the CogitoAttribute class.
+
+Properties:
+  - **attribute_name** (String)
+    - String used in scripts to find specific attributes. Make sure this is all lowercase and without spaces.
+  - **attribute_display_name** (String)
+    - As it would appear in the game.
+  - **attribute_color** (Color)
+    - Used for UI elements
+  - **attribute_icon** (Texture2D)
+    - Used for UI elements
+  - **value_max** (float)
+    - The maximum value of this attribute. Can change over time and is saved in the player state file.
+  - **value_start** (float)
+    - The start value of this attribute.
+      
+Signals:
+  - **attribute_changed**(attribute_name: String, value_current: float, value_max: float, has_increased: bool)
+    - Gets emitted anytime the attribute value changes. If the value change was positive, has_increased will be true, if not it's false)
+  - **attribute_reached_zero**(attribute_name: String, value_current: float, value_max: float)
+    - Gets emitted when the current value of this attribute is 0.
+
+
+## Health Attribute
+This attribute is not jsut for player health. You can attach the component to objects to give them their own "health" and define behaviour when they run out of health (death).
+
+Properties:
+  - **no_sanity_damage** (float)
+    - used in combination with the sanity attribute. Defines how much damage per second the owner takes if their sanity attribute has reached zero.
+  - **sound_on_damage** (AudioStream)
+    - AudioStream that plays when the owner takes damage.
+  - **sound_on_death** (AudioStream)
+    - AudioStream that plays when the owner dies (health reaches zero).
+  - **destroy_on_death** (Array[NodePath])
+    - When the owner dies, all the nodes which nodepaths are in this array will get destroyed (queue_free())
+  - **spawn_on_death** (PackedScene)
+    - When the owner dies, the packed scene will be instantiate at the owners global position. This is most commonly used for VFX or item drops.
+
+Signals:
+  - **damage_taken**()
+    - Gets emitted when the owner takes damage (attribute value decreases). Can be used for VFX, audio.
+  - **death**()
+    - Gets emitted when the owner dies. Can be used for VFX, audio, triggering cutscenes, updating quests, etc.
+
+
+## Stamina Attribute
+(work in progress)
+
+
+## Visibility Attribute
+(work in progress)
+
+
+## Sanity Attribute
+(work in progress)
+
+
+# Player Interaction System
+Cogito works with a raycast interaction system. This means that the player camera contains a raycast3d that constantly checks what the player is looking at. If an interactive object is detected, the raycast checks what kind of interaction components are attached to the object and displays interaction prompts accordingly.
+
+**Help, my object doesn't get detected by the interaction system?**
+- Check that the object is a Cogito Object or one of it's variants.
+- Check that the object is set to the correct collision layers. The interaction raycast is set to detect on layer 2 by default.
+- Check that the object has collision shapes.
+- Check that the object contain interaction components. If you use custom interaction components, try to swap to default ones to see if the behaviour changes.
+
+  
 
 
 # Game persistence, saving and loading
