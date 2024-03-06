@@ -32,6 +32,7 @@ func _ready():
 func _show_quest_display():
 	update_active_quests()
 	update_completed_quests()
+	update_failed_quests()
 	quest_display.show()
 	
 func _hide_quest_display():
@@ -57,6 +58,17 @@ func update_completed_quests():
 	for quest in CogitoQuestManager.get_completed_quests():
 		var instanced_quest_entry = quest_entry.instantiate()
 		completed_group.add_child(instanced_quest_entry)
+		instanced_quest_entry.set_quest_info(quest.quest_title,quest.quest_description,str(quest.quest_counter_current) + "/" + str(quest.quest_counter_goal))
+
+
+func update_failed_quests():
+	#Clearing out group entries:
+	for node in failed_group.get_children():
+		node.queue_free()
+	
+	for quest in CogitoQuestManager.get_failed_quests():
+		var instanced_quest_entry = quest_entry.instantiate()
+		failed_group.add_child(instanced_quest_entry)
 		instanced_quest_entry.set_quest_info(quest.quest_title,quest.quest_description,str(quest.quest_counter_current) + "/" + str(quest.quest_counter_goal))
 
 

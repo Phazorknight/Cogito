@@ -1,4 +1,5 @@
 extends Node3D
+class_name CogitoQuestUpdater
 
 @export var quest_to_update : CogitoQuest
 enum UpdateType {Start, Complete, Fail, ChangeCounter}
@@ -21,8 +22,9 @@ func update_quest():
 		UpdateType.Complete:
 			quest_to_update.update()
 			CogitoQuestManager.complete_quest(quest_to_update)
-		UpdateType.Start:
-			CogitoQuestManager.start_quest(quest_to_update)
+		UpdateType.Fail:
+			print("Failing quest ", quest_to_update)
+			CogitoQuestManager.fail_quest(quest_to_update)
 		UpdateType.ChangeCounter:
 			if has_been_triggered:
 				return
@@ -57,5 +59,3 @@ func save():
 		
 	}
 	return state_dict
-
-

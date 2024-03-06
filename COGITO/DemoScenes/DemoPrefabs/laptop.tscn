@@ -98,7 +98,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_48jcr")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_og60x"]
-size = Vector3(0.521735, 0.0282227, 0.340784)
+size = Vector3(0.525516, 0.0282227, 0.340784)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_78fgu"]
 size = Vector3(0.525453, 0.334753, 0.0285786)
@@ -110,7 +110,6 @@ inventory_item = ExtResource("4_r0qpn")
 quantity = 1
 
 [node name="laptop" type="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 mass = 5.0
 max_contacts_reported = 4
@@ -118,16 +117,16 @@ contact_monitor = true
 script = ExtResource("1_32vwr")
 
 [node name="laptop(Clone)" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.44, 0, 0, 0, 0.44, 0, 0, 0, 0.44, 0, 0, 0)
+transform = Transform3D(0.44, 0, 0, 0, 0.44, 0, 0, 0, 0.44, -0.3, 0, 0.2)
 mesh = SubResource("ArrayMesh_pndgq")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.260751, 0.0121582, -0.172208)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0370964, 0.0134146, 0.0299114)
 shape = SubResource("BoxShape3D_og60x")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.00001, 8.9407e-08, 2.98023e-08, 0, 0.907044, 0.421036, -1.78814e-07, -0.421038, 0.907049, 0.263081, 0.163784, -0.396448)
+transform = Transform3D(1.00001, 8.9407e-08, 2.98023e-08, 0, 0.907044, 0.421036, -1.78814e-07, -0.421038, 0.907049, -0.0363583, 0.166824, -0.199015)
 shape = SubResource("BoxShape3D_78fgu")
 
 [node name="CarryableComponent" parent="." instance=ExtResource("2_w8f7r")]

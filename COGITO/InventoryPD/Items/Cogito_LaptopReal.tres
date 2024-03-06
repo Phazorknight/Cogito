@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=3 format=3 uid="uid://dtyra0gss8i65"]
+
+[ext_resource type="Texture2D" uid="uid://b4hu864fg0bv4" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop_Logo.png" id="1_bw20e"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_omen8"]
+
+[resource]
+script = ExtResource("1_omen8")
+name = "CEOs Laptop"
+descpription = "The CEO's laptop. There's probably a  lot of valuable data on here."
+icon = ExtResource("1_bw20e")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop_real.tscn"
+hint_text_on_use = ""

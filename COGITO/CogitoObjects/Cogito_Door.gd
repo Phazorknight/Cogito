@@ -3,6 +3,7 @@ extends Node3D
 class_name CogitoDoor
 
 signal object_state_updated(interaction_text:String)
+signal door_state_changed(is_open:bool)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
@@ -175,7 +176,7 @@ func open_door(interactor: Node3D):
 	is_open = true
 	interaction_text = interaction_text_when_open
 	object_state_updated.emit(interaction_text)
-	
+	door_state_changed.emit(true)
 	# Only used if there's an auto close time set.
 	if auto_close_time > 0:
 		close_timer = Timer.new()
@@ -212,7 +213,7 @@ func close_door(_interactor: Node3D):
 	is_open = false
 	interaction_text = interaction_text_when_closed
 	object_state_updated.emit(interaction_text)
-	
+	door_state_changed.emit(false)
 	
 func set_state():
 	if is_open:

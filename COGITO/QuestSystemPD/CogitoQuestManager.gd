@@ -29,9 +29,15 @@ func start_quest(quest: CogitoQuest) -> CogitoQuest:
 	assert(quest != null)
 
 	if active.is_quest_inside(quest):
+		print("Quest ", quest, " is already active.")
 		return quest
-	if completed.is_quest_inside(quest): #Throw an error?
+	if completed.is_quest_inside(quest):
+		print("Quest ", quest, " is already completed.")
 		return quest
+	if failed.is_quest_inside(quest):
+		print("Quest ", quest, " was already failed.")
+		return quest	
+	
 
 	#Add the quest to the actives quests group
 	available.remove_quest(quest)

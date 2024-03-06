@@ -75,22 +75,20 @@ func _ready():
 	player.player_state_loaded.connect(_on_player_state_load)
 	player.player_interaction_component.updated_wieldable_data.connect(_on_update_wieldable_data)
 
-	# Grabbing external inventories in scene.
-	for node in get_tree().get_nodes_in_group("external_inventory"):
-		print("Is in external_inventory group: ", node)
-		node.toggle_inventory.connect(toggle_inventory_interface)
+	connect_to_external_inventories.call_deferred()
 
 
-func _on_player_state_load():
-	inventory_interface.set_player_inventory_data(player.inventory_data)
-	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
-	
-	# Grabbing external inventories in scene.
+func connect_to_external_inventories(): # Grabbing external inventories in scene.
 	for node in get_tree().get_nodes_in_group("external_inventory"):
 		print("Is in external_inventory group: ", node)
 		if !node.is_connected("toggle_inventory",toggle_inventory_interface):
 			node.toggle_inventory.connect(toggle_inventory_interface)
 
+
+func _on_player_state_load():
+	inventory_interface.set_player_inventory_data(player.inventory_data)
+	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
+	connect_to_external_inventories()
 
 
 func _is_steam_deck() -> bool:

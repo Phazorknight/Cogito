@@ -97,10 +97,10 @@ var snap : Vector3 = Vector3.ZERO
 const STEP_CHECK_COUNT : int = 2
 const WALL_MARGIN : float = 0.001
 
-
 @export_group("Ladder Handling")
 var on_ladder : bool = false
 @export var ladder_speed : float = 2.0
+const LADDER_JUMP_SCALE = 0.5
 
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
@@ -313,7 +313,7 @@ func _process_on_ladder(_delta):
 	velocity = direction * ladder_speed
 
 	var look_vector = camera.get_camera_transform().basis
-	const LADDER_JUMP_SCALE = 0.5
+	
 	if jump:
 		velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
 	
