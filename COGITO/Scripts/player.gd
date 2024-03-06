@@ -313,8 +313,9 @@ func _process_on_ladder(_delta):
 	velocity = direction * ladder_speed
 
 	var look_vector = camera.get_camera_transform().basis
+	const LADDER_JUMP_SCALE = 0.5
 	if jump:
-		velocity += look_vector * Vector3(JUMP_VELOCITY, JUMP_VELOCITY, JUMP_VELOCITY)
+		velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
 	
 	# print("Input_dir:", input_dir, ". direction:", direction)
 	move_and_slide()
