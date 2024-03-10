@@ -292,19 +292,13 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	# try and capture player's intent based on where they're looking
 	var look_vector = camera.get_camera_transform().basis
 	var looking_away = look_vector.z.dot(ladderDir) < 0.33
-	if not looking_away:
-		# they're going head on with the ladder, likely they want to climb it
-		on_ladder = true
-		return
-	
 	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
-	
-	# Snapping to "side" of ladder if player seems as though they're aiming to go down the ladder
-	if looking_down and ladderDir:
+	if looking_down or not looking_away:
 		var offset = (global_position - ladder.global_position)
 		if offset.dot(ladderDir) < -0.1:
 			global_translate(ladderDir*offset.length()/4.0)
 		on_ladder = true
+		return
 	
 
 ### LADDER MOVEMENT
