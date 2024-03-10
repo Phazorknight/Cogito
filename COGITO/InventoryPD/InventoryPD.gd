@@ -160,6 +160,17 @@ func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 	return false
 
 
+# Function to attempt to take all the items in a given inventory.
+func take_all_items(target_inventory: InventoryPD):
+	for slot in inventory_slots:
+		if slot != null:
+			#grab item in slot and add it to target inventory
+			if target_inventory.pick_up_slot_data(slot):
+				print("Grabbed ", slot.inventory_item.name)
+				remove_slot_data(slot) #Empty the slot
+				force_inventory_update()
+
+
 func force_inventory_update():
 	print("Forced inventory update: ", self)
 	inventory_updated.emit(self)

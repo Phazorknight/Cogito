@@ -5,12 +5,15 @@ const Slot = preload("res://COGITO/InventoryPD/UiScenes/Slot.tscn")
 @export var inventory_name : String = ""
 @onready var grid_container = $MarginContainer/VBoxContainer/GridContainer
 @onready var label = $MarginContainer/VBoxContainer/Label
+@onready var button_take_all: Button = $MarginContainer/VBoxContainer/Button_TakeAll
+
 var slot_array = []
 var first_slot
 
 
 func _ready():
 	label.text = inventory_name
+	button_take_all.hide()
 
 
 func set_inventory_data(inventory_data : InventoryPD):

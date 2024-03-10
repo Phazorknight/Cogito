@@ -31,4 +31,9 @@ horizontal_alignment = 1
 layout_mode = 2
 columns = 4
 
+[node name="Button_TakeAll" type="Button" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "Take All"
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

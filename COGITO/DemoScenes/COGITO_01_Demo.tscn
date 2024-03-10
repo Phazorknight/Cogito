@@ -1,4 +1,4 @@
-[gd_scene load_steps=149 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=146 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_7d2n7"]
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_b15oo"]
@@ -40,9 +40,8 @@
 [ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://COGITO/Assets/Graphics/HintIcons/Hint_X.png" id="36_7nev7"]
 [ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="36_42jeg"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="38_l5vpp"]
-[ext_resource type="Script" path="res://COGITO/Scripts/ladder_area.gd" id="39_ferka"]
-[ext_resource type="PackedScene" uid="uid://c6dn6bn47xyrj" path="res://COGITO/Assets/Models/ladder.glb" id="39_ri7bt"]
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/tab_menu.tscn" id="40_6m7mg"]
+[ext_resource type="PackedScene" uid="uid://i7fum2jx3ac3" path="res://COGITO/PrefabScenes/ladder.tscn" id="41_q27ev"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="43_bchdf"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="45_ubu8v"]
 [ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/Interactions/ReadableComponent.tscn" id="46_tumg2"]
@@ -271,7 +270,7 @@ script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_n7p88"]
+[sub_resource type="Resource" id="Resource_n3yvj"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
@@ -349,16 +348,10 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_7qhl1"]
+[sub_resource type="Resource" id="Resource_6caif"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_rj7xk"]
-size = Vector3(0.139, 3.148, 0.8)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_xagqk"]
-size = Vector3(0.8, 3.03359, 0.1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_fj0b6"]
 size = Vector3(3, 2.5, 2)
@@ -1260,7 +1253,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_n7p88")
+inventory_data = SubResource("Resource_n3yvj")
 uses_animation = true
 open_animation = "open"
 
@@ -1620,7 +1613,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_7qhl1")
+inventory_data = SubResource("Resource_6caif")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
@@ -1628,20 +1621,7 @@ player = NodePath("../Player")
 
 [node name="TabMenu" parent="." instance=ExtResource("40_6m7mg")]
 
-[node name="Ladder" type="Area3D" parent="."]
-transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -18.4395, 1.6, -4.87125)
-script = ExtResource("39_ferka")
-
-[node name="ladderArea" type="CollisionShape3D" parent="Ladder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)
-shape = SubResource("BoxShape3D_rj7xk")
-
-[node name="ladder" parent="Ladder" instance=ExtResource("39_ri7bt")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ladder/ladder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00152588, -0.0832032, 0)
-shape = SubResource("BoxShape3D_xagqk")
+[node name="Ladder" parent="." instance=ExtResource("41_q27ev")]
 
 [node name="Stairs" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.8, 0.15, 0.75)

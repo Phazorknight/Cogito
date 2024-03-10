@@ -1,7 +1,7 @@
 class_name CogitoSceneState
 extends Resource
 
-var scene_state_dir : String = "user://COGITO_scene_state_"
+var scene_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoSceneManager.cogito_scene_state_prefix
 
 @export var saved_nodes : Array
 @export var saved_states : Array

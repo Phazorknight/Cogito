@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=86 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://nqyrraqwixxy" path="res://COGITO/DemoScenes/DemoPrefabs/sliding_door.tscn" id="20_t5vwn"]
 [ext_resource type="PackedScene" uid="uid://ciil8mli32kuk" path="res://COGITO/PrefabScenes/Pickups/pickup_laser_rifle.tscn" id="23_ex3ej"]
 [ext_resource type="PackedScene" uid="uid://7osjlj17ntxb" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_window_painted.tscn" id="23_qd03d"]
+[ext_resource type="PackedScene" uid="uid://i7fum2jx3ac3" path="res://COGITO/PrefabScenes/ladder.tscn" id="27_1lvv6"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Spawnzone.gd" id="28_5k0xi"]
 [ext_resource type="PackedScene" uid="uid://cgce75ts2twkp" path="res://COGITO/PrefabScenes/Pickups/pickup_pickaxe.tscn" id="29_ai41f"]
 [ext_resource type="PackedScene" uid="uid://bpahmsxncruqo" path="res://COGITO/Assets/Models/Kenney/barrel.glb" id="32_q1a8d"]
@@ -832,8 +833,7 @@ player_hud = NodePath("../Player_HUD")
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_0c7yw")]
 player = NodePath("../Player")
 
-[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("4_vc32u")]
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+[node name="TabMenu" parent="." instance=ExtResource("4_vc32u")]
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -2740,6 +2740,12 @@ font_size = 64
 outline_size = 10
 horizontal_alignment = 0
 
+[node name="Ladder" parent="MOVEMENT" instance=ExtResource("27_1lvv6")]
+transform = Transform3D(1, 0, 1.39091e-08, 0, 1, 0, -1.39091e-08, 0, 1, -2.94677, -1.4, 18.5308)
+
+[node name="ladderArea" parent="MOVEMENT/Ladder" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 0.0460688, 0)
+
 [node name="KSI_counter_high_painted" parent="." instance=ExtResource("19_v055q")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
 
@@ -2752,3 +2758,5 @@ transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.89647, 2.23517e-08, -16.4559)
 
 [connection signal="pressed" from="SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="SHOOTING_RANGE/Spawnzone" method="_on_generic_button_pressed"]
+
+[editable path="MOVEMENT/Ladder"]

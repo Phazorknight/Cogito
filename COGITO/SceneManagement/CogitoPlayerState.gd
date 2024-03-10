@@ -1,7 +1,8 @@
 class_name CogitoPlayerState
 extends Resource
 
-var player_state_dir : String = "user://COGITO_player_state_"
+#var player_state_dir : String = "user://COGITO_player_state_"
+var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoSceneManager.cogito_player_state_prefix
 
 @export var version : int = 1
 @export var player_inventory : InventoryPD
@@ -28,6 +29,9 @@ var player_state_dir : String = "user://COGITO_player_state_"
 @export var player_completed_quests : Array[CogitoQuest]
 @export var player_failed_quests : Array[CogitoQuest]
 
+#Saving some extra data for save game management/UI
+@export var player_state_screenshot_file : String
+@export var player_state_savetime : String
 
 func add_player_attribute_to_state_data(attribute_data:Vector2):
 	player_attributes.append(attribute_data)
@@ -52,8 +56,13 @@ func clear_saved_wieldable_charges():
 
 func write_state(state_slot : String) -> void:
 	var player_state_file = str(player_state_dir + state_slot + ".res")
+	
+
+	
+	
 	ResourceSaver.save(self, player_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Player state saved as ", player_state_file)
+
 
 
 func state_exists(state_slot : String) -> bool:

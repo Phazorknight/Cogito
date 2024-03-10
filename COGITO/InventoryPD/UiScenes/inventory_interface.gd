@@ -98,6 +98,13 @@ func set_external_inventory(_external_inventory_owner):
 	external_inventory_ui.set_inventory_data(inventory_data)
 	
 	external_inventory_ui.show()
+	external_inventory_ui.button_take_all.show()
+	if !external_inventory_ui.button_take_all.pressed.is_connected(_on_take_all_pressed):
+		external_inventory_ui.button_take_all.pressed.connect(_on_take_all_pressed)
+
+
+func _on_take_all_pressed():
+	external_inventory_owner.inventory_data.take_all_items(get_parent().player.inventory_data)
 
 
 func clear_external_inventory():
