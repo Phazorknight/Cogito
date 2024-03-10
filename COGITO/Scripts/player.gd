@@ -99,7 +99,9 @@ const WALL_MARGIN : float = 0.001
 
 @export_group("Ladder Handling")
 var on_ladder : bool = false
-@export var ladder_speed : float = 2.0
+@export var CAN_SPRINT_ON_LADDER = false
+@export var LADDER_SPEED : float = 2.0
+@export var LADDER_SPRINT_SPEED : float = 3.3
 const LADDER_JUMP_SCALE = 0.5
 
 @export_group("Gamepad Properties")
@@ -284,6 +286,21 @@ func params(transform3d, motion):
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 	return PhysicsServer3D.body_test_motion(self_rid, params(transform3d, motion), test_motion_result)	
 
+func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
+	# called by ladder_area.gd
+	
+	# try and capture player's intent based on where they're looking
+	var look_vector = camera.get_camera_transform().basis
+	var looking_away = look_vector.z.dot(ladderDir) < 0.33
+	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
+	if looking_down or not looking_away:
+		var offset = (global_position - ladder.global_position)
+		if offset.dot(ladderDir) < -0.1:
+			global_translate(ladderDir*offset.length()/4.0)
+		on_ladder = true
+		return
+	
+
 ### LADDER MOVEMENT
 func _process_on_ladder(_delta):
 	var input_dir
@@ -291,6 +308,15 @@ func _process_on_ladder(_delta):
 		input_dir = Input.get_vector("left", "right", "forward", "back")
 	else:
 		input_dir = Vector2.ZERO
+	
+	var ladder_speed = LADDER_SPEED
+	
+	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
+		is_sprinting = true
+		if stamina_attribute.value_current > 0:
+			ladder_speed = LADDER_SPRINT_SPEED
+	else:
+		is_sprinting = false
 		
 	var jump = Input.is_action_pressed("jump")
 
@@ -308,11 +334,13 @@ func _process_on_ladder(_delta):
 			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 
-	# Applying ladder input_dir to direction
-	direction = (transform.basis * Vector3(input_dir.x,input_dir.y * -1,0)).normalized()
-	velocity = direction * ladder_speed
-
 	var look_vector = camera.get_camera_transform().basis
+	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
+
+	# Applying ladder input_dir to direction
+	var y_dir = 1 if looking_down else -1
+	direction = (transform.basis * Vector3(input_dir.x,input_dir.y * y_dir,0)).normalized()
+	velocity = direction * ladder_speed
 	
 	if jump:
 		velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
