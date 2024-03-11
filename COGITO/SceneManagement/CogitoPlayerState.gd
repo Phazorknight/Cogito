@@ -31,7 +31,7 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 
 #Saving some extra data for save game management/UI
 @export var player_state_screenshot_file : String
-@export var player_state_savetime : String
+@export var player_state_savetime : int
 
 func add_player_attribute_to_state_data(attribute_data:Vector2):
 	player_attributes.append(attribute_data)
