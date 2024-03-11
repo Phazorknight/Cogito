@@ -167,7 +167,7 @@ func save_player_state(player, slot:String):
 		print("CSM: No screenshot to save was passed.")
 	
 	## Getting time of saving
-	_player_state.player_state_savetime = Time.get_datetime_string_from_system(false)
+	_player_state.player_state_savetime = int(Time.get_unix_time_from_system())
 
 	#Writing the state from current player interaction component:
 	var current_player_interaction_component = player.player_interaction_component
