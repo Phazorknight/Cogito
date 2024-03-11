@@ -79,10 +79,16 @@ func load_current_slot_data():
 		print("No screenshot for slot ", CogitoSceneManager._active_slot, " found.")
 		
 	# Load save state time
-	var savetime : String = CogitoSceneManager._player_state.player_state_savetime
-	var savetime_array = savetime.rsplit("T", true, 1)
-	var savetime_time: String = savetime_array[1]
-	%Label_SaveTime.text = savetime_array[0] + " " + savetime_time.substr(0,5)
+	var savetime : String
+	if CogitoSceneManager._player_state:
+		savetime = CogitoSceneManager._player_state.player_state_savetime
+	if savetime == null:
+		savetime = ""
+		%Label_SaveTime.text = savetime
+	else:
+		var savetime_array = savetime.rsplit("T", true, 1)
+		var savetime_time: String = savetime_array[1]
+		%Label_SaveTime.text = savetime_array[0] + " " + savetime_time.substr(0,5)
 
 
 func close_pause_menu():

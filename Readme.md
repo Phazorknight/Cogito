@@ -26,7 +26,7 @@ COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [
   - Component based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
   - Examples for interactive obects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
 - Quest System
-- Saven and Load System as well as scene persistency
+- Save and Load System as well as scene persistency
 - Full gamepad support!
 - Fully featured Demo Scene
   - Set up like a game level including a variety of objects, weapons and quests
@@ -64,5 +64,6 @@ COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [
 - About the game assets under the COGITO/assets folder:
   - 3D models are by Kenney (https://www.kenney.nl/) or made by me.
   - Audio is either by Kenney or from freesound.org used under CC0 or MIT license
+  - Water feature sound is by poyekhali from freesound.org used under CC3.0 license.
   - Cloud HDR (kloofendal_48d_partly_cloudy_puresky)2k.hdr by Greg Zaal, used under CC0.
   - All other included assets either made by me or one of the contributors, published under MIT.
