@@ -23,9 +23,6 @@ var config = ConfigFile.new()
 var render_resolution : Vector2i
 var render_scale_val : float
 
-# Need to store this while player drags the slider
-var temp_gui_scale_value = null
-
 # Array to set window modes.
 const WINDOW_MODE_ARRAY : Array[String] = [
 	"Full screen",
@@ -35,7 +32,7 @@ const WINDOW_MODE_ARRAY : Array[String] = [
 ]
 
 
-const RESOUTION_DICTIONARY : Dictionary = {
+const RESOLUTION_DICTIONARY : Dictionary = {
 	"1280x720 (16:9)" : Vector2i(1280,720),
 	"1280x800 (16:10)" : Vector2i(1280,800),
 	"1366x768 (16:9)" : Vector2i(1366,768),
@@ -70,7 +67,7 @@ func add_window_mode_items() -> void:
 		
 # Adding resolutions to the resolution button.
 func add_resolution_items() -> void:
-	for resolution_text in RESOUTION_DICTIONARY:
+	for resolution_text in RESOLUTION_DICTIONARY:
 		resolution_option_button.add_item(resolution_text)
 
 
@@ -95,7 +92,7 @@ func refresh_render():
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
-	render_resolution = RESOUTION_DICTIONARY.values()[index]
+	render_resolution = RESOLUTION_DICTIONARY.values()[index]
 	refresh_render()
 	get_window().size = render_resolution
 
@@ -136,15 +133,12 @@ func load_options():
 	if err != 0:
 		print("Loading options config failed. Using defaults.")
 	
-	# Set in Project Settings
-	var default_gui_scale = get_viewport().scaling_3d_scale
-	
 	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
 	var music_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1)
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
-	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, default_gui_scale)
+	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -153,10 +147,11 @@ func load_options():
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
 	render_scale_slider.value = render_scale
-	
 	render_scale_val = render_scale
+	
 	gui_scale_slider.value = gui_scale
-	render_scale_current_value_label.text = str(gui_scale)
+	gui_scale_current_value_label.text = str(gui_scale)
+	apply_gui_scale_value()
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
@@ -183,19 +178,16 @@ func _on_render_scale_slider_value_changed(value):
 
 
 func _on_gui_scale_slider_value_changed(value):
-	temp_gui_scale_value = value
+	gui_scale_current_value_label.text = str(value)
 
 	
 func _on_gui_scale_slider_drag_ended(value_changed):
-	apply_temp_gui_scale_value()
+	apply_gui_scale_value()
 
 # TODO: Apply changes if the slider is clicked but not dragged
-
-func apply_temp_gui_scale_value():
-	if temp_gui_scale_value != null:
-		get_viewport().content_scale_factor = temp_gui_scale_value
-		gui_scale_current_value_label.text = str(temp_gui_scale_value)
-		temp_gui_scale_value = null
+func apply_gui_scale_value():
+	get_viewport().content_scale_factor = gui_scale_slider.value
+	gui_scale_current_value_label.text = str(gui_scale_slider.value)
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
@@ -232,5 +224,6 @@ func _on_apply_changes_pressed() -> void:
 	save_options()
 	options_updated.emit()
 
-
-
+func _on_tab_menu_resume():
+	# reload options
+	load_options.call_deferred()
