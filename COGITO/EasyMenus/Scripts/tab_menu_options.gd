@@ -8,6 +8,8 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 @onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
 @onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
 @onready var render_scale_slider: HSlider = %RenderScaleSlider
+@onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
+@onready var gui_scale_slider: HSlider = %GUIScaleSlider
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
@@ -20,6 +22,9 @@ var music_bus_index
 var config = ConfigFile.new()
 var render_resolution : Vector2i
 var render_scale_val : float
+
+# Need to store this while player drags the slider
+var temp_gui_scale_value = null
 
 # Array to set window modes.
 const WINDOW_MODE_ARRAY : Array[String] = [
@@ -117,6 +122,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
+	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, anti_aliasing_2d_option_button.get_selected_id())
@@ -130,11 +136,15 @@ func load_options():
 	if err != 0:
 		print("Loading options config failed. Using defaults.")
 	
+	# Set in Project Settings
+	var default_gui_scale = get_viewport().scaling_3d_scale
+	
 	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
 	var music_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1)
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
+	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, default_gui_scale)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -143,7 +153,10 @@ func load_options():
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
 	render_scale_slider.value = render_scale
+	
 	render_scale_val = render_scale
+	gui_scale_slider.value = gui_scale
+	render_scale_current_value_label.text = str(gui_scale)
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
@@ -167,6 +180,22 @@ func _on_render_scale_slider_value_changed(value):
 	render_scale_val = value
 	render_scale_current_value_label.text = str(value)
 	refresh_render()
+
+
+func _on_gui_scale_slider_value_changed(value):
+	temp_gui_scale_value = value
+
+	
+func _on_gui_scale_slider_drag_ended(value_changed):
+	apply_temp_gui_scale_value()
+
+# TODO: Apply changes if the slider is clicked but not dragged
+
+func apply_temp_gui_scale_value():
+	if temp_gui_scale_value != null:
+		get_viewport().content_scale_factor = temp_gui_scale_value
+		gui_scale_current_value_label.text = str(temp_gui_scale_value)
+		temp_gui_scale_value = null
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
@@ -202,3 +231,6 @@ func set_msaa(mode, index):
 func _on_apply_changes_pressed() -> void:
 	save_options()
 	options_updated.emit()
+
+
+

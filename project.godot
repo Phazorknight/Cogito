@@ -31,6 +31,8 @@ CogitoQuestManager="*res://COGITO/QuestSystemPD/CogitoQuestManager.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/initial_position_type=3
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 
