@@ -1,4 +1,5 @@
 extends Control
+class_name TabMenuOptions
 signal options_updated
 
 const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd")
@@ -7,6 +8,8 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 @onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
 @onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
 @onready var render_scale_slider: HSlider = %RenderScaleSlider
+@onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
+@onready var gui_scale_slider: HSlider = %GUIScaleSlider
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
@@ -17,6 +20,8 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 var sfx_bus_index
 var music_bus_index
 var config = ConfigFile.new()
+var render_resolution : Vector2i
+var render_scale_val : float
 
 # Array to set window modes.
 const WINDOW_MODE_ARRAY : Array[String] = [
@@ -27,7 +32,7 @@ const WINDOW_MODE_ARRAY : Array[String] = [
 ]
 
 
-const RESOUTION_DICTIONARY : Dictionary = {
+const RESOLUTION_DICTIONARY : Dictionary = {
 	"1280x720 (16:9)" : Vector2i(1280,720),
 	"1280x800 (16:10)" : Vector2i(1280,800),
 	"1366x768 (16:9)" : Vector2i(1366,768),
@@ -62,7 +67,7 @@ func add_window_mode_items() -> void:
 		
 # Adding resolutions to the resolution button.
 func add_resolution_items() -> void:
-	for resolution_text in RESOUTION_DICTIONARY:
+	for resolution_text in RESOLUTION_DICTIONARY:
 		resolution_option_button.add_item(resolution_text)
 
 
@@ -81,11 +86,15 @@ func on_window_mode_selected(index: int) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 
+func refresh_render():
+	get_window().content_scale_size = render_resolution
+	get_window().scaling_3d_scale = render_scale_val
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
-	DisplayServer.window_set_size(RESOUTION_DICTIONARY.values()[index])
-
+	render_resolution = RESOLUTION_DICTIONARY.values()[index]
+	refresh_render()
+	get_window().size = render_resolution
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
@@ -110,6 +119,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
+	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, anti_aliasing_2d_option_button.get_selected_id())
@@ -128,6 +138,7 @@ func load_options():
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
+	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -136,6 +147,11 @@ func load_options():
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
 	render_scale_slider.value = render_scale
+	render_scale_val = render_scale
+	
+	gui_scale_slider.value = gui_scale
+	gui_scale_current_value_label.text = str(gui_scale)
+	apply_gui_scale_value()
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
@@ -156,8 +172,22 @@ func load_options():
 
 
 func _on_render_scale_slider_value_changed(value):
-	get_viewport().scaling_3d_scale = value
+	render_scale_val = value
 	render_scale_current_value_label.text = str(value)
+	refresh_render()
+
+
+func _on_gui_scale_slider_value_changed(value):
+	gui_scale_current_value_label.text = str(value)
+
+	
+func _on_gui_scale_slider_drag_ended(value_changed):
+	apply_gui_scale_value()
+
+# TODO: Apply changes if the slider is clicked but not dragged
+func apply_gui_scale_value():
+	get_viewport().content_scale_factor = gui_scale_slider.value
+	gui_scale_current_value_label.text = str(gui_scale_slider.value)
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
@@ -193,3 +223,7 @@ func set_msaa(mode, index):
 func _on_apply_changes_pressed() -> void:
 	save_options()
 	options_updated.emit()
+
+func _on_tab_menu_resume():
+	# reload options
+	load_options.call_deferred()
