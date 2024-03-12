@@ -1,4 +1,5 @@
 extends Control
+class_name TabMenuOptions
 signal options_updated
 
 const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd")
@@ -17,6 +18,8 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 var sfx_bus_index
 var music_bus_index
 var config = ConfigFile.new()
+var render_resolution : Vector2i
+var render_scale_val : float
 
 # Array to set window modes.
 const WINDOW_MODE_ARRAY : Array[String] = [
@@ -81,11 +84,15 @@ func on_window_mode_selected(index: int) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 
+func refresh_render():
+	get_window().content_scale_size = render_resolution
+	get_window().scaling_3d_scale = render_scale_val
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
-	DisplayServer.window_set_size(RESOUTION_DICTIONARY.values()[index])
-
+	render_resolution = RESOUTION_DICTIONARY.values()[index]
+	refresh_render()
+	get_window().size = render_resolution
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
@@ -136,6 +143,7 @@ func load_options():
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
 	render_scale_slider.value = render_scale
+	render_scale_val = render_scale
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
@@ -156,8 +164,9 @@ func load_options():
 
 
 func _on_render_scale_slider_value_changed(value):
-	get_viewport().scaling_3d_scale = value
+	render_scale_val = value
 	render_scale_current_value_label.text = str(value)
+	refresh_render()
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
