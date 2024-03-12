@@ -60,8 +60,8 @@ func _process(_delta):
 			is_reset = true
 		
 	# VECTOR 3 for where the player is currently looking
-	var dir = (carryable_position.get_global_transform().origin - get_global_transform().origin).normalized()
-	look_vector = dir
+	#var dir = (carryable_position.get_global_transform().origin - get_global_transform().origin).normalized()
+	#look_vector = dir
 
 
 func interactive_object_enter(detected_object:Node3D):

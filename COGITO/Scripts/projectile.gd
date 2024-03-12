@@ -20,11 +20,8 @@ func on_timeout():
 	queue_free()
 
 
-func _on_body_entered(body):
-	if body is HitboxComponent:
-		print(self, " _on_body_entered: ", body)
-		body.damage(damage_amount)
+func _on_body_entered(collider):
+	if collider is CogitoObject:
+		collider.damage_received.emit(damage_amount)
 		if destroy_on_impact:
 			queue_free()
-	if destroy_on_impact:
-		queue_free()

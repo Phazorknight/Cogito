@@ -113,8 +113,8 @@ func hit_scan_collision(collision_point):
 
 
 func hit_scan_damage(collider):
-	if collider is HitboxComponent:
-		collider.damage(item_reference.wieldable_damage)
+	if collider is CogitoObject:
+		collider.damage_received.emit(item_reference.wieldable_damage)
 
 
 # Function called when wieldable reload is attempted

@@ -2,12 +2,20 @@
 extends Node3D
 class_name CogitoObject
 
+signal damage_received(damage_value:float)
+
 var interaction_nodes : Array[Node]
 
 func _ready():
 	self.add_to_group("interactable")
 	self.add_to_group("Persist") #Adding object to group for persistence
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
+
+
+# Future method to set object state when a scene state file is loaded.
+func set_state():	
+	#TODO: Find a way to possibly save health of health attribute.
+	pass
 
 
 # Function to handle persistence and saving

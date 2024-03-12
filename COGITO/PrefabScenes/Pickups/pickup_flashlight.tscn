@@ -34,12 +34,9 @@ script = ExtResource("1_p4i4k")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_n5am4")]
 slot_data = SubResource("Resource_frpox")
-input_map_action = "interact"
-interaction_text = "Pick up"
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_fvuvi")]
-input_map_action = "interact2"
-interaction_text = "Carry"
+carry_distance_offset = -0.5
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0541318, 0, 0)
