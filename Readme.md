@@ -52,7 +52,7 @@ COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [
 
 - Player controller is based on Like475's First Person Controller Advanced: https://github.com/Like475/fpc-godot
 - Menus are based on SavoVuksan's EasyMenus (also see this link for documentation): https://github.com/SavoVuksan/EasyMenus
-- Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC
+- Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC1s
 - InputHelper by Nathan Hoad (also see this link for documentation): https://github.com/nathanhoad/godot_input_helper
 - QuickAudio by Bryce Dixon (https://github.com/BtheDestroyer/Godot_QuickAudio)
 - Stairs handling based on GodotStairs by elvisish (https://github.com/elvisish/GodotStairs)
