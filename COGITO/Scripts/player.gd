@@ -100,12 +100,12 @@ const WALL_MARGIN : float = 0.001
 
 @export_group("Ladder Handling")
 var on_ladder : bool = false
-@export var CAN_SPRINT_ON_LADDER = false
+@export var CAN_SPRINT_ON_LADDER : bool = false
 @export var LADDER_SPEED : float = 2.0
 @export var LADDER_SPRINT_SPEED : float = 3.3
 @export var LADDER_COOLDOWN : float = 0.5
-const LADDER_JUMP_SCALE = 0.5
-var ladder_on_cooldown = false
+const LADDER_JUMP_SCALE : float = 0.5
+var ladder_on_cooldown : bool = false
 
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
