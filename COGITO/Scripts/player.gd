@@ -103,7 +103,9 @@ var on_ladder : bool = false
 @export var CAN_SPRINT_ON_LADDER = false
 @export var LADDER_SPEED : float = 2.0
 @export var LADDER_SPRINT_SPEED : float = 3.3
-const LADDER_JUMP_SCALE : float = 0.5
+@export var LADDER_COOLDOWN : float = 0.5
+const LADDER_JUMP_SCALE = 0.5
+var ladder_on_cooldown = false
 
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
@@ -287,6 +289,9 @@ func params(transform3d, motion):
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 	return PhysicsServer3D.body_test_motion(self_rid, params(transform3d, motion), test_motion_result)	
 
+func ladder_buffer_finished():
+	ladder_on_cooldown = false
+
 func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	# called by ladder_area.gd
 	
@@ -298,6 +303,9 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 		var offset = (global_position - ladder.global_position)
 		if offset.dot(ladderDir) < -0.1:
 			global_translate(ladderDir*offset.length()/4.0)
+		var ladder_timer = get_tree().create_timer(LADDER_COOLDOWN)
+		ladder_timer.timeout.connect(ladder_buffer_finished)
+		ladder_on_cooldown = true
 		on_ladder = true
 		return
 	
@@ -350,7 +358,7 @@ func _process_on_ladder(_delta):
 	move_and_slide()
 	
 	#Step off ladder when on ground
-	if is_on_floor():
+	if is_on_floor() and not ladder_on_cooldown:
 		on_ladder = false
 
 var jumped_from_slide = false
