@@ -55,7 +55,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)
 shape = SubResource("BoxShape3D_rj7xk")
 
 [node name="ladder" type="StaticBody3D" parent="."]
-process_mode = 1
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="generated(Clone)" type="MeshInstance3D" parent="ladder"]
@@ -66,4 +65,3 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ladder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00152588, -0.0832032, 0)
 shape = SubResource("BoxShape3D_xagqk")
-disabled = true
