@@ -9,13 +9,17 @@ var interaction_nodes : Array[Node]
 func _ready():
 	self.add_to_group("interactable")
 	self.add_to_group("Persist") #Adding object to group for persistence
-	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
+	find_interaction_nodes()
 
 
 # Future method to set object state when a scene state file is loaded.
 func set_state():	
 	#TODO: Find a way to possibly save health of health attribute.
 	pass
+
+
+func find_interaction_nodes():
+	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 
 
 # Function to handle persistence and saving
