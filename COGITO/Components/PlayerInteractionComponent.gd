@@ -269,7 +269,7 @@ func send_hint(hint_icon,hint_text):
 
 # This gets a world space collision point of whatever the camera is pointed at, depending on the equipped wieldable range.
 func Get_Camera_Collision() -> Vector3:
-	var viewport = get_viewport().get_size()
+	var viewport = get_viewport().get_visible_rect().size
 	var camera = get_viewport().get_camera_3d()
 	
 	var Ray_Origin = camera.project_ray_origin(viewport/2)
