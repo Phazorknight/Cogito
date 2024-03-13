@@ -214,13 +214,14 @@ func _on_restart_button_pressed():
 
 
 # On Inventory UI Item Drop
-func _on_inventory_interface_drop_slot_data(slot_data):
+func _on_inventory_interface_drop_slot_data(slot_data: InventorySlotPD):
 	var scene_to_drop = load(slot_data.inventory_item.drop_scene)
 	Audio.play_sound(slot_data.inventory_item.sound_drop)
 	var dropped_item = scene_to_drop.instantiate()
 	dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(item_drop_distance_offset)
+	dropped_item.find_interaction_nodes()
 	for node in dropped_item.interaction_nodes:
-		if node is PickupComponent:
+		if node.has_method("get_item_type"):
 			node.slot_data = slot_data
 
 	get_parent().add_child(dropped_item)
