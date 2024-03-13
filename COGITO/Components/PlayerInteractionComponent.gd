@@ -35,13 +35,16 @@ var is_changing_wieldables : bool = false #Used to avoid any input acitons while
 var equipped_wieldable_item = null
 var equipped_wieldable_node = null
 var is_wielding : bool
-
+var player_rid
 
 func _ready():
 	#for node in wieldable_nodes:
 		#node.hide()
 	object_detected = false
 
+func exclude_player(rid : RID):
+	player_rid = rid
+	interaction_raycast.add_exception_rid(rid)
 
 func _process(_delta):
 	# when carrying object, disable all other prompts.
@@ -273,6 +276,7 @@ func Get_Camera_Collision() -> Vector3:
 	var Ray_End = Ray_Origin + camera.project_ray_normal(viewport/2)*equipped_wieldable_item.wieldable_range
 	
 	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
+	New_Intersection.exclude = [player_rid]
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
 	
 	if not Intersection.is_empty():
