@@ -139,6 +139,7 @@ func _ready():
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Neck/Head/Eyes/Camera/InteractionRaycast
+	player_interaction_component.exclude_player(get_rid())
 	
 	randomize() 
 	
