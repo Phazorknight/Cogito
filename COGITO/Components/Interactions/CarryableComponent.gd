@@ -56,6 +56,9 @@ func _on_body_entered(body):
 	if body.is_in_group("Player") and is_being_carried:
 		leave()
 
+func _exit_tree():
+	if is_being_carried:
+		leave()
 
 func hold():
 	if lock_rotation_when_carried:
@@ -74,8 +77,9 @@ func hold():
 func leave():
 	if lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(false)
-	player_interaction_component.stop_carrying()
-	player_interaction_component.interaction_raycast.remove_exception(parent_object)
+	if player_interaction_component and is_instance_valid(player_interaction_component):
+		player_interaction_component.stop_carrying()
+		player_interaction_component.interaction_raycast.remove_exception(parent_object)
 	is_being_carried = false
 
 
