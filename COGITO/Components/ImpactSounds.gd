@@ -9,7 +9,7 @@ class_name ImpactSounds
 ## Forced delay between impact times (in seconds).
 @export var next_impact_time : float = 0.3
 
-var time_passed : float
+var is_delaying : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,13 +22,12 @@ func _ready() -> void:
 
 
 func _on_parent_node_collision(_collided_node):
-	if !audio_stream_player_3d.playing and time_passed == 0:
+	if !audio_stream_player_3d.playing and !is_delaying:
 		audio_stream_player_3d.play()
-		time_passed = next_impact_time
+		impact_time_delay()
 
 
-func _physics_process(delta: float) -> void:
-	if time_passed > 0:
-		time_passed -= delta
-	else:
-		time_passed = 0
+func impact_time_delay():
+	is_delaying = true
+	await get_tree().create_timer(next_impact_time).timeout
+	is_delaying = false

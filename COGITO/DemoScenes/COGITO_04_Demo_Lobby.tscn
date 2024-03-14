@@ -121,7 +121,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_sxxrl"]
+[sub_resource type="Resource" id="Resource_004fk"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[ExtResource("33_lg13i")]([null, null, null, null, null, null, null, null])
@@ -3222,7 +3222,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_sxxrl")
+inventory_data = SubResource("Resource_004fk")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
