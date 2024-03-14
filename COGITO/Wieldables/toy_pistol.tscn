@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgtjml2t3hdvx"]
+[gd_scene load_steps=11 format=3 uid="uid://dgtjml2t3hdvx"]
 
 [ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Pistol.gd" id="1_b1v5k"]
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://COGITO/PrefabScenes/projectile_pistol.tscn" id="2_l6tt4"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://COGITO/Assets/Audio/Kenney/error_004.ogg" id="3_vdfq8"]
 [ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://COGITO/InventoryPD/Items/Cogito_Pistol.tres" id="4_xoq73"]
 [ext_resource type="AnimationLibrary" uid="uid://bbnpn3wqqoj7l" path="res://COGITO/Animations/Wieldables/Wieldable_ToyPistol.res" id="5_fkf6b"]
+[ext_resource type="PackedScene" uid="uid://bs7nt8mf1kqk7" path="res://COGITO/Wieldables/ViewmodelBasePrefab.tscn" id="5_ulobf"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_r6lnb"]
 _data = PackedByteArray(2, 0, 0, 0, 5, 0, 0, 0, 4, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 2, 0, 0, 0, 115, 66, 19, 0, 77, 0, 72, 115, 204, 0, 0, 0, 209, 226, 4, 0, 0, 1, 0, 0, 1, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 77, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 0, 8, 0, 2, 0, 2, 0, 169, 0, 0, 0, 64, 0, 0, 0, 56, 181, 0, 0, 0, 1, 1, 4, 0, 4, 0, 1, 0, 1, 0, 233, 0, 0, 0, 16, 0, 0, 0, 200, 214, 0, 0, 0, 2, 1, 2, 0, 2, 0, 1, 0, 1, 0, 249, 0, 0, 0, 16, 0, 0, 0, 172, 110, 0, 0, 0, 3, 1, 1, 0, 1, 0, 1, 0, 1, 0, 9, 1, 0, 0, 16, 0, 0, 0, 6, 136, 183, 185, 185, 185, 25, 93, 107, 1, 0, 0, 0, 0, 0, 0, 0, 0, 183, 185, 185, 185, 25, 93, 107, 1, 0, 0, 0, 0, 0, 0, 0, 0, 8, 93, 129, 224, 4, 29, 157, 85, 72, 68, 68, 68, 55, 222, 22, 247, 8, 108, 145, 99, 148, 156, 158, 85, 0, 0, 0, 0, 26, 15, 141, 171, 176, 20, 161, 81, 28, 158, 158, 94, 0, 0, 0, 0, 0, 0, 243, 230, 80, 193, 136, 65, 222, 222, 95, 223, 0, 0, 127, 119, 127, 119, 127, 119, 119, 247, 182, 86, 59, 182, 181, 2, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -57,16 +58,18 @@ projectile_velocity = 50.0
 default_position = Vector3(0.329, -0.264, -0.535)
 sound_primary_use = ExtResource("3_vdfq8")
 item_reference = ExtResource("4_xoq73")
-wieldable_mesh = NodePath("ToyPistol_mesh")
+wieldable_mesh = NodePath("ViewmodelBase/ToyPistol_mesh")
 anim_equip = "ToyPistol/equip"
 anim_unequip = "ToyPistol/unequip"
 anim_action_primary = "ToyPistol/shoot"
 anim_action_secondary = "ToyPistol/action_secondary"
 anim_reload = "ToyPistol/reload"
 
-[node name="ToyPistol_mesh" type="Node3D" parent="."]
+[node name="ViewmodelBase" parent="." instance=ExtResource("5_ulobf")]
 
-[node name="pistol_mesh" type="MeshInstance3D" parent="ToyPistol_mesh"]
+[node name="ToyPistol_mesh" type="Node3D" parent="ViewmodelBase"]
+
+[node name="pistol_mesh" type="MeshInstance3D" parent="ViewmodelBase/ToyPistol_mesh"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 mesh = SubResource("ArrayMesh_gjvni")
 skeleton = NodePath("")
@@ -75,6 +78,7 @@ skeleton = NodePath("")
 bus = &"SFX"
 
 [node name="Bullet_Point" type="Node3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, -1.81899e-12, 0, 1, 0, 0, 0, 1, 0.277335, 0.0601448, 0.00182778)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

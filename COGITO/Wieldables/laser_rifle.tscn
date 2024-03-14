@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://bb8pm2nk8hwon"]
+[gd_scene load_steps=21 format=3 uid="uid://bb8pm2nk8hwon"]
 
 [ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_LaserRifle.gd" id="1_2rut3"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://COGITO/Assets/Audio/Kenney/error_004.ogg" id="2_f7ale"]
 [ext_resource type="Resource" uid="uid://txiu5yxexevm" path="res://COGITO/InventoryPD/Items/Cogito_LaserRifle.tres" id="2_i0fx0"]
 [ext_resource type="PackedScene" uid="uid://dnauxhdncgngx" path="res://COGITO/PrefabScenes/laser_ray.tscn" id="2_ic084"]
 [ext_resource type="AnimationLibrary" uid="uid://c1du0rcgmr542" path="res://COGITO/Animations/Wieldables/Wieldable_LaserRifle.res" id="3_fjq23"]
+[ext_resource type="PackedScene" uid="uid://bs7nt8mf1kqk7" path="res://COGITO/Wieldables/ViewmodelBasePrefab.tscn" id="5_ju25o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g84md"]
 resource_name = "metal"
@@ -226,7 +227,7 @@ length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("LaserRifleMesh/clipA:position:x")
+tracks/0/path = NodePath("ViewmodelBasePrefab/LaserRifleMesh/clipA:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -237,7 +238,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("LaserRifleMesh/clipA:position:y")
+tracks/1/path = NodePath("ViewmodelBasePrefab/LaserRifleMesh/clipA:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -248,7 +249,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("LaserRifleMesh/clipA:position:z")
+tracks/2/path = NodePath("ViewmodelBasePrefab/LaserRifleMesh/clipA:position:z")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -270,7 +271,7 @@ ray_lifespan = 3.0
 default_position = Vector3(0.329, -0.264, -0.535)
 sound_primary_use = ExtResource("2_f7ale")
 item_reference = ExtResource("2_i0fx0")
-wieldable_mesh = NodePath("LaserRifleMesh")
+wieldable_mesh = NodePath("ViewmodelBasePrefab/LaserRifleMesh")
 anim_equip = "LaserRifle/equip"
 anim_unequip = "LaserRifle/unequip"
 anim_action_primary = "LaserRifle/shoot"
@@ -280,17 +281,20 @@ anim_reload = "LaserRifle/reload"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0083878, 0, 0)
 bus = &"SFX"
 
-[node name="LaserRifleMesh" type="Node3D" parent="."]
+[node name="ViewmodelBasePrefab" parent="." instance=ExtResource("5_ju25o")]
 
-[node name="blasterA" type="MeshInstance3D" parent="LaserRifleMesh"]
+[node name="LaserRifleMesh" type="Node3D" parent="ViewmodelBasePrefab"]
+
+[node name="blasterA" type="MeshInstance3D" parent="ViewmodelBasePrefab/LaserRifleMesh"]
 transform = Transform3D(-0.8, 0, 1.20797e-07, 0, 0.8, 0, -1.20797e-07, 0, -0.8, 0, 0, 0)
 mesh = SubResource("ArrayMesh_us24q")
 skeleton = NodePath("")
 
-[node name="Bullet_Point" type="Node3D" parent="LaserRifleMesh"]
+[node name="Bullet_Point" type="Node3D" parent="ViewmodelBasePrefab/LaserRifleMesh"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, -1.81899e-12, 0, 1, 0, 0, 0, 1, 0.00251591, 0.0906586, -0.331559)
 
-[node name="clipA" type="MeshInstance3D" parent="LaserRifleMesh"]
+[node name="clipA" type="MeshInstance3D" parent="ViewmodelBasePrefab/LaserRifleMesh"]
 transform = Transform3D(-1, -6.0536e-09, 1.3411e-07, -5.12227e-09, 1, 0, -1.49012e-07, 1.86265e-09, -1, 0, -0.1, -0.164193)
 mesh = SubResource("ArrayMesh_7s5kr")
 skeleton = NodePath("")
