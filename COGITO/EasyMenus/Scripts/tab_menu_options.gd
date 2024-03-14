@@ -221,6 +221,7 @@ func set_msaa(mode, index):
 
 
 func _on_apply_changes_pressed() -> void:
+	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
 	save_options()
 	options_updated.emit()
 

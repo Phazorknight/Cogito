@@ -44,7 +44,7 @@ albedo_color = Color(0.815686, 1, 1, 0.196078)
 height = 0.4
 radius = 0.15
 
-[sub_resource type="Resource" id="Resource_h1qqu"]
+[sub_resource type="Resource" id="Resource_fdmg6"]
 resource_local_to_scene = true
 script = ExtResource("2_4pii1")
 inventory_item = ExtResource("2_j2eoi")
@@ -96,7 +96,7 @@ visible = false
 shape = SubResource("CylinderShape3D_tvmxx")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_u4d3q")]
-slot_data = SubResource("Resource_h1qqu")
+slot_data = SubResource("Resource_fdmg6")
 
 [node name="ImpactSounds" parent="." instance=ExtResource("5_r4r7l")]
 impact_sounds = SubResource("AudioStreamRandomizer_qu2a1")

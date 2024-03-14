@@ -72,6 +72,6 @@ func reload():
 	print("Pickaxe doesn't need to reload.")
 
 
-func _on_body_entered(body):
-	if body is HitboxComponent:
-		body.damage(item_reference.wieldable_damage)
+func _on_body_entered(collider):
+	if collider is CogitoObject:
+		collider.damage_received.emit(item_reference.wieldable_damage)

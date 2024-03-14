@@ -1,4 +1,4 @@
-[gd_scene load_steps=351 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=352 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -121,7 +121,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_004fk"]
+[sub_resource type="Resource" id="Resource_ms1cc"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[ExtResource("33_lg13i")]([null, null, null, null, null, null, null, null])
@@ -3185,6 +3185,9 @@ shader_parameter/time_scale = 0.025
 shader_parameter/texture_normal = SubResource("NoiseTexture2D_xty2f")
 shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_acxul")
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lqpxh"]
+data = PackedVector3Array(0.6507, 1.2298, -0.0446, 0.6507, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 1.2298, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.0691, 0.6507, 1.2298, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 0.0984, -0.0691, 0.6507, 1.2298, -0.0691, 0.6507, 1.2298, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 1.2298, -0.02, 0.0984, 1.2298, -0.02, 0.6507, 1.2298, -0.02, 0.6507, 1.2298, -0.0446, 0.0984, 1.2298, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.0691, 0.6507, 1.2298, -0.0691, 0.0984, 1.2298, -0.0691, 0.0984, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.02, 0.0984, 1.2298, -0.02, 0.0984, 1.2298, -0.02, 0.0984, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0691, 0.0984, 0.0984, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 1.2298, -0.0691, 0.0984, 0.0984, -0.0691, 0.6507, 0.0984, -0.02, 0.0984, 0.0984, -0.02, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0691, 0.0984, 0.0984, -0.0691, 0.6507, 0.0984, -0.0691, 0.6507, 0.0984, -0.0446, 0.7492, 0, -0.0691, 0.7492, 0, -0.02, 0.7492, 1.3282, -0.02, 0.7492, 1.3282, -0.02, 0.7492, 1.3282, -0.0691, 0.7492, 0, -0.0691, 0.7492, 1.3282, -0.02, 0, 1.3282, -0.02, 0, 1.3282, -0.0691, 0, 1.3282, -0.0691, 0.7492, 1.3282, -0.0691, 0.7492, 1.3282, -0.02, 0, 0, -0.0691, 0.7492, 0, -0.0691, 0.0984, 0.0984, -0.0691, 0.0984, 0.0984, -0.0691, 0, 1.3282, -0.0691, 0, 0, -0.0691, 0.0984, 0.0984, -0.0691, 0.0984, 1.2298, -0.0691, 0, 1.3282, -0.0691, 0.0984, 1.2298, -0.0691, 0.6507, 1.2298, -0.0691, 0, 1.3282, -0.0691, 0.6507, 0.0984, -0.0691, 0.0984, 0.0984, -0.0691, 0.7492, 0, -0.0691, 0.7492, 0, -0.0691, 0.7492, 1.3282, -0.0691, 0.6507, 0.0984, -0.0691, 0.7492, 1.3282, -0.0691, 0.6507, 1.2298, -0.0691, 0.6507, 0.0984, -0.0691, 0.7492, 1.3282, -0.0691, 0, 1.3282, -0.0691, 0.6507, 1.2298, -0.0691, 0.7492, 0, -0.02, 0, 0, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.02, 0.7492, 1.3282, -0.02, 0.7492, 0, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 1.2298, -0.02, 0.7492, 1.3282, -0.02, 0.6507, 1.2298, -0.02, 0.0984, 1.2298, -0.02, 0.7492, 1.3282, -0.02, 0.0984, 0.0984, -0.02, 0.6507, 0.0984, -0.02, 0, 0, -0.02, 0, 0, -0.02, 0, 1.3282, -0.02, 0.0984, 0.0984, -0.02, 0, 1.3282, -0.02, 0.0984, 1.2298, -0.02, 0.0984, 0.0984, -0.02, 0, 1.3282, -0.02, 0.7492, 1.3282, -0.02, 0.0984, 1.2298, -0.02, 0.7492, 0, -0.0691, 0, 0, -0.0691, 0, 0, -0.02, 0, 0, -0.02, 0.7492, 0, -0.02, 0.7492, 0, -0.0691, 0, 1.3282, -0.0691, 0, 1.3282, -0.02, 0, 0, -0.02, 0, 0, -0.02, 0, 0, -0.0691, 0, 1.3282, -0.0691)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqhpt"]
 transparency = 1
 blend_mode = 1
@@ -3222,7 +3225,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_004fk")
+inventory_data = SubResource("Resource_ms1cc")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -6783,10 +6786,10 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 [node name="kitchenFridgeContainer" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 inventory_data = SubResource("Resource_krl8u")
 
-[node name="InventoryCheckerWIN" parent="BREAK_ROOM/kitchenFridgeContainer" index="6" node_paths=PackedStringArray("container_to_check")]
+[node name="InventoryCheckerWIN" parent="BREAK_ROOM/kitchenFridgeContainer" index="8" node_paths=PackedStringArray("container_to_check")]
 container_to_check = NodePath("..")
 
-[node name="InventoryCheckerFAIL" parent="BREAK_ROOM/kitchenFridgeContainer" index="7" node_paths=PackedStringArray("container_to_check")]
+[node name="InventoryCheckerFAIL" parent="BREAK_ROOM/kitchenFridgeContainer" index="9" node_paths=PackedStringArray("container_to_check")]
 container_to_check = NodePath("..")
 
 [node name="kitchenMicrowave" parent="BREAK_ROOM" instance=ExtResource("43_rl17a")]
@@ -7405,13 +7408,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0534334, 0, 1.47072)
 [node name="KSI_ledge_painted_corner_double2" parent="WaterFeature" instance=ExtResource("83_igxpg")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.05343, 0, -1.14096)
 
-[node name="window2" type="MeshInstance3D" parent="WaterFeature"]
-transform = Transform3D(-1.6, 2.09815e-07, 2.08616e-07, 2.09815e-07, 1.6, 5.55204e-16, -2.08616e-07, 3.01981e-14, -1.6, 2.20634, 0.2, 0)
-mesh = SubResource("ArrayMesh_yswb2")
-skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_hqhpt")
-surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
-
 [node name="WaterImpact" parent="WaterFeature" instance=ExtResource("86_70b6h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65283, 0.706182, -0.151815)
 
@@ -7425,6 +7421,19 @@ volume_db = 16.0
 autoplay = true
 max_distance = 8.0
 bus = &"SFX"
+
+[node name="Waterfall_Frame" type="StaticBody3D" parent="WaterFeature"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WaterFeature/Waterfall_Frame"]
+transform = Transform3D(-1.6, 2.09815e-07, 2.08616e-07, 2.09815e-07, 1.6, 5.55204e-16, -2.08616e-07, 3.01981e-14, -1.6, 2.20634, 0.2, 4.76837e-07)
+shape = SubResource("ConcavePolygonShape3D_lqpxh")
+
+[node name="window2" type="MeshInstance3D" parent="WaterFeature/Waterfall_Frame"]
+transform = Transform3D(-1.6, 2.09815e-07, 2.08616e-07, 2.09815e-07, 1.6, 5.55204e-16, -2.08616e-07, 3.01981e-14, -1.6, 2.20634, 0.2, 4.76837e-07)
+mesh = SubResource("ArrayMesh_yswb2")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_hqhpt")
+surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
 
 [node name="KSI_steps_single" parent="." instance=ExtResource("88_u6glq")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.03513, -4.84288e-08, -3.98671)

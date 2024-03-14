@@ -833,8 +833,7 @@ player_hud = NodePath("../Player_HUD")
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_0c7yw")]
 player = NodePath("../Player")
 
-[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("4_vc32u")]
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+[node name="TabMenu" parent="." instance=ExtResource("4_vc32u")]
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -2756,7 +2755,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257
 transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
 
 [node name="barrel2" parent="." instance=ExtResource("31_c4s3c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.59885, -3.11525)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.0840335, -3.11525)
 
 [connection signal="pressed" from="SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="SHOOTING_RANGE/Spawnzone" method="_on_generic_button_pressed"]
 
