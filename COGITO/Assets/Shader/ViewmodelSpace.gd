@@ -1,7 +1,13 @@
+@tool
 extends ShaderSpace
 class_name ViewmodelSpace
+## This node will configure all meshes childed inside of it (recursively) to act without clipping through wall, useful for wieldable viewmodels to keep them in-front
+## 
+## Useful for viewmodels for wieldables. Can toggle the clipping behavior by setting `disable_viewmodel_clipping`
 
 var _viewmodel_clipping_disabled : bool = true
+
+## When this is checked, it will make it so any childed viewmodel will always be rendered in front of everything else
 @export var disable_viewmodel_clipping : bool = true:
 	get:
 		return _viewmodel_clipping_disabled

@@ -74,7 +74,8 @@ const shader_names = {
 }
 
 static func convert_to_shadermat(mat : StandardMaterial3D, injected_vars : String, injected_vertex : String):
-	var shader_mat = ShaderMaterial.new()
+	var shader_mat = ConvertedMaterial.new()
+	shader_mat.cache(mat)
 	shader_mat.shader = Shader.new()
 	shader_mat.shader.code = create_shader_code(mat, injected_vars, injected_vertex)
 	for property in shader_names:
