@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bp6xhd3rkh7tl" path="res://COGITO/InventoryPD/Items/Cogito_Pickaxe.tres" id="2_1ju5q"]
 [ext_resource type="AudioStream" uid="uid://ocm2blyfthyq" path="res://COGITO/Assets/Audio/Kenney/woosh1.ogg" id="2_hp6wh"]
 [ext_resource type="AnimationLibrary" uid="uid://da3y5068fwwbq" path="res://COGITO/Animations/Wieldables/Wieldable_Pickaxe.res" id="3_cqo2g"]
-[ext_resource type="PackedScene" uid="uid://bs7nt8mf1kqk7" path="res://COGITO/Wieldables/ViewmodelBasePrefab.tscn" id="4_exidd"]
+[ext_resource type="Script" path="res://COGITO/Assets/Shader/ViewmodelSpace.gd" id="4_0jrxw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_caeak"]
 resource_name = "wood"
@@ -76,25 +76,24 @@ size = Vector3(0.2, 0.2, 0.2)
 [node name="Pickaxe" type="Node3D" node_paths=PackedStringArray("damage_area", "wieldable_mesh")]
 transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.325805, -0.279839, -0.531526)
 script = ExtResource("1_hb7ed")
-damage_area = NodePath("ViewmodelBase/PickaxeMesh/DamageArea")
+damage_area = NodePath("PickaxeMesh/DamageArea")
 swing_sound = ExtResource("2_hp6wh")
 item_reference = ExtResource("2_1ju5q")
-wieldable_mesh = NodePath("ViewmodelBase/PickaxeMesh")
+wieldable_mesh = NodePath("PickaxeMesh")
 anim_action_primary = "swing"
 
-[node name="ViewmodelBase" parent="." instance=ExtResource("4_exidd")]
+[node name="PickaxeMesh" type="Node3D" parent="."]
+script = ExtResource("4_0jrxw")
 
-[node name="PickaxeMesh" type="Node3D" parent="ViewmodelBase"]
-
-[node name="toolPickaxe" type="MeshInstance3D" parent="ViewmodelBase/PickaxeMesh"]
+[node name="toolPickaxe" type="MeshInstance3D" parent="PickaxeMesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0414924, -0.1011, 1.49012e-07)
 mesh = SubResource("ArrayMesh_nn555")
 skeleton = NodePath("")
 
-[node name="DamageArea" type="Area3D" parent="ViewmodelBase/PickaxeMesh"]
+[node name="DamageArea" type="Area3D" parent="PickaxeMesh"]
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ViewmodelBase/PickaxeMesh/DamageArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickaxeMesh/DamageArea"]
 transform = Transform3D(1, 0, -5.13865e-11, 0, 1, 0, 5.13865e-11, 0, 1, 0.304825, 0.538461, 0.00173935)
 shape = SubResource("BoxShape3D_5dkwl")
 

@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bs7nt8mf1kqk7"]
-
-[ext_resource type="Script" path="res://COGITO/Assets/Shader/ShaderSpace.gd" id="1_2sdc5"]
-[ext_resource type="Shader" path="res://COGITO/Assets/Shader/viewmodel_shader.gdshader" id="2_68shv"]
-
-[node name="ViewmodelBase" type="Node3D"]
-script = ExtResource("1_2sdc5")
-shader_override_enabled = true
-shader_override = ExtResource("2_68shv")

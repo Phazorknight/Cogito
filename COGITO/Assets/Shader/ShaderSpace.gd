@@ -1,36 +1,18 @@
 extends Node3D
 class_name ShaderSpace
 
-var _shader_override_enabled : bool = false
-@export var shader_override_enabled : bool = false:
-	get:
-		return _shader_override_enabled
-	set(value):
-		set_override(value)
-@export var shader_override : Shader
 var tracked_nodes : Array[GeometryInstance3D] = []
-static var standard_properties : Array[String] = []
 
-func set_override(state : bool):
-	if shader_override:
-		_shader_override_enabled = state
-		for node in tracked_nodes:
-			node.set_instance_shader_parameter("viewmodel_enabled",_shader_override_enabled)
+var injected_vars : String
 
-static func get_standard_properties() -> Array[String]:
-	if not len(standard_properties):
-		for property in StandardMaterial3D.new().get_property_list():
-			standard_properties.push_back(property.name)
-	return standard_properties
-	
-# Called when the node enters the scene tree for the first time.
+var injected_vertex : String
+
 func _ready():
-	if not shader_override:
-		print("WARNING: No viewmodel shader set")
-		_shader_override_enabled = false
-		return
-	
 	convert_surfaces.call_deferred()
+
+func set_instance_shader_parameter(parameter_name : String, state : bool):
+	for node in tracked_nodes:
+		node.set_instance_shader_parameter(parameter_name,state)
 
 func convert_mesh(mesh : Mesh):
 	for surface in range(mesh.get_surface_count()):
@@ -47,7 +29,6 @@ func convert_children(node):
 				premat = node.mesh.surface_get_material(surface)
 			var newmat = convert_surface(premat)
 			node.set_surface_override_material(surface,newmat)
-			print(newmat)
 	elif node is CSGShape3D:
 		tracked_nodes.push_back(node)
 		for mesh in node.get_meshes():
@@ -65,13 +46,7 @@ func convert_surfaces():
 
 func convert_surface(mat : BaseMaterial3D):
 	if not mat is StandardMaterial3D:
-		print("WARNING: Cannot convert ", mat, " to viewmodel shader")
+		print("WARNING: Cannot convert ", mat, " to shader material")
 	else:
-		var newmaterial = ShaderMaterial.new()
-		newmaterial.shader = shader_override
-		for param in newmaterial.shader.get_shader_uniform_list():
-			if param.name in get_standard_properties():
-				var mat_version = mat.get(param.name)
-				if mat_version:
-					newmaterial.set_shader_parameter(param.name,mat_version)
+		var newmaterial = Material3DConversion.convert_to_shadermat(mat,injected_vars,injected_vertex)
 		return newmaterial

@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://dsp8iwkwq2rlu" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch1.ogg" id="2_dm0bj"]
 [ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="3_2q6j0"]
 [ext_resource type="AnimationLibrary" uid="uid://dtnyvbl2d4lxg" path="res://COGITO/Animations/Wieldables/Wieldable_Flashlight.res" id="4_sk1pk"]
-[ext_resource type="PackedScene" uid="uid://bs7nt8mf1kqk7" path="res://COGITO/Wieldables/ViewmodelBasePrefab.tscn" id="5_4euo3"]
+[ext_resource type="Script" path="res://COGITO/Assets/Shader/ViewmodelSpace.gd" id="5_kuso5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbp4w"]
 albedo_color = Color(0.0392157, 0.0431373, 0.0745098, 1)
@@ -23,7 +23,7 @@ script = ExtResource("1_pak3j")
 drain_rate = 4.0
 switch_sound = ExtResource("2_dm0bj")
 item_reference = ExtResource("3_2q6j0")
-wieldable_mesh = NodePath("ViewmodelBase/Flashlight_Mesh")
+wieldable_mesh = NodePath("Flashlight_Mesh")
 anim_equip = "Wieldable_Flashlight/equip"
 anim_unequip = "Wieldable_Flashlight/unequip"
 anim_action_primary = "Wieldable_Flashlight/action_primary"
@@ -44,24 +44,23 @@ libraries = {
 "Wieldable_Flashlight": ExtResource("4_sk1pk")
 }
 
-[node name="ViewmodelBase" parent="." instance=ExtResource("5_4euo3")]
-
-[node name="Flashlight_Mesh" type="Node3D" parent="ViewmodelBase"]
+[node name="Flashlight_Mesh" type="Node3D" parent="."]
 transform = Transform3D(0.876604, -0.477881, 0.0565254, 0.480703, 0.875017, -0.0571836, -0.0221337, 0.0772994, 0.996762, 0, 0.102331, 0)
+script = ExtResource("5_kuso5")
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="ViewmodelBase/Flashlight_Mesh"]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Flashlight_Mesh"]
 transform = Transform3D(-4.47035e-08, 1, 0, -1, -4.47035e-08, 0, 0, 2.84217e-14, 1, -0.0541318, 0, -2.98023e-08)
 radius = 0.05
 height = 0.3
 material = SubResource("StandardMaterial3D_lbp4w")
 
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="ViewmodelBase/Flashlight_Mesh"]
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Flashlight_Mesh"]
 transform = Transform3D(-4.47035e-08, 1, 0, -1, -4.47035e-08, 0, 0, 2.84217e-14, 1, 0.145868, 0, 0)
 radius = 0.06
 height = 0.1
 material = SubResource("StandardMaterial3D_lbp4w")
 
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="ViewmodelBase/Flashlight_Mesh"]
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Flashlight_Mesh"]
 transform = Transform3D(-4.47035e-08, 1, 0, -1, -4.47035e-08, 0, 0, 2.84217e-14, 1, 0.196543, 0, -2.98023e-08)
 radius = 0.05
 height = 0.01
