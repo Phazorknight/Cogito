@@ -14,17 +14,17 @@ COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [
 ## Current Features
 - First person player controller with:
   - Sprinting, jumping, crouching, sliding, stairs handling, ladder handling
-  - Fully customizable attributes like Health, Stamina, Visibility (for stealh) - Component based, so easy to add your own.
-  - Lots exposed properties to tweak to your liking (speeds, headbob, fall damage, bunnyhop, etc.)
-  - Easy to use dynamic footstep sound system
+  - Fully customizable attributes like Health, Stamina, Visibility (for stealth) - Component-based, so easy to add your own.
+  - Lots of exposed properties to tweak to your liking (speeds, headbob, fall damage, bunnyhop, etc.)
+  - Easy-to-use dynamic footstep sound system
 - Inventory System
-  - Flexible resource based inventories
+  - Flexible resource-based inventories
   - Inventory UI separate from inventory logic
   - Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)
   - Base class to easily add your custom item types
 - Interaction System
-  - Component based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
-  - Examples for interactive obects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
+  - Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
+  - Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
 - Quest System
 - Save and Load System as well as scene persistency
 - Full gamepad support!
@@ -52,7 +52,7 @@ COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [
 
 - Player controller is based on Like475's First Person Controller Advanced: https://github.com/Like475/fpc-godot
 - Menus are based on SavoVuksan's EasyMenus (also see this link for documentation): https://github.com/SavoVuksan/EasyMenus
-- Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC
+- Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC1s
 - InputHelper by Nathan Hoad (also see this link for documentation): https://github.com/nathanhoad/godot_input_helper
 - QuickAudio by Bryce Dixon (https://github.com/BtheDestroyer/Godot_QuickAudio)
 - Stairs handling based on GodotStairs by elvisish (https://github.com/elvisish/GodotStairs)

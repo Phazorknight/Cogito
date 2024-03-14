@@ -45,9 +45,10 @@ shadow_mesh = SubResource("ArrayMesh_s5jyy")
 [sub_resource type="BoxShape3D" id="BoxShape3D_xagqk"]
 size = Vector3(0.8, 3.03359, 0.1)
 
-[node name="Ladder" type="Area3D"]
+[node name="Ladder" type="Area3D" node_paths=PackedStringArray("ladder_collision")]
 transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -18.4395, 1.6, -4.87125)
 script = ExtResource("1_odht7")
+ladder_collision = NodePath("ladder")
 
 [node name="ladderArea" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0)

@@ -12,7 +12,6 @@ keep_compressed_buffer = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_arutm"]
 resource_name = "target"
-albedo_color = Color(1, 1, 1, 1)
 albedo_texture = SubResource("PortableCompressedTexture2D_gi6as")
 roughness = 0.5
 texture_filter = 0

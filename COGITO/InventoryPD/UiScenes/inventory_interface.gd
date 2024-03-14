@@ -176,8 +176,8 @@ func _on_gui_input(event):
 						print("Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data)
-						grabbed_slot_data = null
 						print("Dropping ", grabbed_slot_data)
+						grabbed_slot_data = null
 					
 				MOUSE_BUTTON_RIGHT:
 					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:

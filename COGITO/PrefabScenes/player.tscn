@@ -98,7 +98,7 @@ libraries = {
 
 [node name="InteractionRaycast" type="RayCast3D" parent="Neck/Head/Eyes/Camera"]
 target_position = Vector3(0, 0, -2.5)
-collision_mask = 2
+collision_mask = 3
 
 [node name="Wieldables" type="Node3D" parent="Neck/Head"]
 
@@ -126,14 +126,14 @@ footstep_material_library = ExtResource("18_q6u2l")
 [node name="FootstepTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="JumpCooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position", "wieldable_nodes") instance=ExtResource("13_rawn6")]
 interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
 carryable_position = NodePath("../CarryablePosition")
 wieldable_nodes = [NodePath("../Neck/Head/Wieldables/Flashlight"), NodePath("../Neck/Head/Wieldables/Toy Pistol"), NodePath("../Neck/Head/Wieldables/Laser Rifle"), NodePath("../Neck/Head/Wieldables/Pickaxe")]
-
-[node name="JumpCooldownTimer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
 
 [connection signal="animation_finished" from="Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]

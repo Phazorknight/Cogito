@@ -20,13 +20,15 @@ var parent_object
 var is_being_carried
 var player_interaction_component
 var carry_position : Vector3 #Position the carriable "floats towards".
- 
+
+
 func _ready():
 	parent_object = get_parent()
 	if parent_object.has_signal("body_entered"):
 		parent_object.body_entered.connect(_on_body_entered) #Connecting to body entered signal
 	else:
 		print(parent_object.name, ": CarriableComponent needs to be child to a RigidBody3D to work.")
+
 
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component
@@ -39,7 +41,7 @@ func interact(_player_interaction_component):
 		leave()
 	else:
 		hold()
-		player_interaction_component.started_carrying.emit(self)
+
 
 func _physics_process(_delta):
 	if is_being_carried:
@@ -54,11 +56,14 @@ func _on_body_entered(body):
 	if body.is_in_group("Player") and is_being_carried:
 		leave()
 
+func _exit_tree():
+	if is_being_carried:
+		leave()
 
 func hold():
 	if lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(true)
-	player_interaction_component.carried_object = self
+	player_interaction_component.start_carrying(self)
 	player_interaction_component.interaction_raycast.add_exception(parent_object)
 	
 	# Play Pick up sound.
@@ -68,12 +73,13 @@ func hold():
 	
 	is_being_carried = true
 
+
 func leave():
 	if lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(false)
-	player_interaction_component.carried_object = null
-	player_interaction_component.interaction_raycast.remove_exception(parent_object)
-	
+	if player_interaction_component and is_instance_valid(player_interaction_component):
+		player_interaction_component.stop_carrying()
+		player_interaction_component.interaction_raycast.remove_exception(parent_object)
 	is_being_carried = false
 
 
@@ -82,5 +88,4 @@ func throw(power):
 	if drop_sound:
 		audio_stream_player_3d.stream = drop_sound
 		audio_stream_player_3d.play()
-	parent_object.apply_central_impulse(player_interaction_component.look_vector * Vector3(power, power, power))
-
+	parent_object.apply_central_impulse(player_interaction_component.look_vector * Vector3(0, 0, power))

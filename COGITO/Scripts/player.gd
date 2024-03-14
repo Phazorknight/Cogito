@@ -56,29 +56,30 @@ var visibility_attribute : CogitoAttribute
 @export var crouch_volume_db : float = -60.0
 
 @export_group("Movement Properties")
-@export var JUMP_VELOCITY = 4.5
-@export var CROUCH_JUMP_VELOCITY = 3.0
-@export var WALKING_SPEED = 5.0
-@export var SPRINTING_SPEED = 8.0
-@export var CROUCHING_SPEED = 3.0
-@export var CROUCHING_DEPTH = -0.9
+@export var JUMP_VELOCITY : float= 4.5
+@export var CROUCH_JUMP_VELOCITY : float = 3.0
+@export var WALKING_SPEED : float = 5.0
+@export var SPRINTING_SPEED : float = 8.0
+@export var CROUCHING_SPEED : float = 3.0
+@export var CROUCHING_DEPTH : float = -0.9
 @export var CAN_CROUCH_JUMP = true
-@export var MOUSE_SENS = 0.25
-@export var LERP_SPEED = 10.0
-@export var AIR_LERP_SPEED = 6.0
-@export var FREE_LOOK_TILT_AMOUNT = 5.0
-@export var SLIDING_SPEED = 5.0
-@export var SLIDE_JUMP_MOD = 1.5
+@export var MOUSE_SENS : float = 0.25
+@export var LERP_SPEED : float = 10.0
+@export var AIR_LERP_SPEED : float = 6.0
+@export var FREE_LOOK_TILT_AMOUNT : float = 5.0
+@export var SLIDING_SPEED : float = 5.0
+@export var SLIDE_JUMP_MOD : float = 1.5
 
 @export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
-var WIGGLE_ON_WALKING_SPEED = 14.0
-var WIGGLE_ON_SPRINTING_SPEED = 22.0
-var WIGGLE_ON_CROUCHING_SPEED = 10.0
+var WIGGLE_ON_WALKING_SPEED : float = 14.0
+var WIGGLE_ON_SPRINTING_SPEED : float = 22.0
+var WIGGLE_ON_CROUCHING_SPEED : float = 10.0
 
-@export var WIGGLE_ON_WALKING_INTENSITY = 0.1
-@export var WIGGLE_ON_SPRINTING_INTENSITY = 0.2
-@export var WIGGLE_ON_CROUCHING_INTENSITY = 0.05
-@export var BUNNY_HOP_ACCELERATION = 0.1
+@export var WIGGLE_ON_WALKING_INTENSITY : float = 0.1
+@export var WIGGLE_ON_SPRINTING_INTENSITY : float = 0.2
+@export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.05
+@export var CAN_BUNNYHOP : bool = true
+@export var BUNNY_HOP_ACCELERATION : float = 0.1
 @export var INVERT_Y_AXIS : bool = true
 
 ## STAIR HANDLING STUFF
@@ -99,10 +100,12 @@ const WALL_MARGIN : float = 0.001
 
 @export_group("Ladder Handling")
 var on_ladder : bool = false
-@export var CAN_SPRINT_ON_LADDER = false
+@export var CAN_SPRINT_ON_LADDER : bool = false
 @export var LADDER_SPEED : float = 2.0
 @export var LADDER_SPRINT_SPEED : float = 3.3
-const LADDER_JUMP_SCALE = 0.5
+@export var LADDER_COOLDOWN : float = 0.5
+const LADDER_JUMP_SCALE : float = 0.5
+var ladder_on_cooldown : bool = false
 
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
@@ -116,21 +119,21 @@ var initial_carryable_height #DEPRECATED Used to change carryable position based
 
 var config = ConfigFile.new()
 
-var current_speed = 5.0
+var current_speed : float = 5.0
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var direction = Vector3.ZERO
-var is_walking = false
-var is_sprinting = false
-var is_crouching = false
-var is_free_looking = false
-var slide_vector = Vector2.ZERO
-var wiggle_vector = Vector2.ZERO
-var wiggle_index = 0.0
-var wiggle_current_intensity = 0.0
-var bunny_hop_speed = SPRINTING_SPEED
-var last_velocity = Vector3.ZERO
-var stand_after_roll = false
-var is_movement_paused = false
+var direction : Vector3 = Vector3.ZERO
+var is_walking : bool = false
+var is_sprinting : bool = false
+var is_crouching : bool = false
+var is_free_looking : bool  = false
+var slide_vector : Vector2 = Vector2.ZERO
+var wiggle_vector : Vector2 = Vector2.ZERO
+var wiggle_index : float = 0.0
+var wiggle_current_intensity : float = 0.0
+var bunny_hop_speed : float = SPRINTING_SPEED
+var last_velocity : Vector3= Vector3.ZERO
+var stand_after_roll : bool = false
+var is_movement_paused : bool = false
 var is_dead : bool = false
 
 
@@ -138,6 +141,7 @@ func _ready():
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Neck/Head/Eyes/Camera/InteractionRaycast
+	player_interaction_component.exclude_player(get_rid())
 	
 	randomize() 
 	
@@ -286,6 +290,9 @@ func params(transform3d, motion):
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 	return PhysicsServer3D.body_test_motion(self_rid, params(transform3d, motion), test_motion_result)	
 
+func ladder_buffer_finished():
+	ladder_on_cooldown = false
+
 func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	# called by ladder_area.gd
 	
@@ -297,6 +304,9 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 		var offset = (global_position - ladder.global_position)
 		if offset.dot(ladderDir) < -0.1:
 			global_translate(ladderDir*offset.length()/4.0)
+		var ladder_timer = get_tree().create_timer(LADDER_COOLDOWN)
+		ladder_timer.timeout.connect(ladder_buffer_finished)
+		ladder_on_cooldown = true
 		on_ladder = true
 		return
 	
@@ -349,7 +359,7 @@ func _process_on_ladder(_delta):
 	move_and_slide()
 	
 	#Step off ladder when on ground
-	if is_on_floor():
+	if is_on_floor() and not ladder_on_cooldown:
 		on_ladder = false
 
 var jumped_from_slide = false
@@ -436,18 +446,22 @@ func _physics_process(delta):
 		sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and stamina_attribute and stamina_attribute.value_current > 0:
-			if !Input.is_action_pressed("jump"):
+			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
 				bunny_hop_speed = SPRINTING_SPEED
-			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
+				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
+			elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
+				current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			is_walking = false
 			is_sprinting = true
 			is_crouching = false
 		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
-			if !Input.is_action_pressed("jump"):
+			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
 				bunny_hop_speed = SPRINTING_SPEED
-			current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
+				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
+			elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
+				current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			is_walking = false
@@ -562,10 +576,10 @@ func _physics_process(delta):
 					platform_velocity.z = 0
 				velocity += platform_velocity
 			
-			if is_sprinting:
+			if is_sprinting and CAN_BUNNYHOP:
 				bunny_hop_speed += BUNNY_HOP_ACCELERATION
-			else:
-				bunny_hop_speed = SPRINTING_SPEED
+			elif is_sprinting and !CAN_BUNNYHOP:
+				SPRINTING_SPEED += SPRINTING_SPEED
 			
 			if is_crouching:
 				#temporarily switch colliders to process jump correctly

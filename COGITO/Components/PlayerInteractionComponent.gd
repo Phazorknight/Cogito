@@ -24,6 +24,7 @@ var previous_interactable
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position : Node3D
+var is_carrying : bool = false
 var carried_object = null  #Used for carryable handling.
 var throw_power : float = 1.5
 var is_changing_wieldables : bool = false #Used to avoid any input acitons while wieldables are being swapped
@@ -34,16 +35,20 @@ var is_changing_wieldables : bool = false #Used to avoid any input acitons while
 var equipped_wieldable_item = null
 var equipped_wieldable_node = null
 var is_wielding : bool
-
+var player_rid
 
 func _ready():
 	#for node in wieldable_nodes:
 		#node.hide()
 	object_detected = false
 
+func exclude_player(rid : RID):
+	player_rid = rid
+	interaction_raycast.add_exception_rid(rid)
+
 func _process(_delta):
 	# when carrying object, disable all other prompts.
-	if carried_object:
+	if is_carrying:
 		pass
 	elif interaction_raycast.is_colliding():
 		interactable = interaction_raycast.get_collider()
@@ -59,9 +64,6 @@ func _process(_delta):
 			interactive_object_exit()
 			is_reset = true
 		
-	# VECTOR 3 for where the player is currently looking
-	#var dir = (carryable_position.get_global_transform().origin - get_global_transform().origin).normalized()
-	#look_vector = dir
 
 
 func interactive_object_enter(detected_object:Node3D):
@@ -79,9 +81,10 @@ func _input(event):
 	if event.is_action_pressed("interact"):
 		
 		# if carrying an object, drop it.
-		if carried_object and carried_object.input_map_action == "interact":
+		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == "interact":
 			carried_object.throw(throw_power)
-			carried_object = null
+		elif is_carrying and !is_instance_valid(carried_object):
+			stop_carrying()
 		
 		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
 		if interaction_raycast.is_colliding():
@@ -97,9 +100,11 @@ func _input(event):
 	
 	if event.is_action_pressed("interact2"):
 		# if carrying an object, drop it.
-		if carried_object and carried_object.input_map_action == "interact2":
+		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == "interact2":
 			carried_object.throw(throw_power)
-			carried_object = null
+		elif is_carrying and !is_instance_valid(carried_object):
+			stop_carrying()
+		
 		
 		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
 		if interaction_raycast.is_colliding():
@@ -142,6 +147,19 @@ func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
 			return destination_point
 	else:
 		return destination_point
+
+
+### Carryable Management
+func start_carrying(_carried_object):
+	is_carrying = true
+	carried_object = _carried_object
+	started_carrying.emit(_carried_object)
+
+
+func stop_carrying():
+	#carried_object.throw(throw_power)
+	is_carrying = false
+	carried_object = null
 
 
 
@@ -251,13 +269,14 @@ func send_hint(hint_icon,hint_text):
 
 # This gets a world space collision point of whatever the camera is pointed at, depending on the equipped wieldable range.
 func Get_Camera_Collision() -> Vector3:
-	var viewport = get_viewport().get_size()
+	var viewport = get_viewport().get_visible_rect().size
 	var camera = get_viewport().get_camera_3d()
 	
 	var Ray_Origin = camera.project_ray_origin(viewport/2)
 	var Ray_End = Ray_Origin + camera.project_ray_normal(viewport/2)*equipped_wieldable_item.wieldable_range
 	
 	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
+	New_Intersection.exclude = [player_rid]
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
 	
 	if not Intersection.is_empty():
