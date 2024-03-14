@@ -14,6 +14,8 @@ class_name ImpactAttributeDamage
 
 var time_passed : float
 
+@onready var minimum_velocity_squared : float = minimum_velocity * minimum_velocity
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if !parent_node.is_class("RigidBody3D"):
@@ -23,7 +25,7 @@ func _ready() -> void:
 
 
 func _on_parent_node_collision(_collided_node):
-	if parent_node.linear_velocity.length() > minimum_velocity and time_passed == 0:
+	if  time_passed == 0 and parent_node.linear_velocity.length_squared() >= minimum_velocity_squared:
 		attribute.subtract(damage)
 		time_passed = next_impact_time
 
