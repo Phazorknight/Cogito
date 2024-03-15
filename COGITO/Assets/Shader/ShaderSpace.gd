@@ -10,6 +10,9 @@ class_name ShaderSpace
 ## If you're looking for viewmodel rendering, use ViewmodelSpace.gd
 ## @experimental
 
+## Godot's rendering engine will only compile a shader when it appears in the camera for the first time which can cause stutters.
+## This flag will force Godot to render all shaders when this space enters the scene.
+@export var precompile_on_enter : bool = true
 var _bake : bool = false
 ## This will 'bake' the custom materials this script generates -- otherwise the materials are generated when this node enters the scene. 
 ## WARNING: Please note any changes you make to the *baked* versions of the Materials will not stay if/when you revert back to unbaked. 
@@ -116,13 +119,17 @@ func convert_surface(mat : Material):
 	if not mat:
 		return
 	if mat is ConvertedMaterial:
-		if Engine.is_editor_hint():
+		if Engine.is_editor_hint() and not _bake:
 			# un-baking
 			return mat.get_original_material()
+		elif precompile_on_enter and not Engine.is_editor_hint():
+			ShaderPrecompiler.precompile(get_tree(),mat)
 		return mat
 	if not mat is StandardMaterial3D:
 		print("WARNING: Cannot convert ", mat, " to shader material")
 	else:
 		var newmaterial = Material3DConversion.convert_to_shadermat(mat,injected_vars,injected_vertex)
+		if precompile_on_enter and not Engine.is_editor_hint():
+			ShaderPrecompiler.precompile(get_tree(),newmaterial)
 		return newmaterial
 	

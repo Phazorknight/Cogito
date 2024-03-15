@@ -38,12 +38,12 @@ const shader_names = {
 	"distance_fade_max": "distance_fade_max",
 	"msdf_pixel_range": "msdf_pixel_range",
 	"msdf_outline_size": "msdf_outline_size",
-	"metallic_texture_channel": "metallic_texture_channel",
-	"ao_texture_channel": "ao_texture_channel",
-	"clearcoat_texture_channel": "clearcoat_texture_channel",
-	"rim_texture_channel": "rim_texture_channel",
-	"heightmap_texture_channel": "heightmap_texture_channel",
-	"refraction_texture_channel": "refraction_texture_channel",
+#	"metallic_texture_channel": "metallic_texture_channel",
+#	"ao_texture_channel": "ao_texture_channel",
+#	"clearcoat_texture_channel": "clearcoat_texture_channel",
+#	"rim_texture_channel": "rim_texture_channel",
+#	"heightmap_texture_channel": "heightmap_texture_channel",
+#	"refraction_texture_channel": "refraction_texture_channel",
 	"transmittance_color": "transmittance_color",
 	"transmittance_depth": "transmittance_depth",
 	"transmittance_boost": "transmittance_boost",
@@ -86,6 +86,22 @@ static func convert_to_shadermat(mat : StandardMaterial3D, injected_vars : Strin
 			shader_mat.set_shader_parameter(shader_names[property],mat.get(property))
 	
 	return shader_mat
+
+static func write_texture_channel(var_name : String, texture_channel : TextureChannel, prefix = "uniform"):
+	# fun fact: Godot engine (as of right now) does not do these correctly, and implementation varies per feature. Yay. *sigh*
+	var code = prefix + " vec4 " + var_name + " = vec4("
+	match texture_channel:
+		TEXTURE_CHANNEL_RED:
+			code += "1.0,0.0,0.0,0.0);\n"
+		TEXTURE_CHANNEL_GREEN:
+			code += "0.0,1.0,0.0,0.0);\n"
+		TEXTURE_CHANNEL_BLUE:
+			code += "0.0,0.0,1.0,0.0);\n"
+		TEXTURE_CHANNEL_ALPHA:
+			code += "0.0,0.0,0.0,1.0);\n"
+		TEXTURE_CHANNEL_GRAYSCALE:
+			code += "0.333333,0.333333,0.333333,0.0);\n"
+	return code
 
 static func create_shader_code(mat : StandardMaterial3D, injected_vars : String, injected_vertex : String):
 	var texfilter_str: String
@@ -244,19 +260,13 @@ static func create_shader_code(mat : StandardMaterial3D, injected_vars : String,
 	code += "uniform float point_size : hint_range(0,128);\n"
 
 	code += "uniform float roughness : hint_range(0,1);\n"
-	code += "uniform sampler2D texture_metallic : hint_default_white," + texfilter_str + ";\n"
-	code += "uniform vec4 metallic_texture_channel;\n"
-	match mat.roughness_texture_channel:
-		TEXTURE_CHANNEL_RED:
-			code += "uniform sampler2D texture_roughness : hint_roughness_r," + texfilter_str + ";\n"
-		TEXTURE_CHANNEL_GREEN:
-			code += "uniform sampler2D texture_roughness : hint_roughness_g," + texfilter_str + ";\n"
-		TEXTURE_CHANNEL_BLUE: 
-			code += "uniform sampler2D texture_roughness : hint_roughness_b," + texfilter_str + ";\n"
-		TEXTURE_CHANNEL_ALPHA:
-			code += "uniform sampler2D texture_roughness : hint_roughness_a," + texfilter_str + ";\n"
-		TEXTURE_CHANNEL_GRAYSCALE:
-			code += "uniform sampler2D texture_roughness : hint_roughness_gray," + texfilter_str + ";\n"
+	code += "uniform sampler2D texture_metallic : " + texfilter_str + ";\n"
+	
+	code += write_texture_channel("metallic_texture_channel", mat.metallic_texture_channel)
+	
+	code += write_texture_channel("roughness_texture_channel", mat.roughness_texture_channel)
+	
+	code += "uniform sampler2D texture_roughness : " + texfilter_str + ";\n"
 
 	code += "uniform float specular;\n"
 	code += "uniform float metallic;\n"
@@ -274,7 +284,7 @@ static func create_shader_code(mat : StandardMaterial3D, injected_vars : String,
 	if mat.get_feature(FEATURE_REFRACTION):
 		code += "uniform sampler2D texture_refraction : " + texfilter_str + ";\n"
 		code += "uniform float refraction : hint_range(-16,16);\n"
-		code += "uniform vec4 refraction_texture_channel;\n"
+		code += write_texture_channel("refraction_texture_channel", mat.refraction_texture_channel)
 
 	if mat.get_feature(FEATURE_REFRACTION):
 		code += "uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;"
@@ -302,7 +312,7 @@ static func create_shader_code(mat : StandardMaterial3D, injected_vars : String,
 
 	if mat.get_feature(FEATURE_AMBIENT_OCCLUSION):
 		code += "uniform sampler2D texture_ambient_occlusion : hint_default_white, " + texfilter_str + ";\n"
-		code += "uniform vec4 ao_texture_channel;\n"
+		code += write_texture_channel("ao_texture_channel", mat.ao_texture_channel)
 		code += "uniform float ao_light_affect;\n"
 
 	if mat.get_feature(FEATURE_DETAIL):
@@ -576,17 +586,6 @@ static func create_shader_code(mat : StandardMaterial3D, injected_vars : String,
 		code += "	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);\n"
 	code += "	METALLIC = metallic_tex * metallic;\n"
 
-	match mat.roughness_texture_channel:
-		TEXTURE_CHANNEL_RED:
-			code += "	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);\n"
-		TEXTURE_CHANNEL_GREEN:
-			code += "	vec4 roughness_texture_channel = vec4(0.0,1.0,0.0,0.0);\n"
-		TEXTURE_CHANNEL_BLUE:
-			code += "	vec4 roughness_texture_channel = vec4(0.0,0.0,1.0,0.0);\n"
-		TEXTURE_CHANNEL_ALPHA:
-			code += "	vec4 roughness_texture_channel = vec4(0.0,0.0,0.0,1.0);\n"
-		TEXTURE_CHANNEL_GRAYSCALE:
-			code += "	vec4 roughness_texture_channel = vec4(0.333333,0.333333,0.333333,0.0);\n"
 
 	if mat.get_flag(FLAG_UV1_USE_TRIPLANAR):
 		code += "	float roughness_tex = dot(triplanar_texture(texture_roughness,uv1_power_normal,uv1_triplanar_pos),roughness_texture_channel);\n"

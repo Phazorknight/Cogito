@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3bej4wl0tvj0"]
+
+[ext_resource type="Script" path="res://COGITO/Assets/Shader/ShaderPrecompiler.gd" id="1_5rykf"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_8skhu"]
+size = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dghy8"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k37ri"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_dghy8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_upqev"]
+
+[node name="ShaderCache" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("QuadMesh_8skhu")
+surface_material_override/0 = SubResource("StandardMaterial3D_k37ri")
+script = ExtResource("1_5rykf")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="QuadRender" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+layers = 262144
+mesh = SubResource("QuadMesh_upqev")
+skeleton = NodePath("../..")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+layers = 262144
+aabb = AABB(-0.5, 0, -1, 1, 1, 2)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+cull_mask = 262144
+current = true
+
+[connection signal="screen_entered" from="SubViewport/VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
+[connection signal="screen_exited" from="SubViewport/VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]
+[connection signal="tree_exiting" from="SubViewport/VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_tree_exiting"]
