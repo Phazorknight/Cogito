@@ -82,7 +82,6 @@ wieldable_mesh = NodePath("PickaxeMesh")
 anim_action_primary = "swing"
 
 [node name="PickaxeMesh" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="toolPickaxe" type="MeshInstance3D" parent="PickaxeMesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0414924, -0.1011, 1.49012e-07)

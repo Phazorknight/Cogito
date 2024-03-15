@@ -129,9 +129,10 @@ func toggle_inventory_interface(external_inventory_owner = null):
 ### Interaction Prompt UI:
 func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 	for node in passed_interaction_nodes:
-		var instanced_prompt = prompt_component.instantiate()
-		prompt_area.add_child(instanced_prompt)
-		instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
+		if !node.is_disabled:
+			var instanced_prompt = prompt_component.instantiate()
+			prompt_area.add_child(instanced_prompt)
+			instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
 	
 	
 func delete_interaction_prompts():

@@ -133,7 +133,7 @@ Signals:
 
 
 ## Health Attribute
-This attribute is not jsut for player health. You can attach the component to objects to give them their own "health" and define behaviour when they run out of health (death).
+This attribute is not just for player health. You can attach the component to objects to give them their own "health" and define behaviour when they run out of health (death).
 
 Properties:
   - **no_sanity_damage** (float)
@@ -155,7 +155,20 @@ Signals:
 
 
 ## Stamina Attribute
-(work in progress)
+**Tip: If you don't want to use the Stamina system, simply remove the StaminaAttribute from your Player scene.**
+This attribute works in tight connection with the Player controller. When in use, certain actions from the player will consume stamina and player movement will be limited once the stamina is fully depleted. The default actions that are affected by Stamina is sprinting and jumping.
+
+Properties:
+  - **stamina_regen_speed** (float)
+    - How fast stamina regenerates in points per second.
+  - **run_exhaustion_speed** (float)
+    - How fast sprinting reduces stamina in points per seconds of sprinting.
+  - **jump_exhaustion** (float)
+    - How much stamina jumping consumes in points.
+  - **regenerate_after** (float)
+    - The delay after using the last stamina-consuming action before stamina starts regenerating, in seconds.
+  - **auto_regenerate** (float)
+    - If turned off, stamina will not auto regenerate.
 
 
 ## Visibility Attribute
@@ -174,8 +187,7 @@ Cogito works with a raycast interaction system. This means that the player camer
 - Check that the object is set to the correct collision layers. The interaction raycast is set to detect on layer 2 by default.
 - Check that the object has collision shapes.
 - Check that the object contain interaction components. If you use custom interaction components, try to swap to default ones to see if the behaviour changes.
-
-  
+ 
 
 
 # Game persistence, saving and loading
