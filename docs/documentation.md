@@ -73,7 +73,9 @@
 
 # Intro to COGITO
 COGITO is a fully featured template. It is recommended to use this as the starting point of your project BEFORE implementing any of your own features.
-(TODO expand this section)
+We strongly recommend playing through the included demo scenes to get a good impression of what functionality is included. While COGITO is designed with modularity and versatility in mind, it is usually easier to modify the included systems than try to make it work with other external systems (like using a different inventory system or player controller).
+The most common tasks most users will run into is adapting their own assets and levels to work with COGITO. I'm in the process of creating video tutorials for these cases which should help you get started quickly.
+
 
 ## COGITO Setup
 1. Clone this repo or download it and unzip it into it's own directory.
@@ -102,7 +104,8 @@ To enable transitioning between scenes, your scene root node needs to have cogit
 
 
 # Player Controller
-(work in progress)
+COGITO includes a first person player controller that has a variety of parameters and settings built-in. We recommend just reading through the descriptions and tweaking the parameters to your liking.
+Most common adjustments needed are walking, running and sprinting speeds, stair handling, ladder handling. Be aware that a few of the player controller parameters will be controlled by the game options and are thus user controlled (for example Invert Y Axis).
 
 
 # Cogito Attributes
@@ -172,22 +175,57 @@ Properties:
 
 
 ## Visibility Attribute
-(work in progress)
+**Tip: If you don't want to use the Visibility system, simply remove the VisibilityAttribute from your Player scene.** 
+(This used to be called Brightness component).
+The Visibility Attribute represents how "visible" the player is within a scene. It is important to understand that this attribute is not actually tied to Lights within your scene. Instead, it works by counting how many Lightzones the player is currently in, which are their own component. This was decided to give developers the best control on how visible the player is at any spot inside a level.
+This attribute can then be checked by other entities, whenever they have a reference to the player. A common example would be that if the player enters the viewcone of a NPC, you might still want the NPC to not detect the player if they're shrouded in complete darkness, or detect the player faster, the higher their visibility is.
 
 
 ## Sanity Attribute
 (work in progress)
 
+## UI Attribute Component
+This packaged scene is used to reperesent attributes in the Player HUD. In the default COGITO Setup, the Player HUD checks which attribute nodes are part of the Player scene and instantiated a UI Attribute Component for each one in the Attribute Container.
+
+The UI Attribute Component reads all properties and connects to all signals needed directly from the Attribute itself (color, icon, name, values).
+You can customize the component to fit your own needs. Alterantively, you can also define explicit attribute components for each attribute if you create a direct reference in the PlayerHUD script (this involves some coding).
+To change where the Attribute UIs show, change the location of the PlayerAttributes PanelContainer.
+
 
 # Player Interaction System
-Cogito works with a raycast interaction system. This means that the player camera contains a raycast3d that constantly checks what the player is looking at. If an interactive object is detected, the raycast checks what kind of interaction components are attached to the object and displays interaction prompts accordingly.
+COGITO works with a raycast interaction system. This means that the player camera contains a raycast3d that constantly checks what the player is looking at. If an interactive object is detected, the raycast checks what kind of interaction components are attached to the object and displays interaction prompts accordingly.
 
 **Help, my object doesn't get detected by the interaction system?**
 - Check that the object is a Cogito Object or one of it's variants.
-- Check that the object is set to the correct collision layers. The interaction raycast is set to detect on layer 2 by default.
+- Check that the object is set to the correct collision layers. The interaction raycast is set to detect on layer 2 by default. Also be aware that the interaction raycast will be blocked by collision shapes on layer 1.
 - Check that the object has collision shapes.
-- Check that the object contain interaction components. If you use custom interaction components, try to swap to default ones to see if the behaviour changes.
- 
+- Check that the object contains one or more interaction components. If you use custom interaction components, try to swap to default ones to see if the behaviour changes.
+
+
+ # Cogito Objects
+Cogito Objects refers to classes specifcally created to work with all of COGITO's systems. These are designed to represent the most commonly used interactive objects in games. Below you'll find a brief explanation what each object does so you know which one to choose when you want to turn your own asset into a suitable Cogito Object.
+
+## Cogito_Object
+This is the basis of most smaller interactive objects. Item pickups, crates, and common "clutter objects" would utilize this.
+Use a Cogito_Object if you want to do any of the following:
+ - You want the object to be moved around within the level scene (Cogito_Object saves position and rotation, works well with RigidBodies)
+ - You want to use a variety of included interactions (most other objects have bespoke interactions, Cogito_Object is made to use a mix of interaction components)
+ - This object might not always exist in the level scene (Cogito_Object are based on PackedScenes and sometimes get instanced on runtime, COGITO also saves if a Cogito_Object exists in a scene or not)
+
+## Cogito_Door
+(work in progress)
+
+## Cogito_Button
+(work in progress)
+
+## Cogito_Switch
+(work in progress)
+
+## Cogito_Keypad
+(work in progress)
+
+## Cogito_Turnwheel
+(work in progress)
 
 
 # Game persistence, saving and loading
