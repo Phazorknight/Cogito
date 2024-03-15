@@ -12,7 +12,7 @@ class_name ImpactAttributeDamage
 ## Forced delay between impact times (in seconds).
 @export var next_impact_time : float = 0.3
 
-var time_passed : float
+var is_delaying : bool
 
 @onready var minimum_velocity_squared : float = minimum_velocity * minimum_velocity
 
@@ -25,13 +25,11 @@ func _ready() -> void:
 
 
 func _on_parent_node_collision(_collided_node):
-	if  time_passed == 0 and parent_node.linear_velocity.length_squared() >= minimum_velocity_squared:
+	if  !is_delaying and parent_node.linear_velocity.length_squared() >= minimum_velocity_squared:
 		attribute.subtract(damage)
-		time_passed = next_impact_time
+		impact_time_delay()
 
-
-func _physics_process(delta: float) -> void:
-	if time_passed > 0:
-		time_passed -= delta
-	else:
-		time_passed = 0
+func impact_time_delay():
+	is_delaying = true
+	await get_tree().create_timer(next_impact_time).timeout
+	is_delaying = false
