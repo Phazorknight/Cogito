@@ -8,7 +8,7 @@ class_name ImpactAttributeDamage
 ## The minimum velocity at time of impact to take damage. This prevents light hits from damageing the attribute
 @export var minimum_velocity : float = 1.0
 ## How much damage to do to the attribute
-@export var damage : int
+@export var damage : float = 1.0
 ## Forced delay between impact times (in seconds).
 @export var next_impact_time : float = 0.3
 
