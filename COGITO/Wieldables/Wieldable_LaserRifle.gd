@@ -2,7 +2,7 @@ extends Node3D
 
 @export_group("Laser Rifle Settings")
 ## Node for the laser origin
-@onready var bullet_point: Node3D = $LaserRifleMesh/Bullet_Point
+@onready var bullet_point: Node3D = %Bullet_Point
 ## Prefab of laser_ray
 @export var laser_ray_prefab : PackedScene
 ## How long laser rays linger in the air

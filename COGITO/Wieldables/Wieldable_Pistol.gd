@@ -6,7 +6,7 @@ extends Node3D
 ## Speed the projectile spawns with
 @export var projectile_velocity : float
 ## Node the projectile spawns at
-@onready var bullet_point = $Bullet_Point
+@onready var bullet_point = %Bullet_Point
 
 ## The Field Of View change when aiming down sight. In degrees.
 @export var ads_fov = 65
