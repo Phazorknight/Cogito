@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=101 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -31,6 +31,14 @@
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://COGITO/PrefabScenes/projectile_pistol.tscn" id="28_fsk2l"]
 [ext_resource type="PackedScene" uid="uid://cgce75ts2twkp" path="res://COGITO/PrefabScenes/Pickups/pickup_pickaxe.tscn" id="29_ai41f"]
 [ext_resource type="PackedScene" uid="uid://co1opmwyvl27" path="res://COGITO/DemoScenes/DemoPrefabs/barrel.tscn" id="31_c4s3c"]
+[ext_resource type="PackedScene" uid="uid://b76etfjjltnts" path="res://COGITO/DemoScenes/DemoPrefabs/ceiling_fan_lab.tscn" id="32_j2alh"]
+[ext_resource type="PackedScene" uid="uid://c7ft55rxa0rum" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_steps_flat.tscn" id="33_01501"]
+[ext_resource type="PackedScene" uid="uid://crh8d5v2dqakq" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_steps_flat_corner.tscn" id="34_6q0uf"]
+[ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="35_hegwd"]
+[ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PrefabScenes/hazard_zone.tscn" id="35_mda7y"]
+[ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://COGITO/PrefabScenes/heal_zone.tscn" id="36_fryka"]
+[ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/Pickups/pickup_health_potion.tscn" id="37_0wxqc"]
+[ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/Pickups/pickup_stamina_extension.tscn" id="38_ayqrv"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -930,8 +938,7 @@ player_hud = NodePath("../Player_HUD")
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_0c7yw")]
 player = NodePath("../Player")
 
-[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("4_vc32u")]
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+[node name="TabMenu" parent="." instance=ExtResource("4_vc32u")]
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -1354,7 +1361,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -3)
 
 [node name="Floor_3x3_39" parent="BASE_FLOOR" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0.4, 0)
 
 [node name="Floor_3x3_40" parent="BASE_FLOOR" instance=ExtResource("6_bedlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 3)
@@ -1847,7 +1854,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -15)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -33)
 
 [node name="Floor_3x3_100" parent="CEILING" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -27)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -30)
 
 [node name="Floor_3x3_101" parent="CEILING" instance=ExtResource("6_bedlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -24)
@@ -1904,7 +1911,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -15)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -33)
 
 [node name="Floor_3x3_121" parent="CEILING" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -27)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -30)
 
 [node name="Floor_3x3_122" parent="CEILING" instance=ExtResource("6_bedlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -24)
@@ -1951,10 +1958,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 24)
 [node name="CEILING_SKYLIGHTS" type="Node3D" parent="CEILING"]
 
 [node name="Glass_3x3_98" parent="CEILING/CEILING_SKYLIGHTS" instance=ExtResource("10_8403t")]
-transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 3, 0, -30)
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 3, 0, -27)
 
 [node name="Glass_3x3_99" parent="CEILING/CEILING_SKYLIGHTS" instance=ExtResource("10_8403t")]
-transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -6, 0, -30)
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -6, 0, -27)
 
 [node name="Glass_3x3_100" parent="CEILING/CEILING_SKYLIGHTS" instance=ExtResource("10_8403t")]
 transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 3, 0, -18)
@@ -1985,6 +1992,21 @@ transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 3, 0, 18)
 
 [node name="Glass_3x3_109" parent="CEILING/CEILING_SKYLIGHTS" instance=ExtResource("10_8403t")]
 transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -6, 0, 18)
+
+[node name="CeilingFan_Lab" parent="CEILING" instance=ExtResource("32_j2alh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -3)
+
+[node name="CeilingFan_Lab3" parent="CEILING" instance=ExtResource("32_j2alh")]
+transform = Transform3D(-0.916698, 0, 0.399581, 0, 1, 0, -0.399581, 0, -0.916698, 0, -1, -12)
+
+[node name="CeilingFan_Lab4" parent="CEILING" instance=ExtResource("32_j2alh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -21)
+
+[node name="CeilingFan_Lab2" parent="CEILING" instance=ExtResource("32_j2alh")]
+transform = Transform3D(-0.612604, 0, -0.79039, 0, 1, 0, 0.79039, 0, -0.612604, 0, -1, 6)
+
+[node name="CeilingFan_Lab5" parent="CEILING" instance=ExtResource("32_j2alh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 15)
 
 [node name="WALLS_LVL01" type="Node3D" parent="."]
 
@@ -2844,6 +2866,13 @@ transform = Transform3D(1, 0, 1.39091e-08, 0, 1, 0, -1.39091e-08, 0, 1, -2.94677
 [node name="ladderArea" parent="MOVEMENT/Ladder" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 0.0460688, 0)
 
+[node name="KSI_steps_flat" parent="MOVEMENT" instance=ExtResource("33_01501")]
+
+[node name="KSI_steps_flat2" parent="MOVEMENT" instance=ExtResource("33_01501")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0, 8)
+
+[node name="KSI_steps_flat_corner" parent="MOVEMENT" instance=ExtResource("34_6q0uf")]
+
 [node name="VendingMachine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
 
@@ -2891,6 +2920,27 @@ transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395
 
 [node name="barrel2" parent="." instance=ExtResource("31_c4s3c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.0840335, -3.11525)
+
+[node name="HazardZone" parent="." instance=ExtResource("35_mda7y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2487, 1.505, -7.4549)
+
+[node name="HealZone" parent="." instance=ExtResource("36_fryka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.24998, 1.505, -0.72672)
+
+[node name="HealthPotion" parent="." instance=ExtResource("37_0wxqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393674, 1.21509, -11.2257)
+
+[node name="HealthPotion2" parent="." instance=ExtResource("37_0wxqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.064918, 1.21509, -11.2257)
+
+[node name="HealthPotion3" parent="." instance=ExtResource("37_0wxqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
+
+[node name="Pickup_StaminaExtension" parent="." instance=ExtResource("38_ayqrv")]
+transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, -1.38741, 0.92349, -11.344)
+
+[node name="CarriableBox" parent="." instance=ExtResource("35_hegwd")]
+transform = Transform3D(0.952555, 0, 0.304366, 0, 1, 0, -0.304366, 0, 0.952555, -6.66945, 1, 4.34045)
 
 [connection signal="pressed" from="SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton" to="VendingMachine/Spawnzone_VendingMachine" method="_on_generic_button_pressed"]
