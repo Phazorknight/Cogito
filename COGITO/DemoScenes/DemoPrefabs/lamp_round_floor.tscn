@@ -82,7 +82,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.71507, -4.84288e-08, -9.947
 collision_layer = 3
 script = ExtResource("1_s2xvf")
 switch_sound = ExtResource("2_d5l8n")
-nodes_to_show_when_on = [NodePath("lampRoundFloor_on"), NodePath("OmniLight3D")]
+nodes_to_show_when_on = [NodePath("lampRoundFloor_on"), NodePath("OmniLight3D2"), NodePath("OmniLight3D3"), NodePath("OmniLight3D4")]
 nodes_to_hide_when_on = [NodePath("lampRoundFloor_off")]
 metadata/_edit_group_ = true
 
@@ -102,6 +102,33 @@ skeleton = NodePath("")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120398, 1.38486, -0.119499)
 visible = false
+shadow_opacity = 0.9
+shadow_blur = 4.0
+omni_range = 3.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.116613, 1.37472, 0.0782413)
+visible = false
+light_energy = 0.2
+shadow_enabled = true
+shadow_opacity = 0.9
+shadow_blur = 4.0
+omni_range = 3.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120924, 1.37472, -0.439525)
+visible = false
+light_energy = 0.2
+shadow_enabled = true
+shadow_opacity = 0.9
+shadow_blur = 4.0
+omni_range = 3.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.338015, 1.37472, 0.0664816)
+visible = false
+light_energy = 0.2
+shadow_enabled = true
 shadow_opacity = 0.9
 shadow_blur = 4.0
 omni_range = 3.0
