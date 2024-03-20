@@ -10,6 +10,7 @@ signal door_state_changed(is_open:bool)
 @export_group("Audio")
 @export var open_sound : AudioStream
 @export var close_sound : AudioStream
+## Sound that plays when attempting to open while locked.
 @export var rattle_sound : AudioStream
 @export var unlock_sound : AudioStream
 

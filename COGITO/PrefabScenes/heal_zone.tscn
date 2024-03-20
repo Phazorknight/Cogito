@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cjs44e1ow53rv"]
+[gd_scene load_steps=7 format=3 uid="uid://cjs44e1ow53rv"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/hazard_zone.gd" id="1_38o7t"]
 [ext_resource type="Texture2D" uid="uid://d0so3oo1yk4kh" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Heart.png" id="2_el00j"]
+[ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="3_8llal"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_in244"]
 size = Vector3(1.5, 3, 1.5)
@@ -33,6 +34,12 @@ shape = SubResource("BoxShape3D_in244")
 mesh = SubResource("BoxMesh_x600l")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_nuibm")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+text = "HEAL ZONE"
+font = ExtResource("3_8llal")
+font_size = 40
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

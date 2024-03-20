@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://co1opmwyvl27"]
+[gd_scene load_steps=13 format=3 uid="uid://co1opmwyvl27"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_p1u1m"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="2_lxpj6"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="3_kqaad"]
 [ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://COGITO/PrefabScenes/simple_particle_puff.tscn" id="4_xpsxg"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="5_vqdq1"]
+[ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="6_wc6qr"]
+[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="7_efwiw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1tv7"]
 resource_name = "cloth"
@@ -97,5 +99,7 @@ value_max = 3.0
 value_start = 3.0
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_vqdq1")]
+pick_up_sound = ExtResource("6_wc6qr")
+drop_sound = ExtResource("7_efwiw")
 
 [editable path="HitboxComponent"]

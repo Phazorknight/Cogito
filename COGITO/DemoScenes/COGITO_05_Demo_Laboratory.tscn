@@ -2922,10 +2922,10 @@ transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.0840335, -3.11525)
 
 [node name="HazardZone" parent="." instance=ExtResource("35_mda7y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2487, 1.505, -7.4549)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.2487, 1.505, -7.4549)
 
 [node name="HealZone" parent="." instance=ExtResource("36_fryka")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.24998, 1.505, -0.72672)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.24998, 1.505, -0.72672)
 
 [node name="HealthPotion" parent="." instance=ExtResource("37_0wxqc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393674, 1.21509, -11.2257)

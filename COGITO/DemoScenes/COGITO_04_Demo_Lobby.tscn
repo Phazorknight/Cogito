@@ -1,4 +1,4 @@
-[gd_scene load_steps=359 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=361 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -65,12 +65,12 @@
 [ext_resource type="PackedScene" uid="uid://drd1xq0u7ua3b" path="res://COGITO/DemoScenes/DemoPrefabs/desk.tscn" id="54_4vkak"]
 [ext_resource type="PackedScene" uid="uid://bqe44f6qeagyx" path="res://COGITO/DemoScenes/DemoPrefabs/plant_small_2.tscn" id="55_s7anr"]
 [ext_resource type="PackedScene" uid="uid://duxk3xlhddnvt" path="res://COGITO/DemoScenes/DemoPrefabs/potted_plant.tscn" id="56_hferh"]
-[ext_resource type="PackedScene" uid="uid://ba3fh1y300wcs" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/rugRectangle.glb" id="57_bdiep"]
 [ext_resource type="PackedScene" uid="uid://efrg1qdo4o5g" path="res://COGITO/DemoScenes/DemoPrefabs/kitchen_fridge_container.tscn" id="57_fdyfl"]
 [ext_resource type="PackedScene" uid="uid://3rlbofuf3x5s" path="res://COGITO/DemoScenes/DemoPrefabs/trashcan.tscn" id="58_no7q4"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="59_7mr36"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="60_oc6pu"]
 [ext_resource type="PackedScene" uid="uid://dlhn1jwgx0wjr" path="res://COGITO/DemoScenes/DemoPrefabs/table_coffee_glass.tscn" id="61_jhsd0"]
+[ext_resource type="PackedScene" uid="uid://c0mrdx8eegxuj" path="res://COGITO/DemoScenes/DemoPrefabs/rug_round.tscn" id="62_m13s3"]
 [ext_resource type="PackedScene" uid="uid://c2t21qbkevaof" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_demo_hint.tscn" id="62_y3og2"]
 [ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/Interactions/ReadableComponent.tscn" id="63_uggg7"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="64_tfc2i"]
@@ -78,10 +78,10 @@
 [ext_resource type="PackedScene" uid="uid://6k5rvlwcpys1" path="res://COGITO/DemoScenes/DemoPrefabs/generic_switch.tscn" id="66_4pwwj"]
 [ext_resource type="PackedScene" uid="uid://qxbx5yllijej" path="res://COGITO/DemoScenes/DemoPrefabs/chair_modern_frame_cushion.tscn" id="67_qkgep"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://COGITO/PrefabScenes/Pickups/pickup_key.tscn" id="68_8mqrf"]
-[ext_resource type="PackedScene" uid="uid://celv6uxeksrny" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/rugRound.glb" id="69_gdeob"]
 [ext_resource type="PackedScene" uid="uid://cik703x8nr8uj" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/rugSquare.glb" id="70_rt25y"]
 [ext_resource type="PackedScene" uid="uid://csmk1jgnppq7b" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/pillowBlue.glb" id="71_7r41f"]
 [ext_resource type="PackedScene" uid="uid://bmvweggv8f5p1" path="res://COGITO/DemoScenes/DemoPrefabs/laptop.tscn" id="72_fpgjy"]
+[ext_resource type="PackedScene" uid="uid://blll0724l8foj" path="res://COGITO/DemoScenes/DemoPrefabs/rug_rectangle.tscn" id="75_26fkw"]
 [ext_resource type="PackedScene" uid="uid://bbw0r2f1pv2vw" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_ledge_painted_corner_double.tscn" id="83_igxpg"]
 [ext_resource type="PackedScene" uid="uid://dkfmxo0mgghcc" path="res://COGITO/DemoScenes/DemoPrefabs/water_plane.tscn" id="83_j65tm"]
 [ext_resource type="Shader" path="res://COGITO/Assets/Shader/water.gdshader" id="84_b4yjg"]
@@ -90,6 +90,8 @@
 [ext_resource type="PackedScene" uid="uid://bqwcopwwk2x6s" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_steps_single.tscn" id="88_u6glq"]
 [ext_resource type="PackedScene" uid="uid://dueiqjrnnwseq" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_corner_outer.glb" id="89_ifcfc"]
 [ext_resource type="PackedScene" uid="uid://dqw7n4i3g4b7g" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_painted.glb" id="90_0bo26"]
+[ext_resource type="PackedScene" uid="uid://c0yox8yh1bexx" path="res://COGITO/PrefabScenes/Pickups/ripped_page_a_pickup.tscn" id="91_qq2p0"]
+[ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PrefabScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("2_a8imk")
@@ -121,7 +123,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_fuiyt"]
+[sub_resource type="Resource" id="Resource_p38r2"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[ExtResource("33_lg13i")]([null, null, null, null, null, null, null, null])
@@ -3276,7 +3278,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_fuiyt")
+inventory_data = SubResource("Resource_p38r2")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -6293,7 +6295,10 @@ outline_size = 6
 horizontal_alignment = 0
 
 [node name="laptop" parent="UPPER_OFFICE_CEO" instance=ExtResource("72_fpgjy")]
-transform = Transform3D(0.0543052, 0, -0.998524, 0, 1, 0, 0.998524, 0, 0.0543052, 2.96413, 0.794343, -1.73872)
+transform = Transform3D(0.0543052, 0, -0.998524, 0, 1, 0, 0.998524, 0, 0.0543052, 2.96413, 0.794343, -1.87712)
+
+[node name="CollisionShape3D2" parent="UPPER_OFFICE_CEO/laptop" index="2"]
+transform = Transform3D(1.00001, 8.9407e-08, 2.98023e-08, 0, 0.907044, 0.421036, -1.78814e-07, -0.421038, 0.907049, -0.0363588, 0.166824, -0.199016)
 
 [node name="PickupComponent" parent="UPPER_OFFICE_CEO/laptop" index="4"]
 slot_data = SubResource("Resource_ei333")
@@ -7017,8 +7022,7 @@ transform = Transform3D(-0.787774, 0, -0.615964, 0, 1, 0, 0.615964, 0, -0.787774
 [node name="CoffeeMug5" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.927595, 0, -0.373587, 0, 1, 0, 0.373587, 0, -0.927595, 1.29253, 0.493418, -0.176573)
 
-[node name="rugRound" parent="BREAK_ROOM" instance=ExtResource("69_gdeob")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.76556, -4.84288e-08, 3.84106)
+[node name="rugRound" parent="BREAK_ROOM" instance=ExtResource("62_m13s3")]
 
 [node name="BATHROOM_STALL" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.1, 2.58, -5.9)
@@ -7305,11 +7309,13 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.8349
 [node name="pottedPlant" parent="ENTRANCE_AREA" instance=ExtResource("56_hferh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.02877, -1.0021e-06, -13.8082)
 
-[node name="rugRectangle" parent="ENTRANCE_AREA" instance=ExtResource("57_bdiep")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.34114, -4.84288e-08, -10.2007)
+[node name="rugRectangle" parent="ENTRANCE_AREA" instance=ExtResource("75_26fkw")]
 
-[node name="rugRectangle2" parent="ENTRANCE_AREA" instance=ExtResource("57_bdiep")]
-transform = Transform3D(-0.00319399, 0, 0.999995, 0, 1, 0, -0.999995, 0, -0.00319399, 6.34114, -4.84288e-08, 10.7993)
+[node name="rugRectangle3" parent="ENTRANCE_AREA" instance=ExtResource("75_26fkw")]
+transform = Transform3D(0.0160039, 0, 0.999872, 0, 1, 0, -0.999872, 0, 0.0160039, 6.34114, -4.84288e-08, 10.8562)
+
+[node name="rugRectangle4" parent="ENTRANCE_AREA" instance=ExtResource("75_26fkw")]
+transform = Transform3D(0.999399, 0, 0.0346727, 0, 1, 0, -0.0346727, 0, 0.999399, -10.5489, -4.84288e-08, 0.946023)
 
 [node name="loungeDesignChair" type="AnimatableBody3D" parent="ENTRANCE_AREA"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6.33074, -4.84288e-08, -9.9916)
@@ -7490,6 +7496,19 @@ You can then assign a key item to the door. If the player has said item in their
 You can also use other ways like Keypads or switches to unlock a door."
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_06_AdvancedDoors"]
+shape = SubResource("SphereShape3D_n25yf")
+
+[node name="Hint_07_Keypad" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0.171214, 1.1744, 8.66609)
+
+[node name="ReadableComponent" parent="DEMO_HINTS/Hint_07_Keypad" index="6"]
+readable_title = "Keypads"
+readable_content = "This classic Keypad works exactly as you expect: Enter the code to unlock the door. You can find hints to the code for this keypad close by.
+
+For your own keypad, you can set any code you like and make it as short/long as you like. 
+Keypads are setup to work with doors, but you can also use them to trigger other objects by using the included signals."
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_07_Keypad"]
 shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Note_Welcome" type="StaticBody3D" parent="."]
@@ -7704,6 +7723,13 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_hqhpt")
 surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
 
+[node name="RippedPageA_pickup" parent="." instance=ExtResource("91_qq2p0")]
+transform = Transform3D(-2.63806e-09, 0.998177, -0.0603517, 4.36317e-08, 0.0603517, 0.998177, 1, 0, -4.37114e-08, 5.13684, 0.51698, -11.7774)
+
+[node name="RippedPageB_pickup" parent="." instance=ExtResource("92_11u5w")]
+transform = Transform3D(-0.999185, 0.0287171, 0.0283608, 0.0286762, 0.0106298, 0.999532, 0.0284021, 0.999531, -0.0114446, 0.584339, 0.607864, 14.3816)
+mass = 0.5
+
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Archive_QuestEnder" to="QUESTS/Archive_QuestEnder" method="_on_body_entered"]
@@ -7720,4 +7746,5 @@ surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
 [editable path="DEMO_HINTS/Hint_04_Breakroom"]
 [editable path="DEMO_HINTS/Hint_05_Platform"]
 [editable path="DEMO_HINTS/Hint_06_AdvancedDoors"]
+[editable path="DEMO_HINTS/Hint_07_Keypad"]
 [editable path="Platform/GenericSwitch"]

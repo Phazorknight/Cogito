@@ -33,7 +33,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_n6nxr"]
+[sub_resource type="Resource" id="Resource_k1up3"]
 resource_local_to_scene = true
 script = ExtResource("2_l0t74")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -72,15 +72,13 @@ environment = SubResource("Environment_ai7l5")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_n6nxr")
+inventory_data = SubResource("Resource_k1up3")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_20bm3")]
 player = NodePath("../Player")
-use_stamina_component = true
 
-[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("4_3maio")]
-nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+[node name="TabMenu" parent="." instance=ExtResource("4_3maio")]
 
 [node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
 

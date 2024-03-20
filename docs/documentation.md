@@ -116,23 +116,23 @@ The base class used for any attributes is the CogitoAttribute class.
 
 Properties:
   - **attribute_name** (String)
-    - String used in scripts to find specific attributes. Make sure this is all lowercase and without spaces.
+	- String used in scripts to find specific attributes. Make sure this is all lowercase and without spaces.
   - **attribute_display_name** (String)
-    - As it would appear in the game.
+	- As it would appear in the game.
   - **attribute_color** (Color)
-    - Used for UI elements
+	- Used for UI elements
   - **attribute_icon** (Texture2D)
-    - Used for UI elements
+	- Used for UI elements
   - **value_max** (float)
-    - The maximum value of this attribute. Can change over time and is saved in the player state file.
+	- The maximum value of this attribute. Can change over time and is saved in the player state file.
   - **value_start** (float)
-    - The start value of this attribute.
-      
+	- The start value of this attribute.
+	  
 Signals:
   - **attribute_changed**(attribute_name: String, value_current: float, value_max: float, has_increased: bool)
-    - Gets emitted anytime the attribute value changes. If the value change was positive, has_increased will be true, if not it's false)
+	- Gets emitted anytime the attribute value changes. If the value change was positive, has_increased will be true, if not it's false)
   - **attribute_reached_zero**(attribute_name: String, value_current: float, value_max: float)
-    - Gets emitted when the current value of this attribute is 0.
+	- Gets emitted when the current value of this attribute is 0.
 
 
 ## Health Attribute
@@ -140,21 +140,21 @@ This attribute is not just for player health. You can attach the component to ob
 
 Properties:
   - **no_sanity_damage** (float)
-    - used in combination with the sanity attribute. Defines how much damage per second the owner takes if their sanity attribute has reached zero.
+	- used in combination with the sanity attribute. Defines how much damage per second the owner takes if their sanity attribute has reached zero.
   - **sound_on_damage** (AudioStream)
-    - AudioStream that plays when the owner takes damage.
+	- AudioStream that plays when the owner takes damage.
   - **sound_on_death** (AudioStream)
-    - AudioStream that plays when the owner dies (health reaches zero).
+	- AudioStream that plays when the owner dies (health reaches zero).
   - **destroy_on_death** (Array[NodePath])
-    - When the owner dies, all the nodes which nodepaths are in this array will get destroyed (queue_free())
+	- When the owner dies, all the nodes which nodepaths are in this array will get destroyed (queue_free())
   - **spawn_on_death** (PackedScene)
-    - When the owner dies, the packed scene will be instantiate at the owners global position. This is most commonly used for VFX or item drops.
+	- When the owner dies, the packed scene will be instantiate at the owners global position. This is most commonly used for VFX or item drops.
 
 Signals:
   - **damage_taken**()
-    - Gets emitted when the owner takes damage (attribute value decreases). Can be used for VFX, audio.
+	- Gets emitted when the owner takes damage (attribute value decreases). Can be used for VFX, audio.
   - **death**()
-    - Gets emitted when the owner dies. Can be used for VFX, audio, triggering cutscenes, updating quests, etc.
+	- Gets emitted when the owner dies. Can be used for VFX, audio, triggering cutscenes, updating quests, etc.
 
 
 ## Stamina Attribute
@@ -163,15 +163,15 @@ This attribute works in tight connection with the Player controller. When in use
 
 Properties:
   - **stamina_regen_speed** (float)
-    - How fast stamina regenerates in points per second.
+	- How fast stamina regenerates in points per second.
   - **run_exhaustion_speed** (float)
-    - How fast sprinting reduces stamina in points per seconds of sprinting.
+	- How fast sprinting reduces stamina in points per seconds of sprinting.
   - **jump_exhaustion** (float)
-    - How much stamina jumping consumes in points.
+	- How much stamina jumping consumes in points.
   - **regenerate_after** (float)
-    - The delay after using the last stamina-consuming action before stamina starts regenerating, in seconds.
+	- The delay after using the last stamina-consuming action before stamina starts regenerating, in seconds.
   - **auto_regenerate** (float)
-    - If turned off, stamina will not auto regenerate.
+	- If turned off, stamina will not auto regenerate.
 
 
 ## Visibility Attribute
@@ -222,10 +222,14 @@ Use a Cogito_Object if you want to do any of the following:
 (work in progress)
 
 ## Cogito_Keypad
-(work in progress)
+This classic Keypad works exactly as you expect. The included PackedScene includes it's own GUI, which can be easily customized.
+The Cogito_Keypad includes exposed references to work with Cogito_Doors, but you can also set them to trigger other objects by using the included signals.
 
 ## Cogito_Turnwheel
-(work in progress)
+With this you can create most common "press and hold" interaction that involve turning an object, like a valve. Is made to work with a HoldInteraction component.
+This object includes settings for rotation axis and speed as well as an AudioStream to play while being rotated.
+It also includes an exposed reference to trigger other nodes (most commonly used for doors).
+
 
 
 # Game persistence, saving and loading
