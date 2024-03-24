@@ -739,22 +739,26 @@ func _physics_process(delta):
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if not sliding_timer.is_stopped():
-			# TODO: Add slide sound effects. For now, mute it
-			pass
-		elif footstep_timer.time_left <= 0:
-			#dynamic volume for footsteps
-			if is_walking:
-				footstep_player.volume_db = walk_volume_db
-			elif is_crouching:
-				footstep_player.volume_db = crouch_volume_db
-			elif is_sprinting:
-				footstep_player.volume_db = sprint_volume_db
-			footstep_surface_detector.play_footstep()
-			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
-			if velocity.length() >= 3.4:
-				footstep_timer.start(.3)
-			else:
-				footstep_timer.start(.6)
+			var slide_player : AudioStreamPlayer3D = $SlidingTimer/SlidePlayer
+			if !slide_player.playing:
+				slide_player.play()
+
+		else:
+			$SlidingTimer/SlidePlayer.stop()
+			if footstep_timer.time_left <= 0:
+				#dynamic volume for footsteps
+				if is_walking:
+					footstep_player.volume_db = walk_volume_db
+				elif is_crouching:
+					footstep_player.volume_db = crouch_volume_db
+				elif is_sprinting:
+					footstep_player.volume_db = sprint_volume_db
+				footstep_surface_detector.play_footstep()
+				# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
+				if velocity.length() >= 3.4:
+					footstep_timer.start(.3)
+				else:
+					footstep_timer.start(.6)
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
