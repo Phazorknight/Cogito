@@ -1,8 +1,8 @@
 extends Control
 signal start_game_pressed
 
-@onready var start_game_button: Button = $%StartGameButton
-@onready var content: Control = $%Content 
+@export var start_game_button: Button
+@onready var content: Control = $ContentMain
 
 #region UI AUDIO
 @export var sound_hover : AudioStream

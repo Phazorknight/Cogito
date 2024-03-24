@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dkie3md1cmsip"]
+[gd_scene load_steps=14 format=3 uid="uid://dkie3md1cmsip"]
 
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_1djt0"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/tab_menu_controller.gd" id="2_473pa"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://COGITO/EasyMenus/Nodes/slider_w_labels.tscn" id="11_u1tdl"]
 [ext_resource type="Script" path="res://COGITO/Scripts/menu_scene_switcher.gd" id="12_4c47n"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3a44o"]
+
 [node name="TabMenu" type="Control" node_paths=PackedStringArray("nodes_to_focus")]
 process_mode = 3
 layout_mode = 3
@@ -26,12 +28,6 @@ script = ExtResource("2_473pa")
 nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 sound_hover = ExtResource("3_cekij")
 sound_click = ExtResource("4_ccwo8")
-
-[node name="TabMenuOptions" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("5_d44ip")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -78,18 +74,6 @@ theme_override_constants/margin_bottom = 25
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="GameTitle" type="Label" parent="Content/TabContainer/Game/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Game"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Game/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 10
-
 [node name="ResumeGameButton" type="Button" parent="Content/TabContainer/Game/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -98,13 +82,60 @@ theme_override_font_sizes/font_size = 30
 text = "Resume"
 script = ExtResource("6_a8sll")
 
-[node name="SaveButton" type="Button" parent="Content/TabContainer/Game/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Content/TabContainer/Game/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Separator_PanelContainer" type="PanelContainer" parent="Content/TabContainer/Game/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3a44o")
+
+[node name="Label_ActiveSlot" type="Label" parent="Content/TabContainer/Game/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 30
-text = "Save"
-script = ExtResource("6_a8sll")
+theme_override_font_sizes/font_size = 25
+text = "Current Slot: ?"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Content/TabContainer/Game/VBoxContainer"]
+custom_minimum_size = Vector2(130, 160)
+layout_mode = 2
+theme = ExtResource("1_1djt0")
+theme_type_variation = &"HUDPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="Content/TabContainer/Game/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Content/TabContainer/Game/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Screenshot_Spot" type="TextureRect" parent="Content/TabContainer/Game/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label_SaveTime2" type="Label" parent="Content/TabContainer/Game/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Last save:"
+horizontal_alignment = 1
+
+[node name="Label_SaveTime" type="Label" parent="Content/TabContainer/Game/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "YYYY-MM-DD HH:MM"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Content/TabContainer/Game/VBoxContainer"]
 layout_mode = 2
@@ -115,39 +146,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 30
-text = "Load Slot A"
+text = "Load"
 script = ExtResource("6_a8sll")
 
-[node name="PanelContainer" type="PanelContainer" parent="Content/TabContainer/Game/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(130, 90)
-layout_mode = 2
-theme = ExtResource("1_1djt0")
-theme_type_variation = &"HUDPanel"
-
-[node name="MarginContainer" type="MarginContainer" parent="Content/TabContainer/Game/VBoxContainer/HBoxContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 2
-theme_override_constants/margin_bottom = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Content/TabContainer/Game/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Screenshot_Spot" type="TextureRect" parent="Content/TabContainer/Game/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="SaveButton" type="Button" parent="Content/TabContainer/Game/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-expand_mode = 1
-stretch_mode = 5
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Save"
+script = ExtResource("6_a8sll")
 
-[node name="Label_SaveTime" type="Label" parent="Content/TabContainer/Game/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Separator_PanelContainer2" type="PanelContainer" parent="Content/TabContainer/Game/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "YYYY-MM-DD HH:MM"
-horizontal_alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3a44o")
 
 [node name="BackToMenuButton" type="Button" parent="Content/TabContainer/Game/VBoxContainer"]
 layout_mode = 2
@@ -483,28 +497,33 @@ theme_override_constants/margin_right = 100
 [node name="VBoxContainer" type="VBoxContainer" parent="Content/TabContainer/Bindings/ScrollContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
+[node name="TabMenuOptions" type="Control" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("5_d44ip")
+
 [node name="MenuSceneSwitcher" type="Node" parent="."]
 script = ExtResource("12_4c47n")
 main_menu_scene = "res://COGITO/DemoScenes/COGITO_MainMenu.tscn"
 start_game_scene = "res://COGITO/DemoScenes/COGITO_01_Demo.tscn"
 
 [connection signal="back_to_main_pressed" from="." to="MenuSceneSwitcher" method="_on_pause_menu_back_to_main_pressed"]
-[connection signal="resume" from="." to="TabMenuOptions" method="_on_tab_menu_resume"]
+[connection signal="resume" from="." to="Content/TabMenuOptions" method="_on_tab_menu_resume"]
 [connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/ResumeGameButton" to="." method="_on_resume_game_button_pressed"]
-[connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/BackToMenuButton" to="." method="_on_back_to_menu_button_pressed"]
 [connection signal="pressed" from="Content/TabContainer/Game/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="TabMenuOptions" method="_on_apply_changes_pressed"]
-[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" to="TabMenuOptions" method="_on_anti_aliasing_2d_option_button_item_selected"]
-[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" to="TabMenuOptions" method="_on_anti_aliasing_3d_option_button_item_selected"]
-[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale/RenderScaleSlider" to="TabMenuOptions" method="_on_render_scale_slider_value_changed"]
-[connection signal="drag_ended" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="TabMenuOptions" method="_on_gui_scale_slider_drag_ended"]
-[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="TabMenuOptions" method="_on_gui_scale_slider_value_changed"]
-[connection signal="toggled" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/VSyncCheckButton" to="TabMenuOptions" method="_on_v_sync_check_button_toggled"]
-[connection signal="pressed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="TabMenuOptions" method="_on_apply_changes_pressed"]
-[connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="TabMenuOptions" method="_on_sfx_volume_slider_value_changed"]
-[connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="TabMenuOptions" method="_on_music_volume_slider_value_changed"]
+[connection signal="pressed" from="Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="Content/TabMenuOptions" method="_on_apply_changes_pressed"]
+[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" to="Content/TabMenuOptions" method="_on_anti_aliasing_2d_option_button_item_selected"]
+[connection signal="item_selected" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" to="Content/TabMenuOptions" method="_on_anti_aliasing_3d_option_button_item_selected"]
+[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale/RenderScaleSlider" to="Content/TabMenuOptions" method="_on_render_scale_slider_value_changed"]
+[connection signal="drag_ended" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="Content/TabMenuOptions" method="_on_gui_scale_slider_drag_ended"]
+[connection signal="value_changed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="Content/TabMenuOptions" method="_on_gui_scale_slider_value_changed"]
+[connection signal="toggled" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/VSyncCheckButton" to="Content/TabMenuOptions" method="_on_v_sync_check_button_toggled"]
+[connection signal="pressed" from="Content/TabContainer/Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="Content/TabMenuOptions" method="_on_apply_changes_pressed"]
+[connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="Content/TabMenuOptions" method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="Content/TabMenuOptions" method="_on_music_volume_slider_value_changed"]
 
 [editable path="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
 [editable path="Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

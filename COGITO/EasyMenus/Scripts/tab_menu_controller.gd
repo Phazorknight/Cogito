@@ -5,9 +5,11 @@ signal back_to_main_pressed
 @onready var content : VBoxContainer = $%Content
 @onready var tab_container: TabContainer = $Content/TabContainer
 @onready var resume_game_button: Button = %ResumeGameButton
-@onready var tab_menu_options: Control = $TabMenuOptions
+@onready var tab_menu_options: TabMenuOptions = %TabMenuOptions
 @onready var save_button: CogitoUiButton = %SaveButton
 @onready var load_button: CogitoUiButton = %LoadButton
+@onready var label_active_slot: Label = %Label_ActiveSlot
+
 
 @export var nodes_to_focus: Array[Control]
 
@@ -55,8 +57,9 @@ func _play_pressed() -> void:
 func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true
-	save_button.text = "Save Slot " + CogitoSceneManager._active_slot
-	load_button.text = "Load Slot " + CogitoSceneManager._active_slot
+	label_active_slot.text = "Current Slot: " + CogitoSceneManager._active_slot
+	#save_button.text = "Save Slot " + CogitoSceneManager._active_slot
+	#load_button.text = "Load Slot " + CogitoSceneManager._active_slot
 	temp_screenshot = grab_temp_screenshot()
 	tab_container.set_current_tab(0)
 	show()

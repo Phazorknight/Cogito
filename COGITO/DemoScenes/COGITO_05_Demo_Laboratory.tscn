@@ -938,7 +938,8 @@ player_hud = NodePath("../Player_HUD")
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_0c7yw")]
 player = NodePath("../Player")
 
-[node name="TabMenu" parent="." instance=ExtResource("4_vc32u")]
+[node name="TabMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("4_vc32u")]
+nodes_to_focus = [NodePath("Content/TabContainer/Game/VBoxContainer/ResumeGameButton"), NodePath("Content/TabContainer/Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), null, NodePath("Content/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
