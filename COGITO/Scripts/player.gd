@@ -51,6 +51,8 @@ var visibility_attribute : CogitoAttribute
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
 @export var jump_sound : AudioStream
+## AudioStream that gets played when the player slides (sprint + crouch).
+@export var slide_sound : AudioStream
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
@@ -135,6 +137,7 @@ var last_velocity : Vector3= Vector3.ZERO
 var stand_after_roll : bool = false
 var is_movement_paused : bool = false
 var is_dead : bool = false
+var slide_audio_player : AudioStreamPlayer3D
 
 
 func _ready():
@@ -180,6 +183,10 @@ func _ready():
 		print("Player has no reference to pause menu.")
 		
 	initial_carryable_height = carryable_position.position.y #DEPRECATED
+
+	#setup sound effect for sliding
+	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
+	slide_audio_player.reparent(self, false)
 	
 
 # Use these functions to manipulate player attributes.
@@ -739,12 +746,11 @@ func _physics_process(delta):
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if not sliding_timer.is_stopped():
-			var slide_player : AudioStreamPlayer3D = $SlidingTimer/SlidePlayer
-			if !slide_player.playing:
-				slide_player.play()
+			if !slide_audio_player.playing:
+				slide_audio_player.play()
 
 		else:
-			$SlidingTimer/SlidePlayer.stop()
+			slide_audio_player.stop()
 			if footstep_timer.time_left <= 0:
 				#dynamic volume for footsteps
 				if is_walking:

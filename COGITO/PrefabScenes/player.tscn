@@ -49,6 +49,7 @@ script = ExtResource("1_wkneb")
 fall_damage = 10
 inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
+slide_sound = ExtResource("13_jr246")
 HEADBOBBLE = 7
 STEP_MAX_SLOPE_DEGREE = 1.0
 
@@ -114,12 +115,6 @@ collision_mask = 3
 [node name="SlidingTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
-
-[node name="SlidePlayer" type="AudioStreamPlayer3D" parent="SlidingTimer"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.300362, 0)
-stream = ExtResource("13_jr246")
-volume_db = -5.0
-bus = &"SFX"
 
 [node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488, 0)
