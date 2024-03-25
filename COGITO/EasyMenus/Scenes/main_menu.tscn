@@ -1,22 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://dq6tvhqcy2aps"]
+[gd_scene load_steps=10 format=3 uid="uid://dq6tvhqcy2aps"]
 
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_74dia"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/main_menu_controller.gd" id="1_lbw7r"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="3_cfl52"]
-[ext_resource type="FontFile" uid="uid://bfavdpnmorag5" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Regular.ttf" id="3_xtajs"]
 [ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="4_mhv4c"]
 [ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="4_ufukr"]
-[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="5_f4hue"]
-[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/option_button_input_propagator.gd" id="6_bggx6"]
 [ext_resource type="PackedScene" uid="uid://k0i6k7mcajfm" path="res://COGITO/EasyMenus/Components/SaveSlotButton.tscn" id="6_s811w"]
-[ext_resource type="PackedScene" uid="uid://cqniig2ks0xs2" path="res://COGITO/EasyMenus/Nodes/gamepad_closable.tscn" id="7_e0nk7"]
-[ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://COGITO/EasyMenus/Nodes/slider_w_labels.tscn" id="8_3iybo"]
-[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/tab_menu_options.gd" id="9_tgfna"]
+[ext_resource type="PackedScene" uid="uid://bly6wti1q8bsu" path="res://COGITO/EasyMenus/Scenes/OptionsTabMenu.tscn" id="8_ig87r"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/main_menu_saveslot_manager.gd" id="13_4uenq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n66hi"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("start_game_button")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("first_focus_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_74dia")
 script = ExtResource("1_lbw7r")
-start_game_button = NodePath("ContentMain/TabContainer/Home/VBoxContainer/SaveSlot_A")
+first_focus_button = NodePath("ContentMain/GameMenu/VBoxContainer/SaveSlot_A")
 sound_hover = ExtResource("3_cfl52")
 sound_click = ExtResource("4_mhv4c")
 
@@ -56,388 +51,62 @@ visible = false
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="TabContainer" type="TabContainer" parent="ContentMain"]
-custom_minimum_size = Vector2(500, 500)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_xtajs")
-
-[node name="Home" type="MarginContainer" parent="ContentMain/TabContainer"]
+[node name="GameMenu" type="MarginContainer" parent="ContentMain"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 25
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Home"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/GameMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="SaveSlot_A" parent="ContentMain/TabContainer/Home/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
+[node name="SaveSlot_A" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
 
-[node name="SaveSlot_B" parent="ContentMain/TabContainer/Home/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
+[node name="SaveSlot_B" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
 
-[node name="SaveSlot_C" parent="ContentMain/TabContainer/Home/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
+[node name="SaveSlot_C" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
 
-[node name="Separator_PanelContainer2" type="PanelContainer" parent="ContentMain/TabContainer/Home/VBoxContainer"]
+[node name="Separator_PanelContainer2" type="PanelContainer" parent="ContentMain/GameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_n66hi")
 
-[node name="QuitButton" type="Button" parent="ContentMain/TabContainer/Home/VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="ContentMain/GameMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Options"
+script = ExtResource("4_ufukr")
+
+[node name="QuitButton" type="Button" parent="ContentMain/GameMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 30
 text = "Quit"
 script = ExtResource("4_ufukr")
 
-[node name="Gameplay" type="MarginContainer" parent="ContentMain/TabContainer"]
+[node name="OptionsTabMenu" parent="ContentMain" node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("8_ig87r")]
 visible = false
 layout_mode = 2
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 25
+nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ContentMain/TabContainer/Gameplay"]
-custom_minimum_size = Vector2(450, 0)
+[node name="MainMenu_SaveSlotManager" type="Control" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
-script = ExtResource("5_f4hue")
-transition_time = 0.15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Gameplay/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 15
-
-[node name="InvertYAxisCheckButton" type="CheckButton" parent="ContentMain/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-tooltip_text = "Inverts looking up and down direction."
-theme_override_font_sizes/font_size = 25
-text = "Invert Y Axis"
-
-[node name="ApplyChanges" type="Button" parent="ContentMain/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 30
-text = "Apply changes"
-script = ExtResource("4_ufukr")
-
-[node name="Graphics" type="MarginContainer" parent="ContentMain/TabContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 25
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ContentMain/TabContainer/Graphics"]
-custom_minimum_size = Vector2(450, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-script = ExtResource("5_f4hue")
-transition_time = 0.15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 15
-
-[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-theme = ExtResource("1_74dia")
-
-[node name="WindowMode" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Window Mode"
-
-[node name="WindowModeOptionButton" type="OptionButton" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="HBoxContainer_Resolution" type="HBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-theme = ExtResource("1_74dia")
-
-[node name="ResolutionLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Resolution"
-
-[node name="ResolutionOptionButton" type="OptionButton" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-
-[node name="HBoxContainer_AA2D" type="HBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="AntiAliasing2DLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-text = "2D Anti Aliasing"
-
-[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-tooltip_text = "Smooth out edges of 2D objects"
-item_count = 4
-selected = 0
-popup/item_0/text = "Off"
-popup/item_0/id = 0
-popup/item_1/text = "2x"
-popup/item_1/id = 1
-popup/item_2/text = "4x"
-popup/item_2/id = 2
-popup/item_3/text = "8x"
-popup/item_3/id = 3
-script = ExtResource("6_bggx6")
-
-[node name="GamepadClosable" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" instance=ExtResource("7_e0nk7")]
-
-[node name="HBoxContainer_AA3D" type="HBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="AntiAliasing3DLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-text = "3D Anti Aliasing"
-
-[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-tooltip_text = "Smooths out edges of 3D objects"
-item_count = 4
-selected = 0
-popup/item_0/text = "Off"
-popup/item_0/id = 0
-popup/item_1/text = "2x"
-popup/item_1/id = 1
-popup/item_2/text = "4x"
-popup/item_2/id = 2
-popup/item_3/text = "8x"
-popup/item_3/id = 3
-script = ExtResource("6_bggx6")
-
-[node name="GamepadClosable" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("7_e0nk7")]
-
-[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="RenderScaleLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Render Scale"
-
-[node name="RenderScaleSlider" type="HSlider" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_force_pass_scroll_events = false
-min_value = 0.25
-max_value = 2.0
-step = 0.05
-value = 1.0
-
-[node name="RenderScaleCurrentValueLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1"
-horizontal_alignment = 1
-
-[node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="GUIScaleLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "UI Scale"
-
-[node name="GUIScaleSlider" type="HSlider" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_force_pass_scroll_events = false
-min_value = 0.25
-max_value = 1.5
-step = 0.05
-value = 1.0
-
-[node name="GUIScaleCurrentValueLabel" type="Label" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1"
-horizontal_alignment = 1
-
-[node name="VSyncCheckButton" type="CheckButton" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
-theme_override_font_sizes/font_size = 25
-text = "V-Sync"
-
-[node name="ApplyChanges" type="Button" parent="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 30
-text = "Apply changes"
-script = ExtResource("4_ufukr")
-
-[node name="Audio" type="MarginContainer" parent="ContentMain/TabContainer"]
-visible = false
-layout_mode = 2
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 25
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ContentMain/TabContainer/Audio"]
-custom_minimum_size = Vector2(450, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-script = ExtResource("5_f4hue")
-transition_time = 0.15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Audio/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 15
-
-[node name="MarginContainer" type="MarginContainer" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="SFXVolumeSlider" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("8_3iybo")]
-unique_name_in_owner = true
-layout_mode = 2
-title = "SFX Volume"
-
-[node name="Title" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="0"]
-text = "SFX Volume"
-
-[node name="HSlider" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="1"]
-max_value = 1.0
-step = 0.1
-
-[node name="MusicVolumeSlider" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("8_3iybo")]
-unique_name_in_owner = true
-layout_mode = 2
-title = "Music Volume"
-
-[node name="Title" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="0"]
-text = "Music Volume"
-
-[node name="HSlider" parent="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="1"]
-max_value = 1.0
-step = 0.1
-
-[node name="Bindings" type="MarginContainer" parent="ContentMain/TabContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 25
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ContentMain/TabContainer/Bindings"]
-custom_minimum_size = Vector2(450, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-script = ExtResource("5_f4hue")
-transition_time = 0.15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Bindings/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 15
-
-[node name="BindingsTitle" type="Label" parent="ContentMain/TabContainer/Bindings/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Coming soon"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="ContentMain/TabContainer/Bindings/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="MarginContainer" type="MarginContainer" parent="ContentMain/TabContainer/Bindings/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentMain/TabContainer/Bindings/ScrollContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="TabMenuOptions" type="Control" parent="ContentMain"]
-unique_name_in_owner = true
-layout_mode = 2
-script = ExtResource("9_tgfna")
-
-[node name="MainMenu_SaveSlotManager" type="Control" parent="ContentMain"]
-layout_mode = 2
+anchors_preset = 0
+offset_left = 100.0
+offset_top = 193.0
+offset_right = 600.0
+offset_bottom = 563.0
 script = ExtResource("13_4uenq")
 start_game_scene = "res://COGITO/DemoScenes/COGITO_04_Demo_Lobby.tscn"
 
-[connection signal="pressed" from="ContentMain/TabContainer/Home/VBoxContainer/QuitButton" to="." method="quit"]
-[connection signal="pressed" from="ContentMain/TabContainer/Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="ContentMain/TabMenuOptions" method="_on_apply_changes_pressed"]
-[connection signal="item_selected" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" to="ContentMain/TabMenuOptions" method="_on_anti_aliasing_2d_option_button_item_selected"]
-[connection signal="item_selected" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" to="ContentMain/TabMenuOptions" method="_on_anti_aliasing_3d_option_button_item_selected"]
-[connection signal="value_changed" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale/RenderScaleSlider" to="ContentMain/TabMenuOptions" method="_on_render_scale_slider_value_changed"]
-[connection signal="drag_ended" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="ContentMain/TabMenuOptions" method="_on_gui_scale_slider_drag_ended"]
-[connection signal="value_changed" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale/GUIScaleSlider" to="ContentMain/TabMenuOptions" method="_on_gui_scale_slider_value_changed"]
-[connection signal="toggled" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/VSyncCheckButton" to="ContentMain/TabMenuOptions" method="_on_v_sync_check_button_toggled"]
-[connection signal="pressed" from="ContentMain/TabContainer/Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="ContentMain/TabMenuOptions" method="_on_apply_changes_pressed"]
-[connection signal="value_changed" from="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" to="ContentMain/TabMenuOptions" method="_on_sfx_volume_slider_value_changed"]
-[connection signal="value_changed" from="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" to="ContentMain/TabMenuOptions" method="_on_music_volume_slider_value_changed"]
-
-[editable path="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
-[editable path="ContentMain/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]
+[connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/OptionsButton" to="." method="open_options_menu"]
+[connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/QuitButton" to="." method="quit"]

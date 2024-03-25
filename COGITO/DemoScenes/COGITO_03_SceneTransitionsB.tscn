@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_3gycq"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_l0t74"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_20bm3"]
-[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/tab_menu.tscn" id="4_3maio"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="4_3maio"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="5_ioaac"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="6_1emu1"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="6_v67yj"]
@@ -33,7 +33,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_k1up3"]
+[sub_resource type="Resource" id="Resource_ebnyt"]
 resource_local_to_scene = true
 script = ExtResource("2_l0t74")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -70,15 +70,15 @@ environment = SubResource("Environment_ai7l5")
 
 [node name="Player" parent="." instance=ExtResource("1_3gycq")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
-pause_menu = NodePath("../TabMenu")
+pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_k1up3")
+inventory_data = SubResource("Resource_ebnyt")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_20bm3")]
 player = NodePath("../Player")
 
-[node name="TabMenu" parent="." instance=ExtResource("4_3maio")]
+[node name="PauseMenu" parent="." instance=ExtResource("4_3maio")]
 
 [node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
 

@@ -1,8 +1,10 @@
 extends Control
 signal start_game_pressed
 
-@export var start_game_button: Button
-@onready var content: Control = $ContentMain
+@export var first_focus_button: Button
+@onready var game_menu: MarginContainer = $ContentMain/GameMenu
+@onready var options_tab_menu: OptionsTabMenu = $ContentMain/OptionsTabMenu
+@onready var options_button: CogitoUiButton = $ContentMain/GameMenu/VBoxContainer/OptionsButton
 
 #region UI AUDIO
 @export var sound_hover : AudioStream
@@ -44,17 +46,25 @@ func _play_pressed() -> void:
 
 
 func _ready():
-	start_game_button.grab_focus()
+	first_focus_button.grab_focus()
+
 
 func quit():
 	get_tree().quit()
-	
-func open_options():
-	content.hide()
-	
-func close_options():
-	content.show();
-	start_game_button.grab_focus()
+
+
+func _input(event):
+	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")) and !game_menu.visible:
+		accept_event()
+		options_tab_menu.hide()
+		game_menu.show()
+		options_button.grab_focus.call_deferred()
+
+
+func open_options_menu():
+	options_tab_menu.show()
+	options_tab_menu.nodes_to_focus[0].grab_focus.call_deferred()
+	game_menu.hide()
 
 
 func _on_start_game_button_pressed():
