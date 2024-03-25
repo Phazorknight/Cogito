@@ -9,9 +9,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	save_slot_a.set_data_from_state(load_slot_data("A"))
-	save_slot_b.set_data_from_state(load_slot_data("B"))
-	save_slot_c.set_data_from_state(load_slot_data("C"))
+	save_slot_a.set_data_from_state(load_slot_data(save_slot_a.manual_save_slot_name))
+	save_slot_b.set_data_from_state(load_slot_data(save_slot_b.manual_save_slot_name))
+	save_slot_c.set_data_from_state(load_slot_data(save_slot_c.manual_save_slot_name))
 
 
 func load_slot_data(save_slot: String) -> CogitoPlayerState:

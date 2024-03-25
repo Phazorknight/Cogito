@@ -263,7 +263,7 @@ func attempt_reload():
 
 
 # Function called by interactables if they need to send a hint. The signal sent here gets picked up by the Player_Hud_Manager.
-func send_hint(hint_icon,hint_text):
+func send_hint(hint_icon: Texture2D, hint_text: String):
 	hint_prompt.emit(hint_icon,hint_text)
 
 

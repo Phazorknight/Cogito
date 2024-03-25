@@ -66,16 +66,19 @@ size_flags_horizontal = 4
 unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
+manual_save_slot_name = "A"
 
 [node name="SaveSlot_B" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
+manual_save_slot_name = "B"
 
 [node name="SaveSlot_C" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
+manual_save_slot_name = "C"
 
 [node name="Separator_PanelContainer2" type="PanelContainer" parent="ContentMain/GameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
@@ -96,9 +99,10 @@ theme_override_font_sizes/font_size = 30
 text = "Quit"
 script = ExtResource("4_ufukr")
 
-[node name="OptionsTabMenu" parent="ContentMain" instance=ExtResource("8_ig87r")]
+[node name="OptionsTabMenu" parent="ContentMain" node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("8_ig87r")]
 visible = false
 layout_mode = 2
+nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="MainMenu_SaveSlotManager" type="Control" parent="."]
 layout_mode = 2

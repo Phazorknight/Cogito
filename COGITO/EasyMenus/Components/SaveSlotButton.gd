@@ -6,6 +6,7 @@ class_name CogitoSaveSlotButton
 @onready var save_time_label: Label = $MarginContainer/HBoxContainer/VBoxContainer/SaveTime
 
 @export var save_slot_manager_node : Control
+@export var manual_save_slot_name : String
 
 var player_state : CogitoPlayerState
 
@@ -70,6 +71,7 @@ func _on_save_slot_button_pressed() -> void:
 	if !player_state:
 		print("SLOT BUTTON: No player state. Should start a new game.")
 		if save_slot_manager_node:
+			CogitoSceneManager.switch_active_slot_to(manual_save_slot_name)
 			save_slot_manager_node.start_new_game()
 	else:
 		print("SLOT BUTTON: Attempting to load player_state ", player_state.player_state_slot_name)
