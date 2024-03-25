@@ -1,14 +1,17 @@
-[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=3 format=3 uid="uid://dtyra0gss8i65"]
+[gd_resource type="Resource" script_class="KeyItemPD" load_steps=4 format=3 uid="uid://ca0wjra4aq00v"]
 
 [ext_resource type="Texture2D" uid="uid://b4hu864fg0bv4" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop_Logo.png" id="1_bw20e"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_omen8"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="1_h5ph8"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="2_d64qt"]
 
 [resource]
-script = ExtResource("1_omen8")
+script = ExtResource("1_h5ph8")
+discard_after_use = false
 name = "CEOs Laptop"
 descpription = "The CEO's laptop. There's probably a  lot of valuable data on here."
 icon = ExtResource("1_bw20e")
 is_stackable = false
 stack_size = 0
 drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop_real.tscn"
-hint_text_on_use = ""
+hint_text_on_use = "I was supposed to do somoething with this."
+sound_pickup = ExtResource("2_d64qt")

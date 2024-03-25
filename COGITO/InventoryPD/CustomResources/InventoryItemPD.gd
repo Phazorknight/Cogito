@@ -38,4 +38,3 @@ var wielded_item
 		#
 	#prints(name, ": Inventory item is generic. No specific use defined.")
 	#return false
-		
