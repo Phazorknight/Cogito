@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="2_pwdxr"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="2_y6kid"]
-[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/tab_menu.tscn" id="3_ekpg2"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="3_ekpg2"]
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="3_m4tao"]
 [ext_resource type="Material" uid="uid://bncvwxye2x1uq" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Prototype_Brown.tres" id="4_s46n3"]
@@ -75,13 +75,13 @@ subdivide_width = 9
 
 [node name="Player" parent="." instance=ExtResource("1_0sk3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69453, 0.8, 0)
-pause_menu = NodePath("../TabMenu")
+pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
 player = NodePath("../Player")
 
-[node name="TabMenu" parent="." instance=ExtResource("3_ekpg2")]
+[node name="PauseMenu" parent="." instance=ExtResource("3_ekpg2")]
 
 [node name="Floor4" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
