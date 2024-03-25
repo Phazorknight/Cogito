@@ -769,7 +769,8 @@ func _physics_process(delta):
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
 				footstep_surface_detector.play_footstep()
-				print(str(velocity.length_squared()) + " : " + str(footstep_interval_change_velocity_square))
+				
+				#determine interval time between footsteps
 				if velocity.length_squared() >= footstep_interval_change_velocity_square:
 					print("sprint")
 					footstep_timer.start(sprint_footstep_interval)
