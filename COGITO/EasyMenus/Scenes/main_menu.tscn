@@ -66,19 +66,19 @@ size_flags_horizontal = 4
 unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
-new_save_slot_name = "A"
+manual_save_slot_name = "A"
 
 [node name="SaveSlot_B" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
-new_save_slot_name = "B"
+manual_save_slot_name = "B"
 
 [node name="SaveSlot_C" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
 unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
-new_save_slot_name = "C"
+manual_save_slot_name = "C"
 
 [node name="Separator_PanelContainer2" type="PanelContainer" parent="ContentMain/GameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
