@@ -56,6 +56,15 @@ var visibility_attribute : CogitoAttribute
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
+## the time between footstep sounds when walking
+@export var walk_footstep_interval : float = 0.6
+## the time between footstep sounds when sprinting
+@export var sprint_footstep_interval : float = 0.3
+## the speed at which the player must be moving before the footsteps change from walk to sprint.
+@export var footstep_interval_change_velocity : float = 5.2
+
+## performance saving variable
+@onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
@@ -760,11 +769,13 @@ func _physics_process(delta):
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
 				footstep_surface_detector.play_footstep()
-				# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
-				if velocity.length() >= 3.4:
-					footstep_timer.start(.3)
+				print(str(velocity.length_squared()) + " : " + str(footstep_interval_change_velocity_square))
+				if velocity.length_squared() >= footstep_interval_change_velocity_square:
+					print("sprint")
+					footstep_timer.start(sprint_footstep_interval)
 				else:
-					footstep_timer.start(.6)
+					print("walk")
+					footstep_timer.start(walk_footstep_interval)
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
