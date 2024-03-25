@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=26 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://COGITO/Components/Attributes/SanityAttribute.tscn" id="7_toa7v"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="8_2tp8b"]
 [ext_resource type="PackedScene" uid="uid://dxxemvynrimqw" path="res://COGITO/Wieldables/pickaxe.tscn" id="12_03s1j"]
+[ext_resource type="AudioStream" uid="uid://b7wmxwvtbpfu1" path="res://COGITO/Assets/Audio/537275__laughingfish78__dirt-sliding.ogg" id="13_jr246"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="16_a6uam"]
 [ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="17_rmtvn"]
@@ -48,6 +49,7 @@ script = ExtResource("1_wkneb")
 fall_damage = 10
 inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
+slide_sound = ExtResource("13_jr246")
 HEADBOBBLE = 7
 STEP_MAX_SLOPE_DEGREE = 1.0
 
