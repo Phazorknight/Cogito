@@ -1,8 +1,8 @@
 extends Control
 
-@onready var save_slot_a: CogitoSaveSlotButton = $"../ContentMain/GameMenu/VBoxContainer/SaveSlot_A"
-@onready var save_slot_b: CogitoSaveSlotButton = $"../ContentMain/GameMenu/VBoxContainer/SaveSlot_B"
-@onready var save_slot_c: CogitoSaveSlotButton = $"../ContentMain/GameMenu/VBoxContainer/SaveSlot_C"
+@onready var save_slot_a: CogitoSaveSlotButton = %SaveSlot_A
+@onready var save_slot_b: CogitoSaveSlotButton = %SaveSlot_B
+@onready var save_slot_c: CogitoSaveSlotButton = %SaveSlot_C
 
 ## Filepath to the scene the player should start in, when pressing "Start game" button.
 @export_file("*.tscn") var start_game_scene

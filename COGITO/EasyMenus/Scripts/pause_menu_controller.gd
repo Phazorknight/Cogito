@@ -102,6 +102,7 @@ func close_pause_menu():
 	hide()
 	emit_signal("resume")
 
+
 func _on_resume_game_button_pressed():
 	close_pause_menu()
 

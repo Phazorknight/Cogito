@@ -63,14 +63,17 @@ layout_mode = 2
 size_flags_horizontal = 4
 
 [node name="SaveSlot_A" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
+unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
 
 [node name="SaveSlot_B" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
+unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
 
 [node name="SaveSlot_C" parent="ContentMain/GameMenu/VBoxContainer" node_paths=PackedStringArray("save_slot_manager_node") instance=ExtResource("6_s811w")]
+unique_name_in_owner = true
 layout_mode = 2
 save_slot_manager_node = NodePath("../../../../MainMenu_SaveSlotManager")
 
@@ -93,18 +96,17 @@ theme_override_font_sizes/font_size = 30
 text = "Quit"
 script = ExtResource("4_ufukr")
 
-[node name="OptionsTabMenu" parent="ContentMain" node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("8_ig87r")]
+[node name="OptionsTabMenu" parent="ContentMain" instance=ExtResource("8_ig87r")]
 visible = false
 layout_mode = 2
-nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="MainMenu_SaveSlotManager" type="Control" parent="."]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 100.0
-offset_top = 193.0
+offset_top = 603.0
 offset_right = 600.0
-offset_bottom = 563.0
+offset_bottom = 603.0
 script = ExtResource("13_4uenq")
 start_game_scene = "res://COGITO/DemoScenes/COGITO_04_Demo_Lobby.tscn"
 

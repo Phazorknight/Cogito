@@ -15,10 +15,12 @@ offset_right = 500.0
 offset_bottom = 500.0
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("5_23wn5")
+current_tab = 1
 script = ExtResource("2_bufp8")
 nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="Gameplay" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
 theme_override_constants/margin_left = 0
@@ -58,7 +60,6 @@ script = ExtResource("6_rlben")
 
 [node name="Graphics" type="MarginContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -77,23 +78,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-theme = ExtResource("1_6plem")
-
-[node name="WindowMode" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Window Mode"
-
-[node name="WindowModeOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-
 [node name="HBoxContainer_Resolution" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
@@ -106,6 +90,23 @@ size_flags_horizontal = 0
 text = "Resolution"
 
 [node name="ResolutionOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="WindowMode" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Window Mode"
+
+[node name="WindowModeOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
@@ -336,6 +337,9 @@ theme_override_constants/margin_right = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Bindings/ScrollContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
+
+[connection signal="pressed" from="Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 
 [editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
 [editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

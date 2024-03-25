@@ -27,8 +27,8 @@ var render_scale_val : float
 
 # Array to set window modes.
 const WINDOW_MODE_ARRAY : Array[String] = [
-	"Full screen",
 	"Exclusive full screen",
+	"Full screen",
 	"Windowed",
 	"Borderless windowed",	
 ]
@@ -55,7 +55,8 @@ func _ready() -> void:
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
 	
-	load_options.call_deferred()
+	#load_options.call_deferred()
+	load_options()
 
 # Called from outside initializes the options menu
 func on_open():
@@ -101,17 +102,18 @@ func add_resolution_items() -> void:
 # Function to change window modes. Hooked up to the window_mode_option_button.
 func on_window_mode_selected(index: int) -> void:
 	match index:
-		0: #Full screen
+		0: #Exclusive full screen
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		1: #Full screen
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		1: #Exclusive full screen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 		2: #Windowed
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 		3: #Borderless windowed
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+
 
 func refresh_render():
 	get_window().content_scale_size = render_resolution
@@ -123,14 +125,15 @@ func on_resolution_selected(index:int) -> void:
 	refresh_render()
 	get_window().size = render_resolution
 
+
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
-	#_on_apply_changes_pressed()
+	_on_apply_changes_pressed()
 
 
 func _on_music_volume_slider_value_changed(value):
 	set_volume(music_bus_index, value)
-	#_on_apply_changes_pressed()
+	_on_apply_changes_pressed()
 
 
 # Sets the volume for the given audio bus
@@ -139,7 +142,7 @@ func set_volume(bus_index, value):
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
 
 
-# Saves the options when the options menu is closed
+# Saves the options
 func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, sfx_volume_slider.hslider.value)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, music_volume_slider.hslider.value)
@@ -158,7 +161,7 @@ func save_options():
 func load_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err != 0:
-		print("Loading options config failed. Using defaults.")
+		print("Loading options config failed. Assuming and saving defaults.")
 	
 	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
 	var music_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1)
@@ -196,6 +199,9 @@ func load_options():
 	window_mode_option_button.item_selected.emit(window_mode)
 	resolution_option_button.selected = resolution_index
 	resolution_option_button.item_selected.emit(resolution_index)
+	
+	refresh_render()
+	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
 
 
 func _on_render_scale_slider_value_changed(value):
