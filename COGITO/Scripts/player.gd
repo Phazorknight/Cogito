@@ -51,9 +51,20 @@ var visibility_attribute : CogitoAttribute
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
 @export var jump_sound : AudioStream
+## AudioStream that gets played when the player slides (sprint + crouch).
+@export var slide_sound : AudioStream
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
+## the time between footstep sounds when walking
+@export var walk_footstep_interval : float = 0.6
+## the time between footstep sounds when sprinting
+@export var sprint_footstep_interval : float = 0.3
+## the speed at which the player must be moving before the footsteps change from walk to sprint.
+@export var footstep_interval_change_velocity : float = 5.2
+
+## performance saving variable
+@onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
@@ -135,6 +146,7 @@ var last_velocity : Vector3= Vector3.ZERO
 var stand_after_roll : bool = false
 var is_movement_paused : bool = false
 var is_dead : bool = false
+var slide_audio_player : AudioStreamPlayer3D
 
 
 func _ready():
@@ -181,6 +193,12 @@ func _ready():
 		
 	initial_carryable_height = carryable_position.position.y #DEPRECATED
 	
+	call_deferred("slide_audio_init")
+
+func slide_audio_init():
+	#setup sound effect for sliding
+	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
+	slide_audio_player.reparent(self, false)
 
 # Use these functions to manipulate player attributes.
 func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
@@ -739,22 +757,26 @@ func _physics_process(delta):
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if not sliding_timer.is_stopped():
-			# TODO: Add slide sound effects. For now, mute it
-			pass
-		elif footstep_timer.time_left <= 0:
-			#dynamic volume for footsteps
-			if is_walking:
-				footstep_player.volume_db = walk_volume_db
-			elif is_crouching:
-				footstep_player.volume_db = crouch_volume_db
-			elif is_sprinting:
-				footstep_player.volume_db = sprint_volume_db
-			footstep_surface_detector.play_footstep()
-			# These "magic numbers" determine the frequency of sounds depending on speed of player. Need to make these variables.
-			if velocity.length() >= 3.4:
-				footstep_timer.start(.3)
-			else:
-				footstep_timer.start(.6)
+			if !slide_audio_player.playing:
+				slide_audio_player.play()
+
+		else:
+			slide_audio_player.stop()
+			if footstep_timer.time_left <= 0:
+				#dynamic volume for footsteps
+				if is_walking:
+					footstep_player.volume_db = walk_volume_db
+				elif is_crouching:
+					footstep_player.volume_db = crouch_volume_db
+				elif is_sprinting:
+					footstep_player.volume_db = sprint_volume_db
+				footstep_surface_detector.play_footstep()
+				
+				#determine interval time between footsteps
+				if velocity.length_squared() >= footstep_interval_change_velocity_square:
+					footstep_timer.start(sprint_footstep_interval)
+				else:
+					footstep_timer.start(walk_footstep_interval)
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
