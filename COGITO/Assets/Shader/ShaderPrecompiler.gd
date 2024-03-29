@@ -32,7 +32,7 @@ static func precompile(tree : SceneTree, shader : ShaderMaterial, use_new_node :
 	return compiler
 
 # Every node will attempt to grab a material from the queue per frame. If there are no new materials to show this frame, it deletes itself.
-func _process(delta):
+func _process(_delta):
 	if len(materials) == 0:
 		if shader_compiler == self:
 			shader_compiler = null

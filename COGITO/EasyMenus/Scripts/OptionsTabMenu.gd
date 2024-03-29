@@ -214,7 +214,7 @@ func _on_gui_scale_slider_value_changed(value):
 	gui_scale_current_value_label.text = str(value)
 
 	
-func _on_gui_scale_slider_drag_ended(value_changed):
+func _on_gui_scale_slider_drag_ended(_value_changed):
 	apply_gui_scale_value()
 
 # TODO: Apply changes if the slider is clicked but not dragged

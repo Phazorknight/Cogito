@@ -5,6 +5,9 @@ signal hot_bar_use(index: int)
 const Slot = preload("res://COGITO/InventoryPD/UiScenes/Slot.tscn")
 @onready var h_box_container = $MarginContainer/VBoxContainer/TopRow
 
+## The amount of slots displayed in the hotbar. WARNING: This is not properly tested. Will cause errors if it's bigger than the player's inventory. Also gamepad only supports 4 slots.
+@export_range(1,8) var hotbar_slot_amount : int = 4
+
 
 func _unhandled_input(event):
 	# Handles Gamepad Hotbar input
@@ -33,7 +36,7 @@ func populate_hotbar(inventory_data : InventoryPD) -> void:
 	for child in h_box_container.get_children():
 		child.queue_free()
 		
-	for slot_data in inventory_data.inventory_slots.slice(0,4):
+	for slot_data in inventory_data.inventory_slots.slice(0,hotbar_slot_amount):
 		var slot = Slot.instantiate()
 		h_box_container.add_child(slot)
 		
