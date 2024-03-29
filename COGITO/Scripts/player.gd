@@ -192,11 +192,13 @@ func _ready():
 		print("Player has no reference to pause menu.")
 		
 	initial_carryable_height = carryable_position.position.y #DEPRECATED
+	
+	call_deferred("slide_audio_init")
 
+func slide_audio_init():
 	#setup sound effect for sliding
 	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
 	slide_audio_player.reparent(self, false)
-	
 
 # Use these functions to manipulate player attributes.
 func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
@@ -772,10 +774,8 @@ func _physics_process(delta):
 				
 				#determine interval time between footsteps
 				if velocity.length_squared() >= footstep_interval_change_velocity_square:
-					print("sprint")
 					footstep_timer.start(sprint_footstep_interval)
 				else:
-					print("walk")
 					footstep_timer.start(walk_footstep_interval)
 
 func _on_sliding_timer_timeout():
