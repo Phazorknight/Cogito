@@ -260,20 +260,20 @@ rings = 1
 [sub_resource type="BoxMesh" id="BoxMesh_woscm"]
 size = Vector3(0.3, 0.3, 0.1)
 
-[sub_resource type="Resource" id="Resource_wdflo"]
+[sub_resource type="Resource" id="Resource_v7b11"]
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("15_86b07")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_hpi7r"]
+[sub_resource type="Resource" id="Resource_eku8j"]
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 
-[sub_resource type="Resource" id="Resource_hcvs8"]
+[sub_resource type="Resource" id="Resource_ameus"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
-inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_wdflo"), SubResource("Resource_hpi7r"), null, null])
+inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_v7b11"), SubResource("Resource_eku8j"), null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_w1o4d"]
 material = ExtResource("2_4ig6i")
@@ -348,7 +348,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_1fmcp"]
+[sub_resource type="Resource" id="Resource_jmlan"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
@@ -1253,7 +1253,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_glg2w")
+inventory_data = SubResource("Resource_ameus")
 uses_animation = true
 open_animation = "open"
 
@@ -1613,7 +1613,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.1480
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
 pause_menu = NodePath("../TabMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_1fmcp")
+inventory_data = SubResource("Resource_jmlan")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_1ofwa")]
