@@ -753,7 +753,6 @@ func _physics_process(delta):
 	#if !is_movement_paused:
 	move_and_slide()
 	
-	
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if not sliding_timer.is_stopped():
@@ -761,7 +760,9 @@ func _physics_process(delta):
 				slide_audio_player.play()
 
 		else:
-			slide_audio_player.stop()
+			if slide_audio_player:
+				slide_audio_player.stop()
+			
 			if footstep_timer.time_left <= 0:
 				#dynamic volume for footsteps
 				if is_walking:
@@ -777,6 +778,9 @@ func _physics_process(delta):
 					footstep_timer.start(sprint_footstep_interval)
 				else:
 					footstep_timer.start(walk_footstep_interval)
+	elif slide_audio_player:
+		slide_audio_player.stop()
+
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
