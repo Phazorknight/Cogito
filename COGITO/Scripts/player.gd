@@ -226,6 +226,7 @@ func decrease_attribute(attribute_name: String, value: float):
 
 
 func _on_death():
+	player_interaction_component.on_death()
 	is_dead = true
 
 

@@ -260,6 +260,15 @@ func attempt_reload():
 		inventory.inventory_updated.emit(inventory)
 		equipped_wieldable_item.update_wieldable_data(self)
 
+func on_death():
+	if equipped_wieldable_item:
+		equipped_wieldable_item.is_being_wielded = false
+	
+	if carried_object:
+		carried_object = null
+		
+	is_wielding = false
+	is_carrying = false
 
 
 # Function called by interactables if they need to send a hint. The signal sent here gets picked up by the Player_Hud_Manager.

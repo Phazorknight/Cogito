@@ -9,7 +9,7 @@ func _ready():
 	if ladder_collision:
 		original_process_mode = ladder_collision.process_mode
 
-func _on_body_shape_entered(body_rid,body,body_shape_idx,local_shape_idx):
+func _on_body_shape_entered(_body_rid,body,_body_shape_idx,local_shape_idx):
 	if body.is_in_group("Player"):
 		#print("Entered ladder")
 		var local_shape_owner = shape_find_owner(local_shape_idx)
