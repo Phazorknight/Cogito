@@ -7433,18 +7433,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_yhahm")
 [node name="Hint_01_Welcome" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
 transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 1.90368, 1.44587, -15.4)
 
-[node name="ReadableComponent" parent="DEMO_HINTS/Hint_01_Welcome" index="6"]
-readable_content = "You've found a Demo Hint!
-These contain explanations on how objects in this scene are set up.
-
-This hint is an example of using ReadableComponent.
-A ReadableComponent is an InteractionComponent that makes objects \"readable\". On interacting, a window like this will pop up, displaying some text.
-
-To create your own, attach a ReadableComponent to a Cogito Object and set the desired title, text and sound.
-As with any InteractionComponent, you can also customize which input_map_action is used and what prompt is displayed. In this case it is \"Read hint\".
-
-To close this window, either press the interaction button again or press ESC."
-
 [node name="Hint_02_LampSwitch" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
 transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 6.9916, 1.44587, -9.49445)
 
@@ -7758,7 +7746,6 @@ mass = 0.5
 [editable path="ARCHIVE/ArchiveDoor"]
 [editable path="MEETING_ROOM/ConferenceDoor"]
 [editable path="BREAK_ROOM/kitchenFridgeContainer"]
-[editable path="DEMO_HINTS/Hint_01_Welcome"]
 [editable path="DEMO_HINTS/Hint_02_LampSwitch"]
 [editable path="DEMO_HINTS/Hint_03_AdvancedSwitch"]
 [editable path="DEMO_HINTS/Hint_04_Breakroom"]
