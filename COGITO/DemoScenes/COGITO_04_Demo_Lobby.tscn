@@ -1,4 +1,4 @@
-[gd_scene load_steps=361 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=362 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -90,6 +90,7 @@
 [ext_resource type="PackedScene" uid="uid://bqwcopwwk2x6s" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_steps_single.tscn" id="88_u6glq"]
 [ext_resource type="PackedScene" uid="uid://dueiqjrnnwseq" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_corner_outer.glb" id="89_ifcfc"]
 [ext_resource type="PackedScene" uid="uid://dqw7n4i3g4b7g" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_painted.glb" id="90_0bo26"]
+[ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://COGITO/PrefabScenes/Pickups/pickup_flashlight.tscn" id="91_fk2yu"]
 [ext_resource type="PackedScene" uid="uid://c0yox8yh1bexx" path="res://COGITO/PrefabScenes/Pickups/ripped_page_a_pickup.tscn" id="91_qq2p0"]
 [ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PrefabScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
 
@@ -123,7 +124,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_nojkk"]
+[sub_resource type="Resource" id="Resource_5bvrm"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[ExtResource("33_lg13i")]([null, null, null, null, null, null, null, null])
@@ -3278,7 +3279,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_nojkk")
+inventory_data = SubResource("Resource_5bvrm")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -7439,10 +7440,10 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 6.9916, 1.44587, -9.49445)
 readable_title = "Cogito Switch"
 readable_content = "This lamp is an example of a Cogito Switch object.
 
-On interaction, the lamp switches from it's OFF to it's ON state, in turn activating the light and changing to a lit mesh.
+On interaction, the lamp switches from its OFF to its ON state, in turn activating the light and changing to a lit mesh.
 
-A switch object is perfect for lamps, but can used for any object that has two distinct states.
-To create a Cogito Switch object, just attached said script to a Node3D derived object. Make sure it has a collision shape and an InteractionComponent and set it's parameters.
+A Switch object is perfect for lamps, but can used for any object that has two distinct states.
+To create a Cogito Switch object, just attach said script to a Node3D-derived object. Make sure it has a collision shape and an InteractionComponent and set its parameters.
 
 If you look at the wall near the entrance, you can find an example of a more complex Switch object."
 
@@ -7453,9 +7454,11 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 6.30891, 1.21174, -15.5319)
 readable_title = "Connected Switch"
 readable_content = "You can connect Cogito Switch objects to each other to create more complex switchable objects.
 
-This red button on the wall is a Switch that's connected to the ceiling lamps, all of wich are their own Switch object.
+This red button on the wall is a Switch that's connected to the ceiling lamps, all of which are their own Switch objects.
 
-When you press the red button, it will trigger one ceiling light after the other with a set delay. Note that this switch starts in it's ON state. The state of the button does not need to match the state of the connected switchable objects. They don't even have to be switchable objects. You can also use this to control doors or use the included signal to hook up your own custom scripts."
+When you press the red button, it will trigger one ceiling light after the other with a set delay. Note that this switch starts in its ON state. The state of the button does not need to match the state of the connected switchable objects. They don't even have to be switchable objects. 
+
+You can also use this to control doors or use the included signal to hook up your own custom scripts."
 
 [node name="Hint_04_Breakroom" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
 transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -2.25377, 1.0441, -8.68306)
@@ -7464,7 +7467,7 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -2.25377, 1.0441, -8.68306)
 readable_title = "Break Room"
 readable_content = "This room is a showcase of how you can use Cogito to make props interactable.
 
-The cupboards and fridge use the Cogito_Door object, while the chairs and coffee mugs are examples of simple RigidBody's that have a Carryable Component attached."
+The cupboards and fridge use the Cogito_Door object, while the chairs and coffee mugs are examples of simple RigidBodies that have a Carryable Component attached."
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_04_Breakroom"]
 shape = SubResource("SphereShape3D_n25yf")
@@ -7475,10 +7478,9 @@ metadata/_edit_group_ = true
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_05_Platform" index="6"]
 readable_title = "Moving Platform"
-readable_content = "By creatively combining the Cogito Door obect with a Cogito Switch object, you can create moving platforms like this lift.
+readable_content = "By creatively combining the Cogito Door object with a Cogito Switch object, you can create moving platforms like this lift.
 
-The platform itself is a \"Door\" that slides upwards. It has no InteractionComponent attached.
-Instead, a Cogito Switch is used: Hooking it up to trigger the platform and make it move.
+The platform itself is a \"Door\" that slides upwards. It has no InteractionComponent attached. Instead, a Cogito Switch is hooked up to trigger the platform and make it move.
 
 Play around with all the options each Cogito script provides and see what you can come up with."
 
@@ -7489,11 +7491,11 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -1.68055, 4.0441, -13.7996)
 readable_title = "Advanced Doors"
 readable_content = "You can set up doors as locked.
 
-When a door is locked, if the player tries to open them, you can set it to play a custom \"rattle\" sound and to display a hint.
+When the player tries to open a locked door, you can set it to play a custom \"rattle\" sound and display a hint.
 
 You can then assign a key item to the door. If the player has said item in their inventory when they interact with the door, they will unlock it.
 
-You can also use other ways like Keypads or switches to unlock a door."
+You can also use other ways like Keypads or Switches to unlock a door."
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_06_AdvancedDoors"]
 shape = SubResource("SphereShape3D_n25yf")
@@ -7503,10 +7505,10 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0.171214, 1.1744, 8.66609)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_07_Keypad" index="6"]
 readable_title = "Keypads"
-readable_content = "This classic Keypad works exactly as you expect: Enter the code to unlock the door. You can find hints to the code for this keypad close by.
+readable_content = "This classic Keypad works exactly as you expect: enter the code to unlock the door. You can find hints to the code for this keypad close by.
 
 For your own keypad, you can set any code you like and make it as short/long as you like. 
-Keypads are setup to work with doors, but you can also use them to trigger other objects by using the included signals."
+Keypads are set up to work with doors, but you can also use them to trigger other objects by using the included signals."
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_07_Keypad"]
 shape = SubResource("SphereShape3D_n25yf")
@@ -7722,6 +7724,9 @@ mesh = SubResource("ArrayMesh_yswb2")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_hqhpt")
 surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
+
+[node name="Pickup_Flashlight" parent="." instance=ExtResource("91_fk2yu")]
+transform = Transform3D(-0.379472, 0, -0.925203, 0, 1, 0, 0.925203, 0, -0.379472, 4.70889, 1.33737, -0.00629956)
 
 [node name="RippedPageA_pickup" parent="." instance=ExtResource("91_qq2p0")]
 transform = Transform3D(-2.63806e-09, 0.998177, -0.0603517, 4.36317e-08, 0.0603517, 0.998177, 1, 0, -4.37114e-08, 5.13684, 0.51698, -11.7774)

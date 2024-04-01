@@ -1,7 +1,7 @@
 ![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
 # COGITO
 [![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202403-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
-beta 202403.24
+beta 202403.25
 
 ## What is it?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.

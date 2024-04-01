@@ -77,10 +77,10 @@ readable_content = "You've found a Demo Hint!
 These contain explanations on how objects in this scene are set up.
 
 This hint is an example of using ReadableComponent.
-A ReadableComponent is an InteractionComponent that makes objects \"readable\". On interacting, a window like this will pop up, displaying a text.
+A ReadableComponent is an InteractionComponent that makes objects \"readable\". On interacting, a window like this will pop up, displaying some text.
 
-To create your own, attach a ReadableComponent to an Cogito Object and set the desired title, text and sound.
-As with any InteractionComponent, you can also customize with input_map_action is used and what prompt is displayed. In this case it is \"Read hint\".
+To create your own, attach a ReadableComponent to a Cogito Object and set the desired title, text and sound.
+As with any InteractionComponent, you can also customize which input_map_action is used and what prompt is displayed. In this case it is \"Read hint\".
 
 To close this window, either press the interaction button again or press ESC."
 interaction_text = "Read hint"

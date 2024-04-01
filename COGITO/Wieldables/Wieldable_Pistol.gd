@@ -1,4 +1,4 @@
-extends Node3D
+extends CogitoWieldable
 
 @export_group("Pistol Settings")
 ## Path to the projectile prefab scene
@@ -17,29 +17,6 @@ extends Node3D
 @export var sound_secondary_use : AudioStream
 @export var sound_reload : AudioStream
 
-@export_group("General Wieldable Settings")
-## Item resource that this wieldable refers to.
-@export var item_reference : WieldableItemPD
-## Visible parts of the wieldable. Used to hide/show on equip/unequip.
-@export var wieldable_mesh : Node3D
-
-@export_group("Animations")
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var audio_stream_player_3d = $AudioStreamPlayer3D
-
-@export var anim_equip: String = "equip"
-@export var anim_unequip: String = "unequip"
-@export var anim_action_primary: String = "action_primary"
-@export var anim_action_secondary: String = "action_secondary"
-@export var anim_reload: String = "reload"
-
-### Every wieldable needs the following functions:
-### equip(_player_interaction_component), unequip(), action_primary(), action_secondary(), reload()
-
-var player_interaction_component : PlayerInteractionComponent # Stores the player interaction component
-
-func _ready():
-	wieldable_mesh.hide()
 
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
 func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool):
@@ -67,7 +44,6 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
 	Projectile.reparent(get_tree().get_current_scene())
-	
 
 
 func action_secondary(is_released:bool):
@@ -91,14 +67,3 @@ func reload():
 	animation_player.play(anim_reload)
 	audio_stream_player_3d.stream = sound_reload
 	audio_stream_player_3d.play()
-
-
-# Function called when wieldable is unequipped.
-func equip(_player_interaction_component: PlayerInteractionComponent):
-	animation_player.play(anim_equip)
-	player_interaction_component = _player_interaction_component
-
-
-# Function called when wieldable is unequipped.
-func unequip():
-	animation_player.play(anim_unequip)
