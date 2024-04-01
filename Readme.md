@@ -40,9 +40,10 @@ COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [
 
 
 ## Videos
-**(OLD) Video giving an overview of features: [COGITO Overview](https://www.youtube.com/watch?v=LYBo1_Qfru0)
+**(OLD) Video giving an overview of features: [COGITO Overview](https://www.youtube.com/watch?v=LYBo1_Qfru0)**
 
 [![COGITO Sliding door from scratch](docs/cog_tut_sliding_door.jpg)](https://youtu.be/rLBSxqjXlWY)
+[![COGITO Wieldables Overview](docs/cog_tut_wieldables.jpg)](https://www.youtube.com/watch?v=9TK4Tw48nKQ)
 
 ## Thanks and Contributions
 - AC-Arcana: added DynamicFootstepSystem
