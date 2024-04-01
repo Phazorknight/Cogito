@@ -3,7 +3,9 @@
 > The documentation is still work in progress and will be updated over time.
 
 > [!IMPORTANT]  
-> This documenation will give you an overview of the most important properties & methods of the different nodes and how to use them. If you want to dive deeper into the code, you can also read the comments in the source code.
+> This documenation will give you an overview of the most important properties & methods of the different nodes and how to use them.
+> This documentation does not always list each and every function or exposed property, as these are better explored in the editor itself and include tooltips on how to use them.
+> If you want to dive deeper into the code, you can also read the comments in the source code.
 
 **Table of Contents**
 - [Documentation](#documentation)
@@ -204,6 +206,18 @@ COGITO works with a raycast interaction system. This means that the player camer
 
  # Cogito Objects
 Cogito Objects refers to classes specifcally created to work with all of COGITO's systems. These are designed to represent the most commonly used interactive objects in games. Below you'll find a brief explanation what each object does so you know which one to choose when you want to turn your own asset into a suitable Cogito Object.
+Interactables consider of two major parts: The object itself and the InteractionComponents attached as child nodes to define what kind of interactions can be done.
+
+Here's a quick overview which object to use for what use-case:
+| Cogito Object/Script  | Use case |
+| ------------- | ------------- |
+| Cogito_Object | Item pick-ups, props, crates, "clutter objects" |
+| Cogito_Door | Doors, gates, manually controlled platforms, bridges, moveable objects with two positions (open/closed)  |
+| Cogito_Button | Button that unlocks a door (single-use), vending machine buttons (repeated-use)  |
+| Cogito_Switch | Lamps, levers, sockets for key objects, objects with two states (on/off) |
+| Cogito_Keypad | Keypads, other UI based minigames that should send signals. |
+| Cogito_Turnwheel | Valves, rotation-based levers, press-and-hold interactions |
+
 
 ## Cogito_Object
 This is the basis of most smaller interactive objects. Item pickups, crates, and common "clutter objects" would utilize this.
@@ -315,16 +329,6 @@ The scene state contains the following data:
 
 
 ### --- OLD DOCUMENTATION BEYOND THIS POINT ---
-
-## Saving, Loading and Persistence - Scene Management
-- Save states are saved per default in dir "user://"
-- Player state and scene states are saved separately. That way the player save doesn't bloat with game size and there's some other minor comforts. 
-- Currently the following objects are saved:
-  - Cogito_Pickup.gd / Cogito_Carriable.gd: Since their existence in the scene can vary, these will be re-instantiated at their saved position if a scene state is loaded. Thus they need to be PackagedScenes to work!
-  - Cogito_Door: These will have their state saved (open/closed/locked)
-  - Cogito_Switch: These will have their state saved (on/off)
-- The following is still WIP or are not being saved:
-  - Destructable objects like the target.
 
 
 ## Interactables
