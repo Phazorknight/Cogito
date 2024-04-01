@@ -1,10 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmvweggv8f5p1"]
+[gd_scene load_steps=17 format=3 uid="uid://bmvweggv8f5p1"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_32vwr"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="2_w8f7r"]
 [ext_resource type="Script" path="res://COGITO/Components/Interactions/PickupComponent.gd" id="3_cmtpl"]
 [ext_resource type="Resource" uid="uid://b7myxblvr7lty" path="res://COGITO/InventoryPD/Items/Cogito_Laptop.tres" id="4_r0qpn"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="5_cln8f"]
+[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="6_xhh5j"]
+[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="7_ccijb"]
+[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_n8ylu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0826t"]
 resource_name = "metalDark"
@@ -137,3 +140,12 @@ script = ExtResource("3_cmtpl")
 slot_data = SubResource("Resource_p2x1b")
 input_map_action = "interact"
 interaction_text = "Pick up"
+
+[node name="QuestUpdaterA" type="Node3D" parent="."]
+script = ExtResource("6_xhh5j")
+quest_to_update = ExtResource("7_ccijb")
+update_type = 1
+
+[node name="QuestUpdaterB" type="Node3D" parent="."]
+script = ExtResource("6_xhh5j")
+quest_to_update = ExtResource("8_n8ylu")

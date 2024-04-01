@@ -11,7 +11,8 @@ var has_been_triggered : bool = false #Used to avoid double-triggering.
 
 
 func _ready():
-	add_to_group("save_object_state")
+	#add_to_group("save_object_state")
+	pass
 
 
 # Called when the node enters the scene tree for the first time.

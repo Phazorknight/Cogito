@@ -66,7 +66,7 @@ anim_action_secondary = "ToyPistol/action_secondary"
 anim_reload = "ToyPistol/reload"
 
 [node name="ToyPistol_mesh" type="Node3D" parent="."]
-transform = Transform3D(1, 0, -2.27374e-13, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-2.80971e-08, 0.642788, 0.766044, -1, -4.37114e-08, 0, 3.34849e-08, -0.766044, 0.642788, 0, -0.5, 0)
 script = ExtResource("5_1h55s")
 
 [node name="pistol_mesh" type="MeshInstance3D" parent="ToyPistol_mesh"]
