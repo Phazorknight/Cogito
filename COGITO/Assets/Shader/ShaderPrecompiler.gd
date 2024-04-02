@@ -24,7 +24,7 @@ static func precompile(tree : SceneTree, shader : ShaderMaterial, use_new_node :
 		compiler.position = Vector3(0,0,-0.1) # position self in front of camera
 		
 		compiler.cast_shadow = 0
-		compiler.custom_aabb = AABB(compiler.global_position, Vector3.ONE*100) # make sure we're always rendering
+		compiler.custom_aabb = AABB(compiler.position, Vector3.ONE*100) # make sure we're always rendering
 		
 		tree.root.get_camera_3d().add_child(compiler)
 	else:

@@ -22,7 +22,7 @@ func spawn_objects():
 		spawn_point.z = randf_range(spawn_area.global_position.z - spawn_area.shape.size.z, spawn_area.global_position.z + spawn_area.shape.size.z )
 		
 		var spawned_object = object_to_spawn.instantiate()
-		spawned_object.global_position = spawn_point
+		spawned_object.position = spawn_point
 		get_tree().current_scene.add_child(spawned_object)
 		
 		left_to_spawn -= 1
