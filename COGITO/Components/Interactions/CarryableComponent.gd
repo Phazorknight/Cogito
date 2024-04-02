@@ -12,6 +12,8 @@ class_name CarryableComponent
 @export var carrying_velocity_multiplier : float = 10
 ## Sets how far away the carried object needs to be from the carry_position before it gets dropped.
 @export var drop_distance : float = 1.5
+##Sets whether the object can be carried while wielding a weapon
+@export var is_carriable_while_wielding : bool = false
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var camera : Camera3D = get_viewport().get_camera_3d()
@@ -37,7 +39,7 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 
 func carry(_player_interaction_component:PlayerInteractionComponent):
 	player_interaction_component = _player_interaction_component
-	if player_interaction_component.is_wielding:
+	if player_interaction_component.is_wielding and not is_carriable_while_wielding:
 		player_interaction_component.send_hint(null,"Can't carry an object while wielding.")
 		return
 
