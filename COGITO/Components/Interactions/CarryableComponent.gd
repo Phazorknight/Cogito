@@ -4,6 +4,8 @@ class_name CarryableComponent
 @export_group("Carriable Settings")
 @export var pick_up_sound : AudioStream
 @export var drop_sound : AudioStream
+##Sets whether the object can be carried while wielding a weapon
+@export var is_carryable_while_wielding : bool = false
 ## Use this to adjust the carry position distance from the player. Per default it's the interaction raycast length. Negative values are closer, positive values are further away.
 @export var carry_distance_offset : float = 0
 ## Set if the object should not rotate when being carried. Usually true is preferred.
@@ -37,7 +39,7 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 
 func carry(_player_interaction_component:PlayerInteractionComponent):
 	player_interaction_component = _player_interaction_component
-	if player_interaction_component.is_wielding:
+	if player_interaction_component.is_wielding and not is_carryable_while_wielding:
 		player_interaction_component.send_hint(null,"Can't carry an object while wielding.")
 		return
 
