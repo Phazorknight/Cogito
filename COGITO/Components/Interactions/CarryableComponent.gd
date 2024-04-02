@@ -4,6 +4,8 @@ class_name CarryableComponent
 @export_group("Carriable Settings")
 @export var pick_up_sound : AudioStream
 @export var drop_sound : AudioStream
+##Sets whether the object can be carried while wielding a weapon
+@export var is_carryable_while_wielding : bool = false
 ## Use this to adjust the carry position distance from the player. Per default it's the interaction raycast length. Negative values are closer, positive values are further away.
 @export var carry_distance_offset : float = 0
 ## Set if the object should not rotate when being carried. Usually true is preferred.
@@ -12,8 +14,6 @@ class_name CarryableComponent
 @export var carrying_velocity_multiplier : float = 10
 ## Sets how far away the carried object needs to be from the carry_position before it gets dropped.
 @export var drop_distance : float = 1.5
-##Sets whether the object can be carried while wielding a weapon
-@export var is_carryable_while_wielding : bool = false
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var camera : Camera3D = get_viewport().get_camera_3d()
