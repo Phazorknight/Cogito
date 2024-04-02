@@ -80,7 +80,7 @@ func action_secondary(is_released:bool):
 		tween_pistol.tween_property(self,"position", Vector3(0,default_position.y,default_position.z), .2)
 
 
-func hit_scan_collision(collision_point):
+func hit_scan_collision(collision_point:Vector3):
 	var bullet_direction = (collision_point - bullet_point.get_global_transform().origin).normalized()
 	var new_intersection = PhysicsRayQueryParameters3D.create(bullet_point.get_global_transform().origin, collision_point + bullet_direction * 2)
 	
@@ -107,7 +107,7 @@ func reload():
 	audio_stream_player_3d.play()
 
 
-# Function called when wieldable is unequipped.
+# Function called when wieldable is equipped.
 func equip(_player_interaction_component: PlayerInteractionComponent):
 	spawn_node = get_tree().get_current_scene()
 	animation_player.play(anim_equip)

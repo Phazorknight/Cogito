@@ -110,7 +110,6 @@ func load_player_state(player, passed_slot:String):
 		for i in loaded_attribute_data.size():
 			player.player_attributes[i].set_attribute(loaded_attribute_data[i].x,loaded_attribute_data[i].y)
 
-
 		player.global_position = _player_state.player_position
 		player.global_rotation = _player_state.player_rotation
 		
@@ -119,7 +118,7 @@ func load_player_state(player, passed_slot:String):
 		for state_data in player_interaction_component_state:
 			for data in state_data.keys():
 				player.player_interaction_component.set(data, state_data[data])
-			player.player_interaction_component.set_state()
+			player.player_interaction_component.set_state.call_deferred() #Calling this deferred as some state calls need to make sure the scene is finished loading.
 		
 		player.player_state_loaded.emit()
 	else:
@@ -297,5 +296,5 @@ func load_next_scene(target : String, connector_name: String, passed_slot: Strin
 
 
 func reset_scene_states():
-	# CREATE FUNCTION THAT DELETES SCENE STATE FILES.
+	# TODO: CREATE FUNCTION THAT DELETES SCENE STATE FILES.
 	pass
