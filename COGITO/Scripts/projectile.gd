@@ -1,4 +1,4 @@
-extends Node
+extends CogitoObject
 
 # Lifespan is being set by the Lifespan timer.
 @onready var lifespan = $Lifespan
@@ -6,14 +6,14 @@ extends Node
 var damage_amount : int = 0
 ## Determine what happens if the projectile hits something. Keep this false for stuff like Arrows. True for stuff like bullets or rockets.
 @export var destroy_on_impact : bool = false
-## Determine if the player can pick this projectile up again.
-var interaction_nodes : Array[Node]
+
 
 func _ready():
 	add_to_group("interactable")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	
-	lifespan.timeout.connect(on_timeout)
+	if lifespan:
+		lifespan.timeout.connect(on_timeout)
 
 
 func on_timeout():

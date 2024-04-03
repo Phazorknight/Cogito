@@ -228,6 +228,9 @@ func attempt_reload():
 		print("Can't interrupt current action / animation")
 		return
 	
+	if equipped_wieldable_node.no_reload:
+		return
+	
 	var ammo_needed : int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)
 	if ammo_needed <= 0:
 		print("Wieldable is fully charged.")
@@ -259,6 +262,7 @@ func attempt_reload():
 		
 		inventory.inventory_updated.emit(inventory)
 		equipped_wieldable_item.update_wieldable_data(self)
+
 
 func on_death():
 	if equipped_wieldable_item:

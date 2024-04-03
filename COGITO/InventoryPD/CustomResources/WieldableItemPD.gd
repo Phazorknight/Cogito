@@ -94,8 +94,8 @@ func add(amount):
 
 
 # Function to get the AmmoItemPD
-func get_ammo_item(item_name_to_check_for: String) -> AmmoItemPD:
-	var ammo_item : AmmoItemPD
+func get_ammo_item(item_name_to_check_for: String) -> InventoryItemPD:
+	var ammo_item : InventoryItemPD
 	if player_interaction_component.get_parent().inventory_data != null:
 		var inventory_to_check = player_interaction_component.get_parent().inventory_data
 		for slot in inventory_to_check.inventory_slots:
