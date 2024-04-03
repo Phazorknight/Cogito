@@ -1,10 +1,14 @@
+class_name CogitoPlayer
 extends CharacterBody3D
+## The player class controls movement from input from the mouse, keyboard, and gamepad
+## Find the template player int res://COGITO/PrefabScenes/player.tscn
 
 signal menu_pressed(player_interaction_component: PlayerInteractionComponent) #Used to exit out other interfaces when ESC/Menu is pressed.
 signal toggle_inventory_interface()
 signal player_state_loaded()
 signal toggled_interface(is_showing_ui:bool) #Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
 
+#region Variables
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
 ## Refereence to Player HUD node
@@ -17,36 +21,8 @@ var is_showing_ui : bool
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
 @export var fall_damage_threshold : float = -5
 
-## Flag if Stamina component isused (as this effects movement)
-#@export var is_using_stamina : bool = true
-
-### NEW PLAYER ATTRIBUTE SYSTEM:
-var player_attributes : Array[Node]
-var stamina_attribute : CogitoAttribute = null
-var visibility_attribute : CogitoAttribute
-
-# Node caching
-@onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
-@onready var neck: Node3D = $Neck
-@onready var head: Node3D = $Neck/Head
-@onready var eyes: Node3D = $Neck/Head/Eyes
-@onready var camera: Camera3D = $Neck/Head/Eyes/Camera
-@onready var animationPlayer: AnimationPlayer = $Neck/Head/Eyes/AnimationPlayer
-
-@onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
-@onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
-@onready var crouch_raycast: RayCast3D = $CrouchRayCast
-@onready var sliding_timer: Timer = $SlidingTimer
-@onready var footstep_timer: Timer = $FootstepTimer
-@onready var jump_timer: Timer = $JumpCooldownTimer
-
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : InventoryPD
-
-# Adding carryable position for item control.
-@onready var carryable_position = %CarryablePosition
-@onready var footstep_player = $FootstepPlayer
-@onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
@@ -62,9 +38,6 @@ var visibility_attribute : CogitoAttribute
 @export var sprint_footstep_interval : float = 0.3
 ## the speed at which the player must be moving before the footsteps change from walk to sprint.
 @export var footstep_interval_change_velocity : float = 5.2
-
-## performance saving variable
-@onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
@@ -82,10 +55,6 @@ var visibility_attribute : CogitoAttribute
 @export var SLIDE_JUMP_MOD : float = 1.5
 
 @export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
-var WIGGLE_ON_WALKING_SPEED : float = 14.0
-var WIGGLE_ON_SPRINTING_SPEED : float = 22.0
-var WIGGLE_ON_CROUCHING_SPEED : float = 10.0
-
 @export var WIGGLE_ON_WALKING_INTENSITY : float = 0.1
 @export var WIGGLE_ON_SPRINTING_INTENSITY : float = 0.2
 @export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.05
@@ -93,21 +62,13 @@ var WIGGLE_ON_CROUCHING_SPEED : float = 10.0
 @export var BUNNY_HOP_ACCELERATION : float = 0.1
 @export var INVERT_Y_AXIS : bool = true
 
-## STAIR HANDLING STUFF
 @export_group("Stair Handling")
-var is_step : bool = false
-var step_check_height : Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
-var gravity_vec : Vector3 = Vector3.ZERO
-var head_offset : Vector3 = Vector3.ZERO
-var snap : Vector3 = Vector3.ZERO
 ## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
 @export var step_height_camera_lerp : float = 2.5
 ## This sets the height of what is still considered a step (instead of a wall/edge)
 @export var STEP_HEIGHT_DEFAULT : Vector3 = Vector3(0, 0.5, 0)
 ## This sets the step slope degree check. When set to 0, tiny edges etc might stop the player in it's tracks. 1 seems to work fine.
 @export var STEP_MAX_SLOPE_DEGREE : float = 0.0
-const STEP_CHECK_COUNT : int = 2
-const WALL_MARGIN : float = 0.001
 
 @export_group("Ladder Handling")
 var on_ladder : bool = false
@@ -122,6 +83,28 @@ var ladder_on_cooldown : bool = false
 @export var JOY_DEADZONE : float = 0.25
 @export var JOY_V_SENS : int = 3
 @export var JOY_H_SENS : int = 2
+
+## Flag if Stamina component isused (as this effects movement)
+#@export var is_using_stamina : bool = true
+
+### NEW PLAYER ATTRIBUTE SYSTEM:
+var player_attributes : Array[Node]
+var stamina_attribute : CogitoAttribute = null
+var visibility_attribute : CogitoAttribute
+
+var WIGGLE_ON_WALKING_SPEED : float = 14.0
+var WIGGLE_ON_SPRINTING_SPEED : float = 22.0
+var WIGGLE_ON_CROUCHING_SPEED : float = 10.0
+
+## STAIR HANDLING STUFF
+var is_step : bool = false
+var step_check_height : Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
+var gravity_vec : Vector3 = Vector3.ZERO
+var head_offset : Vector3 = Vector3.ZERO
+var snap : Vector3 = Vector3.ZERO
+
+const STEP_CHECK_COUNT : int = 2
+const WALL_MARGIN : float = 0.001
 
 var joystick_h_event
 var joystick_v_event
@@ -147,6 +130,36 @@ var stand_after_roll : bool = false
 var is_movement_paused : bool = false
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
+
+# Node caching
+@onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
+@onready var neck: Node3D = $Neck
+@onready var head: Node3D = $Neck/Head
+@onready var eyes: Node3D = $Neck/Head/Eyes
+@onready var camera: Camera3D = $Neck/Head/Eyes/Camera
+@onready var animationPlayer: AnimationPlayer = $Neck/Head/Eyes/AnimationPlayer
+
+@onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
+@onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
+@onready var crouch_raycast: RayCast3D = $CrouchRayCast
+@onready var sliding_timer: Timer = $SlidingTimer
+@onready var footstep_timer: Timer = $FootstepTimer
+@onready var jump_timer: Timer = $JumpCooldownTimer
+
+# Adding carryable position for item control.
+@onready var carryable_position = %CarryablePosition
+@onready var footstep_player = $FootstepPlayer
+@onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
+
+## performance saving variable
+@onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
+
+# Cache allocation of test motion parameters.
+@onready var _params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
+
+@onready var self_rid: RID = self.get_rid()
+@onready var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+#endregion
 
 
 func _ready():
@@ -195,10 +208,12 @@ func _ready():
 	
 	call_deferred("slide_audio_init")
 
+
 func slide_audio_init():
 	#setup sound effect for sliding
 	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
 	slide_audio_player.reparent(self, false)
+
 
 # Use these functions to manipulate player attributes.
 func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
@@ -236,10 +251,12 @@ func _on_pause_movement():
 		is_movement_paused = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+
 func _on_resume_movement():
 	if is_movement_paused:
 		is_movement_paused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 
 # reload options user may have changed while paused.
 func _reload_options():
@@ -247,6 +264,7 @@ func _reload_options():
 	if err == 0:
 		print("Player.gd: Options reloaded.")
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+
 
 # Signal from Pause Menu
 func _on_pause_menu_resume():
@@ -293,9 +311,6 @@ func _input(event):
 			toggle_inventory_interface.emit()
 
 
-# Cache allocation of test motion parameters.
-@onready var _params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
-
 func params(transform3d, motion):
 	var params : PhysicsTestMotionParameters3D = _params
 	params.from = transform3d
@@ -303,14 +318,14 @@ func params(transform3d, motion):
 	params.recovery_as_collision = true
 	return params
 
-@onready var self_rid: RID = self.get_rid()
-@onready var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 	return PhysicsServer3D.body_test_motion(self_rid, params(transform3d, motion), test_motion_result)	
 
+
 func ladder_buffer_finished():
 	ladder_on_cooldown = false
+
 
 func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	# called by ladder_area.gd
@@ -785,6 +800,7 @@ func _physics_process(delta):
 
 func _on_sliding_timer_timeout():
 	is_free_looking = false
+
 
 func _on_animation_player_animation_finished(anim_name):
 	stand_after_roll = anim_name == 'roll' and !is_crouching
