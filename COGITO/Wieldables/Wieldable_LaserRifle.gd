@@ -88,7 +88,7 @@ func hit_scan_collision(collision_point:Vector3):
 	
 	# Spawning a laser ray
 	var instantiated_ray = laser_ray_prefab.instantiate()
-	instantiated_ray.draw_ray(bullet_point.get_global_transform().origin, collision_point + bullet_direction)
+	instantiated_ray.draw_ray(bullet_point.get_global_transform().origin, collision_point)
 	spawn_node.add_child(instantiated_ray)
 	
 	if bullet_collision:
