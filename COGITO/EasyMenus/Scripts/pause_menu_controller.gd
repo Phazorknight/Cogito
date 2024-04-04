@@ -1,6 +1,21 @@
+class_name CogitoPauseMenu
 extends Control
+## This class controls the pause menu which can be found here: 
+## res://COGITO/EasyMenus/Scenes/PauseMenu.tscn
+## You can override this class to add buttons to your pause menu
+## look at the function open_options_menu for an example of showing a submenu
+## also remember to add a hide call for your menu in _input
+
 signal resume
 signal back_to_main_pressed
+
+#region Variables
+@export var nodes_to_focus: Array[Control]
+@export var sound_hover : AudioStream
+@export var sound_click : AudioStream
+
+var playback : AudioStreamPlaybackPolyphonic
+var temp_screenshot : Image
 
 @onready var resume_game_button: Button = %ResumeGameButton
 @onready var save_button: CogitoUiButton = %SaveButton
@@ -8,14 +23,7 @@ signal back_to_main_pressed
 @onready var label_active_slot: Label = %Label_ActiveSlot
 @onready var options_tab_menu: OptionsTabMenu = $Content/OptionsTabMenu
 @onready var game_menu: MarginContainer = $Content/GameMenu
-
-@export var nodes_to_focus: Array[Control]
-
-#region UI AUDIO
-@export var sound_hover : AudioStream
-@export var sound_click : AudioStream
-var playback : AudioStreamPlaybackPolyphonic
-var temp_screenshot : Image
+#endregion
 
 
 func _enter_tree() -> void:
@@ -49,7 +57,6 @@ func _play_hover() -> void:
 
 func _play_pressed() -> void:
 	playback.play_stream(sound_click, 0, 0, 1)
-#endregion
 
 
 func open_pause_menu():
@@ -130,7 +137,6 @@ func _input(event):
 		close_pause_menu()
 
 
-
 func _on_save_button_pressed() -> void:
 	CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
@@ -139,7 +145,7 @@ func _on_save_button_pressed() -> void:
 	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
 	
 	_on_resume_game_button_pressed()
-	
+
 
 func _on_load_button_pressed() -> void:
 	print("LOAD BUTTON PRESSED")
