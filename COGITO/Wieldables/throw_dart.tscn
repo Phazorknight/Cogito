@@ -80,9 +80,9 @@ projectile_prefab = ExtResource("2_e6p2w")
 projectile_velocity = 40.0
 item_reference = ExtResource("2_3c0of")
 wieldable_mesh = NodePath("DartMesh")
-no_reload = true
 anim_equip = "Dart_equip"
 anim_unequip = "Dart_unequip"
+anim_action_primary = "throw"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

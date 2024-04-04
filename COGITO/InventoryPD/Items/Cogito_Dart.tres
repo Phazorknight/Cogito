@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_ub1do")
+no_reload = true
 charge_max = 1.0
 ammo_item_name = "Dart"
 charge_current = 1.0

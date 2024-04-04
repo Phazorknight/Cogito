@@ -8,6 +8,7 @@
 [resource]
 script = ExtResource("2_h6bnx")
 wieldable_data_icon = ExtResource("3_ea2qf")
+no_reload = false
 charge_max = 100.0
 ammo_item_name = "Battery"
 charge_current = 100.0

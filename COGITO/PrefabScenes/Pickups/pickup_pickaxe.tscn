@@ -76,7 +76,7 @@ size = Vector3(0.0939087, 0.715472, 0.0958008)
 [sub_resource type="BoxShape3D" id="BoxShape3D_opt4m"]
 size = Vector3(0.534586, 0.0714657, 0.0451172)
 
-[sub_resource type="Resource" id="Resource_07dwn"]
+[sub_resource type="Resource" id="Resource_xhjqk"]
 resource_local_to_scene = true
 script = ExtResource("5_8rqog")
 inventory_item = ExtResource("4_n8uo2")
@@ -102,4 +102,4 @@ shape = SubResource("BoxShape3D_opt4m")
 [node name="ImpactSounds" parent="." instance=ExtResource("2_hpgs1")]
 
 [node name="PickupComponent" parent="." instance=ExtResource("3_26kv0")]
-slot_data = SubResource("Resource_07dwn")
+slot_data = SubResource("Resource_xhjqk")

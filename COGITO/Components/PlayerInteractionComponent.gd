@@ -228,7 +228,8 @@ func attempt_reload():
 		print("Can't interrupt current action / animation")
 		return
 	
-	if equipped_wieldable_node.no_reload:
+	# If the item doesn't use reloading, return.
+	if equipped_wieldable_item.no_reload:
 		return
 	
 	var ammo_needed : int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)

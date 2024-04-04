@@ -7,8 +7,8 @@ signal charge_changed()
 @export_group("Wieldable settings")
 ## Icon that is displayed on the HUD when item is wielded. If NULL, the item icon will be used instead.
 @export var wieldable_data_icon : Texture2D
-
-var wieldable_data_text : String
+## Check this if your wieldable doesn't use reload (for example melee weapons)
+@export var no_reload : bool = false
 
 ## The maximum charge of the item (this equals fully charged battery in a flashlight or magazine size in guns)
 @export var charge_max : float
@@ -21,6 +21,7 @@ var wieldable_data_text : String
 ## Used for weapons
 @export var wieldable_damage : float
 
+var wieldable_data_text : String
 
 func use(target) -> bool:
 	# Target should always be player? Null check to override using the CogitoSceneManager, which stores a reference to current player node
@@ -66,7 +67,10 @@ func put_away():
 func update_wieldable_data(_player_interaction_component : PlayerInteractionComponent):
 	if _player_interaction_component: #Only update if something get's passed
 		if is_being_wielded:
-			_player_interaction_component.updated_wieldable_data.emit(self,get_item_amount_in_inventory(ammo_item_name),get_ammo_item(ammo_item_name))
+			if !no_reload:
+				_player_interaction_component.updated_wieldable_data.emit(self,get_item_amount_in_inventory(ammo_item_name),get_ammo_item(ammo_item_name))
+			else:
+				_player_interaction_component.updated_wieldable_data.emit(self,0,null)
 		else:
 			_player_interaction_component.updated_wieldable_data.emit(null, 0, null)
 
