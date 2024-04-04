@@ -4,7 +4,7 @@ class_name InventoryItemPD
 ## Name of Item as it appears in game.
 @export var name : String = ""
 ## Description of Item as it'll appear in the HUD / Inventory menu
-@export_multiline var descpription : String = ""
+@export_multiline var description : String = ""
 ## Icon of Item for HUD / Inventory
 @export var icon : Texture2D
 ## Sets if an item can be stackable or not. Usually used for consumables or ammo.

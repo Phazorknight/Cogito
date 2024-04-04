@@ -9,7 +9,7 @@
 script = ExtResource("3_2pl2b")
 discard_after_use = true
 name = "Key"
-descpription = "Opens a locked door."
+description = "Opens a locked door."
 icon = ExtResource("1_n8yj5")
 is_stackable = false
 stack_size = 1
