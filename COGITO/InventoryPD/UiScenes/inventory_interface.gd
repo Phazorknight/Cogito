@@ -66,7 +66,7 @@ func _on_focus_changed(control: Control):
 		
 	if control_in_focus.item_data and !grabbed_slot.visible:
 		item_name.text = control_in_focus.item_data.name
-		item_description.text = control_in_focus.item_data.descpription
+		item_description.text = control_in_focus.item_data.description
 		info_panel.global_position = control_in_focus.global_position + Vector2(0,control_in_focus.size.y)
 		info_panel.show()
 	else:

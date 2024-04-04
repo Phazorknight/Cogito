@@ -8,7 +8,7 @@
 script = ExtResource("1_h5ph8")
 discard_after_use = false
 name = "CEOs Laptop"
-descpription = "The CEO's laptop. There's probably a  lot of valuable data on here."
+description = "The CEO's laptop. There's probably a lot of valuable data on here."
 icon = ExtResource("1_bw20e")
 is_stackable = false
 stack_size = 0

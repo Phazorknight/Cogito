@@ -7,7 +7,7 @@
 script = ExtResource("1_5cvs2")
 discard_after_use = false
 name = "Combined Page"
-descpription = "Reassembled page from the ripped pieces. It says \"New code is 0451\" on it."
+description = "Reassembled page from the ripped pieces. It says \"New code is 0451\" on it."
 icon = ExtResource("1_g83kf")
 is_stackable = false
 stack_size = 0

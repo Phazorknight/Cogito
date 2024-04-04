@@ -8,7 +8,7 @@
 script = ExtResource("2_fxw06")
 discard_after_use = false
 name = "Laptop"
-descpription = "Feels light and doesn't turn on.
+description = "Feels light and doesn't turn on.
 Does that matter?"
 icon = ExtResource("1_ovk1j")
 is_stackable = false

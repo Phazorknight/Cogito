@@ -9,7 +9,7 @@
 script = ExtResource("3_5ndf1")
 discard_after_use = true
 name = "Diamond Key"
-descpription = "This looks like it could fit into something."
+description = "This looks like it could fit into something."
 icon = ExtResource("1_iq57n")
 is_stackable = false
 stack_size = 0
