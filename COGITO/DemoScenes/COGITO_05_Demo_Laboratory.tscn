@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=102 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://COGITO/PrefabScenes/heal_zone.tscn" id="36_fryka"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/Pickups/pickup_health_potion.tscn" id="37_0wxqc"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/Pickups/pickup_stamina_extension.tscn" id="38_ayqrv"]
+[ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PrefabScenes/Pickups/pickup_dart.tscn" id="40_hi3jw"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -2942,6 +2943,18 @@ transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, 
 
 [node name="CarriableBox" parent="." instance=ExtResource("35_hegwd")]
 transform = Transform3D(0.952555, 0, 0.304366, 0, 1, 0, -0.304366, 0, 0.952555, -6.66945, 1, 4.34045)
+
+[node name="Pickup_Dart" parent="." instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0614817, 1.00006, -11.7358)
+
+[node name="Pickup_Dart2" parent="." instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.285636, 1.00006, -11.7358)
+
+[node name="Pickup_Dart3" parent="." instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.665604, 1.00006, -11.7358)
+
+[node name="Pickup_Dart4" parent="." instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.390677, 1.00006, -11.7358)
 
 [connection signal="pressed" from="SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton" to="VendingMachine/Spawnzone_VendingMachine" method="_on_generic_button_pressed"]

@@ -6,7 +6,8 @@ class_name CogitoWieldable
 @export var item_reference : WieldableItemPD
 ## Visible parts of the wieldable. Used to hide/show on equip/unequip.
 @export var wieldable_mesh : Node3D
-
+## Check this if your wieldable doesn't use reload (for example melee weapons)
+@export var no_reload : bool = false
 @export_group("Animations")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D

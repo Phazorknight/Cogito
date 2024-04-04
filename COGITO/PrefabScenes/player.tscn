@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=27 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dxxemvynrimqw" path="res://COGITO/Wieldables/pickaxe.tscn" id="12_03s1j"]
 [ext_resource type="AudioStream" uid="uid://b7wmxwvtbpfu1" path="res://COGITO/Assets/Audio/537275__laughingfish78__dirt-sliding.ogg" id="13_jr246"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="13_rawn6"]
+[ext_resource type="PackedScene" uid="uid://1vnxo4ya6yjr" path="res://COGITO/Wieldables/throw_dart.tscn" id="14_xn6yt"]
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="16_a6uam"]
 [ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="17_rmtvn"]
 [ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="18_q6u2l"]
@@ -112,6 +113,8 @@ collision_mask = 3
 
 [node name="Pickaxe" parent="Neck/Head/Wieldables" instance=ExtResource("12_03s1j")]
 
+[node name="Dart" parent="Neck/Head/Wieldables" instance=ExtResource("14_xn6yt")]
+
 [node name="SlidingTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
@@ -135,7 +138,7 @@ one_shot = true
 [node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position", "wieldable_nodes") instance=ExtResource("13_rawn6")]
 interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
 carryable_position = NodePath("../CarryablePosition")
-wieldable_nodes = [NodePath("../Neck/Head/Wieldables/Flashlight"), NodePath("../Neck/Head/Wieldables/Toy Pistol"), NodePath("../Neck/Head/Wieldables/Laser Rifle"), NodePath("../Neck/Head/Wieldables/Pickaxe")]
+wieldable_nodes = [NodePath("../Neck/Head/Wieldables/Flashlight"), NodePath("../Neck/Head/Wieldables/Toy Pistol"), NodePath("../Neck/Head/Wieldables/Laser Rifle"), NodePath("../Neck/Head/Wieldables/Pickaxe"), NodePath("../Neck/Head/Wieldables/Dart")]
 
 [connection signal="animation_finished" from="Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]
