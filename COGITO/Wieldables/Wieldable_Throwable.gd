@@ -1,6 +1,6 @@
 extends CogitoWieldable
 
-@export_group("Dart Settings")
+@export_group("Throwable Settings")
 ## Path to the projectile prefab scene
 @export var projectile_prefab : PackedScene
 ## Speed the projectile spawns with

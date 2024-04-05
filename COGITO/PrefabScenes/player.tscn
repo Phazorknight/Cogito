@@ -51,12 +51,13 @@ fall_damage = 10
 inventory_data = ExtResource("2_qleua")
 jump_sound = ExtResource("3_1sodd")
 slide_sound = ExtResource("13_jr246")
-HEADBOBBLE = 7
+HEADBOBBLE = 1
 STEP_MAX_SLOPE_DEGREE = 1.0
 
 [node name="VisibilityAttribute" parent="." instance=ExtResource("6_kao4w")]
 
 [node name="SanityAttribute" parent="." instance=ExtResource("7_toa7v")]
+decay_in_darkness = false
 
 [node name="StaminaAttribute" parent="." instance=ExtResource("5_dmlhq")]
 
