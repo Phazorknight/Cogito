@@ -89,7 +89,7 @@ texture = ExtResource("1_u313w")
 
 [node name="Sprite3D_01" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.004, 0.5, 0.045)
-visible = false
+visible = true
 texture = ExtResource("2_sl47g")
 script = ExtResource("3_swihv")
 rotation_axis = Vector3(0, 0, 1)
@@ -98,7 +98,7 @@ is_rotating = true
 
 [node name="Sprite3D_02" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.004, 0.5, 0.045)
-visible = false
+visible = true
 texture = ExtResource("4_p0ysn")
 script = ExtResource("3_swihv")
 rotation_axis = Vector3(0, 0, -1)
@@ -106,5 +106,5 @@ is_rotating = true
 
 [node name="Sprite3D03" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.004, 0.5, 0.046)
-visible = false
+visible = true
 texture = ExtResource("5_jn8cv")
