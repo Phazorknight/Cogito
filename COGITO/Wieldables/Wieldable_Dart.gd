@@ -1,8 +1,6 @@
 extends CogitoWieldable
 
 @export_group("Dart Settings")
-## Path to the projectile prefab scene
-@export var projectile_prefab : PackedScene
 ## Speed the projectile spawns with
 @export var projectile_velocity : float
 ## Node the projectile spawns at
@@ -67,7 +65,7 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
 	
 	# Spawning projectile
-	var Projectile = projectile_prefab.instantiate()
+	var Projectile = load(item_reference.drop_scene).instantiate()
 	bullet_point.add_child(Projectile)
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)

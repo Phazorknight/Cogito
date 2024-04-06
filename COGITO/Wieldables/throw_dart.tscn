@@ -1,8 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://1vnxo4ya6yjr"]
+[gd_scene load_steps=8 format=3 uid="uid://1vnxo4ya6yjr"]
 
 [ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Dart.gd" id="1_pgk5e"]
-[ext_resource type="Resource" uid="uid://c6rpnmo1y1cw5" path="res://COGITO/InventoryPD/Items/Cogito_Dart.tres" id="2_3c0of"]
-[ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PrefabScenes/Pickups/pickup_dart.tscn" id="2_e6p2w"]
 [ext_resource type="AnimationLibrary" uid="uid://ddo1rrwrgerw0" path="res://COGITO/Animations/Wieldables/Wieldable_Dart.res" id="2_nvn25"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_halr6"]
@@ -76,9 +74,7 @@ metallic = 1.0
 
 [node name="Dart" type="Node3D" node_paths=PackedStringArray("wieldable_mesh")]
 script = ExtResource("1_pgk5e")
-projectile_prefab = ExtResource("2_e6p2w")
 projectile_velocity = 40.0
-item_reference = ExtResource("2_3c0of")
 wieldable_mesh = NodePath("DartMesh")
 anim_equip = "Dart_equip"
 anim_unequip = "Dart_unequip"

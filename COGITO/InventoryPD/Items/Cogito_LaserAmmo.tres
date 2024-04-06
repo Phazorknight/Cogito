@@ -1,13 +1,11 @@
-[gd_resource type="Resource" script_class="AmmoItemPD" load_steps=5 format=3 uid="uid://cvupo3p844nh2"]
+[gd_resource type="Resource" script_class="AmmoItemPD" load_steps=4 format=3 uid="uid://cvupo3p844nh2"]
 
 [ext_resource type="Texture2D" uid="uid://uj2uowrvb2ni" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_LaserAmmo.png" id="1_6hnrl"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/AmmoItemPD.gd" id="1_opcg5"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_qv1dk"]
-[ext_resource type="Resource" uid="uid://txiu5yxexevm" path="res://COGITO/InventoryPD/Items/Cogito_LaserRifle.tres" id="4_37gcd"]
 
 [resource]
 script = ExtResource("1_opcg5")
-target_item_ammo = ExtResource("4_37gcd")
 reload_amount = 50
 name = "Laser Ammo"
 description = "Tends to get hot. One clip has a charge of 50."

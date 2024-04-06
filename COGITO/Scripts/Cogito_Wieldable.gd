@@ -3,7 +3,7 @@ class_name CogitoWieldable
 
 @export_group("General Wieldable Settings")
 ## Item resource that this wieldable refers to.
-@export var item_reference : WieldableItemPD
+var item_reference : WieldableItemPD
 ## Visible parts of the wieldable. Used to hide/show on equip/unequip.
 @export var wieldable_mesh : Node3D
 

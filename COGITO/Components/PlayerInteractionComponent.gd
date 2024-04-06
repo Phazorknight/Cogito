@@ -31,6 +31,7 @@ var is_changing_wieldables : bool = false #Used to avoid any input acitons while
 
 ## List of Wieldable nodes
 @export var wieldable_nodes : Array[Node]
+@export var wieldable_container : Node3D
 # Various variables used for wieldable handling
 var equipped_wieldable_item = null
 var equipped_wieldable_node = null
@@ -168,14 +169,15 @@ func equip_wieldable(wieldable_item:WieldableItemPD):
 	if wieldable_item != null:
 		equipped_wieldable_item = wieldable_item #Set Inventory Item reference
 		# Set Wieldable node reference
-		for wieldable_node in wieldable_nodes:
-			if wieldable_node.item_reference == equipped_wieldable_item:
-				equipped_wieldable_node = wieldable_node
-				print("PIC: Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
-				equipped_wieldable_node.equip(self)
-				is_wielding = true
-				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout
-				is_changing_wieldables = false
+		var wieldable_node = wieldable_item.build_wieldable_scene()
+		wieldable_container.add_child(wieldable_node)
+		equipped_wieldable_node = wieldable_node
+		equipped_wieldable_node.item_reference = wieldable_item
+		print("PIC: Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
+		equipped_wieldable_node.equip(self)
+		is_wielding = true
+		await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout
+		is_changing_wieldables = false
 	else:
 		is_changing_wieldables = false
 
@@ -190,6 +192,8 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 			if equipped_wieldable_node.animation_player.is_playing(): #Wait until unequip animation finishes.
 				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout 
 	equipped_wieldable_item = null
+	if equipped_wieldable_node != null:
+		equipped_wieldable_node.queue_free()
 	equipped_wieldable_node = null
 	is_wielding = false
 	equip_wieldable(next_wieldable)
