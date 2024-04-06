@@ -192,11 +192,7 @@ func _ready():
 			if visibility_attribute: # Hooking up sanity attribute to visibility attribute
 				visibility_attribute.attribute_changed.connect(attribute.on_visibility_changed)
 
-
-	#Set the Headbobble for real, as we can not manipulate vars while their created :/
-	WIGGLE_ON_WALKING_SPEED = HEADBOBBLE * 2
-	WIGGLE_ON_SPRINTING_SPEED = HEADBOBBLE * 3
-	WIGGLE_ON_CROUCHING_SPEED = HEADBOBBLE * 1.5
+	apply_headbobble()
 
 	# Pause Menu setup
 	if pause_menu:
@@ -215,6 +211,13 @@ func slide_audio_init():
 	#setup sound effect for sliding
 	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
 	slide_audio_player.reparent(self, false)
+
+
+#Set the Headbobble for real, as we can not manipulate vars while their created :/
+func apply_headbobble():
+	WIGGLE_ON_WALKING_SPEED = HEADBOBBLE * 2
+	WIGGLE_ON_SPRINTING_SPEED = HEADBOBBLE * 3
+	WIGGLE_ON_CROUCHING_SPEED = HEADBOBBLE * 1.5
 
 
 # Use these functions to manipulate player attributes.
@@ -265,6 +268,9 @@ func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err == 0:
 		print("Player.gd: Options reloaded.")
+		
+		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
+		apply_headbobble()
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 
 

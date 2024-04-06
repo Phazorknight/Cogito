@@ -14,13 +14,12 @@ custom_minimum_size = Vector2(500, 500)
 offset_right = 500.0
 offset_bottom = 500.0
 size_flags_horizontal = 4
+theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
-current_tab = 1
 script = ExtResource("2_bufp8")
 nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="Gameplay" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
 theme_override_constants/margin_left = 0
@@ -39,6 +38,23 @@ transition_time = 0.15
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
+
+[node name="HBoxContainer_Headbob" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="HeadbobLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Headbob"
+
+[node name="HeadbobOptionButton" type="OptionButton" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
 
 [node name="InvertYAxisCheckButton" type="CheckButton" parent="Gameplay/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -60,6 +76,7 @@ script = ExtResource("6_rlben")
 
 [node name="Graphics" type="MarginContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25

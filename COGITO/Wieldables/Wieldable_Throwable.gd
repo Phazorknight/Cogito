@@ -1,6 +1,7 @@
 extends CogitoWieldable
 
-@export_group("Dart Settings")
+
+@export_group("Throwable Settings")
 ## Speed the projectile spawns with
 @export var projectile_velocity : float
 ## Node the projectile spawns at
