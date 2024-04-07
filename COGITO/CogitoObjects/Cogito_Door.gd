@@ -66,6 +66,7 @@ var interaction_text
 var close_timer : Timer #Used for auto-close
 
 var interaction_nodes : Array[Node]
+var player_interaction_component : PlayerInteractionComponent
 
 func _ready():
 	add_to_group("interactable")
@@ -90,6 +91,7 @@ func _ready():
 
 
 func interact(interactor: Node3D):
+	player_interaction_component = interactor
 	if !is_locked:
 		if !is_open:
 			open_door(interactor)
@@ -189,7 +191,8 @@ func open_door(interactor: Node3D):
 		
 		
 func on_auto_close_time():
-	close_door(null)
+	close_door(player_interaction_component)
+	
 	
 	
 func close_door(_interactor: Node3D):
@@ -213,19 +216,24 @@ func close_door(_interactor: Node3D):
 		tween_door.tween_property(self,"position", closed_position, door_speed)
 	is_open = false
 	interaction_text = interaction_text_when_closed
+	player_interaction_component.interactive_object_exit() #Froces a re-detection of the interaction prompt.
 	object_state_updated.emit(interaction_text)
 	door_state_changed.emit(false)
 	
 func set_state():
 	if is_open:
+		if is_sliding:
+			position = open_position
 		interaction_text = interaction_text_when_open
 	else:
+		if is_sliding:
+			position = closed_position
 		interaction_text = interaction_text_when_closed
 	if is_locked:
 		interaction_text = interaction_text_when_locked
 	object_state_updated.emit(interaction_text)
-		
-	
+
+
 func save():
 	var state_dict = {
 		"node_path" : self.get_path(),
