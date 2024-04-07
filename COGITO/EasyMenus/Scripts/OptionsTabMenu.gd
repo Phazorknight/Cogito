@@ -1,11 +1,9 @@
-extends TabContainer
 class_name OptionsTabMenu
+extends CogitoTabMenu
 signal options_updated
 
 const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd")
 var config = ConfigFile.new()
-
-@export var nodes_to_focus: Array[Control]
 
 # GAMEPLAY
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
@@ -82,32 +80,6 @@ func on_open():
 	pass
 
 
-func _input(event):
-	if !visible:
-		return
-	
-	#Tab navigation
-	if (event.is_action_pressed("ui_next_tab")):
-		if current_tab + 1 == get_tab_count():
-			current_tab = 0
-		else:
-			current_tab += 1
-			
-		if nodes_to_focus[current_tab]:
-			#print("Grabbing focus of : ", tab_container.current_tab, " - ", nodes_to_focus[tab_container.current_tab])
-			nodes_to_focus[current_tab].grab_focus.call_deferred()
-		
-	if (event.is_action_pressed("ui_prev_tab")):
-		if current_tab  == 0:
-			current_tab = get_tab_count()-1
-		else:
-			current_tab -= 1
-			
-		if nodes_to_focus[current_tab]:
-			#print("Grabbing focus of : ", tab_container.current_tab, " - ", nodes_to_focus[tab_container.current_tab])
-			nodes_to_focus[current_tab].grab_focus.call_deferred()
-
-
 # Adding headbob options to the button
 func add_headbob_items() -> void:
 	for headbob_option in HEADBOB_DICTIONARY:
@@ -149,6 +121,7 @@ func on_window_mode_selected(index: int) -> void:
 func refresh_render():
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
+
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
