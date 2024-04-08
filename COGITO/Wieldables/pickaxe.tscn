@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dxxemvynrimqw"]
+[gd_scene load_steps=10 format=3 uid="uid://dxxemvynrimqw"]
 
 [ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Pickaxe.gd" id="1_hb7ed"]
-[ext_resource type="Resource" uid="uid://bp6xhd3rkh7tl" path="res://COGITO/InventoryPD/Items/Cogito_Pickaxe.tres" id="2_1ju5q"]
 [ext_resource type="AudioStream" uid="uid://ocm2blyfthyq" path="res://COGITO/Assets/Audio/Kenney/woosh1.ogg" id="2_hp6wh"]
 [ext_resource type="AnimationLibrary" uid="uid://da3y5068fwwbq" path="res://COGITO/Animations/Wieldables/Wieldable_Pickaxe.res" id="3_cqo2g"]
 [ext_resource type="Script" path="res://COGITO/Assets/Shader/ViewmodelSpace.gd" id="4_0jrxw"]
@@ -78,7 +77,6 @@ transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.3258
 script = ExtResource("1_hb7ed")
 damage_area = NodePath("PickaxeMesh/DamageArea")
 swing_sound = ExtResource("2_hp6wh")
-item_reference = ExtResource("2_1ju5q")
 wieldable_mesh = NodePath("PickaxeMesh")
 anim_action_primary = "swing"
 

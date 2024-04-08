@@ -159,6 +159,8 @@ var slide_audio_player : AudioStreamPlayer3D
 
 @onready var self_rid: RID = self.get_rid()
 @onready var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+
+@onready var wieldables = %Wieldables
 #endregion
 
 

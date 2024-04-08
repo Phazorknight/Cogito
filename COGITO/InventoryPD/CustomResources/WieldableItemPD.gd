@@ -5,6 +5,7 @@ class_name WieldableItemPD
 signal charge_changed()
 
 @export_group("Wieldable settings")
+@export var wieldable_scene : PackedScene
 ## Icon that is displayed on the HUD when item is wielded. If NULL, the item icon will be used instead.
 @export var wieldable_data_icon : Texture2D
 ## Check this if your wieldable doesn't use reload (for example melee weapons)
@@ -127,3 +128,9 @@ func save():
 		"charge_current" : charge_current
 	}
 	return saved_item_data
+
+
+func build_wieldable_scene():
+	var scene = wieldable_scene.instantiate()
+	scene.item_reference = self
+	return scene

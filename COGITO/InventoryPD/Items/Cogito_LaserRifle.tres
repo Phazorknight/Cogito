@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=4 format=3 uid="uid://txiu5yxexevm"]
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://txiu5yxexevm"]
 
 [ext_resource type="Texture2D" uid="uid://bnqyy1c46mlfw" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_LaserRifle.png" id="1_62c38"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_o1rdd"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_yhudh"]
+[ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://COGITO/Wieldables/laser_rifle.tscn" id="4_wbhgr"]
 
 [resource]
 script = ExtResource("2_o1rdd")
+wieldable_scene = ExtResource("4_wbhgr")
 no_reload = false
 charge_max = 100.0
 ammo_item_name = "Laser Ammo"

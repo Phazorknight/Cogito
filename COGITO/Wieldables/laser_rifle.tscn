@@ -270,7 +270,6 @@ laser_ray_prefab = ExtResource("2_ic084")
 ray_lifespan = 3.0
 default_position = Vector3(0.329, -0.264, -0.535)
 sound_primary_use = ExtResource("2_f7ale")
-item_reference = ExtResource("2_i0fx0")
 wieldable_mesh = NodePath("LaserRifleMesh")
 anim_equip = "LaserRifle/equip"
 anim_unequip = "LaserRifle/unequip"

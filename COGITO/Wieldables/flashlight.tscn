@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://5r8icl42jumy"]
+[gd_scene load_steps=7 format=3 uid="uid://5r8icl42jumy"]
 
 [ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Flashlight.gd" id="1_pak3j"]
 [ext_resource type="AudioStream" uid="uid://dsp8iwkwq2rlu" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch1.ogg" id="2_dm0bj"]
-[ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="3_2q6j0"]
 [ext_resource type="AnimationLibrary" uid="uid://dtnyvbl2d4lxg" path="res://COGITO/Animations/Wieldables/Wieldable_Flashlight.res" id="4_sk1pk"]
 [ext_resource type="Script" path="res://COGITO/Assets/Shader/ViewmodelSpace.gd" id="5_kuso5"]
 
@@ -22,7 +21,6 @@ transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.3258
 script = ExtResource("1_pak3j")
 drain_rate = 4.0
 switch_sound = ExtResource("2_dm0bj")
-item_reference = ExtResource("3_2q6j0")
 wieldable_mesh = NodePath("Flashlight_Mesh")
 anim_equip = "Wieldable_Flashlight/equip"
 anim_unequip = "Wieldable_Flashlight/unequip"
@@ -45,7 +43,6 @@ spot_range = 8.0
 spot_angle = 30.0
 
 [node name="Flashlight_Mesh" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("5_kuso5")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Flashlight_Mesh"]

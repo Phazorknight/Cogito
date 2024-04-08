@@ -1,8 +1,9 @@
 extends CogitoWieldable
 
+
 @export_group("Throwable Settings")
-## Path to the projectile prefab scene
-@export var projectile_prefab : PackedScene
+## Leave empty if projectile and pickup are the same scene
+@export var projectile_override: PackedScene
 ## Speed the projectile spawns with
 @export var projectile_velocity : float
 ## Node the projectile spawns at
@@ -67,8 +68,14 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
 	
 	# Spawning projectile
-	var Projectile = projectile_prefab.instantiate()
-	bullet_point.add_child(Projectile)
-	Projectile.damage_amount = _passed_item_reference.wieldable_damage
-	Projectile.set_linear_velocity(Direction * projectile_velocity)
-	Projectile.reparent(get_tree().get_current_scene())
+	var projectile = instantiate_projectile()
+	bullet_point.add_child(projectile)
+	projectile.damage_amount = _passed_item_reference.wieldable_damage
+	projectile.set_linear_velocity(Direction * projectile_velocity)
+	projectile.reparent(get_tree().get_current_scene())
+
+
+func instantiate_projectile() -> Node3D:
+	if projectile_override != null:
+		return projectile_override.instantiate()
+	return load(item_reference.drop_scene).instantiate()
