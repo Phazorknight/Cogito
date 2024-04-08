@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://1vnxo4ya6yjr"]
+[gd_scene load_steps=9 format=3 uid="uid://1vnxo4ya6yjr"]
 
 [ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Throwable.gd" id="1_pgk5e"]
 [ext_resource type="AnimationLibrary" uid="uid://ddo1rrwrgerw0" path="res://COGITO/Animations/Wieldables/Wieldable_Dart.res" id="2_nvn25"]
+[ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://COGITO/PrefabScenes/projectile_pistol.tscn" id="2_yv8tl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_halr6"]
 resource_name = "yellow"
@@ -74,6 +75,7 @@ metallic = 1.0
 
 [node name="Dart" type="Node3D" node_paths=PackedStringArray("wieldable_mesh")]
 script = ExtResource("1_pgk5e")
+projectile_override = ExtResource("2_yv8tl")
 projectile_velocity = 40.0
 wieldable_mesh = NodePath("DartMesh")
 anim_equip = "Dart_equip"
