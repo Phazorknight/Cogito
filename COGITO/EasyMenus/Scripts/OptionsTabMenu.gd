@@ -31,6 +31,7 @@ const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd
 @onready var contrast_slider: HSlider = %ContrastSlider
 
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
+#@onready var directional_light: DirectionalLight3D = $DirectionalLight3D
 
 var sfx_bus_index
 var music_bus_index
@@ -406,8 +407,8 @@ func _on_shadow_size_option_button_item_selected(index):
 		RenderingServer.directional_shadow_atlas_set_size(512, true)
 		# Adjust shadow bias according to shadow resolution.
 		# Higher resultions can use a lower bias without suffering from shadow acne.
+		#FIXME: Add a Directional Light to the main menu
 		#directional_light.shadow_bias = 0.06
-		#FIXME: ADD DIRECTIONAL LIGHT, and world enviroment to main menu
 		# Disable positional (omni/spot) light shadows entirely to further improve performance.
 		# These often don't contribute as much to a scene compared to directional light shadows.
 		get_viewport().positional_shadow_atlas_size = 0
