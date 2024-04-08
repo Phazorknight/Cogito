@@ -1,0 +1,30 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://bfqf441f3213a"]
+
+[ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_pmp3r"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
+panorama = ExtResource("1_pmp3r")
+
+[sub_resource type="Sky" id="Sky_h3ipr"]
+sky_material = SubResource("PanoramaSkyMaterial_wjbty")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_h3ipr")
+sky_rotation = Vector3(0, 1.74533, 0.174533)
+ambient_light_sky_contribution = 0.1
+ambient_light_energy = 0.2
+tonemap_mode = 1
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+glow_intensity = 2.5
+glow_strength = 0.37
+glow_bloom = 0.2
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_ambient_inject = 0.1
+volumetric_fog_sky_affect = 0.1
+volumetric_fog_temporal_reprojection_amount = 0.85
+adjustment_enabled = true
