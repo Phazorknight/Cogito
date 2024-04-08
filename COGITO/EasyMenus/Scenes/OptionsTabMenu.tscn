@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_6plem"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/OptionsTabMenu.gd" id="2_bufp8"]
-[ext_resource type="FontFile" uid="uid://bfavdpnmorag5" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Regular.ttf" id="5_23wn5"]
+[ext_resource type="Environment" uid="uid://bfqf441f3213a" path="res://COGITO/SceneManagement/WorldEnviroment.tres" id="2_de4hy"]
 [ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="6_rlben"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="7_27vxg"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/option_button_input_propagator.gd" id="8_7fii0"]
@@ -10,21 +10,27 @@
 [ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://COGITO/EasyMenus/Nodes/slider_w_labels.tscn" id="10_45uhu"]
 
 [node name="OptionsTabMenu" type="TabContainer" node_paths=PackedStringArray("nodes_to_focus")]
-custom_minimum_size = Vector2(500, 500)
-offset_right = 500.0
-offset_bottom = 500.0
+custom_minimum_size = Vector2(550, 600)
+offset_right = 550.0
+offset_bottom = 600.0
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
-theme_override_fonts/font = ExtResource("5_23wn5")
+current_tab = 4
 script = ExtResource("2_bufp8")
-nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+nodes_to_focus = [NodePath("Gameplay"), NodePath("Graphics"), NodePath("Video"), NodePath("Audio"), NodePath("Bindings")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_de4hy")
 
 [node name="Gameplay" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 2
+focus_neighbor_left = NodePath("../Bindings")
+focus_neighbor_right = NodePath("../Graphics")
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 25
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Gameplay"]
@@ -37,24 +43,8 @@ transition_time = 0.15
 [node name="VBoxContainer" type="VBoxContainer" parent="Gameplay/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 15
-
-[node name="HBoxContainer_Headbob" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-theme = ExtResource("1_6plem")
-
-[node name="HeadbobLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob"]
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Headbob"
-
-[node name="HeadbobOptionButton" type="OptionButton" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-size_flags_horizontal = 10
 
 [node name="InvertYAxisCheckButton" type="CheckButton" parent="Gameplay/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -65,80 +55,472 @@ tooltip_text = "Inverts looking up and down direction."
 theme_override_font_sizes/font_size = 25
 text = "Invert Y Axis"
 
+[node name="GridContainer" type="GridContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+
+[node name="HeadBobbelLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/GridContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+tooltip_text = "How much the camera shakes while moving."
+mouse_filter = 1
+text = "Head movement"
+
+[node name="HeadBobbelOptionButton" type="OptionButton" parent="Gameplay/ScrollContainer/VBoxContainer/GridContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 3
+popup/item_0/text = "Minimal"
+popup/item_0/id = 0
+popup/item_1/text = "Average"
+popup/item_1/id = 1
+popup/item_2/text = "Full"
+popup/item_2/id = 2
+
 [node name="ApplyChanges" type="Button" parent="Gameplay/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 10
 theme_override_font_sizes/font_size = 30
 text = "Apply changes"
 script = ExtResource("6_rlben")
 
 [node name="Graphics" type="MarginContainer" parent="."]
-unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 0
+focus_neighbor_left = NodePath("../Gameplay")
+focus_neighbor_right = NodePath("../Video")
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/Presets/Potato")
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 25
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Graphics"]
-custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
-size_flags_horizontal = 4
 script = ExtResource("7_27vxg")
-transition_time = 0.15
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Graphics/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+size_flags_vertical = 3
 
-[node name="HBoxContainer_Resolution" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
+[node name="PresetSection" type="Label" parent="Graphics/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1_6plem")
+text = "Apply Preset"
+horizontal_alignment = 1
 
-[node name="ResolutionLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+[node name="Presets" type="BoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Potato" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Potato"
+
+[node name="Low" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Low"
+
+[node name="Medium" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Medium"
+
+[node name="High" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "High"
+
+[node name="Ultra" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ultra"
+
+[node name="HSeparator" type="HSeparator" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="QualitySettings" type="Label" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Quality Settings"
+horizontal_alignment = 1
+
+[node name="QualityGridContainer" type="GridContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="ShadowSizeLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shadow Resolution:"
+
+[node name="ShadowSizeOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 6
+selected = 0
+popup/item_0/text = "Minimum (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Very Low (Faster)"
+popup/item_1/id = 1
+popup/item_2/text = "Low (Fast)"
+popup/item_2/id = 2
+popup/item_3/text = "Medium (Average)"
+popup/item_3/id = 3
+popup/item_4/text = "High (Slow)"
+popup/item_4/id = 4
+popup/item_5/text = "Ultra (Slowest)"
+popup/item_5/id = 5
+
+[node name="ShadowFilterLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Shadow Filtering:"
+
+[node name="ShadowFilterOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 6
+selected = 0
+popup/item_0/text = "Very Low (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Low (Faster)"
+popup/item_1/id = 1
+popup/item_2/text = "Medium (Fast)"
+popup/item_2/id = 2
+popup/item_3/text = "High (Average)"
+popup/item_3/id = 3
+popup/item_4/text = "Very High (Slow)"
+popup/item_4/id = 4
+popup/item_5/text = "Ultra (Slower)"
+popup/item_5/id = 5
+
+[node name="SDFGILabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Global Illumination:"
+
+[node name="SDFGIOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 3
+selected = 0
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Low (Average)"
+popup/item_1/id = 1
+popup/item_2/text = "High (Slow)"
+popup/item_2/id = 2
+
+[node name="GlowLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+text = "Bloom:"
+
+[node name="GlowOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Low (Fast)"
+popup/item_1/id = 1
+popup/item_2/text = "High (Average)"
+popup/item_2/id = 2
+
+[node name="SSAOLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+text = "Ambient Occlusion:"
+
+[node name="SSAOOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Very Low (Fast)"
+popup/item_1/id = 1
+popup/item_2/text = "Low (Fast)"
+popup/item_2/id = 2
+popup/item_3/text = "Medium (Average)"
+popup/item_3/id = 3
+popup/item_4/text = "High (Slow)"
+popup/item_4/id = 4
+
+[node name="SSReflectionsLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+text = "Screen-Space Reflections:"
+
+[node name="SSReflectionsOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Low (Average)"
+popup/item_1/id = 1
+popup/item_2/text = "Medium (Slow)"
+popup/item_2/id = 2
+popup/item_3/text = "High (Slower)"
+popup/item_3/id = 3
+
+[node name="SSILLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+text = "Screen-Space Lighting:"
+
+[node name="SSILOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Very Low (Fast)"
+popup/item_1/id = 1
+popup/item_2/text = "Low (Average)"
+popup/item_2/id = 2
+popup/item_3/text = "Medium (Slow)"
+popup/item_3/id = 3
+popup/item_4/text = "High (Slower)"
+popup/item_4/id = 4
+
+[node name="VolumetricFogLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Volumetric Fog:"
+
+[node name="VolumetricFogOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_0/id = 0
+popup/item_1/text = "Low (Fast)"
+popup/item_1/id = 1
+popup/item_2/text = "High (Average)"
+popup/item_2/id = 2
+
+[node name="HSeparator4" type="HSeparator" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AdjustmentSection" type="Label" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Adjustments"
+horizontal_alignment = 1
+
+[node name="AdjustmentGridContainer" type="GridContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="BrightnessHBox" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="BrightnessLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Brightness"
+
+[node name="BrightnessSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="SaturationHBox" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="SaturationSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/SaturationHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 0.01
+max_value = 10.0
+step = 0.01
+value = 1.0
+
+[node name="SaturationLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/SaturationHBox"]
+visible = false
+layout_mode = 2
+text = "Saturation"
+
+[node name="ContrastHBox" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer"]
+layout_mode = 2
+
+[node name="ContrastLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Contrast
+"
+
+[node name="ContrastSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="ApplyChanges" type="Button" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 30
+text = "Apply changes"
+script = ExtResource("6_rlben")
+
+[node name="Video" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath("../Graphics")
+focus_neighbor_right = NodePath("../Audio")
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/VideoSettingsGridContainer/WindowModeOptionButton")
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Video"]
+layout_mode = 2
+script = ExtResource("7_27vxg")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Video/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="VideoSettingsGridContainer" type="GridContainer" parent="Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="WindowMode" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowModeOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+
+[node name="ResolutionLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Resolution"
 
-[node name="ResolutionOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+[node name="ResolutionOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 10
+size_flags_vertical = 3
 
-[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HSeparator5" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LimitFPSLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+tooltip_text = "Limits the Frames per Second.
+Usually set to the max. Refresh Rate of the Monitor.
+0 disables this feature."
+mouse_filter = 1
+text = "Limit FPS"
+
+[node name="LimitFPSSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+tooltip_text = "Limits the Frames per Second.
+Usualy set to the max. Refresh Rate of the Monitor."
+max_value = 300.0
+step = 10.0
+
+[node name="CurrentFPSLimitLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+layout_mode = 2
+
+[node name="UI Section" type="Label" parent="Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "User Interface Settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
-theme = ExtResource("1_6plem")
 
-[node name="WindowMode" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
-custom_minimum_size = Vector2(180, 0)
+[node name="GUIScaleLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-text = "Window Mode"
+text = "UI Scale"
 
-[node name="WindowModeOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+[node name="GUIScaleSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 1.5
+step = 0.05
+value = 1.0
 
-[node name="HBoxContainer_AA2D" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+[node name="GUIScaleCurrentValueLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer_AA2D" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
 
-[node name="AntiAliasing2DLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
+[node name="AntiAliasing2DLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "2D Anti Aliasing"
 
-[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
+[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -156,18 +538,18 @@ popup/item_3/text = "8x"
 popup/item_3/id = 3
 script = ExtResource("8_7fii0")
 
-[node name="GamepadClosable" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" instance=ExtResource("9_wft0n")]
+[node name="GamepadClosable" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" instance=ExtResource("9_wft0n")]
 
-[node name="HBoxContainer_AA3D" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer_AA3D" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
 
-[node name="AntiAliasing3DLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+[node name="AntiAliasing3DLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "3D Anti Aliasing"
 
-[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -185,30 +567,32 @@ popup/item_3/text = "8x"
 popup/item_3/id = 3
 script = ExtResource("8_7fii0")
 
-[node name="GamepadClosable" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
+[node name="GamepadClosable" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
 
-[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
 
-[node name="RenderScaleLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+[node name="RenderScaleLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Render Scale"
 
-[node name="RenderScaleSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+[node name="RenderScaleSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-mouse_force_pass_scroll_events = false
 min_value = 0.25
 max_value = 2.0
 step = 0.05
 value = 1.0
 
-[node name="RenderScaleCurrentValueLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+[node name="RenderScaleCurrentValueLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -216,36 +600,7 @@ theme_override_font_sizes/font_size = 20
 text = "1"
 horizontal_alignment = 1
 
-[node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="GUIScaleLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "UI Scale"
-
-[node name="GUIScaleSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_force_pass_scroll_events = false
-min_value = 0.25
-max_value = 1.5
-step = 0.05
-value = 1.0
-
-[node name="GUIScaleCurrentValueLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1"
-horizontal_alignment = 1
-
-[node name="VSyncCheckButton" type="CheckButton" parent="Graphics/ScrollContainer/VBoxContainer"]
+[node name="VSyncCheckButton" type="CheckButton" parent="Video/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
@@ -254,11 +609,11 @@ tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
 theme_override_font_sizes/font_size = 25
 text = "V-Sync"
 
-[node name="ApplyChanges" type="Button" parent="Graphics/ScrollContainer/VBoxContainer"]
+[node name="ApplyChanges" type="Button" parent="Video/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 10
 theme_override_font_sizes/font_size = 30
 text = "Apply changes"
 script = ExtResource("6_rlben")
@@ -266,10 +621,12 @@ script = ExtResource("6_rlben")
 [node name="Audio" type="MarginContainer" parent="."]
 visible = false
 layout_mode = 2
+focus_neighbor_left = NodePath("../Video")
+focus_neighbor_right = NodePath("../Bindings")
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 25
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Audio"]
@@ -317,11 +674,10 @@ max_value = 1.0
 step = 0.1
 
 [node name="Bindings" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 2
-theme_override_constants/margin_left = 0
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 0
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 25
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Bindings"]
@@ -356,7 +712,25 @@ theme_override_constants/margin_right = 100
 layout_mode = 2
 
 [connection signal="pressed" from="Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Potato" to="." method="_on_potato_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Low" to="." method="_on_low_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Medium" to="." method="_on_medium_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/High" to="." method="_on_high_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Ultra" to="." method="_on_ultra_pressed"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/ShadowSizeOptionButton" to="." method="_on_shadow_size_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/ShadowFilterOptionButton" to="." method="_on_shadow_filter_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/SDFGIOptionButton" to="." method="_on_sdfgi_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/GlowOptionButton" to="." method="_on_glow_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/SSAOOptionButton" to="." method="_on_ssao_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/SSReflectionsOptionButton" to="." method="_on_ss_reflections_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/SSILOptionButton" to="." method="_on_ssil_option_button_item_selected"]
+[connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/VolumetricFogOptionButton" to="." method="_on_volumetric_fog_option_button_item_selected"]
+[connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]
+[connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/SaturationHBox/SaturationSlider" to="." method="_on_saturation_slider_value_changed"]
+[connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox/ContrastSlider" to="." method="_on_contrast_slider_value_changed"]
 [connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer/LimitFPSSlider" to="." method="_on_limit_fps_slider_value_changed"]
+[connection signal="pressed" from="Video/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 
 [editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
 [editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

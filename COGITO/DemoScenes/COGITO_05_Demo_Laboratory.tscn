@@ -1,8 +1,8 @@
-[gd_scene load_steps=102 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=99 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
-[ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="2_7qwrr"]
+[ext_resource type="Environment" uid="uid://bfqf441f3213a" path="res://COGITO/SceneManagement/WorldEnviroment.tres" id="2_537sm"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_0c7yw"]
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="4_vc32u"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="5_ihscj"]
@@ -40,32 +40,6 @@
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/Pickups/pickup_health_potion.tscn" id="37_0wxqc"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/Pickups/pickup_stamina_extension.tscn" id="38_ayqrv"]
 [ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PrefabScenes/Pickups/pickup_dart.tscn" id="40_hi3jw"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
-panorama = ExtResource("1_ponqc")
-
-[sub_resource type="Sky" id="Sky_h3ipr"]
-sky_material = SubResource("PanoramaSkyMaterial_wjbty")
-
-[sub_resource type="Environment" id="Environment_obnk3"]
-background_mode = 2
-sky = SubResource("Sky_h3ipr")
-sky_rotation = Vector3(0, 1.74533, 0.174533)
-ambient_light_sky_contribution = 0.1
-ambient_light_energy = 0.2
-tonemap_mode = 1
-ssao_enabled = true
-ssil_enabled = true
-glow_enabled = true
-glow_intensity = 2.5
-glow_strength = 0.37
-glow_bloom = 0.2
-glow_blend_mode = 0
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-volumetric_fog_ambient_inject = 0.1
-volumetric_fog_sky_affect = 0.1
-volumetric_fog_temporal_reprojection_amount = 0.85
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6kc6"]
 size = Vector3(10, 0.1, 6)
@@ -929,7 +903,7 @@ shadow_enabled = true
 shadow_opacity = 0.8
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_obnk3")
+environment = ExtResource("2_537sm")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)

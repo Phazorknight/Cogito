@@ -28,7 +28,7 @@ const WINDOW_MODE_ARRAY : Array[String] = [
 	"Full screen",
 	"Exclusive full screen",
 	"Windowed",
-	"Borderless windowed",	
+	"Borderless windowed"
 ]
 
 
@@ -40,7 +40,7 @@ const RESOLUTION_DICTIONARY : Dictionary = {
 	"1600x900 (16:9)" : Vector2i(1600,900),
 	"1920x1080 (16:9)" : Vector2i(1920,1080),
 	"2560x1440 (16:9)" : Vector2i(2560,1440),
-	"3840x2160 (16:9)" : Vector2i(3840,2160),
+	"3840x2160 (16:9)" : Vector2i(3840,2160)
 }
 
 
