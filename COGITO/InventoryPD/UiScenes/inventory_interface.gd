@@ -121,7 +121,8 @@ func clear_external_inventory():
 
 func set_player_inventory_data(inventory_data : InventoryPD):
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
-	inventory_data.inventory_button_press.connect(on_inventory_button_press)
+	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
+		inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	inventory_ui.set_inventory_data(inventory_data)
 
 # Inventory handling on gamepad buttons

@@ -28,7 +28,8 @@ func _unhandled_input(event):
 
 
 func set_inventory_data(inventory_data : InventoryPD) -> void:
-	inventory_data.inventory_updated.connect(populate_hotbar)
+	if !inventory_data.inventory_updated.is_connected(populate_hotbar):
+		inventory_data.inventory_updated.connect(populate_hotbar)
 	populate_hotbar(inventory_data)
 	hot_bar_use.connect(inventory_data.use_slot_data)
 
