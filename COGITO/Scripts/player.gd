@@ -185,12 +185,13 @@ func _ready():
 		if attribute.attribute_name == "stamina": # Saving reference to stamina attribute for movements that require stamina checks
 			stamina_attribute = attribute
 		
-		if attribute.attribute_name == "visibility": #  Saving reference to visibilty attribute for that require stamina checks
+		if attribute.attribute_name == "visibility": #  Saving reference to visibilty attribute for that require visibility checks
 			visibility_attribute = attribute
 			
 		if attribute.attribute_name == "sanity":
 			if visibility_attribute: # Hooking up sanity attribute to visibility attribute
 				visibility_attribute.attribute_changed.connect(attribute.on_visibility_changed)
+				visibility_attribute.check_current_visibility()
 
 	apply_headbobble()
 

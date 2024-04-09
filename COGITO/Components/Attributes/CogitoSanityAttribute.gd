@@ -18,6 +18,7 @@ var player : Node3D
 func _ready() -> void:
 	value_current = value_start
 	player = get_parent()
+	
 
 
 func _process(delta):
