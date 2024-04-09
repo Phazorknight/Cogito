@@ -223,9 +223,13 @@ func close_door(_interactor: Node3D):
 	
 func set_state():
 	if is_open:
-		if is_sliding:
+		if auto_close_time > 0:
+			is_open = false
+			position = closed_position
+			interaction_text = interaction_text_when_closed
+		else:
 			position = open_position
-		interaction_text = interaction_text_when_open
+			interaction_text = interaction_text_when_open
 	else:
 		if is_sliding:
 			position = closed_position

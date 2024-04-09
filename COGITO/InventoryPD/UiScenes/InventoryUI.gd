@@ -17,7 +17,8 @@ func _ready():
 
 
 func set_inventory_data(inventory_data : InventoryPD):
-	inventory_data.inventory_updated.connect(populate_item_grid)
+	if !inventory_data.inventory_updated.is_connected(populate_item_grid):
+		inventory_data.inventory_updated.connect(populate_item_grid)
 	label.text = inventory_name
 	populate_item_grid(inventory_data)
 
