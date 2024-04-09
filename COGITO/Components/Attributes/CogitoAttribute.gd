@@ -18,7 +18,8 @@ signal attribute_reached_zero(attribute_name:String, value_current:float, value_
 @export var value_max : float
 ## Value this attribute starts with per default.
 @export var value_start : float
-
+## Use this for when you want an attribute value to be unchangeable but still use signals etc. Can also be turned on/off at runtime.
+@export var is_locked : bool = false
 var value_current : float
 
 # Used when loading/setting an attribute
@@ -29,6 +30,10 @@ func set_attribute(_value_current:float, _value_max:float):
 
 
 func add(amount):
+	if is_locked:
+		attribute_changed.emit(attribute_name,value_current,value_max,true)
+		return
+		
 	value_current += amount
 	
 	if value_current > value_max:
@@ -37,6 +42,10 @@ func add(amount):
 
 
 func subtract(amount):
+	if is_locked:
+		attribute_changed.emit(attribute_name,value_current,value_max,false)
+		return
+		
 	value_current -= amount
 	
 	if value_current <= 0:

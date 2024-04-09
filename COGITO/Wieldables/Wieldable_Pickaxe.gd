@@ -31,5 +31,5 @@ func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 
 
 func _on_body_entered(collider):
-	if collider is CogitoObject:
+	if collider.has_signal("damage_received"):
 		collider.damage_received.emit(item_reference.wieldable_damage)

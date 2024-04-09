@@ -22,10 +22,8 @@ var parent_position : Vector3
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	value_current = value_start
-	
 	attribute_reached_zero.connect(on_death)
 	attribute_changed.connect(on_health_change)
-	print(attribute_name,": emitting attribute change. Current value is: ", value_current)
 	attribute_changed.emit(attribute_name,value_current,value_max,true)
 
 

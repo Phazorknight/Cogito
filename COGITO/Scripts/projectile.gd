@@ -21,7 +21,7 @@ func on_timeout():
 
 
 func _on_body_entered(collider):
-	if collider is CogitoObject:
+	if collider.has_signal("damage_received"):
 		collider.damage_received.emit(damage_amount)
 		if destroy_on_impact:
 			queue_free()

@@ -3,6 +3,7 @@ extends Node3D
 
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal switched(is_on: bool)
+signal damage_received(damage_value:float)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 

@@ -4,6 +4,7 @@ class_name CogitoDoor
 
 signal object_state_updated(interaction_text:String)
 signal door_state_changed(is_open:bool)
+signal damage_received(damage_value:float)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 

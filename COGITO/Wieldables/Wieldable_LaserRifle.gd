@@ -96,7 +96,7 @@ func hit_scan_collision(collision_point:Vector3):
 
 
 func hit_scan_damage(collider):
-	if collider is CogitoObject:
+	if collider.has_signal("damage_received"):
 		collider.damage_received.emit(item_reference.wieldable_damage)
 
 

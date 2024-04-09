@@ -10,11 +10,17 @@ const ActiveQuests = preload("./QuestGroups/active_quests_group.gd")
 const CompletedQuests = preload("./QuestGroups/completed_quests_group.gd")
 const FailedQuests = preload("./QuestGroups/failed_quests_group.gd")
 
+# AUDIO REFERENCES
+const COGITO_QUEST_COMPLETE = preload("res://COGITO/Assets/Audio/Phazorknight/Cogito_QuestComplete.wav")
+const COGITO_QUEST_FAILED = preload("res://COGITO/Assets/Audio/Phazorknight/Cogito_QuestFailed.wav")
+const COGITO_QUEST_START = preload("res://COGITO/Assets/Audio/Phazorknight/Cogito_QuestStart.wav")
+
 var available: AvailableQuests = AvailableQuests.new("Available")
 var active: ActiveQuests = ActiveQuests.new("Active")
 var completed: CompletedQuests = CompletedQuests.new("Completed")
 var failed: FailedQuests = FailedQuests.new("Failed")
 
+var quest_audio_volume_db : float = -9
 
 func _init() -> void:
 	# Adding quest groups
@@ -45,6 +51,7 @@ func start_quest(quest: CogitoQuest) -> CogitoQuest:
 	quest_activated.emit(quest)
 
 	quest.start()
+	Audio.play_sound(COGITO_QUEST_START).volume_db = quest_audio_volume_db
 	print("Quest ", quest.quest_name, " has been started.")
 	return quest
 
@@ -63,6 +70,7 @@ func complete_quest(quest: CogitoQuest) -> CogitoQuest:
 	completed.add_quest(quest)
 
 	quest_completed.emit(quest)
+	Audio.play_sound(COGITO_QUEST_COMPLETE).volume_db = quest_audio_volume_db
 	return quest
 
 
@@ -77,6 +85,7 @@ func fail_quest(quest: CogitoQuest) -> CogitoQuest:
 	failed.add_quest(quest)
 
 	quest_failed.emit(quest)
+	Audio.play_sound(COGITO_QUEST_FAILED).volume_db = quest_audio_volume_db
 	return quest
 
 

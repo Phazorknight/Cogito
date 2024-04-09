@@ -2,6 +2,7 @@
 extends Node3D
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal pressed()
+signal damage_received(damage_value:float)
 
 @export_group("Cogito Button Settings")
 ## Sound that plays when pressed.
@@ -79,8 +80,10 @@ func press():
 		if nodepath != null:
 			var object = get_node(nodepath)
 			object.interact(player_interaction_component)
-	
 
+
+func on_damage_received():
+	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 
 func check_for_item() -> bool:

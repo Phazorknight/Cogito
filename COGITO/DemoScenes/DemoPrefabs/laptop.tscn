@@ -149,3 +149,6 @@ update_type = 1
 [node name="QuestUpdaterB" type="Node3D" parent="."]
 script = ExtResource("6_xhh5j")
 quest_to_update = ExtResource("8_n8ylu")
+
+[connection signal="was_interacted_with" from="PickupComponent" to="QuestUpdaterA" method="_on_pickup_component_was_interacted_with"]
+[connection signal="was_interacted_with" from="PickupComponent" to="QuestUpdaterB" method="_on_pickup_component_was_interacted_with"]
