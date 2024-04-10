@@ -78,6 +78,7 @@ radius = 0.38
 
 [node name="barrel" type="RigidBody3D"]
 collision_layer = 3
+mass = 10.0
 script = ExtResource("1_p1u1m")
 
 [node name="barrel" type="MeshInstance3D" parent="."]

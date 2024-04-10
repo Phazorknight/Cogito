@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=104 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -40,6 +40,8 @@
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PrefabScenes/Pickups/pickup_health_potion.tscn" id="37_0wxqc"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PrefabScenes/Pickups/pickup_stamina_extension.tscn" id="38_ayqrv"]
 [ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PrefabScenes/Pickups/pickup_dart.tscn" id="40_hi3jw"]
+[ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://COGITO/CogitoObjects/Cogito_Pressureplate.tscn" id="41_0755m"]
+[ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PrefabScenes/ceiling_lamp.tscn" id="42_3rq3h"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -2708,6 +2710,33 @@ transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37
 [node name="Pickup_LaserRifle" parent="SHOOTING_RANGE" instance=ExtResource("23_ex3ej")]
 transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 3.22065, 0.821979, -15.3026)
 
+[node name="Pickup_Pickaxe" parent="SHOOTING_RANGE" instance=ExtResource("29_ai41f")]
+transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
+
+[node name="HealthPotion" parent="SHOOTING_RANGE" instance=ExtResource("37_0wxqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393674, 1.21509, -11.2257)
+
+[node name="HealthPotion2" parent="SHOOTING_RANGE" instance=ExtResource("37_0wxqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.064918, 1.21509, -11.2257)
+
+[node name="HealthPotion3" parent="SHOOTING_RANGE" instance=ExtResource("37_0wxqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
+
+[node name="Pickup_StaminaExtension" parent="SHOOTING_RANGE" instance=ExtResource("38_ayqrv")]
+transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, -1.38741, 0.92349, -11.344)
+
+[node name="Pickup_Dart" parent="SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0614817, 1.00006, -11.7358)
+
+[node name="Pickup_Dart2" parent="SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.285636, 1.00006, -11.7358)
+
+[node name="Pickup_Dart3" parent="SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.665604, 1.00006, -11.7358)
+
+[node name="Pickup_Dart4" parent="SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.390677, 1.00006, -11.7358)
+
 [node name="KSI_table_long" parent="SHOOTING_RANGE" instance=ExtResource("15_lsmut")]
 
 [node name="Spawnzone_Targets" type="Area3D" parent="SHOOTING_RANGE" node_paths=PackedStringArray("spawn_area")]
@@ -2875,6 +2904,9 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0,
 
 [node name="KSI_steps_flat_corner" parent="MOVEMENT" instance=ExtResource("34_6q0uf")]
 
+[node name="CarriableBox" parent="MOVEMENT" instance=ExtResource("35_hegwd")]
+transform = Transform3D(0.952555, 0, 0.304366, 0, 1, 0, -0.304366, 0, 0.952555, -6.66945, 1, 4.34045)
+
 [node name="VendingMachine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
 
@@ -2917,9 +2949,6 @@ shape = SubResource("BoxShape3D_6s5b0")
 
 [node name="SlidingDoor" parent="." instance=ExtResource("20_t5vwn")]
 
-[node name="Pickup_Pickaxe" parent="." instance=ExtResource("29_ai41f")]
-transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
-
 [node name="barrel2" parent="." instance=ExtResource("31_c4s3c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.0840335, -3.11525)
 
@@ -2929,35 +2958,16 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.248
 [node name="HealZone" parent="." instance=ExtResource("36_fryka")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.24998, 1.505, -0.72672)
 
-[node name="HealthPotion" parent="." instance=ExtResource("37_0wxqc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393674, 1.21509, -11.2257)
+[node name="Cogito_Pressureplate" parent="." instance=ExtResource("41_0755m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0398592, 0)
 
-[node name="HealthPotion2" parent="." instance=ExtResource("37_0wxqc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.064918, 1.21509, -11.2257)
-
-[node name="HealthPotion3" parent="." instance=ExtResource("37_0wxqc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
-
-[node name="Pickup_StaminaExtension" parent="." instance=ExtResource("38_ayqrv")]
-transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, -1.38741, 0.92349, -11.344)
-
-[node name="CarriableBox" parent="." instance=ExtResource("35_hegwd")]
-transform = Transform3D(0.952555, 0, 0.304366, 0, 1, 0, -0.304366, 0, 0.952555, -6.66945, 1, 4.34045)
-
-[node name="Pickup_Dart" parent="." instance=ExtResource("40_hi3jw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0614817, 1.00006, -11.7358)
-
-[node name="Pickup_Dart2" parent="." instance=ExtResource("40_hi3jw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.285636, 1.00006, -11.7358)
-
-[node name="Pickup_Dart3" parent="." instance=ExtResource("40_hi3jw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.665604, 1.00006, -11.7358)
-
-[node name="Pickup_Dart4" parent="." instance=ExtResource("40_hi3jw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.390677, 1.00006, -11.7358)
+[node name="CeilingLamp" parent="." instance=ExtResource("42_3rq3h")]
+transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 0.441994, 1.78403, 1.3986)
 
 [connection signal="pressed" from="SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton" to="VendingMachine/Spawnzone_VendingMachine" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton2" to="VendingMachine/Spawnzone_VendingMachine2" method="_on_generic_button_pressed"]
+[connection signal="plate_activated" from="Cogito_Pressureplate" to="CeilingLamp" method="switch_on"]
+[connection signal="plate_deactivated" from="Cogito_Pressureplate" to="CeilingLamp" method="switch_off"]
 
 [editable path="MOVEMENT/Ladder"]
