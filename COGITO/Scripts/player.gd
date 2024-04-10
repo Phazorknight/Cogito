@@ -53,6 +53,7 @@ var is_showing_ui : bool
 @export var FREE_LOOK_TILT_AMOUNT : float = 5.0
 @export var SLIDING_SPEED : float = 5.0
 @export var SLIDE_JUMP_MOD : float = 1.5
+@export var disable_roll_anim : bool = false
 
 @export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
 @export var WIGGLE_ON_WALKING_INTENSITY : float = 0.1
@@ -580,7 +581,8 @@ func _physics_process(delta):
 			head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 			standing_collision_shape.disabled = false
 			crouching_collision_shape.disabled = true
-			animationPlayer.play("roll")
+			if !disable_roll_anim:
+				animationPlayer.play("roll")
 		elif last_velocity.y <= -5.0:
 			animationPlayer.play("landing")
 		

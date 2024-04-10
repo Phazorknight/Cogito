@@ -94,6 +94,7 @@ libraries = {
 }
 
 [node name="Camera" type="Camera3D" parent="Neck/Head/Eyes"]
+transform = Transform3D(1, 0, 0, 0, 1, 4.46638e-06, 0, -4.46638e-06, 1, 0, 0, 0)
 
 [node name="InteractionRaycast" type="RayCast3D" parent="Neck/Head/Eyes/Camera"]
 target_position = Vector3(0, 0, -2.5)
