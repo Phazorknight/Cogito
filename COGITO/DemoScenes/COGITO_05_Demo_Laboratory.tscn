@@ -2950,7 +2950,7 @@ shape = SubResource("BoxShape3D_6s5b0")
 [node name="SlidingDoor" parent="." instance=ExtResource("20_t5vwn")]
 
 [node name="barrel2" parent="." instance=ExtResource("31_c4s3c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.0840335, -3.11525)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.760051, -3.11525)
 
 [node name="HazardZone" parent="." instance=ExtResource("35_mda7y")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.2487, 1.505, -7.4549)

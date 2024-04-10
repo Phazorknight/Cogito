@@ -8,7 +8,13 @@ var config = ConfigFile.new()
 # GAMEPLAY
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
 @onready var headbob_option_button: OptionButton = %HeadbobOptionButton
+@onready var mouse_sens_slider: HSlider = %MouseSensSlider
+@onready var mouse_sens_value_label: Label = %MouseSensValueLabel
+@onready var gp_look_sens_value_label: Label = %GPLookSensValueLabel
+@onready var gp_look_sens_slider: HSlider = %GPLookSensSlider
 
+var gp_looksens : float
+var mouse_sens : float
 var headbob_strength : int
 
 # AUDIO
@@ -64,6 +70,8 @@ const RESOLUTION_DICTIONARY : Dictionary = {
 func _ready() -> void:
 	add_headbob_items()
 	headbob_option_button.item_selected.connect(on_headbob_selected)
+	mouse_sens_slider.value_changed.connect(_on_mouse_sens_slider_value_changed)
+	gp_look_sens_slider.value_changed.connect(_on_gp_looksens_slider_value_changed)
 	add_window_mode_items()
 	add_resolution_items()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
@@ -86,6 +94,19 @@ func add_headbob_items() -> void:
 		headbob_option_button.add_item(headbob_option)
 
 
+func on_headbob_selected(index:int) -> void:
+	headbob_strength = HEADBOB_DICTIONARY.values()[index]
+
+func _on_mouse_sens_slider_value_changed(value):
+	mouse_sens = value
+	mouse_sens_value_label.text = str(value)
+	
+
+func _on_gp_looksens_slider_value_changed(value):
+	gp_looksens = value
+	gp_look_sens_value_label.text = str(value)
+
+
 # Adding window modes to the window mode button.
 func add_window_mode_items() -> void:
 	for mode in WINDOW_MODE_ARRAY:
@@ -96,10 +117,6 @@ func add_window_mode_items() -> void:
 func add_resolution_items() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
 		resolution_option_button.add_item(resolution_text)
-
-
-func on_headbob_selected(index:int) -> void:
-	headbob_strength = HEADBOB_DICTIONARY.values()[index]
 
 
 # Function to change window modes. Hooked up to the window_mode_option_button.
@@ -150,6 +167,8 @@ func set_volume(bus_index, value):
 func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, headbob_strength)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, mouse_sens)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, gp_looksens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
@@ -171,6 +190,8 @@ func load_options():
 		print("Loading options config failed. Assuming and saving defaults.")
 	
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+	mouse_sens = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
+	gp_looksens = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
 	
 	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
@@ -193,6 +214,12 @@ func load_options():
 		3: headbob_option_button.selected = 1
 		7: headbob_option_button.selected = 2
 	headbob_option_button.item_selected.emit(headbob_option_button.selected)
+
+	mouse_sens_slider.value = mouse_sens
+	mouse_sens_value_label.text = str(mouse_sens)
+
+	gp_look_sens_slider.value = gp_looksens
+	gp_look_sens_value_label.text = str(gp_looksens)
 
 	# LOADING AUDIO CFG
 	sfx_volume_slider.hslider.value = sfx_volume

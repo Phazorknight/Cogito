@@ -81,8 +81,8 @@ var ladder_on_cooldown : bool = false
 
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
-@export var JOY_V_SENS : int = 3
-@export var JOY_H_SENS : int = 2
+@export var JOY_V_SENS : float = 2
+@export var JOY_H_SENS : float = 2
 
 ## Flag if Stamina component isused (as this effects movement)
 #@export var is_using_stamina : bool = true
@@ -272,7 +272,10 @@ func _reload_options():
 		
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		apply_headbobble()
+		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+		JOY_H_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
+		JOY_V_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 
 
 # Signal from Pause Menu

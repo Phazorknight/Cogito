@@ -82,12 +82,11 @@ mass = 10.0
 script = ExtResource("1_p1u1m")
 
 [node name="barrel" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, 0, 0)
+transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, -0.5, 0)
 mesh = SubResource("ArrayMesh_2cvk5")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_d5f8h")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_attribute") instance=ExtResource("2_lxpj6")]
@@ -100,6 +99,7 @@ value_max = 3.0
 value_start = 3.0
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_vqdq1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 pick_up_sound = ExtResource("6_wc6qr")
 drop_sound = ExtResource("7_efwiw")
 

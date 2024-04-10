@@ -7,7 +7,7 @@
 size = Vector3(1, 0.08, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_va3qp"]
-size = Vector3(1, 0.1, 1)
+size = Vector3(1, 0.08, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6ge50"]
 size = Vector3(0.9, 0.1, 0.9)
@@ -41,7 +41,7 @@ axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-gravity_scale = -0.8
+gravity_scale = -0.5
 can_sleep = false
 max_contacts_reported = 1
 contact_monitor = true
@@ -63,4 +63,5 @@ linear_limit/lower_distance = 0.0
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 bus = &"SFX"
 
+[connection signal="body_entered" from="Plate" to="." method="_on_plate_body_entered"]
 [connection signal="body_exited" from="Plate" to="." method="_on_plate_body_exited"]
