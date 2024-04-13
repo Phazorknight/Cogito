@@ -55,10 +55,13 @@ var is_showing_ui : bool
 @export var SLIDE_JUMP_MOD : float = 1.5
 @export var disable_roll_anim : bool = false
 
-@export_enum("Minimal:1", "Average:3", "Full:7") var HEADBOBBLE : int
-@export var WIGGLE_ON_WALKING_INTENSITY : float = 0.1
-@export var WIGGLE_ON_SPRINTING_INTENSITY : float = 0.2
-@export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.05
+@export_enum("Minimal:0.1", "Average:0.7", "Full:1") var HEADBOBBLE : int
+@export var WIGGLE_ON_WALKING_INTENSITY : float = 0.03
+@export var WIGGLE_ON_WALKING_SPEED : float = 12.0
+@export var WIGGLE_ON_SPRINTING_INTENSITY : float = 0.05
+@export var WIGGLE_ON_SPRINTING_SPEED : float = 16.0
+@export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.08
+@export var WIGGLE_ON_CROUCHING_SPEED : float = 8.0
 @export var CAN_BUNNYHOP : bool = true
 @export var BUNNY_HOP_ACCELERATION : float = 0.1
 @export var INVERT_Y_AXIS : bool = true
@@ -88,14 +91,13 @@ var ladder_on_cooldown : bool = false
 ## Flag if Stamina component isused (as this effects movement)
 #@export var is_using_stamina : bool = true
 
+### WIGGLE MODIFIERS
+var WIGGLE_INTENSITY_MODIFIER = 1
+
 ### NEW PLAYER ATTRIBUTE SYSTEM:
 var player_attributes : Array[Node]
 var stamina_attribute : CogitoAttribute = null
 var visibility_attribute : CogitoAttribute
-
-var WIGGLE_ON_WALKING_SPEED : float = 14.0
-var WIGGLE_ON_SPRINTING_SPEED : float = 22.0
-var WIGGLE_ON_CROUCHING_SPEED : float = 10.0
 
 ## STAIR HANDLING STUFF
 var is_step : bool = false
@@ -194,8 +196,6 @@ func _ready():
 				visibility_attribute.attribute_changed.connect(attribute.on_visibility_changed)
 				visibility_attribute.check_current_visibility()
 
-	apply_headbobble()
-
 	# Pause Menu setup
 	if pause_menu:
 		var pause_menu_node = get_node(pause_menu)
@@ -213,13 +213,6 @@ func slide_audio_init():
 	#setup sound effect for sliding
 	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
 	slide_audio_player.reparent(self, false)
-
-
-#Set the Headbobble for real, as we can not manipulate vars while their created :/
-func apply_headbobble():
-	WIGGLE_ON_WALKING_SPEED = HEADBOBBLE * 2
-	WIGGLE_ON_SPRINTING_SPEED = HEADBOBBLE * 3
-	WIGGLE_ON_CROUCHING_SPEED = HEADBOBBLE * 1.5
 
 
 # Use these functions to manipulate player attributes.
@@ -272,7 +265,6 @@ func _reload_options():
 		print("Player.gd: Options reloaded.")
 		
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
-		apply_headbobble()
 		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 		JOY_H_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
@@ -498,7 +490,7 @@ func _physics_process(delta):
 				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
 				current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
-			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
+			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			is_walking = false
 			is_sprinting = true
@@ -509,14 +501,14 @@ func _physics_process(delta):
 				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
 				current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
-			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY
+			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			is_walking = false
 			is_sprinting = true
 			is_crouching = false
 		else:
 			current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
-			wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY
+			wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
 			wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
 			is_walking = true
 			is_sprinting = false
@@ -653,7 +645,7 @@ func _physics_process(delta):
 		direction = (transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
 		current_speed = (sliding_timer.time_left / sliding_timer.wait_time + 0.5) * SLIDING_SPEED
 	
-	current_speed = clamp(current_speed, 3.0, 12.0)
+	current_speed = clamp(current_speed, 0.5, 12.0)
 	
 	if direction:
 		velocity.x = direction.x * current_speed
