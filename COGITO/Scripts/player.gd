@@ -54,7 +54,11 @@ var is_showing_ui : bool
 @export var SLIDING_SPEED : float = 5.0
 @export var SLIDE_JUMP_MOD : float = 1.5
 @export var disable_roll_anim : bool = false
+@export var CAN_BUNNYHOP : bool = true
+@export var BUNNY_HOP_ACCELERATION : float = 0.1
+@export var INVERT_Y_AXIS : bool = true
 
+@export_group("Headbob Properties")
 @export_enum("Minimal:0.1", "Average:0.7", "Full:1") var HEADBOBBLE : int
 @export var WIGGLE_ON_WALKING_INTENSITY : float = 0.03
 @export var WIGGLE_ON_WALKING_SPEED : float = 12.0
@@ -62,9 +66,6 @@ var is_showing_ui : bool
 @export var WIGGLE_ON_SPRINTING_SPEED : float = 16.0
 @export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.08
 @export var WIGGLE_ON_CROUCHING_SPEED : float = 8.0
-@export var CAN_BUNNYHOP : bool = true
-@export var BUNNY_HOP_ACCELERATION : float = 0.1
-@export var INVERT_Y_AXIS : bool = true
 
 @export_group("Stair Handling")
 ## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
