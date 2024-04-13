@@ -125,6 +125,7 @@ var slide_vector : Vector2 = Vector2.ZERO
 var wiggle_vector : Vector2 = Vector2.ZERO
 var wiggle_index : float = 0.0
 var wiggle_current_intensity : float = 0.0
+var can_play_footstep : bool = true
 var bunny_hop_speed : float = SPRINTING_SPEED
 var last_velocity : Vector3= Vector3.ZERO
 var stand_after_roll : bool = false
@@ -144,7 +145,6 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
 @onready var crouch_raycast: RayCast3D = $CrouchRayCast
 @onready var sliding_timer: Timer = $SlidingTimer
-@onready var footstep_timer: Timer = $FootstepTimer
 @onready var jump_timer: Timer = $JumpCooldownTimer
 
 # Adding carryable position for item control.
@@ -793,7 +793,7 @@ func _physics_process(delta):
 			if slide_audio_player:
 				slide_audio_player.stop()
 			
-			if footstep_timer.time_left <= 0:
+			if can_play_footstep && wiggle_vector.y > 0.9:
 				#dynamic volume for footsteps
 				if is_walking:
 					footstep_player.volume_db = walk_volume_db
@@ -802,12 +802,12 @@ func _physics_process(delta):
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
 				footstep_surface_detector.play_footstep()
+					
+				can_play_footstep = false
 				
-				#determine interval time between footsteps
-				if velocity.length_squared() >= footstep_interval_change_velocity_square:
-					footstep_timer.start(sprint_footstep_interval)
-				else:
-					footstep_timer.start(walk_footstep_interval)
+			if !can_play_footstep && wiggle_vector.y < 0.9:
+				can_play_footstep = true
+				
 	elif slide_audio_player:
 		slide_audio_player.stop()
 

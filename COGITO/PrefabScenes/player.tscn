@@ -116,9 +116,6 @@ script = ExtResource("16_a6uam")
 generic_fallback_footstep_profile = ExtResource("17_rmtvn")
 footstep_material_library = ExtResource("18_q6u2l")
 
-[node name="FootstepTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="JumpCooldownTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
