@@ -1,19 +1,13 @@
+class_name CogitoPlayerHudManager
 extends Control
 
 signal show_inventory
 signal hide_inventory
 
-@onready var damage_overlay = $DamageOverlay
-@onready var inventory_interface = $InventoryInterface
-@onready var wieldable_hud: PanelContainer = $MarginContainer_BottomUI/WieldableHud # Displays wieldable icons and data. Hides when no wieldable equipped.
+#region Variables
 
 ## Reference to the Node that has the player.gd script.
 @export var player : Node
-
-var hurt_tween : Tween
-var is_inventory_open : bool = false
-var device_id : int = -1
-var interaction_texture : Texture2D
 
 ## Used to reset icons etc, useful to have.
 @export var empty_texture : Texture2D
@@ -22,18 +16,29 @@ var interaction_texture : Texture2D
 
 ## PackedScene/Prefab for Interaction Prompts
 @export var prompt_component : PackedScene
-@onready var prompt_area: Control = $PromptArea
 
 ## PackedScene/Prefab for Hints
 @export var hint_component : PackedScene
-@onready var hint_area: Control = $HintArea
 
 ## This sets how far away from the player dropped items appear. 0 = items appear on the tip of the player interaction raycast. Negative values mean closer, positive values mean further away that this.
 @export var item_drop_distance_offset : float = -1
 
 ## Reference to PackedScene that gets instantiated for each player attribute.
 @export var ui_attribute_prefab : PackedScene
+
+var hurt_tween : Tween
+var is_inventory_open : bool = false
+var device_id : int = -1
+var interaction_texture : Texture2D
+
+@onready var damage_overlay = $DamageOverlay
+@onready var inventory_interface = $InventoryInterface
+@onready var wieldable_hud: PanelContainer = $MarginContainer_BottomUI/WieldableHud # Displays wieldable icons and data. Hides when no wieldable equipped.
+@onready var prompt_area: Control = $PromptArea
+@onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : VBoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
+
+#endregion
 
 
 func _ready():
@@ -42,7 +47,30 @@ func _ready():
 	# Calling this function once to set proper input icons
 	_on_input_device_change(InputHelper.device,InputHelper.device_index)
 	
+	$DeathScreen.hide()
+	damage_overlay.modulate = Color.TRANSPARENT
+	
+	# Set up for HUD elements for wieldables
+	wieldable_hud.hide()
+	
+	_setup_player()
+	
+	connect_to_external_inventories.call_deferred()
+
+
+func setup_player(new_player : Node):
+	player = new_player
+	_setup_player()
+
+
+func _setup_player():
 	### NEW ATTRIBUTE SYSTEM:
+	
+	## remove any previous attributes in cases where the player has been changed
+	for n in ui_attribute_area.get_children():
+		ui_attribute_area.remove_child(n)
+		n.queue_free()
+		
 	for attribute in player.player_attributes:
 		var spawned_attribute_ui = ui_attribute_prefab.instantiate()
 		ui_attribute_area.add_child(spawned_attribute_ui)
@@ -51,14 +79,9 @@ func _ready():
 			attribute.death.connect(_on_player_death)
 		
 		spawned_attribute_ui.initiate_attribute_ui(attribute)
-
-
-	$DeathScreen.hide()
-	damage_overlay.modulate = Color.TRANSPARENT
 	
-	
-	# Set up for HUD elements for wieldables
-	wieldable_hud.hide()
+	#prevent stuck prompts when changing players
+	delete_interaction_prompts()
 	
 	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
@@ -74,8 +97,6 @@ func _ready():
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
 	player.player_state_loaded.connect(_on_player_state_load)
 	player.player_interaction_component.updated_wieldable_data.connect(_on_update_wieldable_data)
-
-	connect_to_external_inventories.call_deferred()
 
 
 func connect_to_external_inventories(): # Grabbing external inventories in scene.
@@ -133,8 +154,8 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 			var instanced_prompt = prompt_component.instantiate()
 			prompt_area.add_child(instanced_prompt)
 			instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
-	
-	
+
+
 func delete_interaction_prompts():
 	var current_prompts = prompt_area.get_children()
 	if current_prompts:

@@ -1,11 +1,12 @@
 @icon("res://COGITO/Assets/Graphics/Editor/CogitoNodeIcon.svg")
+class_name CogitoSwitch
 extends Node3D
 
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal switched(is_on: bool)
 signal damage_received(damage_value:float)
 
-@onready var audio_stream_player_3d = $AudioStreamPlayer3D
+#region Variables
 
 ## Sets if object starts as on or off.
 @export var is_on : bool = false
@@ -35,6 +36,11 @@ var interaction_text : String
 var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
 
+@onready var audio_stream_player_3d = $AudioStreamPlayer3D
+
+#endregion
+
+
 func _ready():
 	self.add_to_group("interactable")
 	add_to_group("save_object_state")
@@ -47,6 +53,7 @@ func _ready():
 	else:
 		switch_off()
 
+
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component
 	if !allows_repeated_interaction and is_on:
@@ -57,6 +64,7 @@ func interact(_player_interaction_component):
 			switch()
 	else:
 		switch()
+
 
 func switch():
 	audio_stream_player_3d.play()
@@ -100,7 +108,7 @@ func switch_off():
 	object_state_updated.emit(interaction_text)
 	switched.emit(is_on)
 
-		
+
 func check_for_item() -> bool:
 	var inventory = player_interaction_component.get_parent().inventory_data
 	for slot_data in inventory.inventory_slots:
@@ -113,8 +121,8 @@ func check_for_item() -> bool:
 	if item_hint != "":
 		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
-	
-	
+
+
 func set_state():
 	if is_on:
 		for node in nodes_to_show_when_on:
@@ -134,7 +142,7 @@ func set_state():
 		interaction_text = interaction_text_when_off
 	
 	object_state_updated.emit(interaction_text)
-	
+
 
 func save():
 	var state_dict = {
