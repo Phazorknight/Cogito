@@ -1,4 +1,4 @@
-[gd_scene load_steps=366 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=367 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -64,6 +64,7 @@
 [ext_resource type="PackedScene" uid="uid://bqe44f6qeagyx" path="res://COGITO/DemoScenes/DemoPrefabs/plant_small_2.tscn" id="55_s7anr"]
 [ext_resource type="PackedScene" uid="uid://duxk3xlhddnvt" path="res://COGITO/DemoScenes/DemoPrefabs/potted_plant.tscn" id="56_hferh"]
 [ext_resource type="PackedScene" uid="uid://efrg1qdo4o5g" path="res://COGITO/DemoScenes/DemoPrefabs/kitchen_fridge_container.tscn" id="57_fdyfl"]
+[ext_resource type="Resource" uid="uid://ca0wjra4aq00v" path="res://COGITO/InventoryPD/Items/Cogito_LaptopReal.tres" id="58_0tscj"]
 [ext_resource type="PackedScene" uid="uid://3rlbofuf3x5s" path="res://COGITO/DemoScenes/DemoPrefabs/trashcan.tscn" id="58_no7q4"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="59_7mr36"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="60_oc6pu"]
@@ -123,7 +124,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_7oafx"]
+[sub_resource type="Resource" id="Resource_8g6xp"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -3290,7 +3291,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_7oafx")
+inventory_data = SubResource("Resource_8g6xp")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -7000,6 +7001,7 @@ inventory_data = SubResource("Resource_krl8u")
 
 [node name="InventoryCheckerWIN" parent="BREAK_ROOM/kitchenFridgeContainer" index="8" node_paths=PackedStringArray("container_to_check")]
 container_to_check = NodePath("..")
+item_to_check_for = ExtResource("58_0tscj")
 
 [node name="InventoryCheckerFAIL" parent="BREAK_ROOM/kitchenFridgeContainer" index="9" node_paths=PackedStringArray("container_to_check")]
 container_to_check = NodePath("..")
