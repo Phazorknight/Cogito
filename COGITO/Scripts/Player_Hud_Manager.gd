@@ -53,12 +53,17 @@ func _ready():
 	# Set up for HUD elements for wieldables
 	wieldable_hud.hide()
 	
-	setup_player()
+	_setup_player()
 	
 	connect_to_external_inventories.call_deferred()
 
 
-func setup_player():
+func setup_player(new_player : Node):
+	player = new_player
+	_setup_player()
+
+
+func _setup_player():
 	### NEW ATTRIBUTE SYSTEM:
 	
 	## remove any previous attributes in cases where the player has been changed
@@ -74,6 +79,9 @@ func setup_player():
 			attribute.death.connect(_on_player_death)
 		
 		spawned_attribute_ui.initiate_attribute_ui(attribute)
+	
+	#prevent stuck prompts when changing players
+	delete_interaction_prompts()
 	
 	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
