@@ -5,34 +5,41 @@ signal options_updated
 const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd")
 
 @export var nodes_to_focus: Array[Control]
-
-@onready var sfx_volume_slider : HSliderWLabel = $%SFXVolumeSlider
-@onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
+#Gameplay Options
+@onready var headbobbel_option_button: OptionButton = %HeadBobbelOptionButton
+@onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
+#Video Tab
+@onready var window_mode_option_button: OptionButton = %WindowModeOptionButton
+@onready var resolution_option_button: OptionButton = %ResolutionOptionButton
+@onready var current_fps_limit_label: Label = %CurrentFPSLimitLabel
+@onready var limit_fps_slider = %LimitFPSSlider
+@onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
+@onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
 @onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
 @onready var render_scale_slider: HSlider = %RenderScaleSlider
 @onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
 @onready var gui_scale_slider: HSlider = %GUIScaleSlider
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
-@onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
-@onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
-@onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
-@onready var window_mode_option_button: OptionButton = %WindowModeOptionButton
-@onready var resolution_option_button: OptionButton = %ResolutionOptionButton
-
+#Graphics Tab
 @onready var shadow_size_option_button: OptionButton = %ShadowSizeOptionButton
 @onready var shadow_filter_option_button: OptionButton = %ShadowFilterOptionButton
-@onready var sdfgi_option_button: OptionButton = %SDFGIOptionButton
-@onready var glow_option_button: OptionButton = %GlowOptionButton
+#@onready var sdfgi_option_button: OptionButton = %SDFGIOptionButton
+#@onready var glow_option_button: OptionButton = %GlowOptionButton
 @onready var ssao_option_button: OptionButton = %SSAOOptionButton
 @onready var ss_reflections_option_button: OptionButton = $%SSReflectionsOptionButton
 @onready var ssil_option_button: OptionButton = %SSILOptionButton
 @onready var volumetric_fog_option_button: OptionButton = %VolumetricFogOptionButton
 @onready var brightness_slider: HSlider = %BrightnessSlider
+@onready var current_brightness_label = %CurrentBrightnessLabel
 @onready var contrast_slider: HSlider = %ContrastSlider
-
+@onready var current_contrast_label = %CurrentContrastLabel
+#Audio Tab
+@onready var sfx_volume_slider : HSliderWLabel = $%SFXVolumeSlider
+@onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
+#World Environment (indirect setting)
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
-#@onready var directional_light: DirectionalLight3D = $DirectionalLight3D
-
+#We need to declase these, but they are getting loaded later, if at all.
+var directional_light
 var sfx_bus_index
 var music_bus_index
 var config = ConfigFile.new()
@@ -68,7 +75,8 @@ func _ready() -> void:
 	
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
-	
+	#To set a DirectionalLight3D for the options you need to place it into this group:
+	var directional_light = get_tree().get_nodes_in_group("DirectionalLight")
 	#load_options.call_deferred()
 	load_options()
 
@@ -106,7 +114,8 @@ func _input(event):
 func add_window_mode_items() -> void:
 	for mode in WINDOW_MODE_ARRAY:
 		window_mode_option_button.add_item(mode)
-		
+
+
 # Adding resolutions to the resolution button.
 func add_resolution_items() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
@@ -132,6 +141,7 @@ func on_window_mode_selected(index: int) -> void:
 func refresh_render():
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
+
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
@@ -171,15 +181,15 @@ func save_options():
 	
 	config.set_value(OptionsConstants.section_name, OptionsConstants.shadow_size_key, shadow_size_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.shadow_filter_key, shadow_filter_option_button.selected)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.sdfgi_key, sdfgi_option_button.selected)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.glow_key, glow_option_button.selected)
+	#config.set_value(OptionsConstants.section_name, OptionsConstants.sdfgi_key, sdfgi_option_button.selected)
+	#config.set_value(OptionsConstants.section_name, OptionsConstants.glow_key, glow_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.ssao_key, ssao_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.ss_reflections_key, ss_reflections_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.ssil_key, ssil_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.volumetric_fog_key, volumetric_fog_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.brightness_key, brightness_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.contrast_key, contrast_slider.value);
-	
+	config.set_value(OptionsConstants.section_name, OptionsConstants.limit_fps_key, limit_fps_slider.value);
 	config.save(OptionsConstants.config_file_name)
 
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
@@ -201,20 +211,22 @@ func load_options():
 	
 	var shadow_size = config.get_value(OptionsConstants.section_name, OptionsConstants.shadow_size_key, shadow_size_option_button.selected)
 	var shadow_filter = config.get_value(OptionsConstants.section_name, OptionsConstants.shadow_filter_key, shadow_filter_option_button.selected)
-	var sdfgi = config.get_value(OptionsConstants.section_name, OptionsConstants.sdfgi_key, sdfgi_option_button.selected)
-	var glow = config.get_value(OptionsConstants.section_name, OptionsConstants.glow_key, glow_option_button.selected)
+	#var sdfgi = config.get_value(OptionsConstants.section_name, OptionsConstants.sdfgi_key, sdfgi_option_button.selected)
+	#var glow = config.get_value(OptionsConstants.section_name, OptionsConstants.glow_key, glow_option_button.selected)
 	var ssao = config.get_value(OptionsConstants.section_name, OptionsConstants.ssao_key, ssao_option_button.selected)
 	var ss_reflections = config.get_value(OptionsConstants.section_name, OptionsConstants.ss_reflections_key, ss_reflections_option_button.selected)
 	var ssil = config.get_value(OptionsConstants.section_name, OptionsConstants.ssil_key, ssil_option_button.selected)
 	var volumetric_fog = config.get_value(OptionsConstants.section_name, OptionsConstants.volumetric_fog_key, volumetric_fog_option_button.selected)
 	var brightness = config.get_value(OptionsConstants.section_name, OptionsConstants.brightness_key, brightness_slider.value);
 	var contrast = config.get_value(OptionsConstants.section_name, OptionsConstants.contrast_key, contrast_slider.value);
-	
+	var fps = config.get_value(OptionsConstants.section_name, OptionsConstants.limit_fps_key, limit_fps_slider.value);
+	#setting the saved values:
 	world_environment.environment.adjustment_brightness = brightness
-	brightness_slider.set_value_no_signal(brightness)
+	brightness_slider.value = brightness
+	current_brightness_label.text = str(brightness)
 	world_environment.environment.adjustment_contrast = contrast
-	contrast_slider.set_value_no_signal(contrast)
-	
+	contrast_slider.value = contrast
+	current_contrast_label.text = str(contrast)
 	_on_volumetric_fog_option_button_item_selected(volumetric_fog)
 	volumetric_fog_option_button.selected = volumetric_fog
 	_on_ssil_option_button_item_selected(ssil)
@@ -223,14 +235,17 @@ func load_options():
 	ss_reflections_option_button.selected = ss_reflections
 	_on_ssao_option_button_item_selected(ssao)
 	ssao_option_button.selected = ssao
-	_on_glow_option_button_item_selected(glow)
-	glow_option_button.selected = glow
-	_on_sdfgi_option_button_item_selected(sdfgi)
-	sdfgi_option_button.selected = sdfgi
+	#_on_glow_option_button_item_selected(glow)
+	#glow_option_button.selected = glow
+	#_on_sdfgi_option_button_item_selected(sdfgi)
+	#sdfgi_option_button.selected = sdfgi
 	_on_shadow_filter_option_button_item_selected(shadow_filter)
 	shadow_filter_option_button.selected = shadow_filter
 	_on_shadow_size_option_button_item_selected(shadow_size)
 	shadow_size_option_button.selected = shadow_size
+	_on_limit_fps_slider_value_changed(fps)
+	limit_fps_slider.value = fps
+	current_fps_limit_label.text = str(fps)
 	
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
@@ -239,7 +254,7 @@ func load_options():
 	
 	gui_scale_slider.value = gui_scale
 	gui_scale_current_value_label.text = str(gui_scale)
-	apply_gui_scale_value()
+	apply_gui_scale_value(gui_scale)
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
@@ -270,16 +285,19 @@ func _on_render_scale_slider_value_changed(value):
 
 func _on_gui_scale_slider_value_changed(value):
 	gui_scale_current_value_label.text = str(value)
-
+	apply_gui_scale_value(value)
 	
 func _on_gui_scale_slider_drag_ended(_value_changed):
-	apply_gui_scale_value()
+	apply_gui_scale_value(_value_changed)
 
 # TODO: Apply changes if the slider is clicked but not dragged
-func apply_gui_scale_value():
+func apply_gui_scale_value(value):
 	get_viewport().content_scale_factor = gui_scale_slider.value
 	gui_scale_current_value_label.text = str(gui_scale_slider.value)
 
+func _on_limit_fps_slider_value_changed(value: float):
+	Engine.max_fps = value
+	current_fps_limit_label.text = str(value)
 
 func _on_v_sync_check_button_toggled(button_pressed):
 	# There are multiple V-Sync Methods supported by Godot 
@@ -321,13 +339,15 @@ func _on_tab_menu_resume():
 	load_options.call_deferred()
 
 
+#region Graphical Presets Region
+
 func _on_potato_pressed() -> void:
 	set_msaa("msaa_3d",0)
 	set_msaa("msaa_2d",0)
 	%ShadowSizeOptionButton.selected = 0
 	%ShadowFilterOptionButton.selected = 0
-	%SDFGIOptionButton.selected = 0
-	%GlowOptionButton.selected = 0
+	#%SDFGIOptionButton.selected = 0
+	#%GlowOptionButton.selected = 0
 	%SSAOOptionButton.selected = 0
 	%SSReflectionsOptionButton.selected = 0
 	%SSILOptionButton.selected = 0
@@ -339,8 +359,8 @@ func _on_low_pressed() -> void:
 	set_msaa("msaa_2d",1)
 	%ShadowSizeOptionButton.selected = 1
 	%ShadowFilterOptionButton.selected = 1
-	%SDFGIOptionButton.selected = 0
-	%GlowOptionButton.selected = 0
+	#%SDFGIOptionButton.selected = 0
+	#%GlowOptionButton.selected = 0
 	%SSAOOptionButton.selected = 0
 	%SSReflectionsOptionButton.selected = 0
 	%SSILOptionButton.selected = 0
@@ -352,8 +372,8 @@ func _on_medium_pressed() -> void:
 	set_msaa("msaa_2d",2)
 	%ShadowSizeOptionButton.selected = 2
 	%ShadowFilterOptionButton.selected = 2
-	%SDFGIOptionButton.selected = 1
-	%GlowOptionButton.selected = 1
+	#%SDFGIOptionButton.selected = 1
+	#%GlowOptionButton.selected = 1
 	%SSAOOptionButton.selected = 1
 	%SSReflectionsOptionButton.selected = 1
 	%SSILOptionButton.selected = 0
@@ -365,8 +385,8 @@ func _on_high_pressed() -> void:
 	set_msaa("msaa_2d",3)
 	%ShadowSizeOptionButton.selected = 3
 	%ShadowFilterOptionButton.selected = 3
-	%SDFGIOptionButton.selected = 1
-	%GlowOptionButton.selected = 2
+	#%SDFGIOptionButton.selected = 1
+	#%GlowOptionButton.selected = 2
 	%SSAOOptionButton.selected = 2
 	%SSReflectionsOptionButton.selected = 2
 	%SSILOptionButton.selected = 2
@@ -378,8 +398,8 @@ func _on_ultra_pressed() -> void:
 	set_msaa("msaa_2d",3)
 	%ShadowSizeOptionButton.selected = 5
 	%ShadowFilterOptionButton.selected = 5
-	%SDFGIOptionButton.selected = 2
-	%GlowOptionButton.selected = 2
+	#%SDFGIOptionButton.selected = 2
+	#%GlowOptionButton.selected = 2
 	%SSAOOptionButton.selected = 4
 	%SSReflectionsOptionButton.selected = 3
 	%SSILOptionButton.selected = 4
@@ -387,53 +407,69 @@ func _on_ultra_pressed() -> void:
 	update_preset()
 
 func update_preset() -> void:
-	# Simulate options being manually selected to run their respective update code.s
+	# Simulate options being manually selected to run their respective update code.
 	%ShadowSizeOptionButton.item_selected.emit(%ShadowSizeOptionButton.selected)
 	%ShadowFilterOptionButton.item_selected.emit(%ShadowFilterOptionButton.selected)
-	%SDFGIOptionButton.item_selected.emit(%SDFGIOptionButton.selected)
-	%GlowOptionButton.item_selected.emit(%GlowOptionButton.selected)
+	#%SDFGIOptionButton.item_selected.emit(%SDFGIOptionButton.selected)
+	#%GlowOptionButton.item_selected.emit(%GlowOptionButton.selected)
 	%SSAOOptionButton.item_selected.emit(%SSAOOptionButton.selected)
 	%SSReflectionsOptionButton.item_selected.emit(%SSReflectionsOptionButton.selected)
 	%SSILOptionButton.item_selected.emit(%SSILOptionButton.selected)
 	%VolumetricFogOptionButton.item_selected.emit(%VolumetricFogOptionButton.selected)
 	%BrightnessSlider.value_changed.emit(%BrightnessSlider.value)
 
+#endregion
 
-func _on_limit_fps_slider_value_changed(value: float):
-	Engine.max_fps = value
 
-func _on_shadow_size_option_button_item_selected(index):
-	if index == 0: # Minimum
+func _on_shadow_size_option_button_item_selected(index: int):
+	if index == 0 and directional_light != null: # Minimum
 		RenderingServer.directional_shadow_atlas_set_size(512, true)
 		# Adjust shadow bias according to shadow resolution.
 		# Higher resultions can use a lower bias without suffering from shadow acne.
-		#FIXME: Add a Directional Light to the main menu
-		#directional_light.shadow_bias = 0.06
+		directional_light.shadow_bias = 0.06
 		# Disable positional (omni/spot) light shadows entirely to further improve performance.
 		# These often don't contribute as much to a scene compared to directional light shadows.
 		get_viewport().positional_shadow_atlas_size = 0
-	if index == 1: # Very Low
+	elif index == 0 and directional_light == null:
+		RenderingServer.directional_shadow_atlas_set_size(512, true)
+		get_viewport().positional_shadow_atlas_size = 0
+	if index == 1 and directional_light != null: # Very Low
 		RenderingServer.directional_shadow_atlas_set_size(1024, true)
-		#directional_light.shadow_bias = 0.04
+		directional_light.shadow_bias = 0.04
 		get_viewport().positional_shadow_atlas_size = 1024
-	if index == 2: # Low
+	elif index == 1 and directional_light == null:
+		RenderingServer.directional_shadow_atlas_set_size(1024, true)
+		get_viewport().positional_shadow_atlas_size = 1024
+	if index == 2 and directional_light != null: # Low
 		RenderingServer.directional_shadow_atlas_set_size(2048, true)
-		#directional_light.shadow_bias = 0.03
+		directional_light.shadow_bias = 0.03
 		get_viewport().positional_shadow_atlas_size = 2048
-	if index == 3: # Medium (default)
+	elif index == 2 and directional_light == null:
+		RenderingServer.directional_shadow_atlas_set_size(2048, true)
+		get_viewport().positional_shadow_atlas_size = 2048
+	if index == 3 and directional_light != null: # Medium (default)
 		RenderingServer.directional_shadow_atlas_set_size(4096, true)
-		#directional_light.shadow_bias = 0.02
+		directional_light.shadow_bias = 0.02
 		get_viewport().positional_shadow_atlas_size = 4096
-	if index == 4: # High
+	elif index == 3 and directional_light == null: # Medium (default)
+		RenderingServer.directional_shadow_atlas_set_size(4096, true)
+		get_viewport().positional_shadow_atlas_size = 4096
+	if index == 4 and directional_light != null: # High
 		RenderingServer.directional_shadow_atlas_set_size(8192, true)
-		#directional_light.shadow_bias = 0.01
+		directional_light.shadow_bias = 0.01
 		get_viewport().positional_shadow_atlas_size = 8192
-	if index == 5: # Ultra
+	elif index == 4 and directional_light == null:
+		RenderingServer.directional_shadow_atlas_set_size(8192, true)
+		get_viewport().positional_shadow_atlas_size = 8192
+	if index == 5 and directional_light != null: # Ultra
 		RenderingServer.directional_shadow_atlas_set_size(16384, true)
-		#directional_light.shadow_bias = 0.005
+		directional_light.shadow_bias = 0.005
+		get_viewport().positional_shadow_atlas_size = 16384
+	elif index == 5 and directional_light == null:
+		RenderingServer.directional_shadow_atlas_set_size(16384, true)
 		get_viewport().positional_shadow_atlas_size = 16384
 
-func _on_shadow_filter_option_button_item_selected(index):
+func _on_shadow_filter_option_button_item_selected(index: int):
 	if index == 0: # Very Low
 		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
 		RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
@@ -459,43 +495,39 @@ func _on_shadow_filter_option_button_item_selected(index):
 # then be sure to run this function again to make the setting effective.
 #region World Environment depending functions
 
-
-func _on_saturation_slider_value_changed(value: float) -> void:
-	# The slider value is clamped between 0.5 and 10.
-	world_environment.environment.set_adjustment_saturation(value)
-
-
 func _on_contrast_slider_value_changed(value: float) -> void:
 	# The slider value is clamped between 0.5 and 2.
 	world_environment.environment.set_adjustment_contrast(value)
+	current_contrast_label.text = str(value)
 
 
 func _on_brightness_slider_value_changed(value: float) -> void:
 	# The slider value is clamped between 0.5 and 2.
 	world_environment.environment.set_adjustment_brightness(value)
+	current_brightness_label.text = str(value)
 
 
-func _on_sdfgi_option_button_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.sdfgi_enabled = false
-	if index == 1: # Low
-		world_environment.environment.sdfgi_enabled = true
-		RenderingServer.gi_set_use_half_resolution(true)
-	if index == 2: # High
-		world_environment.environment.sdfgi_enabled = true
-		RenderingServer.gi_set_use_half_resolution(false)
+#func _on_sdfgi_option_button_item_selected(index: int):
+	#if index == 0: # Disabled (default)
+		#world_environment.environment.sdfgi_enabled = false
+	#if index == 1: # Low
+		#world_environment.environment.sdfgi_enabled = true
+		#RenderingServer.gi_set_use_half_resolution(true)
+	#if index == 2: # High
+		#world_environment.environment.sdfgi_enabled = true
+		#RenderingServer.gi_set_use_half_resolution(false)
+
+#
+#func _on_glow_option_button_item_selected(index: int):
+	#if index == 0: # Disabled (default)
+		#world_environment.environment.glow_enabled = false
+	#if index == 1: # Low
+		#world_environment.environment.glow_enabled = true
+	#if index == 2: # High
+		#world_environment.environment.glow_enabled = true
 
 
-func _on_glow_option_button_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.glow_enabled = false
-	if index == 1: # Low
-		world_environment.environment.glow_enabled = true
-	if index == 2: # High
-		world_environment.environment.glow_enabled = true
-
-
-func _on_ssao_option_button_item_selected(index):
+func _on_ssao_option_button_item_selected(index: int):
 	if index == 0: # Disabled (default)
 		world_environment.environment.ssao_enabled = false
 	if index == 1: # Very Low
@@ -526,7 +558,7 @@ func _on_ss_reflections_option_button_item_selected(index: int) -> void:
 		world_environment.environment.set_ssr_max_steps(56)
 
 
-func _on_ssil_option_button_item_selected(index):
+func _on_ssil_option_button_item_selected(index: int):
 	if index == 0: # Disabled (default)
 		world_environment.environment.ssil_enabled = false
 	if index == 1: # Very Low
@@ -542,7 +574,7 @@ func _on_ssil_option_button_item_selected(index):
 		world_environment.environment.ssil_enabled = true
 		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_HIGH, true, 0.5, 4, 50, 300)
 
-func _on_volumetric_fog_option_button_item_selected(index):
+func _on_volumetric_fog_option_button_item_selected(index: int):
 	if index == 0: # Disabled (default)
 		world_environment.environment.volumetric_fog_enabled = false
 	if index == 1: # Low

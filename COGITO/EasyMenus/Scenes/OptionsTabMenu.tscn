@@ -15,7 +15,7 @@ offset_right = 550.0
 offset_bottom = 600.0
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
-current_tab = 4
+current_tab = 2
 script = ExtResource("2_bufp8")
 nodes_to_focus = [NodePath("Gameplay"), NodePath("Graphics"), NodePath("Video"), NodePath("Audio"), NodePath("Bindings")]
 
@@ -56,12 +56,10 @@ theme_override_font_sizes/font_size = 25
 text = "Invert Y Axis"
 
 [node name="GridContainer" type="GridContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 columns = 2
 
 [node name="HeadBobbelLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/GridContainer"]
-visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 tooltip_text = "How much the camera shakes while moving."
@@ -69,10 +67,11 @@ mouse_filter = 1
 text = "Head movement"
 
 [node name="HeadBobbelOptionButton" type="OptionButton" parent="Gameplay/ScrollContainer/VBoxContainer/GridContainer"]
-visible = false
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 3
+selected = 0
 popup/item_0/text = "Minimal"
 popup/item_0/id = 0
 popup/item_1/text = "Average"
@@ -110,44 +109,51 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PresetSection" type="Label" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Apply Preset"
 horizontal_alignment = 1
 
 [node name="Presets" type="BoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="Potato" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 text = "Potato"
 
 [node name="Low" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 text = "Low"
 
 [node name="Medium" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 text = "Medium"
 
 [node name="High" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 text = "High"
 
 [node name="Ultra" type="Button" parent="Graphics/ScrollContainer/VBoxContainer/Presets"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 text = "Ultra"
 
 [node name="HSeparator" type="HSeparator" parent="Graphics/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 
 [node name="QualitySettings" type="Label" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Quality Settings"
@@ -206,12 +212,14 @@ popup/item_5/text = "Ultra (Slower)"
 popup/item_5/id = 5
 
 [node name="SDFGILabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Global Illumination:"
 
 [node name="SDFGIOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 item_count = 3
@@ -224,11 +232,13 @@ popup/item_2/text = "High (Slow)"
 popup/item_2/id = 2
 
 [node name="GlowLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
+visible = false
 layout_mode = 2
 text = "Bloom:"
 
 [node name="GlowOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 item_count = 3
 selected = 0
@@ -316,9 +326,10 @@ popup/item_2/id = 2
 
 [node name="HSeparator4" type="HSeparator" parent="Graphics/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 
 [node name="AdjustmentSection" type="Label" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 text = "Adjustments"
 horizontal_alignment = 1
@@ -332,12 +343,13 @@ custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
 [node name="BrightnessLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Brightness"
 
 [node name="BrightnessSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -346,60 +358,47 @@ max_value = 2.0
 step = 0.1
 value = 1.0
 
-[node name="SaturationHBox" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer"]
-visible = false
-custom_minimum_size = Vector2(400, 0)
+[node name="CurrentBrightnessLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-
-[node name="SaturationSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/SaturationHBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-min_value = 0.01
-max_value = 10.0
-step = 0.01
-value = 1.0
-
-[node name="SaturationLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/SaturationHBox"]
-visible = false
-layout_mode = 2
-text = "Saturation"
+text = "1"
+horizontal_alignment = 1
 
 [node name="ContrastHBox" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer"]
 layout_mode = 2
 
 [node name="ContrastLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Contrast
 "
 
 [node name="ContrastSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 1
 min_value = 0.5
 max_value = 2.0
 step = 0.1
 value = 1.0
 
-[node name="ApplyChanges" type="Button" parent="Graphics/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(300, 0)
+[node name="CurrentContrastLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 30
-text = "Apply changes"
-script = ExtResource("6_rlben")
+text = "1
+"
+horizontal_alignment = 1
 
 [node name="Video" type="MarginContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../Graphics")
 focus_neighbor_right = NodePath("../Audio")
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/VideoSettingsGridContainer/WindowModeOptionButton")
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/WindowModeHBoxContainer/WindowModeOptionButton")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 10
@@ -416,44 +415,40 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
-[node name="VideoSettingsGridContainer" type="GridContainer" parent="Video/ScrollContainer/VBoxContainer"]
+[node name="WindowModeHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-columns = 2
 
-[node name="WindowMode" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="WindowMode" type="Label" parent="Video/ScrollContainer/VBoxContainer/WindowModeHBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Window Mode"
 
-[node name="WindowModeOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="WindowModeOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/WindowModeHBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
+size_flags_horizontal = 6
+alignment = 1
 
-[node name="ResolutionLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
-custom_minimum_size = Vector2(180, 0)
+[node name="ResolutionHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
+
+[node name="ResolutionLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/ResolutionHBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 text = "Resolution"
 
-[node name="ResolutionOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="ResolutionOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/ResolutionHBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 3
+size_flags_horizontal = 6
+alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="LimitFPSHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
 
-[node name="HSeparator5" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="LimitFPSLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="LimitFPSLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/LimitFPSHBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 tooltip_text = "Limits the Frames per Second.
@@ -462,45 +457,53 @@ Usually set to the max. Refresh Rate of the Monitor.
 mouse_filter = 1
 text = "Limit FPS"
 
-[node name="LimitFPSSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="LimitFPSSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/LimitFPSHBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 tooltip_text = "Limits the Frames per Second.
 Usualy set to the max. Refresh Rate of the Monitor."
 max_value = 300.0
-step = 10.0
+step = 5.0
 
-[node name="CurrentFPSLimitLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer"]
+[node name="CurrentFPSLimitLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/LimitFPSHBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="HSeparator5" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="UI Section" type="Label" parent="Video/ScrollContainer/VBoxContainer"]
+[node name="UISectionLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "User Interface Settings"
 horizontal_alignment = 1
 
-[node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
+[node name="GUIScaleHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="GUIScaleLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+[node name="GUIScaleLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/GUIScaleHBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "UI Scale"
 
-[node name="GUIScaleSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+[node name="GUIScaleSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/GUIScaleHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 mouse_force_pass_scroll_events = false
-min_value = 0.25
+min_value = 0.8
 max_value = 1.5
-step = 0.05
+step = 0.1
 value = 1.0
 
-[node name="GUIScaleCurrentValueLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+[node name="GUIScaleCurrentValueLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/GUIScaleHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
@@ -509,18 +512,22 @@ horizontal_alignment = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
 
-[node name="HBoxContainer_AA2D" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
+[node name="AntiAliasingSectionLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Anti-Aliasing"
+horizontal_alignment = 1
+
+[node name="AA2DHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="AntiAliasing2DLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
+[node name="AntiAliasing2DLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/AA2DHBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "2D Anti Aliasing"
 
-[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
+[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/AA2DHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -538,18 +545,18 @@ popup/item_3/text = "8x"
 popup/item_3/id = 3
 script = ExtResource("8_7fii0")
 
-[node name="GamepadClosable" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" instance=ExtResource("9_wft0n")]
+[node name="GamepadClosable" parent="Video/ScrollContainer/VBoxContainer/AA2DHBoxContainer/AntiAliasing2DOptionButton" instance=ExtResource("9_wft0n")]
 
-[node name="HBoxContainer_AA3D" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
+[node name="AA3DHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="AntiAliasing3DLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+[node name="AntiAliasing3DLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/AA3DHBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "3D Anti Aliasing"
 
-[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Video/ScrollContainer/VBoxContainer/AA3DHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -567,22 +574,22 @@ popup/item_3/text = "8x"
 popup/item_3/id = 3
 script = ExtResource("8_7fii0")
 
-[node name="GamepadClosable" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
+[node name="GamepadClosable" parent="Video/ScrollContainer/VBoxContainer/AA3DHBoxContainer/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
 
 [node name="HSeparator3" type="HSeparator" parent="Video/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
+[node name="RenderScaleHBoxContainer" type="HBoxContainer" parent="Video/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
-[node name="RenderScaleLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+[node name="RenderScaleLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/RenderScaleHBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Render Scale"
 
-[node name="RenderScaleSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+[node name="RenderScaleSlider" type="HSlider" parent="Video/ScrollContainer/VBoxContainer/RenderScaleHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -592,11 +599,10 @@ max_value = 2.0
 step = 0.05
 value = 1.0
 
-[node name="RenderScaleCurrentValueLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+[node name="RenderScaleCurrentValueLabel" type="Label" parent="Video/ScrollContainer/VBoxContainer/RenderScaleHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 text = "1"
 horizontal_alignment = 1
 
@@ -674,6 +680,7 @@ max_value = 1.0
 step = 0.1
 
 [node name="Bindings" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
@@ -726,10 +733,10 @@ layout_mode = 2
 [connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/SSILOptionButton" to="." method="_on_ssil_option_button_item_selected"]
 [connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/VolumetricFogOptionButton" to="." method="_on_volumetric_fog_option_button_item_selected"]
 [connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]
-[connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/SaturationHBox/SaturationSlider" to="." method="_on_saturation_slider_value_changed"]
 [connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox/ContrastSlider" to="." method="_on_contrast_slider_value_changed"]
-[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
-[connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/VideoSettingsGridContainer/LimitFPSSlider" to="." method="_on_limit_fps_slider_value_changed"]
+[connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/LimitFPSHBoxContainer/LimitFPSSlider" to="." method="_on_limit_fps_slider_value_changed"]
+[connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/GUIScaleHBoxContainer/GUIScaleSlider" to="." method="_on_gui_scale_slider_value_changed"]
+[connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/RenderScaleHBoxContainer/RenderScaleSlider" to="." method="_on_render_scale_slider_value_changed"]
 [connection signal="pressed" from="Video/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 
 [editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]

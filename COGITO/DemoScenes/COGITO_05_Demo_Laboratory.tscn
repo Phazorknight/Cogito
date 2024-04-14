@@ -896,7 +896,7 @@ size = Vector3(0.1, 0.1, 0.1)
 script = ExtResource("1_4dqq6")
 connectors = [NodePath("CONNECTOR_TO_LOBBY/ConnectorFromLobby")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." groups=["DirectionalLight"]]
 transform = Transform3D(0.5, -0.224144, 0.836516, -1.13133e-08, 0.965926, 0.258819, -0.866025, -0.12941, 0.482963, 0, 2, 0)
 light_color = Color(1, 0.929167, 0.75, 1)
 shadow_enabled = true

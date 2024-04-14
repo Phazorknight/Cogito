@@ -94,7 +94,7 @@
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_8fy8d"]
+[sub_resource type="Resource" id="Resource_t0457"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -793,7 +793,7 @@ shadow_mesh = SubResource("ArrayMesh_70jo1")
 points = PackedVector3Array(10, 0.05, 17.5, 10, -0.05, 17.5, 10, 0.05, -17.5, -10, 0.05, 17.5, -10, -0.05, 17.5, 10, -0.05, -17.5, -10, 0.05, -17.5, -10, -0.05, -17.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_wtwgn"]
-size = Vector3(20, 0.1, 35)
+size = Vector3(20, 2, 35)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjvk2"]
 resource_name = "glass"
@@ -3220,8 +3220,8 @@ emission_enabled = true
 script = ExtResource("1_dracg")
 connectors = [NodePath("MAIN_LOBBY/LAB_CONNECTOR/ConnectorFromLab")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.5, -0.224144, 0.836516, -1.13133e-08, 0.965926, 0.258819, -0.866025, -0.12941, 0.482963, 0, 2, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." groups=["DirectionalLight"]]
+transform = Transform3D(0.5, -0.224144, 0.836516, -1.13133e-08, 0.965926, 0.258819, -0.866025, -0.12941, 0.482963, 31.1428, 19.9889, 15.0093)
 light_color = Color(1, 0.929167, 0.75, 1)
 shadow_enabled = true
 shadow_opacity = 0.8
@@ -3243,7 +3243,7 @@ material = SubResource("FogMaterial_4avjx")
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 pause_menu = NodePath("../PauseMenu")
 player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_8fy8d")
+inventory_data = SubResource("Resource_t0457")
 step_height_camera_lerp = 1.5
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
@@ -5667,7 +5667,7 @@ transform = Transform3D(0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 0, 0, 1
 shape = SubResource("ConvexPolygonShape3D_x27rs")
 
 [node name="MainCeiling" type="MeshInstance3D" parent="MAIN_LOBBY/StaticBody3D"]
-transform = Transform3D(0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 0, 0, 1, 0, 5.55, 0)
+transform = Transform3D(0.996195, -0.0871558, 0, 0.0871558, 0.996195, 0, 0, 0, 1, 0, 6.40211, 0)
 mesh = SubResource("BoxMesh_wtwgn")
 skeleton = NodePath("../../..")
 
@@ -5828,6 +5828,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126438, 2.68542, -8.09135)
 
 [node name="window" type="MeshInstance3D" parent="MAIN_LOBBY/RailingA"]
 transform = Transform3D(2.10175e-15, 4.37114e-08, -1, 1.1, -4.37114e-08, 0, -4.80825e-08, -1, -4.37114e-08, 1.04308e-07, 0.0500004, -0.0499992)
+cast_shadow = 2
 mesh = SubResource("ArrayMesh_yswb2")
 skeleton = NodePath("")
 
@@ -6324,6 +6325,7 @@ skeleton = NodePath("")
 [node name="SpotLight3D" type="SpotLight3D" parent="LIGHTS_CEILING_WALL/lampWall"]
 transform = Transform3D(1, 4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, 2.96907e-09, -0.00929523, 0.0679183)
 shadow_enabled = true
+spot_range = 4.0
 
 [node name="loungeSofaCorner2" parent="." instance=ExtResource("28_jqaqs")]
 transform = Transform3D(-1, 0, -8.19564e-08, 0, 1, 0, 8.19564e-08, 0, -1, -5.89628, 2.7, -5.98518)
