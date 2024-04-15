@@ -1,12 +1,12 @@
 @icon("res://COGITO/Assets/Graphics/Editor/CogitoNodeIcon.svg")
-extends Node3D
 class_name CogitoDoor
+extends Node3D
 
 signal object_state_updated(interaction_text:String)
 signal door_state_changed(is_open:bool)
 signal damage_received(damage_value:float)
 
-@onready var audio_stream_player_3d = $AudioStreamPlayer3D
+#region Variables
 
 @export_group("Audio")
 @export var open_sound : AudioStream
@@ -60,6 +60,7 @@ signal damage_received(damage_value:float)
 @export var opening_animation : String
 @export var reverse_opening_anim_for_close : bool = true
 @export var closing_animation : String
+
 var anim_player : AnimationPlayer
 var is_moving : bool = false
 var target_rotation_rad : float 
@@ -68,6 +69,11 @@ var close_timer : Timer #Used for auto-close
 
 var interaction_nodes : Array[Node]
 var player_interaction_component : PlayerInteractionComponent
+
+@onready var audio_stream_player_3d = $AudioStreamPlayer3D
+
+#endregion
+
 
 func _ready():
 	add_to_group("interactable")
@@ -127,8 +133,8 @@ func _physics_process(_delta):
 			is_moving = false
 		if !use_z_axis and abs(rotation.y - target_rotation_rad) <= 0.01: 
 			is_moving = false
-	
-	
+
+
 func check_for_key(interactor):
 	var inventory = interactor.get_parent().inventory_data
 	for slot_data in inventory.inventory_slots:
@@ -154,8 +160,8 @@ func unlock_door():
 	is_locked = false
 	interaction_text = interaction_text_when_closed	
 	object_state_updated.emit(interaction_text)
-	
-	
+
+
 func open_door(interactor: Node3D):
 	audio_stream_player_3d.stream = open_sound
 	audio_stream_player_3d.play()
@@ -189,13 +195,12 @@ func open_door(interactor: Node3D):
 		close_timer.one_shot = true
 		close_timer.start()
 		close_timer.timeout.connect(on_auto_close_time)
-		
-		
+
+
 func on_auto_close_time():
 	close_door(player_interaction_component)
-	
-	
-	
+
+
 func close_door(_interactor: Node3D):
 	if close_timer: #If there's an auto_close_timer, destroy it.
 		close_timer.queue_free()
@@ -217,10 +222,12 @@ func close_door(_interactor: Node3D):
 		tween_door.tween_property(self,"position", closed_position, door_speed)
 	is_open = false
 	interaction_text = interaction_text_when_closed
-	player_interaction_component.interactive_object_exit() #Froces a re-detection of the interaction prompt.
+	if player_interaction_component:
+		player_interaction_component.interactive_object_exit() #Froces a re-detection of the interaction prompt.
 	object_state_updated.emit(interaction_text)
 	door_state_changed.emit(false)
-	
+
+
 func set_state():
 	if is_open:
 		if auto_close_time > 0:
