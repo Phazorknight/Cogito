@@ -71,7 +71,7 @@ func _setup_player():
 		ui_attribute_area.remove_child(n)
 		n.queue_free()
 		
-	for attribute in player.player_attributes:
+	for attribute in player.player_attributes.values():
 		var spawned_attribute_ui = ui_attribute_prefab.instantiate()
 		ui_attribute_area.add_child(spawned_attribute_ui)
 		if attribute.attribute_name == "health":

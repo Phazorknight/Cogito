@@ -107,8 +107,11 @@ func load_player_state(player, passed_slot:String):
 		
 		# New way of loading player attributes:
 		var loaded_attribute_data = _player_state.player_attributes
-		for i in loaded_attribute_data.size():
-			player.player_attributes[i].set_attribute(loaded_attribute_data[i].x,loaded_attribute_data[i].y)
+		for attribute in loaded_attribute_data:
+			var attribute_data: Vector2 = loaded_attribute_data[attribute]
+			var cur_value = attribute_data.x
+			var max_value = attribute_data.y
+			player.player_attributes[attribute].set_attribute(cur_value, max_value)
 
 		player.global_position = _player_state.player_position
 		player.global_rotation = _player_state.player_rotation
@@ -163,8 +166,10 @@ func save_player_state(player, slot:String):
 	## New way of saving attributes:
 	_player_state.clear_saved_attribute_data()
 	for attribute in player.player_attributes:
-		var attribute_data : Vector2 = Vector2(attribute.value_current,attribute.value_max)
-		_player_state.add_player_attribute_to_state_data(attribute_data)
+		var cur_value = player.player_attributes[attribute].value_current
+		var max_value = player.player_attributes[attribute].value_max
+		var attribute_data := Vector2(cur_value, max_value)
+		_player_state.add_player_attribute_to_state_data(attribute, attribute_data)
 
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")
