@@ -96,7 +96,7 @@ var ladder_on_cooldown : bool = false
 var WIGGLE_INTENSITY_MODIFIER = 1
 
 ### NEW PLAYER ATTRIBUTE SYSTEM:
-var player_attributes : Array[Node]
+var player_attributes : Dictionary
 var stamina_attribute : CogitoAttribute = null
 var visibility_attribute : CogitoAttribute
 
@@ -179,23 +179,24 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
-	player_attributes = find_children("","CogitoAttribute",false) #Grabs all attached player attributes
-	for attribute in player_attributes:
+	# Grabs all attached player attributes
+	for attribute in find_children("","CogitoAttribute",false):
+		player_attributes[attribute.attribute_name] = attribute
 		print("Cogito Attribute found: ", attribute.attribute_name)
-		
-		if attribute.attribute_name == "health": # Hookup Health attribute signal to detect player death
-			attribute.death.connect(_on_death)
-			
-		if attribute.attribute_name == "stamina": # Saving reference to stamina attribute for movements that require stamina checks
-			stamina_attribute = attribute
-		
-		if attribute.attribute_name == "visibility": #  Saving reference to visibilty attribute for that require visibility checks
-			visibility_attribute = attribute
-			
-		if attribute.attribute_name == "sanity":
-			if visibility_attribute: # Hooking up sanity attribute to visibility attribute
-				visibility_attribute.attribute_changed.connect(attribute.on_visibility_changed)
-				visibility_attribute.check_current_visibility()
+
+	# If found, hookup health attribute signal to detect player death
+	var health_attribute = player_attributes.get("health")
+	if health_attribute:
+		health_attribute.death.connect(_on_death)
+	# Save reference to stamina attribute for movements that require stamina checks (null if not found)
+	stamina_attribute = player_attributes.get("stamina")
+	# Save reference to visibilty attribute for that require visibility checks (null if not found)
+	visibility_attribute = player_attributes.get("visibility")
+	# Hookup sanity attribute to visibility attribute
+	var sanity_attribute = player_attributes.get("sanity")
+	if sanity_attribute and visibility_attribute:
+		visibility_attribute.attribute_changed.connect(sanity_attribute.on_visibility_changed)
+		visibility_attribute.check_current_visibility()
 
 	# Pause Menu setup
 	if pause_menu:
@@ -218,27 +219,28 @@ func slide_audio_init():
 
 # Use these functions to manipulate player attributes.
 func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
-	for attribute in player_attributes:
-		if attribute.attribute_name == attribute_name:
-			if value_type == ConsumableItemPD.ValueType.CURRENT:
-				if attribute.value_current == attribute.value_max:
-					return false
-				else:
-					attribute.add(value)
-					return true
-			if value_type == ConsumableItemPD.ValueType.MAX:
-				attribute.value_max += value
-				attribute.add(value)
-				return true
-	
-	print("Player.gd increase attribute: No match in for loop")
+	var attribute = player_attributes.get(attribute_name)
+	if not attribute:
+		print("Player.gd increase attribute: Attribute not found")
+		return false
+	if value_type == ConsumableItemPD.ValueType.CURRENT:
+		if attribute.value_current == attribute.value_max:
+			return false
+		attribute.add(value)
+		return true
+	elif value_type == ConsumableItemPD.ValueType.MAX:
+		attribute.value_max += value
+		attribute.add(value)
+		return true
 	return false
 
 
 func decrease_attribute(attribute_name: String, value: float):
-	for attribute in player_attributes:
-		if attribute.attribute_name == attribute_name:
-			attribute.subtract(value)
+	var attribute = player_attributes.get(attribute_name)
+	if not attribute:
+		print("Player.gd decrease attribute: Attribute not found")
+		return
+	attribute.subtract(value)
 
 
 func _on_death():

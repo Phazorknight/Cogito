@@ -19,7 +19,7 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var player_sanity : Vector2
 
 #New way of saving player attributes
-@export var player_attributes : Array[Vector2]
+@export var player_attributes : Dictionary
 
 #Saving parameters from the player interaction component
 @export var interaction_component_state : Array
@@ -34,8 +34,8 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var player_state_savetime : int
 @export var player_state_slot_name : String
 
-func add_player_attribute_to_state_data(attribute_data:Vector2):
-	player_attributes.append(attribute_data)
+func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
+	player_attributes[name] = attribute_data
 	
 func clear_saved_attribute_data():
 	player_attributes.clear()
