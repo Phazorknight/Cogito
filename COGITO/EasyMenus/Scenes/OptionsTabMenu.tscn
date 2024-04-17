@@ -15,7 +15,6 @@ offset_right = 550.0
 offset_bottom = 600.0
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
-current_tab = 2
 script = ExtResource("2_bufp8")
 nodes_to_focus = [NodePath("Gameplay"), NodePath("Graphics"), NodePath("Video"), NodePath("Audio"), NodePath("Bindings")]
 
@@ -23,7 +22,6 @@ nodes_to_focus = [NodePath("Gameplay"), NodePath("Graphics"), NodePath("Video"),
 environment = ExtResource("2_de4hy")
 
 [node name="Gameplay" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../Bindings")
 focus_neighbor_right = NodePath("../Graphics")
@@ -79,7 +77,7 @@ popup/item_1/id = 1
 popup/item_2/text = "Full"
 popup/item_2/id = 2
 
-[node name="ApplyChanges" type="Button" parent="Gameplay/ScrollContainer/VBoxContainer"]
+[node name="ApplyChanges" type="Button" parent="Gameplay"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -393,8 +391,18 @@ text = "1
 "
 horizontal_alignment = 1
 
+[node name="ApplyChanges" type="Button" parent="Graphics"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 30
+text = "Apply changes"
+script = ExtResource("6_rlben")
+
 [node name="Video" type="MarginContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../Graphics")
 focus_neighbor_right = NodePath("../Audio")
@@ -629,7 +637,7 @@ visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../Video")
 focus_neighbor_right = NodePath("../Bindings")
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/GridContainer/SFXVolumeSlider")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 10
@@ -645,39 +653,44 @@ transition_time = 0.15
 [node name="VBoxContainer" type="VBoxContainer" parent="Audio/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 15
+size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="Audio/ScrollContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Audio/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_right = 100
+size_flags_horizontal = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="SFXVolumeSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("10_45uhu")]
-unique_name_in_owner = true
-layout_mode = 2
-title = "SFX Volume"
-
-[node name="Title" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="0"]
-text = "SFX Volume"
-
-[node name="HSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="1"]
-max_value = 1.0
-step = 0.1
-
-[node name="MusicVolumeSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("10_45uhu")]
+[node name="MusicVolumeSlider" parent="Audio/ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("10_45uhu")]
 unique_name_in_owner = true
 layout_mode = 2
 title = "Music Volume"
 
-[node name="Title" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="0"]
+[node name="Title" parent="Audio/ScrollContainer/VBoxContainer/GridContainer/MusicVolumeSlider" index="0"]
 text = "Music Volume"
 
-[node name="HSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="1"]
+[node name="HSlider" parent="Audio/ScrollContainer/VBoxContainer/GridContainer/MusicVolumeSlider" index="1"]
 max_value = 1.0
 step = 0.1
+
+[node name="SFXVolumeSlider" parent="Audio/ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("10_45uhu")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "SFX Volume"
+
+[node name="Title" parent="Audio/ScrollContainer/VBoxContainer/GridContainer/SFXVolumeSlider" index="0"]
+text = "SFX Volume"
+
+[node name="HSlider" parent="Audio/ScrollContainer/VBoxContainer/GridContainer/SFXVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.1
+
+[node name="ApplyChanges" type="Button" parent="Audio/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 30
+text = "Apply changes"
+script = ExtResource("6_rlben")
 
 [node name="Bindings" type="MarginContainer" parent="."]
 visible = false
@@ -697,6 +710,7 @@ transition_time = 0.15
 [node name="VBoxContainer" type="VBoxContainer" parent="Bindings/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 15
 
 [node name="BindingsTitle" type="Label" parent="Bindings/ScrollContainer/VBoxContainer"]
@@ -704,11 +718,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Coming soon"
 horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="Bindings/ScrollContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 10
 
 [node name="MarginContainer" type="MarginContainer" parent="Bindings/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -718,7 +727,16 @@ theme_override_constants/margin_right = 100
 [node name="VBoxContainer" type="VBoxContainer" parent="Bindings/ScrollContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[connection signal="pressed" from="Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[node name="ApplyChanges" type="Button" parent="Bindings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_font_sizes/font_size = 30
+text = "Apply changes"
+script = ExtResource("6_rlben")
+
+[connection signal="pressed" from="Gameplay/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 [connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Potato" to="." method="_on_potato_pressed"]
 [connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Low" to="." method="_on_low_pressed"]
 [connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/Presets/Medium" to="." method="_on_medium_pressed"]
@@ -734,10 +752,13 @@ layout_mode = 2
 [connection signal="item_selected" from="Graphics/ScrollContainer/VBoxContainer/QualityGridContainer/VolumetricFogOptionButton" to="." method="_on_volumetric_fog_option_button_item_selected"]
 [connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/BrightnessHBox/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]
 [connection signal="value_changed" from="Graphics/ScrollContainer/VBoxContainer/AdjustmentGridContainer/ContrastHBox/ContrastSlider" to="." method="_on_contrast_slider_value_changed"]
+[connection signal="pressed" from="Graphics/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 [connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/LimitFPSHBoxContainer/LimitFPSSlider" to="." method="_on_limit_fps_slider_value_changed"]
 [connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/GUIScaleHBoxContainer/GUIScaleSlider" to="." method="_on_gui_scale_slider_value_changed"]
 [connection signal="value_changed" from="Video/ScrollContainer/VBoxContainer/RenderScaleHBoxContainer/RenderScaleSlider" to="." method="_on_render_scale_slider_value_changed"]
 [connection signal="pressed" from="Video/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[connection signal="pressed" from="Audio/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[connection signal="pressed" from="Bindings/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 
-[editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
-[editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]
+[editable path="Audio/ScrollContainer/VBoxContainer/GridContainer/MusicVolumeSlider"]
+[editable path="Audio/ScrollContainer/VBoxContainer/GridContainer/SFXVolumeSlider"]
