@@ -31,6 +31,8 @@ func _update_interactable() -> void:
 
 	# If we got this far, we have unseen the currently tracked interactable
 	if _interactable != null:
+		# NOTE: Ideally we'd handle freed objects here as well, but Godot handles them equally with null,
+		# i.e. is_instance_valid() will return false for both
 		interactable_unseen.emit()
 
 	_interactable = new_interactable
@@ -40,4 +42,5 @@ func _update_interactable() -> void:
 		interactable_seen.emit(new_interactable)
 		return
 
+	# If we got this far, we probably have a freed object, most likely from picking up an item
 	interactable_unseen.emit()

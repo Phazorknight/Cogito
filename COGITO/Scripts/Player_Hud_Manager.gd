@@ -163,6 +163,7 @@ func delete_interaction_prompts():
 			prompt.discard_prompt()
 
 
+# FIXME: This no longer works because we clear the screen each frame
 func set_drop_prompt(_carrying_node):
 	var current_prompts = prompt_area.get_children()
 	if current_prompts:
