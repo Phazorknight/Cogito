@@ -5,7 +5,6 @@ class_name PlayerInteractionComponent
 signal interaction_prompt(interaction_text : String)
 signal hint_prompt(hint_icon:Texture2D, hint_text: String)
 signal updated_wieldable_data(wielded_item:WieldableItemPD, ammo_in_inventory: int, ammo_item: AmmoItemPD)
-
 # Signals for Interaction raycast system
 signal interactive_object_detected(interaction_nodes: Array[Node])
 signal nothing_detected()
@@ -15,12 +14,8 @@ var look_vector : Vector3
 var device_id : int = -1  #Used for displaying correct input prompts depending on input device.
 
 ## Raycast3D for interaction check.
-@export var interaction_raycast : RayCast3D
-# Various variables used for interaction raycast checks.
-var is_reset : bool  = true
-var object_detected : bool
+@export var interaction_raycast: InteractionRayCast
 var interactable: CogitoObject
-var previous_interactable
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position : Node3D
@@ -38,43 +33,20 @@ var equipped_wieldable_node = null
 var is_wielding : bool
 var player_rid
 
+
 func _ready():
+	pass
 	#for node in wieldable_nodes:
 		#node.hide()
-	object_detected = false
+
 
 func exclude_player(rid : RID):
 	player_rid = rid
 	interaction_raycast.add_exception_rid(rid)
 
+
 func _process(_delta):
-	# when carrying object, disable all other prompts.
-	if is_carrying:
-		pass
-	elif interaction_raycast.is_colliding():
-		is_reset = false
-		if interactable != null and !object_detected:
-			interactive_object_enter(interactable)
-		else:
-			if interactable == null or interactable != previous_interactable:
-				interactive_object_exit()
-
-	else:
-		if !is_reset:
-			interactive_object_exit()
-			is_reset = true
-		
-
-
-func interactive_object_enter(detected_object:Node3D):
-	previous_interactable = detected_object
-	interactive_object_detected.emit(detected_object.interaction_nodes)
-	object_detected = true
-
-
-func interactive_object_exit():
-	nothing_detected.emit()
-	object_detected = false
+	pass
 
 
 func _input(event: InputEvent) -> void:
@@ -93,7 +65,7 @@ func _input(event: InputEvent) -> void:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action:
 					node.interact(self)
-		interactive_object_exit()
+		nothing_detected.emit() # HACK: Need to keep this for now, otherwise the UI bugs out when taking items
 		if is_wielding:
 			equipped_wieldable_item.update_wieldable_data(self)
 
@@ -301,7 +273,9 @@ func set_state():
 
 func _on_interaction_raycast_interactable_seen(new_interactable: CogitoObject) -> void:
 	interactable = new_interactable
+	interactive_object_detected.emit(interactable.interaction_nodes)
 
 
 func _on_interaction_raycast_interactable_unseen() -> void:
 	interactable = null
+	nothing_detected.emit()
