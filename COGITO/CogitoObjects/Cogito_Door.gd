@@ -223,7 +223,7 @@ func close_door(_interactor: Node3D):
 	is_open = false
 	interaction_text = interaction_text_when_closed
 	if player_interaction_component:
-		player_interaction_component.interactive_object_exit() #Froces a re-detection of the interaction prompt.
+		player_interaction_component.nothing_detected.emit() # Forces a re-detection of the interaction prompt.
 	object_state_updated.emit(interaction_text)
 	door_state_changed.emit(false)
 
