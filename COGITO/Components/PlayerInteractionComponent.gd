@@ -53,10 +53,10 @@ func _process(_delta):
 		pass
 	elif interaction_raycast.is_colliding():
 		is_reset = false
-		if interactable != null and interactable.is_in_group("interactable") and !object_detected:
+		if interactable != null and !object_detected:
 			interactive_object_enter(interactable)
 		else:
-			if interactable == null or !interactable.is_in_group("interactable") or interactable != previous_interactable:
+			if interactable == null or interactable != previous_interactable:
 				interactive_object_exit()
 
 	else:
@@ -88,7 +88,8 @@ func _input(event: InputEvent) -> void:
 			stop_carrying()
 
 		# Check if we have an interactable in view and are pressing the correct button
-		if interactable != null and interactable.is_in_group("interactable"):
+		# BUG: When carrying an object, if you drop so that your cursor hovers over another item, that item will get picked
+		if interactable != null:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action:
 					node.interact(self)
