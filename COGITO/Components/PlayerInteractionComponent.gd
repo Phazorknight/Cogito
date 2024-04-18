@@ -113,7 +113,6 @@ func stop_carrying():
 	carried_object = null
 
 
-
 ### Wieldable Management
 func equip_wieldable(wieldable_item:WieldableItemPD):
 	if wieldable_item != null:
@@ -130,7 +129,6 @@ func equip_wieldable(wieldable_item:WieldableItemPD):
 		is_changing_wieldables = false
 	else:
 		is_changing_wieldables = false
-
 
 
 func change_wieldable_to(next_wieldable: InventoryItemPD):
@@ -253,8 +251,8 @@ func Get_Camera_Collision() -> Vector3:
 		return Col_Point
 	else:
 		return Ray_End
-	
-	
+
+
 func save():
 	var interaction_component_data = {
 	"equipped_wieldable_item": equipped_wieldable_item,
@@ -263,7 +261,8 @@ func save():
 		
 	}
 	return interaction_component_data
-	
+
+
 func set_state():
 	if equipped_wieldable_item and is_wielding:
 		equip_wieldable(equipped_wieldable_item)
