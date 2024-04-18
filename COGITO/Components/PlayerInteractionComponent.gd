@@ -2,35 +2,35 @@ extends Node3D
 class_name PlayerInteractionComponent
 
 # Signals for UI/HUD use
-signal interaction_prompt(interaction_text : String)
-signal hint_prompt(hint_icon:Texture2D, hint_text: String)
-signal updated_wieldable_data(wielded_item:WieldableItemPD, ammo_in_inventory: int, ammo_item: AmmoItemPD)
+signal interaction_prompt(interaction_text: String)
+signal hint_prompt(hint_icon: Texture2D, hint_text: String)
+signal updated_wieldable_data(wielded_item: WieldableItemPD, ammo_in_inventory: int, ammo_item: AmmoItemPD)
 # Signals for Interaction raycast system
 signal interactive_object_detected(interaction_nodes: Array[Node])
 signal nothing_detected()
 signal started_carrying(interaction_node: Node)
 
-var look_vector : Vector3
-var device_id : int = -1  # Used for displaying correct input prompts depending on input device.
+var look_vector: Vector3
+var device_id: int = -1  # Used for displaying correct input prompts depending on input device.
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
 var interactable: CogitoObject # Updated via signals from InteractionRayCast
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
-@export var carryable_position : Node3D
-var is_carrying : bool = false
+@export var carryable_position: Node3D
+var is_carrying: bool = false
 var carried_object = null  # Used for carryable handling.
-var throw_power : float = 1.5
-var is_changing_wieldables : bool = false # Used to avoid any input acitons while wieldables are being swapped
+var throw_power: float = 1.5
+var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 
 ## List of Wieldable nodes
-@export var wieldable_nodes : Array[Node]
-@export var wieldable_container : Node3D
+@export var wieldable_nodes: Array[Node]
+@export var wieldable_container: Node3D
 # Various variables used for wieldable handling
 var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
-var is_wielding : bool
+var is_wielding: bool
 var player_rid
 
 
@@ -40,7 +40,7 @@ func _ready():
 		#node.hide()
 
 
-func exclude_player(rid : RID):
+func exclude_player(rid: RID):
 	player_rid = rid
 	interaction_raycast.add_exception_rid(rid)
 
@@ -89,7 +89,7 @@ func _input(event: InputEvent) -> void:
 
 
 ## Helper function to always get raycast destination point
-func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
+func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
 	var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
 	if interaction_raycast.is_colliding():
 		if destination_point == interaction_raycast.get_collision_point():
@@ -114,7 +114,7 @@ func stop_carrying():
 
 
 ### Wieldable Management
-func equip_wieldable(wieldable_item:WieldableItemPD):
+func equip_wieldable(wieldable_item: WieldableItemPD):
 	if wieldable_item != null:
 		equipped_wieldable_item = wieldable_item #Set Inventory Item reference
 		# Set Wieldable node reference
@@ -147,7 +147,7 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 	equip_wieldable(next_wieldable)
 
 
-func attempt_action_primary(is_released:bool):
+func attempt_action_primary(is_released: bool):
 	if is_changing_wieldables: # Block action if currently in the process of changing wieldables
 		return
 	if equipped_wieldable_node == null:
@@ -159,7 +159,7 @@ func attempt_action_primary(is_released:bool):
 		equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
 
 
-func attempt_action_secondary(is_released:bool):
+func attempt_action_secondary(is_released: bool):
 	if is_changing_wieldables: # Block action if currently in the process of changing wieldables
 		return
 	if equipped_wieldable_node == null:
@@ -231,7 +231,7 @@ func on_death():
 
 # Function called by interactables if they need to send a hint. The signal sent here gets picked up by the Player_Hud_Manager.
 func send_hint(hint_icon: Texture2D, hint_text: String):
-	hint_prompt.emit(hint_icon,hint_text)
+	hint_prompt.emit(hint_icon, hint_text)
 
 
 # This gets a world space collision point of whatever the camera is pointed at, depending on the equipped wieldable range.
@@ -242,7 +242,7 @@ func Get_Camera_Collision() -> Vector3:
 	var Ray_Origin = camera.project_ray_origin(viewport/2)
 	var Ray_End = Ray_Origin + camera.project_ray_normal(viewport/2)*equipped_wieldable_item.wieldable_range
 	
-	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
+	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin, Ray_End)
 	New_Intersection.exclude = [player_rid]
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
 	
