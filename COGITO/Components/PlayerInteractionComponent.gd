@@ -11,18 +11,18 @@ signal nothing_detected()
 signal started_carrying(interaction_node: Node)
 
 var look_vector : Vector3
-var device_id : int = -1  #Used for displaying correct input prompts depending on input device.
+var device_id : int = -1  # Used for displaying correct input prompts depending on input device.
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
-var interactable: CogitoObject
+var interactable: CogitoObject # Updated via signals from InteractionRayCast
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position : Node3D
 var is_carrying : bool = false
-var carried_object = null  #Used for carryable handling.
+var carried_object = null  # Used for carryable handling.
 var throw_power : float = 1.5
-var is_changing_wieldables : bool = false #Used to avoid any input acitons while wieldables are being swapped
+var is_changing_wieldables : bool = false # Used to avoid any input acitons while wieldables are being swapped
 
 ## List of Wieldable nodes
 @export var wieldable_nodes : Array[Node]
@@ -137,7 +137,7 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 		equipped_wieldable_item.is_being_wielded = false
 		if equipped_wieldable_node != null:
 			equipped_wieldable_node.unequip()
-			if equipped_wieldable_node.animation_player.is_playing(): #Wait until unequip animation finishes.
+			if equipped_wieldable_node.animation_player.is_playing(): # Wait until unequip animation finishes.
 				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout 
 	equipped_wieldable_item = null
 	if equipped_wieldable_node != null:
@@ -148,7 +148,7 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 
 
 func attempt_action_primary(is_released:bool):
-	if is_changing_wieldables: #Block action if currently in the process of changing wieldables
+	if is_changing_wieldables: # Block action if currently in the process of changing wieldables
 		return
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
@@ -160,7 +160,7 @@ func attempt_action_primary(is_released:bool):
 
 
 func attempt_action_secondary(is_released:bool):
-	if is_changing_wieldables: #Block action if currently in the process of changing wieldables
+	if is_changing_wieldables: # Block action if currently in the process of changing wieldables
 		return
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
