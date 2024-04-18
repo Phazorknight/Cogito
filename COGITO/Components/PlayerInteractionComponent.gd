@@ -65,7 +65,9 @@ func _input(event: InputEvent) -> void:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action:
 					node.interact(self)
-		nothing_detected.emit() # HACK: Need to keep this for now, otherwise the UI bugs out when taking items
+					# HACK: Forces the UI to update after interaction
+					nothing_detected.emit()
+					interactive_object_detected.emit(interactable.interaction_nodes)
 		if is_wielding:
 			equipped_wieldable_item.update_wieldable_data(self)
 

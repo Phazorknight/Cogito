@@ -222,8 +222,6 @@ func close_door(_interactor: Node3D):
 		tween_door.tween_property(self,"position", closed_position, door_speed)
 	is_open = false
 	interaction_text = interaction_text_when_closed
-	if player_interaction_component:
-		player_interaction_component.nothing_detected.emit() # Forces a re-detection of the interaction prompt.
 	object_state_updated.emit(interaction_text)
 	door_state_changed.emit(false)
 

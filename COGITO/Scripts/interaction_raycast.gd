@@ -26,7 +26,7 @@ func _update_interactable() -> void:
 
 	# If interactable hasn't changed, no actions required. Because we treat
 	# non-interactables as null, we also avoid accidental false assignations.
-	if new_interactable == _interactable:
+	if new_interactable == _interactable and is_instance_valid(new_interactable):
 		return
 
 	# If we got this far, we have unseen the currently tracked interactable
@@ -34,7 +34,10 @@ func _update_interactable() -> void:
 		interactable_unseen.emit()
 
 	_interactable = new_interactable
-
+	
 	# If we have a new tracked interactable, we have seen an interactable
 	if _interactable != null:
 		interactable_seen.emit(new_interactable)
+		return
+
+	interactable_unseen.emit()
