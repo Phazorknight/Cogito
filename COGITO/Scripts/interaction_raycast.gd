@@ -32,11 +32,9 @@ func _update_interactable() -> void:
 	# If we got this far, we have unseen the currently tracked interactable
 	if _interactable != null:
 		interactable_unseen.emit()
-		print("UNSEEN")
 
 	_interactable = new_interactable
 
 	# If we have a new tracked interactable, we have seen an interactable
 	if _interactable != null:
 		interactable_seen.emit(new_interactable)
-		print("SEEN")
