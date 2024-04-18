@@ -46,7 +46,10 @@ func exclude_player(rid: RID):
 
 
 func _process(_delta):
-	pass
+	# HACK: Forces the UI to update every frame
+	nothing_detected.emit()
+	if interactable:
+		interactive_object_detected.emit(interactable.interaction_nodes)
 
 
 func _input(event: InputEvent) -> void:
@@ -61,13 +64,11 @@ func _input(event: InputEvent) -> void:
 
 		# Check if we have an interactable in view and are pressing the correct button
 		# BUG: When carrying an object, if you drop so that your cursor hovers over another item, that item will get picked
-		if interactable != null:
+		if interactable != null and not is_carrying:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action:
 					node.interact(self)
-					# HACK: Forces the UI to update after interaction
-					nothing_detected.emit()
-					interactive_object_detected.emit(interactable.interaction_nodes)
+					break
 		if is_wielding:
 			equipped_wieldable_item.update_wieldable_data(self)
 
