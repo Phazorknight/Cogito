@@ -46,16 +46,20 @@ func exclude_player(rid: RID):
 
 
 func _process(_delta):
+	# CRITICAL: Items that require holding the key down no longer work
 	# HACK: Forces the UI to update every frame
 	nothing_detected.emit()
 	if interactable:
 		interactive_object_detected.emit(interactable.interaction_nodes)
 
+	# HACK: Restores the drop prompt while carrying items
+	if is_carrying:
+		started_carrying.emit(carried_object)
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
-
 		# if carrying an object, drop it.
 		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == action:
 			carried_object.throw(throw_power)
