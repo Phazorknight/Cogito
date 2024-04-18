@@ -2,10 +2,10 @@ class_name InteractionRayCast
 extends RayCast3D
 
 
-signal interactable_seen(interactable: CogitoObject)
+signal interactable_seen(interactable)
 signal interactable_unseen()
 
-var _interactable: CogitoObject = null
+var _interactable = null
 
 
 func _ready() -> void:
@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 
 
 func _update_interactable() -> void:
-	var collider: Node = get_collider()
+	var collider = get_collider()
 	var new_interactable = collider
 
 	# Handle all colliders that aren't in interactable group as null.

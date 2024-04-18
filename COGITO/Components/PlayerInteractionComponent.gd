@@ -15,7 +15,7 @@ var device_id: int = -1  # Used for displaying correct input prompts depending o
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
-var interactable: CogitoObject # Updated via signals from InteractionRayCast
+var interactable # Updated via signals from InteractionRayCast
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position: Node3D
@@ -270,7 +270,7 @@ func set_state():
 		equipped_wieldable_item.update_wieldable_data(self)
 
 
-func _on_interaction_raycast_interactable_seen(new_interactable: CogitoObject) -> void:
+func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
 	interactable = new_interactable
 	interactive_object_detected.emit(interactable.interaction_nodes)
 
