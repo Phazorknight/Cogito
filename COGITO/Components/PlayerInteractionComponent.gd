@@ -78,47 +78,29 @@ func interactive_object_exit():
 	object_detected = false
 
 
-func _input(event):
-	if event.is_action_pressed("interact"):
-		
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
+		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
+
 		# if carrying an object, drop it.
-		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == "interact":
+		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == action:
 			carried_object.throw(throw_power)
 		elif is_carrying and !is_instance_valid(carried_object):
 			stop_carrying()
-		
+
 		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
-		if interaction_raycast.is_colliding():
-			interactable = interaction_raycast.get_collider()
-			if interactable.is_in_group("interactable"):
-				for node in interactable.interaction_nodes:
-					if node.input_map_action == "interact":
-						node.interact(self)
+		# This could be run each frame instead and the key be checked when finding an interactable,
+		# which would be slower, but would easily allow any key to be used in the
+		# interaction component and help reduce the nesting.
+		interactable = interaction_raycast.get_collider()
+		if interactable != null and interactable.is_in_group("interactable"):
+			for node: InteractionComponent in interactable.interaction_nodes:
+				if node.input_map_action == action:
+					node.interact(self)
 		interactive_object_exit()
 		if is_wielding:
 			equipped_wieldable_item.update_wieldable_data(self)
-	
-	
-	if event.is_action_pressed("interact2"):
-		# if carrying an object, drop it.
-		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == "interact2":
-			carried_object.throw(throw_power)
-		elif is_carrying and !is_instance_valid(carried_object):
-			stop_carrying()
-		
-		
-		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
-		if interaction_raycast.is_colliding():
-			interactable = interaction_raycast.get_collider()
-			if interactable.is_in_group("interactable"):
-				for node in interactable.interaction_nodes:
-					if node.input_map_action == "interact2":
-						node.interact(self)
-		interactive_object_exit()
-		if is_wielding:
-			equipped_wieldable_item.update_wieldable_data(self)
-	
-	
+
 	# Wieldable primary Action Input
 	if !get_parent().is_movement_paused:
 		if is_wielding and Input.is_action_just_pressed("action_primary"):
