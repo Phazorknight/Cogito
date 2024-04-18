@@ -19,7 +19,7 @@ var device_id : int = -1  #Used for displaying correct input prompts depending o
 # Various variables used for interaction raycast checks.
 var is_reset : bool  = true
 var object_detected : bool
-var interactable
+var interactable: CogitoObject
 var previous_interactable
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
@@ -52,7 +52,6 @@ func _process(_delta):
 	if is_carrying:
 		pass
 	elif interaction_raycast.is_colliding():
-		interactable = interaction_raycast.get_collider()
 		is_reset = false
 		if interactable != null and interactable.is_in_group("interactable") and !object_detected:
 			interactive_object_enter(interactable)
@@ -88,11 +87,7 @@ func _input(event: InputEvent) -> void:
 		elif is_carrying and !is_instance_valid(carried_object):
 			stop_carrying()
 
-		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
-		# This could be run each frame instead and the key be checked when finding an interactable,
-		# which would be slower, but would easily allow any key to be used in the
-		# interaction component and help reduce the nesting.
-		interactable = interaction_raycast.get_collider()
+		# Check if we have an interactable in view and are pressing the correct button
 		if interactable != null and interactable.is_in_group("interactable"):
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action:
@@ -301,3 +296,11 @@ func set_state():
 		equip_wieldable(equipped_wieldable_item)
 		equipped_wieldable_item.player_interaction_component = self
 		equipped_wieldable_item.update_wieldable_data(self)
+
+
+func _on_interaction_raycast_interactable_seen(new_interactable: CogitoObject) -> void:
+	interactable = new_interactable
+
+
+func _on_interaction_raycast_interactable_unseen() -> void:
+	interactable = null
