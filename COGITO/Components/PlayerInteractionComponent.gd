@@ -82,18 +82,18 @@ func _input(event: InputEvent) -> void:
 					break
 
 	# Wieldable primary Action Input
-	if !get_parent().is_movement_paused:
-		if is_wielding and Input.is_action_just_pressed("action_primary"):
+	if is_wielding and !get_parent().is_movement_paused:
+		if Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary(false)
-		if is_wielding and Input.is_action_just_released("action_primary"):
+		if Input.is_action_just_released("action_primary"):
 			attempt_action_primary(true)
 		
-		if is_wielding and Input.is_action_just_pressed("action_secondary"):
+		if Input.is_action_just_pressed("action_secondary"):
 			attempt_action_secondary(false)
-		if is_wielding and Input.is_action_just_released("action_secondary"):
+		if Input.is_action_just_released("action_secondary"):
 			attempt_action_secondary(true)
 		
-		if is_wielding and event.is_action_pressed("reload"):
+		if event.is_action_pressed("reload"):
 			attempt_reload()
 
 
