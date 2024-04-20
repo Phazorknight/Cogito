@@ -40,8 +40,6 @@ var player_rid
 
 func _ready():
 	pass
-	#for node in wieldable_nodes:
-		#node.hide()
 
 
 func exclude_player(rid: RID):
