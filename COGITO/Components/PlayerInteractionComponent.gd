@@ -48,11 +48,6 @@ func exclude_player(rid: RID):
 
 
 func _process(_delta):
-	# HACK: Forces the UI to update every frame
-	nothing_detected.emit()
-	if interactable:
-		interactive_object_detected.emit(interactable.interaction_nodes)
-
 	# HACK: Restores the drop prompt while carrying items
 	if is_carrying:
 		started_carrying.emit(carried_object)
@@ -73,6 +68,9 @@ func _input(event: InputEvent) -> void:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action and not node.is_disabled:
 					node.interact(self)
+					# Ensures the UI gets updated after an interaction
+					nothing_detected.emit() # Clears the prompts
+					interactive_object_detected.emit(interactable.interaction_nodes) # Builds the prompts
 					break
 
 	# Wieldable primary Action Input
