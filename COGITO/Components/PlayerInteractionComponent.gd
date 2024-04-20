@@ -73,7 +73,7 @@ func _input(event: InputEvent) -> void:
 		# BUG: When carrying an object, if you drop so that your cursor hovers over another item, that item will get picked
 		if interactable != null and not is_carrying:
 			for node: InteractionComponent in interactable.interaction_nodes:
-				if node.input_map_action == action:
+				if node.input_map_action == action and not node.is_disabled:
 					node.interact(self)
 					break
 		if is_wielding:
