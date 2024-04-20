@@ -49,7 +49,6 @@ func exclude_player(rid: RID):
 
 
 func _process(_delta):
-	# CRITICAL: Items that require holding the key down no longer work
 	# HACK: Forces the UI to update every frame
 	nothing_detected.emit()
 	if interactable:
@@ -58,10 +57,6 @@ func _process(_delta):
 	# HACK: Restores the drop prompt while carrying items
 	if is_carrying:
 		started_carrying.emit(carried_object)
-
-	# HACK: Update weapon UI in case ammo is picked up
-	if is_wielding:
-		equipped_wieldable_item.update_wieldable_data(self)
 
 
 func _input(event: InputEvent) -> void:
