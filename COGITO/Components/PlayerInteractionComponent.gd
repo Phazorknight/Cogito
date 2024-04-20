@@ -68,9 +68,7 @@ func _input(event: InputEvent) -> void:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action and not node.is_disabled:
 					node.interact(self)
-					# Ensures the UI gets updated after an interaction
-					nothing_detected.emit() # Clears the prompts
-					interactive_object_detected.emit(interactable.interaction_nodes) # Builds the prompts
+					_rebuild_interaction_prompts() # Update the prompts after an interaction
 					break
 
 	# Wieldable primary Action Input
@@ -108,7 +106,8 @@ func start_carrying(_carried_object):
 
 func stop_carrying():
 	carried_object = null
-	nothing_detected.emit() # Ensures the drop prompt gets deleted
+	_rebuild_interaction_prompts() # Ensures the drop prompt gets deleted
+	
 
 
 ### Wieldable Management
@@ -295,3 +294,9 @@ func _is_carrying() -> bool:
 
 func _is_wielding() -> bool:
 	return equipped_wieldable_item != null
+
+
+func _rebuild_interaction_prompts() -> void:
+	nothing_detected.emit() # Clears the prompts
+	if interactable != null:
+		interactive_object_detected.emit(interactable.interaction_nodes) # Builds the prompts
