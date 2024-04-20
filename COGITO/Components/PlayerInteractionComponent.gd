@@ -218,8 +218,7 @@ func attempt_reload():
 	if equipped_wieldable_item.no_reload:
 		return
 
-	# Round up the ammo calculation as the charges are floats, not ints
-	var ammo_needed: int = abs(ceili(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current))
+	var ammo_needed: int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)
 	if ammo_needed <= 0:
 		print("Wieldable is fully charged.")
 		return
