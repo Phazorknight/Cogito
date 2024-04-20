@@ -15,7 +15,8 @@ var device_id: int = -1  # Used for displaying correct input prompts depending o
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
-var interactable # Updated via signals from InteractionRayCast
+var interactable: # Updated via signals from InteractionRayCast
+	set = _set_interactable
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position: Node3D
@@ -275,12 +276,18 @@ func set_state():
 
 func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
 	interactable = new_interactable
-	interactive_object_detected.emit(interactable.interaction_nodes)
 
 
 func _on_interaction_raycast_interactable_unseen() -> void:
 	interactable = null
-	nothing_detected.emit()
+
+
+func _set_interactable(new_interactable) -> void:
+	interactable = new_interactable
+	if interactable == null:
+		nothing_detected.emit()
+	else:
+		interactive_object_detected.emit(interactable.interaction_nodes)
 
 
 func _is_carrying() -> bool:
