@@ -212,13 +212,17 @@ func attempt_reload():
 			continue
 
 		var ammo_used: int
-		if ammo_needed >= slot.quantity:
-			ammo_used = slot.quantity
+		var slot_ammo: AmmoItemPD = slot.inventory_item
+		var quantity_needed: int = ceili(float(ammo_needed) / slot_ammo.reload_amount)
+
+		if slot.quantity <= quantity_needed:
+			ammo_used = slot_ammo.reload_amount * slot.quantity
 			inventory.remove_slot_data(slot)
-		elif ammo_needed < slot.quantity:
-			ammo_used = ammo_needed
-			slot.quantity -= ammo_used
-		equipped_wieldable_item.charge_current += ammo_used
+		elif slot.quantity > quantity_needed:
+			ammo_used = slot_ammo.reload_amount * quantity_needed
+			slot.quantity -= quantity_needed
+
+		equipped_wieldable_item.add(ammo_used)
 		ammo_needed -= ammo_used
 
 	inventory.inventory_updated.emit(inventory)
