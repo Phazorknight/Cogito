@@ -59,6 +59,10 @@ func _process(_delta):
 	if is_carrying:
 		started_carrying.emit(carried_object)
 
+	# HACK: Update weapon UI in case ammo is picked up
+	if is_wielding:
+		equipped_wieldable_item.update_wieldable_data(self)
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
@@ -76,8 +80,6 @@ func _input(event: InputEvent) -> void:
 				if node.input_map_action == action and not node.is_disabled:
 					node.interact(self)
 					break
-		if is_wielding:
-			equipped_wieldable_item.update_wieldable_data(self)
 
 	# Wieldable primary Action Input
 	if !get_parent().is_movement_paused:
