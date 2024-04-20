@@ -183,13 +183,13 @@ func equip_wieldable(wieldable_item:WieldableItemPD):
 
 
 
-func change_wieldable_to(next_wieldable: InventoryItemPD):
+func change_wieldable_to(next_wieldable: InventoryItemPD, force_immediate := false):
 	is_changing_wieldables = true
 	if equipped_wieldable_item != null:
 		equipped_wieldable_item.is_being_wielded = false
 		if equipped_wieldable_node != null:
 			equipped_wieldable_node.unequip()
-			if equipped_wieldable_node.animation_player.is_playing(): #Wait until unequip animation finishes.
+			if not force_immediate and equipped_wieldable_node.animation_player.is_playing(): #Wait until unequip animation finishes.
 				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout 
 	equipped_wieldable_item = null
 	if equipped_wieldable_node != null:

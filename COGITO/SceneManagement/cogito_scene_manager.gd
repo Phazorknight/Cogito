@@ -116,6 +116,9 @@ func load_player_state(player, passed_slot:String):
 		player.global_position = _player_state.player_position
 		player.global_rotation = _player_state.player_rotation
 		
+		# Force reset wieldable before loading:
+		player.player_interaction_component.change_wieldable_to(null, true)
+		
 		#Loading player interaction component state
 		var player_interaction_component_state = _player_state.interaction_component_state
 		for state_data in player_interaction_component_state:
