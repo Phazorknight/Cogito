@@ -20,7 +20,8 @@ var interactable: # Updated via signals from InteractionRayCast
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position: Node3D
-var carried_object = null  # Used for carryable handling.
+var carried_object = null:  # Used for carryable handling.
+	set = _set_carried_object
 var is_carrying: bool:
 	get = _is_carrying
 var throw_power: float = 1.5
@@ -107,11 +108,9 @@ func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
 ### Carryable Management
 func start_carrying(_carried_object):
 	carried_object = _carried_object
-	started_carrying.emit(_carried_object)
 
 
 func stop_carrying():
-	#carried_object.throw(throw_power)
 	carried_object = null
 
 
@@ -285,6 +284,12 @@ func _set_interactable(new_interactable) -> void:
 		nothing_detected.emit()
 	else:
 		interactive_object_detected.emit(interactable.interaction_nodes)
+
+
+func _set_carried_object(new_carried_object) -> void:
+	carried_object = new_carried_object
+	if carried_object != null:
+		started_carrying.emit(carried_object)
 
 
 func _is_carrying() -> bool:
