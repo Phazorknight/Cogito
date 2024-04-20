@@ -108,6 +108,7 @@ func start_carrying(_carried_object):
 
 func stop_carrying():
 	carried_object = null
+	nothing_detected.emit() # Ensures the drop prompt gets deleted
 
 
 ### Wieldable Management
