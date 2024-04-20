@@ -19,8 +19,9 @@ var interactable # Updated via signals from InteractionRayCast
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
 @export var carryable_position: Node3D
-var is_carrying: bool = false
 var carried_object = null  # Used for carryable handling.
+var is_carrying: bool:
+	get = _is_carrying
 var throw_power: float = 1.5
 var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 
@@ -30,7 +31,8 @@ var is_changing_wieldables: bool = false # Used to avoid any input acitons while
 # Various variables used for wieldable handling
 var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
-var is_wielding: bool
+var is_wielding: bool:
+	get = _is_wielding
 var player_rid
 
 
@@ -109,14 +111,12 @@ func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
 
 ### Carryable Management
 func start_carrying(_carried_object):
-	is_carrying = true
 	carried_object = _carried_object
 	started_carrying.emit(_carried_object)
 
 
 func stop_carrying():
 	#carried_object.throw(throw_power)
-	is_carrying = false
 	carried_object = null
 
 
@@ -131,7 +131,6 @@ func equip_wieldable(wieldable_item: WieldableItemPD):
 		equipped_wieldable_node.item_reference = wieldable_item
 		print("PIC: Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
 		equipped_wieldable_node.equip(self)
-		is_wielding = true
 		await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout
 		is_changing_wieldables = false
 	else:
@@ -150,7 +149,6 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 	if equipped_wieldable_node != null:
 		equipped_wieldable_node.queue_free()
 	equipped_wieldable_node = null
-	is_wielding = false
 	equip_wieldable(next_wieldable)
 
 
@@ -235,9 +233,6 @@ func on_death():
 	
 	if carried_object:
 		carried_object = null
-		
-	is_wielding = false
-	is_carrying = false
 
 
 # Function called by interactables if they need to send a hint. The signal sent here gets picked up by the Player_Hud_Manager.
@@ -289,3 +284,11 @@ func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
 func _on_interaction_raycast_interactable_unseen() -> void:
 	interactable = null
 	nothing_detected.emit()
+
+
+func _is_carrying() -> bool:
+	return carried_object != null
+
+
+func _is_wielding() -> bool:
+	return equipped_wieldable_item != null
