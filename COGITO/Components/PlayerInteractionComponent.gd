@@ -23,7 +23,7 @@ var interactable: # Updated via signals from InteractionRayCast
 var carried_object = null:  # Used for carryable handling.
 	set = _set_carried_object
 var is_carrying: bool:
-	get = _is_carrying
+	get: return carried_object != null
 var throw_power: float = 1.5
 var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 
@@ -34,7 +34,7 @@ var is_changing_wieldables: bool = false # Used to avoid any input acitons while
 var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
 var is_wielding: bool:
-	get = _is_wielding
+	get: return equipped_wieldable_item != null
 var player_rid
 
 
@@ -286,14 +286,6 @@ func _set_carried_object(new_carried_object) -> void:
 	carried_object = new_carried_object
 	if carried_object != null:
 		started_carrying.emit(carried_object)
-
-
-func _is_carrying() -> bool:
-	return carried_object != null
-
-
-func _is_wielding() -> bool:
-	return equipped_wieldable_item != null
 
 
 func _rebuild_interaction_prompts() -> void:
