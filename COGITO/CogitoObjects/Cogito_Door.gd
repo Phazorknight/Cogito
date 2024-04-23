@@ -4,6 +4,7 @@ extends Node3D
 
 signal object_state_updated(interaction_text:String)
 signal door_state_changed(is_open:bool)
+signal lock_state_changed(is_locked:bool)
 signal damage_received(damage_value:float)
 
 #region Variables
@@ -160,6 +161,7 @@ func unlock_door():
 	is_locked = false
 	interaction_text = interaction_text_when_closed	
 	object_state_updated.emit(interaction_text)
+	lock_state_changed.emit(is_locked)
 
 
 func open_door(interactor: Node3D):
