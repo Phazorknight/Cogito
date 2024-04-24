@@ -149,6 +149,7 @@ func toggle_inventory_interface(external_inventory_owner = null):
 
 ### Interaction Prompt UI:
 func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
+	delete_interaction_prompts() # clear prompts whenever new ones are received
 	for node in passed_interaction_nodes:
 		if node.is_disabled:
 			continue

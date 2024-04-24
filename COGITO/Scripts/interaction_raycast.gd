@@ -5,7 +5,8 @@ extends RayCast3D
 signal interactable_seen(interactable)
 signal interactable_unseen()
 
-var _interactable = null
+var _interactable = null:
+	set = _set_interactable
 
 
 func _ready() -> void:
@@ -16,31 +17,30 @@ func _process(delta: float) -> void:
 	_update_interactable()
 
 
+func _set_interactable(value) -> void:
+	_interactable = value
+	if _interactable == null:
+		interactable_unseen.emit()
+	else:
+		interactable_seen.emit(_interactable)
+
+
 func _update_interactable() -> void:
 	var collider = get_collider()
-	var new_interactable = collider
 
-	# Handle all colliders that aren't in interactable group as null.
+	# Handle freed objects.
+	# is_instance_valid() will be false for null and for freed objects, but only
+	# null will return 0 for typeof()
+	if not is_instance_valid(_interactable):
+		if typeof(_interactable) != 0:
+			_interactable = null
+			return
+
+	# Handle all colliders that aren't in the interactable group as null.
 	if collider != null and not collider.is_in_group("interactable"):
-		new_interactable = null
+		collider = null
 
-	# If interactable hasn't changed, no actions required. Because we treat
-	# non-interactables as null, we also avoid accidental false assignations.
-	if new_interactable == _interactable and is_instance_valid(new_interactable):
+	if collider == _interactable:
 		return
 
-	# If we got this far, we have unseen the currently tracked interactable
-	if _interactable != null:
-		# NOTE: Ideally we'd handle freed objects here as well, but Godot handles them equally with null,
-		# i.e. is_instance_valid() will return false for both
-		interactable_unseen.emit()
-
-	_interactable = new_interactable
-	
-	# If we have a new tracked interactable, we have seen an interactable
-	if _interactable != null:
-		interactable_seen.emit(new_interactable)
-		return
-
-	# If we got this far, we probably have a freed object, most likely from picking up an item
-	interactable_unseen.emit()
+	_interactable = collider
