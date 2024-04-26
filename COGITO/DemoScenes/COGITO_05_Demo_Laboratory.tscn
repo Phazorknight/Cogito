@@ -1,10 +1,8 @@
-[gd_scene load_steps=104 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=102 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="2_7qwrr"]
-[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_0c7yw"]
-[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="4_vc32u"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="5_ihscj"]
 [ext_resource type="PackedScene" uid="uid://b6yj5prtsl7hy" path="res://COGITO/DemoScenes/DemoPrefabs/floor_3x_3_00.tscn" id="6_bedlu"]
 [ext_resource type="PackedScene" uid="uid://bavlamv6h43uw" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_painted.tscn" id="6_yj0h7"]
@@ -935,14 +933,6 @@ environment = SubResource("Environment_obnk3")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-pause_menu = NodePath("../PauseMenu")
-player_hud = NodePath("../Player_HUD")
-
-[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_0c7yw")]
-player = NodePath("../Player")
-
-[node name="PauseMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("4_vc32u")]
-nodes_to_focus = [null, null, null, null, null]
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
