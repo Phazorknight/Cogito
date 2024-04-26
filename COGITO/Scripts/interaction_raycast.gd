@@ -43,4 +43,10 @@ func _update_interactable() -> void:
 	if collider == _interactable:
 		return
 
+	# HACK: Turns out a null from the collider is/can be an object.
+	# This changes it to an actual null, so the freed object handling
+	# won't trigger on it.
+	if collider == null and typeof(collider) != 0:
+		collider = null
+
 	_interactable = collider
