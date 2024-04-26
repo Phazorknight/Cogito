@@ -10,9 +10,9 @@ signal toggled_interface(is_showing_ui:bool) #Used to hide UI elements like the 
 
 #region Variables
 ## Reference to Pause menu node
-@export var pause_menu : NodePath
+var pause_menu: NodePath
 ## Refereence to Player HUD node
-@export var player_hud : NodePath
+var player_hud: NodePath
 # Used for handling input when UI is open/displayed
 var is_showing_ui : bool
 
@@ -197,14 +197,6 @@ func _ready():
 	if sanity_attribute and visibility_attribute:
 		visibility_attribute.attribute_changed.connect(sanity_attribute.on_visibility_changed)
 		visibility_attribute.check_current_visibility()
-
-	# Pause Menu setup
-	if pause_menu:
-		var pause_menu_node = get_node(pause_menu)
-		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
-		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
-	else:
-		print("Player has no reference to pause menu.")
 		
 	initial_carryable_height = carryable_position.position.y #DEPRECATED
 	

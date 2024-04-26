@@ -1,11 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://dty7vjg3hp68b"]
+[gd_scene load_steps=16 format=3 uid="uid://dty7vjg3hp68b"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="1_8f7tt"]
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_8th5t"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="2_w4txe"]
-[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="3_ha28r"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="5_5tohn"]
-[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="5_gcqc7"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="6_jn18d"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="7_34j8q"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://COGITO/PrefabScenes/carriable_box.tscn" id="8_4hlpp"]
@@ -31,7 +29,7 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_ffs5j"]
+[sub_resource type="Resource" id="Resource_lu3pe"]
 resource_local_to_scene = true
 script = ExtResource("2_w4txe")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -62,15 +60,8 @@ environment = SubResource("Environment_ai7l5")
 
 [node name="Player" parent="." instance=ExtResource("1_8f7tt")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.63987, 1.19987, 3.00969)
-pause_menu = NodePath("../PauseMenu")
-player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_ffs5j")
+inventory_data = SubResource("Resource_lu3pe")
 step_height_camera_lerp = 1.5
-
-[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_ha28r")]
-player = NodePath("../Player")
-
-[node name="PauseMenu" parent="." instance=ExtResource("5_gcqc7")]
 
 [node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
 

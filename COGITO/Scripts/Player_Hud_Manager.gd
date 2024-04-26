@@ -7,7 +7,7 @@ signal hide_inventory
 #region Variables
 
 ## Reference to the Node that has the player.gd script.
-@export var player : Node
+var player: Node
 
 ## Used to reset icons etc, useful to have.
 @export var empty_texture : Texture2D
@@ -42,6 +42,7 @@ var interaction_texture : Texture2D
 
 
 func _ready():
+	player = CogitoSceneManager._current_player_node
 	# Connect to signal that detects change of input device
 	InputHelper.device_changed.connect(_on_input_device_change)
 	# Calling this function once to set proper input icons
