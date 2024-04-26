@@ -48,9 +48,7 @@ func exclude_player(rid: RID):
 
 
 func _process(_delta):
-	# HACK: Restores the drop prompt while carrying items
-	if is_carrying:
-		started_carrying.emit(carried_object)
+	pass
 
 
 func _input(event: InputEvent) -> void:
@@ -68,7 +66,8 @@ func _input(event: InputEvent) -> void:
 			for node: InteractionComponent in interactable.interaction_nodes:
 				if node.input_map_action == action and not node.is_disabled:
 					node.interact(self)
-					_rebuild_interaction_prompts() # Update the prompts after an interaction
+					# Update the prompts after an interaction. This is especially crucial for doors and switches.
+					_rebuild_interaction_prompts()
 					break
 
 	# Wieldable primary Action Input
@@ -107,7 +106,6 @@ func start_carrying(_carried_object):
 func stop_carrying():
 	carried_object = null
 	_rebuild_interaction_prompts() # Ensures the drop prompt gets deleted
-	
 
 
 ### Wieldable Management
@@ -276,6 +274,9 @@ func _on_interaction_raycast_interactable_unseen() -> void:
 
 func _set_interactable(new_interactable) -> void:
 	interactable = new_interactable
+	# Ensure the drop prompt isn't cleared.
+	if is_carrying:
+		return
 	if interactable == null:
 		nothing_detected.emit()
 	else:
@@ -289,6 +290,9 @@ func _set_carried_object(new_carried_object) -> void:
 
 
 func _rebuild_interaction_prompts() -> void:
+	# Ensure the drop prompt isn't cleared.
+	if is_carrying:
+		return
 	nothing_detected.emit() # Clears the prompts
 	if interactable != null:
 		interactive_object_detected.emit(interactable.interaction_nodes) # Builds the prompts
