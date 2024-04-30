@@ -2,126 +2,92 @@ extends Node3D
 class_name PlayerInteractionComponent
 
 # Signals for UI/HUD use
-signal interaction_prompt(interaction_text : String)
-signal hint_prompt(hint_icon:Texture2D, hint_text: String)
-signal updated_wieldable_data(wielded_item:WieldableItemPD, ammo_in_inventory: int, ammo_item: AmmoItemPD)
-
+signal interaction_prompt(interaction_text: String)
+signal hint_prompt(hint_icon: Texture2D, hint_text: String)
+signal updated_wieldable_data(wielded_item: WieldableItemPD, ammo_in_inventory: int, ammo_item: AmmoItemPD)
 # Signals for Interaction raycast system
 signal interactive_object_detected(interaction_nodes: Array[Node])
 signal nothing_detected()
 signal started_carrying(interaction_node: Node)
 
-var look_vector : Vector3
-var device_id : int = -1  #Used for displaying correct input prompts depending on input device.
+var look_vector: Vector3
+var device_id: int = -1  # Used for displaying correct input prompts depending on input device.
 
 ## Raycast3D for interaction check.
-@export var interaction_raycast : RayCast3D
-# Various variables used for interaction raycast checks.
-var is_reset : bool  = true
-var object_detected : bool
-var interactable
-var previous_interactable
+@export var interaction_raycast: InteractionRayCast
+var interactable: # Updated via signals from InteractionRayCast
+	set = _set_interactable
 
 ## Node3D for carryables. Carryables will be pulled toward this position when being carried.
-@export var carryable_position : Node3D
-var is_carrying : bool = false
-var carried_object = null  #Used for carryable handling.
-var throw_power : float = 1.5
-var is_changing_wieldables : bool = false #Used to avoid any input acitons while wieldables are being swapped
+@export var carryable_position: Node3D
+var carried_object = null:  # Used for carryable handling.
+	set = _set_carried_object
+var is_carrying: bool:
+	get: return carried_object != null
+var throw_power: float = 1.5
+var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 
 ## List of Wieldable nodes
-@export var wieldable_nodes : Array[Node]
-@export var wieldable_container : Node3D
+@export var wieldable_nodes: Array[Node]
+@export var wieldable_container: Node3D
 # Various variables used for wieldable handling
 var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
-var is_wielding : bool
+var is_wielding: bool:
+	get: return equipped_wieldable_item != null
 var player_rid
 
-func _ready():
-	#for node in wieldable_nodes:
-		#node.hide()
-	object_detected = false
 
-func exclude_player(rid : RID):
+func _ready():
+	pass
+
+
+func exclude_player(rid: RID):
 	player_rid = rid
 	interaction_raycast.add_exception_rid(rid)
 
+
 func _process(_delta):
-	# when carrying object, disable all other prompts.
-	if is_carrying:
-		pass
-	elif interaction_raycast.is_colliding():
-		interactable = interaction_raycast.get_collider()
-		is_reset = false
-		if interactable != null and interactable.is_in_group("interactable") and !object_detected:
-			interactive_object_enter(interactable)
-		else:
-			if interactable == null or !interactable.is_in_group("interactable") or interactable != previous_interactable:
-				interactive_object_exit()
-
-	else:
-		if !is_reset:
-			interactive_object_exit()
-			is_reset = true
-		
-
-
-func interactive_object_enter(detected_object:Node3D):
-	previous_interactable = detected_object
-	interactive_object_detected.emit(detected_object.interaction_nodes)
-	object_detected = true
-
-
-func interactive_object_exit():
-	nothing_detected.emit()
-	object_detected = false
+	pass
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
-
 		# if carrying an object, drop it.
 		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == action:
 			carried_object.throw(throw_power)
 		elif is_carrying and !is_instance_valid(carried_object):
 			stop_carrying()
 
-		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
-		# This could be run each frame instead and the key be checked when finding an interactable,
-		# which would be slower, but would easily allow any key to be used in the
-		# interaction component and help reduce the nesting.
-		interactable = interaction_raycast.get_collider()
-		if interactable != null and interactable.is_in_group("interactable"):
+		# Check if we have an interactable in view and are pressing the correct button
+		# BUG: When carrying an object, if you drop so that your cursor hovers over another item, that item will get picked
+		if interactable != null and not is_carrying:
 			for node: InteractionComponent in interactable.interaction_nodes:
-				if node.input_map_action == action:
+				if node.input_map_action == action and not node.is_disabled:
 					node.interact(self)
-		interactive_object_exit()
-		if is_wielding:
-			equipped_wieldable_item.update_wieldable_data(self)
+					# Update the prompts after an interaction. This is especially crucial for doors and switches.
+					_rebuild_interaction_prompts()
+					break
 
 	# Wieldable primary Action Input
-	if !get_parent().is_movement_paused:
-		if is_wielding and Input.is_action_just_pressed("action_primary"):
+	if is_wielding and !get_parent().is_movement_paused:
+		if Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary(false)
-		if is_wielding and Input.is_action_just_released("action_primary"):
+		if Input.is_action_just_released("action_primary"):
 			attempt_action_primary(true)
 		
-		if is_wielding and Input.is_action_just_pressed("action_secondary"):
+		if Input.is_action_just_pressed("action_secondary"):
 			attempt_action_secondary(false)
-		if is_wielding and Input.is_action_just_released("action_secondary"):
+		if Input.is_action_just_released("action_secondary"):
 			attempt_action_secondary(true)
 		
-		if is_wielding and event.is_action_pressed("reload"):
-			if interaction_raycast.is_colliding() and interaction_raycast.get_collider().has_method("interact"):
-				return
-			else:
-				attempt_reload()
+		if event.is_action_pressed("reload"):
+			attempt_reload()
 
 
 ## Helper function to always get raycast destination point
-func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
+func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
 	var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
 	if interaction_raycast.is_colliding():
 		if destination_point == interaction_raycast.get_collision_point():
@@ -134,20 +100,16 @@ func get_interaction_raycast_tip(distance_offset : float) -> Vector3:
 
 ### Carryable Management
 func start_carrying(_carried_object):
-	is_carrying = true
 	carried_object = _carried_object
-	started_carrying.emit(_carried_object)
 
 
 func stop_carrying():
-	#carried_object.throw(throw_power)
-	is_carrying = false
 	carried_object = null
-
+	_rebuild_interaction_prompts() # Ensures the drop prompt gets deleted
 
 
 ### Wieldable Management
-func equip_wieldable(wieldable_item:WieldableItemPD):
+func equip_wieldable(wieldable_item: WieldableItemPD):
 	if wieldable_item != null:
 		equipped_wieldable_item = wieldable_item #Set Inventory Item reference
 		# Set Wieldable node reference
@@ -157,12 +119,10 @@ func equip_wieldable(wieldable_item:WieldableItemPD):
 		equipped_wieldable_node.item_reference = wieldable_item
 		print("PIC: Found ", equipped_wieldable_item.name, " in wieldable node array: ", wieldable_node.name)
 		equipped_wieldable_node.equip(self)
-		is_wielding = true
 		await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout
 		is_changing_wieldables = false
 	else:
 		is_changing_wieldables = false
-
 
 
 func change_wieldable_to(next_wieldable: InventoryItemPD):
@@ -171,18 +131,17 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 		equipped_wieldable_item.is_being_wielded = false
 		if equipped_wieldable_node != null:
 			equipped_wieldable_node.unequip()
-			if equipped_wieldable_node.animation_player.is_playing(): #Wait until unequip animation finishes.
+			if equipped_wieldable_node.animation_player.is_playing(): # Wait until unequip animation finishes.
 				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout 
 	equipped_wieldable_item = null
 	if equipped_wieldable_node != null:
 		equipped_wieldable_node.queue_free()
 	equipped_wieldable_node = null
-	is_wielding = false
 	equip_wieldable(next_wieldable)
 
 
-func attempt_action_primary(is_released:bool):
-	if is_changing_wieldables: #Block action if currently in the process of changing wieldables
+func attempt_action_primary(is_released: bool):
+	if is_changing_wieldables: # Block action if currently in the process of changing wieldables
 		return
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
@@ -193,8 +152,8 @@ func attempt_action_primary(is_released:bool):
 		equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
 
 
-func attempt_action_secondary(is_released:bool):
-	if is_changing_wieldables: #Block action if currently in the process of changing wieldables
+func attempt_action_secondary(is_released: bool):
+	if is_changing_wieldables: # Block action if currently in the process of changing wieldables
 		return
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
@@ -262,14 +221,11 @@ func on_death():
 	
 	if carried_object:
 		carried_object = null
-		
-	is_wielding = false
-	is_carrying = false
 
 
 # Function called by interactables if they need to send a hint. The signal sent here gets picked up by the Player_Hud_Manager.
 func send_hint(hint_icon: Texture2D, hint_text: String):
-	hint_prompt.emit(hint_icon,hint_text)
+	hint_prompt.emit(hint_icon, hint_text)
 
 
 # This gets a world space collision point of whatever the camera is pointed at, depending on the equipped wieldable range.
@@ -280,7 +236,7 @@ func Get_Camera_Collision() -> Vector3:
 	var Ray_Origin = camera.project_ray_origin(viewport/2)
 	var Ray_End = Ray_Origin + camera.project_ray_normal(viewport/2)*equipped_wieldable_item.wieldable_range
 	
-	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin,Ray_End)
+	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin, Ray_End)
 	New_Intersection.exclude = [player_rid]
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
 	
@@ -289,8 +245,8 @@ func Get_Camera_Collision() -> Vector3:
 		return Col_Point
 	else:
 		return Ray_End
-	
-	
+
+
 func save():
 	var interaction_component_data = {
 	"equipped_wieldable_item": equipped_wieldable_item,
@@ -299,9 +255,44 @@ func save():
 		
 	}
 	return interaction_component_data
-	
+
+
 func set_state():
 	if equipped_wieldable_item and is_wielding:
 		equip_wieldable(equipped_wieldable_item)
 		equipped_wieldable_item.player_interaction_component = self
 		equipped_wieldable_item.update_wieldable_data(self)
+
+
+func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
+	interactable = new_interactable
+
+
+func _on_interaction_raycast_interactable_unseen() -> void:
+	interactable = null
+
+
+func _set_interactable(new_interactable) -> void:
+	interactable = new_interactable
+	# Ensure the drop prompt isn't cleared.
+	if is_carrying:
+		return
+	if interactable == null:
+		nothing_detected.emit()
+	else:
+		interactive_object_detected.emit(interactable.interaction_nodes)
+
+
+func _set_carried_object(new_carried_object) -> void:
+	carried_object = new_carried_object
+	if carried_object != null:
+		started_carrying.emit(carried_object)
+
+
+func _rebuild_interaction_prompts() -> void:
+	# Ensure the drop prompt isn't cleared.
+	if is_carrying:
+		return
+	nothing_detected.emit() # Clears the prompts
+	if interactable != null:
+		interactive_object_detected.emit(interactable.interaction_nodes) # Builds the prompts

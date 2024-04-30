@@ -149,27 +149,23 @@ func toggle_inventory_interface(external_inventory_owner = null):
 
 ### Interaction Prompt UI:
 func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
+	delete_interaction_prompts() # clear prompts whenever new ones are received
 	for node in passed_interaction_nodes:
-		if !node.is_disabled:
-			var instanced_prompt = prompt_component.instantiate()
-			prompt_area.add_child(instanced_prompt)
-			instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
+		if node.is_disabled:
+			continue
+		var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
+		prompt_area.add_child(instanced_prompt)
+		instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
 
 
-func delete_interaction_prompts():
-	var current_prompts = prompt_area.get_children()
-	if current_prompts:
-		for prompt in current_prompts:
-			prompt.discard_prompt()
+func delete_interaction_prompts() -> void:
+	for prompt: UiPromptComponent in prompt_area.get_children():
+		prompt.discard_prompt()
 
 
 func set_drop_prompt(_carrying_node):
-	var current_prompts = prompt_area.get_children()
-	if current_prompts:
-		for prompt in current_prompts:
-			prompt.discard_prompt()
-			
-	var instanced_prompt = prompt_component.instantiate()
+	delete_interaction_prompts()
+	var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
 	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
 
