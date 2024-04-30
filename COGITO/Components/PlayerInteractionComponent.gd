@@ -249,7 +249,7 @@ func Get_Camera_Collision() -> Vector3:
 func save():
 	var interaction_component_data = {
 	"equipped_wieldable_item": equipped_wieldable_item,
-	"equipped_wieldable_node": equipped_wieldable_node,
+	#"equipped_wieldable_node": equipped_wieldable_node,
 	"is_wielding": is_wielding
 		
 	}
@@ -257,10 +257,27 @@ func save():
 
 
 func set_state():
-	if equipped_wieldable_item and is_wielding:
-		equip_wieldable(equipped_wieldable_item)
-		equipped_wieldable_item.player_interaction_component = self
-		equipped_wieldable_item.update_wieldable_data(self)
+	### Clearing out data from previous player state
+	
+	updated_wieldable_data.emit(null, 0, null) # Clearing out wieldable HUD Data
+	
+	# Clearing out any instantiated wielable nodes
+	var leftover_wieldable_nodes : Array[Node] = wieldable_container.get_children()
+	for leftover_wieldable_node in leftover_wieldable_nodes:
+		leftover_wieldable_node.queue_free()
+
+	# Clearing out equipped wieldable node and it's reference
+	if equipped_wieldable_node != null:
+		equipped_wieldable_node.queue_free()
+	equipped_wieldable_node = null
+	
+	# Now equip saved wieldable item "from scratch"
+	if is_wielding and equipped_wieldable_item:
+		var temp_wieldable : WieldableItemPD = equipped_wieldable_item
+		equipped_wieldable_item = null
+		
+		temp_wieldable.is_being_wielded = false
+		temp_wieldable.use(get_parent())
 
 
 func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
