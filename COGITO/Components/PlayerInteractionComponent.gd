@@ -18,8 +18,6 @@ var device_id: int = -1  # Used for displaying correct input prompts depending o
 var interactable: # Updated via signals from InteractionRayCast
 	set = _set_interactable
 
-## Node3D for carryables. Carryables will be pulled toward this position when being carried.
-@export var carryable_position: Node3D
 var carried_object = null:  # Used for carryable handling.
 	set = _set_carried_object
 var is_carrying: bool:
@@ -56,7 +54,8 @@ func _input(event: InputEvent) -> void:
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
 		# if carrying an object, drop it.
 		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == action:
-			carried_object.throw(throw_power)
+			carried_object.throw(throw_power) 
+			return # Adding this here so the input gets "consumed".
 		elif is_carrying and !is_instance_valid(carried_object):
 			stop_carrying()
 

@@ -151,7 +151,6 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var jump_timer: Timer = $JumpCooldownTimer
 
 # Adding carryable position for item control.
-@onready var carryable_position = %CarryablePosition
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 
@@ -205,9 +204,7 @@ func _ready():
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
 		print("Player has no reference to pause menu.")
-		
-	initial_carryable_height = carryable_position.position.y #DEPRECATED
-	
+
 	call_deferred("slide_audio_init")
 
 
@@ -423,9 +420,6 @@ func _physics_process(delta):
 	else:
 		input_dir = Vector2.ZERO
 	
-	# LERP the up/down rotation of whatever you're carrying.
-	carryable_position.rotation.z = lerp_angle(carryable_position.rotation.z, head.rotation.x, 5 * delta)
-	
 	# Processing analog stick mouselook
 	if joystick_h_event and !is_movement_paused:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
@@ -467,7 +461,6 @@ func _physics_process(delta):
 			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
 		
 		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height-.8, delta * LERP_SPEED)
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false
 		wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
@@ -477,7 +470,6 @@ func _physics_process(delta):
 		is_crouching = true
 	else:
 		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-		carryable_position.position.y = lerp(carryable_position.position.y, initial_carryable_height, delta * LERP_SPEED)
 		if head.position.y < CROUCHING_DEPTH/4:
 			# still transitioning from state
 			crouching_collision_shape.disabled = false

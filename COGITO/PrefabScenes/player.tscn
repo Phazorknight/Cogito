@@ -76,10 +76,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
 target_position = Vector3(0, 1.6, 0)
 collision_mask = 3
 
-[node name="CarryablePosition" type="Node3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.2, 0.341, -0.3)
-
 [node name="Neck" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 
@@ -122,9 +118,8 @@ footstep_material_library = ExtResource("18_q6u2l")
 wait_time = 0.5
 one_shot = true
 
-[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position", "wieldable_container") instance=ExtResource("13_rawn6")]
+[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "wieldable_container") instance=ExtResource("13_rawn6")]
 interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
-carryable_position = NodePath("../CarryablePosition")
 wieldable_container = NodePath("../Neck/Head/Wieldables")
 
 [connection signal="animation_finished" from="Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
