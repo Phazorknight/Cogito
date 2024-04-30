@@ -33,7 +33,7 @@ var is_changing_wieldables : bool = false #Used to avoid any input acitons while
 @export var wieldable_nodes : Array[Node]
 @export var wieldable_container : Node3D
 # Various variables used for wieldable handling
-var equipped_wieldable_item = null
+var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
 var is_wielding : bool
 var player_rid
@@ -78,47 +78,29 @@ func interactive_object_exit():
 	object_detected = false
 
 
-func _input(event):
-	if event.is_action_pressed("interact"):
-		
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
+		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
+
 		# if carrying an object, drop it.
-		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == "interact":
+		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == action:
 			carried_object.throw(throw_power)
 		elif is_carrying and !is_instance_valid(carried_object):
 			stop_carrying()
-		
+
 		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
-		if interaction_raycast.is_colliding():
-			interactable = interaction_raycast.get_collider()
-			if interactable.is_in_group("interactable"):
-				for node in interactable.interaction_nodes:
-					if node.input_map_action == "interact":
-						node.interact(self)
+		# This could be run each frame instead and the key be checked when finding an interactable,
+		# which would be slower, but would easily allow any key to be used in the
+		# interaction component and help reduce the nesting.
+		interactable = interaction_raycast.get_collider()
+		if interactable != null and interactable.is_in_group("interactable"):
+			for node: InteractionComponent in interactable.interaction_nodes:
+				if node.input_map_action == action:
+					node.interact(self)
 		interactive_object_exit()
 		if is_wielding:
 			equipped_wieldable_item.update_wieldable_data(self)
-	
-	
-	if event.is_action_pressed("interact2"):
-		# if carrying an object, drop it.
-		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == "interact2":
-			carried_object.throw(throw_power)
-		elif is_carrying and !is_instance_valid(carried_object):
-			stop_carrying()
-		
-		
-		# Checks if raycast is hitting an interactable object that has an interaction for this input action.
-		if interaction_raycast.is_colliding():
-			interactable = interaction_raycast.get_collider()
-			if interactable.is_in_group("interactable"):
-				for node in interactable.interaction_nodes:
-					if node.input_map_action == "interact2":
-						node.interact(self)
-		interactive_object_exit()
-		if is_wielding:
-			equipped_wieldable_item.update_wieldable_data(self)
-	
-	
+
 	# Wieldable primary Action Input
 	if !get_parent().is_movement_paused:
 		if is_wielding and Input.is_action_just_pressed("action_primary"):
@@ -222,51 +204,56 @@ func attempt_action_secondary(is_released:bool):
 
 
 func attempt_reload():
-	var inventory = get_parent().inventory_data
+	var inventory: InventoryPD = get_parent().inventory_data
 	# Some safety checks if reload should even be triggered.
 	if inventory == null:
 		print("Player inventory was null!")
 		return
-	
+
 	if equipped_wieldable_node.animation_player.is_playing():
 		print("Can't interrupt current action / animation")
 		return
-	
+
 	# If the item doesn't use reloading, return.
 	if equipped_wieldable_item.no_reload:
 		return
-	
-	var ammo_needed : int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)
+
+	var ammo_needed: int = abs(equipped_wieldable_item.charge_max - equipped_wieldable_item.charge_current)
 	if ammo_needed <= 0:
 		print("Wieldable is fully charged.")
 		return
-		
+
 	if equipped_wieldable_item.get_item_amount_in_inventory(equipped_wieldable_item.ammo_item_name) <= 0:
 		print("You have no ammo for this wieldable.")
 		return
-		
-	if !equipped_wieldable_node.animation_player.is_playing(): #Make sure reload isn't interrupting another animation.
-		equipped_wieldable_node.reload()
-		
-		while ammo_needed > 0:
-			if equipped_wieldable_item.get_item_amount_in_inventory(equipped_wieldable_item.ammo_item_name) <=0:
-				print("No more ammo in inventory.")
-				break
-			for slot in inventory.inventory_slots:
-				if slot != null and slot.inventory_item.name == equipped_wieldable_item.ammo_item_name and ammo_needed > 0:
-					inventory.remove_item_from_stack(slot)
-					ammo_needed -= slot.inventory_item.reload_amount
-					if ammo_needed < 0:
-						ammo_needed = 0
-						
-					equipped_wieldable_item.charge_current += slot.inventory_item.reload_amount
-					if equipped_wieldable_item.charge_current > equipped_wieldable_item.charge_max:
-						equipped_wieldable_item.charge_current = equipped_wieldable_item.charge_max
-					
-					print("RELOAD: Found ", slot.inventory_item.name, ". Removed one and added ", slot.inventory_item.reload_amount, " charge. Still needed: ", ammo_needed)
-		
-		inventory.inventory_updated.emit(inventory)
-		equipped_wieldable_item.update_wieldable_data(self)
+
+	if equipped_wieldable_node.animation_player.is_playing(): # Make sure reload isn't interrupting another animation.
+		return
+
+	equipped_wieldable_node.reload()
+
+	for slot: InventorySlotPD in inventory.inventory_slots:
+		if ammo_needed <= 0:
+			break
+		if slot == null or slot.inventory_item.name != equipped_wieldable_item.ammo_item_name:
+			continue
+
+		var ammo_used: int
+		var slot_ammo: AmmoItemPD = slot.inventory_item
+		var quantity_needed: int = ceili(float(ammo_needed) / slot_ammo.reload_amount)
+
+		if slot.quantity <= quantity_needed:
+			ammo_used = slot_ammo.reload_amount * slot.quantity
+			inventory.remove_slot_data(slot)
+		elif slot.quantity > quantity_needed:
+			ammo_used = slot_ammo.reload_amount * quantity_needed
+			slot.quantity -= quantity_needed
+
+		equipped_wieldable_item.add(ammo_used)
+		ammo_needed -= ammo_used
+
+	inventory.inventory_updated.emit(inventory)
+	equipped_wieldable_item.update_wieldable_data(self)
 
 
 func on_death():
