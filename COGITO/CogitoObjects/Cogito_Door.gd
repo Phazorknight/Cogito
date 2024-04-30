@@ -231,19 +231,37 @@ func close_door(_interactor: Node3D):
 func set_state():
 	if is_open:
 		if auto_close_time > 0:
-			is_open = false
-			position = closed_position
+			set_to_closed_position()
 			interaction_text = interaction_text_when_closed
 		else:
-			position = open_position
+			set_to_open_position()
 			interaction_text = interaction_text_when_open
 	else:
-		if is_sliding:
-			position = closed_position
+		set_to_closed_position()
 		interaction_text = interaction_text_when_closed
 	if is_locked:
 		interaction_text = interaction_text_when_locked
 	object_state_updated.emit(interaction_text)
+
+
+func set_to_open_position():
+	if is_sliding:
+		position = open_position
+	else:
+		if use_z_axis:
+			rotation.z = deg_to_rad(open_rotation_deg)
+		else:
+			rotation.y = deg_to_rad(open_rotation_deg)
+
+
+func set_to_closed_position():
+	if is_sliding:
+		position = closed_position
+	else:
+		if use_z_axis:
+			rotation.z = deg_to_rad(closed_rotation_deg)
+		else:
+			rotation.y = deg_to_rad(closed_rotation_deg)
 
 
 func save():
