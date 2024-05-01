@@ -19,8 +19,8 @@ class_name CarryableComponent
 @onready var camera : Camera3D = get_viewport().get_camera_3d()
 
 var parent_object
-var is_being_carried
-var player_interaction_component
+var is_being_carried : bool
+var player_interaction_component : PlayerInteractionComponent
 var carry_position : Vector3 #Position the carriable "floats towards".
 
 
@@ -97,4 +97,5 @@ func throw(power):
 	if drop_sound:
 		audio_stream_player_3d.stream = drop_sound
 		audio_stream_player_3d.play()
-	parent_object.apply_central_impulse(player_interaction_component.look_vector * Vector3(0, 0, power))
+	print(name, ": Throwing with impulse force ", player_interaction_component.Get_Look_Direction() * power)
+	parent_object.apply_central_impulse(player_interaction_component.Get_Look_Direction() * power)

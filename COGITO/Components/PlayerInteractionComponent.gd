@@ -22,7 +22,8 @@ var carried_object = null:  # Used for carryable handling.
 	set = _set_carried_object
 var is_carrying: bool:
 	get: return carried_object != null
-var throw_power: float = 1.5
+## Power with which object are thrown (opposed to being dropped)
+@export var throw_power: float = 10
 var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 
 ## List of Wieldable nodes
@@ -54,6 +55,11 @@ func _input(event: InputEvent) -> void:
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
 		# if carrying an object, drop it.
 		_handle_interaction(action)
+		
+	if is_carrying and !get_parent().is_movement_paused and is_instance_valid(carried_object):
+		if Input.is_action_just_pressed("action_primary"):
+			carried_object.throw(throw_power)
+		
 
 	# Wieldable primary Action Input
 	if is_wielding and !get_parent().is_movement_paused:
@@ -69,18 +75,18 @@ func _input(event: InputEvent) -> void:
 		
 		if event.is_action_pressed("reload"):
 			attempt_reload()
+			return
 
 
 func _handle_interaction(action: String) -> void:
 	# if carrying an object, drop it.
 	if is_carrying:
 		if is_instance_valid(carried_object) and carried_object.input_map_action == action:
-			carried_object.throw(throw_power)
+			carried_object.throw(1)
 			return
 		elif !is_instance_valid(carried_object):
 			stop_carrying()
 			return
-
 
 	# Check if we have an interactable in view and are pressing the correct button
 	if interactable != null and not is_carrying:
@@ -233,6 +239,13 @@ func on_death():
 func send_hint(hint_icon: Texture2D, hint_text: String):
 	hint_prompt.emit(hint_icon, hint_text)
 
+
+# Function to get a normalised vector3 in direction the player is looking.
+func Get_Look_Direction() -> Vector3:
+	var viewport = get_viewport().get_visible_rect().size
+	var camera = get_viewport().get_camera_3d()
+	return camera.project_ray_normal(viewport/2)
+	
 
 # This gets a world space collision point of whatever the camera is pointed at, depending on the equipped wieldable range.
 func Get_Camera_Collision() -> Vector3:

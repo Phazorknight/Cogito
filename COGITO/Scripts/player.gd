@@ -57,6 +57,8 @@ var is_showing_ui : bool
 @export var CAN_BUNNYHOP : bool = true
 @export var BUNNY_HOP_ACCELERATION : float = 0.1
 @export var INVERT_Y_AXIS : bool = true
+## How much strength the player has to push RigidBody3D objects.
+@export var PLAYER_PUSH_FORCE : float = 1.3
 
 @export_group("Headbob Properties")
 @export_enum("Minimal:0.1", "Average:0.7", "Full:1") var HEADBOBBLE : int
@@ -766,10 +768,14 @@ func _physics_process(delta):
 	if is_falling:
 		snap = Vector3.ZERO
 
-
-	#if !is_movement_paused:
 	move_and_slide()
 	
+	# Pushing RigidBody3Ds
+	for col_idx in get_slide_collision_count():
+		var col := get_slide_collision(col_idx)
+		if col.get_collider() is RigidBody3D:
+			col.get_collider().apply_central_impulse(-col.get_normal() * PLAYER_PUSH_FORCE)
+
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and velocity.length() >= 0.2:
 		if not sliding_timer.is_stopped():
