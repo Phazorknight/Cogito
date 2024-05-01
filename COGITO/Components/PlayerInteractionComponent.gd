@@ -53,21 +53,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
 		# if carrying an object, drop it.
-		if is_carrying and is_instance_valid(carried_object) and carried_object.input_map_action == action:
-			carried_object.throw(throw_power) 
-			return # Adding this here so the input gets "consumed".
-		elif is_carrying and !is_instance_valid(carried_object):
-			stop_carrying()
-
-		# Check if we have an interactable in view and are pressing the correct button
-		# BUG: When carrying an object, if you drop so that your cursor hovers over another item, that item will get picked
-		if interactable != null and not is_carrying:
-			for node: InteractionComponent in interactable.interaction_nodes:
-				if node.input_map_action == action and not node.is_disabled:
-					node.interact(self)
-					# Update the prompts after an interaction. This is especially crucial for doors and switches.
-					_rebuild_interaction_prompts()
-					break
+		_handle_interaction(action)
 
 	# Wieldable primary Action Input
 	if is_wielding and !get_parent().is_movement_paused:
@@ -83,6 +69,27 @@ func _input(event: InputEvent) -> void:
 		
 		if event.is_action_pressed("reload"):
 			attempt_reload()
+
+
+func _handle_interaction(action: String) -> void:
+	# if carrying an object, drop it.
+	if is_carrying:
+		if is_instance_valid(carried_object) and carried_object.input_map_action == action:
+			carried_object.throw(throw_power)
+			return
+		elif !is_instance_valid(carried_object):
+			stop_carrying()
+			return
+
+
+	# Check if we have an interactable in view and are pressing the correct button
+	if interactable != null and not is_carrying:
+		for node: InteractionComponent in interactable.interaction_nodes:
+			if node.input_map_action == action and not node.is_disabled:
+				node.interact(self)
+				# Update the prompts after an interaction. This is especially crucial for doors and switches.
+				_rebuild_interaction_prompts()
+				break
 
 
 ## Helper function to always get raycast destination point

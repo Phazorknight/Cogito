@@ -210,7 +210,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 		# Deleting all current nodes that are in the Persist group as to not clone objects.
 		var save_nodes = get_tree().get_nodes_in_group("Persist")
 		for i in save_nodes:
-			print("Deleting existing node: ", i)
+			print("Deleting existing node: ", i.name)
 			i.queue_free()
 			
 		var array_of_node_data = _scene_state.saved_nodes

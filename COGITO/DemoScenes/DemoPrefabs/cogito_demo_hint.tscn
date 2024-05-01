@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://c2t21qbkevaof"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_s4pls"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_StaticInteractable.gd" id="1_vm8jf"]
 [ext_resource type="Texture2D" uid="uid://bsnnl3lj58bwg" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_01.png" id="2_47x5t"]
 [ext_resource type="Script" path="res://COGITO/Scripts/Cogito_RotatorTool.gd" id="3_04ruj"]
 [ext_resource type="Texture2D" uid="uid://c2t5w06mlog62" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_02.png" id="4_j2t2d"]
@@ -32,10 +32,10 @@ albedo_color = Color(0.258824, 0.780392, 0.921569, 1)
 metallic = 1.0
 metallic_specular = 1.0
 
-[node name="COGITO_HINT" type="AnimatableBody3D"]
-transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0.203677, 1.44587, -11.4)
+[node name="COGITO_HINT" type="StaticBody3D"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
-script = ExtResource("1_s4pls")
+script = ExtResource("1_vm8jf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_n25yf")

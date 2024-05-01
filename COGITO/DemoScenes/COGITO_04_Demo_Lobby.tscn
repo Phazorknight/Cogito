@@ -1,4 +1,4 @@
-[gd_scene load_steps=367 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=364 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -71,8 +71,6 @@
 [ext_resource type="PackedScene" uid="uid://dlhn1jwgx0wjr" path="res://COGITO/DemoScenes/DemoPrefabs/table_coffee_glass.tscn" id="61_jhsd0"]
 [ext_resource type="PackedScene" uid="uid://c0mrdx8eegxuj" path="res://COGITO/DemoScenes/DemoPrefabs/rug_round.tscn" id="62_m13s3"]
 [ext_resource type="PackedScene" uid="uid://c2t21qbkevaof" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_demo_hint.tscn" id="62_y3og2"]
-[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/Interactions/ReadableComponent.tscn" id="63_uggg7"]
-[ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="64_tfc2i"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="65_cw5kp"]
 [ext_resource type="PackedScene" uid="uid://6k5rvlwcpys1" path="res://COGITO/DemoScenes/DemoPrefabs/generic_switch.tscn" id="66_4pwwj"]
 [ext_resource type="PackedScene" uid="uid://qxbx5yllijej" path="res://COGITO/DemoScenes/DemoPrefabs/chair_modern_frame_cushion.tscn" id="67_qkgep"]
@@ -81,6 +79,7 @@
 [ext_resource type="PackedScene" uid="uid://csmk1jgnppq7b" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/pillowBlue.glb" id="71_7r41f"]
 [ext_resource type="PackedScene" uid="uid://bmvweggv8f5p1" path="res://COGITO/DemoScenes/DemoPrefabs/laptop.tscn" id="72_fpgjy"]
 [ext_resource type="PackedScene" uid="uid://blll0724l8foj" path="res://COGITO/DemoScenes/DemoPrefabs/rug_rectangle.tscn" id="75_26fkw"]
+[ext_resource type="PackedScene" uid="uid://dqsod8j0c6qag" path="res://COGITO/DemoScenes/DemoPrefabs/note_welcome.tscn" id="80_g3r0x"]
 [ext_resource type="PackedScene" uid="uid://bbw0r2f1pv2vw" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_ledge_painted_corner_double.tscn" id="83_igxpg"]
 [ext_resource type="PackedScene" uid="uid://dkfmxo0mgghcc" path="res://COGITO/DemoScenes/DemoPrefabs/water_plane.tscn" id="83_j65tm"]
 [ext_resource type="Shader" path="res://COGITO/Assets/Shader/water.gdshader" id="84_b4yjg"]
@@ -2907,13 +2906,6 @@ emission_enabled = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_n25yf"]
 radius = 0.18
-
-[sub_resource type="BoxMesh" id="BoxMesh_c635y"]
-size = Vector3(0.3, 0.02, 0.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mqvc0"]
-margin = 0.01
-size = Vector3(0.3, 0.06, 0.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6gwur"]
 resource_name = "metal"
@@ -7523,23 +7515,7 @@ Keypads are set up to work with doors, but you can also use them to trigger othe
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_07_Keypad"]
 shape = SubResource("SphereShape3D_n25yf")
 
-[node name="Note_Welcome" type="StaticBody3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0.0518305, -4.59182e-08, 0.998656, -0.998656, 4.13871e-08, 0.0518305, 0.0156556, 1.44901, -11.8935)
-collision_layer = 3
-script = ExtResource("59_7mr36")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Note_Welcome"]
-transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 0, 0, 0)
-mesh = SubResource("BoxMesh_c635y")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Note_Welcome"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -0.00130868, -4.76837e-07)
-shape = SubResource("BoxShape3D_mqvc0")
-
-[node name="ReadableComponent" parent="Note_Welcome" instance=ExtResource("63_uggg7")]
-interact_sound = ExtResource("64_tfc2i")
-readable_title = "Welcome to the LOBBY"
-readable_content = "This scene is still under construction, but feel free to explore what's there."
+[node name="Note_Welcome" parent="." instance=ExtResource("80_g3r0x")]
 
 [node name="FrontDoor" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
