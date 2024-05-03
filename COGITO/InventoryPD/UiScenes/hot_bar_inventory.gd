@@ -37,10 +37,12 @@ func set_inventory_data(inventory_data : InventoryPD) -> void:
 func populate_hotbar(inventory_data : InventoryPD) -> void:
 	for child in h_box_container.get_children():
 		child.queue_free()
-		
+	
+	var index = 0	
 	for slot_data in inventory_data.inventory_slots.slice(0,hotbar_slot_amount):
 		var slot = Slot.instantiate()
 		h_box_container.add_child(slot)
 		
 		if slot_data:
-			slot.set_slot_data(slot_data)
+			slot.set_slot_data(slot_data, index, false)
+		index += 1

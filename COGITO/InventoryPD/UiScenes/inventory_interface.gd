@@ -148,7 +148,7 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 				else:
 					print("Dropping slot data via gamepad")
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
-					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data())
+					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(index))
 					grabbed_slot_data = null
 
 	inventory_ui.slot_array[index].grab_focus()
@@ -158,7 +158,7 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 func update_grabbed_slot():
 	if grabbed_slot_data:
 		grabbed_slot.show()
-		grabbed_slot.set_slot_data(grabbed_slot_data)
+		grabbed_slot.set_slot_data(grabbed_slot_data, grabbed_slot.get_index(), true)
 	else:
 		grabbed_slot.hide()
 
@@ -186,7 +186,7 @@ func _on_gui_input(event):
 						Audio.play_sound(sound_error)
 						print("Can't drop while wielding this item.")
 					else:
-						drop_slot_data.emit(grabbed_slot_data.create_single_slot_data())
+						drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index))
 						if grabbed_slot_data.quantity < 1:
 							grabbed_slot_data = null
 					

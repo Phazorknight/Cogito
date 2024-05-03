@@ -6,6 +6,10 @@ const MAX_STACK_SIZE : int = 99
 @export var inventory_item : InventoryItemPD
 #@export_range(1, MAX_STACK_SIZE) var quantity : int = 1: set = set_quantity
 @export var quantity : int = 1
+@export var origin_index = -1
+
+func is_origin(index):
+	return origin_index == index
 
 func set_quantity(value: int):
 	quantity = value
@@ -27,8 +31,9 @@ func can_fully_merge_with(other_slot_data: InventorySlotPD) -> bool:
 func fully_merge_with(other_slot_data: InventorySlotPD):
 	quantity += other_slot_data.quantity
 	
-func create_single_slot_data() -> InventorySlotPD:
+func create_single_slot_data(index: int) -> InventorySlotPD:
 	var new_slot_data = duplicate()
+	new_slot_data.origin_index = index
 	new_slot_data.quantity = 1
 	quantity -= 1
 	return new_slot_data

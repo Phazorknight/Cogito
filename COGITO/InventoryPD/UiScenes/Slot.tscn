@@ -31,16 +31,16 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_35t0l")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+expand_mode = 1
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
-layout_mode = 2
-expand_mode = 1
 
 [node name="QuantityLabel" type="Label" parent="."]
 visible = false

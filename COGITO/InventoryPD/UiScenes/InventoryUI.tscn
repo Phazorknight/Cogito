@@ -29,7 +29,7 @@ horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-columns = 4
+columns = 8
 
 [node name="Button_TakeAll" type="Button" parent="MarginContainer/VBoxContainer"]
 visible = false

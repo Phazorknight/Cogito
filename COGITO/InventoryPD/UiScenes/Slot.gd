@@ -9,14 +9,23 @@ extends PanelContainer
 ## AudioStream that plays when slot gets highlighted.
 @export var sound_highlight : AudioStream
 var item_data = null
-
+var origin_index
 
 signal slot_clicked(index: int, mouse_button: int)
 signal slot_pressed(index: int, action: String)
 
-func set_slot_data(slot_data: InventorySlotPD):
+func set_slot_data(slot_data: InventorySlotPD, index: int, moving: bool):
 	item_data = slot_data.inventory_item
-	texture_rect.texture = item_data.icon
+	if moving:
+		slot_data.origin_index = index
+		origin_index = index
+	else:
+		origin_index = slot_data.origin_index
+		if index == slot_data.origin_index:
+			texture_rect.texture = item_data.icon
+			self_modulate = Color.AQUA
+		elif item_data:
+			self_modulate = Color.AQUA
 	
 	if slot_data.quantity > 1:
 		quantity_label.text = "x%s" % slot_data.quantity
@@ -72,8 +81,20 @@ func _on_hidden():
 func _on_focus_entered() -> void:
 	Audio.play_sound(sound_highlight)
 	$Panel.show()
-	selection_panel.show()
+	if item_data != null:
+		highlight_adjacent_slots(true)
 
 func _on_focus_exited() -> void:
-	selection_panel.hide()
 	$Panel.hide()
+	if item_data != null:
+		highlight_adjacent_slots(false)
+
+func highlight_adjacent_slots(on):
+	var size = item_data.size
+	for x in size.x:
+		for y in size.y:
+			var selection = $"../../../../".slot_array[origin_index + x + (y*8)].selection_panel
+			if on:
+				selection.show()
+			else:
+				selection.hide()

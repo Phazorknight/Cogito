@@ -34,6 +34,7 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 	# Clearing array for gamepad navigation.
 	slot_array.clear()
 	
+	var index = 0
 	for slot_data in inventory_data.inventory_slots:
 		var slot = Slot.instantiate()
 		grid_container.add_child(slot)
@@ -45,7 +46,8 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 		slot.set_focus_mode(FOCUS_ALL)
 	
 		if slot_data:
-			slot.set_slot_data(slot_data)
+			slot.set_slot_data(slot_data, index, false)
+		index += 1
 	
 
 func _on_visibility_changed():

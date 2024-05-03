@@ -5,6 +5,7 @@ signal inventory_interact(inventory_data: InventoryPD, index: int, mouse_button:
 signal inventory_button_press(inventory_data: InventoryPD, index: int, action: String)
 signal inventory_updated(inventory_data: InventoryPD)
 
+@export var inventory_size : Vector2
 @export var inventory_slots : Array[InventorySlotPD]
 @export var first_slot : InventorySlotPD
 
@@ -19,6 +20,11 @@ func on_slot_button_pressed(index: int, action: String):
 	print("Pressed ", action, " on slot index ", index)
 	inventory_button_press.emit(self, index, action)
 
+func null_out_slots(slot_data):
+	var size = slot_data.inventory_item.size
+	for x in size.x:
+		for y in size.y:
+			inventory_slots[slot_data.origin_index + x + (y*inventory_size.x)] = null
 
 # Returns slot data without actually changing the slot
 func get_slot_data(index: int) -> InventorySlotPD:
@@ -33,7 +39,7 @@ func grab_slot_data(index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	
 	if slot_data:
-		inventory_slots[index] = null
+		null_out_slots(slot_data)
 		inventory_updated.emit(self)
 		return slot_data
 	else:
@@ -45,7 +51,7 @@ func grab_single_slot_data(index: int) -> InventorySlotPD:
 	if slot_data:
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:
-			inventory_slots[index] = null
+			null_out_slots(slot_data)
 		inventory_updated.emit(self)
 		return slot_data
 	else:
@@ -65,7 +71,7 @@ func use_slot_data(index: int):
 	if slot_data.inventory_item.has_method("is_consumable") and use_successful:
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:
-			inventory_slots[index] = null
+			null_out_slots(slot_data)
 	
 	inventory_updated.emit(self)
 	
@@ -79,7 +85,7 @@ func remove_slot_data(slot_data_to_remove: InventorySlotPD):
 		return
 	else:
 		print("Removing ", slot_data_to_remove, " at index ", index)
-		inventory_slots[index] = null
+		null_out_slots(slot_data_to_remove)
 		inventory_updated.emit(self)
 
 
@@ -92,7 +98,7 @@ func remove_item_from_stack(slot_data: InventorySlotPD):
 		print("Removing ", slot_data, " at index ", index)
 		inventory_slots[index].quantity -= 1
 		if inventory_slots[index].quantity <= 0:
-			inventory_slots[index] = null
+			null_out_slots(slot_data)
 		inventory_updated.emit(self)
 
 
@@ -103,7 +109,9 @@ func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> Inventory
 	if slot_data and slot_data.can_fully_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data)
 	else:
+		grabbed_slot_data.origin_index = index
 		inventory_slots[index] = grabbed_slot_data
+		add_adjacent_slots(index)
 		return_slot_data = slot_data
 		
 	inventory_updated.emit(self)
@@ -113,10 +121,11 @@ func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> Inventory
 func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	
-	if not slot_data:
-		inventory_slots[index] = grabbed_slot_data.create_single_slot_data()
+	if not slot_data and is_enough_space(index):
+		inventory_slots[index] = grabbed_slot_data.create_single_slot_data(index)
+		add_adjacent_slots(index)
 	elif slot_data.can_merge_with(grabbed_slot_data):
-		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data())
+		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data(slot_data.origin_index))
 	# Logic for ammo items
 	elif slot_data.inventory_item.has_method("update_wieldable_data") and slot_data.inventory_item == grabbed_slot_data.inventory_item.target_item_ammo:
 		# Check if there's room for charge
@@ -174,3 +183,22 @@ func take_all_items(target_inventory: InventoryPD):
 func force_inventory_update():
 	print("Forced inventory update: ", self)
 	inventory_updated.emit(self)
+
+func add_adjacent_slots(index: int):
+	var size = inventory_slots[index].inventory_item.size
+	for x in size.x:
+		for y in size.y:
+			inventory_slots[index + x + (y*inventory_size.x)] = inventory_slots[index]
+
+func is_enough_space(index):
+	var current_slot = inventory_slots[index]
+	var size = current_slot.inventory_item.size
+	# check outside of y bounds
+	if (index + (size.y*inventory_size.x)) >= inventory_slots.size():
+		return false
+	for x in size.x:
+		for y in size.y:
+			var adj_item = inventory_slots[index + x + (y*inventory_size.x)]
+			if adj_item.origin_index != current_slot.origin_index and adj_item.origin_index != -1:
+				return false
+	return true

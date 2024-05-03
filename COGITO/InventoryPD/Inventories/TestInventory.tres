@@ -11,4 +11,4 @@ quantity = 1
 
 [resource]
 script = ExtResource("1_wxkif")
-inventory_slots = Array[ExtResource("2_83f1b")]([SubResource("Resource_4h4d1"), null, null, null, null])
+inventory_slots = [SubResource("Resource_4h4d1"), null, null, null, null]

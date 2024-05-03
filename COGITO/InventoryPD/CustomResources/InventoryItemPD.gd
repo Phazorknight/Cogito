@@ -16,6 +16,7 @@ class_name InventoryItemPD
 @export var hint_icon_on_use : Texture2D
 ## Hint that is displayed when used. For example "Potion replenished 10 HP!"
 @export var hint_text_on_use : String
+@export var size : Vector2 = Vector2(2,2)
 
 @export_subgroup("Audio")
 ## Audio that plays when item is used.
