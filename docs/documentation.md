@@ -336,7 +336,7 @@ The scene state contains the following data:
 
 ### How do I set the main menu to start/load my own level scene?
 - Open the main_menu.tscn and find the MainMenu_SaveSlotManager node. There you can set a path to the scene you want to load first when a new game is started.
-![COGITO_ChangeGameScene](docs/cog_ChangeGameScene.jpg)
+![COGITO_ChangeGameScene](cog_ChangeGameScene.jpg)
 
 ### My own objects aren't working!
 There are a few reasons for them to not be working, so here's a checklist:
