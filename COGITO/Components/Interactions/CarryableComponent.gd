@@ -1,5 +1,8 @@
 extends InteractionComponent
-class_name CarryableComponent
+class_name CogitoCarryableComponent
+
+signal carry_state_changed(is_being_carried : bool)
+signal thrown(impulse)
 
 @export_group("Carriable Settings")
 @export var pick_up_sound : AudioStream
@@ -49,7 +52,6 @@ func carry(_player_interaction_component:PlayerInteractionComponent):
 		hold()
 
 
-
 func _physics_process(_delta):
 	if is_being_carried:
 		carry_position = player_interaction_component.get_interaction_raycast_tip(carry_distance_offset)
@@ -57,8 +59,8 @@ func _physics_process(_delta):
 		
 		if(carry_position-parent_object.global_position).length() >= drop_distance:
 			leave()
-		
-		
+
+
 func _on_body_entered(body):
 	if body.is_in_group("Player") and is_being_carried:
 		leave()
@@ -81,6 +83,7 @@ func hold():
 		audio_stream_player_3d.play()
 	
 	is_being_carried = true
+	carry_state_changed.emit(is_being_carried)
 
 
 func leave():
@@ -90,6 +93,7 @@ func leave():
 		player_interaction_component.stop_carrying()
 		player_interaction_component.interaction_raycast.remove_exception(parent_object)
 	is_being_carried = false
+	carry_state_changed.emit(is_being_carried)
 
 
 func throw(power):
@@ -97,5 +101,7 @@ func throw(power):
 	if drop_sound:
 		audio_stream_player_3d.stream = drop_sound
 		audio_stream_player_3d.play()
-	print(name, ": Throwing with impulse force ", player_interaction_component.Get_Look_Direction() * power)
-	parent_object.apply_central_impulse(player_interaction_component.Get_Look_Direction() * power)
+	var impulse = player_interaction_component.Get_Look_Direction() * power
+	print(name, ": Throwing with impulse force ", impulse)
+	parent_object.apply_central_impulse(impulse)
+	thrown.emit(impulse)
