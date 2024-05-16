@@ -37,12 +37,35 @@ func set_inventory_data(inventory_data : InventoryPD) -> void:
 func populate_hotbar(inventory_data : InventoryPD) -> void:
 	for child in h_box_container.get_children():
 		child.queue_free()
-	
-	var index = 0	
+	if inventory_data.grid:
+		populate_grid(inventory_data)
+	else:
+		populate_non_grid(inventory_data)
+		
+func populate_non_grid(inventory_data : InventoryPD):	
 	for slot_data in inventory_data.inventory_slots.slice(0,hotbar_slot_amount):
 		var slot = Slot.instantiate()
 		h_box_container.add_child(slot)
-		
 		if slot_data:
-			slot.set_slot_data(slot_data, index, false)
+			slot.set_slot_data(slot_data, slot_data.origin_index, false, 1)
+			slot.set_hotbar_icon()
+		
+# For grid population, add only slots with the first unique instance of an origin_index
+func populate_grid(inventory_data : InventoryPD):
+	var index = 0
+	var origin_indexes = [-1]
+	for slot_data in inventory_data.inventory_slots:
+		if not slot_data or origin_indexes.has(slot_data.origin_index):
+			continue
+		origin_indexes.append(slot_data.origin_index)
+		var slot = Slot.instantiate()
+		h_box_container.add_child(slot)
+		slot.ammo_slot = true
+		slot.set_slot_data(slot_data, slot_data.origin_index, false, 1)
+		slot.set_hotbar_icon()
 		index += 1
+		if index == hotbar_slot_amount:
+			return
+	for leftover_slots in hotbar_slot_amount-index:
+		var slot = Slot.instantiate()
+		h_box_container.add_child(slot)

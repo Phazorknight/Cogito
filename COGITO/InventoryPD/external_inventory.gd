@@ -22,10 +22,10 @@ func _ready():
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	interaction_text = text_when_closed
 	animation_player = $AnimationPlayer
+	inventory_data.apply_initial_inventory()
 
 func interact(_player):
 	toggle_inventory.emit(self)
-	
 
 func open():
 	if uses_animation:

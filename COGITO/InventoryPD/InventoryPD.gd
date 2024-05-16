@@ -5,11 +5,21 @@ signal inventory_interact(inventory_data: InventoryPD, index: int, mouse_button:
 signal inventory_button_press(inventory_data: InventoryPD, index: int, action: String)
 signal inventory_updated(inventory_data: InventoryPD)
 
-@export var inventory_size : Vector2
+@export var grid: bool
+@export var starter_inventory : Array[InventorySlotPD]
+@export var inventory_size : Vector2i = Vector2i(4,1)
 @export var inventory_slots : Array[InventorySlotPD]
 @export var first_slot : InventorySlotPD
 
 func _init():
+	if inventory_slots.size() > 0:
+		first_slot = inventory_slots[0]
+
+# Call this in your initial scene
+func apply_initial_inventory():
+	inventory_slots.resize(inventory_size.x * inventory_size.y)
+	for item in starter_inventory:
+		pick_up_slot_data(item)
 	if inventory_slots.size() > 0:
 		first_slot = inventory_slots[0]
 
@@ -21,7 +31,9 @@ func on_slot_button_pressed(index: int, action: String):
 	inventory_button_press.emit(self, index, action)
 
 func null_out_slots(slot_data):
-	var size = slot_data.inventory_item.size
+	if not slot_data:
+		return
+	var size = slot_data.inventory_item.size if grid else Vector2i(1,1)
 	for x in size.x:
 		for y in size.y:
 			inventory_slots[slot_data.origin_index + x + (y*inventory_size.x)] = null
@@ -34,7 +46,6 @@ func get_slot_data(index: int) -> InventorySlotPD:
 	else:
 		return null
 
-
 func grab_slot_data(index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	
@@ -44,7 +55,6 @@ func grab_slot_data(index: int) -> InventorySlotPD:
 		return slot_data
 	else:
 		return null
-
 
 func grab_single_slot_data(index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
@@ -56,8 +66,6 @@ func grab_single_slot_data(index: int) -> InventorySlotPD:
 		return slot_data
 	else:
 		return null
-	
-
 
 func use_slot_data(index: int):
 	var slot_data = inventory_slots[index]
@@ -101,18 +109,23 @@ func remove_item_from_stack(slot_data: InventorySlotPD):
 			null_out_slots(slot_data)
 		inventory_updated.emit(self)
 
-
 func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	
 	var return_slot_data : InventorySlotPD
 	if slot_data and slot_data.can_fully_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data)
-	else:
+	elif is_enough_space(grabbed_slot_data, index):
+		# Swap out item
+		var item_to_swap = get_item_to_swap(grabbed_slot_data, index)
+		null_out_slots(item_to_swap)
 		grabbed_slot_data.origin_index = index
 		inventory_slots[index] = grabbed_slot_data
 		add_adjacent_slots(index)
-		return_slot_data = slot_data
+		return_slot_data = item_to_swap
+	else:
+		# do nothing, the grabbed slot remains the same
+		return grabbed_slot_data
 		
 	inventory_updated.emit(self)
 	return return_slot_data
@@ -121,9 +134,11 @@ func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> Inventory
 func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	
-	if not slot_data and is_enough_space(index):
+	if not slot_data and is_enough_space(grabbed_slot_data, index):
 		inventory_slots[index] = grabbed_slot_data.create_single_slot_data(index)
 		add_adjacent_slots(index)
+	elif not slot_data:
+		return grabbed_slot_data
 	elif slot_data.can_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data(slot_data.origin_index))
 	# Logic for ammo items
@@ -146,6 +161,8 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 	
 	if grabbed_slot_data.quantity > 0:
 		# Swapping items
+		var item_to_swap = get_item_to_swap(grabbed_slot_data, index)
+		null_out_slots(item_to_swap)
 		return grabbed_slot_data
 	else:
 		# Placing items
@@ -154,18 +171,22 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 
 func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 	for index in inventory_slots.size():
-		if inventory_slots[index] and inventory_slots[index].can_fully_merge_with(slot_data) :
+		slot_data.origin_index = index
+		if inventory_slots[index] and inventory_slots[index].can_fully_merge_with(slot_data):
+			slot_data.origin_index = index
 			inventory_slots[index].fully_merge_with(slot_data)
 			inventory_updated.emit(self)
-			
 			return true
 	
 	for index in inventory_slots.size():
-		if not inventory_slots[index]:
+		slot_data.origin_index = index
+		if not inventory_slots[index] and is_enough_space(slot_data, index):
 			inventory_slots[index] = slot_data
+			add_adjacent_slots(index)
 			inventory_updated.emit(self)
 			return true
-		
+	
+	get_local_scene().player_interaction_component.send_hint(null, "Unable to pick up item.")	
 	return false
 
 
@@ -185,20 +206,41 @@ func force_inventory_update():
 	inventory_updated.emit(self)
 
 func add_adjacent_slots(index: int):
+	if not grid:
+		return
 	var size = inventory_slots[index].inventory_item.size
 	for x in size.x:
 		for y in size.y:
 			inventory_slots[index + x + (y*inventory_size.x)] = inventory_slots[index]
 
-func is_enough_space(index):
-	var current_slot = inventory_slots[index]
-	var size = current_slot.inventory_item.size
+# check if an item either has free slots to occupy or can swap one item out
+func is_enough_space(grabbed_slot_data: InventorySlotPD, to_place_index: int):
+	var swap_origin = -1
+	var size = grabbed_slot_data.inventory_item.size if grid else Vector2i(1,1)
 	# check outside of y bounds
-	if (index + (size.y*inventory_size.x)) >= inventory_slots.size():
+	if (to_place_index + (size.x-1) + ((size.y-1)*inventory_size.x)) >= inventory_slots.size():
+		return false
+	var right_edge: int = to_place_index + size.x-1
+	# check row does not shift
+	if (int(to_place_index / inventory_size.x) != int(right_edge / inventory_size.x)):
 		return false
 	for x in size.x:
 		for y in size.y:
-			var adj_item = inventory_slots[index + x + (y*inventory_size.x)]
-			if adj_item.origin_index != current_slot.origin_index and adj_item.origin_index != -1:
+			var adj_item = inventory_slots[to_place_index + x + (y*inventory_size.x)]
+			if not adj_item:
+				continue
+			if swap_origin == -1 and adj_item.origin_index != -1:
+				swap_origin = adj_item.origin_index	
+			elif adj_item.origin_index != swap_origin and adj_item.origin_index != -1:
 				return false
 	return true
+	
+func get_item_to_swap(grabbed_slot_data: InventorySlotPD, to_place_index: int):
+	var size = grabbed_slot_data.inventory_item.size if grid else Vector2i(1,1)
+	for x in size.x:
+		for y in size.y:
+			var adj_item = inventory_slots[to_place_index + x + (y*inventory_size.x)]
+			if not adj_item:
+				continue
+			if adj_item.origin_index != -1:
+				return adj_item

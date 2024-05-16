@@ -1,35 +1,11 @@
-[gd_resource type="Resource" script_class="InventoryPD" load_steps=8 format=3 uid="uid://ev2xuamhfojm"]
+[gd_resource type="Resource" script_class="InventoryPD" load_steps=2 format=3 uid="uid://ev2xuamhfojm"]
 
-[ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="1_26ca7"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="1_vgg6i"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_8x7on"]
-
-[sub_resource type="Resource" id="Resource_3nnci"]
-script = ExtResource("2_8x7on")
-inventory_item = ExtResource("1_26ca7")
-quantity = 1
-origin_index = 0
-
-[sub_resource type="Resource" id="Resource_85jdq"]
-script = ExtResource("2_8x7on")
-inventory_item = ExtResource("1_26ca7")
-quantity = 1
-origin_index = 0
-
-[sub_resource type="Resource" id="Resource_mm6sb"]
-script = ExtResource("2_8x7on")
-inventory_item = ExtResource("1_26ca7")
-quantity = 1
-origin_index = 0
-
-[sub_resource type="Resource" id="Resource_f32kt"]
-script = ExtResource("2_8x7on")
-inventory_item = ExtResource("1_26ca7")
-quantity = 1
-origin_index = 0
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_vgg6i")
-inventory_size = Vector2(8, 4)
-inventory_slots = Array[ExtResource("2_8x7on")]([SubResource("Resource_3nnci"), SubResource("Resource_85jdq"), null, null, null, null, null, null, SubResource("Resource_mm6sb"), SubResource("Resource_f32kt"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+grid = false
+starter_inventory = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+inventory_size = Vector2i(4, 2)
+inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg41w2fijcp4q"]
+[gd_scene load_steps=6 format=3 uid="uid://cg41w2fijcp4q"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/Slot.gd" id="1_hcuh3"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_qlqw8"]
@@ -10,6 +10,9 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_c2nn1"]
+font_size = 24
 
 [node name="Slot" type="PanelContainer"]
 custom_minimum_size = Vector2(64, 64)
@@ -23,6 +26,7 @@ sound_highlight = ExtResource("2_qlqw8")
 
 [node name="Panel" type="Panel" parent="."]
 visible = false
+modulate = Color(0, 1, 0, 1)
 layout_mode = 2
 theme = ExtResource("3_m2h1n")
 
@@ -31,16 +35,12 @@ visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_35t0l")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 2
-expand_mode = 1
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+expand_mode = 1
 
 [node name="QuantityLabel" type="Label" parent="."]
 visible = false
@@ -60,6 +60,7 @@ theme = ExtResource("3_m2h1n")
 theme_type_variation = &"HUDLabel"
 theme_override_font_sizes/font_size = 12
 text = "100%"
+label_settings = SubResource("LabelSettings_c2nn1")
 vertical_alignment = 1
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

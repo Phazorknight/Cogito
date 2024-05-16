@@ -23,7 +23,7 @@ func _ready():
 	is_inventory_open = false
 	info_panel.hide()
 	grabbed_slot.set_focus_mode(0)
-
+	
 
 func open_inventory():
 	if !is_inventory_open:
@@ -57,6 +57,7 @@ func close_inventory():
 
 
 func _on_focus_changed(control: Control):
+	
 	if !control.has_method("set_slot_data"):
 		print("Not a slot. returning.")
 		return
@@ -124,6 +125,7 @@ func set_player_inventory_data(inventory_data : InventoryPD):
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
 		inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	inventory_ui.set_inventory_data(inventory_data)
+	grabbed_slot.using_grid(inventory_data.grid)
 
 # Inventory handling on gamepad buttons
 func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: String):
@@ -151,17 +153,25 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(index))
 					grabbed_slot_data = null
 
-	inventory_ui.slot_array[index].grab_focus()
+	var size = inventory_ui.slot_array.size()
+	var element = index if index < size else size-1
+	# Should fix issues where an external inventory is bigger than the players
+	inventory_ui.slot_array[element].grab_focus() 
 	update_grabbed_slot()
 
 
 func update_grabbed_slot():
 	if grabbed_slot_data:
 		grabbed_slot.show()
-		grabbed_slot.set_slot_data(grabbed_slot_data, grabbed_slot.get_index(), true)
+		grabbed_slot.set_slot_data(grabbed_slot_data, grabbed_slot.get_index(), true, 0)
+		inventory_ui.grabbed_slot = grabbed_slot
+		if external_inventory_ui.visible:
+			external_inventory_ui.grabbed_slot = grabbed_slot
+		grabbed_slot.set_grabbed_dimensions()
 	else:
 		grabbed_slot.hide()
-
+		inventory_ui.detach_grabbed_slot()
+		external_inventory_ui.detach_grabbed_slot()
 
 # Grabbed slot data handling for mouse buttons
 func _on_gui_input(event):

@@ -21,4 +21,5 @@ is_stackable = false
 stack_size = 0
 drop_scene = "res://COGITO/PrefabScenes/Pickups/pickup_laser_rifle.tscn"
 hint_text_on_use = ""
+size = Vector2(3, 2)
 sound_pickup = ExtResource("3_yhudh")
