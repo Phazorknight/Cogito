@@ -94,6 +94,8 @@ The most common tasks most users will run into is adapting their own assets and 
 
 
 ## Basic Game Scene Setup
+Here's a short video showing on how to set up a minimal scene to work with Cogito: [Cogito Scene Setup](https://youtu.be/KXcOj4LhOrY)
+
 To fully work, you need 3 Prefab Scenes in your scene + the following references set up in their inspector. These nodes should be in this order in the scene tree:
 - player.tscn
   - Reference to Pause Menu node
