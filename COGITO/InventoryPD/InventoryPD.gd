@@ -5,7 +5,9 @@ signal inventory_interact(inventory_data: InventoryPD, index: int, mouse_button:
 signal inventory_button_press(inventory_data: InventoryPD, index: int, action: String)
 signal inventory_updated(inventory_data: InventoryPD)
 
+## Enables grid inventory. If using, make sure player and ALL interactables have this set to true.
 @export var grid: bool
+## Injects items from this into the inventory slots
 @export var starter_inventory : Array[InventorySlotPD]
 @export var inventory_size : Vector2i = Vector2i(4,1)
 @export var inventory_slots : Array[InventorySlotPD]
@@ -68,6 +70,9 @@ func grab_single_slot_data(index: int) -> InventorySlotPD:
 		return null
 
 func use_slot_data(index: int):
+	if index == -1: # No item assigned to hotbar
+		return
+	
 	var slot_data = inventory_slots[index]
 	
 	if not slot_data:
@@ -115,7 +120,7 @@ func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> Inventory
 	var return_slot_data : InventorySlotPD
 	if slot_data and slot_data.can_fully_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data)
-	elif is_enough_space(grabbed_slot_data, index):
+	elif is_enough_space(grabbed_slot_data, index, false):
 		# Swap out item
 		var item_to_swap = get_item_to_swap(grabbed_slot_data, index)
 		null_out_slots(item_to_swap)
@@ -134,7 +139,7 @@ func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> Inventory
 func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	
-	if not slot_data and is_enough_space(grabbed_slot_data, index):
+	if not slot_data and is_enough_space(grabbed_slot_data, index, false):
 		inventory_slots[index] = grabbed_slot_data.create_single_slot_data(index)
 		add_adjacent_slots(index)
 	elif not slot_data:
@@ -180,7 +185,7 @@ func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 	
 	for index in inventory_slots.size():
 		slot_data.origin_index = index
-		if not inventory_slots[index] and is_enough_space(slot_data, index):
+		if not inventory_slots[index] and is_enough_space(slot_data, index, true):
 			inventory_slots[index] = slot_data
 			add_adjacent_slots(index)
 			inventory_updated.emit(self)
@@ -195,7 +200,7 @@ func take_all_items(target_inventory: InventoryPD):
 	for slot in inventory_slots:
 		if slot != null:
 			#grab item in slot and add it to target inventory
-			if target_inventory.pick_up_slot_data(slot):
+			if target_inventory.pick_up_slot_data(slot.duplicate()):
 				print("Grabbed ", slot.inventory_item.name)
 				remove_slot_data(slot) #Empty the slot
 				force_inventory_update()
@@ -214,7 +219,7 @@ func add_adjacent_slots(index: int):
 			inventory_slots[index + x + (y*inventory_size.x)] = inventory_slots[index]
 
 # check if an item either has free slots to occupy or can swap one item out
-func is_enough_space(grabbed_slot_data: InventorySlotPD, to_place_index: int):
+func is_enough_space(grabbed_slot_data: InventorySlotPD, to_place_index: int, pickup: bool):
 	var swap_origin = -1
 	var size = grabbed_slot_data.inventory_item.size if grid else Vector2i(1,1)
 	# check outside of y bounds
@@ -229,7 +234,9 @@ func is_enough_space(grabbed_slot_data: InventorySlotPD, to_place_index: int):
 			var adj_item = inventory_slots[to_place_index + x + (y*inventory_size.x)]
 			if not adj_item:
 				continue
-			if swap_origin == -1 and adj_item.origin_index != -1:
+			elif pickup: # if picking up an item, swap logic should not be invoked
+				return false
+			elif swap_origin == -1 and adj_item.origin_index != -1:
 				swap_origin = adj_item.origin_index	
 			elif adj_item.origin_index != swap_origin and adj_item.origin_index != -1:
 				return false
