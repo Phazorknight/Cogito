@@ -1,7 +1,7 @@
 ![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
 # COGITO
-[![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202404-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
-beta 202404.01
+[![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202405-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
+beta 202405.01
 
 ## What is it?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -31,6 +31,10 @@ The structure of this template always tries to adhere to the following principle
 - Interaction System
   - Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
   - Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
+- Systemic Properties
+  - Give objects properties like "FLAMMABLE" or "WET" and they will interact with each other depending on their state and properties.
+  - For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.
+  - Straight forward system to add your own properties and behaviours, all handled in one script. Also easy to just ignore.
 - Quest System
 - Save and Load System as well as scene persistency
 - Full gamepad support!

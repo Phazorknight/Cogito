@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://plcyvalw4ie"]
+
+[ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_yurfn"]
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="2_bqhjn"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="3_vb126"]
+[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="4_pa8nw"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="5_o8pd8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_y6xta"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_yu5l0"]
+sky_material = SubResource("ProceduralSkyMaterial_y6xta")
+
+[sub_resource type="Environment" id="Environment_ly4i1"]
+background_mode = 2
+sky = SubResource("Sky_yu5l0")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_1as5o"]
+resource_local_to_scene = true
+script = ExtResource("3_vb126")
+inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
+
+[node name="CogitoTestScene" type="Node3D"]
+script = ExtResource("1_yurfn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ly4i1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+use_collision = true
+size = Vector3(10, 0.1, 10)
+
+[node name="Player" parent="." instance=ExtResource("2_bqhjn")]
+pause_menu = NodePath("../PauseMenu")
+player_hud = NodePath("../Player_HUD")
+inventory_data = SubResource("Resource_1as5o")
+
+[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_pa8nw")]
+player = NodePath("../Player")
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_o8pd8")]

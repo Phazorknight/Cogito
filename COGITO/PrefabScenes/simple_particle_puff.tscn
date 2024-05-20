@@ -24,7 +24,7 @@ radius = 0.1
 height = 0.2
 radial_segments = 32
 
-[node name="SimpleParticlePuff" type="GPUParticles3D"]
+[node name="SimpleParticlePuff" type="GPUParticles3D" node_paths=PackedStringArray("particles")]
 emitting = false
 amount = 15
 lifetime = 1.5
@@ -39,3 +39,4 @@ process_material = SubResource("ParticleProcessMaterial_8n21t")
 draw_pass_1 = SubResource("SphereMesh_kic5n")
 script = ExtResource("1_uwv56")
 self_destructs = true
+particles = [NodePath(".")]
