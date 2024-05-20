@@ -166,7 +166,11 @@ func save_player_state(player, slot:String):
 	## New way of saving attributes:
 	_player_state.clear_saved_attribute_data()
 	for attribute in player.player_attributes:
-		var cur_value = player.player_attributes[attribute].value_current
+		var cur_value
+		if !player.player_attributes[attribute].dont_save_current_value:
+			cur_value = player.player_attributes[attribute].value_current
+		else:
+			cur_value = 0
 		var max_value = player.player_attributes[attribute].value_max
 		var attribute_data := Vector2(cur_value, max_value)
 		_player_state.add_player_attribute_to_state_data(attribute, attribute_data)
@@ -298,6 +302,12 @@ func load_next_scene(target : String, connector_name: String, passed_slot: Strin
 	#loading_screen.attempt_to_load_save = loading_a_save
 	loading_screen.load_mode = load_mode
 	get_tree().current_scene.add_child(loading_screen)
+
+
+func delete_save(passed_slot: String) -> void:
+	var file_to_remove = cogito_state_dir + cogito_player_state_prefix + passed_slot + ".res"
+	OS.move_to_trash(ProjectSettings.globalize_path(file_to_remove))
+	print("CSM: Save file removed: ", file_to_remove)
 
 
 func reset_scene_states():

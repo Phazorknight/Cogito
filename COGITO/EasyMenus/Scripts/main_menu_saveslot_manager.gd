@@ -9,6 +9,10 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	load_all_save_slots()
+
+
+func load_all_save_slots():
 	save_slot_a.set_data_from_state(load_slot_data(save_slot_a.manual_save_slot_name))
 	save_slot_b.set_data_from_state(load_slot_data(save_slot_b.manual_save_slot_name))
 	save_slot_c.set_data_from_state(load_slot_data(save_slot_c.manual_save_slot_name))

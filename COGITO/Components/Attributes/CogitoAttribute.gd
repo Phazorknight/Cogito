@@ -20,6 +20,9 @@ signal attribute_reached_zero(attribute_name:String, value_current:float, value_
 @export var value_start : float
 ## Use this for when you want an attribute value to be unchangeable but still use signals etc. Can also be turned on/off at runtime.
 @export var is_locked : bool = false
+## Use this when you don't want an attribute's current value to not be saved.
+@export var dont_save_current_value : bool = false
+
 var value_current : float
 
 # Used when loading/setting an attribute

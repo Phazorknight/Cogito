@@ -10,3 +10,4 @@ attribute_display_name = "Visibility"
 attribute_color = Color(0, 1, 1, 1)
 attribute_icon = ExtResource("2_f82e1")
 value_max = 5.0
+dont_save_current_value = true
