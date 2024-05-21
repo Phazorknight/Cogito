@@ -43,8 +43,10 @@ func _on_body_entered(collider: Node):
 				# When both objects are soft, damage the hit object.
 				print("Projectile: Soft object hit, dealing damage.")
 				deal_damage(collider)
-				
-			cogito_properties.check_for_systemic_reactions(collider) # Handling elemental systemic reactions.
+			
+			# Manually setting the reaction collider and calling reactions on object hit, skipping the reaction threshold time.
+			collider.cogito_properties.reaction_collider = self
+			collider.cogito_properties.check_for_systemic_reactions()
 
 
 func deal_damage(collider: Node):

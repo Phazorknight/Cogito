@@ -80,7 +80,8 @@ radius = 0.38
 [node name="barrel" type="RigidBody3D"]
 collision_layer = 3
 mass = 10.0
-max_contacts_reported = 4
+continuous_cd = true
+max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_p1u1m")
 
@@ -111,5 +112,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512641, 0)
 elemental_properties = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="deal_burn_damage" from="CogitoProperties" to="HealthAttribute" method="subtract"]
 
 [editable path="HitboxComponent"]

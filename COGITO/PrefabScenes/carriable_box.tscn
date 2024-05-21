@@ -27,7 +27,7 @@ size = Vector3(1, 0.1, 0.1)
 [node name="CarriableBox" type="RigidBody3D"]
 collision_layer = 3
 mass = 4.0
-max_contacts_reported = 8
+max_contacts_reported = 10
 contact_monitor = true
 script = ExtResource("1_2lkyl")
 
@@ -116,6 +116,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
 shape = SubResource("BoxShape3D_mtcvq")
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_vvdy3")]
-elemental_properties = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.355716, 0)
+elemental_properties = 3
+electrify_on_ready = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
