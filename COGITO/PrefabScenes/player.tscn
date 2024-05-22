@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=24 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player.gd" id="1_wkneb"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_qleua"]
@@ -8,6 +8,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://COGITO/Assets/Animations/player_eyes.tres" id="4_juktk"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="5_6htai"]
 [ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://COGITO/Components/Attributes/StaminaAttribute.tscn" id="5_dmlhq"]
+[ext_resource type="PackedScene" uid="uid://dorp3auw3s65q" path="res://COGITO/Components/Attributes/LightMeterAttribute.tscn" id="5_isp5d"]
 [ext_resource type="PackedScene" uid="uid://wtf1fqndii2p" path="res://COGITO/Components/Attributes/VisibilityAttribute.tscn" id="6_kao4w"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="6_nrttm"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="7_swbyy"]
@@ -49,6 +50,8 @@ jump_sound = ExtResource("3_1sodd")
 slide_sound = ExtResource("13_jr246")
 HEADBOBBLE = 1
 STEP_MAX_SLOPE_DEGREE = 1.0
+
+[node name="LightMeterAttribute" parent="." instance=ExtResource("5_isp5d")]
 
 [node name="VisibilityAttribute" parent="." instance=ExtResource("6_kao4w")]
 
