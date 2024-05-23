@@ -30,3 +30,4 @@ readable_title = "Readable Component"
 readable_content = "COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on providing a framework for creating interactable objects and items.
 
 Also the code is 0451."
+ignore_open_gui = false

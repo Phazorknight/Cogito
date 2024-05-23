@@ -94,17 +94,9 @@ The most common tasks most users will run into is adapting their own assets and 
 
 
 ## Basic Game Scene Setup
-Here's a short video showing on how to set up a minimal scene to work with Cogito: [Cogito Scene Setup](https://youtu.be/KXcOj4LhOrY)
+** Update: You now only need to place your Player.tscn inside your scene. The Player_HUD and PauseMenu have been moved inside the Player.tscn.**
+Please note that you still need to hook up your references inside the player scene (though they should be hooked up by default).
 
-To fully work, you need 3 Prefab Scenes in your scene + the following references set up in their inspector. These nodes should be in this order in the scene tree:
-- player.tscn
-  - Reference to Pause Menu node
-  - Reference to Player_HUD node
-- Player_HUD.tscn
-  - Reference to player node
-- TabMenu.tscn
-
-All signals needed get hooked up via code, so this should work without any extra signal setup.
 To enable transitioning between scenes, your scene root node needs to have cogito_scene.gd attached and connector nodes defined (see demo scene). You can read more about this in [Scene Transitions](#scene_transitions).
 
 
@@ -184,6 +176,12 @@ Properties:
 (This used to be called Brightness component).
 The Visibility Attribute represents how "visible" the player is within a scene. It is important to understand that this attribute is not actually tied to Lights within your scene. Instead, it works by counting how many Lightzones the player is currently in, which are their own component. This was decided to give developers the best control on how visible the player is at any spot inside a level.
 This attribute can then be checked by other entities, whenever they have a reference to the player. A common example would be that if the player enters the viewcone of a NPC, you might still want the NPC to not detect the player if they're shrouded in complete darkness, or detect the player faster, the higher their visibility is.
+
+
+## Light Meter Attribute
+This new attribute actually measures how much light the player is exposed to by checking the average luminance of the current player position.
+As this heavily depends on your scene, you will most likely need to tweak the min/max values within this attribute and it's script.
+Please note that this calculation is somewhat performance hungry, so use with caution.
 
 
 ## Sanity Attribute

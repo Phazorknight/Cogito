@@ -6,3 +6,4 @@
 script = ExtResource("1_kq08i")
 input_map_action = "interact"
 interaction_text = "Pick up"
+ignore_open_gui = false

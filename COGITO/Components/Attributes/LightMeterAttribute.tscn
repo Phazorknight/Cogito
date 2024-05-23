@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dorp3auw3s65q"]
 
 [ext_resource type="Script" path="res://COGITO/Components/Attributes/LightMeterAttribute.gd" id="1_1s8f4"]
-[ext_resource type="Texture2D" uid="uid://cm1t4hpploi24" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Visibility.png" id="2_1q48w"]
+[ext_resource type="Texture2D" uid="uid://dvqhierikwfec" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Lightbulb.png" id="2_h0mts"]
 
 [node name="LightMeterAttribute" type="Node"]
 script = ExtResource("1_1s8f4")
 attribute_name = "lightmeter"
 attribute_display_name = "Light Meter"
 attribute_color = Color(0.619608, 0.619608, 0.619608, 1)
-attribute_icon = ExtResource("2_1q48w")
+attribute_icon = ExtResource("2_h0mts")
 value_max = 100.0
 dont_save_current_value = true
 

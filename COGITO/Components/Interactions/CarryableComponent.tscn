@@ -6,5 +6,6 @@
 script = ExtResource("1_08ccb")
 input_map_action = "interact2"
 interaction_text = "Carry"
+ignore_open_gui = false
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
