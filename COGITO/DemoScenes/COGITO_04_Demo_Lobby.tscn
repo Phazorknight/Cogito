@@ -1,4 +1,4 @@
-[gd_scene load_steps=364 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=366 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -49,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://cse4e4f61awy2" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/kitchenMicrowave.glb" id="43_rl17a"]
 [ext_resource type="PackedScene" uid="uid://u2b6ss4xaxp8" path="res://COGITO/DemoScenes/DemoPrefabs/coffee_mug.tscn" id="44_harbr"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://COGITO/PrefabScenes/Pickups/pickup_battery.tscn" id="45_628oc"]
+[ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://COGITO/DemoScenes/DemoPrefabs/generic_button.tscn" id="45_mglg7"]
 [ext_resource type="PackedScene" uid="uid://cxof5rvjpgx1l" path="res://COGITO/DemoScenes/DemoPrefabs/door_basic.tscn" id="45_xp8oa"]
 [ext_resource type="PackedScene" uid="uid://b8t65a0tc7uq0" path="res://COGITO/DemoScenes/DemoPrefabs/bathroom_mirror.tscn" id="46_dfquo"]
 [ext_resource type="PackedScene" uid="uid://dtdievhv81y4e" path="res://COGITO/DemoScenes/DemoPrefabs/bathroom_sink.tscn" id="47_a6dcc"]
@@ -91,6 +92,7 @@
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://COGITO/PrefabScenes/Pickups/pickup_flashlight.tscn" id="91_fk2yu"]
 [ext_resource type="PackedScene" uid="uid://c0yox8yh1bexx" path="res://COGITO/PrefabScenes/Pickups/ripped_page_a_pickup.tscn" id="91_qq2p0"]
 [ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PrefabScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
+[ext_resource type="PackedScene" uid="uid://dqlue11vwpc5y" path="res://COGITO/CogitoObjects/Cogito_SecurityCamera.tscn" id="92_nldkd"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("2_a8imk")
@@ -6639,6 +6641,13 @@ transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634
 [node name="Pickup_Battery4" parent="ARCHIVE" instance=ExtResource("45_628oc")]
 transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634, -0.383062, 0.734926, -3.84369)
 
+[node name="SecurityCamera" parent="ARCHIVE" instance=ExtResource("92_nldkd")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4.41835, 2.13406, -7.60744)
+
+[node name="CameraButton" parent="ARCHIVE" instance=ExtResource("45_mglg7")]
+transform = Transform3D(1, 4.37114e-08, -7.57103e-08, -7.57103e-08, -2.38419e-07, -1, -4.37114e-08, 1, -3.27826e-07, 4.3552, 0.88812, -7.94767)
+usable_interaction_text = "Turn off camera"
+
 [node name="MEETING_ROOM" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0997177, 0, -9.01854)
 
@@ -7783,6 +7792,7 @@ shape = SubResource("BoxShape3D_4k13h")
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Archive_QuestEnder" to="QUESTS/Archive_QuestEnder" method="_on_body_entered"]
+[connection signal="pressed" from="ARCHIVE/CameraButton" to="ARCHIVE/SecurityCamera" method="turn_off"]
 [connection signal="body_entered" from="WaterFeature/WetZone" to="WaterFeature/WetZone" method="_on_body_entered"]
 [connection signal="body_entered" from="WaterFeature2/WetZone2" to="WaterFeature2/WetZone2" method="_on_body_entered"]
 
