@@ -78,11 +78,12 @@ metallic = 1.0
 height = 0.28
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_jlvbj"]
+[sub_resource type="Resource" id="Resource_cumhm"]
 resource_local_to_scene = true
 script = ExtResource("4_qk8k6")
 inventory_item = ExtResource("3_ohc35")
 quantity = 1
+origin_index = -1
 
 [node name="Pickup_Dart" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -114,7 +115,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
 shape = SubResource("CylinderShape3D_xbicr")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_u01ym")]
-slot_data = SubResource("Resource_jlvbj")
+slot_data = SubResource("Resource_cumhm")
 
 [node name="Lifespan" type="Timer" parent="."]
 

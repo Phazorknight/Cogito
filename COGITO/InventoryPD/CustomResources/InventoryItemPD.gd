@@ -16,7 +16,7 @@ class_name InventoryItemPD
 @export var hint_icon_on_use : Texture2D
 ## Hint that is displayed when used. For example "Potion replenished 10 HP!"
 @export var hint_text_on_use : String
-@export var size : Vector2 = Vector2(1,1)
+@export var item_size : Vector2 = Vector2(1,1)
 
 @export_subgroup("Audio")
 ## Audio that plays when item is used.
@@ -32,8 +32,8 @@ var wielded_item
 
 func get_region(x, y):
 	var image = icon.get_image()
-	var x_chunk = icon.get_width() / size.x
-	var y_chunk = icon.get_height() / size.y
+	var x_chunk = icon.get_width() / item_size.x
+	var y_chunk = icon.get_height() / item_size.y
 	var region = Rect2i(Vector2i(x * x_chunk, y * y_chunk), Vector2i(x_chunk, y_chunk))
 	return image.get_region(region)
 

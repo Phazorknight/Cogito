@@ -126,6 +126,9 @@ albedo = Color(0.694118, 0.694118, 0.694118, 1)
 [sub_resource type="Resource" id="Resource_0kaw2"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
+grid = false
+starter_inventory = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+inventory_size = Vector2i(4, 1)
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_68nml"]
@@ -2414,6 +2417,9 @@ data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903,
 [sub_resource type="Resource" id="Resource_krl8u"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
+grid = false
+starter_inventory = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+inventory_size = Vector2i(4, 1)
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6s1x"]

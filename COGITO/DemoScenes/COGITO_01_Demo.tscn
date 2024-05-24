@@ -262,15 +262,20 @@ size = Vector3(0.3, 0.3, 0.1)
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("15_86b07")
 quantity = 2
+origin_index = -1
 
 [sub_resource type="Resource" id="Resource_eku8j"]
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 2
+origin_index = -1
 
-[sub_resource type="Resource" id="Resource_kqd0r"]
+[sub_resource type="Resource" id="Resource_miudc"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
+grid = false
+starter_inventory = Array[ExtResource("16_fg1wi")]([])
+inventory_size = Vector2i(4, 1)
 inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_v7b11"), SubResource("Resource_eku8j"), null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_w1o4d"]
@@ -288,12 +293,14 @@ resource_local_to_scene = true
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 1
+origin_index = -1
 
 [sub_resource type="Resource" id="Resource_u8yjv"]
 resource_local_to_scene = true
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("17_nl6sa")
 quantity = 1
+origin_index = -1
 
 [sub_resource type="BoxMesh" id="BoxMesh_rixwv"]
 material = ExtResource("2_4ig6i")
@@ -349,6 +356,9 @@ size = Vector3(100, 3, 100)
 [sub_resource type="Resource" id="Resource_aoreq"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
+grid = false
+starter_inventory = Array[ExtResource("16_fg1wi")]([])
+inventory_size = Vector2i(4, 1)
 inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_fj0b6"]
@@ -1244,7 +1254,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_kqd0r")
+inventory_data = SubResource("Resource_miudc")
 uses_animation = true
 open_animation = "open"
 

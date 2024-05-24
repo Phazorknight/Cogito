@@ -1,18 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://cg41w2fijcp4q"]
+[gd_scene load_steps=7 format=3 uid="uid://cg41w2fijcp4q"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/Slot.gd" id="1_hcuh3"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_qlqw8"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="3_m2h1n"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jj7a"]
+bg_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_35t0l"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_c2nn1"]
-font_size = 24
+font_size = 20
 
 [node name="Slot" type="PanelContainer"]
 custom_minimum_size = Vector2(64, 64)
@@ -26,20 +29,25 @@ sound_highlight = ExtResource("2_qlqw8")
 
 [node name="Panel" type="Panel" parent="."]
 visible = false
-modulate = Color(0, 1, 0, 1)
+modulate = Color(1, 1, 1, 0.0392157)
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("3_m2h1n")
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jj7a")
 
 [node name="Selected" type="Panel" parent="."]
 visible = false
 layout_mode = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_35t0l")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 expand_mode = 1
 
 [node name="QuantityLabel" type="Label" parent="."]

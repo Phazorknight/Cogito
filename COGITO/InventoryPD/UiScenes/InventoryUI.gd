@@ -8,12 +8,14 @@ const Slot = preload("res://COGITO/InventoryPD/UiScenes/Slot.tscn")
 @onready var button_take_all: Button = $MarginContainer/VBoxContainer/Button_TakeAll
 
 var slot_array = []
-var first_slot
-var grabbed_slot
+var first_slot : InventorySlotPD
+var grabbed_slot : SlotPanel
+
 
 func _ready():
 	label.text = inventory_name
 	button_take_all.hide()
+
 
 func set_inventory_data(inventory_data : InventoryPD):
 	if !inventory_data.inventory_updated.is_connected(populate_item_grid):
@@ -21,9 +23,11 @@ func set_inventory_data(inventory_data : InventoryPD):
 	label.text = inventory_name
 	populate_item_grid(inventory_data)
 
+
 func clear_inventory_data(inventory_data : InventoryPD):
 	inventory_data.inventory_updated.disconnect(populate_item_grid)
 	slot_array.clear()
+
 
 func populate_item_grid(inventory_data : InventoryPD) -> void:
 	# set grid container columns to the width (x) of the inventory
@@ -56,6 +60,7 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 	if inventory_data.grid:
 		apply_slot_icon_regions()
 
+
 func apply_slot_icon_regions():
 	var added_items = []
 	for slot in slot_array:
@@ -65,24 +70,28 @@ func apply_slot_icon_regions():
 		else:
 			continue
 
-func apply_item_icons(item_data, origin_index: int):
-	var size = item_data.size
-	for x in size.x:
-		for y in size.y:
+
+func apply_item_icons(item_data : InventoryItemPD, origin_index: int):
+	var icon_slot_size = item_data.item_size
+	for x in icon_slot_size.x:
+		for y in icon_slot_size.y:
 			slot_array[origin_index + x + (y*grid_container.columns)].set_icon_region(x, y)
+
 
 func detach_grabbed_slot():
 	for slot in slot_array:
 		slot.selection_panel.hide()
 	grabbed_slot = null
 
+
 func highlight_slots(index: int, highlight: bool):
-	if not grabbed_slot or not grabbed_slot.item_data or not grabbed_slot.grid:
+	if !grabbed_slot or !grabbed_slot.item_data or !grabbed_slot.grid:
 		return
-	var size = grabbed_slot.item_data.size if grabbed_slot.grid else Vector2i(1,1)
-	var item_intersections = count_intersecting_items(index, size)
-	for x in size.x:
-		for y in size.y:
+	
+	var highlight_size : Vector2i = grabbed_slot.item_data.item_size if grabbed_slot.grid else Vector2i(1,1)
+	var item_intersections = count_intersecting_items(index, highlight_size)
+	for x in highlight_size.x:
+		for y in highlight_size.y:
 			if out_of_bounds(index, x, y):
 				continue
 			var selection = slot_array[index + x + (y*grid_container.columns)].selection_panel
@@ -90,21 +99,23 @@ func highlight_slots(index: int, highlight: bool):
 				selection.show()
 			else:
 				selection.hide()
-	change_slot_colours(size, index, item_intersections)
+	change_slot_colours(highlight_size, index, item_intersections)
 
-func change_slot_colours(size, index, item_intersections):
-	for x in size.x:
-		for y in size.y:
+
+func change_slot_colours(slot_group: Vector2i, index, item_intersections):
+	for x in slot_group.x:
+		for y in slot_group.y:
 			if out_of_bounds(index, x, y):
 				continue
 			var selection = slot_array[index + x + (y*grid_container.columns)].selection_panel
 			selection.modulate = set_colour(item_intersections)
 
+
 # count intersections to check if item can be swapped out
-func count_intersecting_items(index: int, size: Vector2i):
+func count_intersecting_items(index: int, intersect_size: Vector2i):
 	var intersecting_origins = []
-	for x in size.x:
-		for y in size.y:
+	for x in intersect_size.x:
+		for y in intersect_size.y:
 			if out_of_bounds(index, x, y):
 				return -1
 			var adj_item = slot_array[index + x + (y*grid_container.columns)]
@@ -114,6 +125,7 @@ func count_intersecting_items(index: int, size: Vector2i):
 				intersecting_origins.append(adj_item.origin_index)
 	return intersecting_origins.size()
 
+
 func set_colour(item_intersections):
 	if item_intersections == -1 or item_intersections > 1:
 		return Color.RED
@@ -121,6 +133,7 @@ func set_colour(item_intersections):
 		return Color.YELLOW
 	else:
 		return Color.GREEN	
+
 
 func out_of_bounds(index: int, x, y):
 	# check outside of y bounds

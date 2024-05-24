@@ -1,4 +1,5 @@
 extends PanelContainer
+class_name SlotPanel
 
 @onready var texture_rect = $MarginContainer/TextureRect
 @onready var quantity_label = $QuantityLabel
@@ -60,13 +61,13 @@ func set_slot_data(slot_data: InventorySlotPD, index: int, moving: bool, x_size:
 func check_if_top_right_slot(slot_data: InventorySlotPD, index: int):
 	if not item_data:
 		return
-	if index == slot_data.origin_index + item_data.size.x-1:
+	if index == slot_data.origin_index + item_data.item_size.x-1:
 		quantity_slot = true
 		
 func check_if_bottom_right_slot(slot_data: InventorySlotPD, index: int, x_size: int):
 	if not item_data:
 		return
-	if index == slot_data.origin_index + item_data.size.x-1 + ((item_data.size.y-1)*x_size):
+	if index == slot_data.origin_index + item_data.item_size.x-1 + ((item_data.item_size.y-1)*x_size):
 		ammo_slot = true
 
 func _on_charge_changed():
@@ -90,11 +91,12 @@ func _on_gui_input(event):
 		slot_pressed.emit(get_index(), "inventory_drop_item")
 
 func set_grabbed_dimensions():
-	var item_size = item_data.size if grid else Vector2i(1,1)
+	var item_size = item_data.item_size if grid else Vector2i(1,1)
 	size = Vector2i(64 * item_size.x, 64 * item_size.y)
 	set_hotbar_icon()
 
 func set_selection(is_selected : bool):
+	print(name, ": set_selection called. selection panel should be visible. (is_selected = ", is_selected, ")")
 	selection_panel.visible = is_selected
 	
 func _on_mouse_entered():
