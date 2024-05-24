@@ -7,6 +7,7 @@ class_name CogitoSaveSlotButton
 
 @export var save_slot_manager_node : Control
 @export var manual_save_slot_name : String
+@export var empty_slot_screenshot : Texture2D
 
 var player_state : CogitoPlayerState
 
@@ -39,6 +40,8 @@ func set_data_from_state(_player_state:CogitoPlayerState):
 	if _player_state == null:
 		slot_name_label.text = "NEW GAME"
 		save_time_label.text = ""
+		screenshot_spot.texture = empty_slot_screenshot
+		player_state = null
 		return
 	else:
 		player_state = _player_state
@@ -80,3 +83,13 @@ func _on_save_slot_button_pressed() -> void:
 		CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
 		CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
 		CogitoSceneManager.loading_saved_game(player_state.player_state_slot_name)
+
+
+func _on_delete_slot_pressed():
+	CogitoSceneManager.switch_active_slot_to(manual_save_slot_name)
+	if CogitoSceneManager._player_state != null:
+		CogitoSceneManager.delete_save(manual_save_slot_name)
+		save_slot_manager_node.load_all_save_slots()
+	else:
+		print("Slot is already empty!")
+	

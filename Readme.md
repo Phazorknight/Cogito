@@ -1,7 +1,7 @@
 ![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
 # COGITO
-[![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202404-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
-beta 202404.01
+[![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202405-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
+beta 202405.11
 
 ## What is it?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -31,6 +31,10 @@ The structure of this template always tries to adhere to the following principle
 - Interaction System
   - Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
   - Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
+- Systemic Properties
+  - Give objects properties like "FLAMMABLE" or "WET" and they will interact with each other depending on their state and properties.
+  - For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.
+  - Straight forward system to add your own properties and behaviours, all handled in one script. Also easy to just ignore.
 - Quest System
 - Save and Load System as well as scene persistency
 - Full gamepad support!
@@ -71,6 +75,11 @@ The structure of this template always tries to adhere to the following principle
 - About the game assets under the COGITO/assets folder:
   - 3D models are by Kenney (https://www.kenney.nl/) or made by me.
   - Audio is either by Kenney or from freesound.org used under CC0 or MIT license
-  - Water feature sound is by poyekhali from freesound.org used under CC3.0 license.
+  - Alarm Siren.wav by mirkosukovic -- https://freesound.org/s/435666/ -- License: Attribution 4.0
+  - Match strike by Bertsz -- https://freesound.org/s/524306/ -- License: Creative Commons 0
+  - Running Water by Poyekhali -- https://freesound.org/s/241842/ -- License: Attribution 3.0
+  - Dirt Sliding.wav by Laughingfish78 -- https://freesound.org/s/537275/ -- License: Creative Commons 0
+  - FIREBurn_Fireplace.Artificial.Crackling.Roar by newlocknew -- https://freesound.org/s/641848/ -- License: Attribution NonCommercial 4.0
+  - Water steaming on hot surface #1 by Ekrcoaster -- https://freesound.org/s/666290/ -- License: Creative Commons 0
   - Cloud HDR (kloofendal_48d_partly_cloudy_puresky)2k.hdr by Greg Zaal, used under CC0.
   - All other included assets either made by me or one of the contributors, published under MIT.

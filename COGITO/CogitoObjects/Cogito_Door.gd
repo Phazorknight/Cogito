@@ -107,14 +107,14 @@ func interact(interactor: Node3D):
 			for nodepath in doors_to_sync_with:
 				if nodepath != null:
 					var object = get_node(nodepath)
-					object.open_door()
+					object.open_door(interactor)
 		else:
 			close_door(interactor)
 			
 			for nodepath in doors_to_sync_with:
 				if nodepath != null:
 					var object = get_node(nodepath)
-					object.close_door()
+					object.close_door(interactor)
 	else:
 		audio_stream_player_3d.stream = rattle_sound
 		audio_stream_player_3d.play()

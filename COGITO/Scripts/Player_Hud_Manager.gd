@@ -37,6 +37,8 @@ var interaction_texture : Texture2D
 @onready var prompt_area: Control = $PromptArea
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : VBoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
+@onready var fade_in_screen: Panel = $FadeInScreen
+@onready var crosshair: Control = $Crosshair
 
 #endregion
 
@@ -53,20 +55,46 @@ func _ready():
 	# Set up for HUD elements for wieldables
 	wieldable_hud.hide()
 	
-	_setup_player()
-	
+	_setup_player.call_deferred()
 	connect_to_external_inventories.call_deferred()
+	
+	fade_in.call_deferred(1.5)
 
 
 func setup_player(new_player : Node):
 	player = new_player
 	_setup_player()
 
-
 func _setup_player():
-	### NEW ATTRIBUTE SYSTEM:
+	#prevent stuck prompts when changing players
+	delete_interaction_prompts()
+
+	connect_to_player_signals()
+	instantiate_player_attribute_ui()
 	
-	## remove any previous attributes in cases where the player has been changed
+	# Fill inventory HUD with player inventory
+	inventory_interface.set_player_inventory_data(player.inventory_data)
+	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
+
+
+func connect_to_player_signals():
+	player.player_interaction_component.interactive_object_detected.connect(set_interaction_prompts)
+	player.player_interaction_component.nothing_detected.connect(delete_interaction_prompts)
+	player.player_interaction_component.started_carrying.connect(set_drop_prompt)
+	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
+	player.player_interaction_component.updated_wieldable_data.connect(_on_update_wieldable_data)
+	player.toggled_interface.connect(_on_external_ui_toggle)
+	player.toggle_inventory_interface.connect(toggle_inventory_interface)
+	player.player_state_loaded.connect(_on_player_state_load)
+
+
+func fade_in(fade_in_duration: float):
+	fade_in_screen.set_modulate(Color.BLACK)
+	var fade_tween = get_tree().create_tween()
+	fade_tween.tween_property(fade_in_screen, "modulate", Color.TRANSPARENT, fade_in_duration)
+
+
+func instantiate_player_attribute_ui():
 	for n in ui_attribute_area.get_children():
 		ui_attribute_area.remove_child(n)
 		n.queue_free()
@@ -79,24 +107,6 @@ func _setup_player():
 			attribute.death.connect(_on_player_death)
 		
 		spawned_attribute_ui.initiate_attribute_ui(attribute)
-	
-	#prevent stuck prompts when changing players
-	delete_interaction_prompts()
-	
-	# Fill inventory HUD with player inventory
-	inventory_interface.set_player_inventory_data(player.inventory_data)
-	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
-	
-	player.player_interaction_component.interactive_object_detected.connect(set_interaction_prompts)
-	player.player_interaction_component.nothing_detected.connect(delete_interaction_prompts)
-	player.player_interaction_component.started_carrying.connect(set_drop_prompt)
-	
-	player.toggled_interface.connect(_on_external_ui_toggle)
-	
-	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
-	player.toggle_inventory_interface.connect(toggle_inventory_interface)
-	player.player_state_loaded.connect(_on_player_state_load)
-	player.player_interaction_component.updated_wieldable_data.connect(_on_update_wieldable_data)
 
 
 func connect_to_external_inventories(): # Grabbing external inventories in scene.
@@ -177,10 +187,12 @@ func _on_external_ui_toggle(is_showing:bool):
 		player._on_pause_movement()
 		player.is_showing_ui = true
 		prompt_area.hide()
+		crosshair.hide()
 	else:
 		player._on_resume_movement()
 		player.is_showing_ui = false
 		prompt_area.show()
+		crosshair.show()
 
 
 # When HUD receives set use prompt signal (usually when equipping a wieldable)

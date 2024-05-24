@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bekq2c16juwa1"]
+[gd_scene load_steps=13 format=3 uid="uid://bekq2c16juwa1"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/projectile.gd" id="1_4jdmy"]
+[ext_resource type="Script" path="res://COGITO/Scripts/CogitoProjectile.gd" id="1_4jdmy"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="2_u01ym"]
 [ext_resource type="Resource" uid="uid://c6rpnmo1y1cw5" path="res://COGITO/InventoryPD/Items/Cogito_Dart.tres" id="3_ohc35"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_qk8k6"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="5_4xy2e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_halr6"]
 resource_name = "yellow"
@@ -78,7 +79,7 @@ metallic = 1.0
 height = 0.28
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_jlvbj"]
+[sub_resource type="Resource" id="Resource_oe53u"]
 resource_local_to_scene = true
 script = ExtResource("4_qk8k6")
 inventory_item = ExtResource("3_ohc35")
@@ -114,8 +115,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
 shape = SubResource("CylinderShape3D_xbicr")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_u01ym")]
-slot_data = SubResource("Resource_jlvbj")
+slot_data = SubResource("Resource_oe53u")
 
 [node name="Lifespan" type="Timer" parent="."]
+
+[node name="CogitoProperties" parent="." instance=ExtResource("5_4xy2e")]
+elemental_properties = 2
+material_properties = 1
+ignite_on_ready = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

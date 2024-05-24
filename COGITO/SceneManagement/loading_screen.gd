@@ -10,7 +10,6 @@ var next_scene_path : String
 var connector_name : String
 var next_scene_state_filename : String
 var passed_slot : String
-#var attempt_to_load_save : bool
 var load_mode
 
 func _ready():

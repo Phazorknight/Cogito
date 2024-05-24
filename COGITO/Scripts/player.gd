@@ -309,7 +309,7 @@ func _input(event):
 		elif !is_movement_paused and !is_dead:
 			_on_pause_movement()
 			get_node(pause_menu).open_pause_menu()
-	
+
 	# Open/closes Inventory if Inventory button is pressed
 	if event.is_action_pressed("inventory") and !is_dead:
 		if !is_showing_ui: #Making sure now external UI is open.

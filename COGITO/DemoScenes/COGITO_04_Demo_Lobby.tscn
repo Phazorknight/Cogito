@@ -1,11 +1,9 @@
-[gd_scene load_steps=364 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=366 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PrefabScenes/player.tscn" id="3_mgle8"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/InventoryPD.gd" id="4_0kggm"]
-[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PrefabScenes/Player_HUD.tscn" id="5_to5tg"]
-[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="6_vlp8l"]
 [ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="7_a40bd"]
 [ext_resource type="Resource" uid="uid://drmtc0tqmwquk" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_AccessArchive.tres" id="8_5xvfv"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="9_ec70c"]
@@ -51,6 +49,7 @@
 [ext_resource type="PackedScene" uid="uid://cse4e4f61awy2" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/kitchenMicrowave.glb" id="43_rl17a"]
 [ext_resource type="PackedScene" uid="uid://u2b6ss4xaxp8" path="res://COGITO/DemoScenes/DemoPrefabs/coffee_mug.tscn" id="44_harbr"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://COGITO/PrefabScenes/Pickups/pickup_battery.tscn" id="45_628oc"]
+[ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://COGITO/DemoScenes/DemoPrefabs/generic_button.tscn" id="45_mglg7"]
 [ext_resource type="PackedScene" uid="uid://cxof5rvjpgx1l" path="res://COGITO/DemoScenes/DemoPrefabs/door_basic.tscn" id="45_xp8oa"]
 [ext_resource type="PackedScene" uid="uid://b8t65a0tc7uq0" path="res://COGITO/DemoScenes/DemoPrefabs/bathroom_mirror.tscn" id="46_dfquo"]
 [ext_resource type="PackedScene" uid="uid://dtdievhv81y4e" path="res://COGITO/DemoScenes/DemoPrefabs/bathroom_sink.tscn" id="47_a6dcc"]
@@ -87,11 +86,13 @@
 [ext_resource type="AudioStream" uid="uid://bd2ni82t6ht8t" path="res://COGITO/Assets/Audio/241842_poyekhali_running-water.ogg" id="87_ibv1p"]
 [ext_resource type="PackedScene" uid="uid://bqwcopwwk2x6s" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_steps_single.tscn" id="88_u6glq"]
 [ext_resource type="PackedScene" uid="uid://dueiqjrnnwseq" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_corner_outer.glb" id="89_ifcfc"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="89_vc84d"]
 [ext_resource type="PackedScene" uid="uid://dqw7n4i3g4b7g" path="res://COGITO/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_painted.glb" id="90_0bo26"]
 [ext_resource type="PackedScene" uid="uid://ctr7n0w3hgys7" path="res://COGITO/Components/LightzoneComponent.tscn" id="91_1svd8"]
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://COGITO/PrefabScenes/Pickups/pickup_flashlight.tscn" id="91_fk2yu"]
 [ext_resource type="PackedScene" uid="uid://c0yox8yh1bexx" path="res://COGITO/PrefabScenes/Pickups/ripped_page_a_pickup.tscn" id="91_qq2p0"]
 [ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PrefabScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
+[ext_resource type="PackedScene" uid="uid://dqlue11vwpc5y" path="res://COGITO/CogitoObjects/Cogito_SecurityCamera.tscn" id="92_nldkd"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("2_a8imk")
@@ -123,7 +124,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_0kaw2"]
+[sub_resource type="Resource" id="Resource_v1ucv"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
@@ -3238,6 +3239,9 @@ resource_name = "metalLight"
 albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
 emission_enabled = true
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_3kuvd"]
+size = Vector3(2.52411, 1.05029, 2.18591)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_mq6up"]
 size = Vector3(16.4526, 6.84363, 36.7433)
 
@@ -3281,16 +3285,8 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-pause_menu = NodePath("../PauseMenu")
-player_hud = NodePath("../Player_HUD")
-inventory_data = SubResource("Resource_0kaw2")
+inventory_data = SubResource("Resource_v1ucv")
 step_height_camera_lerp = 1.5
-
-[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_to5tg")]
-player = NodePath("../Player")
-
-[node name="PauseMenu" parent="." node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("6_vlp8l")]
-nodes_to_focus = [null, null, null, null, null]
 
 [node name="QUESTS" type="Node3D" parent="."]
 
@@ -6645,6 +6641,13 @@ transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634
 [node name="Pickup_Battery4" parent="ARCHIVE" instance=ExtResource("45_628oc")]
 transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634, -0.383062, 0.734926, -3.84369)
 
+[node name="SecurityCamera" parent="ARCHIVE" instance=ExtResource("92_nldkd")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4.41835, 2.13406, -7.60744)
+
+[node name="CameraButton" parent="ARCHIVE" instance=ExtResource("45_mglg7")]
+transform = Transform3D(1, 4.37114e-08, -7.57103e-08, -7.57103e-08, -2.38419e-07, -1, -4.37114e-08, 1, -3.27826e-07, 4.3552, 0.88812, -7.94767)
+usable_interaction_text = "Turn off camera"
+
 [node name="MEETING_ROOM" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0997177, 0, -9.01854)
 
@@ -7664,6 +7667,16 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_hqhpt")
 surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
 
+[node name="WetZone" type="Area3D" parent="WaterFeature"]
+script = ExtResource("59_7mr36")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WaterFeature/WetZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55772, 0.0251465, 0.168274)
+shape = SubResource("BoxShape3D_3kuvd")
+
+[node name="CogitoProperties" parent="WaterFeature/WetZone" instance=ExtResource("89_vc84d")]
+elemental_properties = 4
+
 [node name="WaterFeature2" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.2, 0, 6.6)
 
@@ -7710,6 +7723,17 @@ mesh = SubResource("ArrayMesh_yswb2")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_hqhpt")
 surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
+
+[node name="WetZone2" type="Area3D" parent="WaterFeature2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208797, 0, 0)
+script = ExtResource("59_7mr36")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WaterFeature2/WetZone2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55772, 0.0251465, 0.168274)
+shape = SubResource("BoxShape3D_3kuvd")
+
+[node name="CogitoProperties" parent="WaterFeature2/WetZone2" instance=ExtResource("89_vc84d")]
+elemental_properties = 4
 
 [node name="Pickup_Flashlight" parent="." instance=ExtResource("91_fk2yu")]
 transform = Transform3D(-0.379472, 0, -0.925203, 0, 1, 0, 0.925203, 0, -0.379472, 4.70889, 1.33737, -0.00629956)
@@ -7768,6 +7792,9 @@ shape = SubResource("BoxShape3D_4k13h")
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Archive_QuestEnder" to="QUESTS/Archive_QuestEnder" method="_on_body_entered"]
+[connection signal="pressed" from="ARCHIVE/CameraButton" to="ARCHIVE/SecurityCamera" method="turn_off"]
+[connection signal="body_entered" from="WaterFeature/WetZone" to="WaterFeature/WetZone" method="_on_body_entered"]
+[connection signal="body_entered" from="WaterFeature2/WetZone2" to="WaterFeature2/WetZone2" method="_on_body_entered"]
 
 [editable path="UPPER_OFFICE_CEO/WindowedDoor"]
 [editable path="ARCHIVE/ArchiveDoor"]

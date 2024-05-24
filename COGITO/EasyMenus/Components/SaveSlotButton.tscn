@@ -9,6 +9,7 @@ custom_minimum_size = Vector2(330, 90)
 theme_override_font_sizes/font_size = 24
 alignment = 0
 script = ExtResource("2_rvlrs")
+empty_slot_screenshot = ExtResource("3_xdxly")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

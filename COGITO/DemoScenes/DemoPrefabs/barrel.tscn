@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://co1opmwyvl27"]
+[gd_scene load_steps=14 format=3 uid="uid://co1opmwyvl27"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_p1u1m"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="2_lxpj6"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="3_kqaad"]
-[ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://COGITO/PrefabScenes/simple_particle_puff.tscn" id="4_xpsxg"]
+[ext_resource type="PackedScene" uid="uid://4pr4qkdw2ru6" path="res://COGITO/Assets/VFX/Impacts/Impact_01.tscn" id="4_y2b0x"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="5_vqdq1"]
 [ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="6_wc6qr"]
 [ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="7_efwiw"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="8_x2mti"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1tv7"]
 resource_name = "cloth"
@@ -79,6 +80,9 @@ radius = 0.38
 [node name="barrel" type="RigidBody3D"]
 collision_layer = 3
 mass = 10.0
+continuous_cd = true
+max_contacts_reported = 10
+contact_monitor = true
 script = ExtResource("1_p1u1m")
 
 [node name="barrel" type="MeshInstance3D" parent="."]
@@ -94,7 +98,7 @@ health_attribute = NodePath("../HealthAttribute")
 
 [node name="HealthAttribute" parent="." instance=ExtResource("3_kqaad")]
 destroy_on_death = Array[NodePath]([NodePath("..")])
-spawn_on_death = ExtResource("4_xpsxg")
+spawn_on_death = ExtResource("4_y2b0x")
 value_max = 3.0
 value_start = 3.0
 
@@ -102,5 +106,13 @@ value_start = 3.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 pick_up_sound = ExtResource("6_wc6qr")
 drop_sound = ExtResource("7_efwiw")
+
+[node name="CogitoProperties" parent="." instance=ExtResource("8_x2mti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512641, 0)
+elemental_properties = 2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="deal_burn_damage" from="CogitoProperties" to="HealthAttribute" method="subtract"]
 
 [editable path="HitboxComponent"]

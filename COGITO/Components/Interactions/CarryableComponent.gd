@@ -102,6 +102,5 @@ func throw(power):
 		audio_stream_player_3d.stream = drop_sound
 		audio_stream_player_3d.play()
 	var impulse = player_interaction_component.Get_Look_Direction() * power
-	print(name, ": Throwing with impulse force ", impulse)
 	parent_object.apply_central_impulse(impulse)
 	thrown.emit(impulse)
