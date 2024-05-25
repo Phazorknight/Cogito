@@ -61,7 +61,10 @@ Thanks and Contributions
 License and Credits
 -------------------
 * This add-on is published under the MIT license.
-* You can use this add-on in your projects, personal or commercial, as long as you credit us (mostly cause I'd love to see what people use it for!)
+* You can use this add-on in your projects, personal or commercial, as long as you credit us (mostly cause we'd love to see what people use it for!)
+
+|
+
 * About the game assets under the COGITO/assets folder:
    * 3D models are by `Kenney <https://www.kenney.nl/>`_ or `Philip Drobar <https://www.philipdrobar.com/>`_.
    * Audio is either by `Kenney <https://www.kenney.nl/>`_ or from `freesound.org <https://freesound.org/>`_ used under CC0 or MIT license
