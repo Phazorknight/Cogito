@@ -13,6 +13,8 @@ COGITO
 
    about
    tutorials
+   manual
+   faq
 
 ------------
 
