@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What is it? &mdash; Cogito  documentation</title>
+  <title>Principals of this Template &mdash; Cogito  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Principals of this Template" href="Principles.html" />
-    <link rel="prev" title="COGITO" href="../index.html" /> 
+    <link rel="next" title="Current Features" href="Features.html" />
+    <link rel="prev" title="What is it?" href="WhatIsIt.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,9 +46,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">What is it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#current-features">Current Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Principles.html">Principals of this Template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WhatIsIt.html">What is it?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Principals of this Template</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Features.html">Current Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos.html">Videos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Tutorials/Videos/FeatureOverview.html">(Old) Feature Overview</a></li>
@@ -68,9 +67,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">What is it?</li>
+      <li class="breadcrumb-item active">Principals of this Template</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/About/WhatIsIt.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/About/Principles.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -78,62 +77,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="what-is-it">
-<h1>What is it?<a class="headerlink" href="#what-is-it" title="Link to this heading"></a></h1>
-<p>COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
-In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and items.</p>
-</section>
-<section id="current-features">
-<h1>Current Features<a class="headerlink" href="#current-features" title="Link to this heading"></a></h1>
+  <section id="principals-of-this-template">
+<h1>Principals of this Template<a class="headerlink" href="#principals-of-this-template" title="Link to this heading"></a></h1>
+<p>The structure of this template always tries to adhere to the following principles:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>First person player controller with:</dt><dd><ul>
-<li><p>Sprinting, jumping, crouching, sliding, stairs handling, ladder handling</p></li>
-<li><p>Fully customizable attributes like Health, Stamina, Visibility (for stealth) - Component-based, so easy to add your own.</p></li>
-<li><p>Lots of exposed properties to tweak to your liking (speeds, headbob, fall damage, bunnyhop, etc.)</p></li>
-<li><p>Easy-to-use dynamic footstep sound system</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Inventory System</dt><dd><ul>
-<li><p>Flexible resource-based inventories</p></li>
-<li><p>Inventory UI separate from inventory logic</p></li>
-<li><p>Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)</p></li>
-<li><p>Base class to easily add your custom item types</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Interaction System</dt><dd><ul>
-<li><p>Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones</p></li>
-<li><p>Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Systemic Properties</dt><dd><ul>
-<li><p>Give objects properties like “FLAMMABLE” or “WET” and they will interact with each other depending on their state and properties.</p></li>
-<li><p>For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.</p></li>
-<li><p>Straight forward system to add your own properties and behaviours, all handled in one script. Also easy to just ignore.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Fully featured Demo Scene</dt><dd><ul>
-<li><p>Set up like a game level including a variety of objects, weapons and quests</p></li>
-<li><p>In-game helper documents that explain how objects in the scene were set up</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Quest System</p></li>
-<li><p>Save and Load System as well as scene persistency</p></li>
-<li><p>Full gamepad support!</p></li>
+<li><p><strong>Complete:</strong> When you download COGITO and press play, you get a functioning project out of the box. Game menu, save slot select, options and a playable level are all included.</p></li>
+<li><p><strong>Versatile:</strong> Wether your game is set in the future, the past or the present, uses melee, projectile or no weapons at all, has low poly, stylized or realistic graphics, the template will have features for you.</p></li>
+<li><p><strong>Modular:</strong> Don’t want to use a feature? You will be able to hide it, ignore it or strip it out without breaking COGITO. At the same time, COGITO is designed to be extendable with your own custom features or other add-ons.</p></li>
+<li><p><strong>Approachable:</strong> While there will always be a learning curve, we strive to make COGTIO approachable and intuitive to use, so it doesn’t get in your way of making your game.</p></li>
 </ul>
 </section>
 
@@ -141,8 +92,8 @@ In comparison to other first person assets out there, which focus mostly on shoo
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../index.html" class="btn btn-neutral float-left" title="COGITO" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Principles.html" class="btn btn-neutral float-right" title="Principals of this Template" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="WhatIsIt.html" class="btn btn-neutral float-left" title="What is it?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Features.html" class="btn btn-neutral float-right" title="Current Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

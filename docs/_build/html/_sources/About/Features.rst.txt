@@ -1,8 +1,3 @@
-What is it?
-===========
-COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. 
-In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and items.
-
 Current Features
 ================
 * First person player controller with:

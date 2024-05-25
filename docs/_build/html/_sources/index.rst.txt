@@ -7,11 +7,12 @@ COGITO
 ======
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
-   :caption: About:
+   :caption: Contents:
 
-   About/WhatIsIt
+   about
+   tutorials
 
 .. image:: Cogito_capsule_202402_jpg.jpg
    :alt: Cogito Banner
@@ -24,4 +25,12 @@ COGITO
    :alt: COGITO beta 202404
    :target: https://github.com/Phazorknight/Cogito
 
-beta 202405.10
+beta 202405.11
+
+COGITO is made by `Philip Drobar <https://www.philipdrobar.com>`_ with help from `these contributors <https://github.com/Phazorknight/Cogito/graphs/contributors>`_.
+
+------------
+
+! IMPORTANT
+-----------
+   COGITO is still under active development. While some features are pretty much set, others might change soon. Use at your own risk and check Issues and Discussion pages for more information.
