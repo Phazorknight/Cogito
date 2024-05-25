@@ -14,6 +14,8 @@ COGITO
    about
    tutorials
 
+------------
+
 .. image:: Cogito_capsule_202402_jpg.jpg
    :alt: Cogito Banner
 
@@ -31,6 +33,5 @@ COGITO is made by `Philip Drobar <https://www.philipdrobar.com>`_ with help from
 
 ------------
 
-! IMPORTANT
------------
+.. caution::
    COGITO is still under active development. While some features are pretty much set, others might change soon. Use at your own risk and check Issues and Discussion pages for more information.

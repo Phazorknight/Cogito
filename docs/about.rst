@@ -1,4 +1,4 @@
-About COGITO
+About
 ============
 
 What is COGITO?
@@ -6,8 +6,8 @@ What is COGITO?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. 
 In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and items.
 
-Principals of COGITO
---------------------
+Guiding Principals
+------------------
 The structure of this template always tries to adhere to the following principles:
 
 * **Complete:** When you download COGITO and press play, you get a functioning project out of the box. Game menu, save slot select, options and a playable level are all included.
@@ -15,8 +15,8 @@ The structure of this template always tries to adhere to the following principle
 * **Modular:** Don't want to use a feature? You will be able to hide it, ignore it or strip it out without breaking COGITO. At the same time, COGITO is designed to be extendable with your own custom features or other add-ons.
 * **Approachable:** While there will always be a learning curve, we strive to make COGTIO approachable and intuitive to use, so it doesn't get in your way of making your game.
 
-Current Features of COGITO
---------------------------
+Current Features
+----------------
 * First person player controller with:
    * Sprinting, jumping, crouching, sliding, stairs handling, ladder handling
    * Fully customizable attributes like Health, Stamina, Visibility (for stealth) - Component-based, so easy to add your own.
