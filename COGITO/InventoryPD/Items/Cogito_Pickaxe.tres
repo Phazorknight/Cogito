@@ -19,6 +19,6 @@ description = "Don't go digging for diamonds now."
 icon = ExtResource("1_a7clm")
 is_stackable = false
 stack_size = 0
-drop_scene = null
+drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_pickaxe.tscn"
 hint_text_on_use = ""
 sound_pickup = ExtResource("3_5g3cg")

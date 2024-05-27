@@ -16,18 +16,18 @@ func _ready():
 	button_take_all.hide()
 
 
-func set_inventory_data(inventory_data : InventoryPD):
+func set_inventory_data(inventory_data : CogitoInventory):
 	if !inventory_data.inventory_updated.is_connected(populate_item_grid):
 		inventory_data.inventory_updated.connect(populate_item_grid)
 	label.text = inventory_name
 	populate_item_grid(inventory_data)
 
 
-func clear_inventory_data(inventory_data : InventoryPD):
+func clear_inventory_data(inventory_data : CogitoInventory):
 	inventory_data.inventory_updated.disconnect(populate_item_grid)
 	slot_array.clear()
 
-func populate_item_grid(inventory_data : InventoryPD) -> void:
+func populate_item_grid(inventory_data : CogitoInventory) -> void:
 	for child in grid_container.get_children():
 		child.queue_free()
 	

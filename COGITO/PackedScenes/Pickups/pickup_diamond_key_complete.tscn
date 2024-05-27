@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://6sb6ccvu32qo"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/cogito_pickup.gd" id="1_dxe3l"]
+[ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="2_alwo6"]
+[ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="2_jc0y1"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_bn7vt"]
+
+[sub_resource type="Resource" id="Resource_vlolv"]
+script = ExtResource("3_bn7vt")
+inventory_item = ExtResource("2_jc0y1")
+quantity = 1
+
+[node name="DiamondKeyComplete" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_dxe3l")
+slot_data = SubResource("Resource_vlolv")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
+material_override = ExtResource("2_alwo6")
+polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
+depth = 0.02
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01)
+visible = false
+depth = 0.02
+polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
+margin = 0.02

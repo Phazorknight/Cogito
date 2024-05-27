@@ -19,6 +19,6 @@ description = "There's a reason it looks like a toy. Shoots foam bullets."
 icon = ExtResource("1_dj2ew")
 is_stackable = false
 stack_size = 0
-drop_scene = "res://COGITO/PrefabScenes/Pickups/pickup_pistol.tscn"
+drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_pistol.tscn"
 hint_text_on_use = ""
 sound_pickup = ExtResource("3_weko3")

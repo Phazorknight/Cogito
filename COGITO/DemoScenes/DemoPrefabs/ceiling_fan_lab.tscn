@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://b76etfjjltnts"]
 
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_RotatorTool.gd" id="3_ft8vw"]
+[ext_resource type="Script" path="res://COGITO/Scripts/cogito_rotator_tool.gd" id="3_ft8vw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8bmrh"]
 resource_name = "metalLight"

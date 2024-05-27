@@ -11,5 +11,5 @@ description = "Reassembled page from the ripped pieces. It says \"New code is 04
 icon = ExtResource("1_g83kf")
 is_stackable = false
 stack_size = 0
-drop_scene = "res://COGITO/PrefabScenes/Pickups/page_combined_pickup.tscn"
+drop_scene = "res://COGITO/PackedScenes/Pickups/page_combined_pickup.tscn"
 hint_text_on_use = "I should probably read this."

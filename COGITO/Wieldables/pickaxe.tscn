@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dxxemvynrimqw"]
 
-[ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_Pickaxe.gd" id="1_hb7ed"]
+[ext_resource type="Script" path="res://COGITO/Wieldables/wieldable_pickaxe.gd" id="1_hb7ed"]
 [ext_resource type="AudioStream" uid="uid://ocm2blyfthyq" path="res://COGITO/Assets/Audio/Kenney/woosh1.ogg" id="2_hp6wh"]
 [ext_resource type="AnimationLibrary" uid="uid://da3y5068fwwbq" path="res://COGITO/Animations/Wieldables/Wieldable_Pickaxe.res" id="3_cqo2g"]
 [ext_resource type="Script" path="res://COGITO/Assets/Shader/ViewmodelSpace.gd" id="4_0jrxw"]

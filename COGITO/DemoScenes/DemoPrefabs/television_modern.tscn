@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bgeywot8vygsa" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_00.png" id="1_u313w"]
 [ext_resource type="Texture2D" uid="uid://bsnnl3lj58bwg" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_01.png" id="2_sl47g"]
-[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_RotatorTool.gd" id="3_swihv"]
+[ext_resource type="Script" path="res://COGITO/Scripts/cogito_rotator_tool.gd" id="3_swihv"]
 [ext_resource type="Texture2D" uid="uid://c2t5w06mlog62" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_02.png" id="4_p0ysn"]
 [ext_resource type="Texture2D" uid="uid://1oslnc23jviv" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_03.png" id="5_jn8cv"]
 

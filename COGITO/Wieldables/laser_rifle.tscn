@@ -1,9 +1,9 @@
 [gd_scene load_steps=21 format=3 uid="uid://bb8pm2nk8hwon"]
 
-[ext_resource type="Script" path="res://COGITO/Wieldables/Wieldable_LaserRifle.gd" id="1_2rut3"]
+[ext_resource type="Script" path="res://COGITO/Wieldables/wieldable_laser_rifle.gd" id="1_2rut3"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://COGITO/Assets/Audio/Kenney/error_004.ogg" id="2_f7ale"]
 [ext_resource type="Resource" uid="uid://txiu5yxexevm" path="res://COGITO/InventoryPD/Items/Cogito_LaserRifle.tres" id="2_i0fx0"]
-[ext_resource type="PackedScene" uid="uid://dnauxhdncgngx" path="res://COGITO/PrefabScenes/laser_ray.tscn" id="2_ic084"]
+[ext_resource type="PackedScene" uid="uid://dnauxhdncgngx" path="res://COGITO/PackedScenes/laser_ray.tscn" id="2_ic084"]
 [ext_resource type="AnimationLibrary" uid="uid://c1du0rcgmr542" path="res://COGITO/Animations/Wieldables/Wieldable_LaserRifle.res" id="3_fjq23"]
 [ext_resource type="Script" path="res://COGITO/Assets/Shader/ViewmodelSpace.gd" id="5_fa3wp"]
 

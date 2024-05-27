@@ -1,7 +1,7 @@
 extends StaticBody3D
 
 @export var inventory_name : String = "Container"
-@export var inventory_data : InventoryPD
+@export var inventory_data : CogitoInventory
 @export var text_when_closed : String = "Open"
 @export var text_when_open : String = "Close"
 var interaction_text

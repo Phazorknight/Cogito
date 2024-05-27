@@ -20,6 +20,6 @@ description = "A piece of paper ripped in half. It has some numbers on it but pa
 icon = ExtResource("1_hcvti")
 is_stackable = false
 stack_size = 0
-drop_scene = "res://COGITO/PrefabScenes/Pickups/ripped_page_a_pickup.tscn"
+drop_scene = "res://COGITO/PackedScenes/Pickups/ripped_page_a_pickup.tscn"
 hint_text_on_use = "I need the other half."
 sound_pickup = ExtResource("3_q33gx")

@@ -12,3 +12,7 @@ func move_player_to_connector(connector_name:String):
 			return
 	
 	print("No connector with name ", connector_name, " found.")
+
+func _enter_tree() -> void:
+	CogitoSceneManager._current_scene_root_node = self
+	print("Cogito Scene: Current scene root node set to ", CogitoSceneManager._current_scene_root_node.name)

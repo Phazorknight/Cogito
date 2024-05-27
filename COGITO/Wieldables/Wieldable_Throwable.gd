@@ -14,7 +14,7 @@ extends CogitoWieldable
 @export var sound_primary_use : AudioStream
 @export var sound_reload : AudioStream
 
-var player_inventory : InventoryPD
+var player_inventory : CogitoInventory
 var item_slot : InventorySlotPD
 
 # Function called when wieldable is unequipped.

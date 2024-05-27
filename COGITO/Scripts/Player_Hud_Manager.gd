@@ -255,4 +255,4 @@ func _on_inventory_interface_drop_slot_data(slot_data: InventorySlotPD):
 		if node.has_method("get_item_type"):
 			node.slot_data = slot_data
 
-	get_parent().add_child(dropped_item)
+	CogitoSceneManager._current_scene_root_node.add_child(dropped_item)

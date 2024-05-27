@@ -178,7 +178,7 @@ func attempt_action_secondary(is_released: bool):
 
 
 func attempt_reload():
-	var inventory: InventoryPD = get_parent().inventory_data
+	var inventory: CogitoInventory = get_parent().inventory_data
 	# Some safety checks if reload should even be triggered.
 	if inventory == null:
 		print("Player inventory was null!")

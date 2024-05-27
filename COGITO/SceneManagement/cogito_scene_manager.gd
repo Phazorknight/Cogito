@@ -13,6 +13,7 @@ extends Node
 @export var _current_scene_name : String
 @export var _current_scene_path : String
 @export var _scene_state : CogitoSceneState
+@export var _current_scene_root_node : Node
 
 enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 @export var scene_load_mode: CogitoSceneLoadMode

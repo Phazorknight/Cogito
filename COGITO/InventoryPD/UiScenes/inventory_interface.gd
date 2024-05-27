@@ -119,14 +119,14 @@ func clear_external_inventory():
 		external_inventory_owner = null
 
 
-func set_player_inventory_data(inventory_data : InventoryPD):
+func set_player_inventory_data(inventory_data : CogitoInventory):
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
 		inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	inventory_ui.set_inventory_data(inventory_data)
 
 # Inventory handling on gamepad buttons
-func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: String):
+func on_inventory_button_press(inventory_data: CogitoInventory, index: int, action: String):
 	match [grabbed_slot_data, action]:
 		[null, "inventory_move_item"]:
 			grabbed_slot_data = inventory_data.grab_slot_data(index)
