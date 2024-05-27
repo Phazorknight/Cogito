@@ -17,6 +17,7 @@ func _ready():
 
 # Called when the node enters the scene tree for the first time.
 func update_quest():
+	print("Quest updater: Attempting to update quest ", quest_to_update.quest_name)
 	match update_type:
 		UpdateType.Start:
 			CogitoQuestManager.start_quest(quest_to_update)

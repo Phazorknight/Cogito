@@ -43,9 +43,9 @@
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="43_bchdf"]
 [ext_resource type="PackedScene" uid="uid://bhj146kxvb3s5" path="res://COGITO/PackedScenes/document.tscn" id="44_im51b"]
 [ext_resource type="PackedScene" uid="uid://i4rqcx7lyrfd" path="res://COGITO/PackedScenes/keypad_prefab.tscn" id="48_150m3"]
-[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="49_obvm3"]
-[ext_resource type="Resource" uid="uid://yb7k8evveqdp" path="res://COGITO/QuestSystemPD/Quests/QuestA.tres" id="50_blav1"]
-[ext_resource type="Resource" uid="uid://bmkcm7tkpqjwb" path="res://COGITO/QuestSystemPD/Quests/QuestB.tres" id="51_cmhea"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="49_obvm3"]
+[ext_resource type="Resource" uid="uid://yb7k8evveqdp" path="res://COGITO/QuestSystem/Quests/QuestA.tres" id="50_blav1"]
+[ext_resource type="Resource" uid="uid://bmkcm7tkpqjwb" path="res://COGITO/QuestSystem/Quests/QuestB.tres" id="51_cmhea"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)

@@ -11,9 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://b4hu864fg0bv4" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop_Logo.png" id="9_iby11"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="10_kklpn"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="10_t0b0h"]
-[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="11_h7tya"]
-[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="12_45rln"]
-[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="13_244hp"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="11_h7tya"]
+[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="12_45rln"]
+[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="13_244hp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0826t"]
 resource_name = "metalDark"

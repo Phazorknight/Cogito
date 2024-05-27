@@ -1,14 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://efrg1qdo4o5g"]
+[gd_scene load_steps=23 format=3 uid="uid://efrg1qdo4o5g"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Container.gd" id="1_n63mt"]
 [ext_resource type="Resource" uid="uid://c2ba74q3bcixq" path="res://COGITO/DemoScenes/DemoInventories/DemoInventory_Fridge.tres" id="2_27aia"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_jl0td"]
-[ext_resource type="Script" path="res://COGITO/Components/InventoryChecker.gd" id="4_gkqxq"]
-[ext_resource type="Texture2D" uid="uid://b4hu864fg0bv4" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop_Logo.png" id="5_qf2f6"]
+[ext_resource type="Script" path="res://COGITO/Scripts/inventory_checker.gd" id="4_trges"]
+[ext_resource type="Resource" uid="uid://ca0wjra4aq00v" path="res://COGITO/InventoryPD/Items/Cogito_LaptopReal.tres" id="5_838le"]
 [ext_resource type="Resource" uid="uid://b7myxblvr7lty" path="res://COGITO/InventoryPD/Items/Cogito_Laptop.tres" id="6_6xc2m"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="6_bhs3v"]
-[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="7_fhl3i"]
-[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_wpbw8"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="7_fhl3i"]
+[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_wpbw8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmsn7"]
 resource_name = "metalLight"
@@ -230,17 +229,6 @@ _data = {
 "open": SubResource("Animation_pl7ih")
 }
 
-[sub_resource type="Resource" id="Resource_3lsia"]
-script = ExtResource("6_bhs3v")
-discard_after_use = false
-name = "CEOs Laptop"
-descpription = "The CEO's laptop. There's probably a  lot of valuable data on here."
-icon = ExtResource("5_qf2f6")
-is_stackable = false
-stack_size = 0
-drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop_real.tscn"
-hint_text_on_use = ""
-
 [node name="kitchenFridgeContainer" type="StaticBody3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.65301, -4.84288e-08, 6.17191)
 collision_layer = 3
@@ -310,12 +298,14 @@ libraries = {
 "": SubResource("AnimationLibrary_qj67x")
 }
 
-[node name="InventoryCheckerWIN" type="Node" parent="."]
-script = ExtResource("4_gkqxq")
-item_to_check_for = SubResource("Resource_3lsia")
+[node name="InventoryCheckerWIN" type="Node" parent="." node_paths=PackedStringArray("container_to_check")]
+script = ExtResource("4_trges")
+container_to_check = NodePath("..")
+item_to_check_for = ExtResource("5_838le")
 
-[node name="InventoryCheckerFAIL" type="Node" parent="."]
-script = ExtResource("4_gkqxq")
+[node name="InventoryCheckerFAIL" type="Node" parent="." node_paths=PackedStringArray("container_to_check")]
+script = ExtResource("4_trges")
+container_to_check = NodePath("..")
 item_to_check_for = ExtResource("6_6xc2m")
 
 [node name="QuestUpdaterWIN" type="Node3D" parent="."]

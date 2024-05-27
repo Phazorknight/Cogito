@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://dhadvbqjxigfo"]
 
-[ext_resource type="Script" path="res://COGITO/QuestSystemPD/CustomResources/CogitoQuest.gd" id="1_s644g"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/CustomResources/cogito_quest.gd" id="1_s644g"]
 
 [resource]
 script = ExtResource("1_s644g")

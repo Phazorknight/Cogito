@@ -119,6 +119,7 @@ func find_visible_targets_within_detection_area() -> Array[Node3D]:
 
 func object_visibile_for_detector(target: Node3D) -> bool:
 	detection_ray_cast_3d.set_target_position(to_local(target.global_position))
+	print("Security Camera: Checking if detector can see ", target.name, " at position ", target.global_position, ".")
 	var detected_object = detection_ray_cast_3d.get_collider()
 
 	if detected_object == target:
@@ -137,7 +138,6 @@ func on_body_left_detection(body: Node3D):
 	if only_detect_player and body.is_in_group("Player"):
 		print("SecurityCamera: Player left detection area: ", body)
 		objects_in_detection_area.erase(body)
-
 
 
 func start_alarm_light():

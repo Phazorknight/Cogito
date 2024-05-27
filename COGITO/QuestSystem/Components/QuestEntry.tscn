@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh4yhqd73trwx"]
 
-[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestEntry.gd" id="1_lav6n"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/quest_entry.gd" id="1_lav6n"]
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="2_kkklj"]
 [ext_resource type="FontFile" uid="uid://3dfnao4d0lph" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Italic.ttf" id="3_ygsya"]
 

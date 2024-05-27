@@ -4,10 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PackedScenes/cogito_player.tscn" id="3_mgle8"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/cogito_inventory.gd" id="4_0kggm"]
-[ext_resource type="Script" path="res://COGITO/QuestSystemPD/Components/QuestUpdater.gd" id="7_a40bd"]
-[ext_resource type="Resource" uid="uid://drmtc0tqmwquk" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_AccessArchive.tres" id="8_5xvfv"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="7_a40bd"]
+[ext_resource type="Resource" uid="uid://drmtc0tqmwquk" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres" id="8_5xvfv"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="9_ec70c"]
-[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystemPD/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="9_ljdo7"]
+[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="9_ljdo7"]
 [ext_resource type="PackedScene" uid="uid://ddjbxllw044a3" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorCornerRound.glb" id="10_4csde"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="10_wbxwm"]
 [ext_resource type="PackedScene" uid="uid://br3vumdotavq0" path="res://COGITO/Assets/Models/Kenney/Furniture/GLTF format/floorHalf.glb" id="11_7indd"]
@@ -63,7 +63,6 @@
 [ext_resource type="PackedScene" uid="uid://bqe44f6qeagyx" path="res://COGITO/DemoScenes/DemoPrefabs/plant_small_2.tscn" id="55_s7anr"]
 [ext_resource type="PackedScene" uid="uid://duxk3xlhddnvt" path="res://COGITO/DemoScenes/DemoPrefabs/potted_plant.tscn" id="56_hferh"]
 [ext_resource type="PackedScene" uid="uid://efrg1qdo4o5g" path="res://COGITO/DemoScenes/DemoPrefabs/kitchen_fridge_container.tscn" id="57_fdyfl"]
-[ext_resource type="Resource" uid="uid://ca0wjra4aq00v" path="res://COGITO/InventoryPD/Items/Cogito_LaptopReal.tres" id="58_0tscj"]
 [ext_resource type="PackedScene" uid="uid://3rlbofuf3x5s" path="res://COGITO/DemoScenes/DemoPrefabs/trashcan.tscn" id="58_no7q4"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="59_7mr36"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="60_oc6pu"]
@@ -818,6 +817,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_70jo1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exwbc"]
+size = Vector3(0.3, 4.99817, 31)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x27rs"]
 points = PackedVector3Array(10, 0.05, 17.5, 10, -0.05, 17.5, 10, 0.05, -17.5, -10, 0.05, 17.5, -10, -0.05, 17.5, 10, -0.05, -17.5, -10, 0.05, -17.5, -10, -0.05, -17.5)
@@ -4358,6 +4360,7 @@ shape = SubResource("BoxShape3D_1q44t")
 [node name="Wall" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -6, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4370,6 +4373,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall2" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall2"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4382,6 +4386,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall3" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-2.18557e-07, 0, -1, 0, 1, 0, 1, 0, -2.18557e-07, 5, 0, -18)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall3"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4394,6 +4399,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall33" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 1, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall33"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4406,6 +4412,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall78" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 1, 0, -18)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall78"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4418,6 +4425,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall4" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall4"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4430,6 +4438,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall5" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall5"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4442,6 +4451,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall6" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -20)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall6"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4454,6 +4464,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall8" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall8"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4466,6 +4477,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall9" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall9"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4478,6 +4490,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall10" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall10"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4490,6 +4503,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall11" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall11"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4502,6 +4516,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall12" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall12"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4514,6 +4529,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall13" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall13"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4526,6 +4542,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall14" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall14"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4538,6 +4555,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall15" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall15"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4550,6 +4568,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall16" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall16"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4562,6 +4581,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall17" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -6, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall17"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4574,6 +4594,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall18" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -4, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall18"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4586,6 +4607,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall19" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall19"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4598,6 +4620,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall20" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall20"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4610,6 +4633,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall21" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall21"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4622,6 +4646,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall22" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall22"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4634,6 +4659,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall23" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall23"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4646,6 +4672,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall24" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall24"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4658,6 +4685,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall72" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2, 5.158, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall72"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4670,6 +4698,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall73" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 5.158, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall73"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4682,6 +4711,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall74" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2, 5.158, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall74"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4694,6 +4724,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall75" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4, 5.158, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall75"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4706,6 +4737,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall76" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 5.158, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall76"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4718,6 +4750,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall77" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8, 5.158, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall77"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4730,6 +4763,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall25" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall25"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4742,6 +4776,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall26" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall26"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4754,6 +4789,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall27" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall27"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4766,6 +4802,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall28" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall28"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4778,6 +4815,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall29" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall29"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4790,6 +4828,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall30" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall30"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4802,6 +4841,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall66" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 5.158, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall66"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4814,6 +4854,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall67" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 5.158, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall67"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4826,6 +4867,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall68" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 5.158, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall68"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4838,6 +4880,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall69" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.158, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall69"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4850,6 +4893,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall70" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 5.158, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall70"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4862,6 +4906,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall71" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 5.158, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall71"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4874,6 +4919,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall31" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall31"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4886,6 +4932,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall32" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2.579, 16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall32"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4898,6 +4945,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall34" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 14)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall34"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4910,6 +4958,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall35" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 12)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall35"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4922,6 +4971,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall36" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 10)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall36"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4934,6 +4984,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall37" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 8)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall37"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4946,6 +4997,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall38" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 6)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall38"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4959,6 +5011,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall39" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 4)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall39"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4972,6 +5025,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall40" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 2)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall40"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4984,6 +5038,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall42" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 14)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall42"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -4996,6 +5051,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall43" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 12)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall43"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5008,6 +5064,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall44" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 10)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall44"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5020,6 +5077,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall45" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 8)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall45"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5032,6 +5090,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall46" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 6)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall46"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5044,6 +5103,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall47" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 4)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall47"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5056,6 +5116,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall48" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, 2)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall48"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5068,6 +5129,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall49" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -3.7998e-07)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall49"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5080,6 +5142,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall51" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -4)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall51"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5092,6 +5155,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall52" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -6)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall52"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5105,6 +5169,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall53" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -8)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall53"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5118,6 +5183,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall54" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -10)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall54"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5130,6 +5196,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall55" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -12)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall55"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5142,6 +5209,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall56" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -14)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall56"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5154,6 +5222,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall57" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall57"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5166,6 +5235,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall58" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -2)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall58"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5178,6 +5248,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall59" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -4)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall59"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5190,6 +5261,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall60" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -6)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall60"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5202,6 +5274,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall61" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -8)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall61"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5214,6 +5287,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall62" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -10)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall62"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5226,6 +5300,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall63" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -12)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall63"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5238,6 +5313,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall64" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -14)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall64"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5250,6 +5326,7 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="Wall65" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 2.579, -16)
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="wall(Clone)" type="MeshInstance3D" parent="MAIN_LOBBY/Wall65"]
 mesh = SubResource("ArrayMesh_wjscr")
@@ -5526,6 +5603,12 @@ skeleton = NodePath("")
 transform = Transform3D(1.50421e-07, -0.174311, -1.99239, 1.31602e-08, 1.99239, -0.174311, 2, 0, 1.50996e-07, 7.56564, 3.58066, 0.60545)
 mesh = SubResource("ArrayMesh_74fdd")
 skeleton = NodePath("")
+
+[node name="WindowWallCollider" type="StaticBody3D" parent="MAIN_LOBBY/BigWindowedWall"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAIN_LOBBY/BigWindowedWall/WindowWallCollider"]
+transform = Transform3D(0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 0, 1, 7.68177, 3.65292, -0.00372753)
+shape = SubResource("BoxShape3D_exwbc")
 
 [node name="FloorUnit18" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.68, 9.9)
@@ -7013,13 +7096,6 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 
 [node name="kitchenFridgeContainer" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 inventory_data = SubResource("Resource_krl8u")
-
-[node name="InventoryCheckerWIN" parent="BREAK_ROOM/kitchenFridgeContainer" index="8" node_paths=PackedStringArray("container_to_check")]
-container_to_check = NodePath("..")
-item_to_check_for = ExtResource("58_0tscj")
-
-[node name="InventoryCheckerFAIL" parent="BREAK_ROOM/kitchenFridgeContainer" index="9" node_paths=PackedStringArray("container_to_check")]
-container_to_check = NodePath("..")
 
 [node name="kitchenMicrowave" parent="BREAK_ROOM" instance=ExtResource("43_rl17a")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)

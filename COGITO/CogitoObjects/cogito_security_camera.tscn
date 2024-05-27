@@ -17,9 +17,9 @@ albedo_color = Color(1, 0, 1, 1)
 material = SubResource("StandardMaterial3D_87h3m")
 size = Vector3(0.2, 0.05, 0.4)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_qjye3"]
-height = 4.0
-radius = 3.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaig8"]
+custom_solver_bias = 1.0
+size = Vector3(4, 4, 4)
 
 [node name="SecurityCamera" type="Node3D" node_paths=PackedStringArray("detection_area", "indicator_mesh")]
 script = ExtResource("1_c4ulv")
@@ -48,7 +48,7 @@ mesh = SubResource("BoxMesh_uhxk2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CameraMesh/DetectionArea3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 2.3)
-shape = SubResource("CylinderShape3D_qjye3")
+shape = SubResource("BoxShape3D_qaig8")
 
 [node name="IndicatorLight" type="OmniLight3D" parent="CameraMesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.333066, 0)
