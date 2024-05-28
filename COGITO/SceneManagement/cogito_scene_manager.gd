@@ -13,6 +13,7 @@ extends Node
 @export var _current_scene_name : String
 @export var _current_scene_path : String
 @export var _scene_state : CogitoSceneState
+@warning_ignore("unused_private_class_variable")
 @export var _current_scene_root_node : Node
 
 enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}

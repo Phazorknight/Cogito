@@ -318,7 +318,7 @@ func _input(event):
 			toggle_inventory_interface.emit()
 
 
-func params(transform3d, motion):
+func get_params(transform3d, motion):
 	var params : PhysicsTestMotionParameters3D = _params
 	params.from = transform3d
 	params.motion = motion
@@ -327,7 +327,7 @@ func params(transform3d, motion):
 
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
-	return PhysicsServer3D.body_test_motion(self_rid, params(transform3d, motion), test_motion_result)	
+	return PhysicsServer3D.body_test_motion(self_rid, get_params(transform3d, motion), test_motion_result)	
 
 
 func ladder_buffer_finished():
