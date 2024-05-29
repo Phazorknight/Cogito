@@ -1,3 +1,4 @@
+@icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoPlayer.svg")
 class_name CogitoPlayer
 extends CharacterBody3D
 ## The player class controls movement from input from the mouse, keyboard, and gamepad

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cj0yaeh3yg7tu"]
 
-[ext_resource type="Script" path="res://COGITO/Components/Properties/CogitoProperties.gd" id="1_c2uds"]
+[ext_resource type="Script" path="res://COGITO/Components/Properties/cogito_properties.gd" id="1_c2uds"]
 [ext_resource type="AudioStream" uid="uid://dmt7stt0c6uup" path="res://COGITO/Assets/Audio/524306_bertsz_flame_ignite.ogg" id="2_1flcd"]
 [ext_resource type="AudioStream" uid="uid://bxq2chqsr8f7d" path="res://COGITO/Assets/Audio/641848_newlocknew_fireburn.ogg" id="3_f6gd1"]
 [ext_resource type="PackedScene" uid="uid://tuqnu6aooyge" path="res://COGITO/Assets/VFX/electricity.tscn" id="4_1ygiu"]

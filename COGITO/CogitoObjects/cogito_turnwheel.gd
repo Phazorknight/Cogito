@@ -1,3 +1,4 @@
+@icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends AnimatableBody3D
 
 signal object_state_updated(interaction_text : String)

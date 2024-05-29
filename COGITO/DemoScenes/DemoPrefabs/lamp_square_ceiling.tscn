@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://c37aefrimpe1e"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Switch.gd" id="1_fk6ku"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_switch.gd" id="1_fk6ku"]
 [ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_xyusk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aq8f6"]

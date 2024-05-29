@@ -1,4 +1,4 @@
-@icon("res://COGITO/Assets/Graphics/Editor/CogitoNodeIcon.svg")
+@icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 class_name CogitoPressureplate
 extends Node3D
 

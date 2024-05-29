@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://611llvxrvq88"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Pressureplate.gd" id="1_56vbk"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_pressure_plate.gd" id="1_56vbk"]
 [ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_pce3q"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7xxyv"]

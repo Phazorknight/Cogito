@@ -39,7 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PackedScenes/Pickups/pickup_health_potion.tscn" id="37_0wxqc"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PackedScenes/Pickups/pickup_stamina_extension.tscn" id="38_ayqrv"]
 [ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PackedScenes/Pickups/pickup_dart.tscn" id="40_hi3jw"]
-[ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://COGITO/CogitoObjects/Cogito_Pressureplate.tscn" id="41_0755m"]
+[ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://COGITO/PackedScenes/cogito_pressure_plate.tscn" id="41_0755m"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PackedScenes/ceiling_lamp.tscn" id="42_3rq3h"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://w6hpf431lt3l"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_uyyh2"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_uyyh2"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="2_hi2jy"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="3_1m0el"]
 [ext_resource type="AudioStream" uid="uid://dvbd46d7c28ee" path="res://COGITO/Assets/Audio/Kenney/bookPlace1.ogg" id="4_vtjpn"]

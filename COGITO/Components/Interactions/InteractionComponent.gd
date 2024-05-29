@@ -1,4 +1,6 @@
+@icon("res://COGITO/Assets/Graphics/Editor/Icon_InteractionComponent.svg")
 extends Node3D
+## Base class for any interactions based on input map actions.
 class_name InteractionComponent
 
 signal was_interacted_with(interaction_text,input_map_action)

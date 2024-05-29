@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://qxbx5yllijej"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/Cogito_Object.gd" id="1_38a48"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_38a48"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="2_2f7lg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34wti"]
