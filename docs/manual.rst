@@ -1,16 +1,122 @@
+******
 Manual
-======
-
-.. note:: 
-   The documentation is still work in progress and will be updated over time.
+******
 
 .. tip::
    This documenation will give you an overview of the most important properties & methods of the different nodes and how to use them. This documentation does not always list each and every function or exposed property, as these are better explored in the editor itself and include tooltips on how to use them. If you want to dive deeper into the code, you can also read the comments in the source code.
 
-Introduction
-------------
+.. note::
+   While COGITO is designed with modularity and versatility in mind, it is usually easier to modify the included systems than try to make it work with other external systems (like using a different inventory system or player controller). The most common tasks most users will run into is adapting their own assets and levels to work with COGITO. I'm in the process of creating video tutorials for these cases which should help you get started quickly.
 
-COGITO is a fully featured template. It is recommended to use this as the starting point of your project BEFORE implementing any of your own features. We strongly recommend playing through the included demo scenes to get a good impression of what functionality is included. While COGITO is designed with modularity and versatility in mind, it is usually easier to modify the included systems than try to make it work with other external systems (like using a different inventory system or player controller). The most common tasks most users will run into is adapting their own assets and levels to work with COGITO. I'm in the process of creating video tutorials for these cases which should help you get started quickly.
+
+Scene Setup and management
+==========================
+
+
+Cogito Scenes
+-------------
+
+Scene Manager
+-------------
+
+Main Menu
+---------
+
+Game persistence, saving and loading
+------------------------------------
+This information will help you understand when and what kind of data is loaded and saved. If you run into any issues with scene persistence not behaving as you might expect, this might point you in the right direction.
+
+COGITO uses custom resources for saving. These resources are called ``states``. The ``state file`` contains all information that COGITO saves, usually tied to a profile or save slot.
+
+There are two types of state files: Player states and Scene states. Separating this has pros and cons. Knowing these can help you to understand any issues you might run into, as well as changing what doesn’t work for you.
+
+**Pros:**
+
+* Player state is completely game scene independent.
+* Easier to customize what kind of data is saved.
+* Scene states don’t need to “know” of other scene states.
+* When the player saves/loads a game, only necessary data is saved or loaded, improving load times.
+* Avoids save file bloat.
+  
+**Cons:**
+
+* File management: As save data is split up between different ``state files``, more file management actions need to be taken for each operation.
+* Old/misaligned ``state files`` can create unexpected behavior or reduced compatibility when updating/changing the player or scenes.
+
+Player state
+~~~~~~~~~~~~
+The ``player state`` contains all data tied to the player:
+
+* Player position in game scene
+* Player rotation in game scene
+* Game scene the player was in when the state was saved (name as well as path)
+* Player attributes (current value and max value)
+* Player inventory
+* Player quests (active, failed, completed)
+
+**When is the player state saved?**
+
+* A ``player state`` is saved when the game save is triggered manually. The save file created is saved in the user directory and is tied to the currently active save slot.
+* A temporary ``player state`` is also saved when the player transitions from one scene to another scene. This state is saved on exit of the first scene, and loaded when entering the new scene, as to maintain player data consistency.
+
+**When is the player state loaded?**
+
+* A ``player state`` is loaded when the player loads a saved game manually. It is tied to the currently active save slot.
+* If the player is transitioning from one scene to another, then the temporarily created player state is loaded, with some data like player position and rotation being overwritten by the scene connector.
+
+Scene state
+~~~~~~~~~~~
+The ``scene state`` contains all data relevant for proper persistence of the game scene. Usually you’d have a ``scene state`` file for each save slot and game scene present (for example, if your game has 10 game scenes, and 3 save slots, you’d potentially have 30 scene states, 10 scene states for each save slot).
+
+The ``scene state`` contains the following data:
+
+* All objects:
+
+   * Position
+   * Rotation
+
+* Cogito Object:
+
+   * Position
+   * Rotation
+   * Parent node path (for instantiation)
+   * Packed scene file path (for instantiation)
+   * Child interaction nodes (for object data)
+
+* Cogito Door:
+
+   * Is locked/unlocked
+   * Is open/closed
+
+* Cogito Switch:
+
+   * Is on/off
+
+* Cogito Button:
+
+   * has been used
+
+* Cogito Turnwheel:
+
+   * has been turned
+  
+* Cogito Keypad:
+
+   * is locked/unlocked
+
+**When is the scene state saved?**
+
+The ``scene state`` of the currently active game scene is saved when the player manually triggers the game save (usually from the menu). This only saves the state of the currently active scene (TODO: look into this more if the player transitions through multiple scenes)
+The ``scene state`` is saved as a temporary state as soon as the player leaves the scene to transition to a different one. This is used to keep scene persistency if the player later returns to this scene.
+
+**When is the scene state loaded?**
+
+When the player loads a saved game, the scene as well as it’s state that is referenced in the ``player state`` is loaded. This works by checking if the player is currently in the scene that the ``player state`` has saved as the players location. If NOT, the game transitions to said scene and only then loads the ``player state`` and ``scene state``.
+If it exists, a temporary ``scene state`` is loaded when the player transitions into a scene. This is used to keep scene persistency, if the player is returning to this scene when they were previously in it. If no temporary ``scene state`` is found, the default scene is loaded.
+
+
+
+
 
 Player Controller
 -----------------
@@ -220,97 +326,3 @@ The Inventory System contains of 3 main resources:
 Inventory Item Class
 ~~~~~~~~~~~~~~~~~~~~
 This is the base class of all ``Inventory Items``. Contains information that is common to all item types, such as name, description, stack size, etc. If you want to create your own item type, it is strongly recommended to inherit from this class.
-
-Game persistence, saving and loading
-------------------------------------
-This information will help you understand when and what kind of data is loaded and saved. If you run into any issues with scene persistence not behaving as you might expect, this might point you in the right direction.
-
-Save data overview
-~~~~~~~~~~~~~~~~~~
-COGITO uses custom resources for saving. These resources are called ``states``. The ``state file`` contains all information that COGITO saves, usually tied to a profile or save slot.
-
-There are two types of state files: Player states and Scene states. Separating this has pros and cons. Knowing these can help you to understand any issues you might run into, as well as changing what doesn’t work for you.
-
-**Pros:**
-
-* Player state is completely game scene independent.
-* Easier to customize what kind of data is saved.
-* Scene states don’t need to “know” of other scene states.
-* When the player saves/loads a game, only necessary data is saved or loaded, improving load times.
-* Avoids save file bloat.
-  
-**Cons:**
-
-* File management: As save data is split up between different ``state files``, more file management actions need to be taken for each operation.
-* Old/misaligned ``state files`` can create unexpected behavior or reduced compatibility when updating/changing the player or scenes.
-
-Player state
-~~~~~~~~~~~~
-The ``player state`` contains all data tied to the player:
-
-* Player position in game scene
-* Player rotation in game scene
-* Game scene the player was in when the state was saved (name as well as path)
-* Player attributes (current value and max value)
-* Player inventory
-* Player quests (active, failed, completed)
-
-**When is the player state saved?**
-
-* A ``player state`` is saved when the game save is triggered manually. The save file created is saved in the user directory and is tied to the currently active save slot.
-* A temporary ``player state`` is also saved when the player transitions from one scene to another scene. This state is saved on exit of the first scene, and loaded when entering the new scene, as to maintain player data consistency.
-
-**When is the player state loaded?**
-
-* A ``player state`` is loaded when the player loads a saved game manually. It is tied to the currently active save slot.
-* If the player is transitioning from one scene to another, then the temporarily created player state is loaded, with some data like player position and rotation being overwritten by the scene connector.
-
-Scene state
-~~~~~~~~~~~
-The ``scene state`` contains all data relevant for proper persistence of the game scene. Usually you’d have a ``scene state`` file for each save slot and game scene present (for example, if your game has 10 game scenes, and 3 save slots, you’d potentially have 30 scene states, 10 scene states for each save slot).
-
-The ``scene state`` contains the following data:
-
-* All objects:
-
-   * Position
-   * Rotation
-
-* Cogito Object:
-
-   * Position
-   * Rotation
-   * Parent node path (for instantiation)
-   * Packed scene file path (for instantiation)
-   * Child interaction nodes (for object data)
-
-* Cogito Door:
-
-   * Is locked/unlocked
-   * Is open/closed
-
-* Cogito Switch:
-
-   * Is on/off
-
-* Cogito Button:
-
-   * has been used
-
-* Cogito Turnwheel:
-
-   * has been turned
-  
-* Cogito Keypad:
-
-   * is locked/unlocked
-
-**When is the scene state saved?**
-
-The ``scene state`` of the currently active game scene is saved when the player manually triggers the game save (usually from the menu). This only saves the state of the currently active scene (TODO: look into this more if the player transitions through multiple scenes)
-The ``scene state`` is saved as a temporary state as soon as the player leaves the scene to transition to a different one. This is used to keep scene persistency if the player later returns to this scene.
-
-**When is the scene state loaded?**
-
-When the player loads a saved game, the scene as well as it’s state that is referenced in the ``player state`` is loaded. This works by checking if the player is currently in the scene that the ``player state`` has saved as the players location. If NOT, the game transitions to said scene and only then loads the ``player state`` and ``scene state``.
-If it exists, a temporary ``scene state`` is loaded when the player transitions into a scene. This is used to keep scene persistency, if the player is returning to this scene when they were previously in it. If no temporary ``scene state`` is found, the default scene is loaded.

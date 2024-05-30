@@ -12,6 +12,7 @@ COGITO
    :caption: Contents:
 
    about
+   gettingstarted
    tutorials
    manual
    faq
@@ -30,6 +31,10 @@ COGITO
    :target: https://github.com/Phazorknight/Cogito
 
 beta 202405.11
+
+COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. 
+In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and environments.
+
 
 COGITO is made by `Philip Drobar <https://www.philipdrobar.com>`_ with help from `these contributors <https://github.com/Phazorknight/Cogito/graphs/contributors>`_.
 

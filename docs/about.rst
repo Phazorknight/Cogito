@@ -1,10 +1,12 @@
 About
 ============
 
-What is COGITO?
----------------
+Welcome to COGITO
+-----------------
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. 
-In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and items.
+In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and environments.
+
+COGITO is a fully featured template. It is recommended to use this as the starting point of your project BEFORE implementing any of your own features. We strongly recommend playing through the included demo scenes to get a good impression of what functionality is included. While COGITO is designed with modularity and versatility in mind, it is usually easier to modify the included systems than try to make it work with other external systems (like using a different inventory system or player controller). The most common tasks most users will run into is adapting their own assets and levels to work with COGITO. I'm in the process of creating video tutorials for these cases which should help you get started quickly.
 
 Guiding Principals
 ------------------
@@ -41,8 +43,9 @@ Current Features
 * Save and Load System as well as scene persistency
 * Full gamepad support!
 
-Thanks and Contributions
-------------------------
+
+Contributors
+------------
 * `AC-Arcana <https://github.com/ac-arcana>`_: added DynamicFootstepSystem
 * `pcbeard <https://github.com/pcbeard>`_: Performance tweaks and bugfixes.
 * `FailSpy <https://github.com/FailSpy>`_: improved input handling as well as UI and Player Controller quality-of-life fixes.
@@ -58,8 +61,9 @@ Thanks and Contributions
 * Stairs handling based on `GodotStairs by elvisish <https://github.com/elvisish/GodotStairs>`_
 * Cogito Quest System based on `shomykohai's Godot 4 quest system. <https://github.com/shomykohai/quest-system>`_
 
-License and Credits
--------------------
+
+Credits
+-------
 * This add-on is published under the MIT license.
 * You can use this add-on in your projects, personal or commercial, as long as you credit us (mostly cause we'd love to see what people use it for!)
 
