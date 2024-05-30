@@ -13,8 +13,8 @@ COGITO
 
    about
    gettingstarted
-   tutorials
    manual
+   tutorials
    faq
 
 ------------

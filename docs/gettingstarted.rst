@@ -10,23 +10,23 @@ After installation, you can import your own assets and get started making your g
 
 Installation steps:
 
-#. Clone this repo or download it and unzip it into it's own directory.
+#. Clone this repo or download it and unzip it into its own directory.
 #. Open the project with the Godot editor (make sure you use a compatible version, currently 4.2.1)
 
 
 Setup
 -----
 
-Confirm your project is setup as follows
+Confirm your project is set up as follows
 
-#. Make sure the following plug-ins are activated:
+#. Make sure the following plugins are activated:
 #. Quick Audio (currently v1.0)
 #. Input Helper (currently v4.2.2)
-#. Also Make sure the following Autoloads are set up in your project:
+#. Also make sure the following Autoloads are set up in your project:
 
    * res://COGITO/EsayMenus/Nodes/menu_template_manager.tscn
    * res://COGITO/SceneManagement/cogito_scene_manager.gd
-   * res://COGITO/QuestSysteemPD/CogitoQuestManager.gd
+   * res://COGITO/QuestSysteem/cogito_quest_manager.gd
 
 #. Make sure that the Main Scene is set to ``res://COGITO/DemoScenes/COGITO_0_MainMenu.tscn``. This is not strictly necessary, but will make sure the Demo project runs as expected.
 
@@ -38,3 +38,39 @@ Running the Demo scenes
 #. You can also run the ``Lobby`` or the ``Laboratory`` scenes directly and explore.
 
 Feel free to explore the Demo scenes to discover everything COGITO has to offer!
+
+
+How COGITO works in 60 seconds
+------------------------------
+
+Here's all you need to know in as little words as possible.
+
+Level scenes
+~~~~~~~~~~~~
+
+You only need the ``cogito_player.tscn`` in your scene to run. It includes the HUD and pause menu as child scenes.
+If you want to transition between different level scenes, the root node of your level scene needs to have ``cogito_scene.gd`` attached and connector nodes defined.
+
+Components
+~~~~~~~~~~
+A lot of parts of COGITO heavily applies the component design pattern. This means that most functions are organized in a way where you will have a root node of an object, and can add or remove several child nodes as *Components* to change the object's behavior.
+For example:
+#. Player scene has Attributes as child nodes.
+#. Cogito Objects have InteractionComponents as child nodes.
+
+and many more.
+
+Common object types
+~~~~~~~~~~~~~~~~~~~
+COGITO includes a number of common object scripts which define an objects behavior.
+When you create your game, a common workflow would look like this:
+#. Create a new scene (usually a Node3D)
+#. Create / import an asset (like a door mesh)
+#. Add the imported mesh to your new scene. (MeshInstance of the door + collider)
+#. Attach the script with the desired behavior to the scene root node (for the door we'd use ``cogito_door.gd``)
+#. Set the desired behavior in the Inspector
+#. Add any additional nodes or components (the door requires a BasicInteraction component as a child node)
+#. Save packed scene.
+
+Voilà, you can now place the door in your level scenes and it should work.
+You can read more about them in the manual under *Cogito Objects*.
