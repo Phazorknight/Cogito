@@ -25,6 +25,7 @@ func _ready():
 	
 	grabbed_slot_node.set_mouse_filter(2) # Setting mouse filter to ignore.
 	grabbed_slot_node.set_focus_mode(0) # Setting focus mode to none.
+	grabbed_slot_node.visibility_changed.connect(update_grabbed_slot_position)
 	
 
 func open_inventory():
@@ -61,7 +62,6 @@ func close_inventory():
 
 
 func _on_focus_changed(control: Control):
-	
 	if !control.has_method("set_slot_data"):
 		print("Not a slot. returning.")
 		return
@@ -79,19 +79,26 @@ func _on_focus_changed(control: Control):
 	else:
 		info_panel.hide()
 	
+	# Updating the currently focused slot in the inventory_ui
+	inventory_ui.currently_focused_slot = control_in_focus
+	
 	# How a grabbed item gets displayed.
 	if grabbed_slot_node.visible:
 		grabbed_slot_node.set_mouse_filter(2) # Setting mouse filter to ignore.
 		grabbed_slot_node.set_focus_mode(0) # Setting focus mode to none.
 		if InputHelper.device_index != -1: # Updating grabbed item position if using gamepad
-			grabbed_slot_node.global_position = control_in_focus.global_position + (control_in_focus.size / 2)
+			update_grabbed_slot_position()
 
 
 func _slot_on_mouse_exit():
 	info_panel.hide()		
 
-# DEPRECATED. Was used to move the grabbed slot icon with the mouse cursor.
-# Could bring this back later and make it conditional to mouse/kb input.
+
+func update_grabbed_slot_position():
+	print("Inventory interface: update grabbed slot position to ", control_in_focus, " at ", control_in_focus.global_position)
+	grabbed_slot_node.global_position = control_in_focus.global_position + (control_in_focus.size / 2)
+
+
 func _physics_process(_delta):
 	if InputHelper.device_index == -1: #Checking for keyboard/mouse control.
 		if grabbed_slot_node.visible:
@@ -146,7 +153,6 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 	match [grabbed_slot_data, action]:
 		[null, "inventory_move_item"]:
 			grabbed_slot_data = inventory_data.grab_slot_data(index)
-			grabbed_slot_node.global_position = control_in_focus.global_position + (control_in_focus.size / 2)
 		[_, "inventory_move_item"]:
 			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
 		[null, "inventory_use_item"]:
@@ -168,9 +174,14 @@ func on_inventory_button_press(inventory_data: InventoryPD, index: int, action: 
 					grabbed_slot_data = null
 
 	var amount_of_inventory_slots = inventory_ui.slot_array.size()
-	var element = index if index < amount_of_inventory_slots else amount_of_inventory_slots-1
+	var element : int
+	if index < amount_of_inventory_slots:
+		element = index
+	else:
+		element = amount_of_inventory_slots-1
 	# Should fix issues where an external inventory is bigger than the players
-	inventory_ui.slot_array[element].grab_focus() 
+	print("Inventory_interface: grabbing focus for slot_array index = ", element)
+	inventory_ui.slot_array[element].grab_focus()
 	update_grabbed_slot()
 
 
@@ -223,4 +234,3 @@ func _on_visibility_changed():
 		drop_slot_data.emit(grabbed_slot_data)
 		grabbed_slot_data = null
 		update_grabbed_slot()
-

@@ -1,5 +1,5 @@
-extends PanelContainer
-class_name SlotPanel
+class_name SlotPanel extends PanelContainer
+
 
 @onready var texture_rect = $MarginContainer/TextureRect
 @onready var quantity_label = $QuantityLabel

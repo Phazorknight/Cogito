@@ -13,9 +13,11 @@ signal inventory_updated(inventory_data: InventoryPD)
 @export var inventory_slots : Array[InventorySlotPD]
 @export var first_slot : InventorySlotPD
 
+
 func _init():
 	if inventory_slots.size() > 0:
 		first_slot = inventory_slots[0]
+
 
 # Call this in your initial scene
 func apply_initial_inventory():
@@ -25,12 +27,14 @@ func apply_initial_inventory():
 	if inventory_slots.size() > 0:
 		first_slot = inventory_slots[0]
 
+
 func on_slot_clicked(index: int, mouse_button: int):
 	inventory_interact.emit(self, index, mouse_button)
 
+
 func on_slot_button_pressed(index: int, action: String):
-	print("Pressed ", action, " on slot index ", index)
 	inventory_button_press.emit(self, index, action)
+
 
 func null_out_slots(slot_data):
 	if not slot_data:
@@ -40,6 +44,7 @@ func null_out_slots(slot_data):
 		for y in size.y:
 			inventory_slots[slot_data.origin_index + x + (y*inventory_size.x)] = null
 
+
 # Returns slot data without actually changing the slot
 func get_slot_data(index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
@@ -47,6 +52,7 @@ func get_slot_data(index: int) -> InventorySlotPD:
 		return slot_data
 	else:
 		return null
+
 
 func grab_slot_data(index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
@@ -218,6 +224,7 @@ func add_adjacent_slots(index: int):
 	for x in size.x:
 		for y in size.y:
 			inventory_slots[index + x + (y*inventory_size.x)] = inventory_slots[index]
+
 
 # check if an item either has free slots to occupy or can swap one item out
 func is_enough_space(grabbed_slot_data: InventorySlotPD, to_place_index: int, pickup: bool):

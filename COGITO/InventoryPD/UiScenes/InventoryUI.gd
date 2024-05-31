@@ -3,6 +3,11 @@ extends PanelContainer
 const Slot = preload("res://COGITO/InventoryPD/UiScenes/Slot.tscn")
 
 @export var inventory_name : String = ""
+
+@export var color_can_swap : Color = Color.YELLOW
+@export var color_can_not_place : Color = Color.DARK_RED
+@export var color_can_place : Color = Color.LIME_GREEN
+
 @onready var grid_container = $MarginContainer/VBoxContainer/GridContainer
 @onready var label = $MarginContainer/VBoxContainer/Label
 @onready var button_take_all: Button = $MarginContainer/VBoxContainer/Button_TakeAll
@@ -10,7 +15,8 @@ const Slot = preload("res://COGITO/InventoryPD/UiScenes/Slot.tscn")
 var slot_array = []
 var first_slot : InventorySlotPD
 var grabbed_slot : SlotPanel
-
+var loaded_inventory_data : InventoryPD
+var currently_focused_slot : SlotPanel
 
 func _ready():
 	label.text = inventory_name
@@ -21,6 +27,7 @@ func set_inventory_data(inventory_data : InventoryPD):
 	if !inventory_data.inventory_updated.is_connected(populate_item_grid):
 		inventory_data.inventory_updated.connect(populate_item_grid)
 	label.text = inventory_name
+	loaded_inventory_data = inventory_data
 	populate_item_grid(inventory_data)
 
 
@@ -30,13 +37,15 @@ func clear_inventory_data(inventory_data : InventoryPD):
 
 
 func populate_item_grid(inventory_data : InventoryPD) -> void:
-	# set grid container columns to the width (x) of the inventory
-	grid_container.columns = inventory_data.inventory_size.x if inventory_data.grid else 4
 	for child in grid_container.get_children():
 		child.queue_free()
 	
 	# Clearing array for gamepad navigation.
 	slot_array.clear()
+	
+	if inventory_data.grid:
+		# set grid container columns to the width (x) of the inventory
+		grid_container.columns = inventory_data.inventory_size.x
 	
 	var index = 0
 	for slot_data in inventory_data.inventory_slots:
@@ -49,7 +58,6 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 		slot.slot_pressed.connect(inventory_data.on_slot_button_pressed)
 		slot.highlight_slot.connect(highlight_slots)
 		slot.using_grid(inventory_data.grid)
-		slot.set_focus_mode(FOCUS_ALL)
 	
 		if slot_data:
 			slot.set_slot_data(slot_data, index, false, grid_container.columns)
@@ -57,8 +65,33 @@ func populate_item_grid(inventory_data : InventoryPD) -> void:
 			
 		index += 1
 	
+	override_slot_focus_neighbors()
+	
 	if inventory_data.grid:
 		apply_slot_icon_regions()
+
+
+func override_slot_focus_neighbors():
+	var index = 0
+	for slot in slot_array:
+		# SETTING LEFT NEIGHBOR
+		if index != 0:
+			slot.set_focus_neighbor(SIDE_LEFT, slot_array[index-1].get_path())
+		
+		# SETTING RIGHT NEIGHBOR
+		if index != slot_array.size() - 1:
+			slot.set_focus_neighbor(SIDE_RIGHT, slot_array[index+1].get_path())
+			
+		# SETTING UP NEIGHBOR:
+		if (index - loaded_inventory_data.inventory_size.x) >= 0: #This checks if the selected slot is NOT already in the top row.
+			slot.set_focus_neighbor(SIDE_TOP, slot_array[index - loaded_inventory_data.inventory_size.x].get_path())
+
+		# SETTING UP DOWN NEIGHOR:
+		if (index + loaded_inventory_data.inventory_size.x) < slot_array.size(): #This checks that the slot is NOT already in the bottom row.
+			slot.set_focus_neighbor(SIDE_BOTTOM, slot_array[index + loaded_inventory_data.inventory_size.x].get_path() )
+
+		index += 1
+
 
 
 func apply_slot_icon_regions():
@@ -128,11 +161,11 @@ func count_intersecting_items(index: int, intersect_size: Vector2i):
 
 func set_colour(item_intersections):
 	if item_intersections == -1 or item_intersections > 1:
-		return Color.RED
+		return color_can_not_place
 	elif item_intersections == 1:
-		return Color.YELLOW
+		return color_can_swap
 	else:
-		return Color.GREEN	
+		return color_can_place
 
 
 func out_of_bounds(index: int, x, y):
