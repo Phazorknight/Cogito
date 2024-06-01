@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dorp3auw3s65q"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Attributes/cogito_light_meter_attribute.gd" id="1_1s8f4"]
+[ext_resource type="Texture2D" uid="uid://dvqhierikwfec" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Lightbulb.png" id="2_h0mts"]
+
+[node name="LightMeterAttribute" type="Node"]
+script = ExtResource("1_1s8f4")
+attribute_name = "lightmeter"
+attribute_display_name = "Light Meter"
+attribute_color = Color(0.619608, 0.619608, 0.619608, 1)
+attribute_icon = ExtResource("2_h0mts")
+value_max = 100.0
+dont_save_current_value = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+debug_draw = 2
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="LightDetection" type="Node3D" parent="SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/LightDetection"]
+far = 20.0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport/LightDetection"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport/LightDetection"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="LightLevel" type="Node" parent="."]

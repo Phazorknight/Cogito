@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg6gj8kohejmb"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/controller_echo_input_generator.gd" id="1_8rdph"]
+
+[node name="ControllerEchoInputGenerator" type="Node"]
+process_mode = 3
+script = ExtResource("1_8rdph")
+
+[node name="EchoTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="WaitingTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="EchoTimer" to="." method="_on_echo_timer_timeout"]
+[connection signal="timeout" from="WaitingTimer" to="." method="_on_waiting_timer_timeout"]

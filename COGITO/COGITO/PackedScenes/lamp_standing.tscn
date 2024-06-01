@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://d1rq8gm20sjo1"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_switch.gd" id="1_tccsv"]
+[ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_1ogwg"]
+[ext_resource type="Material" uid="uid://duwpnfvdwx8pi" path="res://COGITO/Assets/Materials/Lamp_Stand.tres" id="3_tvw1v"]
+[ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://COGITO/Assets/Materials/Lamp_Shade.tres" id="4_08xoa"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="5_24lgg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tg7ld"]
+albedo_color = Color(1, 0.890196, 0.631373, 1)
+emission_enabled = true
+emission = Color(1, 0.890196, 0.631373, 1)
+rim = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8msfe"]
+height = 1.5
+radius = 0.1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j2i1g"]
+height = 0.1
+radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_p0fmx"]
+height = 0.3
+radius = 0.3
+
+[node name="Lamp_Standing" type="StaticBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5066, 0, 5.95227)
+collision_layer = 3
+script = ExtResource("1_tccsv")
+switch_sound = ExtResource("2_1ogwg")
+nodes_to_show_when_on = [NodePath("SpotLight3D"), NodePath("Lamp_Shade_ON")]
+nodes_to_hide_when_on = [NodePath("Lamp_Shade_OFF")]
+
+[node name="Lamp_Foot" type="CSGCylinder3D" parent="."]
+material_override = ExtResource("3_tvw1v")
+radius = 0.3
+height = 0.1
+
+[node name="Lamp_Neck" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+material_override = ExtResource("3_tvw1v")
+radius = 0.05
+height = 1.5
+
+[node name="Lamp_Shade_OFF" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+material_override = ExtResource("4_08xoa")
+radius = 0.3
+height = 0.3
+cone = true
+
+[node name="Lamp_Shade_ON" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+visible = false
+radius = 0.3
+height = 0.3
+cone = true
+material = SubResource("StandardMaterial3D_tg7ld")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CylinderShape3D_8msfe")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_j2i1g")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+shape = SubResource("CylinderShape3D_p0fmx")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.82902, 0)
+visible = false
+light_color = Color(1, 0.984314, 0.921569, 1)
+light_energy = 2.0
+shadow_bias = 0.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"
+
+[node name="BasicInteraction" parent="." instance=ExtResource("5_24lgg")]
+interaction_text = "Interact"

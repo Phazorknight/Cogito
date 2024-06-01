@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://bmkcm7tkpqjwb"]
+
+[ext_resource type="Script" path="res://COGITO/QuestSystem/CustomResources/cogito_quest.gd" id="1_bu0sf"]
+
+[resource]
+script = ExtResource("1_bu0sf")
+id = 1
+quest_name = "quest_b"
+quest_title = "Test Quest B"
+quest_description_active = "This is a test quest with a quest counter."
+quest_description_completed = "You completed this quest."
+quest_description_failed = "You failed this quest."
+quest_counter_current = 0
+quest_counter_goal = 3

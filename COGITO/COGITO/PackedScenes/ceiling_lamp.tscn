@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://lsun1f1wjfxl"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_switch.gd" id="1_ueccq"]
+[ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_bq20n"]
+[ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://COGITO/Assets/Materials/Lamp_Shade.tres" id="2_va873"]
+[ext_resource type="PackedScene" uid="uid://ctr7n0w3hgys7" path="res://COGITO/Components/LightzoneComponent.tscn" id="4_lybt7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_05p8f"]
+albedo_color = Color(1, 0.890196, 0.631373, 1)
+emission_enabled = true
+emission = Color(1, 0.890196, 0.631373, 1)
+rim = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_n08oq"]
+height = 0.2
+radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0ljm4"]
+height = 2.62204
+radius = 1.0
+
+[node name="CeilingLamp" type="AnimatableBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -23.8641, 1.7, 5.40424)
+script = ExtResource("1_ueccq")
+switch_sound = ExtResource("2_bq20n")
+nodes_to_show_when_on = [NodePath("Lamp_Shade_ON"), NodePath("SpotLight3D")]
+nodes_to_hide_when_on = [NodePath("Lamp_Shade_OFF")]
+
+[node name="Lamp_Shade_OFF" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_va873")
+radius = 0.3
+height = 0.3
+cone = true
+
+[node name="Lamp_Shade_ON" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0)
+visible = false
+radius = 0.3
+height = 0.3
+cone = true
+material = SubResource("StandardMaterial3D_05p8f")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.12902, 0)
+visible = false
+light_color = Color(1, 0.984314, 0.921569, 1)
+light_energy = 2.0
+shadow_bias = 0.0
+spot_angle = 30.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7, 0)
+bus = &"SFX"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_n08oq")
+
+[node name="LightzoneComponent" parent="." instance=ExtResource("4_lybt7")]
+
+[node name="CollisionShape3D" parent="LightzoneComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5774, 0)
+shape = SubResource("CylinderShape3D_0ljm4")
+
+[connection signal="switched" from="." to="LightzoneComponent/LightzoneSwitchComponent" method="_on_switched"]
+
+[editable path="LightzoneComponent"]

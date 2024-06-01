@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://lc5uq2e6ldah"]
+
+[ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="1_dj2ew"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_dk2he"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_weko3"]
+[ext_resource type="PackedScene" uid="uid://dgtjml2t3hdvx" path="res://COGITO/Wieldables/toy_pistol.tscn" id="4_f2ej1"]
+
+[resource]
+script = ExtResource("2_dk2he")
+wieldable_scene = ExtResource("4_f2ej1")
+no_reload = false
+charge_max = 10.0
+ammo_item_name = "Foam Bullets"
+charge_current = 10.0
+wieldable_range = 10.0
+wieldable_damage = 1.0
+name = "Foam Pistol"
+description = "There's a reason it looks like a toy. Shoots foam bullets."
+icon = ExtResource("1_dj2ew")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_pistol.tscn"
+hint_text_on_use = ""
+sound_pickup = ExtResource("3_weko3")

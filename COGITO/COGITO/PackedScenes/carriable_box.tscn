@@ -1,0 +1,124 @@
+[gd_scene load_steps=12 format=3 uid="uid://d3m4ni301eso7"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_2lkyl"]
+[ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="2_4d2c8"]
+[ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="3_p1e4y"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="4_fui0y"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="5_vvdy3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2t7p8"]
+size = Vector3(0.9, 0.9, 0.9)
+subdivide_width = 9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmnvw"]
+albedo_color = Color(0.580392, 0.403922, 0.25098, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dya1i"]
+size = Vector3(0.8, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwuli"]
+albedo_color = Color(0.341176, 0.180392, 0.0431373, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0i1sv"]
+size = Vector3(1, 0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtcvq"]
+
+[node name="CarriableBox" type="RigidBody3D"]
+collision_layer = 3
+mass = 4.0
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_2lkyl")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("4_fui0y")]
+pick_up_sound = ExtResource("2_4d2c8")
+drop_sound = ExtResource("3_p1e4y")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_2t7p8")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_kmnvw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, -0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, -0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.45, 0, -0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.45, 0, -0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.45, 0, 0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.45, 0, 0.45)
+mesh = SubResource("BoxMesh_dya1i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.45, 0.45, 0)
+mesh = SubResource("BoxMesh_0i1sv")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.45, 0.45, 0)
+mesh = SubResource("BoxMesh_0i1sv")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.45, -0.45, 0)
+mesh = SubResource("BoxMesh_0i1sv")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.45, -0.45, 0)
+mesh = SubResource("BoxMesh_0i1sv")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nwuli")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_mtcvq")
+
+[node name="CogitoProperties" parent="." instance=ExtResource("5_vvdy3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.355716, 0)
+elemental_properties = 3
+electrify_on_ready = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

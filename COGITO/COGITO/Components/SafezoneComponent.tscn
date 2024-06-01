@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bii8upk4fjr0d"]
+
+[ext_resource type="Script" path="res://COGITO/Components/SafezoneComponent.gd" id="1_pbi8l"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_omvqv"]
+radius = 3.0
+
+[node name="SafezoneComponent" type="Area3D"]
+script = ExtResource("1_pbi8l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_omvqv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

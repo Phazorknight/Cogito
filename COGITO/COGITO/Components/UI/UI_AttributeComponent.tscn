@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2dt6mcv83j64"]
+
+[ext_resource type="Script" path="res://COGITO/Components/UI/UI_AttributeComponent.gd" id="1_1g7if"]
+[ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_s50ws"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="3_cqwdn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yjm3"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yo8vr"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="UiAttributeComponent" type="Control"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_1g7if")
+bar_stylebox = SubResource("StyleBoxFlat_5yjm3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_right = 203.0
+offset_bottom = 25.0
+
+[node name="AttributeIcon" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_s50ws")
+expand_mode = 2
+
+[node name="AttributeBar" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(130, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("3_cqwdn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yo8vr")
+value = 50.0
+show_percentage = false
+
+[node name="AttributeLabel" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("3_cqwdn")
+theme_type_variation = &"HUDLabel"
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1

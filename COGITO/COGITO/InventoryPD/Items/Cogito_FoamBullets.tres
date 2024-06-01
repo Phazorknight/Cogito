@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AmmoItemPD" load_steps=5 format=3 uid="uid://bqhbrpnp2tt08"]
+
+[ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="1_efcmi"]
+[ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://COGITO/Assets/Graphics/HintIcons/Hint_X.png" id="1_p472b"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/AmmoItemPD.gd" id="3_fjkqh"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_2hhqx"]
+
+[resource]
+script = ExtResource("3_fjkqh")
+reload_amount = 1
+name = "Foam Bullets"
+description = "Very visible but not very dangerous. Have a tendency to vanish."
+icon = ExtResource("1_efcmi")
+is_stackable = true
+stack_size = 50
+drop_scene = "res://COGITO/PackedScenes/projectile_pistol.tscn"
+hint_icon_on_use = ExtResource("1_p472b")
+hint_text_on_use = "Can't be used by itself."
+sound_pickup = ExtResource("4_2hhqx")

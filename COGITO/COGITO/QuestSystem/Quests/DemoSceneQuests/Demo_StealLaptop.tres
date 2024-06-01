@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://b7wrhr74mptlf"]
+
+[ext_resource type="Script" path="res://COGITO/QuestSystem/CustomResources/cogito_quest.gd" id="1_l7t02"]
+
+[resource]
+script = ExtResource("1_l7t02")
+id = 772
+quest_name = "demo_steal_laptop"
+quest_title = "Steal the CEO's laptop"
+quest_description_active = "We need the data on that laptop. As soon as you have it in your possession, we'll let you know the next steps."
+quest_description_completed = "You found the laptop."
+quest_description_failed = "You failed this quest."
+quest_counter_current = 0
+quest_counter_goal = 0

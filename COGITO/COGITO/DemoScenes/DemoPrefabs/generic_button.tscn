@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://cs6raqlyejqul"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_button.gd" id="1_l32yq"]
+[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="4_26rcl"]
+[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="5_dudfk"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
+top_radius = 0.05
+bottom_radius = 0.08
+height = 0.05
+radial_segments = 12
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3kl6m"]
+albedo_color = Color(0, 1, 0.184314, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o2wjq"]
+size = Vector3(0.2, 0.05, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nti18"]
+size = Vector3(0.150977, 0.069043, 0.147333)
+
+[node name="GenericButton" type="AnimatableBody3D"]
+transform = Transform3D(-4.37114e-08, 0.5, 0.866025, 1.06581e-14, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, 0.671964, 0.88812, -1.10062)
+collision_layer = 3
+script = ExtResource("1_l32yq")
+press_sound = ExtResource("2_awyad")
+press_cooldown_time = 1.0
+
+[node name="ButtonMesh_off" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_clo4d")
+surface_material_override/0 = SubResource("StandardMaterial3D_3kl6m")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
+mesh = SubResource("BoxMesh_o2wjq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0041995, -0.0154781, -0.00178528)
+shape = SubResource("BoxShape3D_nti18")
+
+[node name="BasicInteraction" parent="." instance=ExtResource("3_v8dn1")]
+
+[node name="HealthAttribute" parent="." instance=ExtResource("4_26rcl")]
+value_max = 1.0
+value_start = 1.0
+is_locked = true
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_attribute") instance=ExtResource("5_dudfk")]
+health_attribute = NodePath("../HealthAttribute")
+
+[connection signal="damage_taken" from="HealthAttribute" to="." method="on_damage_received"]

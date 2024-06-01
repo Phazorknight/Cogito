@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dru131jwwih1y"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/menu_template_manager.gd" id="1_bu3n2"]
+[ext_resource type="PackedScene" uid="uid://bg6gj8kohejmb" path="res://COGITO/EasyMenus/Nodes/controller_echo_input_generator.tscn" id="2_n5r8f"]
+[ext_resource type="PackedScene" uid="uid://c56b7kxfiaj3r" path="res://COGITO/EasyMenus/Nodes/startup_loader.tscn" id="3_nyn02"]
+
+[node name="MenuTemplateManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_bu3n2")
+
+[node name="StartupLoader" parent="." instance=ExtResource("3_nyn02")]
+
+[node name="ControllerEchoInputGenerator" parent="." instance=ExtResource("2_n5r8f")]

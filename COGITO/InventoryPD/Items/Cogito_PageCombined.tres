@@ -13,4 +13,4 @@ is_stackable = false
 stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/page_combined_pickup.tscn"
 hint_text_on_use = "I should probably read this."
-item_size = Vector2(1, 1)
+size = Vector2(1, 1)

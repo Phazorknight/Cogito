@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvkkotlj71pqa"]
+
+[ext_resource type="Shader" uid="uid://bspjwxt1hotc" path="res://COGITO/Assets/VFX/Explosion_01/explosion01_particle.tres" id="1_2nxg6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2w3i7"]
+render_priority = 0
+shader = ExtResource("1_2nxg6")
+shader_parameter/base_color = Color(0.152941, 0.152941, 0.152941, 1)
+shader_parameter/alpha = 1.755
+shader_parameter/emission_color = Color(1, 0.333333, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_a4utb"]
+material = SubResource("ShaderMaterial_2w3i7")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00508267, -0.0389062, 0.041105)
+mesh = SubResource("SphereMesh_a4utb")

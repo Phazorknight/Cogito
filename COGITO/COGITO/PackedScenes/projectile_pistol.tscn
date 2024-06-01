@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://c1umit2vtv22v"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_projectile.gd" id="1_6pqxf"]
+[ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://COGITO/InventoryPD/Items/Cogito_FoamBullets.tres" id="3_7etap"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="4_acy7b"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_tbkmk"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="5_6jfy1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sn251"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f0413"]
+material = SubResource("StandardMaterial3D_sn251")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.2
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wm252"]
+height = 0.25
+radius = 0.05
+
+[sub_resource type="Resource" id="Resource_ln2av"]
+resource_local_to_scene = true
+script = ExtResource("4_tbkmk")
+inventory_item = ExtResource("3_7etap")
+quantity = 1
+
+[node name="projectile_pistol" type="RigidBody3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+top_level = true
+collision_layer = 2
+collision_mask = 3
+mass = 0.1
+continuous_cd = true
+max_contacts_reported = 10
+contact_monitor = true
+script = ExtResource("1_6pqxf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_f0413")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_f0413")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_f0413")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_wm252")
+
+[node name="Lifespan" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="PickupComponent" parent="." instance=ExtResource("4_acy7b")]
+slot_data = SubResource("Resource_ln2av")
+
+[node name="CogitoProperties" parent="." instance=ExtResource("5_6jfy1")]
+elemental_properties = 4
+material_properties = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

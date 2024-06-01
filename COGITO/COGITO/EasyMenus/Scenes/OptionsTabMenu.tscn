@@ -1,0 +1,437 @@
+[gd_scene load_steps=9 format=3 uid="uid://bly6wti1q8bsu"]
+
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_6plem"]
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/OptionsTabMenu.gd" id="2_bufp8"]
+[ext_resource type="FontFile" uid="uid://bfavdpnmorag5" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Regular.ttf" id="5_23wn5"]
+[ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="6_rlben"]
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="7_27vxg"]
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/option_button_input_propagator.gd" id="8_7fii0"]
+[ext_resource type="PackedScene" uid="uid://cqniig2ks0xs2" path="res://COGITO/EasyMenus/Nodes/gamepad_closable.tscn" id="9_wft0n"]
+[ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://COGITO/EasyMenus/Nodes/slider_w_labels.tscn" id="10_45uhu"]
+
+[node name="OptionsTabMenu" type="TabContainer" node_paths=PackedStringArray("nodes_to_focus")]
+custom_minimum_size = Vector2(500, 500)
+offset_right = 500.0
+offset_bottom = 500.0
+size_flags_horizontal = 4
+theme = ExtResource("1_6plem")
+theme_override_fonts/font = ExtResource("5_23wn5")
+script = ExtResource("2_bufp8")
+nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
+
+[node name="Gameplay" type="MarginContainer" parent="."]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Gameplay"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("7_27vxg")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Gameplay/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer_Headbob" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="HeadbobLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Headbob"
+
+[node name="HeadbobOptionButton" type="OptionButton" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer_MouseSens" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="MouseSensLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_MouseSens"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Mouse Sensitivity"
+
+[node name="MouseSensSlider" type="HSlider" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_MouseSens"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.05
+max_value = 0.7
+step = 0.025
+value = 0.25
+
+[node name="MouseSensValueLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_MouseSens"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.25"
+horizontal_alignment = 1
+
+[node name="InvertYAxisCheckButton" type="CheckButton" parent="Gameplay/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Inverts looking up and down direction."
+theme_override_font_sizes/font_size = 25
+text = "Invert Y Axis"
+
+[node name="HBoxContainer_Group" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Group"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Group"]
+layout_mode = 2
+text = "Gamepad Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Group"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer_GamepadLookSense" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="GPLookSensLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_GamepadLookSense"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Look Sensitivity"
+
+[node name="GPLookSensSlider" type="HSlider" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_GamepadLookSense"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.5
+max_value = 3.0
+step = 0.1
+value = 2.0
+
+[node name="GPLookSensValueLabel" type="Label" parent="Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_GamepadLookSense"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "2"
+horizontal_alignment = 1
+
+[node name="ApplyChanges" type="Button" parent="Gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Apply changes"
+script = ExtResource("6_rlben")
+
+[node name="Graphics" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Graphics"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("7_27vxg")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Graphics/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer_Resolution" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="ResolutionLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Resolution"
+
+[node name="ResolutionOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="WindowMode" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Window Mode"
+
+[node name="WindowModeOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="HBoxContainer_AA2D" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="AntiAliasing2DLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "2D Anti Aliasing"
+
+[node name="AntiAliasing2DOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Smooth out edges of 2D objects"
+item_count = 4
+selected = 0
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+script = ExtResource("8_7fii0")
+
+[node name="GamepadClosable" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA2D/AntiAliasing2DOptionButton" instance=ExtResource("9_wft0n")]
+
+[node name="HBoxContainer_AA3D" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="AntiAliasing3DLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "3D Anti Aliasing"
+
+[node name="AntiAliasing3DOptionButton" type="OptionButton" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Smooths out edges of 3D objects"
+item_count = 4
+selected = 0
+popup/item_0/text = "Off"
+popup/item_0/id = 0
+popup/item_1/text = "2x"
+popup/item_1/id = 1
+popup/item_2/text = "4x"
+popup/item_2/id = 2
+popup/item_3/text = "8x"
+popup/item_3/id = 3
+script = ExtResource("8_7fii0")
+
+[node name="GamepadClosable" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
+
+[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="RenderScaleLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Render Scale"
+
+[node name="RenderScaleSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="RenderScaleCurrentValueLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+
+[node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+
+[node name="GUIScaleLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "UI Scale"
+
+[node name="GUIScaleSlider" type="HSlider" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 0.25
+max_value = 1.5
+step = 0.05
+value = 1.0
+
+[node name="GUIScaleCurrentValueLabel" type="Label" parent="Graphics/ScrollContainer/VBoxContainer/HBoxContainer_GUIScale"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+horizontal_alignment = 1
+
+[node name="VSyncCheckButton" type="CheckButton" parent="Graphics/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
+theme_override_font_sizes/font_size = 25
+text = "V-Sync"
+
+[node name="ApplyChanges" type="Button" parent="Graphics/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Apply changes"
+script = ExtResource("6_rlben")
+
+[node name="Audio" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Audio"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("7_27vxg")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Audio/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="MarginContainer" type="MarginContainer" parent="Audio/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SFXVolumeSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("10_45uhu")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "SFX Volume"
+
+[node name="Title" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="0"]
+text = "SFX Volume"
+
+[node name="HSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.1
+
+[node name="MusicVolumeSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("10_45uhu")]
+unique_name_in_owner = true
+layout_mode = 2
+title = "Music Volume"
+
+[node name="Title" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="0"]
+text = "Music Volume"
+
+[node name="HSlider" parent="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="1"]
+max_value = 1.0
+step = 0.1
+
+[node name="Bindings" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Bindings"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("7_27vxg")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bindings/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="BindingsTitle" type="Label" parent="Bindings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Coming soon"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Bindings/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="Bindings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bindings/ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="Gameplay/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+[connection signal="pressed" from="Graphics/ScrollContainer/VBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
+
+[editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
+[editable path="Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

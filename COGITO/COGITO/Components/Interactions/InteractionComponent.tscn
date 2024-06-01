@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfgkhiu4nkowg"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/InteractionComponent.gd" id="1_onlt0"]
+
+[node name="InteractionComponent" type="Node"]
+script = ExtResource("1_onlt0")

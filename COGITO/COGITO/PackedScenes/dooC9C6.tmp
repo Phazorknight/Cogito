@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://bdyukj85qkut0"]
+
+[ext_resource type="Script" path="res://COGITO/Scripts/Cogito_Door.gd" id="1_v6apr"]
+[ext_resource type="AudioStream" uid="uid://bipwc8kk30bub" path="res://COGITO/Assets/Audio/Kenney/doorOpen_1.ogg" id="2_syv37"]
+[ext_resource type="AudioStream" uid="uid://g8n7a73j5qqo" path="res://COGITO/Assets/Audio/Kenney/doorClose_4.ogg" id="3_mv414"]
+[ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://COGITO/Assets/Audio/Kenney/beltHandle2.ogg" id="4_amxf0"]
+[ext_resource type="PackedScene" uid="uid://bjko2ni8pfb34" path="res://COGITO/Components/CustomInteraction.tscn" id="5_jyccs"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ik1yl"]
+size = Vector3(0.07, 1.8, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_okhh2"]
+albedo_color = Color(0.619608, 0.552941, 0.494118, 1)
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_br66c"]
+size = Vector3(0.1, 2, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxkv6"]
+albedo_color = Color(0.729412, 0.615686, 0.603922, 1)
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ub8li"]
+size = Vector3(0.1, 0.1, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fx78h"]
+size = Vector3(0.1, 2, 1)
+
+[node name="Door" type="AnimatableBody3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.8, 0, 5.1)
+collision_layer = 3
+script = ExtResource("1_v6apr")
+open_sound = ExtResource("2_syv37")
+close_sound = ExtResource("3_mv414")
+unlock_sound = ExtResource("4_amxf0")
+key_hint = "Key needed."
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.5)
+mesh = SubResource("BoxMesh_ik1yl")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_okhh2")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.95)
+mesh = SubResource("BoxMesh_br66c")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.05)
+mesh = SubResource("BoxMesh_br66c")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0.5)
+mesh = SubResource("BoxMesh_ub8li")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0500001, 0.5)
+mesh = SubResource("BoxMesh_ub8li")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_mxkv6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.5)
+shape = SubResource("BoxShape3D_fx78h")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -26.0
+bus = &"SFX"
+
+[node name="CustomInteraction" parent="." instance=ExtResource("5_jyccs")]
+input_map_action = "interact"
+interaction_text = "Interact"

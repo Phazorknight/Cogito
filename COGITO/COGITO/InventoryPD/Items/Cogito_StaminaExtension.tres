@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ConsumableItemPD" load_steps=6 format=3 uid="uid://060gqm74tdlk"]
+
+[ext_resource type="Texture2D" uid="uid://xdrsyodejj36" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Drop.png" id="1_1g5jd"]
+[ext_resource type="Texture2D" uid="uid://ra2d8abru67o" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_StaminaExtension.png" id="2_ylptx"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/ConsumableItemPD.gd" id="3_vpu4k"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_3code"]
+[ext_resource type="AudioStream" uid="uid://bna1nc66vw053" path="res://COGITO/Assets/Audio/Kenney/phaserUp5.ogg" id="4_obcds"]
+
+[resource]
+script = ExtResource("3_vpu4k")
+attribute_name = "stamina"
+attribute_change_amount = 25.0
+value_to_change = 1
+name = "Stamina Extension"
+description = "Drinking this permanently increases your maximum stamina."
+icon = ExtResource("2_ylptx")
+is_stackable = true
+stack_size = 5
+drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_stamina_extension.tscn"
+hint_icon_on_use = ExtResource("1_1g5jd")
+hint_text_on_use = "Max stamina increased by 25."
+sound_use = ExtResource("4_obcds")
+sound_pickup = ExtResource("4_3code")

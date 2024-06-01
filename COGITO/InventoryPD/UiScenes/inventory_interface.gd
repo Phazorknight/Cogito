@@ -63,6 +63,7 @@ func close_inventory():
 
 func _on_focus_changed(control: Control):
 	if !control.has_method("set_slot_data"):
+		print("Not a slot. returning.")
 		return
 	
 	if control != null:
@@ -94,6 +95,7 @@ func _slot_on_mouse_exit():
 
 
 func update_grabbed_slot_position():
+	print("Inventory interface: update grabbed slot position to ", control_in_focus, " at ", control_in_focus.global_position)
 	grabbed_slot_node.global_position = control_in_focus.global_position + (control_in_focus.size / 2)
 
 
@@ -163,10 +165,10 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 				if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
 				#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 					Audio.play_sound(sound_error)
-					print("Inventory_interface.gd: Can't drop while wielding this item.")
+					print("Can't drop while wielding this item.")
 					grabbed_slot_data = null
 				else:
-					print("Inventory_interface.gd: Dropping slot data via gamepad")
+					print("Dropping slot data via gamepad")
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
 					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(index))
 					grabbed_slot_data = null
@@ -178,6 +180,7 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 	else:
 		element = amount_of_inventory_slots-1
 	# Should fix issues where an external inventory is bigger than the players
+	print("Inventory_interface: grabbing focus for slot_array index = ", element)
 	inventory_ui.slot_array[element].grab_focus()
 	update_grabbed_slot()
 
@@ -207,17 +210,17 @@ func _on_gui_input(event):
 					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
 					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
-						print("Inventory_interface.gd: Can't drop while wielding this item.")
+						print("Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data)
-						print("Inventory_interface.gd: Dropping ", grabbed_slot_data)
+						print("Dropping ", grabbed_slot_data)
 						grabbed_slot_data = null
 					
 				MOUSE_BUTTON_RIGHT:
 					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
 					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
-						print("Inventory_interface.gd: Can't drop while wielding this item.")
+						print("Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index))
 						if grabbed_slot_data.quantity < 1:

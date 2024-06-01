@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhlrhobg5d4dj"]
+
+[ext_resource type="Script" path="res://COGITO/Components/UI/UI_PromptComponent.gd" id="1_ij0tw"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="2_bet8p"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="3_k0tgw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6bug"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.6)
+expand_margin_right = 2.0
+
+[node name="UiPromptComponent" type="PanelContainer"]
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("2_bet8p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_k6bug")
+script = ExtResource("1_ij0tw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme = ExtResource("2_bet8p")
+
+[node name="Container" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_bet8p")
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="InteractionButton" parent="HBoxContainer/Container" instance=ExtResource("3_k0tgw")]
+position = Vector2(0, 0)
+scale = Vector2(0.3, 0.3)
+centered = false
+frame = 6
+action_name = "interact"
+
+[node name="InteractionText" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_bet8p")
+theme_type_variation = &"PromptLabel"
+text = "Interact"

@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=3 uid="uid://cct0itdltyppg"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/ReadableComponent.gd" id="1_6uwtb"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="2_kxsxn"]
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/follow_focus_center.gd" id="3_aj2s3"]
+
+[node name="ReadableComponent" type="Node3D"]
+script = ExtResource("1_6uwtb")
+readable_title = "Testomania"
+readable_content = "COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on providing a framework for creating interactable objects and items."
+input_map_action = "interact"
+interaction_text = "Read"
+
+[node name="ReadableUi" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -273.0
+offset_top = -250.0
+offset_right = 273.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_kxsxn")
+
+[node name="BG" type="Panel" parent="ReadableUi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG2" type="Panel" parent="ReadableUi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bindings" type="MarginContainer" parent="ReadableUi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ReadableUi/Bindings"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("3_aj2s3")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ReadableUi/Bindings/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ReadableTitle" type="Label" parent="ReadableUi/Bindings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "This is a readable. Title can even be longer."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="ReadableUi/Bindings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ReadableContent" type="RichTextLabel" parent="ReadableUi/Bindings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+fit_content = true

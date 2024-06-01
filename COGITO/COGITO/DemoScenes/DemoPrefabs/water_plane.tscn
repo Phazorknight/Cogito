@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://dkfmxo0mgghcc"]
+
+[ext_resource type="Shader" path="res://COGITO/Assets/Shader/water.gdshader" id="1_rv278"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_a6yhw"]
+subdivide_width = 200
+subdivide_depth = 200
+orientation = 1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rb24w"]
+noise_type = 3
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xty2f"]
+seamless = true
+as_normal_map = true
+bump_strength = 1.5
+noise = SubResource("FastNoiseLite_rb24w")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mu74q"]
+noise_type = 3
+seed = 10
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_acxul"]
+seamless = true
+as_normal_map = true
+bump_strength = 1.5
+noise = SubResource("FastNoiseLite_mu74q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ewlq"]
+render_priority = 0
+shader = ExtResource("1_rv278")
+shader_parameter/albedo = Color(0.0509804, 0.196078, 0.243137, 1)
+shader_parameter/albedo_fresnel = Color(0.407843, 0.772549, 0.898039, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.02
+shader_parameter/transparency = 0.9
+shader_parameter/wave_direction = Vector2(2, 0)
+shader_parameter/wave_direction2 = Vector2(0, 1)
+shader_parameter/time_scale = 0.025
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_xty2f")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_acxul")
+
+[node name="WaterPlane" type="MeshInstance3D"]
+mesh = SubResource("QuadMesh_a6yhw")
+skeleton = NodePath("../KSI_ledge_painted_corner_double2")
+surface_material_override/0 = SubResource("ShaderMaterial_3ewlq")

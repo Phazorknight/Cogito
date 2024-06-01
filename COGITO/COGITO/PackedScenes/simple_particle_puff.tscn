@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bc2hryr610vgo"]
+
+[ext_resource type="Script" path="res://COGITO/Scripts/particle_controller.gd" id="1_uwv56"]
+
+[sub_resource type="Curve" id="Curve_u7b87"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 1.4, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_480q5"]
+curve = SubResource("Curve_u7b87")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8n21t"]
+inherit_velocity_ratio = 1.0
+direction = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+damping_max = 1.0
+scale_curve = SubResource("CurveTexture_480q5")
+
+[sub_resource type="SphereMesh" id="SphereMesh_kic5n"]
+radius = 0.1
+height = 0.2
+radial_segments = 32
+
+[node name="SimpleParticlePuff" type="GPUParticles3D" node_paths=PackedStringArray("particles")]
+emitting = false
+amount = 15
+lifetime = 1.5
+one_shot = true
+speed_scale = 1.5
+explosiveness = 1.0
+randomness = 0.2
+collision_base_size = 0.1
+visibility_aabb = AABB(-1, -1, -1, 2, 2, 2)
+trail_lifetime = 0.02
+process_material = SubResource("ParticleProcessMaterial_8n21t")
+draw_pass_1 = SubResource("SphereMesh_kic5n")
+script = ExtResource("1_uwv56")
+self_destructs = true
+particles = [NodePath(".")]

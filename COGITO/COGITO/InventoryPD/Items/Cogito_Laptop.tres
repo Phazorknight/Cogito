@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="KeyItemPD" load_steps=4 format=3 uid="uid://b7myxblvr7lty"]
+
+[ext_resource type="Texture2D" uid="uid://c44ovxwnba2yw" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop.png" id="1_ovk1j"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="2_fxw06"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_lbs5p"]
+
+[resource]
+script = ExtResource("2_fxw06")
+discard_after_use = false
+name = "Laptop"
+description = "Feels light and doesn't turn on.
+Does that matter?"
+icon = ExtResource("1_ovk1j")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop.tscn"
+hint_text_on_use = "I was supposed to do something with this."
+sound_pickup = ExtResource("3_lbs5p")

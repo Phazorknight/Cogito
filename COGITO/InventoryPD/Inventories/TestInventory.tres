@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CogitoInventory" load_steps=5 format=3 uid="uid://b7mkykos46gnt"]
+[gd_resource type="Resource" script_class="InventoryPD" load_steps=5 format=3 uid="uid://b7mkykos46gnt"]
 
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="1_wd11c"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/cogito_inventory.gd" id="1_wxkif"]
@@ -8,11 +8,7 @@
 script = ExtResource("2_83f1b")
 inventory_item = ExtResource("1_wd11c")
 quantity = 1
-origin_index = -1
 
 [resource]
 script = ExtResource("1_wxkif")
-grid = true
-starter_inventory = Array[ExtResource("2_83f1b")]([])
-inventory_size = Vector2i(4, 2)
-inventory_slots = Array[ExtResource("2_83f1b")]([SubResource("Resource_4h4d1"), null, null, null, null, null, null, null])
+inventory_slots = [SubResource("Resource_4h4d1"), null, null, null, null]

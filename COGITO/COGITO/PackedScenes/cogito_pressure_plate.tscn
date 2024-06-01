@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://611llvxrvq88"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_pressure_plate.gd" id="1_56vbk"]
+[ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_pce3q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xxyv"]
+size = Vector3(1, 0.08, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_va3qp"]
+size = Vector3(1, 0.08, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ge50"]
+size = Vector3(0.9, 0.1, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rs8m6"]
+albedo_color = Color(0.501961, 0.341176, 0.501961, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3d3yb"]
+margin = 0.03
+size = Vector3(0.9, 0.1, 0.9)
+
+[node name="Cogito_Pressureplate" type="Node3D" node_paths=PackedStringArray("plate_node")]
+script = ExtResource("1_56vbk")
+activation_sound = ExtResource("2_pce3q")
+plate_node = NodePath("Plate")
+unweighted_plate_position = Vector3(0, 0.1, 0)
+
+[node name="Base" type="StaticBody3D" parent="."]
+
+[node name="Base" type="MeshInstance3D" parent="Base"]
+mesh = SubResource("BoxMesh_7xxyv")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base"]
+shape = SubResource("BoxShape3D_va3qp")
+
+[node name="Plate" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = -0.5
+can_sleep = false
+max_contacts_reported = 1
+contact_monitor = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Plate"]
+mesh = SubResource("BoxMesh_6ge50")
+surface_material_override/0 = SubResource("StandardMaterial3D_rs8m6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plate"]
+shape = SubResource("BoxShape3D_3d3yb")
+
+[node name="SliderJoint3D" type="SliderJoint3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+node_a = NodePath("../Base")
+node_b = NodePath("../Plate")
+linear_limit/upper_distance = 0.09
+linear_limit/lower_distance = 0.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"
+
+[connection signal="body_entered" from="Plate" to="." method="_on_plate_body_entered"]
+[connection signal="body_exited" from="Plate" to="." method="_on_plate_body_exited"]

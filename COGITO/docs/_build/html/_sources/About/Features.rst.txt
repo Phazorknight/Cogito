@@ -1,0 +1,25 @@
+Current Features
+================
+* First person player controller with:
+   * Sprinting, jumping, crouching, sliding, stairs handling, ladder handling
+   * Fully customizable attributes like Health, Stamina, Visibility (for stealth) - Component-based, so easy to add your own.
+   * Lots of exposed properties to tweak to your liking (speeds, headbob, fall damage, bunnyhop, etc.)
+   * Easy-to-use dynamic footstep sound system
+* Inventory System
+   * Flexible resource-based inventories
+   * Inventory UI separate from inventory logic
+   * Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)
+   * Base class to easily add your custom item types
+* Interaction System
+   * Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
+   * Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
+* Systemic Properties
+   * Give objects properties like "FLAMMABLE" or "WET" and they will interact with each other depending on their state and properties.
+   * For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.
+   * Straight forward system to add your own properties and behaviours, all handled in one script. Also easy to just ignore.
+* Fully featured Demo Scene
+   * Set up like a game level including a variety of objects, weapons and quests
+   * In-game helper documents that explain how objects in the scene were set up
+* Quest System
+* Save and Load System as well as scene persistency
+* Full gamepad support!

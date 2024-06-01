@@ -1,0 +1,20 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=6 format=3 uid="uid://dc03jiw2a6y3j"]
+
+[ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="1_jo73n"]
+[ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="2_p3uaq"]
+[ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="3_nqlif"]
+[ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="4_kkjjk"]
+[ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="5_lupef"]
+
+[resource]
+streams_count = 5
+stream_0/stream = ExtResource("1_jo73n")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_p3uaq")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_nqlif")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_kkjjk")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("5_lupef")
+stream_4/weight = 1.0

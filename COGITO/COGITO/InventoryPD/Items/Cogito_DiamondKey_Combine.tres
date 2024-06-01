@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="KeyItemPD" load_steps=5 format=3 uid="uid://gu1buq254o4l"]
+
+[ext_resource type="Texture2D" uid="uid://b026nu4btecpx" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_DiamondKey_Complete.png" id="1_iq57n"]
+[ext_resource type="Texture2D" uid="uid://dlsbl1glpswk5" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Question.png" id="1_okpun"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="3_5ndf1"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://COGITO/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_n11fw"]
+
+[resource]
+script = ExtResource("3_5ndf1")
+discard_after_use = true
+name = "Diamond Key"
+description = "This looks like it could fit into something."
+icon = ExtResource("1_iq57n")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_diamond_key_complete.tscn"
+hint_icon_on_use = ExtResource("1_okpun")
+hint_text_on_use = "Now where does this fit?"
+sound_pickup = ExtResource("4_n11fw")

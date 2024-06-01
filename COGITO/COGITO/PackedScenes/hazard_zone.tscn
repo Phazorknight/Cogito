@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://8h462cd7whew"]
+
+[ext_resource type="Script" path="res://COGITO/Scripts/hazard_zone.gd" id="1_vwqvk"]
+[ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://COGITO/Assets/Graphics/HintIcons/Hint_X.png" id="2_ut4mo"]
+[ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="3_yale6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_in244"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x600l"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84cqo"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0, 0, 0.392157)
+rim = 0.0
+rim_tint = 0.0
+backlight = Color(0.509804, 0.294118, 0.294118, 1)
+disable_receive_shadows = true
+
+[node name="HazardZone" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2487, 1.505, 1.5451)
+script = ExtResource("1_vwqvk")
+player_attribute = "health"
+hint_icon = ExtResource("2_ut4mo")
+hint_message = "You're taking damage!"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_in244")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_x600l")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_84cqo")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+text = "HAZARD
+ZONE"
+font = ExtResource("3_yale6")
+font_size = 40
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

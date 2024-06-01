@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwd3g16ep0idw"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_p4i4k"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="2_n5am4"]
+[ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://COGITO/InventoryPD/Items/Cogito_Flashlight.tres" id="2_sm7gp"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_0bl2i"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="5_fvuvi"]
+
+[sub_resource type="Resource" id="Resource_frpox"]
+script = ExtResource("3_0bl2i")
+inventory_item = ExtResource("2_sm7gp")
+quantity = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbp4w"]
+albedo_color = Color(0.0392157, 0.0431373, 0.0745098, 1)
+metallic = 0.95
+metallic_specular = 0.1
+metallic_texture_channel = 3
+roughness = 0.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0btuw"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3tojh"]
+margin = 0.01
+height = 0.4
+radius = 0.06
+
+[node name="Pickup_Flashlight" type="RigidBody3D"]
+collision_layer = 3
+mass = 2.0
+script = ExtResource("1_p4i4k")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_n5am4")]
+slot_data = SubResource("Resource_frpox")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("5_fvuvi")]
+carry_distance_offset = -0.5
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0541318, 0, 0)
+radius = 0.05
+height = 0.3
+material = SubResource("StandardMaterial3D_lbp4w")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.145868, 0, 0)
+radius = 0.06
+height = 0.1
+material = SubResource("StandardMaterial3D_lbp4w")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.196543, 0, 0)
+radius = 0.05
+height = 0.01
+material = SubResource("StandardMaterial3D_0btuw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_3tojh")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -4.37114e-08, -1, -1, 1.91069e-15, 4.37114e-08, 0, 1, -4.37114e-08, 0.174371, 0, 0)
+visible = false
+spot_range = 8.0
+spot_angle = 30.0

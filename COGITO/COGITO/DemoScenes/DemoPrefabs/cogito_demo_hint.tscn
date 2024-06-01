@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=3 uid="uid://c2t21qbkevaof"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_static_interactable.gd" id="1_vm8jf"]
+[ext_resource type="Texture2D" uid="uid://bsnnl3lj58bwg" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_01.png" id="2_47x5t"]
+[ext_resource type="Script" path="res://COGITO/Scripts/cogito_rotator_tool.gd" id="3_04ruj"]
+[ext_resource type="Texture2D" uid="uid://c2t5w06mlog62" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_02.png" id="4_j2t2d"]
+[ext_resource type="Texture2D" uid="uid://1oslnc23jviv" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_03.png" id="5_66ruk"]
+[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/Interactions/ReadableComponent.tscn" id="6_1xwxr"]
+[ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="7_bb2nk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n25yf"]
+radius = 0.18
+
+[sub_resource type="SphereMesh" id="SphereMesh_y1mbc"]
+radius = 0.02
+height = 0.038
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sarwu"]
+albedo_color = Color(0.0470588, 0.678431, 0.615686, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_opjhk"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.2
+radial_segments = 16
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3gbm3"]
+albedo_color = Color(0.258824, 0.780392, 0.921569, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
+[node name="COGITO_HINT" type="StaticBody3D"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 3
+script = ExtResource("1_vm8jf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_n25yf")
+
+[node name="Sprite3D_01" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-09, -0.1, 0, -4.37114e-09, 1.91069e-16, 0.1, -0.1, 4.37114e-09, -4.37114e-09, 0, 0, 0)
+texture = ExtResource("2_47x5t")
+script = ExtResource("3_04ruj")
+rotation_axis = Vector3(0, 0, 1)
+rotation_speed = 1.2
+is_rotating = true
+
+[node name="Sprite3D_02" type="Sprite3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0)
+texture = ExtResource("4_j2t2d")
+script = ExtResource("3_04ruj")
+rotation_axis = Vector3(-1, 0, 0)
+is_rotating = true
+
+[node name="Sprite3D03" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-09, -0.1, 0, -4.37114e-09, 1.91069e-16, 0.1, -0.1, 4.37114e-09, -4.37114e-09, 0, 0, 0)
+texture = ExtResource("5_66ruk")
+script = ExtResource("3_04ruj")
+is_rotating = true
+
+[node name="Center" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_y1mbc")
+surface_material_override/0 = SubResource("StandardMaterial3D_sarwu")
+
+[node name="Stick" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.1, 0, 0)
+mesh = SubResource("CylinderMesh_opjhk")
+surface_material_override/0 = SubResource("StandardMaterial3D_3gbm3")
+
+[node name="ReadableComponent" parent="." instance=ExtResource("6_1xwxr")]
+interact_sound = ExtResource("7_bb2nk")
+readable_title = "Demo Hint"
+readable_content = "You've found a Demo Hint!
+These contain explanations on how objects in this scene are set up.
+
+This hint is an example of using ReadableComponent.
+A ReadableComponent is an InteractionComponent that makes objects \"readable\". On interacting, a window like this will pop up, displaying some text.
+
+To create your own, attach a ReadableComponent to a Cogito Object and set the desired title, text and sound.
+As with any InteractionComponent, you can also customize which input_map_action is used and what prompt is displayed. In this case it is \"Read hint\".
+
+To close this window, either press the interaction button again or press ESC."
+interaction_text = "Read hint"

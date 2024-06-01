@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CombinableItemPD" load_steps=7 format=3 uid="uid://dyrad3e3t138m"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/CombinableItemPD.gd" id="1_u1rhg"]
+[ext_resource type="Texture2D" uid="uid://cyniwf78v5lgs" path="res://COGITO/Assets/Graphics/ItemIcons/ripped_page_b.png" id="1_xupyp"]
+[ext_resource type="Resource" uid="uid://do16v80crng52" path="res://COGITO/InventoryPD/Items/Cogito_PageCombined.tres" id="2_ts5ml"]
+[ext_resource type="AudioStream" uid="uid://bhce82qflwaur" path="res://COGITO/Assets/Audio/Kenney/cardPlace1.ogg" id="3_q1m23"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_veaq2"]
+
+[sub_resource type="Resource" id="Resource_34jct"]
+script = ExtResource("3_veaq2")
+inventory_item = ExtResource("2_ts5ml")
+quantity = 1
+
+[resource]
+script = ExtResource("1_u1rhg")
+target_item_combine = "Ripped Page A"
+resulting_item = SubResource("Resource_34jct")
+name = "Ripped Page B"
+description = "A piece of paper ripped in half. It has some numbers on it but parts are missing."
+icon = ExtResource("1_xupyp")
+is_stackable = false
+stack_size = 0
+drop_scene = "res://COGITO/PackedScenes/Pickups/ripped_page_b_pickup.tscn"
+hint_text_on_use = "I need the other half."
+sound_pickup = ExtResource("3_q1m23")

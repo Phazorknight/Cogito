@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtyn807e22vww"]
+
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_4m36a"]
+
+[node name="Options_Display_Button" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 400.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 40.0
+theme = ExtResource("1_4m36a")
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BASE_LABEL"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10

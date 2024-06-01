@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjs44e1ow53rv"]
+
+[ext_resource type="Script" path="res://COGITO/Scripts/hazard_zone.gd" id="1_38o7t"]
+[ext_resource type="Texture2D" uid="uid://d0so3oo1yk4kh" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Heart.png" id="2_el00j"]
+[ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="3_8llal"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_in244"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x600l"]
+size = Vector3(1.5, 3, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nuibm"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.333333, 0.611765, 0.313726, 0.392157)
+rim = 0.0
+rim_tint = 0.0
+backlight = Color(0.509804, 0.294118, 0.294118, 1)
+disable_receive_shadows = true
+
+[node name="HealZone" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.2487, 1.505, 1.5451)
+script = ExtResource("1_38o7t")
+player_attribute = "health"
+is_recovery_zone = true
+hint_icon = ExtResource("2_el00j")
+hint_message = "Your health is regenerating."
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_in244")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_x600l")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nuibm")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+text = "HEAL ZONE"
+font = ExtResource("3_8llal")
+font_size = 40
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -31,6 +31,7 @@ func _ready():
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	interaction_text = text_when_closed
 	object_state_updated.emit(interaction_text)
+	inventory_data.apply_initial_inventory()
 
 func interact(_player_interaction_component: PlayerInteractionComponent):
 	toggle_inventory.emit(self)
