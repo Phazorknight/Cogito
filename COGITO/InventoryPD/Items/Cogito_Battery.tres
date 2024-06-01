@@ -17,5 +17,6 @@ stack_size = 5
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_battery.tscn"
 hint_icon_on_use = ExtResource("1_54cn8")
 hint_text_on_use = "Can't use this by itself."
+size = Vector2(1, 1)
 sound_use = ExtResource("5_tfubv")
 sound_pickup = ExtResource("3_lxwux")

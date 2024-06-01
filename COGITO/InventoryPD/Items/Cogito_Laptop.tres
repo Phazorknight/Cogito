@@ -15,4 +15,5 @@ is_stackable = false
 stack_size = 0
 drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop.tscn"
 hint_text_on_use = "I was supposed to do something with this."
+size = Vector2(2, 2)
 sound_pickup = ExtResource("3_lbs5p")

@@ -21,4 +21,5 @@ is_stackable = true
 stack_size = 5
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_dart.tscn"
 hint_text_on_use = ""
+size = Vector2(1, 1)
 sound_pickup = ExtResource("3_sof2n")
