@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="22_haksr"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_lrgwp"]
+margin = 0.0
 height = 1.6
 radius = 0.35
 
