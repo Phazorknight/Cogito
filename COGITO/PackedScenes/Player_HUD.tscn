@@ -249,7 +249,6 @@ self_modulate = Color(1, 1, 1, 0.498039)
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
-mouse_filter = 2
 
 [node name="HotBarInventory" parent="InventoryInterface" instance=ExtResource("6_8odro")]
 layout_mode = 1
