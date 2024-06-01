@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqgg1nng0vvbh"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Attributes/cogito_health_attribute.gd" id="1_048fp"]
+[ext_resource type="Texture2D" uid="uid://sv8b0kbpm17t" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Health.png" id="2_smx1r"]
+
+[node name="HealthAttribute" type="Node"]
+script = ExtResource("1_048fp")
+attribute_name = "health"
+attribute_display_name = "Health"
+attribute_color = Color(0.729412, 0, 0, 1)
+attribute_icon = ExtResource("2_smx1r")
+value_max = 100.0
+value_start = 80.0

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyy2kpk7e36if"]
+
+[ext_resource type="PackedScene" uid="uid://6648411gf11k" path="res://COGITO/Assets/Models/shelf_drawer.glb" id="1_0px3f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_etb8u"]
+size = Vector3(0.3, 0.05, 0.1)
+
+[node name="shelf_drawer" instance=ExtResource("1_0px3f")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.84217e-14, 0, 0, 1, 0, 0.83, 0.182)
+mesh = SubResource("BoxMesh_etb8u")

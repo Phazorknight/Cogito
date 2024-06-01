@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://k28yrbg3k3pw"]
+
+[ext_resource type="Script" path="res://COGITO/Components/HitboxComponent.gd" id="1_7oy1x"]
+
+[node name="HitboxComponent" type="Node"]
+script = ExtResource("1_7oy1x")

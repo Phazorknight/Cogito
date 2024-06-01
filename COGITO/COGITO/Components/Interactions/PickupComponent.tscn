@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://1xq4y42qkcur"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/PickupComponent.gd" id="1_kq08i"]
+
+[node name="PickupComponent" type="Node3D"]
+script = ExtResource("1_kq08i")
+input_map_action = "interact"
+interaction_text = "Pick up"
+ignore_open_gui = false

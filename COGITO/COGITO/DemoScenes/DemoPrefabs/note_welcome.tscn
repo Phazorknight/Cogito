@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqsod8j0c6qag"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_r5c6a"]
+[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://COGITO/Components/Interactions/ReadableComponent.tscn" id="2_cwsfv"]
+[ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://COGITO/Assets/Audio/Kenney/bookOpen.ogg" id="3_lxhi0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_c635y"]
+size = Vector3(0.3, 0.02, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mqvc0"]
+margin = 0.01
+size = Vector3(0.3, 0.06, 0.5)
+
+[node name="Note_Welcome" type="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0.0518305, -4.59182e-08, 0.998656, -0.998656, 4.13871e-08, 0.0518305, 0.0156556, 1.44901, -11.8935)
+collision_layer = 3
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_r5c6a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_c635y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -0.00130868, -4.76837e-07)
+shape = SubResource("BoxShape3D_mqvc0")
+
+[node name="ReadableComponent" parent="." instance=ExtResource("2_cwsfv")]
+interact_sound = ExtResource("3_lxhi0")
+readable_title = "Welcome to the LOBBY"
+readable_content = "This scene is still under construction, but feel free to explore what's there."

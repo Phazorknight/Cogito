@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=5 format=3 uid="uid://bcn2jyeulv0j0"]
+
+[ext_resource type="AudioStream" uid="uid://5onay5pmsghw" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Wood/footstep_wood-01.ogg" id="1_7v8a8"]
+[ext_resource type="AudioStream" uid="uid://cbwakrpmhoe7" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Wood/footstep_wood-02.ogg" id="2_51qp5"]
+[ext_resource type="AudioStream" uid="uid://cutv4q0xssorw" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Wood/footstep_wood-03.ogg" id="3_mhqco"]
+[ext_resource type="AudioStream" uid="uid://baaw2cb6q2476" path="res://COGITO/DynamicFootstepSystem/Assets/Audio/Wood/footstep_wood-04.ogg" id="4_4ytdf"]
+
+[resource]
+streams_count = 4
+stream_0/stream = ExtResource("1_7v8a8")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_51qp5")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_mhqco")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_4ytdf")
+stream_3/weight = 1.0

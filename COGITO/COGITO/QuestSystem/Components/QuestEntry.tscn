@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://dh4yhqd73trwx"]
+
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/quest_entry.gd" id="1_lav6n"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="2_kkklj"]
+[ext_resource type="FontFile" uid="uid://3dfnao4d0lph" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Italic.ttf" id="3_ygsya"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_he3s4"]
+bg_color = Color(0.0392157, 0.0392157, 0.0392157, 0.235294)
+expand_margin_left = 5.0
+expand_margin_top = 2.0
+expand_margin_right = 5.0
+expand_margin_bottom = 2.0
+
+[node name="QuestEntry" type="MarginContainer"]
+custom_minimum_size = Vector2(0, 60)
+size_flags_vertical = 0
+theme = ExtResource("2_kkklj")
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+script = ExtResource("1_lav6n")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_he3s4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="QuestName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_kkklj")
+theme_type_variation = &"PromptLabel"
+text = "Questname"
+
+[node name="QuestDescription" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme = ExtResource("2_kkklj")
+text = "Long text is long. Long text is long. Long text is long. Long text is long. Long text is long. Long text is long."
+autowrap_mode = 3
+
+[node name="QuestCounter" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme = ExtResource("2_kkklj")
+theme_override_fonts/font = ExtResource("3_ygsya")
+text = "00/99"
+horizontal_alignment = 2
+autowrap_mode = 3

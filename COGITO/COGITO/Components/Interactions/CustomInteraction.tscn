@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjko2ni8pfb34"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/CustomInteraction.gd" id="1_nlvav"]
+
+[node name="CustomInteraction" type="Node3D"]
+script = ExtResource("1_nlvav")

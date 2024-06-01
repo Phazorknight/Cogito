@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://l61jtpfxu5x5"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/BasicInteraction.gd" id="1_42b7y"]
+
+[node name="BasicInteraction" type="Node3D"]
+script = ExtResource("1_42b7y")
+input_map_action = "interact"
+interaction_text = "Open"

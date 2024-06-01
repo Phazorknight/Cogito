@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqlue11vwpc5y"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_security_camera.gd" id="1_c4ulv"]
+[ext_resource type="AudioStream" uid="uid://bd7xfxmsaeu0o" path="res://COGITO/Assets/Audio/435666__mirkosukovic__alarm-siren.wav" id="2_41o63"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ey5nf"]
+albedo_color = Color(0.262745, 0.262745, 0.262745, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_weyt4"]
+albedo_color = Color(0.266667, 0.631373, 0.890196, 1)
+metallic = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87h3m"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uhxk2"]
+material = SubResource("StandardMaterial3D_87h3m")
+size = Vector3(0.2, 0.05, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaig8"]
+custom_solver_bias = 1.0
+size = Vector3(4, 4, 4)
+
+[node name="SecurityCamera" type="Node3D" node_paths=PackedStringArray("detection_area", "indicator_mesh")]
+script = ExtResource("1_c4ulv")
+detection_area = NodePath("CameraMesh/DetectionArea3D")
+alarm_sound = ExtResource("2_41o63")
+indicator_mesh = NodePath("CameraMesh/IndicatorMesh")
+
+[node name="CameraMesh" type="Node3D" parent="."]
+transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
+
+[node name="Camera_Case" type="CSGBox3D" parent="CameraMesh"]
+size = Vector3(0.3, 0.3, 0.5)
+material = SubResource("StandardMaterial3D_ey5nf")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CameraMesh/Camera_Case"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.2)
+radius = 0.1
+height = 0.2
+material = SubResource("StandardMaterial3D_weyt4")
+
+[node name="IndicatorMesh" type="MeshInstance3D" parent="CameraMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.173511, 0)
+mesh = SubResource("BoxMesh_uhxk2")
+
+[node name="DetectionArea3D" type="Area3D" parent="CameraMesh"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraMesh/DetectionArea3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 2.3)
+shape = SubResource("BoxShape3D_qaig8")
+
+[node name="IndicatorLight" type="OmniLight3D" parent="CameraMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.333066, 0)
+light_color = Color(1, 0, 0, 1)
+light_energy = 0.1
+
+[node name="DetectionRayCast3D" type="RayCast3D" parent="CameraMesh"]
+transform = Transform3D(0.707107, -7.45058e-09, -0.707107, 0.183013, 0.965926, 0.183013, 0.683013, -0.258819, 0.683013, 0.00110061, 0.00171312, 0.312306)
+exclude_parent = false
+target_position = Vector3(0.85, -1.1, 1.94)
+collision_mask = 3
+hit_back_faces = false
+debug_shape_custom_color = Color(1, 0, 1, 1)
+
+[node name="CameraMount" type="Node3D" parent="."]
+
+[node name="Mount" type="CSGBox3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, -0.195544)
+size = Vector3(0.1, 0.1, 0.508911)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CameraMount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+radius = 0.04
+height = 0.2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -10.0
+max_distance = 30.0
+bus = &"SFX"

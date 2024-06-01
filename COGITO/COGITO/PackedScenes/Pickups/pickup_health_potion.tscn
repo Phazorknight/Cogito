@@ -1,0 +1,104 @@
+[gd_scene load_steps=24 format=3 uid="uid://0fj068bj0csc"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_bh0fn"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_4pii1"]
+[ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://COGITO/InventoryPD/Items/Cogito_HealthPotion.tres" id="2_j2eoi"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="2_u4d3q"]
+[ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="5_r4r7l"]
+[ext_resource type="AudioStream" uid="uid://cl1llyise451u" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_000.ogg" id="6_ia22h"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="6_o5nsr"]
+[ext_resource type="AudioStream" uid="uid://c3ruc72xidtx6" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_001.ogg" id="7_6ipju"]
+[ext_resource type="AudioStream" uid="uid://bmy2fw6y1gc42" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_002.ogg" id="8_4gir3"]
+[ext_resource type="AudioStream" uid="uid://d31gb8y6dvco0" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_003.ogg" id="9_7bixy"]
+[ext_resource type="AudioStream" uid="uid://c0ds3w6ienyuh" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_light_004.ogg" id="10_a20q4"]
+[ext_resource type="AudioStream" uid="uid://brxfaq7a8f88b" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_medium_000.ogg" id="11_4aqns"]
+[ext_resource type="AudioStream" uid="uid://clmfb5qvk06lx" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_medium_001.ogg" id="12_shomb"]
+[ext_resource type="AudioStream" uid="uid://dm0jc0t81prps" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_medium_002.ogg" id="13_ynldk"]
+[ext_resource type="AudioStream" uid="uid://d2by8ro32cpp7" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_medium_003.ogg" id="14_7pc23"]
+[ext_resource type="AudioStream" uid="uid://d2nrnx15l5aux" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactGlass_medium_004.ogg" id="15_ofsdw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jf5x7"]
+top_radius = 0.07
+bottom_radius = 0.15
+height = 0.4
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnne2"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x4wsa"]
+top_radius = 0.025
+bottom_radius = 0.15
+height = 0.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6k4s"]
+transparency = 1
+blend_mode = 1
+cull_mode = 1
+albedo_color = Color(0.815686, 1, 1, 0.196078)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tvmxx"]
+height = 0.4
+radius = 0.15
+
+[sub_resource type="Resource" id="Resource_w8nqp"]
+resource_local_to_scene = true
+script = ExtResource("2_4pii1")
+inventory_item = ExtResource("2_j2eoi")
+quantity = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qu2a1"]
+random_pitch = 1.1
+random_volume_offset_db = 3.0
+streams_count = 10
+stream_0/stream = ExtResource("6_ia22h")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("7_6ipju")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("8_4gir3")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("9_7bixy")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("10_a20q4")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("11_4aqns")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("12_shomb")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("13_ynldk")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("14_7pc23")
+stream_8/weight = 1.0
+stream_9/stream = ExtResource("15_ofsdw")
+stream_9/weight = 1.0
+
+[node name="HealthPotion" type="RigidBody3D"]
+collision_layer = 3
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("1_bh0fn")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.685, 0, 0, 0, 0.685, 0, 0, 0, 0.685, 0, -0.1043, 0)
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+mesh = SubResource("CylinderMesh_x4wsa")
+material = SubResource("StandardMaterial3D_a6k4s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0656812, 0)
+visible = false
+shape = SubResource("CylinderShape3D_tvmxx")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_u4d3q")]
+slot_data = SubResource("Resource_w8nqp")
+
+[node name="ImpactSounds" parent="." instance=ExtResource("5_r4r7l")]
+impact_sounds = SubResource("AudioStreamRandomizer_qu2a1")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("6_o5nsr")]

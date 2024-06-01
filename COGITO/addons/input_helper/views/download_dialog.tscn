@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bownbkcmm43gn"]
+
+[ext_resource type="PackedScene" uid="uid://b7mst0qu7vjk1" path="res://addons/input_helper/components/download_update_panel.tscn" id="1_37q37"]
+[ext_resource type="Script" path="res://addons/input_helper/views/download_dialog.gd" id="1_ltktf"]
+
+[node name="DownloadDialog" type="AcceptDialog"]
+initial_position = 2
+ok_button_text = "Close"
+script = ExtResource("1_ltktf")
+
+[node name="DownloadUpdatePanel" parent="." instance=ExtResource("1_37q37")]
+
+[connection signal="failed" from="DownloadUpdatePanel" to="." method="_on_download_update_panel_failed"]
+[connection signal="updated" from="DownloadUpdatePanel" to="." method="_on_download_update_panel_updated"]

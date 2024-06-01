@@ -1,0 +1,80 @@
+[gd_scene load_steps=14 format=3 uid="uid://bab56bf0vqfss"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_ab3qi"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="2_5yg6i"]
+[ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://COGITO/InventoryPD/Items/Cogito_Battery.tres" id="2_hmjxw"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_12bow"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="5_q7tof"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jpa6y"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.2
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bflwk"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+metallic_specular = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_45n87"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.1
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkxj7"]
+albedo_color = Color(0.658824, 0.396078, 0, 1)
+metallic_specular = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gicqu"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_63ixj"]
+albedo_color = Color(0.658824, 0.658824, 0.658824, 1)
+metallic_specular = 0.2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_emdw8"]
+height = 0.3
+radius = 0.1
+
+[sub_resource type="Resource" id="Resource_g1f2m"]
+resource_local_to_scene = true
+script = ExtResource("3_12bow")
+inventory_item = ExtResource("2_hmjxw")
+quantity = 1
+
+[node name="Pickup_Battery" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_ab3qi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_jpa6y")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_bflwk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_45n87")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_bkxj7")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
+mesh = SubResource("CylinderMesh_gicqu")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_63ixj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0504714, 0)
+shape = SubResource("CylinderShape3D_emdw8")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_5yg6i")]
+slot_data = SubResource("Resource_g1f2m")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("5_q7tof")]

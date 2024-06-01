@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorials &mdash; Cogito  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Manual" href="manual.html" />
+    <link rel="prev" title="About" href="about.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Cogito
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#what-is-cogito">What is COGITO?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#guiding-principals">Guiding Principals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#current-features">Current Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#thanks-and-contributions">Thanks and Contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#license-and-credits">License and Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#mit-license">MIT License</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cogito-setup">COGITO Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-your-first-cogito-scene">Setting Up Your First Cogito Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#old-feature-overview">(Old) Feature Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sliding-door-from-scratch">Sliding Door from Scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wieldables-overview">Wieldables Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#player-controller">Player Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#cogito-attributes">COGITO Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogitoattribute-base-class">CogitoAttribute base class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#health-attribute">Health Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#stamina-attribute">Stamina Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#visibility-attribute">Visibility Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#light-meter-attribute">Light Meter Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#sanity-attribute">Sanity Attribute</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#ui-attribute-component">UI Attribute Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#player-interaction-system">Player Interaction System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#cogito-objects">Cogito Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-object">Cogito_Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-door">Cogito_Door</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-button">Cogito_Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-switch">Cogito_Switch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-keypad">Cogito_Keypad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-turnwheel">Cogito_Turnwheel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-staticinteractable">Cogito_StaticInteractable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#cogito-inventory-system">Cogito Inventory System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#inventory-overview">Inventory Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#inventory-item-class">Inventory Item Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#game-persistence-saving-and-loading">Game persistence, saving and loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#save-data-overview">Save data overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#player-state">Player state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#scene-state">Scene state</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#my-question-isn-t-answered-here">My question isn’t answered here?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-set-the-main-menu-to-start-load-my-own-level-scene">How do I set the main menu to start/load my own level scene?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#my-own-objects-aren-t-working">My own objects aren’t working!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cogito</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tutorials</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorials.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading"></a></h1>
+<section id="cogito-setup">
+<h2>COGITO Setup<a class="headerlink" href="#cogito-setup" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Clone this repo or download it and unzip it into it’s own directory.</p></li>
+<li><p>Open the project with the Godot editor.</p></li>
+<li><p>Make sure the following plug-ins are activated:</p></li>
+<li><p>Quick Audio (currently v1.0)</p></li>
+<li><p>Input Helper (currently v4.2.2)</p></li>
+<li><p>Make sure the following Autoloads are set up in your project:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="res://COGITO/EsayMenus/Nodes/menu_template_manager.tscn">res://COGITO/EsayMenus/Nodes/menu_template_manager.tscn</a></p></li>
+<li><p><a class="reference external" href="res://COGITO/SceneManagement/cogito_scene_manager.gd">res://COGITO/SceneManagement/cogito_scene_manager.gd</a></p></li>
+<li><p><a class="reference external" href="res://COGITO/QuestSysteemPD/CogitoQuestManager.gd">res://COGITO/QuestSysteemPD/CogitoQuestManager.gd</a></p></li>
+</ul>
+</li>
+<li><p>Open and run <a class="reference external" href="res://COGITO/DemoScenes/COGITO_04_Demo_Lobby.tscn">res://COGITO/DemoScenes/COGITO_04_Demo_Lobby.tscn</a> to see if everything works.</p></li>
+</ol>
+</section>
+<section id="setting-up-your-first-cogito-scene">
+<h2>Setting Up Your First Cogito Scene<a class="headerlink" href="#setting-up-your-first-cogito-scene" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Place Player.tscn inside your scene.</p></li>
+<li><p>To enable transitioning between scenes, your scene root node needs to have cogito_scene.gd attached and connector nodes defined (see demo scene).</p></li>
+</ol>
+</section>
+<section id="old-feature-overview">
+<h2>(Old) Feature Overview<a class="headerlink" href="#old-feature-overview" title="Link to this heading"></a></h2>
+<p>Click the image to open the video on YouTube</p>
+<a class="reference external image-reference" href="https://www.youtube.com/watch?v=LYBo1_Qfru0"><img alt="COGITO Feature Overview" src="https://img.youtube.com/vi/LYBo1_Qfru0/maxresdefault.jpg" /></a>
+</section>
+<section id="sliding-door-from-scratch">
+<h2>Sliding Door from Scratch<a class="headerlink" href="#sliding-door-from-scratch" title="Link to this heading"></a></h2>
+<p>Click the image to open the video on YouTube</p>
+<a class="reference external image-reference" href="https://www.youtube.com/watch?v=rLBSxqjXlWY"><img alt="IMAGE ALT TEXT HERE" src="https://img.youtube.com/vi/rLBSxqjXlWY/maxresdefault.jpg" /></a>
+</section>
+<section id="wieldables-overview">
+<h2>Wieldables Overview<a class="headerlink" href="#wieldables-overview" title="Link to this heading"></a></h2>
+<p>Click the image to open the video on YouTube</p>
+<a class="reference external image-reference" href="https://www.youtube.com/watch?v=9TK4Tw48nKQ"><img alt="IMAGE ALT TEXT HERE" src="https://img.youtube.com/vi/9TK4Tw48nKQ/maxresdefault.jpg" /></a>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="about.html" class="btn btn-neutral float-left" title="About" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="manual.html" class="btn btn-neutral float-right" title="Manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Drobar plus contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://dvqua6l6cgbpv"]
+
+[ext_resource type="Texture2D" uid="uid://bgeywot8vygsa" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_00.png" id="1_k6hy0"]
+[ext_resource type="Texture2D" uid="uid://bsnnl3lj58bwg" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_01.png" id="2_n61jb"]
+[ext_resource type="Texture2D" uid="uid://c2t5w06mlog62" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_02.png" id="3_mdgon"]
+[ext_resource type="Texture2D" uid="uid://1oslnc23jviv" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_03.png" id="4_bild2"]
+
+[sub_resource type="Animation" id="Animation_p680k"]
+resource_name = "single_spin"
+length = 2.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon_01:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -6.283, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Icon_02:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 6.283, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_svbim"]
+_data = {
+"single_spin": SubResource("Animation_p680k")
+}
+
+[node name="CogitoSpinner" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Icon_00" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(200, 200)
+texture = ExtResource("1_k6hy0")
+
+[node name="Icon_01" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(200, 200)
+texture = ExtResource("2_n61jb")
+
+[node name="Icon_02" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(200, 200)
+texture = ExtResource("3_mdgon")
+
+[node name="Icon_03" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(200, 200)
+texture = ExtResource("4_bild2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_svbim")
+}

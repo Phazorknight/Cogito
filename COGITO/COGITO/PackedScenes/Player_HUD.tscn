@@ -1,0 +1,500 @@
+[gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
+
+[ext_resource type="Script" path="res://COGITO/Scripts/player_hud_manager.gd" id="1_0wdkf"]
+[ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
+[ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://COGITO/Assets/Graphics/Crosshair.png" id="3_ahile"]
+[ext_resource type="PackedScene" uid="uid://dtdjlu4dtm6wh" path="res://COGITO/InventoryPD/UiScenes/InventoryUI.tscn" id="3_krf2d"]
+[ext_resource type="Texture2D" uid="uid://b45endup5sujv" path="res://COGITO/Assets/Textures/CameraDamageVignette.png" id="3_lb6l4"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
+[ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="3_o56n0"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
+[ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
+[ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
+[ext_resource type="Script" path="res://COGITO/Scripts/ui_wieldable_hud.gd" id="8_2nbvg"]
+[ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
+[ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
+[ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="10_bnneb"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
+[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
+[ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://COGITO/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
+[ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
+[ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://COGITO/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1f12m"]
+blend_mode = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_q4xln"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_ossw8"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eka6m"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbke8"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Player_HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0wdkf")
+default_hint_icon = ExtResource("3_o56n0")
+prompt_component = ExtResource("3_06ipe")
+hint_component = ExtResource("17_bidre")
+ui_attribute_prefab = ExtResource("20_lscav")
+
+[node name="DamageOverlay" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="DamageOverlay"]
+material = SubResource("CanvasItemMaterial_1f12m")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_lb6l4")
+expand_mode = 5
+
+[node name="Crosshair" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ahile")
+expand_mode = 1
+
+[node name="HintTimer" type="Timer" parent="."]
+wait_time = 3.5
+
+[node name="PromptArea" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.578125
+anchor_top = 0.5
+anchor_right = 0.578125
+anchor_bottom = 0.5
+theme_override_constants/separation = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer_BottomUI" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="WieldableHud" type="PanelContainer" parent="MarginContainer_BottomUI"]
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+script = ExtResource("8_2nbvg")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer_BottomUI/WieldableHud"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer"]
+layout_mode = 2
+
+[node name="WieldableData" type="HBoxContainer" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="WieldableIcon" type="TextureRect" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/WieldableData"]
+layout_mode = 2
+texture = ExtResource("9_1l2nt")
+expand_mode = 3
+
+[node name="WieldableChargeLabel" type="Label" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/WieldableData"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
+text = "00"
+label_settings = SubResource("LabelSettings_q4xln")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AmmoData" type="HBoxContainer" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="AmmoIcon" type="TextureRect" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/AmmoData"]
+layout_mode = 2
+texture = ExtResource("10_bnneb")
+expand_mode = 3
+
+[node name="AmmoLabel" type="Label" parent="MarginContainer_BottomUI/WieldableHud/MarginContainer/VBoxContainer/AmmoData"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDLabel"
+text = "00"
+label_settings = SubResource("LabelSettings_ossw8")
+
+[node name="PlayerAttributes" type="PanelContainer" parent="MarginContainer_BottomUI"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_filter = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer_BottomUI/PlayerAttributes"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer_BottomUI/PlayerAttributes/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="InventoryInterface" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_lyywb")
+sound_error = ExtResource("8_bxpra")
+metadata/_edit_lock_ = true
+
+[node name="InventoryUI" parent="InventoryInterface" instance=ExtResource("3_krf2d")]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -245.0
+offset_right = 63.0
+offset_bottom = -199.0
+grow_vertical = 0
+inventory_name = "Player Inventory"
+
+[node name="ExternalInventoryUI" parent="InventoryInterface" instance=ExtResource("3_krf2d")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 104.0
+offset_top = -20.0
+offset_right = 144.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GrabbedSlot" parent="InventoryInterface" instance=ExtResource("5_juyvt")]
+visible = false
+modulate = Color(1, 1, 1, 0.498039)
+self_modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="HotBarInventory" parent="InventoryInterface" instance=ExtResource("6_8odro")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -37.0
+offset_right = 255.0
+offset_bottom = -5.0
+grow_vertical = 0
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+
+[node name="InfoPanel" type="PanelContainer" parent="InventoryInterface"]
+visible = false
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 110.0
+mouse_filter = 2
+theme = ExtResource("5_j6s1a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_eka6m")
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="ItemName" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"PromptLabel"
+text = "ItemName"
+
+[node name="ItemDescription" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/line_spacing = 1
+theme_override_font_sizes/font_size = 14
+text = "Item description going over to lines. Testing overflow as well to make sure the panel container extends as needed."
+autowrap_mode = 3
+
+[node name="HBoxUse" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnUse" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "inventory_use_item"
+
+[node name="TextUse" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxUse"]
+layout_mode = 2
+text = "Use"
+
+[node name="HBoxMove" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnMove" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "inventory_move_item"
+
+[node name="TextMove" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxMove"]
+layout_mode = 2
+text = "Move"
+
+[node name="HBoxDrop" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnDrop" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.3, 0.3)
+action_name = "inventory_drop_item"
+
+[node name="TextDrop" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop"]
+layout_mode = 2
+text = "Drop"
+
+[node name="DeathScreen" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_j6s1a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rbke8")
+
+[node name="BoxContainer" type="BoxContainer" parent="DeathScreen/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -49.5
+offset_right = 175.0
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen/Panel/BoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DeathScreen/Panel/BoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DeathScreen/Panel/BoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "You died."
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="DeathScreen/Panel/BoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Restart"
+
+[node name="HintArea" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_bottom = 5.0
+theme = ExtResource("5_j6s1a")
+
+[node name="QuestHUD" type="Control" parent="."]
+anchors_preset = 0
+anchor_left = 0.683594
+anchor_top = 0.0138889
+anchor_right = 0.683594
+anchor_bottom = 0.0138889
+pivot_offset = Vector2(400, 0)
+theme = ExtResource("5_j6s1a")
+script = ExtResource("15_kn51k")
+send_quest_notifications = true
+quest_entry = ExtResource("16_qsjbq")
+metadata/_edit_use_anchors_ = true
+
+[node name="QuestDisplay" type="PanelContainer" parent="QuestHUD"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 166.0
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestHUD/QuestDisplay"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="QuestHUD/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"PromptLabel"
+theme_override_font_sizes/font_size = 24
+text = "Quests"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="QuestHUD/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+
+[node name="Active" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_override_constants/separation = 4
+
+[node name="QuestEntry" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
+layout_mode = 2
+
+[node name="QuestEntry2" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
+layout_mode = 2
+
+[node name="Completed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Failed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="FadeInScreen" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_j6s1a")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rbke8")
+
+[connection signal="timeout" from="HintTimer" to="." method="_on_hint_timer_timeout"]
+[connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
+[connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
+[connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]
+[connection signal="pressed" from="DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

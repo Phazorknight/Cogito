@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cetc123v5gnff"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Attributes/cogito_sanity_attribute.gd" id="1_q1jwf"]
+[ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_g45ru"]
+
+[node name="SanityAttribute" type="Node"]
+script = ExtResource("1_q1jwf")
+decay_rate = 4.0
+recovery_rate = 3.0
+decay_in_darkness = true
+attribute_name = "sanity"
+attribute_display_name = "Sanity"
+attribute_color = Color(0, 0.670588, 0, 1)
+attribute_icon = ExtResource("2_g45ru")
+value_max = 100.0
+value_start = 50.0

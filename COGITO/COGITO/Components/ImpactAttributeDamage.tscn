@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5cjuw2emh3wq"]
+
+[ext_resource type="Script" path="res://COGITO/Components/ImpactAttributeDamage.gd" id="1_lfg44"]
+
+[node name="ImpactAttributeDamage" type="Node3D"]
+script = ExtResource("1_lfg44")
+damage = 1

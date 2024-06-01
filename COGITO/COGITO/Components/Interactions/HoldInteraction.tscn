@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://poem1yjtmt3n"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/HoldInteraction.gd" id="1_lawwc"]
+
+[node name="HoldInteraction" type="Node3D"]
+script = ExtResource("1_lawwc")
+input_map_action = "interact"
+interaction_text = "Hold"
+
+[node name="HoldTimer" type="Timer" parent="."]
+
+[node name="HoldUi" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 10.0
+offset_right = 20.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="HoldUi"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+show_percentage = false

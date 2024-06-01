@@ -1,0 +1,38 @@
+[gd_scene load_steps=11 format=3 uid="uid://c33aod2r6mxf6"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/DialogueNodesInteraction.gd" id="1_66yfh"]
+[ext_resource type="Resource" uid="uid://dx5jwgeci8ju3" path="res://DN_TestDialogue.tres" id="2_bmdb8"]
+[ext_resource type="Theme" uid="uid://b4f152moh4ayu" path="res://addons/dialogue_nodes/themes/bubblyClean.theme" id="3_eplts"]
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeWait.gd" id="4_tynj0"]
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeGhost.gd" id="5_210fs"]
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/bbcodeMatrix.gd" id="6_uhu03"]
+[ext_resource type="Script" path="res://addons/dialogue_nodes/objects/DialogueBubble.gd" id="7_5g8j8"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_18s5n"]
+script = ExtResource("4_tynj0")
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_qqvse"]
+script = ExtResource("5_210fs")
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_8q1en"]
+script = ExtResource("6_uhu03")
+
+[node name="DialogueNodesInteraction" type="Node3D"]
+script = ExtResource("1_66yfh")
+dialogue_data = ExtResource("2_bmdb8")
+input_map_action = "interact"
+interaction_text = "Talk"
+
+[node name="DialogueBubble" type="RichTextLabel" parent="." node_paths=PackedStringArray("follow_node")]
+clip_contents = false
+offset_right = 140.0
+offset_bottom = 23.0
+theme = ExtResource("3_eplts")
+bbcode_enabled = true
+text = "Sample dialogue."
+fit_content = true
+autowrap_mode = 0
+custom_effects = [SubResource("RichTextEffect_18s5n"), SubResource("RichTextEffect_qqvse"), SubResource("RichTextEffect_8q1en")]
+script = ExtResource("7_5g8j8")
+follow_node = NodePath("..")
+dialogue_custom_effects = [SubResource("RichTextEffect_18s5n"), SubResource("RichTextEffect_qqvse"), SubResource("RichTextEffect_8q1en")]

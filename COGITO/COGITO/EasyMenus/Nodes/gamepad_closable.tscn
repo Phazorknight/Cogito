@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqniig2ks0xs2"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/gamepad_closeable.gd" id="1_akg2c"]
+
+[node name="GamepadClosable" type="Node"]
+editor_description = "Add this node as a child of a OptionButton.
+This node makes the Popup closeable by using a Gamepad."
+script = ExtResource("1_akg2c")

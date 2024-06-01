@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce7bjv28uakxl"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Attributes/cogito_stamina_attribute.gd" id="1_jkbcj"]
+[ext_resource type="Texture2D" uid="uid://dre2xvgfoqv28" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Stamina.png" id="2_yabdn"]
+
+[node name="StaminaAttribute" type="Node"]
+script = ExtResource("1_jkbcj")
+stamina_regen_speed = 2.0
+run_exhaustion_speed = 3.0
+jump_exhaustion = 5.0
+attribute_name = "stamina"
+attribute_display_name = "Stamina"
+attribute_color = Color(1, 0.733333, 0.160784, 1)
+attribute_icon = ExtResource("2_yabdn")
+value_max = 30.0
+value_start = 30.0

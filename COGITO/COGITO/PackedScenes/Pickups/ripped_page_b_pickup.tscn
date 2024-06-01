@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://uoru03g0vtp"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_okgq0"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="2_l1smi"]
+[ext_resource type="Resource" uid="uid://dyrad3e3t138m" path="res://COGITO/InventoryPD/Items/Cogito_RippedPage_B.tres" id="3_ics4n"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_md7ey"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ak5i"]
+margin = 0.01
+size = Vector3(0.125, 0.25, 0.045)
+
+[sub_resource type="Resource" id="Resource_cetkx"]
+script = ExtResource("3_md7ey")
+inventory_item = ExtResource("3_ics4n")
+quantity = 1
+
+[node name="RippedPageB_pickup" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_okgq0")
+
+[node name="RippedPageB_Mesh" type="CSGPolygon3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.04, -0.125, 0)
+polygon = PackedVector2Array(0.2, 0, 0.2, 0.5, 0, 0.5, -0.025, 0.45, -0.015, 0.4, -0.04, 0.35, -0.04, 0.3, -0.065, 0.25, -0.03, 0.2, -0.02, 0.15, -0.045, 0.1, -0.01, 0.05, 0.055, 0)
+depth = 0.01
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3ak5i")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_l1smi")]
+slot_data = SubResource("Resource_cetkx")

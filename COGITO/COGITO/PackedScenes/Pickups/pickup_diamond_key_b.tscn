@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://djfg6ea5cbhyv"]
+
+[ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="1_qb6jw"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_rbcr3"]
+[ext_resource type="Resource" uid="uid://1sito351mi08" path="res://COGITO/InventoryPD/Items/Cogito_DiamondKey_B.tres" id="2_8nfob"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_cfmdv"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://COGITO/Components/Interactions/PickupComponent.tscn" id="3_mehd7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtyi5"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ppqw0"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_pddov"]
+
+[sub_resource type="Resource" id="Resource_b2hxk"]
+resource_local_to_scene = true
+script = ExtResource("3_cfmdv")
+inventory_item = ExtResource("2_8nfob")
+quantity = 1
+
+[node name="DiamondKeyB" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_rbcr3")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
+material_override = ExtResource("1_qb6jw")
+polygon = PackedVector2Array(0, 0.15, 0, 0.1, 0.05, 0.1, 0.05, 0, 0.2, 0.125, 0.05, 0.25, 0.05, 0.15)
+depth = 0.02
+
+[node name="_MeshInstance3D_22749" type="MeshInstance3D" parent="CSGPolygon3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1e-05)
+material_override = SubResource("StandardMaterial3D_vtyi5")
+mesh = SubResource("ImmediateMesh_ppqw0")
+
+[node name="_MeshInstance3D_14095" type="MeshInstance3D" parent="CSGPolygon3D2/_MeshInstance3D_22749"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1e-05)
+mesh = SubResource("ArrayMesh_pddov")
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01)
+visible = false
+depth = 0.02
+polygon = PackedVector2Array(0.05, 0, 0.05, 0.25, 0.2, 0.125)
+margin = 0.02
+
+[node name="PickupComponent" parent="." instance=ExtResource("3_mehd7")]
+slot_data = SubResource("Resource_b2hxk")

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual &mdash; Cogito  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Cogito
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#what-is-cogito">What is COGITO?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#guiding-principals">Guiding Principals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#current-features">Current Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#thanks-and-contributions">Thanks and Contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#license-and-credits">License and Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#mit-license">MIT License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#cogito-setup">COGITO Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#setting-up-your-first-cogito-scene">Setting Up Your First Cogito Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#old-feature-overview">(Old) Feature Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#sliding-door-from-scratch">Sliding Door from Scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#wieldables-overview">Wieldables Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#player-controller">Player Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cogito-attributes">COGITO Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cogitoattribute-base-class">CogitoAttribute base class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#health-attribute">Health Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stamina-attribute">Stamina Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visibility-attribute">Visibility Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#light-meter-attribute">Light Meter Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sanity-attribute">Sanity Attribute</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ui-attribute-component">UI Attribute Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#player-interaction-system">Player Interaction System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cogito-objects">Cogito Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-object">Cogito_Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-door">Cogito_Door</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-button">Cogito_Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-switch">Cogito_Switch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-keypad">Cogito_Keypad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-turnwheel">Cogito_Turnwheel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cogito-staticinteractable">Cogito_StaticInteractable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cogito-inventory-system">Cogito Inventory System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inventory-overview">Inventory Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inventory-item-class">Inventory Item Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#game-persistence-saving-and-loading">Game persistence, saving and loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#save-data-overview">Save data overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#player-state">Player state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scene-state">Scene state</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#my-question-isn-t-answered-here">My question isn’t answered here?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-set-the-main-menu-to-start-load-my-own-level-scene">How do I set the main menu to start/load my own level scene?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#my-own-objects-aren-t-working">My own objects aren’t working!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cogito</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Manual</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/manual.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="manual">
+<h1>Manual<a class="headerlink" href="#manual" title="Link to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The documentation is still work in progress and will be updated over time.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This documenation will give you an overview of the most important properties &amp; methods of the different nodes and how to use them. This documentation does not always list each and every function or exposed property, as these are better explored in the editor itself and include tooltips on how to use them. If you want to dive deeper into the code, you can also read the comments in the source code.</p>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>COGITO is a fully featured template. It is recommended to use this as the starting point of your project BEFORE implementing any of your own features. We strongly recommend playing through the included demo scenes to get a good impression of what functionality is included. While COGITO is designed with modularity and versatility in mind, it is usually easier to modify the included systems than try to make it work with other external systems (like using a different inventory system or player controller). The most common tasks most users will run into is adapting their own assets and levels to work with COGITO. I’m in the process of creating video tutorials for these cases which should help you get started quickly.</p>
+</section>
+<section id="player-controller">
+<h2>Player Controller<a class="headerlink" href="#player-controller" title="Link to this heading"></a></h2>
+<p>COGITO includes a first person player controller that has a variety of parameters and settings built-in. We recommend just reading through the descriptions and tweaking the parameters to your liking. Most common adjustments needed are walking, running and sprinting speeds, stair handling, and ladder handling. Be aware that a few of the player controller parameters will be controlled by the game options and are thus user controlled (for example Invert Y Axis).</p>
+</section>
+<section id="cogito-attributes">
+<h2>COGITO Attributes<a class="headerlink" href="#cogito-attributes" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">COGITO</span> <span class="pre">Attributes</span></code> are a custom class used to save and manipulate data most commonly used to represent some kind of numerical attribute. Most common examples are values like health points, stamina, magic, etc. These are usually tied to the player but not exclusively. For example you can use the health attribute on any objects that you want to receive damage. The included specific attributes come as component nodes you can simply instantiate as child nodes to any object.</p>
+<section id="cogitoattribute-base-class">
+<h3>CogitoAttribute base class<a class="headerlink" href="#cogitoattribute-base-class" title="Link to this heading"></a></h3>
+<p>The base class used for any attributes is the <code class="docutils literal notranslate"><span class="pre">CogitoAttribute</span></code> class.</p>
+<p><strong>Properties:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>attribute_name (String)</dt><dd><ul>
+<li><p>String used in scripts to find specific attributes. Make sure this is all lowercase and without spaces.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>attribute_display_name (String)</dt><dd><ul>
+<li><p>As it would appear in the game.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>attribute_color (Color)</dt><dd><ul>
+<li><p>Used for UI elements</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>attribute_icon (Texture2D)</dt><dd><ul>
+<li><p>Used for UI elements</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>value_max (float)</dt><dd><ul>
+<li><p>The maximum value of this attribute. Can change over time and is saved in the player state file.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>value_start (float)</dt><dd><ul>
+<li><p>The start value of this attribute.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Signals:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>attribute_changed(attribute_name: String, value_current: float, value_max: float, has_increased: bool)</dt><dd><ul>
+<li><p>Gets emitted anytime the attribute value changes. If the value change was positive, has_increased will be true, if not it’s false)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>attribute_reached_zero(attribute_name: String, value_current: float, value_max: float)</dt><dd><ul>
+<li><p>Gets emitted when the current value of this attribute is 0.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="health-attribute">
+<h3>Health Attribute<a class="headerlink" href="#health-attribute" title="Link to this heading"></a></h3>
+<p>This attribute is not just for player health. You can attach the component to objects to give them their own “health” and define behaviour when they run out of health (death).</p>
+<p><strong>Properties:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>no_sanity_damage (float)</dt><dd><ul>
+<li><p>used in combination with the sanity attribute. Defines how much damage per second the owner takes if their sanity attribute has reached zero.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>sound_on_damage (AudioStream)</dt><dd><ul>
+<li><p>AudioStream that plays when the owner takes damage.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>sound_on_death (AudioStream)</dt><dd><ul>
+<li><p>AudioStream that plays when the owner dies (health reaches zero).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>destroy_on_death (Array[NodePath])</dt><dd><ul>
+<li><p>When the owner dies, all the nodes which nodepaths are in this array will get destroyed (queue_free())</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>spawn_on_death (PackedScene)</dt><dd><ul>
+<li><p>When the owner dies, the packed scene will be instantiated at the owners global position. This is most commonly used for VFX or item drops.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Signals:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>damage_taken()</dt><dd><ul>
+<li><p>Gets emitted when the owner takes damage (attribute value decreases). Can be used for VFX, audio.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>death()</dt><dd><ul>
+<li><p>Gets emitted when the owner dies. Can be used for VFX, audio, triggering cutscenes, updating quests, etc.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="stamina-attribute">
+<h3>Stamina Attribute<a class="headerlink" href="#stamina-attribute" title="Link to this heading"></a></h3>
+<p>This attribute works in tight connection with the Player controller. When in use, certain actions from the player will consume stamina and player movement will be limited once the stamina is fully depleted. The default actions that are affected by Stamina is sprinting and jumping.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you don’t want to use the Stamina system, simply remove the StaminaAttribute from your Player scene.</p>
+</div>
+<p><strong>Properties:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>stamina_regen_speed (float)</dt><dd><ul>
+<li><p>How fast stamina regenerates in points per second.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>run_exhaustion_speed (float)</dt><dd><ul>
+<li><p>How fast sprinting reduces stamina in points per seconds of sprinting.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>jump_exhaustion (float)</dt><dd><ul>
+<li><p>How much stamina jumping consumes in points.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>regenerate_after (float)</dt><dd><ul>
+<li><p>The delay after using the last stamina-consuming action before stamina starts regenerating, in seconds.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>auto_regenerate (float)</dt><dd><ul>
+<li><p>If turned off, stamina will not auto regenerate.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="visibility-attribute">
+<h3>Visibility Attribute<a class="headerlink" href="#visibility-attribute" title="Link to this heading"></a></h3>
+<p>(This used to be called Brightness component). The <code class="docutils literal notranslate"><span class="pre">Visibility</span> <span class="pre">Attribute</span></code> represents how “visible” the player is within a scene. It is important to understand that this attribute is not actually tied to Lights within your scene. Instead, it works by counting how many <code class="docutils literal notranslate"><span class="pre">Lightzones</span></code> the player is currently in.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Lightzones</span></code> are a separate component, which gives developers complete control over how visible the player is at any spot inside a level. This attribute can then be checked by other entities, whenever they have a reference to the player. A common example would be that if the player enters the viewcone of a NPC, you might still want the NPC to not detect the player if they’re shrouded in complete darkness, or detect the player faster, the higher their visibility is.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you don’t want to use the Visibility system, simply remove the VisibilityAttribute from your Player scene.</p>
+</div>
+</section>
+<section id="light-meter-attribute">
+<h3>Light Meter Attribute<a class="headerlink" href="#light-meter-attribute" title="Link to this heading"></a></h3>
+<p>This new attribute actually measures how much light the player is exposed to by checking the average luminance of the current player position. As this heavily depends on your scene, you will most likely need to tweak the min/max values within this attribute and it’s script. Please note that this calculation is somewhat performance hungry, so use with caution.</p>
+</section>
+<section id="sanity-attribute">
+<h3>Sanity Attribute<a class="headerlink" href="#sanity-attribute" title="Link to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This attribute is a work in progress</p>
+</div>
+</section>
+</section>
+<section id="ui-attribute-component">
+<h2>UI Attribute Component<a class="headerlink" href="#ui-attribute-component" title="Link to this heading"></a></h2>
+<p>This <code class="docutils literal notranslate"><span class="pre">packed</span> <span class="pre">scene</span></code> is used to reperesent <code class="docutils literal notranslate"><span class="pre">CogitoAttributes</span></code> in the <code class="docutils literal notranslate"><span class="pre">Player</span> <span class="pre">HUD</span></code>. In the default COGITO Setup, the <code class="docutils literal notranslate"><span class="pre">Player</span> <span class="pre">HUD</span></code> checks which attribute nodes are part of the Player scene and instantiates a <code class="docutils literal notranslate"><span class="pre">UI</span> <span class="pre">Attribute</span> <span class="pre">Component</span></code> for each one in the <code class="docutils literal notranslate"><span class="pre">Attribute</span> <span class="pre">Container</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">UI</span> <span class="pre">Attribute</span> <span class="pre">Component</span></code> reads all properties and connects to all signals needed directly from the Attribute itself (color, icon, name, values). You can customize the component to fit your own needs. Alterantively, you can also define explicit attribute components for each attribute if you create a direct reference in the <code class="docutils literal notranslate"><span class="pre">Player</span> <span class="pre">HUD</span></code> script (this involves some coding). To change where the Attribute UIs show, change the location of the <code class="docutils literal notranslate"><span class="pre">PlayerAttributes</span></code> <code class="docutils literal notranslate"><span class="pre">PanelContainer</span></code>.</p>
+</section>
+<section id="player-interaction-system">
+<h2>Player Interaction System<a class="headerlink" href="#player-interaction-system" title="Link to this heading"></a></h2>
+<p>COGITO works with a raycast interaction system. This means that the player camera contains a <code class="docutils literal notranslate"><span class="pre">raycast3d</span></code> that constantly checks what the player is looking at. If an interactive object is detected, the raycast checks what kind of interaction components are attached to the object and displays interaction prompts accordingly.</p>
+</section>
+<section id="cogito-objects">
+<h2>Cogito Objects<a class="headerlink" href="#cogito-objects" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Cogito</span> <span class="pre">Object</span></code> refers to classes specifically created to work with all of COGITO’s systems. These are designed to represent the most commonly used interactive objects in games. Below you’ll find a brief explanation what each object does so you know which one to choose when you want to turn your own asset into a suitable <code class="docutils literal notranslate"><span class="pre">Cogito</span> <span class="pre">Object</span></code>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Interactables consider two major parts: The object itself and the InteractionComponents attached as child nodes to define what kind of interactions can be done.</p>
+</div>
+<p>Here’s a quick overview which object to use for what use-case:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Cogito Object/Script</p></th>
+<th class="head"><p>Use case</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Cogito_Object</p></td>
+<td><p>Item pick-ups, props, crates, “clutter objects”</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cogito_Door</p></td>
+<td><p>Doors, gates, manually controlled platforms, bridges, moveable objects with two positions (open/closed)</p></td>
+</tr>
+<tr class="row-even"><td><p>Cogito_Button</p></td>
+<td><p>Button that unlocks a door (single-use), vending machine buttons (repeated-use)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cogito_Switch</p></td>
+<td><p>Lamps, levers, sockets for key objects, objects with two states (on/off)</p></td>
+</tr>
+<tr class="row-even"><td><p>Cogito_Keypad</p></td>
+<td><p>Keypads, other UI based minigames that should send signals.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cogito_Turnwheel</p></td>
+<td><p>Valves, rotation-based levers, press-and-hold interactions</p></td>
+</tr>
+<tr class="row-even"><td><p>Cogito_StaticInteractable</p></td>
+<td><p>Static objects who’s state won’t get saved that still can have interactions attached.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="cogito-object">
+<h3>Cogito_Object<a class="headerlink" href="#cogito-object" title="Link to this heading"></a></h3>
+<p>This is the basis of most smaller interactive objects. Item pickups, crates, and common “clutter objects” would utilize this. Use a <code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> if you want to do any of the following:</p>
+<ul class="simple">
+<li><p>You want the object to be moved around within the level scene (<code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> saves position and rotation, works well with RigidBodies)</p></li>
+<li><p>You want to use a variety of included interactions (most other objects have bespoke interactions, <code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> is made to use a mix of interaction components)</p></li>
+<li><p>This object might not always exist in the level scene (<code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> are based on PackedScenes and sometimes get instanced on runtime, COGITO also saves if a <code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> exists in a scene or not)</p></li>
+</ul>
+</section>
+<section id="cogito-door">
+<h3>Cogito_Door<a class="headerlink" href="#cogito-door" title="Link to this heading"></a></h3>
+<p>Naturally, this object is perfect for doors, but it can actually be used for anything that is supposed to move based on player interaction or other Cogito Objects. If you have an object that transitions between two positions, then the Cogito_Door object is the one to use. It also includes options to be “locked” and to require a key_item to be unlocked. Cogito_Doors also don’t have to be purely triggered by direct player interactions: Cogito_Doors can be controlled by other Cogito Objects or via signals. To learn how to set up a Cogito Door from scratch, check out COGITO - Tutorial: Sliding door.</p>
+</section>
+<section id="cogito-button">
+<h3>Cogito_Button<a class="headerlink" href="#cogito-button" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Cogito_Button</span></code> is used to trigger other objects via signal or to call interact() on other <code class="docutils literal notranslate"><span class="pre">Cogito_Objects</span></code>. It can be set to be “one-time-use” and also has “re-use” delay to avoid spamming.</p>
+</section>
+<section id="cogito-switch">
+<h3>Cogito_Switch<a class="headerlink" href="#cogito-switch" title="Link to this heading"></a></h3>
+<p>Similar to the <code class="docutils literal notranslate"><span class="pre">Cogito_Button</span></code> but with a few more functions. This is used to create interactive objects with a clear on/off or A/B state. Most common examples are lamps and lights.</p>
+<p>It uses 3 node arrays that will be switched depending on their state:</p>
+<ul class="simple">
+<li><p>nodes that will be shown when ON</p></li>
+<li><p>nodes that will be hidden when ON</p></li>
+<li><p>and nodes that will have interact() called on switch use.</p></li>
+</ul>
+<p>You can also set if the switch can be used repeatedly or not, if using the switch requires an item, and of course your custom interaction texts. Included signals can also help triggering additional behaviours, like playing an animation.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The objects you switch do not have to be part of the switchable object. For example if you want a ceiling lamp that is controlled by a light switch, make the light switch the switchable and add all the ceiling lamps to the objects to switch list.</p>
+</div>
+</section>
+<section id="cogito-keypad">
+<h3>Cogito_Keypad<a class="headerlink" href="#cogito-keypad" title="Link to this heading"></a></h3>
+<p>This classic Keypad works exactly as you expect. The included <code class="docutils literal notranslate"><span class="pre">PackedScene</span></code> includes it’s own GUI, which can be easily customized. The <code class="docutils literal notranslate"><span class="pre">Cogito_Keypad</span></code> includes exposed references to work with <code class="docutils literal notranslate"><span class="pre">Cogito_Doors</span></code>, but you can also set them to trigger other objects by using the included signals.</p>
+</section>
+<section id="cogito-turnwheel">
+<h3>Cogito_Turnwheel<a class="headerlink" href="#cogito-turnwheel" title="Link to this heading"></a></h3>
+<p>With this you can create most common “press and hold” interaction that involve turning an object, like a valve. It is made to work with a <code class="docutils literal notranslate"><span class="pre">HoldInteraction</span></code> component. This object includes settings for rotation axis and speed as well as an <code class="docutils literal notranslate"><span class="pre">AudioStream</span></code> to play while being rotated. It also includes an exposed reference to trigger other nodes (most commonly used for doors).</p>
+</section>
+<section id="cogito-staticinteractable">
+<h3>Cogito_StaticInteractable<a class="headerlink" href="#cogito-staticinteractable" title="Link to this heading"></a></h3>
+<p>This object is used for <code class="docutils literal notranslate"><span class="pre">Cogito</span> <span class="pre">Objects</span></code> that do not need to save any information for persistency or saving/loading. The object itself does not have to be strictly static. This is most commonly used for very generic environment interactables, like a poster on the wall that will have a Readable component, or a pinwheel that can be spun via an interaction.</p>
+</section>
+</section>
+<section id="cogito-inventory-system">
+<h2>Cogito Inventory System<a class="headerlink" href="#cogito-inventory-system" title="Link to this heading"></a></h2>
+<p>The inventory system is largely resource based. The inventory system and the inventory UI are independent form each other. UI elements get updated via signals.</p>
+<section id="inventory-overview">
+<h3>Inventory Overview<a class="headerlink" href="#inventory-overview" title="Link to this heading"></a></h3>
+<p>The Inventory System contains of 3 main resources:</p>
+<ul class="simple">
+<li><p>Item: Resource that contains all the parameters pertaining to a specific item. Has sub-catgeories like <code class="docutils literal notranslate"><span class="pre">WieldableItem</span></code>, <code class="docutils literal notranslate"><span class="pre">ConsumableItem</span></code> etc.</p></li>
+<li><p>Slot: The “container” for an item and manages stuff like item stacks, moving items, dropping items, etc.</p></li>
+<li><p>Inventory: This resource is a collection of slots. Can vary in size. Per default, the Player has an inventory attached. Also used for containers.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>It is helpful to understand what the documentation refers to when using the words <code class="docutils literal notranslate"><span class="pre">item</span></code> and <code class="docutils literal notranslate"><span class="pre">pick</span> <span class="pre">up</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Item</span></code>  always refers to the Resource file, based on the <code class="docutils literal notranslate"><span class="pre">Inventory</span> <span class="pre">Item</span></code> class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pick</span> <span class="pre">up</span></code> is how the item exists in the 3D world, usually as a <code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> with a <code class="docutils literal notranslate"><span class="pre">pick_up</span> <span class="pre">component</span></code> attached.</p></li>
+<li><p>Usually the two reference each other: <code class="docutils literal notranslate"><span class="pre">Cogito_Object</span></code> with <code class="docutils literal notranslate"><span class="pre">Pickup_component</span></code> &lt;-&gt; <code class="docutils literal notranslate"><span class="pre">Inventory</span> <span class="pre">Item</span> <span class="pre">resource</span></code></p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure that the <code class="docutils literal notranslate"><span class="pre">Slot</span> <span class="pre">Data</span></code> resource on your <code class="docutils literal notranslate"><span class="pre">pick</span> <span class="pre">up</span></code> is set to “Local to Scene ON”, especially on stackable items. If not, instances of this item will share the same slot resource, causing item quantities to be calculated incorrectly.</p>
+</div>
+</section>
+<section id="inventory-item-class">
+<h3>Inventory Item Class<a class="headerlink" href="#inventory-item-class" title="Link to this heading"></a></h3>
+<p>This is the base class of all <code class="docutils literal notranslate"><span class="pre">Inventory</span> <span class="pre">Items</span></code>. Contains information that is common to all item types, such as name, description, stack size, etc. If you want to create your own item type, it is strongly recommended to inherit from this class.</p>
+</section>
+</section>
+<section id="game-persistence-saving-and-loading">
+<h2>Game persistence, saving and loading<a class="headerlink" href="#game-persistence-saving-and-loading" title="Link to this heading"></a></h2>
+<p>This information will help you understand when and what kind of data is loaded and saved. If you run into any issues with scene persistence not behaving as you might expect, this might point you in the right direction.</p>
+<section id="save-data-overview">
+<h3>Save data overview<a class="headerlink" href="#save-data-overview" title="Link to this heading"></a></h3>
+<p>COGITO uses custom resources for saving. These resources are called <code class="docutils literal notranslate"><span class="pre">states</span></code>. The <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">file</span></code> contains all information that COGITO saves, usually tied to a profile or save slot.</p>
+<p>There are two types of state files: Player states and Scene states. Separating this has pros and cons. Knowing these can help you to understand any issues you might run into, as well as changing what doesn’t work for you.</p>
+<p><strong>Pros:</strong></p>
+<ul class="simple">
+<li><p>Player state is completely game scene independent.</p></li>
+<li><p>Easier to customize what kind of data is saved.</p></li>
+<li><p>Scene states don’t need to “know” of other scene states.</p></li>
+<li><p>When the player saves/loads a game, only necessary data is saved or loaded, improving load times.</p></li>
+<li><p>Avoids save file bloat.</p></li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul class="simple">
+<li><p>File management: As save data is split up between different <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">files</span></code>, more file management actions need to be taken for each operation.</p></li>
+<li><p>Old/misaligned <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">files</span></code> can create unexpected behavior or reduced compatibility when updating/changing the player or scenes.</p></li>
+</ul>
+</section>
+<section id="player-state">
+<h3>Player state<a class="headerlink" href="#player-state" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> contains all data tied to the player:</p>
+<ul class="simple">
+<li><p>Player position in game scene</p></li>
+<li><p>Player rotation in game scene</p></li>
+<li><p>Game scene the player was in when the state was saved (name as well as path)</p></li>
+<li><p>Player attributes (current value and max value)</p></li>
+<li><p>Player inventory</p></li>
+<li><p>Player quests (active, failed, completed)</p></li>
+</ul>
+<p><strong>When is the player state saved?</strong></p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> is saved when the game save is triggered manually. The save file created is saved in the user directory and is tied to the currently active save slot.</p></li>
+<li><p>A temporary <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> is also saved when the player transitions from one scene to another scene. This state is saved on exit of the first scene, and loaded when entering the new scene, as to maintain player data consistency.</p></li>
+</ul>
+<p><strong>When is the player state loaded?</strong></p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> is loaded when the player loads a saved game manually. It is tied to the currently active save slot.</p></li>
+<li><p>If the player is transitioning from one scene to another, then the temporarily created player state is loaded, with some data like player position and rotation being overwritten by the scene connector.</p></li>
+</ul>
+</section>
+<section id="scene-state">
+<h3>Scene state<a class="headerlink" href="#scene-state" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> contains all data relevant for proper persistence of the game scene. Usually you’d have a <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> file for each save slot and game scene present (for example, if your game has 10 game scenes, and 3 save slots, you’d potentially have 30 scene states, 10 scene states for each save slot).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> contains the following data:</p>
+<ul>
+<li><p>All objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Position</p></li>
+<li><p>Rotation</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Cogito Object:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Position</p></li>
+<li><p>Rotation</p></li>
+<li><p>Parent node path (for instantiation)</p></li>
+<li><p>Packed scene file path (for instantiation)</p></li>
+<li><p>Child interaction nodes (for object data)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Cogito Door:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Is locked/unlocked</p></li>
+<li><p>Is open/closed</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Cogito Switch:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Is on/off</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Cogito Button:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>has been used</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Cogito Turnwheel:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>has been turned</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Cogito Keypad:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>is locked/unlocked</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p><strong>When is the scene state saved?</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> of the currently active game scene is saved when the player manually triggers the game save (usually from the menu). This only saves the state of the currently active scene (TODO: look into this more if the player transitions through multiple scenes)
+The <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> is saved as a temporary state as soon as the player leaves the scene to transition to a different one. This is used to keep scene persistency if the player later returns to this scene.</p>
+<p><strong>When is the scene state loaded?</strong></p>
+<p>When the player loads a saved game, the scene as well as it’s state that is referenced in the <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> is loaded. This works by checking if the player is currently in the scene that the <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> has saved as the players location. If NOT, the game transitions to said scene and only then loads the <code class="docutils literal notranslate"><span class="pre">player</span> <span class="pre">state</span></code> and <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code>.
+If it exists, a temporary <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> is loaded when the player transitions into a scene. This is used to keep scene persistency, if the player is returning to this scene when they were previously in it. If no temporary <code class="docutils literal notranslate"><span class="pre">scene</span> <span class="pre">state</span></code> is found, the default scene is loaded.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="faq.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Drobar plus contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

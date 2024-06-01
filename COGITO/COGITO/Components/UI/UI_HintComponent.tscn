@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://0j3gwj62g2eb"]
+
+[ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://COGITO/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="1_06m72"]
+[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_e7j04"]
+[ext_resource type="Script" path="res://COGITO/Components/UI/UI_HintComponent.gd" id="2_3getp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqjgf"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3e6h4"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_bottom = 1
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[node name="HintPrompt" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 380.0
+offset_bottom = 50.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("2_3getp")
+default_hint_icon = ExtResource("1_06m72")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 447.0
+offset_bottom = 40.0
+theme_override_constants/separation = 0
+
+[node name="SpacerX" type="Panel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_uqjgf")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3e6h4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HintIcon" type="TextureRect" parent="HBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("1_06m72")
+expand_mode = 2
+
+[node name="HintText" type="Label" parent="HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_e7j04")
+theme_type_variation = &"PromptLabel"
+text = "Hint text appears here and can be longer."
+
+[node name="HintTimer" type="Timer" parent="."]

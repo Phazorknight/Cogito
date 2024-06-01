@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://dhadvbqjxigfo"]
+
+[ext_resource type="Script" path="res://COGITO/QuestSystem/CustomResources/cogito_quest.gd" id="1_s644g"]
+
+[resource]
+script = ExtResource("1_s644g")
+id = 773
+quest_name = "demo_deliver_laptop"
+quest_title = "Deliver the CEO's laptop"
+quest_description_active = "We have a hidden compartment in the fridge, so drop the laptop in there and we can retriefe it."
+quest_description_completed = "We got the data we needed. Great work!"
+quest_description_failed = "The laptop you delivered was fake! Do not contact us again."
+quest_counter_current = 0
+quest_counter_goal = 0

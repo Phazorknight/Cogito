@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About &mdash; Cogito  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials.html" />
+    <link rel="prev" title="COGITO" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Cogito
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-cogito">What is COGITO?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#guiding-principals">Guiding Principals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#current-features">Current Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thanks-and-contributions">Thanks and Contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license-and-credits">License and Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mit-license">MIT License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#cogito-setup">COGITO Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#setting-up-your-first-cogito-scene">Setting Up Your First Cogito Scene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#old-feature-overview">(Old) Feature Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#sliding-door-from-scratch">Sliding Door from Scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#wieldables-overview">Wieldables Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#player-controller">Player Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#cogito-attributes">COGITO Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogitoattribute-base-class">CogitoAttribute base class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#health-attribute">Health Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#stamina-attribute">Stamina Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#visibility-attribute">Visibility Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#light-meter-attribute">Light Meter Attribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#sanity-attribute">Sanity Attribute</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#ui-attribute-component">UI Attribute Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#player-interaction-system">Player Interaction System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#cogito-objects">Cogito Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-object">Cogito_Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-door">Cogito_Door</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-button">Cogito_Button</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-switch">Cogito_Switch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-keypad">Cogito_Keypad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-turnwheel">Cogito_Turnwheel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#cogito-staticinteractable">Cogito_StaticInteractable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#cogito-inventory-system">Cogito Inventory System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#inventory-overview">Inventory Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#inventory-item-class">Inventory Item Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#game-persistence-saving-and-loading">Game persistence, saving and loading</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#save-data-overview">Save data overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#player-state">Player state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#scene-state">Scene state</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#my-question-isn-t-answered-here">My question isn’t answered here?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-do-i-set-the-main-menu-to-start-load-my-own-level-scene">How do I set the main menu to start/load my own level scene?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#my-own-objects-aren-t-working">My own objects aren’t working!</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Cogito</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">About</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/about.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="about">
+<h1>About<a class="headerlink" href="#about" title="Link to this heading"></a></h1>
+<section id="what-is-cogito">
+<h2>What is COGITO?<a class="headerlink" href="#what-is-cogito" title="Link to this heading"></a></h2>
+<p>COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
+In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on providing a framework for creating interactable objects and items.</p>
+</section>
+<section id="guiding-principals">
+<h2>Guiding Principals<a class="headerlink" href="#guiding-principals" title="Link to this heading"></a></h2>
+<p>The structure of this template always tries to adhere to the following principles:</p>
+<ul class="simple">
+<li><p><strong>Complete:</strong> When you download COGITO and press play, you get a functioning project out of the box. Game menu, save slot select, options and a playable level are all included.</p></li>
+<li><p><strong>Versatile:</strong> Wether your game is set in the future, the past or the present, uses melee, projectile or no weapons at all, has low poly, stylized or realistic graphics, the template will have features for you.</p></li>
+<li><p><strong>Modular:</strong> Don’t want to use a feature? You will be able to hide it, ignore it or strip it out without breaking COGITO. At the same time, COGITO is designed to be extendable with your own custom features or other add-ons.</p></li>
+<li><p><strong>Approachable:</strong> While there will always be a learning curve, we strive to make COGTIO approachable and intuitive to use, so it doesn’t get in your way of making your game.</p></li>
+</ul>
+</section>
+<section id="current-features">
+<h2>Current Features<a class="headerlink" href="#current-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>First person player controller with:</dt><dd><ul>
+<li><p>Sprinting, jumping, crouching, sliding, stairs handling, ladder handling</p></li>
+<li><p>Fully customizable attributes like Health, Stamina, Visibility (for stealth) - Component-based, so easy to add your own.</p></li>
+<li><p>Lots of exposed properties to tweak to your liking (speeds, headbob, fall damage, bunnyhop, etc.)</p></li>
+<li><p>Easy-to-use dynamic footstep sound system</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Inventory System</dt><dd><ul>
+<li><p>Flexible resource-based inventories</p></li>
+<li><p>Inventory UI separate from inventory logic</p></li>
+<li><p>Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)</p></li>
+<li><p>Base class to easily add your custom item types</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Interaction System</dt><dd><ul>
+<li><p>Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones</p></li>
+<li><p>Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Systemic Properties</dt><dd><ul>
+<li><p>Give objects properties like “FLAMMABLE” or “WET” and they will interact with each other depending on their state and properties.</p></li>
+<li><p>For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.</p></li>
+<li><p>Straight forward system to add your own properties and behaviours, all handled in one script. Also easy to just ignore.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Fully featured Demo Scene</dt><dd><ul>
+<li><p>Set up like a game level including a variety of objects, weapons and quests</p></li>
+<li><p>In-game helper documents that explain how objects in the scene were set up</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Quest System</p></li>
+<li><p>Save and Load System as well as scene persistency</p></li>
+<li><p>Full gamepad support!</p></li>
+</ul>
+</section>
+<section id="thanks-and-contributions">
+<h2>Thanks and Contributions<a class="headerlink" href="#thanks-and-contributions" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ac-arcana">AC-Arcana</a>: added DynamicFootstepSystem</p></li>
+<li><p><a class="reference external" href="https://github.com/pcbeard">pcbeard</a>: Performance tweaks and bugfixes.</p></li>
+<li><p><a class="reference external" href="https://github.com/FailSpy">FailSpy</a>: improved input handling as well as UI and Player Controller quality-of-life fixes.</p></li>
+<li><p><a class="reference external" href="https://github.com/kk1201">kk1201</a>: improving Lightzone component.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><p>Player controller is based on <a class="reference external" href="https://github.com/Like475/fpc-godot">Like475’s First Person Controller Advanced</a></p></li>
+<li><p>Menus are based on <a class="reference external" href="https://github.com/SavoVuksan/EasyMenus">SavoVuksan’s EasyMenus (also see this link for documentation)</a></p></li>
+<li><p>Inventory system was helped by following <a class="reference external" href="https://www.youtube.com/watch?v=V79YabQZC1s">DevLogLogan on Youtube</a></p></li>
+<li><p><a class="reference external" href="https://github.com/nathanhoad/godot_input_helper">InputHelper by Nathan Hoad (also see this link for documentation)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/BtheDestroyer/Godot_QuickAudio">QuickAudio by Bryce Dixon</a></p></li>
+<li><p>Stairs handling based on <a class="reference external" href="https://github.com/elvisish/GodotStairs">GodotStairs by elvisish</a></p></li>
+<li><p>Cogito Quest System based on <a class="reference external" href="https://github.com/shomykohai/quest-system">shomykohai’s Godot 4 quest system.</a></p></li>
+</ul>
+</section>
+<section id="license-and-credits">
+<h2>License and Credits<a class="headerlink" href="#license-and-credits" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>This add-on is published under the MIT license.</p></li>
+<li><p>You can use this add-on in your projects, personal or commercial, as long as you credit us (mostly cause we’d love to see what people use it for!)</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li><dl class="simple">
+<dt>About the game assets under the COGITO/assets folder:</dt><dd><ul>
+<li><p>3D models are by <a class="reference external" href="https://www.kenney.nl/">Kenney</a> or <a class="reference external" href="https://www.philipdrobar.com/">Philip Drobar</a>.</p></li>
+<li><p>Audio is either by <a class="reference external" href="https://www.kenney.nl/">Kenney</a> or from <a class="reference external" href="https://freesound.org/">freesound.org</a> used under CC0 or MIT license</p></li>
+<li><p><a class="reference external" href="https://freesound.org/s/435666/">Alarm Siren.wav by mirkosukovic</a> – License: Attribution 4.0</p></li>
+<li><p><a class="reference external" href="https://freesound.org/s/524306/">Match strike by Bertsz</a> – License: Creative Commons 0</p></li>
+<li><p><a class="reference external" href="https://freesound.org/s/241842/">Running Water by Poyekhali</a> – License: Attribution 3.0</p></li>
+<li><p><a class="reference external" href="https://freesound.org/s/537275/">Dirt Sliding.wav by Laughingfish78</a> – License: Creative Commons 0</p></li>
+<li><p><a class="reference external" href="https://freesound.org/s/641848/">FIREBurn_Fireplace.Artificial.Crackling.Roar by newlocknew</a> – License: Attribution NonCommercial 4.0</p></li>
+<li><p><a class="reference external" href="https://freesound.org/s/666290/">Water steaming on hot surface #1 by Ekrcoaster</a> – License: Creative Commons 0</p></li>
+<li><p>Cloud HDR (kloofendal_48d_partly_cloudy_puresky)2k.hdr by Greg Zaal, used under CC0.</p></li>
+<li><p>All other included assets either made by <a class="reference external" href="https://www.philipdrobar.com/">Philip Drobar</a> or one of the contributors, published under MIT.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="mit-license">
+<h2>MIT License<a class="headerlink" href="#mit-license" title="Link to this heading"></a></h2>
+<p>Copyright (c) 2023 Phazorknight</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="COGITO" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Philip Drobar plus contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

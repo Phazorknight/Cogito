@@ -1,0 +1,2 @@
+{"filename":"res://COGITO/PrefabScenes/carriable_box.tscn","parent":"/root/Cogito02SceneTransitionsA","pos_x":-0.00000428532303,"pos_y":0.690003156661987,"pos_z":3.57161068916321,"rot_x":0.0000000918167017971427,"rot_y":0.00000512824135512346,"rot_z":-0.0000008035862}
+{"filename":"res://COGITO/PrefabScenes/pickup_health_potion.tscn","parent":"/root/Cogito02SceneTransitionsA","pos_x":-0.06044107303023,"pos_y":0.255253374576569,"pos_z":7.24798583984375,"rot_x":0.00000636323738945066,"rot_y":-0.00304254377261,"rot_z":0.00226565799675882}

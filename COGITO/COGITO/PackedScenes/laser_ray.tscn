@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnauxhdncgngx"]
+
+[ext_resource type="Script" path="res://COGITO/PackedScenes/laser_ray.gd" id="1_s4rtm"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_lgwhp"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(1, 0.329412, 0.627451, 0.968627)
+emission_enabled = true
+emission = Color(0.792157, 0.792157, 0.792157, 1)
+rim_enabled = true
+
+[node name="LaserRay" type="Node3D"]
+script = ExtResource("1_s4rtm")
+laser_material = SubResource("ORMMaterial3D_lgwhp")
+lifespan = 2.0
+
+[node name="Timer" type="Timer" parent="."]

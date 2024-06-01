@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyfwp0vhgfjd7"]
+
+[ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/slider_w_labels.gd" id="1_fn6ep"]
+
+[node name="SliderWLabels" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fn6ep")
+show_percentage = true
+title = "Slider"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+offset_right = 800.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 25
+text = "Slider"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 2
+offset_top = 42.0
+offset_right = 800.0
+offset_bottom = 58.0
+
+[node name="CurrentValue" type="Label" parent="."]
+layout_mode = 2
+offset_top = 62.0
+offset_right = 800.0
+offset_bottom = 93.0
+theme_override_font_sizes/font_size = 20
+text = "0 %"
+horizontal_alignment = 1
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
