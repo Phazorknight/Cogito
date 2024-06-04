@@ -16,4 +16,5 @@ stack_size = 1
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_key.tscn"
 hint_icon_on_use = ExtResource("1_17jgp")
 hint_text_on_use = "This should fit a door around here."
+item_size = Vector2(1, 1)
 sound_pickup = ExtResource("4_7b7vh")

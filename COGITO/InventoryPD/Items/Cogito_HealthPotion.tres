@@ -19,5 +19,6 @@ stack_size = 5
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_health_potion.tscn"
 hint_icon_on_use = ExtResource("1_5eqwj")
 hint_text_on_use = "You've gained 10 health."
+item_size = Vector2(1, 1)
 sound_use = ExtResource("4_41mfm")
 sound_pickup = ExtResource("4_sr2jy")

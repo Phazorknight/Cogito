@@ -2,7 +2,10 @@
 extends Node3D
 class_name CogitoSecurityCamera
 
-signal player_was_detected
+signal started_detecting
+signal object_detected
+signal object_no_longer_detected
+signal turned_off
 
 @onready var detection_ray_cast_3d: RayCast3D = $CameraMesh/DetectionRayCast3D
 @onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
@@ -66,6 +69,7 @@ func searching():
 func start_detecting():
 	print("SecuirtyCamera: Starting detection.")
 	current_state = DetectorState.DETECTING
+	started_detecting.emit()
 	update_indicator_mesh()
 
 
@@ -83,7 +87,7 @@ func detecting(delta: float):
 		start_alarm_light()
 		if !audio_stream_player_3d.playing:
 			audio_stream_player_3d.play()
-		player_was_detected.emit()
+		object_detected.emit()
 		update_indicator_mesh()
  
 
@@ -91,6 +95,7 @@ func stop_detecting():
 	print("SecurityCamera: Stopping detection.")
 	detection_time = 0
 	current_state = DetectorState.SEARCHING
+	object_no_longer_detected.emit()
 	update_indicator_mesh()
 
 
@@ -104,6 +109,7 @@ func turn_off():
 	if audio_stream_player_3d.playing:
 		audio_stream_player_3d.stop()
 	current_state = DetectorState.OFFLINE
+	turned_off.emit()
 	update_indicator_mesh()
 	indicator_light.light_energy = 0
 

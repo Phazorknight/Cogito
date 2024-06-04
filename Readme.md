@@ -1,7 +1,7 @@
 ![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
 # COGITO
 [![GodotEngine](https://img.shields.io/badge/Godot_4.2.1_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202405-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
-beta 202405.15
+beta 202405.16
 
 ## What is it?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -28,6 +28,7 @@ The structure of this template always tries to adhere to the following principle
   - Inventory UI separate from inventory logic
   - Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)
   - Base class to easily add your custom item types
+  - Slot-based (Minecraft) or grid-based (Resident Evil 4), the choice is yours!
 - Interaction System
   - Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
   - Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
@@ -43,43 +44,8 @@ The structure of this template always tries to adhere to the following principle
   - In-game helper documents that explain how objects in the scene were set up
 
 > [!IMPORTANT]  
-> COGITO is still under active develompent. While some features are pretty much set, others might change soon. Use at your own risk and check Issues and Discussion pages for more information.
+> COGITO is still under active develompent. While some features are pretty much set, others might change. Use at your own risk and check Issues and Discussion pages for more information.
 
+## [Full documentation here!](https://cogito.readthedocs.io/en/latest/index.html)
 
-## [Documentation](docs/documentation.md)
-
-
-## Videos
-**(OLD) Video giving an overview of features: [COGITO Overview](https://www.youtube.com/watch?v=LYBo1_Qfru0)**
-
-[![COGITO Sliding door from scratch](docs/cog_tut_sliding_door.jpg)](https://youtu.be/rLBSxqjXlWY)
-[![COGITO Wieldables Overview](docs/cog_tut_wieldables.jpg)](https://www.youtube.com/watch?v=9TK4Tw48nKQ)
-
-## Thanks and Contributions
-- AC-Arcana: added DynamicFootstepSystem
-- pcbeard: Performance tweaks and bugfixes.
-- FailSpy: improved input handling as well as UI and Player Controller quality-of-life fixes.
-- kk1201: improving Lightzone component.
-
-- Player controller is based on Like475's First Person Controller Advanced: https://github.com/Like475/fpc-godot
-- Menus are based on SavoVuksan's EasyMenus (also see this link for documentation): https://github.com/SavoVuksan/EasyMenus
-- Inventory system was helped by following DevLogLogan on Youtube: https://www.youtube.com/watch?v=V79YabQZC1s
-- InputHelper by Nathan Hoad (also see this link for documentation): https://github.com/nathanhoad/godot_input_helper
-- QuickAudio by Bryce Dixon (https://github.com/BtheDestroyer/Godot_QuickAudio)
-- Stairs handling based on GodotStairs by elvisish (https://github.com/elvisish/GodotStairs)
-- Cogito Quest System based on shomykohai's Godot 4 quest system.
-
-## License and Credits
-- This add-on is published under the MIT license.
-- You can use this add-on in your projects, personal or commercial, as long as you credit us (mostly cause I'd love to see what people use it for!)
-- About the game assets under the COGITO/assets folder:
-  - 3D models are by Kenney (https://www.kenney.nl/) or made by me.
-  - Audio is either by Kenney or from freesound.org used under CC0 or MIT license
-  - Alarm Siren.wav by mirkosukovic -- https://freesound.org/s/435666/ -- License: Attribution 4.0
-  - Match strike by Bertsz -- https://freesound.org/s/524306/ -- License: Creative Commons 0
-  - Running Water by Poyekhali -- https://freesound.org/s/241842/ -- License: Attribution 3.0
-  - Dirt Sliding.wav by Laughingfish78 -- https://freesound.org/s/537275/ -- License: Creative Commons 0
-  - FIREBurn_Fireplace.Artificial.Crackling.Roar by newlocknew -- https://freesound.org/s/641848/ -- License: Attribution NonCommercial 4.0
-  - Water steaming on hot surface #1 by Ekrcoaster -- https://freesound.org/s/666290/ -- License: Creative Commons 0
-  - Cloud HDR (kloofendal_48d_partly_cloudy_puresky)2k.hdr by Greg Zaal, used under CC0.
-  - All other included assets either made by me or one of the contributors, published under MIT.
+[Credits, Contributors and License](https://cogito.readthedocs.io/en/latest/about.html)

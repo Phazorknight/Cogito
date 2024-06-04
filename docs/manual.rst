@@ -22,11 +22,70 @@ If you look inside the packed scene you will find several components for the var
 
 Cogito Player class
 -------------------
+This is the base class of the included first person player controller. You find a lot of important parameters in this, and most of them have tooltips to explain what they control.
 
+**Node References**
+The player needs a reference to the Player HUD node and the Pause Menu node. These should be included in the player scene as default.
+
+**Audio**
+Controls movement sounds as well as volume and certain thresholds. Be aware that the actual footstep sounds are controlled by the dynamic footstep sound system.
+
+**Movement Properties**
+Most of these are self-explanatory, and we encourage you to experiment.
+
+**Head bob Properties**
+Controls the dynamic head bob. The main head bob strength setting is controlled in-game in the options menu. The rest of the values are then multiplied by that setting.
+
+**Stair Handling**
+The most essential setting here is the step height, which controls what the player controller will consider a step. Also be aware that the player collision shape plays a big role in stair handling for correct edge detection.
+This is the reason the included player controller has a box/cylinder collider as its collision shape.
+
+**Ladder Handling**
+Controls movement settings while player is on a ladder.
+
+**Game pad Properties**
+These will only affect game pad input.
 
 
 HUD and UI
 ==========
+COGITO comes with an included themed UI. Except for a handful of hard references (see Player Controller), the UI was designed to be decoupled from most systems, which should enable you to easily modify or substitute it.
+
+Main Menu
+~~~~~~~~~
+The Main Menu scene is meant to be the first menu the player sees when starting the game.
+It directly displays several game slots as well as additional buttons like `Options` and `Quit`.
+In addition to the UI elements, it includes a Save Slot Manager node that handles save slot management. This node is needed for the save slot buttons to work In addition to the UI elements, it includes a Save Slot Manager node that handles save slot management. This node is needed for the save slot buttons to work correctly.
+
+**Save Slot Buttons**
+Save Slot buttons are their own scenes with an attached script that includes some settings for COGITO's save system as well as a reference to the Save Slot Manager.
+To add more slots, simply add another Save Slot Button, set the reference to the Save Slot Manager and give the slot a name. Make sure no two save slot buttons share the same save slot name, or they will reference the same save slot!
+
+**Options**
+The `Options` button displays the Options Menu, which in turn is its own scene, to make sure it is the same as the one that the Pause Menu opens. See ``Options`` for more info.
+
+
+Pause Menu
+~~~~~~~~~~
+The Pause Menu will open if the player presses ESC / Menu while in game.
+Per default, it will provide options to save or load the current slot, set options, return to the main menu or quit the game.
+
+The current slot is determined by which active slot is set in the Cogito Scene Manager (see `Scene Setup and Management`)
+If the current slot has a saved game, it will show a screenshot and the time/date of the save.
+
+
+Options Menu
+~~~~~~~~~~~~
+The Options Menu is its own scene called `OptionsTabMenu`.
+COGITO comes with a handful of included options that range from gameplay and control settings to graphics and audio settings.
+All the options are controlled and set in the CogitoTabMenu script that's attached to the root node of this scene.
+Options are saved in a cfg file, so they are save slot independent.
+
+**Adding your own options**
+To add your own options, edit the `OptionsTabMenu.gd` and add your own methods.
+Make sure you add any new values to the `save_options()` and `load_options()` methods, as well as to the `options_constants.gd` file, to make sure they are saved/loaded correctly.
+Then add buttons to the OptionsTabMenu as needed and use their signal to control the methods you've added to `OptionsTabMenu.gd`
+
 
 
 COGITO Attributes
@@ -118,7 +177,7 @@ Visibility Attribute
 Light Meter Attribute
 ~~~~~~~~~~~~~~~~~~~~~
 
-This new attribute actually measures how much light the player is exposed to by checking the average luminance of the current player position. As this heavily depends on your scene, you will most likely need to tweak the min/max values within this attribute and it's script. Please note that this calculation is somewhat performance hungry, so use with caution.
+This new attribute actually measures how much light the player is exposed to by checking the average luminance of the current player position. As this heavily depends on your scene, you will most likely need to tweak the min/max values within this attribute and it's script. Please note that this calculation is somewhat performance hungry, so use with caution. It is currently set to only update when the player moves to improve performance, but you might want to also update on certain events (like when the player interacts with anything).
 
 Sanity Attribute
 ~~~~~~~~~~~~~~~~
@@ -151,19 +210,25 @@ Here's a quick overview which object to use for what use-case:
 =========================    =======================================================================================================
 Cogito Object/Script	     Use case
 =========================    =======================================================================================================
-Cogito_Object	             Item pick-ups, props, crates, "clutter objects"
+Cogito Object	             Item pick-ups, props, crates, "clutter objects"
 -------------------------    -------------------------------------------------------------------------------------------------------
-Cogito_Door	                 Doors, gates, manually controlled platforms, bridges, moveable objects with two positions (open/closed)
+Cogito Door	                 Doors, gates, manually controlled platforms, bridges, moveable objects with two positions (open/closed)
 -------------------------    -------------------------------------------------------------------------------------------------------
-Cogito_Button	             Button that unlocks a door (single-use), vending machine buttons (repeated-use)
+Cogito Button	             Button that unlocks a door (single-use), vending machine buttons (repeated-use)
 -------------------------    -------------------------------------------------------------------------------------------------------
-Cogito_Switch	             Lamps, levers, sockets for key objects, objects with two states (on/off)
+Cogito Switch	             Lamps, levers, sockets for key objects, objects with two states (on/off)
 -------------------------    -------------------------------------------------------------------------------------------------------
-Cogito_Keypad	             Keypads, other UI based minigames that should send signals.
+Cogito Keypad	             Keypads, other UI based minigames that should send signals.
 -------------------------    -------------------------------------------------------------------------------------------------------
-Cogito_Turnwheel	         Valves, rotation-based levers, press-and-hold interactions
+Cogito Turnwheel	         Valves, rotation-based levers, press-and-hold interactions
 -------------------------    -------------------------------------------------------------------------------------------------------
-Cogito_StaticInteractable	 Static objects who's state won't get saved that still can have interactions attached.
+Cogito StaticInteractable	 Static objects who's state won't get saved that still can have interactions attached.
+-------------------------    -------------------------------------------------------------------------------------------------------
+Cogito Container          	 Used for objects that have their own inventory, like containers, crates, etc. But potentially also on NPCs.
+-------------------------    -------------------------------------------------------------------------------------------------------
+Cogito Projectile           Similar to Cogito Object, but handles additional information for projectiles like lifespan, damage, destroy_on_impact. Some of these are inherited from the Wieldable that spawns this projectile.
+-------------------------    -------------------------------------------------------------------------------------------------------
+Cogito Security Camera      *Name most likely to change*. Made for detection of other objects (most commonly the player).
 =========================    =======================================================================================================
 
 Cogito Object
@@ -210,6 +275,19 @@ Cogito Static Interactable
 This object is used for ``Cogito Objects`` that do not need to save any information for persistency or saving/loading. The object itself does not have to be strictly static. This is most commonly used for very generic environment interactables, like a poster on the wall that will have a Readable component, or a pinwheel that can be spun via an interaction.
 
 
+Cogito Security Camera
+~~~~~~~~~~~~~~~~~~~~~~
+The Security Camera is an example object on how object and player detection can work in COGITO. It's detection mechanic is tied to a simple state machine to enable dynamic and flexible behaviors.
+It also includes a few extra nodes that help with testing it's behavior, like a mesh that changes it's color based on the current state of the camera and an alarm sound that plays once the object is detected.
+
+**How does detection work:**
+* The security camera has a reference to an Area3D based detection area. It uses the Area3D body entered/exited signals to keep a list of all objects that are within the detection area and meet the critera (eg. is in group `Player`).
+* Once an object is within the detection area, the script casts a DetectionRaycast3D from a set position to the object. If the raycast hits the object, it counts as detected and the `DETECTING` state gets started which starts a timer.
+* As long as the object is being detected, the timer keeps going until it hits the *spot time*, at which point the camera switches to the `DETECTED` state and triggering some effects (like an alarm etc.). There are also signals for state changes that can be used.
+* If the camera "loses" the object, like for example the raycast is obscured by a different object or the object leaves the detection area, then the detection timer gets interrupted and the camera switches back to `SEARCHING` state.
+
+
+
 Cogito Inventory System
 =======================
 The inventory system is largely resource based. The inventory system and the inventory UI are independent form each other. UI elements get updated via signals.
@@ -246,14 +324,38 @@ Containers
 
 Item Types
 ~~~~~~~~~~
+COGITO's base item class is called `InventoryItem`, which contains parameters that all items share, no matter what type they are.
+
+Additionally, there are a few subclasses for Item types that are based on the InventoryItem class, which offer more specific behavior.
+
+**Ammo Item**
+This type is used to "reload" wieldable items. Please note that it doesn't necessarily have to be weapons (for example, Batteries can be "Ammo" for the flashlight).
+Ammo Items can have a specific reload amount. This amount determines how much one item will add to the charge of the target item (for example, one battery adds 10 to the charge of the flashlight).
+
+**Combinable Item**
+This item type exists to be combined with another item. The target item name needs to be set (and needs to 100% match the string, otherwise it won't work).
+The resulting item is based on a Inventory Slot, so you can make it that combining items might create multiple items. (for example, combining a saw with a log could create 5 wooden boards).
+
+**Consumable Item**
+This item type will influence an attribute when used. The most common example for this would be a health potion, which increases the current health of the player by a set amount.
+Please note that you can also set these to increase the max amount of an attribute, enabling you to create items that permanently increase health or stamina.
+
+**Key Item**
+This item type is used as a "required to have" item for other Cogito objects to check for. The most common example would be a door that requires the player to have the
+key in their inventory. You can set this item to be discarded after use.
+
+**Wieldable Item**
+This item type defines items that are wieldable. They are to be used in conjunction with Wieldables, containing important data for them. Thus, these need
+to have a PackedScene reference to the Wieldable scene set. Most other parameters are related to their ammo use.
+Please note that the behavior of wieldables is not defined here, but in the Wieldable scenes themselves.
 
 
 
 Wieldables
 ==========
 
-Wieldables describes any type of item that the player can hold (aka *wield*). Most common examples are weapons, but this can also apply to a flashlight, binoculars or a radio.
-Wieldables work together with Inventory Items to define their behaviour and update the data.
+Wieldables describes any type of item that the player can hold (aka *wield*). The most common examples are weapons, but this can also apply to a flashlight, binoculars, or a radio.
+Wieldables work together with Inventory Items to define their behavior and update the data.
 
 
 Included Wieldables:
@@ -261,21 +363,25 @@ Included Wieldables:
 
 Flashlight
 ~~~~~~~~~~
+Wieldable that switches between on/off state, draining its charge while it's on.
 
 Toy Pistol
 ~~~~~~~~~~
+A wieldable that represents a weapon that spawns a projectile.
 
 Laser Rifle
 ~~~~~~~~~~~
+A wieldable that represents a hit scan-based weapon.
 
 Throwable Dart
 ~~~~~~~~~~~~~~
+A wieldable that works like a "throwable". It works that on primary action, it spawns a projectile, un-equips itself and removes 1 of its associated item from the player's inventory.
+If the player still has more of the same item in the inventory, it will re-equip.
 
 
 
 Quest System
 ============
-
 The included Quest system is a simple way to give the Player guidance to what their next goal is.
 It is currently very basic and might be enhanced with future updates.
 

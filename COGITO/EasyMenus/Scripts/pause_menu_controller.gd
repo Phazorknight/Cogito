@@ -13,6 +13,7 @@ signal back_to_main_pressed
 @export var nodes_to_focus: Array[Control]
 @export var sound_hover : AudioStream
 @export var sound_click : AudioStream
+@export var empty_slot_texture : Texture
 
 var playback : AudioStreamPlaybackPolyphonic
 var temp_screenshot : Image
@@ -91,6 +92,7 @@ func load_current_slot_data():
 		var texture = ImageTexture.create_from_image(image)
 		%Screenshot_Spot.texture = texture
 	else:
+		%Screenshot_Spot.texture = empty_slot_texture
 		print("No screenshot for slot ", CogitoSceneManager._active_slot, " found.")
 		
 	# Load save state time

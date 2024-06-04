@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkie3md1cmsip"]
+[gd_scene load_steps=10 format=3 uid="uid://dkie3md1cmsip"]
 
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="1_1djt0"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Scripts/pause_menu_controller.gd" id="2_473pa"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://COGITO/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="3_cekij"]
 [ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://COGITO/Assets/Audio/Kenney/UiAudio/click1.ogg" id="4_ccwo8"]
+[ext_resource type="Texture2D" uid="uid://tjkesqff2f4g" path="res://COGITO/Assets/Graphics/EmptySaveSlot.png" id="5_18sdt"]
 [ext_resource type="Script" path="res://COGITO/Theme/CogitoUiButton.gd" id="6_a8sll"]
 [ext_resource type="PackedScene" uid="uid://bly6wti1q8bsu" path="res://COGITO/EasyMenus/Scenes/OptionsTabMenu.tscn" id="6_xdpcn"]
 [ext_resource type="Script" path="res://COGITO/Scripts/menu_scene_switcher.gd" id="12_4c47n"]
@@ -23,6 +24,7 @@ script = ExtResource("2_473pa")
 nodes_to_focus = [NodePath("Content/GameMenu/VBoxContainer/ResumeGameButton")]
 sound_hover = ExtResource("3_cekij")
 sound_click = ExtResource("4_ccwo8")
+empty_slot_texture = ExtResource("5_18sdt")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -109,6 +111,7 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+texture = ExtResource("5_18sdt")
 expand_mode = 1
 stretch_mode = 5
 

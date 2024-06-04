@@ -2,14 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="2_le1ck"]
 [ext_resource type="Script" path="res://COGITO/EasyMenus/Components/SaveSlotButton.gd" id="2_rvlrs"]
-[ext_resource type="Texture2D" uid="uid://b7inqgblogmi6" path="res://COGITO/Assets/Graphics/Editor/CogitoNodeIcon.svg" id="3_xdxly"]
+[ext_resource type="Texture2D" uid="uid://tjkesqff2f4g" path="res://COGITO/Assets/Graphics/EmptySaveSlot.png" id="4_ifjpb"]
 
 [node name="SaveSlotButton" type="Button"]
 custom_minimum_size = Vector2(330, 90)
 theme_override_font_sizes/font_size = 24
 alignment = 0
 script = ExtResource("2_rvlrs")
-empty_slot_screenshot = ExtResource("3_xdxly")
+empty_slot_screenshot = ExtResource("4_ifjpb")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -47,6 +47,6 @@ custom_minimum_size = Vector2(158, 86)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
-texture = ExtResource("3_xdxly")
+texture = ExtResource("4_ifjpb")
 expand_mode = 1
 stretch_mode = 5

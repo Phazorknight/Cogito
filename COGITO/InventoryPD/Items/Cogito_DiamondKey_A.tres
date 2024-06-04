@@ -27,6 +27,6 @@ stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_diamond_key_a.tscn"
 hint_icon_on_use = ExtResource("1_xojlq")
 hint_text_on_use = "Can't be used by itself."
-size = Vector2(1, 1)
+item_size = Vector2(1, 1)
 sound_use = ExtResource("7_wumxo")
 sound_pickup = ExtResource("6_bxgel")

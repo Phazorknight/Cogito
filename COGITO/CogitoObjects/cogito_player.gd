@@ -1,13 +1,14 @@
 @icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoPlayer.svg")
+## The player class controls movement from input from the mouse, keyboard, and gamepad, as well as behavior parameters like stair and ladder handling.
 class_name CogitoPlayer
 extends CharacterBody3D
-## The player class controls movement from input from the mouse, keyboard, and gamepad
-## Find the template player int res://COGITO/PrefabScenes/player.tscn
 
-signal menu_pressed(player_interaction_component: PlayerInteractionComponent) #Used to exit out other interfaces when ESC/Menu is pressed.
+## Emits when ESC/Menu input map action is pressed. Can be used to exit out other interfaces, etc.
+signal menu_pressed(player_interaction_component: PlayerInteractionComponent)
 signal toggle_inventory_interface()
 signal player_state_loaded()
-signal toggled_interface(is_showing_ui:bool) #Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
+## Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
+signal toggled_interface(is_showing_ui:bool) 
 
 #region Variables
 ## Reference to Pause menu node
@@ -62,6 +63,7 @@ var is_showing_ui : bool
 @export var PLAYER_PUSH_FORCE : float = 1.3
 
 @export_group("Headbob Properties")
+## Head bob strength. Currently controlled/overridden by the in-game options.
 @export_enum("Minimal:0.1", "Average:0.7", "Full:1") var HEADBOBBLE : int
 @export var WIGGLE_ON_WALKING_INTENSITY : float = 0.03
 @export var WIGGLE_ON_WALKING_SPEED : float = 12.0
