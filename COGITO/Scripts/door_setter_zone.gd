@@ -51,4 +51,3 @@ func _on_body_exited(body: Node3D):
 		var door = get_node(door_to_set)
 		await get_tree().create_timer(close_delay).timeout
 		door.close_door()
-			

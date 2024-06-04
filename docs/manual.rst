@@ -25,25 +25,31 @@ Cogito Player class
 This is the base class of the included first person player controller. You find a lot of important parameters in this, and most of them have tooltips to explain what they control.
 
 **Node References**
+
 The player needs a reference to the Player HUD node and the Pause Menu node. These should be included in the player scene as default.
 
 **Audio**
+
 Controls movement sounds as well as volume and certain thresholds. Be aware that the actual footstep sounds are controlled by the dynamic footstep sound system.
 
 **Movement Properties**
+
 Most of these are self-explanatory, and we encourage you to experiment.
 
 **Head bob Properties**
 Controls the dynamic head bob. The main head bob strength setting is controlled in-game in the options menu. The rest of the values are then multiplied by that setting.
 
 **Stair Handling**
+
 The most essential setting here is the step height, which controls what the player controller will consider a step. Also be aware that the player collision shape plays a big role in stair handling for correct edge detection.
 This is the reason the included player controller has a box/cylinder collider as its collision shape.
 
 **Ladder Handling**
+
 Controls movement settings while player is on a ladder.
 
 **Game pad Properties**
+
 These will only affect game pad input.
 
 
@@ -52,21 +58,24 @@ HUD and UI
 COGITO comes with an included themed UI. Except for a handful of hard references (see Player Controller), the UI was designed to be decoupled from most systems, which should enable you to easily modify or substitute it.
 
 Main Menu
-~~~~~~~~~
+---------
 The Main Menu scene is meant to be the first menu the player sees when starting the game.
 It directly displays several game slots as well as additional buttons like `Options` and `Quit`.
 In addition to the UI elements, it includes a Save Slot Manager node that handles save slot management. This node is needed for the save slot buttons to work In addition to the UI elements, it includes a Save Slot Manager node that handles save slot management. This node is needed for the save slot buttons to work correctly.
 
-**Save Slot Buttons**
+Save Slot Buttons
+~~~~~~~~~~~~~~~~~
+
 Save Slot buttons are their own scenes with an attached script that includes some settings for COGITO's save system as well as a reference to the Save Slot Manager.
 To add more slots, simply add another Save Slot Button, set the reference to the Save Slot Manager and give the slot a name. Make sure no two save slot buttons share the same save slot name, or they will reference the same save slot!
 
-**Options**
+Options
+~~~~~~~
 The `Options` button displays the Options Menu, which in turn is its own scene, to make sure it is the same as the one that the Pause Menu opens. See ``Options`` for more info.
 
 
 Pause Menu
-~~~~~~~~~~
+----------
 The Pause Menu will open if the player presses ESC / Menu while in game.
 Per default, it will provide options to save or load the current slot, set options, return to the main menu or quit the game.
 
@@ -75,16 +84,17 @@ If the current slot has a saved game, it will show a screenshot and the time/dat
 
 
 Options Menu
-~~~~~~~~~~~~
+------------
 The Options Menu is its own scene called `OptionsTabMenu`.
 COGITO comes with a handful of included options that range from gameplay and control settings to graphics and audio settings.
 All the options are controlled and set in the CogitoTabMenu script that's attached to the root node of this scene.
 Options are saved in a cfg file, so they are save slot independent.
 
-**Adding your own options**
-To add your own options, edit the `OptionsTabMenu.gd` and add your own methods.
-Make sure you add any new values to the `save_options()` and `load_options()` methods, as well as to the `options_constants.gd` file, to make sure they are saved/loaded correctly.
-Then add buttons to the OptionsTabMenu as needed and use their signal to control the methods you've added to `OptionsTabMenu.gd`
+Adding your own options
+~~~~~~~~~~~~~~~~~~~~~~~
+To add your own options, edit the ``OptionsTabMenu.gd`` and add your own methods.
+Make sure you add any new values to the ``save_options()`` and ``load_options()`` methods, as well as to the ``options_constants.gd`` file, to make sure they are saved/loaded correctly.
+Then add buttons to the OptionsTabMenu as needed and use their signal to control the methods you've added to ``OptionsTabMenu.gd``.
 
 
 
@@ -207,29 +217,30 @@ Cogito Objects
 
 Here's a quick overview which object to use for what use-case:
 
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Object/Script	    | Use case                                                                                  | 
-+===========================+===========================================================================================+
-| Cogito Object	          | Item pick-ups, props, crates, "clutter objects"                                           |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Door	             | Doors, gates, manually controlled platforms, bridges, moveable objects with two positions.|
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Button	          | Button that unlocks a door (single-use), vending machine buttons (repeated-use)           |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Switch	          | Lamps, levers, sockets for key objects, objects with two states (on/off)                  |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Keypad	          | Keypads, other UI based minigames that should send signals.                               |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Turnwheel	       | Valves, rotation-based levers, press-and-hold interactions.                               |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito StaticInteractable | Static objects who's state won't get saved that still can have interactions attached.     |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Container          | Objects that have their own inventory, like containers, crates, NPCs.                     |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Projectile         | Objects spawned by wieldables.                                                            |
-+---------------------------+-------------------------------------------------------------------------------------------+
-| Cogito Security Camera    | *Name most likely to change*. For detection of other objects (most commonly the player).  |
-+---------------------------+-------------------------------------------------------------------------------------------+
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Object/Script	    | Use case                                                                                   | 
++===========================+============================================================================================+
+| Cogito Object	          | Item pick-ups, props, crates, "clutter objects"                                            |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Door	             | Doors, gates, manually controlled platforms, bridges, moveable objects with two positions. |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Button	          | Button that unlocks a door (single-use), vending machine buttons (repeated-use)            |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Switch	          | Lamps, levers, sockets for key objects, objects with two states (on/off)                   |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Keypad	          | Keypads, other UI based minigames that should send signals.                                |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Turnwheel	       | Valves, rotation-based levers, press-and-hold interactions.                                |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito StaticInteractable | Static objects who's state won't get saved that still can have interactions attached.      |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Container          | Objects that have their own inventory, like containers, crates, NPCs.                      |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Projectile         | Objects spawned by wieldables.                                                             |
++---------------------------+--------------------------------------------------------------------------------------------+
+| Cogito Security Camera    | *Name most likely to change*. For detection of other objects (most commonly the player).   |
++---------------------------+--------------------------------------------------------------------------------------------+
+
 
 Cogito Object
 ~~~~~~~~~~~~~
@@ -280,7 +291,7 @@ Cogito Security Camera
 The Security Camera is an example object on how object and player detection can work in COGITO. It's detection mechanic is tied to a simple state machine to enable dynamic and flexible behaviors.
 It also includes a few extra nodes that help with testing it's behavior, like a mesh that changes it's color based on the current state of the camera and an alarm sound that plays once the object is detected.
 
-**How does detection work:**
+**How the detection works**
 
 * The security camera has a reference to an Area3D based detection area. It uses the Area3D body entered/exited signals to keep a list of all objects that are within the detection area and meet the critera (eg. is in group `Player`).
 * Once an object is within the detection area, the script casts a DetectionRaycast3D from a set position to the object. If the raycast hits the object, it counts as detected and the ``DETECTING`` state gets started which starts a timer.
@@ -364,8 +375,8 @@ Wieldables describes any type of item that the player can hold (aka *wield*). Th
 Wieldables work together with Inventory Items to define their behavior and update the data.
 
 
-Included Wieldables:
---------------------
+Included Wieldables
+-------------------
 
 Flashlight
 ~~~~~~~~~~
@@ -383,6 +394,58 @@ Throwable Dart
 ~~~~~~~~~~~~~~
 A wieldable that works like a "throwable". It works that on primary action, it spawns a projectile, un-equips itself and removes 1 of its associated item from the player's inventory.
 If the player still has more of the same item in the inventory, it will re-equip.
+
+
+Dynamic Footstep System
+========================
+
+
+Footstep Surface Detector
+-------------------------
+
+This is in the default player scene.
+* Generic Fallback Footstep Profile - If detection for a footstep sound fails, this sound profile will be used
+* Footstep Material Library - If assigned, the system will look up any material the player is standing on in this library to find a footstep profile for it. If a material is not found in the library, it will fall back to the generic fallback footstep profile
+
+
+Footstep Profile
+----------------
+
+The profiles are not a new class. They are an AudioStreamRandomizer. I recommend saving these as resources.
+
+* To create a new one:
+  * Right click in the FileSystem, Create New -> Resource
+  * Find AudioStreamRandomizer (I like to type random in the search bar)
+
+* To assign footstep sounds:
+  * Select the Footstep Profile Asset (You can adjust random pitch and random volume here)
+  * Expand the "Streams" accordion
+    * Here you can add or remove elements. Each of the added elements will be selected from randomly.
+    * You also can adjust their weights individually. Higher weights are more likely to be selected
+
+
+Footstep Surface
+----------------
+
+When this script is attached to an object in the scene it will determine what footstep sounds will be played when stepping on that object.
+You must assign a footstep profile or you will still get a generic footstep sound.
+These can also be assigned to children in the case of a StaticBody3D or Rigidbody3D
+
+
+Footstep Material Library
+-------------------------
+
+A resource that contains an array of Footstep Material Profiles. I recommend saving this as a resource. 
+You can create them in a similar way to how I described creating Footstep Profiles
+The Footstep Material Profiles don't necessarily have to be saved as resources, they can be created inside the Footstep Material Library.
+* Click the down arrow and click "New Footstep Material Profile"
+* Click the footstep material profile
+* Assign a material to detect and a footstep profile
+
+
+Footstep Material Profile
+-------------------------
+Contains a material and a Footstep Profile. When the specified material is detected the specified Footstep Profile will be used.
 
 
 
@@ -538,5 +601,41 @@ If it exists, a temporary ``scene state`` is loaded when the player transitions 
 Additional tools and components
 ===============================
 
+List of additional tools and components that are included with COGITO.
+
+
+Ladder Area
+-----------
+Script used to define ladders that the player can climb. Needs a reference to a CollisionObject3D and uses it's signals to determine if the player is on the ladder.
+
+
+Cogito Rotator Tool
+-------------------
+A basic script to rotate Node3Ds. Used for the ceiling fans.
+
+
+Spawn Zone
+----------
+A basic script to spawn PackedScenes within an area (CollisionShape3D). Used for the Ammo dispenser as well as the Target spawner in the Laboratory scene.
+
+
+Hazard Zone
+-----------
+Attach this to an Area3D to create a zone that influences a player attribute. Player attributes can be decreased and increased.
+
+
+Scene Transition Zone
+---------------------
+Used to create areas that transitions the players to a different level scene when entering.
+Please note that the target scene needs to be a Cogito Scene and has to have a connector defined for this to work properly.
+
+.. tip::
+   You also use this to transition from other interactions. Just set up a transition zone that the player can't touch. Then hook up a signal to it's ``transition_to_next_scene()`` function.
+
+
 Dialogue Nodes Component
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
+This InteractionComponent is made to be used with Nagi's Dialogue Nodes add-on for Godot 4.
+You need to have the add-on installed and activated for the component to work.
+To use it, open ``DialogueNodesInteraction.gd`` and un-comment the code to activate the script.
+Afterwards you can attach the component to any Cogito object and reference a dialogue resource, which will get started when interacting.
