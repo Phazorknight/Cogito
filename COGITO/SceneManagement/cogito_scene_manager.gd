@@ -25,6 +25,7 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 
 func _ready() -> void:
 	_player_state = get_existing_player_state(_active_slot) #Setting active slot (per default it's A)
+	_scene_state = get_existing_scene_state(_active_slot)
 
 
 func switch_active_slot_to(slot_name:String):
@@ -44,6 +45,17 @@ func get_existing_player_state(passed_slot) -> CogitoPlayerState:
 		return ResourceLoader.load(player_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)
 	else:
 		print("CSM: Get existing player state: No player state found for slot ", passed_slot)
+		return null
+
+
+func get_existing_scene_state(passed_slot) -> CogitoSceneState:
+	var scene_state_file : String = cogito_state_dir + cogito_scene_state_prefix + passed_slot + ".res"
+	print("CSM: Looking for file: ", scene_state_file)
+	if ResourceLoader.exists(scene_state_file):
+		print("CSM: Get existing scene state: found for slot ", passed_slot, ".")
+		return ResourceLoader.load(scene_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)
+	else:
+		print("CSM: Get existing scene state: No scene state found for slot ", passed_slot)
 		return null
 
 
