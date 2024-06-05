@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=100 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://1p4vcn6myoet" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall.tscn" id="8_mnu4d"]
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="8_ppug2"]
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="8_psdfg"]
+[ext_resource type="PackedScene" uid="uid://t2gxjp6of2et" path="res://COGITO/DemoScenes/DemoPrefabs/floor_dirt_3x_3_.tscn" id="9_btwfh"]
 [ext_resource type="PackedScene" uid="uid://3se2gpg0u3wx" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_ridges_half.tscn" id="9_gy8kl"]
 [ext_resource type="PackedScene" uid="uid://caex54qny4gvm" path="res://COGITO/DemoScenes/DemoPrefabs/glass_3x_3_98.tscn" id="10_8403t"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="11_vcl5j"]
@@ -1464,95 +1465,94 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 24)
 
 [node name="Movement_Trench_Floor" type="Node3D" parent="BASE_FLOOR"]
 
-[node name="Floor_3x3_42" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 12)
+[node name="FloorDirt_3x3_" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
 
-[node name="Floor_3x3_43" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
+[node name="FloorDirt_3x3_2" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 9)
 
-[node name="Floor_3x3_44" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 15)
-
-[node name="Floor_3x3_45" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 18)
-
-[node name="Floor_3x3_60" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 21)
-
-[node name="Floor_3x3_63" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 12)
-
-[node name="Floor_3x3_64" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 9)
-
-[node name="Floor_3x3_65" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 15)
-
-[node name="Floor_3x3_66" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 18)
-
-[node name="Floor_3x3_67" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 21)
-
-[node name="Floor_3x3_70" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 12)
-
-[node name="Floor_3x3_71" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 9)
-
-[node name="Floor_3x3_72" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 15)
-
-[node name="Floor_3x3_73" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 18)
-
-[node name="Floor_3x3_74" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 21)
-
-[node name="Floor_3x3_84" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 12)
-
-[node name="Floor_3x3_86" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 15)
-
-[node name="Floor_3x3_87" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 18)
-
-[node name="Floor_3x3_59" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 18)
-
-[node name="Floor_3x3_58" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 15)
-
-[node name="Floor_3x3_57" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 9)
-
-[node name="Floor_3x3_56" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 12)
-
-[node name="Floor_3x3_53" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 21)
-
-[node name="Floor_3x3_52" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 18)
-
-[node name="Floor_3x3_51" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 15)
-
-[node name="Floor_3x3_50" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 9)
-
-[node name="Floor_3x3_49" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
+[node name="FloorDirt_3x3_3" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 12)
 
-[node name="Floor_3x3_46" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 21)
+[node name="FloorDirt_3x3_4" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 9)
 
-[node name="Floor_3x3_78" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
+[node name="FloorDirt_3x3_5" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 12)
+
+[node name="FloorDirt_3x3_6" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 9)
+
+[node name="FloorDirt_3x3_7" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 12)
+
+[node name="FloorDirt_3x3_8" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 9)
+
+[node name="FloorDirt_3x3_9" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 12)
+
+[node name="FloorDirt_3x3_10" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 9)
+
+[node name="FloorDirt_3x3_11" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 12)
+
+[node name="FloorDirt_3x3_12" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 9)
 
-[node name="Floor_3x3_81" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("6_bedlu")]
+[node name="FloorDirt_3x3_13" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 18)
+
+[node name="FloorDirt_3x3_30" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 21)
+
+[node name="FloorDirt_3x3_14" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 15)
+
+[node name="FloorDirt_3x3_15" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 18)
+
+[node name="FloorDirt_3x3_16" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 15)
+
+[node name="FloorDirt_3x3_17" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 18)
+
+[node name="FloorDirt_3x3_18" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 15)
+
+[node name="FloorDirt_3x3_19" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 18)
+
+[node name="FloorDirt_3x3_20" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 15)
+
+[node name="FloorDirt_3x3_21" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 18)
+
+[node name="FloorDirt_3x3_22" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 15)
+
+[node name="FloorDirt_3x3_23" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 18)
+
+[node name="FloorDirt_3x3_25" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -3, 21)
+
+[node name="FloorDirt_3x3_26" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 21)
+
+[node name="FloorDirt_3x3_27" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3, 21)
+
+[node name="FloorDirt_3x3_28" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -3, 21)
+
+[node name="FloorDirt_3x3_29" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 21)
+
+[node name="FloorDirt_3x3_24" parent="BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 15)
 
 [node name="CEILING" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 2)

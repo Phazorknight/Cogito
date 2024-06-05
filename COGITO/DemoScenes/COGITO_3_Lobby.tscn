@@ -7109,7 +7109,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_dg8i0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BREAK_ROOM/tableRound"]
 shape = SubResource("ConcavePolygonShape3D_upcaa")
 
-[node name="kitchenFridgeContainer" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
+[node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
 inventory_data = SubResource("Resource_0tqm5")
 
 [node name="kitchenMicrowave" parent="BREAK_ROOM" instance=ExtResource("43_rl17a")]
@@ -7924,7 +7925,6 @@ shape = SubResource("BoxShape3D_4k13h")
 [editable path="UPPER_OFFICE_CEO/WindowedDoor"]
 [editable path="ARCHIVE/ArchiveDoor"]
 [editable path="MEETING_ROOM/ConferenceDoor"]
-[editable path="BREAK_ROOM/kitchenFridgeContainer"]
 [editable path="DEMO_HINTS/Hint_02_LampSwitch"]
 [editable path="DEMO_HINTS/Hint_03_AdvancedSwitch"]
 [editable path="DEMO_HINTS/Hint_04_Breakroom"]

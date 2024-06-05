@@ -2,9 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PackedScenes/cogito_player.tscn" id="1_0sk3n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/cogito_inventory.gd" id="2_ivcyr"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="2_pwdxr"]
-[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PackedScenes/Player_HUD.tscn" id="2_y6kid"]
-[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="3_ekpg2"]
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="3_m4tao"]
 [ext_resource type="Material" uid="uid://bncvwxye2x1uq" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Prototype_Brown.tres" id="4_s46n3"]
@@ -21,6 +20,14 @@
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="20_5hoci"]
 [ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="21_0438d"]
 [ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://COGITO/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="22_stsjx"]
+
+[sub_resource type="Resource" id="Resource_06861"]
+resource_local_to_scene = true
+script = ExtResource("2_ivcyr")
+grid = true
+starter_inventory = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+inventory_size = Vector2i(5, 3)
+inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_4k1rk"]
 material = ExtResource("1_xlgi6")
@@ -75,13 +82,7 @@ subdivide_width = 9
 
 [node name="Player" parent="." instance=ExtResource("1_0sk3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69453, 0.8, 0)
-pause_menu = NodePath("../PauseMenu")
-player_hud = NodePath("../Player_HUD")
-
-[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_y6kid")]
-player = NodePath("../Player")
-
-[node name="PauseMenu" parent="." instance=ExtResource("3_ekpg2")]
+inventory_data = SubResource("Resource_06861")
 
 [node name="Floor4" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

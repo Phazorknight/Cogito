@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://5iifh2dc07ai"]
+[gd_scene load_steps=22 format=3 uid="uid://5iifh2dc07ai"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_gc46u"]
 [ext_resource type="Texture2D" uid="uid://bgeywot8vygsa" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_00.png" id="2_ka3nw"]
@@ -8,8 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://1oslnc23jviv" path="res://COGITO/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_03.png" id="6_4mu01"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="7_g00h4"]
 [ext_resource type="Script" path="res://COGITO/Components/Interactions/PickupComponent.gd" id="8_klji4"]
-[ext_resource type="Texture2D" uid="uid://b4hu864fg0bv4" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Laptop_Logo.png" id="9_iby11"]
-[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/KeyItemPD.gd" id="10_kklpn"]
+[ext_resource type="Resource" uid="uid://ca0wjra4aq00v" path="res://COGITO/InventoryPD/Items/Cogito_LaptopReal.tres" id="9_hxd45"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="10_t0b0h"]
 [ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="11_h7tya"]
 [ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="12_45rln"]
@@ -112,22 +111,11 @@ size = Vector3(0.525516, 0.0282227, 0.340784)
 [sub_resource type="BoxShape3D" id="BoxShape3D_78fgu"]
 size = Vector3(0.525453, 0.334753, 0.0285786)
 
-[sub_resource type="Resource" id="Resource_3lsia"]
-script = ExtResource("10_kklpn")
-discard_after_use = false
-name = "CEOs Laptop"
-description = ""
-icon = ExtResource("9_iby11")
-is_stackable = false
-stack_size = 0
-drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop_real.tscn"
-hint_text_on_use = ""
-
-[sub_resource type="Resource" id="Resource_ufnk8"]
-resource_local_to_scene = true
+[sub_resource type="Resource" id="Resource_a3f7g"]
 script = ExtResource("10_t0b0h")
-inventory_item = SubResource("Resource_3lsia")
+inventory_item = ExtResource("9_hxd45")
 quantity = 1
+origin_index = -1
 
 [node name="laptop_real" type="RigidBody3D"]
 collision_layer = 3
@@ -179,7 +167,7 @@ carry_distance_offset = -1.0
 [node name="PickupComponent" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0422819, 0.00429514, 0.0620775)
 script = ExtResource("8_klji4")
-slot_data = SubResource("Resource_ufnk8")
+slot_data = SubResource("Resource_a3f7g")
 input_map_action = "interact"
 interaction_text = "Pick up"
 

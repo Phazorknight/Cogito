@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://t2gxjp6of2et"]
+
+[ext_resource type="Material" uid="uid://bnepeulvkh40w" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Dirt.tres" id="1_3t0wi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vjdm2"]
+material = ExtResource("1_3t0wi")
+size = Vector3(3, 0.2, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v4mur"]
+size = Vector3(3, 0.2, 3)
+
+[node name="FloorDirt_3x3_" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -3, 12)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.1, 1.5)
+mesh = SubResource("BoxMesh_vjdm2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.1, 1.5)
+shape = SubResource("BoxShape3D_v4mur")
