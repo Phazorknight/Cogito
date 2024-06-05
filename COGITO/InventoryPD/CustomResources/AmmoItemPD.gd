@@ -5,6 +5,9 @@ class_name AmmoItemPD
 ## The amount one item addes to the target item charge. For bullets this should be 1.
 @export var reload_amount : int = 1
 
+# Using method to enable other scripts to check if this is an ammo item. Used in cogito_inventory.gd.
+func is_ammo_item():
+	pass
 
 func use(target) -> bool:
 	# Target should always be player? Null check to override using the CogitoSceneManager, which stores a reference to current player node

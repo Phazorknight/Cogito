@@ -148,36 +148,47 @@ func drop_single_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> In
 	if not slot_data and is_enough_space(grabbed_slot_data, index, false):
 		inventory_slots[index] = grabbed_slot_data.create_single_slot_data(index)
 		add_adjacent_slots(index)
+		print("cogito_inventory.gd: drop_single_slot_data(...): grabbed item placed in inventory.")
 	elif not slot_data:
 		return grabbed_slot_data
 	elif slot_data.can_merge_with(grabbed_slot_data):
 		slot_data.fully_merge_with(grabbed_slot_data.create_single_slot_data(slot_data.origin_index))
+		print("cogito_inventory.gd: drop_single_slot_data(...): grabbed item fully merged with target.")
+		#return null
 	# Logic for ammo items
-	elif slot_data.inventory_item.has_method("update_wieldable_data") and slot_data.inventory_item == grabbed_slot_data.inventory_item.target_item_ammo:
+	elif slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.has_method("is_ammo_item") and slot_data.inventory_item.ammo_item_name == grabbed_slot_data.inventory_item.name:
+		print("cogito_inventory.gd: drop_single_slot_data(...): AmmoItem detected. Attempting to reload target.")
 		# Check if there's room for charge
 		if slot_data.inventory_item.charge_max - slot_data.inventory_item.charge_current >= grabbed_slot_data.inventory_item.reload_amount:
 			get_local_scene().player_interaction_component.send_hint(null,"Charging " + slot_data.inventory_item.name + " by " + str(grabbed_slot_data.inventory_item.reload_amount))
 			slot_data.inventory_item.add(grabbed_slot_data.inventory_item.reload_amount)
 			grabbed_slot_data.quantity -= 1
+		else:
+			print("cogito_inventory.gd: drop_single_slot_data(...): AmmoItem detected. Target charge is too high to be reloaded.")
 	# Check if grabbed item is a combinable AND check if slot item is the target combine item:
 	elif grabbed_slot_data.inventory_item.has_method("is_combinable") and slot_data.inventory_item.name == grabbed_slot_data.inventory_item.target_item_combine :
 		# Reduce/destroy both items.
 		remove_slot_data(slot_data)
 		grabbed_slot_data.quantity -= 1
-		
 		# Add resulting item to inventory:
 		pick_up_slot_data(grabbed_slot_data.inventory_item.resulting_item)
-		
+	
 	inventory_updated.emit(self)
 	
 	if grabbed_slot_data.quantity > 0:
-		# Swapping items
-		var item_to_swap = get_item_to_swap(grabbed_slot_data, index)
-		null_out_slots(item_to_swap)
 		return grabbed_slot_data
 	else:
-		# Placing items
 		return null
+		
+	#if grabbed_slot_data.quantity > 0:
+		## Swapping items
+		#var item_to_swap = get_item_to_swap(grabbed_slot_data, index)
+		#null_out_slots(item_to_swap)
+		#return grabbed_slot_data
+	#else:
+		## Placing items
+		#print("cogito_inventory.gd: drop_single_slot_data( grabbed item name=", grabbed_slot_data.inventory_item.name, ", ", index, "): Placing items reached.")
+		#return null
 
 
 func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:

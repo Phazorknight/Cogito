@@ -31,7 +31,7 @@ func find_cogito_properties():
 	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
 	if property_nodes:
 		cogito_properties = property_nodes[0]
-		print(name, ": cogito_properties set to ", cogito_properties)
+		#print(name, ": cogito_properties set to ", cogito_properties)
 
 
 # Function to handle persistence and saving
