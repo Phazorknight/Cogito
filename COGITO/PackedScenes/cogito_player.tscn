@@ -23,14 +23,11 @@
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PackedScenes/Player_HUD.tscn" id="21_j3p88"]
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="22_haksr"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_lrgwp"]
-margin = 0.0
-height = 1.6
-radius = 0.35
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
+size = Vector3(0.6, 1.7, 0.6)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_syr41"]
-height = 0.7
-radius = 0.35
+[sub_resource type="BoxShape3D" id="BoxShape3D_ut3wm"]
+size = Vector3(0.6, 0.7, 0.6)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_af0lu"]
 streams_count = 5
@@ -69,11 +66,12 @@ decay_in_darkness = false
 [node name="HealthAttribute" parent="." instance=ExtResource("9_ky5mf")]
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
-shape = SubResource("CylinderShape3D_lrgwp")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_8vem4")
 
 [node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
-shape = SubResource("CylinderShape3D_syr41")
+shape = SubResource("BoxShape3D_ut3wm")
 disabled = true
 
 [node name="StaircheckRayCast3D" type="RayCast3D" parent="."]
