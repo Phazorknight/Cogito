@@ -493,7 +493,8 @@ func _physics_process(delta):
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			is_walking = false
-			is_sprinting = true
+			if is_on_floor():
+				is_sprinting = true
 			is_crouching = false
 		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
 			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
