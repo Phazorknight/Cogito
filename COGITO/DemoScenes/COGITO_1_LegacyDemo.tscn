@@ -268,7 +268,7 @@ inventory_item = ExtResource("17_nl6sa")
 quantity = 2
 origin_index = -1
 
-[sub_resource type="Resource" id="Resource_ov8kt"]
+[sub_resource type="Resource" id="Resource_u6w2r"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 grid = false
@@ -1252,7 +1252,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 [node name="Chest" parent="INTERACTIVE_OBJECTS" groups=["external_inventory"] instance=ExtResource("14_d7sxi")]
 transform = Transform3D(0.686504, 0, -0.727126, 0, 1, 0, 0.727126, 0, 0.686504, -4.38933, 0.0425703, 5.97176)
 inventory_name = "Chest"
-inventory_data = SubResource("Resource_ov8kt")
+inventory_data = SubResource("Resource_u6w2r")
 uses_animation = true
 open_animation = "open"
 

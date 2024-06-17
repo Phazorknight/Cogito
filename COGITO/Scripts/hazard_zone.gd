@@ -12,6 +12,8 @@ signal apply_hazard_effect()
 @export var hint_icon : Texture2D
 ## Hint text that appears when player enteres the zone. Leave blank if you don't want a hint to appear.
 @export var hint_message : String
+## Used to activate / deactivate this zone on runtime.
+@export var is_active : bool = true
 
 var is_within_zone : bool
 var player
@@ -26,6 +28,16 @@ func _on_body_entered(body):
 func _on_body_exited(body):
 	if body.is_in_group("Player") :
 		is_within_zone = false
+
+
+func interact(_player_interaction_component: PlayerInteractionComponent):
+	if is_active:
+		monitoring = false
+		is_active = false
+	else:
+		monitoring = true
+		is_active = true
+
 
 func _process(delta):
 	if is_within_zone:
