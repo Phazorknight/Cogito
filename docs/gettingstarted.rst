@@ -48,7 +48,7 @@ Level scenes
 ~~~~~~~~~~~~
 
 You only need the ``cogito_player.tscn`` in your scene to run. It includes the HUD and pause menu as child scenes.
-If you want to transition between different level scenes, the root node of your level scene needs to have ``cogito_scene.gd`` attached and connector nodes defined.
+The root node of your level scene needs to have ``cogito_scene.gd`` attached. If you want to transition between scenes, you need to define connector nodes in the inspector.
 
 Components
 ~~~~~~~~~~

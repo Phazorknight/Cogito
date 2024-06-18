@@ -26,6 +26,13 @@ There are a few reasons for them to not be working, so here's a checklist:
 * Make sure you have interaciton components attached to the root node of your object. Use a default included component to make sure it works (``CarryableComponent`` is the quickest)
 * Make sure your object is saved as it's own scene. It is not strictly necessary for all object-types, but can help with some issues.
 
+
+I can't drop items / my level behaves oddly.
+--------------------------------------------
+Make sure you have the ``cogito_scene.gd`` script attached to the root node of your level scene.
+COGITO uses this to identify which node is the parent to spawned objects (like dropped items).
+
+
 How do I get a reference to the player?
 ---------------------------------------
 
