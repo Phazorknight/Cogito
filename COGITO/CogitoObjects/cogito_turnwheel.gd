@@ -16,6 +16,7 @@ signal object_state_updated(interaction_text : String)
 
 var has_been_turned: bool = false
 var interaction_nodes : Array[Node]
+var cogito_properties : CogitoProperties = null
 
 func _ready():
 	self.add_to_group("save_object_state")

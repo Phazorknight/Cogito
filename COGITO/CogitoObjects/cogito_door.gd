@@ -69,6 +69,7 @@ var interaction_text
 var close_timer : Timer #Used for auto-close
 
 var interaction_nodes : Array[Node]
+var cogito_properties : CogitoProperties = null
 var player_interaction_component : PlayerInteractionComponent
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D

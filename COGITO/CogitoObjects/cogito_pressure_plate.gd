@@ -28,6 +28,7 @@ signal damage_received(damage_value:float)
 @export var tween_time : float = .3
 
 var is_activated : bool = false
+var cogito_properties : CogitoProperties = null
 var player_interaction_component : PlayerInteractionComponent
 
 

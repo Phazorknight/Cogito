@@ -4,6 +4,7 @@ signal object_state_updated(interaction_text: String) #used to display correct i
 signal pressed()
 signal damage_received(damage_value:float)
 
+
 @export_group("Cogito Button Settings")
 ## Sound that plays when pressed.
 @export var press_sound : AudioStream
@@ -28,10 +29,12 @@ signal damage_received(damage_value:float)
 @export var objects_call_interact : Array[NodePath]
 @export var objects_call_delay : float = 0
 
+
 var has_been_used : bool = false
 var interaction_text : String 
 var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
+var cogito_properties : CogitoProperties = null
 var cooldown : float
 
 func _ready() -> void:

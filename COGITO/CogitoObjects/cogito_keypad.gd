@@ -45,6 +45,7 @@ var interaction_text : String
 var is_open: bool #Used to show/hide ui.
 var is_locked : bool = true #Used to check if unlocked or not.
 var interaction_nodes : Array[Node]
+var cogito_properties : CogitoProperties = null
 var entered_code: String
 var player_interaction_component
 

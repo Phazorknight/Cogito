@@ -35,6 +35,7 @@ signal damage_received(damage_value:float)
 var interaction_text : String 
 var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
+var cogito_properties : CogitoProperties = null
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 

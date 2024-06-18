@@ -18,6 +18,7 @@ class_name CogitoContainer
 
 var interaction_text
 var interaction_nodes : Array[Node]
+var cogito_properties : CogitoProperties = null
 
 signal toggle_inventory(external_inventory_owner)
 signal object_state_updated(interaction_text:String)
