@@ -99,7 +99,7 @@ func start_reaction_threshold_timer(passed_collider: Node3D):
 
 
 func check_for_reaction_timer_interrupt(passed_collider: Node3D):
-	print(get_parent().name , ": check for reaction timer interrupt called. Passed collider: ", passed_collider.name, ". Current reaction collider: ", reaction_collider.name)
+	#print(get_parent().name , ": check for reaction timer interrupt called. Passed collider: ", passed_collider.name, ". Current reaction collider: ", reaction_collider.name)
 	
 	# Quick check to see if the collider has any CogitoProperties.
 	if( !passed_collider.cogito_properties):
