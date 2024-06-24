@@ -6197,7 +6197,7 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
-is_sliding = true
+door_type = 1
 open_position = Vector3(0, 0, 0.28)
 
 [node name="drawer" type="MeshInstance3D" parent="UPPER_OFFICE_CEO/deskCorner/Drawer"]
@@ -6242,7 +6242,7 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
-is_sliding = true
+door_type = 1
 closed_position = Vector3(0.625, 0.785, -0.03)
 open_position = Vector3(0.625, 1.285, -0.03)
 
@@ -6381,6 +6381,7 @@ transform = Transform3D(0.718733, 0, 0.695286, 0, 1, 0, -0.695286, 0, 0.718733, 
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.100001, 1.56287, -2.09816)
 collision_layer = 3
 script = ExtResource("22_fgo21")
+rotation_axis = Vector3(0, 0, 1)
 rotation_speed = 0.01
 nodes_to_trigger = [NodePath("../HiddenDoor")]
 hold_audio_stream = ExtResource("23_q1spm")
@@ -7808,7 +7809,7 @@ transform = Transform3D(0.985497, 0, 0.169694, 0, 1, 0, -0.169694, 0, 0.985497, 
 [node name="Platform" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.017, 0, 7.568)
 script = ExtResource("13_5x4ip")
-is_sliding = true
+door_type = 1
 closed_position = Vector3(-5.017, 0, 7.568)
 open_position = Vector3(-5.017, 2.614, 7.568)
 door_speed = 3.0

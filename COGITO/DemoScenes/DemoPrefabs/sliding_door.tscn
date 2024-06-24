@@ -107,7 +107,7 @@ script = ExtResource("1_fged4")
 open_sound = ExtResource("2_n3bjk")
 close_sound = ExtResource("3_bh3rj")
 auto_close_time = 2.0
-is_sliding = true
+door_type = 1
 open_position = Vector3(0, 0, -1.44)
 door_speed = 0.3
 

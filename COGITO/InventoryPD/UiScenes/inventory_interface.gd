@@ -75,6 +75,8 @@ func _on_focus_changed(control: Control):
 		info_panel.global_position = control_in_focus.global_position + Vector2(0,control_in_focus.size.y)
 		#if InputHelper.device_index != -1: # Only showing info panel when using a controller.
 		info_panel.show()
+		if !control.mouse_exited.is_connected(_slot_on_mouse_exit):
+			control.mouse_exited.connect(_slot_on_mouse_exit)
 		
 	else:
 		info_panel.hide()
@@ -91,11 +93,11 @@ func _on_focus_changed(control: Control):
 
 
 func _slot_on_mouse_exit():
-	info_panel.hide()		
+	info_panel.hide()
 
 
 func update_grabbed_slot_position():
-	print("Inventory interface: update grabbed slot position to ", control_in_focus, " at ", control_in_focus.global_position)
+	#print("Inventory interface: update grabbed slot position to ", control_in_focus, " at ", control_in_focus.global_position)
 	grabbed_slot_node.global_position = control_in_focus.global_position + (control_in_focus.size / 2)
 
 

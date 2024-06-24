@@ -304,6 +304,18 @@ Cogito Inventory System
 =======================
 The inventory system is largely resource based. The inventory system and the inventory UI are independent form each other. UI elements get updated via signals.
 
+.. important::
+   It is helpful to understand what the documentation refers to when using the words ``item`` and ``pick up``
+
+   * ``Item``  always refers to the Resource file, based on the ``Inventory Item`` class.
+   * ``Pick up`` is how the item exists in the 3D world, usually as a ``Cogito_Object`` with a ``pick_up component`` attached.
+   * The two reference each other: The ``Pickup_component`` of a ``Cogito_Object`` <-> ``Inventory Item resource``
+   * Finally, if you create a Wieldable item, the third player is a PackedScene ``Wieldable``, which in turn gets referenced by your ``Inventory Item``
+
+.. image:: cog_wieldable_items_relationship.JPG
+   :alt: Graphic showing the relation ship between Pickup, Inventory Item and Wieldable.
+
+
 Inventory Overview
 ------------------
 The Inventory System contains of 3 main resources: 
@@ -312,13 +324,6 @@ The Inventory System contains of 3 main resources:
 * Slot: The "container" for an item and manages stuff like item stacks, moving items, dropping items, etc.
 * Inventory: This resource is a collection of slots. Can vary in size. Per default, the Player has an inventory attached. Also used for containers.
 
-.. important::
-   It is helpful to understand what the documentation refers to when using the words ``item`` and ``pick up``
-
-   * ``Item``  always refers to the Resource file, based on the ``Inventory Item`` class.
-   * ``Pick up`` is how the item exists in the 3D world, usually as a ``Cogito_Object`` with a ``pick_up component`` attached.
-   * Usually the two reference each other: ``Cogito_Object`` with ``Pickup_component`` <-> ``Inventory Item resource``
-
 .. note:: 
     Make sure that the ``Slot Data`` resource on your ``pick up`` is set to "Local to Scene ON", especially on stackable items. If not, instances of this item will share the same slot resource, causing item quantities to be calculated incorrectly.
 
@@ -326,8 +331,24 @@ Slots
 ~~~~~
 Slots are containers that hold items. In most cases you don't have to deal with Slots except when defining the size of the player inventory or an external container. 
 
-Containers
-~~~~~~~~~~
+External Inventories
+~~~~~~~~~~~~~~~~~~~~
+
+External inventories are used to create containers or any other objects that should hold items that are NOT the player.
+An example would be the Fridge in the Lobby demo scene or the Chest in the legacy demo scene.
+
+To create an external inventory, use the ``external_inventory.gd`` script. You can then load a CogitoInventory resource.
+By doing this on a packed scene, you can make sure that all instances of that scene will have an inventory that is the same size.
+To make sure that these instances don't actually share the same inventory, make sure to check "Local to scene" (though this can be used to create "connected containers").
+Be sure to define if your inventory is grid based, and it's size.
+
+If you want to pre-add items into your external inventory, you have to add inventory slots and then load the item resource into them.
+
+.. important::
+   If you use the gird inventory, **you have to  set an origin index**. This sets the position of the item within the external inventory, starting at 0.
+   Keep each items size in mind when you set this. Failing to set working origin indexes will throw an error when the player tries to access the external inventory.
+
+
 
 Inventory Item Class
 --------------------

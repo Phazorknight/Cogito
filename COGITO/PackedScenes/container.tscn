@@ -1,7 +1,27 @@
-[gd_scene load_steps=13 format=3 uid="uid://3okedyf5glns"]
+[gd_scene load_steps=18 format=3 uid="uid://3okedyf5glns"]
 
 [ext_resource type="Script" path="res://COGITO/InventoryPD/external_inventory.gd" id="1_ovckt"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/cogito_inventory.gd" id="2_2oue8"]
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_hwyxp"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_m2db3"]
+
+[sub_resource type="Resource" id="Resource_r8i2t"]
+script = ExtResource("2_hwyxp")
+quantity = 1
+origin_index = -1
+
+[sub_resource type="Resource" id="Resource_1eygi"]
+script = ExtResource("2_hwyxp")
+quantity = 1
+origin_index = -1
+
+[sub_resource type="Resource" id="Resource_ggjah"]
+resource_local_to_scene = true
+script = ExtResource("2_2oue8")
+grid = true
+starter_inventory = Array[ExtResource("2_hwyxp")]([])
+inventory_size = Vector2i(4, 2)
+inventory_slots = Array[ExtResource("2_hwyxp")]([SubResource("Resource_r8i2t"), SubResource("Resource_1eygi")])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa0bx"]
 resource_name = "wood"
@@ -171,6 +191,7 @@ _data = {
 [node name="container" type="StaticBody3D"]
 collision_layer = 3
 script = ExtResource("1_ovckt")
+inventory_data = SubResource("Resource_ggjah")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_m2db3")]
 

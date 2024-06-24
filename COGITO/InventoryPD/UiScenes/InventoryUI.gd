@@ -178,6 +178,7 @@ func out_of_bounds(index: int, x, y):
 		return true
 	return false
 
+
 func _on_visibility_changed():
 	# This is here because to prevent a dead end signal error in the inspector.
 	pass

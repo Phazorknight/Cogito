@@ -1,3 +1,4 @@
+@tool
 @icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoDoor.svg")
 class_name CogitoDoor
 extends Node3D
@@ -6,6 +7,12 @@ signal object_state_updated(interaction_text:String)
 signal door_state_changed(is_open:bool)
 signal lock_state_changed(is_locked:bool)
 signal damage_received(damage_value:float)
+
+enum DoorType {
+  ROTATING,
+  SLIDING,
+  ANIMATED
+}
 
 #region Variables
 
@@ -16,7 +23,7 @@ signal damage_received(damage_value:float)
 @export var rattle_sound : AudioStream
 @export var unlock_sound : AudioStream
 
-@export_group("Door Parameters")
+@export_group("Door Settings")
 ## Start state of the door (usually closed).
 @export var is_open : bool = false
 ## Text that appears on the interaction prompt when locked.
@@ -37,9 +44,24 @@ signal damage_received(damage_value:float)
 @export var auto_close_time: float
 
 ## Use these if you don't have an animation.
-@export_subgroup("Tween Parameters")
-## Set this to true if you're making a sliding instead of a rotating door.
-@export var is_sliding : bool
+@export_group("Door Parameters")
+
+@export var door_type := DoorType.ROTATING:
+	set(value):
+		door_type = value
+		notify_property_list_changed()
+
+func _validate_property(property: Dictionary):
+	if property.name in ["use_z_axis", "bidirectional_swing", "open_rotation_deg", "closed_rotation_deg"] and door_type != DoorType.ROTATING:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	elif property.name in ["open_position", "closed_position"] and door_type != DoorType.SLIDING:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	elif property.name in ["animation_player", "opening_animation", "reverse_opening_anim_for_close", "closing_animation"] and door_type != DoorType.ANIMATED:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	elif property.name in ["closing_animation"] and reverse_opening_anim_for_close:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+
+
 ## Rotation axis to use. True = use Z axis. False = use Y axis:
 @export var use_z_axis : bool = false
 ## Set this to true if the door should swing opposite the direction of the interactor
@@ -55,11 +77,14 @@ signal damage_received(damage_value:float)
 ## Speed in which the door moves between open and closed position. Usually around 0.1.
 @export var door_speed : float = .1
 
-@export_subgroup("Animation Parameters")
-@export var is_animation_based : bool = false
+# Aimation Parameters
 @export var animation_player : NodePath
 @export var opening_animation : String
-@export var reverse_opening_anim_for_close : bool = true
+@export var reverse_opening_anim_for_close : bool = true:
+	set(value):
+		reverse_opening_anim_for_close = value
+		notify_property_list_changed()
+
 @export var closing_animation : String
 
 var anim_player : AnimationPlayer
@@ -82,7 +107,7 @@ func _ready():
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	
-	if is_animation_based:
+	if door_type == DoorType.ANIMATED:
 		anim_player = get_node(animation_player)
 	
 	if use_z_axis:
@@ -124,7 +149,7 @@ func interact(interactor: Node3D):
 
 
 func _physics_process(_delta):
-	if !is_sliding:
+	if door_type == DoorType.ROTATING:
 		if is_moving:
 			if use_z_axis:
 				rotation.z = lerp_angle(rotation.z, target_rotation_rad, door_speed)
@@ -169,9 +194,9 @@ func open_door(interactor: Node3D):
 	audio_stream_player_3d.stream = open_sound
 	audio_stream_player_3d.play()
 
-	if is_animation_based:
+	if door_type == DoorType.ANIMATED:
 		anim_player.play(opening_animation)
-	elif !is_sliding:
+	elif door_type == DoorType.ROTATING:
 		target_rotation_rad = deg_to_rad(open_rotation_deg)
 		var swing_direction: int = 1
 
@@ -211,12 +236,12 @@ func close_door(_interactor: Node3D):
 	audio_stream_player_3d.stream = close_sound
 	audio_stream_player_3d.play()
 	
-	if is_animation_based:
+	if door_type == DoorType.ANIMATED:
 		if reverse_opening_anim_for_close:
 			anim_player.play_backwards(opening_animation)
 		else:
 			anim_player.play(closing_animation)
-	elif !is_sliding:
+	elif door_type == DoorType.ROTATING:
 		target_rotation_rad = deg_to_rad(closed_rotation_deg)
 		is_moving = true
 	else:
@@ -246,7 +271,7 @@ func set_state():
 
 
 func set_to_open_position():
-	if is_sliding:
+	if door_type == DoorType.SLIDING:
 		position = open_position
 	else:
 		if use_z_axis:
@@ -256,7 +281,7 @@ func set_to_open_position():
 
 
 func set_to_closed_position():
-	if is_sliding:
+	if door_type == DoorType.SLIDING:
 		position = closed_position
 	else:
 		if use_z_axis:

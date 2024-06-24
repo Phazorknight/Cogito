@@ -42,7 +42,7 @@ collision_layer = 3
 script = ExtResource("2_xux4j")
 open_sound = ExtResource("3_jxcxt")
 close_sound = ExtResource("4_4064u")
-is_sliding = true
+door_type = 1
 closed_position = Vector3(0, 0.04, 0.3)
 open_position = Vector3(0, 0.04, -0.04)
 
@@ -74,7 +74,7 @@ collision_layer = 3
 script = ExtResource("2_xux4j")
 open_sound = ExtResource("3_jxcxt")
 close_sound = ExtResource("4_4064u")
-is_sliding = true
+door_type = 1
 closed_position = Vector3(0, 0.34, 0.3)
 open_position = Vector3(0, 0.34, -0.04)
 
@@ -106,6 +106,7 @@ collision_layer = 3
 script = ExtResource("2_xux4j")
 open_sound = ExtResource("6_q1lg4")
 close_sound = ExtResource("7_takda")
+door_type = 1
 open_rotation_deg = -100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CabinetDoorA"]
@@ -132,6 +133,7 @@ collision_layer = 3
 script = ExtResource("2_xux4j")
 open_sound = ExtResource("6_q1lg4")
 close_sound = ExtResource("7_takda")
+door_type = 1
 open_rotation_deg = 100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CabinetDoorB"]

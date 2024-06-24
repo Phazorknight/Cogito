@@ -141,7 +141,7 @@ collision_layer = 3
 script = ExtResource("1_ymvqg")
 open_sound = ExtResource("2_jmyy3")
 close_sound = ExtResource("3_b5gei")
-is_sliding = true
+door_type = 1
 open_position = Vector3(0, 0, 0.284)
 door_speed = 0.2
 
