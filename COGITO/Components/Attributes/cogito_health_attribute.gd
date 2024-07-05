@@ -47,4 +47,5 @@ func on_death(_attribute_name:String, _value_current:float, _value_max:float):
 		get_tree().current_scene.add_child(spawned_object)
 	
 	for nodepath in destroy_on_death:
-		get_node(nodepath).queue_free()
+		if get_node(nodepath):
+			get_node(nodepath).queue_free()
