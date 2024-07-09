@@ -14,6 +14,7 @@ signal has_been_read
 
 var is_open : bool
 
+
 func _ready():
 	readable_ui.hide()
 	is_open = false
@@ -37,6 +38,7 @@ func open(_player_interaction_component: PlayerInteractionComponent):
 	readable_ui.show()
 	has_been_read.emit()
 	is_open = true
+
 
 func close(_player_interaction_component: PlayerInteractionComponent):
 	readable_ui.hide()

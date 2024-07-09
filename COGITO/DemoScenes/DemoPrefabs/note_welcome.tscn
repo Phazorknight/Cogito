@@ -33,4 +33,10 @@ shape = SubResource("BoxShape3D_mqvc0")
 [node name="ReadableComponent" parent="." instance=ExtResource("2_cwsfv")]
 interact_sound = ExtResource("3_lxhi0")
 readable_title = "Welcome to the LOBBY"
-readable_content = "This scene is still under construction, but feel free to explore what's there."
+readable_content = "This scene is still under construction, but feel free to explore what's there.
+
+COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses more on providing a framework for creating interactable objects and items.
+
+This text is a placeholder, showing how a readable object would work. It is recommended to make a copy of the readable component and then modify the copy to your liking.
+
+This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
