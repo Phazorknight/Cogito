@@ -23,6 +23,7 @@ var spawn_node : Node
 var is_firing : bool = false
 
 var firing_cooldown : float
+var player_rid : RID
 
 var inventory_item_reference : WieldableItemPD
 
@@ -30,6 +31,7 @@ var inventory_item_reference : WieldableItemPD
 func _ready():
 	wieldable_mesh.hide()
 	firing_cooldown = 0
+	player_rid = CogitoSceneManager._current_player_node.get_rid()
 
 
 func _physics_process(_delta: float) -> void:
@@ -38,6 +40,8 @@ func _physics_process(_delta: float) -> void:
 		
 	if is_firing:
 		if firing_cooldown <= 0:
+			if animation_player.is_playing():
+				return
 			# Gettting camera_collision pos from player interaction component:
 			var _camera_collision = player_interaction_component.Get_Camera_Collision()
 			hit_scan_collision(_camera_collision) #Do the hitscan
@@ -83,6 +87,7 @@ func action_secondary(is_released:bool):
 func hit_scan_collision(collision_point:Vector3):
 	var bullet_direction = (collision_point - bullet_point.get_global_transform().origin).normalized()
 	var new_intersection = PhysicsRayQueryParameters3D.create(bullet_point.get_global_transform().origin, collision_point + bullet_direction * 2)
+	new_intersection.exclude = [player_rid]
 	
 	var bullet_collision = get_world_3d().direct_space_state.intersect_ray(new_intersection)
 	
