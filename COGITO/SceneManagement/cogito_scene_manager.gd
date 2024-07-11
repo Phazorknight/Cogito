@@ -49,7 +49,10 @@ func get_existing_player_state(passed_slot) -> CogitoPlayerState:
 
 
 func get_existing_scene_state(passed_slot) -> CogitoSceneState:
-	var scene_state_file : String = cogito_state_dir + cogito_scene_state_prefix + passed_slot + ".res"
+	var current_scene : String = ""
+	if _player_state:
+		current_scene = _player_state.player_current_scene
+	var scene_state_file : String = cogito_state_dir + cogito_scene_state_prefix + passed_slot + "_" + current_scene + ".res"
 	print("CSM: Looking for file: ", scene_state_file)
 	if ResourceLoader.exists(scene_state_file):
 		print("CSM: Get existing scene state: found for slot ", passed_slot, ".")
