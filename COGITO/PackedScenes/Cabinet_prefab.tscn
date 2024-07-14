@@ -106,7 +106,6 @@ collision_layer = 3
 script = ExtResource("2_xux4j")
 open_sound = ExtResource("6_q1lg4")
 close_sound = ExtResource("7_takda")
-door_type = 1
 open_rotation_deg = -100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CabinetDoorA"]
@@ -133,7 +132,6 @@ collision_layer = 3
 script = ExtResource("2_xux4j")
 open_sound = ExtResource("6_q1lg4")
 close_sound = ExtResource("7_takda")
-door_type = 1
 open_rotation_deg = 100.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CabinetDoorB"]
