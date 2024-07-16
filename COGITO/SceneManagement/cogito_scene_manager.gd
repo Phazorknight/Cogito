@@ -131,7 +131,7 @@ func load_player_state(player, passed_slot:String):
 			player.player_attributes[attribute].set_attribute(cur_value, max_value)
 
 		player.global_position = _player_state.player_position
-		player.global_rotation = _player_state.player_rotation
+		player.body.global_rotation = _player_state.player_rotation
 		
 		#Loading player interaction component state
 		var player_interaction_component_state = _player_state.interaction_component_state
@@ -178,7 +178,7 @@ func save_player_state(player, slot:String):
 	_player_state.player_current_scene = _current_scene_name
 	_player_state.player_current_scene_path = _current_scene_path
 	_player_state.player_position = player.global_position
-	_player_state.player_rotation = player.global_rotation
+	_player_state.player_rotation = player.body.global_rotation
 	
 	## New way of saving attributes:
 	_player_state.clear_saved_attribute_data()
