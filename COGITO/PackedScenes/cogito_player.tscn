@@ -83,29 +83,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
 target_position = Vector3(0, 1.6, 0)
 collision_mask = 3
 
-[node name="Neck" type="Node3D" parent="."]
+[node name="Body" type="Node3D" parent="."]
+
+[node name="Neck" type="Node3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 
-[node name="Head" type="Node3D" parent="Neck"]
+[node name="Head" type="Node3D" parent="Body/Neck"]
 
-[node name="Eyes" type="Node3D" parent="Neck/Head"]
+[node name="Eyes" type="Node3D" parent="Body/Neck/Head"]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Neck/Head/Eyes"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body/Neck/Head/Eyes"]
 reset_on_save = false
 root_node = NodePath("../..")
 libraries = {
 "": ExtResource("10_tp6cj")
 }
 
-[node name="Camera" type="Camera3D" parent="Neck/Head/Eyes"]
+[node name="Camera" type="Camera3D" parent="Body/Neck/Head/Eyes"]
 transform = Transform3D(1, 0, 0, 0, 1, 4.46638e-06, 0, -4.46638e-06, 1, 0, 0, 0)
 
-[node name="InteractionRaycast" type="RayCast3D" parent="Neck/Head/Eyes/Camera"]
+[node name="InteractionRaycast" type="RayCast3D" parent="Body/Neck/Head/Eyes/Camera"]
 target_position = Vector3(0, 0, -2.5)
 collision_mask = 3
 script = ExtResource("11_miluh")
 
-[node name="Wieldables" type="Node3D" parent="Neck/Head"]
+[node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
 
 [node name="SlidingTimer" type="Timer" parent="."]
@@ -126,15 +128,15 @@ wait_time = 0.5
 one_shot = true
 
 [node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "wieldable_container") instance=ExtResource("20_4f25o")]
-interaction_raycast = NodePath("../Neck/Head/Eyes/Camera/InteractionRaycast")
-wieldable_container = NodePath("../Neck/Head/Wieldables")
+interaction_raycast = NodePath("../Body/Neck/Head/Eyes/Camera/InteractionRaycast")
+wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("21_j3p88")]
 player = NodePath("..")
 
 [node name="PauseMenu" parent="." instance=ExtResource("22_haksr")]
 
-[connection signal="animation_finished" from="Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="interactable_seen" from="Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
-[connection signal="interactable_unseen" from="Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
+[connection signal="animation_finished" from="Body/Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
+[connection signal="interactable_unseen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]
