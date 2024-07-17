@@ -14,6 +14,7 @@ var damage_amount : int = 0
 
 func _ready():
 	add_to_group("interactable")
+	self.add_to_group("Persist") #Adding object to group for persistence
 	find_interaction_nodes()
 	find_cogito_properties()
 	

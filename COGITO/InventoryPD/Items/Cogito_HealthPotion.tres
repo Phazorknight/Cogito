@@ -11,6 +11,7 @@ script = ExtResource("3_4qsd3")
 attribute_name = "health"
 attribute_change_amount = 10.0
 value_to_change = 0
+consumable_effects = Array[Resource("res://COGITO/InventoryPD/CustomResources/ConsumableEffect.gd")]([])
 name = "Health Potion"
 description = "Tastes better than it looks."
 icon = ExtResource("1_net5f")
