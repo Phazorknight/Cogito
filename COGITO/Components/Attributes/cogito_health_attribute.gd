@@ -31,7 +31,7 @@ func on_health_change(_health_name:String, _health_current:float, _health_max:fl
 	if !has_increased:
 		damage_taken.emit()
 		if sound_on_damage_taken:
-			Audio.play_sound_3d(sound_on_death).global_position = get_parent().global_position
+			Audio.play_sound_3d(sound_on_damage_taken).global_position = get_parent().global_position
 
 
 func on_death(_attribute_name:String, _value_current:float, _value_max:float):
