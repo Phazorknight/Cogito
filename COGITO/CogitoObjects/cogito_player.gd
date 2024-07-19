@@ -151,7 +151,7 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var neck: Node3D = $Body/Neck
 @onready var head: Node3D = $Body/Neck/Head
 @onready var eyes: Node3D = $Body/Neck/Head/Eyes
-@onready var camera: Camera3D = $Body/Neck/Head/Eyes/Camera
+@onready var camera: Camera3D = $Body/Neck/Head/Eyes/CameraHolder/Camera
 @onready var animationPlayer: AnimationPlayer = $Body/Neck/Head/Eyes/AnimationPlayer
 
 @onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
@@ -174,13 +174,24 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
 
 @onready var wieldables = %Wieldables
+
+# Camera Smoothing
+@onready var camera_holder = $Body/Neck/Head/Eyes/CameraHolder
+@onready var camera_target = $Body/Neck/Head/Eyes
+@onready var wieldables_target = $Body/Neck/Head
+
+var is_transforms_update_needed  : bool = false
+var camera_gt_previous : Transform3D
+var camera_gt_current : Transform3D
+var wieldables_gt_previous : Transform3D
+var wieldables_gt_current : Transform3D
 #endregion
 
 
 func _ready():
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
-	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
+	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/CameraHolder/Camera/InteractionRaycast
 	player_interaction_component.exclude_player(get_rid())
 	
 	randomize() 
@@ -216,7 +227,19 @@ func _ready():
 		print("Player has no reference to pause menu.")
 
 	call_deferred("slide_audio_init")
-
+	
+	camera_holder.set_as_top_level(true)
+	camera_holder.global_transform = camera_target.global_transform
+	
+	camera_gt_previous = camera_target.global_transform
+	camera_gt_current = camera_target.global_transform
+	
+	wieldables.set_as_top_level(true)
+	wieldables.global_transform = wieldables_target.global_transform
+	
+	wieldables_gt_previous = wieldables_target.global_transform
+	wieldables_gt_current = wieldables_target.global_transform
+	
 
 func slide_audio_init():
 	#setup sound effect for sliding
@@ -414,7 +437,31 @@ func _process_on_ladder(_delta):
 
 var jumped_from_slide = false
 
+
+func update_transforms():
+	camera_gt_previous = camera_gt_current
+	camera_gt_current = camera_target.global_transform
+	
+	wieldables_gt_previous = wieldables_gt_current
+	wieldables_gt_current = wieldables_target.global_transform
+
+
+func _process(delta: float) -> void:
+	if is_transforms_update_needed:
+		update_transforms()
+		is_transforms_update_needed = false
+
+	var interpolation_fraction : float = clamp(Engine.get_physics_interpolation_fraction(), 0, 1)
+
+	var camera_xform : Transform3D = camera_gt_previous.interpolate_with(camera_gt_current, interpolation_fraction)
+	camera_holder.global_transform = camera_xform
+
+	var wieldables_xform : Transform3D = wieldables_gt_previous.interpolate_with(wieldables_gt_current, interpolation_fraction)
+	wieldables.global_transform = wieldables_xform
+
+
 func _physics_process(delta):
+	is_transforms_update_needed = true
 	#if is_movement_paused:
 		#return
 		
