@@ -32,7 +32,8 @@ enum MaterialProperties{
 
 ## Time it takes for a property state change to happen. E.g. an object only ignites if exposed to fire for at least 1 second.
 @export var reaction_threshold_time : float = 1.0
-
+## The maximum amount of spawned vfx. Lower this to reduce potential performance issues.
+@export var max_spawned_vfx : int = 5
 
 @export_group("Burn Parameters")
 ## Sets if the object should ignite itself on ready. Needs to be flammable for this to work.
@@ -232,5 +233,10 @@ func electrify():
 func spawn_elemental_vfx(vfx_packed_scene:PackedScene):
 	var spawned_object = vfx_packed_scene.instantiate()
 	get_parent().add_child.call_deferred(spawned_object)
+	
+	# If max spawned vfx is reached, all spawned vfx will be cleared.
+	if spawned_effects.size() <= max_spawned_vfx + 1:
+		clear_spawned_effects()
+		
 	spawned_effects.append(spawned_object)
 	spawned_object.position = Vector3(0,0,0)

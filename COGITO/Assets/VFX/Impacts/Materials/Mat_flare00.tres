@@ -4,7 +4,6 @@
 
 [resource]
 transparency = 1
-cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("1_bfy7w")

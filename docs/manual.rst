@@ -13,6 +13,20 @@ Manual
 Player Controller
 =================
 COGITO includes a first person player controller that has a variety of parameters and settings built-in. We recommend just reading through the descriptions and tweaking the parameters to your liking. Most common adjustments needed are walking, running and sprinting speeds, stair handling, and ladder handling. Be aware that a few of the player controller parameters will be controlled by the game options and are thus user controlled (for example Invert Y Axis).
+The controls are currently not rebindable in-game, but you can adjust them to your liking with the input map settings in the Godot project.
+
+**Default controls:**
+
+* W A S D - Moving the character
+* Space - Jump
+* Shift - Sprint
+* C - Crouch
+* F / E - Interact / Interact2
+
+
+.. tip::
+   Invert Mouse Y is set in the in-game options menu and saved in the game's config file. Be aware that the built game will have it's own config file so this setting might "reset". 
+
 
 Cogito Player Packed Scene
 --------------------------

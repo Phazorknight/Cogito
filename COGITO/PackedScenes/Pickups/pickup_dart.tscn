@@ -79,11 +79,12 @@ metallic = 1.0
 height = 0.28
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_oe53u"]
+[sub_resource type="Resource" id="Resource_o6kw1"]
 resource_local_to_scene = true
 script = ExtResource("4_qk8k6")
 inventory_item = ExtResource("3_ohc35")
 quantity = 1
+origin_index = -1
 
 [node name="Pickup_Dart" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -115,12 +116,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
 shape = SubResource("CylinderShape3D_xbicr")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_u01ym")]
-slot_data = SubResource("Resource_oe53u")
+slot_data = SubResource("Resource_o6kw1")
 
 [node name="Lifespan" type="Timer" parent="."]
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_4xy2e")]
-elemental_properties = 2
 material_properties = 1
 ignite_on_ready = true
 

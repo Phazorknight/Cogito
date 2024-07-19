@@ -59,6 +59,7 @@ size = Vector3(0.0942247, 0.2, 0.0599624)
 script = ExtResource("3_xoy07")
 inventory_item = ExtResource("2_7v1hn")
 quantity = 1
+origin_index = -1
 
 [node name="pickup_pistol" type="RigidBody3D"]
 collision_layer = 3

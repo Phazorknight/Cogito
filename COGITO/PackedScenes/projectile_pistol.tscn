@@ -23,11 +23,12 @@ rings = 1
 height = 0.25
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_ln2av"]
+[sub_resource type="Resource" id="Resource_gbvnt"]
 resource_local_to_scene = true
 script = ExtResource("4_tbkmk")
 inventory_item = ExtResource("3_7etap")
 quantity = 1
+origin_index = -1
 
 [node name="projectile_pistol" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -61,10 +62,9 @@ wait_time = 30.0
 autostart = true
 
 [node name="PickupComponent" parent="." instance=ExtResource("4_acy7b")]
-slot_data = SubResource("Resource_ln2av")
+slot_data = SubResource("Resource_gbvnt")
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_6jfy1")]
-elemental_properties = 4
 material_properties = 1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -34,7 +34,7 @@ hue_variation_max = 0.01
 
 [node name="SmallFlames" type="GPUParticles3D"]
 material_override = ExtResource("1_q2s6m")
-amount = 13
+amount = 14
 lifetime = 1.4
 randomness = 0.03
 fixed_fps = 60

@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=105 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -17,11 +17,14 @@
 [ext_resource type="PackedScene" uid="uid://caex54qny4gvm" path="res://COGITO/DemoScenes/DemoPrefabs/glass_3x_3_98.tscn" id="10_8403t"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://COGITO/Assets/Materials/Prototype_Green.tres" id="11_vcl5j"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_mbvqw"]
+[ext_resource type="PackedScene" uid="uid://diaf8d3vpbiku" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_painted_alt.tscn" id="12_y6rt8"]
+[ext_resource type="PackedScene" uid="uid://bbq36eh6h10ar" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted_alt.tscn" id="13_ce23p"]
 [ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://COGITO/DemoScenes/DemoPrefabs/generic_button.tscn" id="14_6k3d5"]
 [ext_resource type="FontFile" uid="uid://bu5on5evfoljs" path="res://COGITO/Assets/Fonts/Montserrat/Montserrat-Bold.ttf" id="15_buvip"]
 [ext_resource type="PackedScene" uid="uid://c2r7ib4rrrdfj" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_table_long.tscn" id="15_lsmut"]
 [ext_resource type="PackedScene" uid="uid://bwide2wobjajt" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_wall_doorway_wide_painted.tscn" id="15_mnt7d"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://COGITO/PackedScenes/target_destructable.tscn" id="15_n0vqj"]
+[ext_resource type="PackedScene" uid="uid://dvc8ghayvuasy" path="res://COGITO/DemoScenes/DemoPrefabs/ksi_floor_recessed_end.tscn" id="16_kb157"]
 [ext_resource type="PackedScene" uid="uid://b5ukfmvoxa33e" path="res://COGITO/PackedScenes/Pickups/pickup_laser_ammo.tscn" id="17_l2vbg"]
 [ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://COGITO/PackedScenes/Pickups/pickup_pistol.tscn" id="19_1ce0p"]
 [ext_resource type="PackedScene" uid="uid://nqyrraqwixxy" path="res://COGITO/DemoScenes/DemoPrefabs/sliding_door.tscn" id="20_t5vwn"]
@@ -43,6 +46,8 @@
 [ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PackedScenes/Pickups/pickup_dart.tscn" id="40_hi3jw"]
 [ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://COGITO/PackedScenes/cogito_pressure_plate.tscn" id="41_0755m"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PackedScenes/ceiling_lamp.tscn" id="42_3rq3h"]
+[ext_resource type="PackedScene" uid="uid://dlm5kc3g1g18h" path="res://COGITO/PackedScenes/Pickups/pickup_dart_water.tscn" id="47_gb8en"]
+[ext_resource type="PackedScene" uid="uid://dyngdr0rnqwlb" path="res://COGITO/PackedScenes/Pickups/pickup_dart_fire.tscn" id="48_sg5rf"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -1936,6 +1941,291 @@ transform = Transform3D(-0.612604, 0, -0.79039, 0, 1, 0, 0.79039, 0, -0.612604, 
 [node name="CeilingFan_Lab5" parent="CEILING" instance=ExtResource("32_j2alh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 15)
 
+[node name="ROOM_SYSTEMIC_PROPERTIES" type="Node3D" parent="."]
+
+[node name="CeilingFan_Lab6" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("32_j2alh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 4.5, -5)
+
+[node name="KSI_wall_painted_alt" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9, 0, -4)
+
+[node name="KSI_wall_painted_alt3" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9, 0, -1)
+
+[node name="KSI_wall_painted_alt2" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9, 0, -10)
+
+[node name="KSI_wall_painted_alt4" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9, 0, -13)
+
+[node name="KSI_wall_painted_alt5" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -24.2, 0, -7)
+
+[node name="KSI_wall_painted_alt6" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -24.2, 0, -10)
+
+[node name="KSI_wall_painted_alt7" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -24.2, 0, -1)
+
+[node name="KSI_wall_painted_alt9" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -24.2, 0, -4)
+
+[node name="KSI_wall_painted_alt8" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -24.2, 0, 2)
+
+[node name="KSI_wall_painted_alt10" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -15, 0, -13.2)
+
+[node name="KSI_wall_painted_alt11" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -12, 0, -13.2)
+
+[node name="KSI_wall_painted_alt12" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -21, 0, -13.2)
+
+[node name="KSI_wall_painted_alt13" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -18, 0, -13.2)
+
+[node name="KSI_wall_painted_alt14" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -24, 0, -13.2)
+
+[node name="KSI_wall_painted_alt15" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -18, 0, 2.2)
+
+[node name="KSI_wall_painted_alt16" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -21, 0, 2.2)
+
+[node name="KSI_wall_painted_alt17" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12, 0, 2.2)
+
+[node name="KSI_wall_painted_alt18" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0, 2.2)
+
+[node name="KSI_wall_painted_alt19" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("12_y6rt8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9, 0, 2.2)
+
+[node name="KSI_wall_doorway_painted_alt" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("13_ce23p")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -9, 0, -7)
+
+[node name="Floor_3x3_42" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -13)
+
+[node name="Floor_3x3_43" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -10)
+
+[node name="Floor_3x3_44" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -13)
+
+[node name="Floor_3x3_45" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -10)
+
+[node name="Floor_3x3_46" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -4)
+
+[node name="Floor_3x3_47" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -1)
+
+[node name="Floor_3x3_48" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -4)
+
+[node name="Floor_3x3_58" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -7)
+
+[node name="Floor_3x3_49" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -1)
+
+[node name="Floor_3x3_50" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -13)
+
+[node name="Floor_3x3_51" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -10)
+
+[node name="Floor_3x3_52" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -13)
+
+[node name="Floor_3x3_53" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -10)
+
+[node name="Floor_3x3_54" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -4)
+
+[node name="Floor_3x3_55" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -1)
+
+[node name="Floor_3x3_56" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -4)
+
+[node name="Floor_3x3_57" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, -1)
+
+[node name="KSI_wall_ridges_half105" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, 2)
+
+[node name="KSI_wall_ridges_half106" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, 0.5)
+
+[node name="KSI_wall_ridges_half107" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -1)
+
+[node name="KSI_wall_ridges_half108" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -2.5)
+
+[node name="KSI_wall_ridges_half109" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -4)
+
+[node name="KSI_wall_ridges_half110" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -5.5)
+
+[node name="KSI_wall_ridges_half111" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -7)
+
+[node name="KSI_wall_ridges_half112" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -8.5)
+
+[node name="KSI_wall_ridges_half113" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -10)
+
+[node name="KSI_wall_ridges_half114" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -23.7, 3, -11.5)
+
+[node name="KSI_wall_ridges_half125" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -12.8)
+
+[node name="KSI_wall_ridges_half126" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -11.3)
+
+[node name="KSI_wall_ridges_half127" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -9.8)
+
+[node name="KSI_wall_ridges_half128" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -8.3)
+
+[node name="KSI_wall_ridges_half129" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -6.8)
+
+[node name="KSI_wall_ridges_half130" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -5.3)
+
+[node name="KSI_wall_ridges_half131" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -3.8)
+
+[node name="KSI_wall_ridges_half132" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -2.3)
+
+[node name="KSI_wall_ridges_half133" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, -0.8)
+
+[node name="KSI_wall_ridges_half134" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 3, 0.7)
+
+[node name="KSI_wall_ridges_half115" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.95, 3, 1.75)
+
+[node name="KSI_wall_ridges_half116" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.45, 3, 1.75)
+
+[node name="KSI_wall_ridges_half117" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.95, 3, 1.75)
+
+[node name="KSI_wall_ridges_half118" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13.45, 3, 1.75)
+
+[node name="KSI_wall_ridges_half119" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.95, 3, 1.75)
+
+[node name="KSI_wall_ridges_half120" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.45, 3, 1.75)
+
+[node name="KSI_wall_ridges_half121" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -17.95, 3, 1.75)
+
+[node name="KSI_wall_ridges_half122" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -19.45, 3, 1.75)
+
+[node name="KSI_wall_ridges_half123" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20.95, 3, 1.75)
+
+[node name="KSI_wall_ridges_half124" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22.45, 3, 1.75)
+
+[node name="KSI_wall_ridges_half135" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -23.95, 3, -12.75)
+
+[node name="KSI_wall_ridges_half136" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22.45, 3, -12.75)
+
+[node name="KSI_wall_ridges_half137" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -20.95, 3, -12.75)
+
+[node name="KSI_wall_ridges_half138" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -19.45, 3, -12.75)
+
+[node name="KSI_wall_ridges_half139" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -17.95, 3, -12.75)
+
+[node name="KSI_wall_ridges_half140" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16.45, 3, -12.75)
+
+[node name="KSI_wall_ridges_half141" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.95, 3, -12.75)
+
+[node name="KSI_wall_ridges_half142" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.45, 3, -12.75)
+
+[node name="KSI_wall_ridges_half143" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11.95, 3, -12.75)
+
+[node name="KSI_wall_ridges_half144" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.45, 3, -12.75)
+
+[node name="KSI_floor_recessed_end" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12, 0, -4)
+
+[node name="KSI_floor_recessed_end6" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -21, 0, -4)
+
+[node name="KSI_floor_recessed_end5" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12, 0, -7)
+
+[node name="KSI_floor_recessed_end2" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -21, 0, -7)
+
+[node name="KSI_floor_recessed_end3" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -18, 0, -1)
+
+[node name="KSI_floor_recessed_end8" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -18, 0, -10)
+
+[node name="KSI_floor_recessed_end4" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -15, 0, -10)
+
+[node name="KSI_floor_recessed_end7" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("16_kb157")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -15, 0, -1)
+
+[node name="KSI_counter3" type="StaticBody3D" parent="ROOM_SYSTEMIC_PROPERTIES"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11.8741, 0, -12.8699)
+metadata/_edit_group_ = true
+
+[node name="object_054" type="MeshInstance3D" parent="ROOM_SYSTEMIC_PROPERTIES/KSI_counter3"]
+mesh = SubResource("ArrayMesh_64oen")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ROOM_SYSTEMIC_PROPERTIES/KSI_counter3"]
+shape = SubResource("ConcavePolygonShape3D_j3b43")
+
+[node name="KSI_counter4" type="StaticBody3D" parent="ROOM_SYSTEMIC_PROPERTIES"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.8741, 0, -12.8699)
+metadata/_edit_group_ = true
+
+[node name="object_054" type="MeshInstance3D" parent="ROOM_SYSTEMIC_PROPERTIES/KSI_counter4"]
+mesh = SubResource("ArrayMesh_64oen")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ROOM_SYSTEMIC_PROPERTIES/KSI_counter4"]
+shape = SubResource("ConcavePolygonShape3D_j3b43")
+
+[node name="Ceiling" parent="ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("6_bedlu")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, -24, 5.4, -13)
+
 [node name="WALLS_LVL01" type="Node3D" parent="."]
 
 [node name="KSI_wall_painted" parent="WALLS_LVL01" instance=ExtResource("6_yj0h7")]
@@ -2044,9 +2334,6 @@ transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, 5
 [node name="KSI_wall_painted28" parent="WALLS_LVL01" instance=ExtResource("6_yj0h7")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, -7)
 
-[node name="KSI_wall_painted29" parent="WALLS_LVL01" instance=ExtResource("6_yj0h7")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, -4)
-
 [node name="KSI_wall_painted30" parent="WALLS_LVL01" instance=ExtResource("6_yj0h7")]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, -1)
 
@@ -2093,6 +2380,9 @@ transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, 2
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, 23)
 
 [node name="KSI_wall_doorway_painted" parent="WALLS_LVL01" instance=ExtResource("8_ppug2")]
+
+[node name="KSI_wall_doorway_painted2" parent="WALLS_LVL01" instance=ExtResource("8_ppug2")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -9, 0, -4)
 
 [node name="WALLS_LVL02_RIDGED" type="Node3D" parent="."]
 
@@ -2589,6 +2879,17 @@ font_size = 64
 outline_size = 10
 horizontal_alignment = 2
 
+[node name="Label_SYSTEMICPROPS" type="Label3D" parent="SHOOTING_RANGE"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.62388, 1.5, -6.32353)
+text = "SYSTEMIC
+PROPERTIES
+(WIP)"
+font = ExtResource("12_mbvqw")
+font_size = 64
+outline_size = 10
+horizontal_alignment = 0
+line_spacing = -20.0
+
 [node name="TARGETS" type="Node3D" parent="SHOOTING_RANGE"]
 
 [node name="TargetDestructable" parent="SHOOTING_RANGE/TARGETS" instance=ExtResource("15_n0vqj")]
@@ -2794,6 +3095,23 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 
 [node name="KSI_wall_doorway_wide_painted6" parent="MOVEMENT" instance=ExtResource("15_mnt7d")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3, 0, 2)
 
+[node name="SYSTEMIC_PROPERTIES" type="Node3D" parent="."]
+
+[node name="Pickup_Dart_Water" parent="SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
+transform = Transform3D(0.754801, 6.99125e-15, -0.655954, 0, 1, 1.06581e-14, 0.655954, -8.04478e-15, 0.754801, -11.0006, 0.76828, -12.2038)
+
+[node name="Pickup_Dart_Water2" parent="SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
+transform = Transform3D(0.864836, 5.35097e-15, -0.502054, 0, 1, 1.06581e-14, 0.502054, -9.21755e-15, 0.864836, -11.192, 0.76828, -12.2038)
+
+[node name="Pickup_Dart_Water3" parent="SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
+transform = Transform3D(0.133813, 1.05623e-14, -0.991007, 0, 1, 1.06581e-14, 0.991007, -1.4262e-15, 0.133813, -11.3976, 0.76828, -12.2038)
+
+[node name="Pickup_Dart_Water5" parent="SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
+transform = Transform3D(0.399549, 9.77044e-15, -0.916712, 1.04927e-22, 1, 1.06581e-14, 0.916712, -4.25845e-15, 0.399549, -11.6311, 0.76828, -12.2038)
+
+[node name="Pickup_Dart_Water4" parent="SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
+transform = Transform3D(0.27364, 1.02513e-14, -0.961832, 1.04927e-22, 1, 1.06581e-14, 0.961832, -2.9165e-15, 0.27364, -10.7698, 0.76828, -12.2038)
+
 [node name="VendingMachine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
 
@@ -2837,19 +3155,34 @@ shape = SubResource("BoxShape3D_6s5b0")
 [node name="SlidingDoor" parent="." instance=ExtResource("20_t5vwn")]
 
 [node name="barrel2" parent="." instance=ExtResource("31_c4s3c")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.26627, 0.760051, -3.11525)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.66636, 0.760051, -0.498804)
 
 [node name="HazardZone" parent="." instance=ExtResource("35_mda7y")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.2487, 1.505, -7.4549)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.2487, 1.505, -2.4549)
 
 [node name="HealZone" parent="." instance=ExtResource("36_fryka")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.24998, 1.505, -0.72672)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.24998, 1.505, -0.32672)
 
 [node name="Cogito_Pressureplate" parent="." instance=ExtResource("41_0755m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0398592, 0)
 
 [node name="CeilingLamp" parent="." instance=ExtResource("42_3rq3h")]
 transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 0.441994, 1.78403, 1.3986)
+
+[node name="Pickup_Dart_Fire" parent="." instance=ExtResource("48_sg5rf")]
+transform = Transform3D(0.670944, 0, -0.741508, 7.90309e-15, 1, 7.15102e-15, 0.741508, -1.06581e-14, 0.670944, -12.7269, 0.750406, -12.2088)
+
+[node name="Pickup_Dart_Fire2" parent="." instance=ExtResource("48_sg5rf")]
+transform = Transform3D(0.237499, 0, -0.971388, 1.03532e-14, 1, 2.5313e-15, 0.971388, -1.06581e-14, 0.237499, -12.9278, 0.750406, -12.2021)
+
+[node name="Pickup_Dart_Fire3" parent="." instance=ExtResource("48_sg5rf")]
+transform = Transform3D(-0.404535, 0, -0.914522, 9.74711e-15, 1, -4.31159e-15, 0.914522, -1.06581e-14, -0.404535, -13.1656, 0.750406, -12.2204)
+
+[node name="Pickup_Dart_Fire4" parent="." instance=ExtResource("48_sg5rf")]
+transform = Transform3D(-0.118803, -3.12308e-15, -0.992918, 9.74711e-15, 1, -4.31159e-15, 0.992918, -1.01903e-14, -0.118803, -13.3797, 0.750406, -12.2204)
+
+[node name="Pickup_Dart_Fire5" parent="." instance=ExtResource("48_sg5rf")]
+transform = Transform3D(-0.888953, 1.06394e-14, 0.457998, 9.74711e-15, 1, -4.31159e-15, -0.457998, 6.31354e-16, -0.888953, -13.6313, 0.750406, -12.2204)
 
 [connection signal="pressed" from="SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton" to="VendingMachine/Spawnzone_VendingMachine" method="_on_generic_button_pressed"]
