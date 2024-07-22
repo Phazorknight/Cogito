@@ -23,7 +23,7 @@ rings = 1
 height = 0.25
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_gbvnt"]
+[sub_resource type="Resource" id="Resource_s1k6p"]
 resource_local_to_scene = true
 script = ExtResource("4_tbkmk")
 inventory_item = ExtResource("3_7etap")
@@ -62,7 +62,7 @@ wait_time = 30.0
 autostart = true
 
 [node name="PickupComponent" parent="." instance=ExtResource("4_acy7b")]
-slot_data = SubResource("Resource_gbvnt")
+slot_data = SubResource("Resource_s1k6p")
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_6jfy1")]
 material_properties = 1

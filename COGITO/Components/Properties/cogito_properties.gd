@@ -8,8 +8,8 @@ signal has_been_extinguished()
 signal deal_burn_damage(burn_damage_amount:int)
 signal has_become_wet()
 signal has_become_dry()
-signal has_become_electrified()
-
+signal has_become_electric()
+signal has_lost_electricity()
 
 enum ElementalProperties{
 	CONDUCTIVE = 1,
@@ -44,9 +44,9 @@ enum MaterialProperties{
 @export var burn_damage_interval : float = 1.0
 
 
-@export_group("Electrified Parameters")
+@export_group("Electricity Parameters")
 ## Sets if the object should become electrified on ready. Needs to be conductive for this to work.
-@export var electrify_on_ready : bool
+@export var electric_on_ready : bool
 
 
 @export_group("VFX PackedScenes")
@@ -66,9 +66,12 @@ enum MaterialProperties{
 var reaction_collider : Node3D = null
 var spawned_effects : Array[Node] # Used to store and clear out spawned effects
 var is_on_fire : bool = false
-var is_electrified : bool = false
+var is_electric : bool = false
 var player_is_touching : bool = false
 var player_node : Node3D = null
+
+var reaction_bodies : Array[Node3D] #Used to keep track of bodies with systemic properties.
+
 
 func _ready():
 	reaction_timer.timeout.connect(check_for_systemic_reactions)
@@ -77,8 +80,8 @@ func _ready():
 	if ignite_on_ready:
 		set_on_fire()
 		
-	if electrify_on_ready:
-		electrify()
+	if electric_on_ready:
+		make_electric()
 		
 	if elemental_properties == ElementalProperties.WET:
 		make_wet()
@@ -92,6 +95,8 @@ func start_reaction_threshold_timer(passed_collider: Node3D):
 	
 	# Saving passed collider to make sure we're reaction to the right thing.
 	reaction_collider = passed_collider
+	
+	add_systemic_body(passed_collider)
 	
 	# Starting the reaction timer.
 	if reaction_timer.is_stopped():
@@ -107,12 +112,18 @@ func check_for_reaction_timer_interrupt(passed_collider: Node3D):
 		print("Collider ", passed_collider.name, " has no properties.")
 		return
 	
+	remove_systemic_body(passed_collider)
+	
 	# If the passed_collider is the reaction_collider, then this reaction needs to be stopped.
 	if passed_collider == reaction_collider:
 		print(get_parent().name , ": Passed collider and current reaction collider match! Reaction timer is stopped is ", reaction_timer.is_stopped())
 		if !reaction_timer.is_stopped():
 			print(get_parent().name , " has stopped reaction timer as the collider ", passed_collider, " is no longer in contact.")
 			reaction_timer.stop()
+	
+	if reaction_bodies.size() == 0:
+		if !electric_on_ready:
+			loose_electricity()
 
 
 func check_for_systemic_reactions():
@@ -123,8 +134,9 @@ func check_for_systemic_reactions():
 		# Case where the object has no properties defined.
 		print("Collider ", reaction_collider.name, " has no properties.")
 		return
-		
+	
 	if reaction_collider.cogito_properties:
+		### FIRE REACTIONS
 		if reaction_collider.cogito_properties.is_on_fire:
 			if elemental_properties & ElementalProperties.FLAMMABLE:
 				print(get_parent().name, ": Touched burning collider ", reaction_collider.name, ". I'm flammable, igniting self.")
@@ -135,10 +147,17 @@ func check_for_systemic_reactions():
 				print(get_parent().name, ": Touched burning collider ", reaction_collider.name, ". I'm wet so I'll extinguish the collider.")
 				reaction_collider.cogito_properties.extinguish()
 
+		if elemental_properties & ElementalProperties.CONDUCTIVE: ### ELECTRICITY REACTIONS
+			if is_electric:
+				print("Electrified ", get_parent().name, " touched condictive collider ", reaction_collider.name, ". Trying to pass on electricity!")
+				reaction_collider.cogito_properties.make_electric()
+			if reaction_collider.cogito_properties.is_electric:
+				print(get_parent().name, ": Touched by electrified collider ", reaction_collider.name, ". Getting electric.")
+				make_electric()
 
 		print("Collider ", reaction_collider.name, " elemental properties: ", reaction_collider.cogito_properties.elemental_properties)
 		match reaction_collider.cogito_properties.elemental_properties:
-			ElementalProperties.WET:
+			ElementalProperties.WET: ### WATER REACTIONS
 				if is_on_fire:
 					print(get_parent().name, ": Touched by wet collider ", reaction_collider.name, " while on fire. Extinguishing self.")
 					extinguish()
@@ -146,6 +165,8 @@ func check_for_systemic_reactions():
 				else:
 					print(get_parent().name, ": Touched by wet collider ", reaction_collider.name, " but wasn't on fire. Getting wet.")
 					make_wet()
+
+
 
 
 func make_conductive():
@@ -221,13 +242,22 @@ func clear_spawned_effects():
 	spawned_effects.clear()
 
 
-func electrify():
+func make_electric():
 	if elemental_properties & ElementalProperties.CONDUCTIVE:
-		is_electrified = true
+		is_electric = true
 		spawn_elemental_vfx(spawn_on_electrified)
-		has_become_electrified.emit()
+		print(get_parent().name, " has become electric.")
+		has_become_electric.emit()
+		
+		recheck_systemic_reactions()
 	else:
 		print(get_parent().name, " is not CONDUCTIVE.")
+
+
+func loose_electricity():
+	is_electric = false
+	clear_spawned_effects()
+	has_lost_electricity.emit()
 
 
 func spawn_elemental_vfx(vfx_packed_scene:PackedScene):
@@ -240,3 +270,23 @@ func spawn_elemental_vfx(vfx_packed_scene:PackedScene):
 		
 	spawned_effects.append(spawned_object)
 	spawned_object.position = Vector3(0,0,0)
+
+
+func add_systemic_body(body: Node3D):
+	if reaction_bodies.find(body) == -1:
+		reaction_bodies.append(body)
+
+
+func remove_systemic_body(body: Node3D):
+	var index_in_reaction_bodies : int = reaction_bodies.find(body)
+	if index_in_reaction_bodies != -1:
+		reaction_bodies.remove_at(index_in_reaction_bodies)
+
+
+func recheck_systemic_reactions():
+	if reaction_bodies.size() < 1:
+		print(get_parent().name, " systemic properties: Can't recheck reactions as there's no reaction bodies stored.")
+		return
+		
+	for reaction_body in reaction_bodies:
+		start_reaction_threshold_timer(reaction_body)

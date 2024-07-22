@@ -60,6 +60,6 @@ func _on_body_entered(body: Node) -> void:
 
 
 func _on_body_exited(body: Node) -> void:
-		# Using this check to only call interactions on other Cogito Objects. #TODO: could be a better check...
+	# Using this check to only call interactions on other Cogito Objects. #TODO: could be a better check...
 	if body.has_method("save") and cogito_properties:
 		cogito_properties.check_for_reaction_timer_interrupt(body)

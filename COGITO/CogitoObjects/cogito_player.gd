@@ -94,9 +94,6 @@ var ladder_on_cooldown : bool = false
 @export var JOY_V_SENS : float = 2
 @export var JOY_H_SENS : float = 2
 
-## Flag if Stamina component isused (as this effects movement)
-#@export var is_using_stamina : bool = true
-
 ### WIGGLE MODIFIERS
 var WIGGLE_INTENSITY_MODIFIER = 1
 

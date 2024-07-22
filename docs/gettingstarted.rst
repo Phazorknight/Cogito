@@ -4,9 +4,8 @@ Getting started
 Installation
 ------------
 
-It is strongly recommended to use the COGITO Project as your base Godot project, as it comes
-with a few pre-configured settings like Input Maps and Autoloads.
-After installation, you can import your own assets and get started making your game.
+.. tip::
+   It is strongly recommended to use the COGITO Project as your base Godot project, as it comes with a few pre-configured settings like Input Maps and Autoloads. After installation, you can import your own assets and get started making your game.
 
 Installation steps:
 
@@ -17,7 +16,8 @@ Installation steps:
 Setup
 -----
 
-Confirm your project is set up as follows
+If you've used the COGITO Project as the base for your own project, you shouldn't have to do much else to get it running. But just in case here's some how it should be set up:
+
 Make sure the following plugins are activated:
 * Quick Audio (currently v1.0)
 * Input Helper (currently v4.2.2)
