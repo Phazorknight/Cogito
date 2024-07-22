@@ -44,7 +44,7 @@ The structure of this template always tries to adhere to the following principle
   - In-game helper documents that explain how objects in the scene were set up
 
 > [!IMPORTANT]  
-> COGITO is still under active develompent. While some features are pretty much set, others might change. Use at your own risk and check Issues and Discussion pages for more information.
+> COGITO is still under active development. While some features are pretty much set, others might change. Use at your own risk and check Issues and Discussion pages for more information.
 
 ## [Full documentation here!](https://cogito.readthedocs.io/en/latest/index.html)
 
