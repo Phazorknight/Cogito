@@ -1,87 +1,101 @@
 extends CogitoWieldable
 
-
 @export_group("Flashlight Settings")
 ## Sets if the flashlight is turned on or off on ready()
 @export var is_on : bool
 ## How much the energy depletes per second.
 @export var drain_rate : float = 1
-## The light node that gets toggled.
-@onready var spot_light_3d = $SpotLight3D
+@export var toggle_cooldown : float = 0.5
+@export var button_press_delay : float = 0.1
+@export var state_change_delay : float = 0.25
 
 @export_group("Audio")
 @export var switch_sound : AudioStream
 @export var sound_reload : AudioStream
 
+## The light node that gets toggled.
+@onready var spot_light_3d = $SpotLight3D
+
 ### Every wieldable needs the following functions:
 ### equip(_player_interaction_component), unequip(), action_primary(), action_secondary(), reload()
 
-var trigger_has_been_pressed : bool = false
-
+var is_action_pressed : bool = false
+var can_toggle : bool = true # If the flashlight can be toggled.
+var cooldown_timer : float = 0.0
 
 func _ready():
-	if wieldable_mesh:
-		wieldable_mesh.hide()
-	if is_on:
-		spot_light_3d.show()
-	else:
-		spot_light_3d.hide()
-
+    if wieldable_mesh:
+        wieldable_mesh.hide()
+    spot_light_3d.visible = is_on
 
 func _process(delta):
-	if is_on:
-		player_interaction_component.equipped_wieldable_item.subtract(delta * drain_rate)
-		if player_interaction_component.equipped_wieldable_item.charge_current == 0:
-			turn_off()
-			is_on = false
+    if is_on:
+        player_interaction_component.equipped_wieldable_item.subtract(delta * drain_rate)
+        if player_interaction_component.equipped_wieldable_item.charge_current == 0:
+            turn_off()
+    
+    if not can_toggle:
+        cooldown_timer += delta
+        if cooldown_timer >= toggle_cooldown:
+            can_toggle = true
+            cooldown_timer = 0.0
 
-
-# Primary action called by the Player Interaction Component when flashlight is wielded.
-func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
-	if _is_released:
-		return
-		
-	animation_player.play(anim_action_primary)
-	toggle_on_off()
-
+func action_primary(_passed_item_reference:InventoryItemPD, is_released: bool):
+    if is_released:
+        is_action_pressed = false
+        return
+    
+    if not is_action_pressed and can_toggle and not animation_player.is_playing():
+        is_action_pressed = true
+        can_toggle = false
+        cooldown_timer = 0.0
+        animation_player.play(anim_action_primary)
+        toggle_on_off()
 
 # Function called when wieldable is unequipped.
 func equip(_player_interaction_component: PlayerInteractionComponent):
-	animation_player.play(anim_equip)
-	player_interaction_component = _player_interaction_component
+    animation_player.play(anim_equip)
+    player_interaction_component = _player_interaction_component
 
-
-# Function called when wieldable is unequipped.
+# Function called when wieldable is equipped.
 func unequip():
-	animation_player.play(anim_unequip)
-	if is_on:
-		turn_off()
-
+    animation_player.play(anim_unequip)
+    if is_on:
+        turn_off()
 
 # Function called when wieldable reload is attempted
 func reload():
-	animation_player.play(anim_reload)
-	audio_stream_player_3d.stream = sound_reload
-	audio_stream_player_3d.play()
-
+    animation_player.play(anim_reload)
+    play_sound(sound_reload)
 
 # Function to explicitly turn it off for use when battery is depleted.
 func turn_off():
-	is_on = false
-	audio_stream_player_3d.stream = switch_sound
-	audio_stream_player_3d.play()
-	spot_light_3d.hide()
-
+    toggle_flashlight(false)
 
 func toggle_on_off():
-	audio_stream_player_3d.stream = switch_sound
-	audio_stream_player_3d.play()
-	
-	if is_on:
-		spot_light_3d.hide()
-		is_on = false
-	elif player_interaction_component.equipped_wieldable_item.charge_current == 0:
-		player_interaction_component.send_hint(null, player_interaction_component.equipped_wieldable_item.name + " is out of battery.")
-	else:
-		spot_light_3d.show()
-		is_on = true
+    await get_tree().create_timer(button_press_delay).timeout
+    play_sound(switch_sound)
+    
+    # Play the animation
+    if is_on:
+        animation_player.play("turn_off")
+    else:
+        animation_player.play("turn_on")
+    
+    # Wait for the animation to finish
+    await animation_player.animation_finished
+    
+    if is_on:
+        toggle_flashlight(false)
+    elif player_interaction_component.equipped_wieldable_item.charge_current > 0:
+        toggle_flashlight(true)
+    else:
+        player_interaction_component.send_hint(null, player_interaction_component.equipped_wieldable_item.name + " is out of battery.")
+
+func toggle_flashlight(new_state: bool):
+    is_on = new_state
+    spot_light_3d.visible = new_state
+
+func play_sound(sound: AudioStream):
+    audio_stream_player_3d.stream = sound
+    audio_stream_player_3d.play()
