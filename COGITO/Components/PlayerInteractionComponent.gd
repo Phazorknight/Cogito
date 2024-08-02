@@ -32,6 +32,7 @@ var is_changing_wieldables: bool = false # Used to avoid any input acitons while
 # Various variables used for wieldable handling
 var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
+var wieldable_was_on: bool = false
 var is_wielding: bool:
 	get: return equipped_wieldable_item != null
 var player_rid
@@ -270,18 +271,21 @@ func Get_Camera_Collision() -> Vector3:
 
 
 func save():
+	if equipped_wieldable_node and equipped_wieldable_node.has_method("toggle_on_off"):
+		wieldable_was_on = equipped_wieldable_node.is_on
+	
+	
 	var interaction_component_data = {
 	"equipped_wieldable_item": equipped_wieldable_item,
 	#"equipped_wieldable_node": equipped_wieldable_node,
-	"is_wielding": is_wielding
-		
+	"is_wielding": is_wielding,
+	"wieldable_was_on" : wieldable_was_on,
 	}
 	return interaction_component_data
 
 
 func set_state():
 	### Clearing out data from previous player state
-	
 	updated_wieldable_data.emit(null, 0, null) # Clearing out wieldable HUD Data
 	
 	# Clearing out any instantiated wielable nodes
@@ -301,6 +305,9 @@ func set_state():
 		
 		temp_wieldable.is_being_wielded = false
 		temp_wieldable.use(get_parent())
+		
+		if equipped_wieldable_node and equipped_wieldable_node.has_method("toggle_on_off") and wieldable_was_on:
+			equipped_wieldable_node.toggle_flashlight(wieldable_was_on)
 
 
 func _on_interaction_raycast_interactable_seen(new_interactable) -> void:

@@ -160,8 +160,9 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 		[null, "inventory_use_item"]:
 			inventory_data.use_slot_data(index)
 		[_, "inventory_use_item"]:
+			print("Inventory_interface.gd: Gamepad use_item pressed while grabbed_slot_data. Calling drop_single_slot_data...")
 			grabbed_slot_data = inventory_data.drop_single_slot_data(grabbed_slot_data, index)
-		[_, "inventory_drop_item"]:
+		[null, "inventory_drop_item"]:
 			grabbed_slot_data = inventory_data.get_slot_data(index)
 			if grabbed_slot_data:
 				if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
@@ -174,6 +175,9 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
 					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(index))
 					grabbed_slot_data = null
+		[_, "inventory_drop_item"]:
+			Audio.play_sound(sound_error)
+			print("Can't drop while moving an item.")
 
 	var amount_of_inventory_slots = inventory_ui.slot_array.size()
 	var element : int

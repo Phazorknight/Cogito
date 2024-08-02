@@ -33,6 +33,7 @@ func on_slot_clicked(index: int, mouse_button: int):
 
 
 func on_slot_button_pressed(index: int, action: String):
+	prints("cogito_inventory.gd: on_slot_button_pressed. index=", index, "action=", action)
 	inventory_button_press.emit(self, index, action)
 
 

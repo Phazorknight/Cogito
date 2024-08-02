@@ -86,19 +86,23 @@ func _on_gui_input(event):
 		slot_pressed.emit(get_index(), "inventory_move_item")
 		highlight_slot.emit(get_index(), true)
 	if event.is_action_pressed("inventory_use_item"):
+		print("Slot.gd: inventory_use_item pressed on slot ", get_index())
 		slot_pressed.emit(get_index(), "inventory_use_item")
 	if event.is_action_pressed("inventory_drop_item"):
 		slot_pressed.emit(get_index(), "inventory_drop_item")
+
 
 func set_grabbed_dimensions():
 	var item_size = item_data.item_size if grid else Vector2i(1,1)
 	size = Vector2i(64 * item_size.x, 64 * item_size.y)
 	set_hotbar_icon()
 
+
 func set_selection(is_selected : bool):
 	print(name, ": set_selection called. selection panel should be visible. (is_selected = ", is_selected, ")")
 	selection_panel.visible = is_selected
-	
+
+
 func _on_mouse_entered():
 	grab_focus()
 
