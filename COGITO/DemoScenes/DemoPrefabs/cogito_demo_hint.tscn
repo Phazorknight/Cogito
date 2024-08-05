@@ -34,7 +34,7 @@ metallic_specular = 1.0
 
 [node name="COGITO_HINT" type="StaticBody3D"]
 transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
-collision_layer = 3
+collision_layer = 2
 script = ExtResource("1_vm8jf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

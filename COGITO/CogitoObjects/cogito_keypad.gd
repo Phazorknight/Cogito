@@ -101,6 +101,9 @@ func _on_button_received(_passed_string:String):
 		print("Already unlocked!")
 		return
 	
+	if !is_open:
+		return
+	
 	match _passed_string:
 		"C":
 			clear_entered_code()

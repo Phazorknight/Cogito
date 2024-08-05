@@ -14,6 +14,7 @@ static var used_shortcut = false
 
 var tween : Tween
 
+
 func _ready() -> void:
 	#Attempt to make this work with focus
 	self.focus_entered.connect(_on_focus_entered)
@@ -52,11 +53,13 @@ func press_button_manually():
 	tween.tween_property(tween_stylebox, "border_width_left", target.border_width_left, tween_time)
 	tween.connect('finished',unpress)
 
+
 func unpress():
 	if not tween or tween.is_running() or not tween.is_valid:
 		# we've likely been overridden since, so don't mess with anything
 		return
 	current_state = BaseButton.DRAW_PRESSED # this will be changed on the next frame
+
 
 func _process(_delta: float) -> void:
 	if get_draw_mode() != current_state:
@@ -87,6 +90,7 @@ func _on_focus_entered() -> void:
 	tween.tween_property(tween_stylebox, "border_color", target.border_color, tween_time)
 	tween.tween_property(tween_stylebox, "border_width_left", target.border_width_left, tween_time)
 
+
 func in_context() -> bool:
 	var context = get_viewport().gui_get_focus_owner()
 	if context:
@@ -94,6 +98,7 @@ func in_context() -> bool:
 		var our_context = shortcut_context or get_parent_control()
 		return context_owner == our_context
 	return false
+
 
 func _on_focus_exited() -> void:
 	if get_viewport().gui_get_focus_owner() == null:
@@ -110,7 +115,9 @@ func _on_focus_exited() -> void:
 	tween.tween_property(tween_stylebox, "border_color", target.border_color, tween_time)
 	tween.tween_property(tween_stylebox, "border_width_left", target.border_width_left, tween_time)
 
-func _input(event : InputEvent):
+
+#func _input(event : InputEvent):
+func _unhandled_input(event: InputEvent) -> void:
 	if in_context():
 		if shortcut and shortcut.matches_event(event):
 			# let other CogitoButtons know that the current context has had a shortcut used
@@ -118,6 +125,7 @@ func _input(event : InputEvent):
 		elif used_shortcut and accepts_contextual_enter and event.is_action_pressed("ui_accept"):
 			accept_event()
 			press_button_manually()
+
 
 func _on_pressed():
 	pressed_string.emit(text)
