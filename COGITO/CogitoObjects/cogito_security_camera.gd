@@ -7,9 +7,10 @@ signal object_detected
 signal object_no_longer_detected
 signal turned_off
 
-@onready var detection_ray_cast_3d: RayCast3D = $CameraMesh/DetectionRayCast3D
 @onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
-@onready var indicator_light: OmniLight3D = $CameraMesh/IndicatorLight
+
+@export var detection_ray_cast_3d: RayCast3D
+@export var indicator_light: OmniLight3D
 
 @export var detection_area : Area3D 
 @export var start_state : DetectorState

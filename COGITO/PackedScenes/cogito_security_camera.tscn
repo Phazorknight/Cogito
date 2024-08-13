@@ -21,8 +21,10 @@ size = Vector3(0.2, 0.05, 0.4)
 custom_solver_bias = 1.0
 size = Vector3(4, 4, 4)
 
-[node name="SecurityCamera" type="Node3D" node_paths=PackedStringArray("detection_area", "indicator_mesh")]
+[node name="SecurityCamera" type="Node3D" node_paths=PackedStringArray("detection_ray_cast_3d", "indicator_light", "detection_area", "indicator_mesh")]
 script = ExtResource("1_c4ulv")
+detection_ray_cast_3d = NodePath("CameraMesh/DetectionRayCast3D")
+indicator_light = NodePath("CameraMesh/IndicatorLight")
 detection_area = NodePath("CameraMesh/DetectionArea3D")
 alarm_sound = ExtResource("2_41o63")
 indicator_mesh = NodePath("CameraMesh/IndicatorMesh")
