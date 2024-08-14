@@ -114,6 +114,12 @@ var gravity_vec : Vector3 = Vector3.ZERO
 var head_offset : Vector3 = Vector3.ZERO
 var is_jumping : bool = false
 var is_in_air : bool = false
+#water handling stuff
+var is_in_water : bool = false
+var was_in_water_recently : bool = false
+#this timer is for the fall damage, to kind of give a bit of a safety net for players falling too fast out of water.
+var was_in_water_timer : float = 0.0
+var was_in_water_timer_reset : float = 0.5
 
 var joystick_h_event
 var joystick_v_event
@@ -414,12 +420,24 @@ var jumped_from_slide = false
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
-		
+	
+	if is_climbing:
+		# sometimes the climbing out of water tween gets you stuck and hard locked.  
+		# this is just a failsafe for that.  0.2-0.5 seconds feels right.
+		if climb_unstuck_timer > 0.0:
+			climb_unstuck_timer -= delta
+		else:
+			is_climbing = false
+	
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
+		
+	
+
 	
 	# Getting input direction
+	
 	var input_dir
 	if !is_movement_paused:
 		input_dir = Input.get_vector("left", "right", "forward", "back")
@@ -447,8 +465,29 @@ func _physics_process(delta):
 		stand_after_roll = false
 	
 	var crouched_jump = false
+	
+	
+		#hacked in solution for swimming using WaterMaker3D's built in water area.
+	if water_check():
+		is_in_water = true
+		_handle_water_physics(delta)
+		return
+	if is_in_water:
+		is_in_water = false
+		was_in_water_recently = true
+		was_in_water_timer = was_in_water_timer_reset
+	
+	if is_climbing:
+		return
+	if was_in_water_recently :
+		if was_in_water_timer > 0.0:
+			was_in_water_timer -= delta
+		else:
+			was_in_water_recently = false
+	
 	if is_on_floor():
 		# reset our slide-jump state
+		reset_water_gravity = false
 		jumped_from_slide = false
 	else:
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
@@ -573,14 +612,66 @@ func _physics_process(delta):
 		if last_velocity.y <= -7.5:
 			head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 			standing_collision_shape.disabled = false
-			crouching_collision_shape.disabled = true
+			crouching_collision_shape.disabled = true					step_result.normal = test_motion_result.get_collision_normal()
+		elif is_zero_approx(test_motion_result.get_collision_normal().y):
+			var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal()
+			transform3d.origin += wall_collision_normal * WALL_MARGIN
+			motion = (main_velocity * delta).slide(wall_collision_normal)
+			test_motion_params.from = transform3d
+			test_motion_params.motion = motion
+			
+			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
+			
+			if not is_player_collided:
+				transform3d.origin += motion
+				motion = -step_height_main
+				test_motion_params.from = transform3d
+				test_motion_params.motion = motion
+				
+				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
+				
+				if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
+					if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
+						is_step = true
+						step_result.diff_position = test_motion_result.get_travel()
+						step_result.normal = test_motion_result.get_collision_normal()
+
+	return is_step
+	
+	
+func _on_sliding_timer_timeout():
+	is_free_looking = false
+
+
+func _on_animation_player_animation_finished(anim_name):
+	stand_after_roll = anim_name == 'roll' and !is_crouching
+
+
+class StepResult:
+	var diff_position: Vector3 = Vector3.ZERO
+	var normal: Vector3 = Vector3.ZERO
+	var is_step_up: bool = false
+
+var cam_aligned_wish_dir := Vector3.ZERO
+
+var swim_up_speed : float = 10.0
+var ledge_climb_height : float = 0.5
+var ledge_climb_offset : float = 0.75
+
+@onready var underwatercast = %Mouth
+
+
+func _handle_water_physics(delta) -> void:
+	is_climbing = false
+
+
 			if !disable_roll_anim:
 				animationPlayer.play("roll")
 		elif last_velocity.y <= -5.0:
 			animationPlayer.play("landing")
 		
 		# Taking fall damage
-		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
+		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold and !(is_in_water or was_in_water_recently):
 			#health_component.subtract(fall_damage)
 			decrease_attribute("health",fall_damage)
 	
@@ -861,4 +952,108 @@ class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
+
+var cam_aligned_wish_dir := Vector3.ZERO
+
+var swim_up_speed : float = 10.0
+var ledge_climb_height : float = 0.5
+var ledge_climb_offset : float = 0.75
+
+@onready var underwatercast = %Mouth
+
+#THE MAGIC OF SWIMMING.
+# CC0 code by MajikayoGames adapated for my purposes and tweaked to feel nicer with CogitoPlayer defaults.
+
+func _handle_water_physics(delta) -> void:
+	is_climbing = false
+	var input_dir: Vector2
+	if !is_movement_paused:
+		input_dir = Input.get_vector("left", "right", "forward", "back")
+	else:
+		input_dir = Vector2.ZERO
+	input_dir = -input_dir
+	
+	var look_vector = camera.get_camera_transform().basis
+	var direction = (look_vector * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if not is_on_floor():
+		if !reset_water_gravity:
+			velocity.y -= gravity * 0.1 * delta  # Less gravity effect in water
+		else:
+			reset_water_gravity = false
+
+	# Apply directional movement with water resistance
+	velocity -= direction * WALKING_SPEED * delta
+	
+	# Handle swimming upwards when the jump button is pressed
+	if Input.is_action_pressed("jump"):
+		if ledge_raycast.is_colliding():
+			var collider = ledge_raycast.get_collider()
+			if collider != WaterMaker3D and !underwatercast.is_colliding():
+				var ledge_position = detect_ledge()
+				if ledge_position != Vector3.INF:
+					ledge_climb(ledge_position)
+				else:
+					velocity.y += swim_up_speed * delta
+			else:
+				velocity.y += swim_up_speed * delta
+		else:
+			velocity.y += swim_up_speed * delta
+
+	# Dampen velocity to simulate water resistance
+	# Everything else in this code gives you proper swimming movement.  This is the magic line.
+	# this is what makes you feel like you're swimming.
+	velocity = velocity.lerp(Vector3.ZERO, delta * 2)
+	move_and_slide()
+
+# even with ideal movement, and physics, it is a PAIN to climb out of water.  
+# This is a tweened edge climb that helps players climb out of water.
+# it can probably be adapted for other uses, but I don't personally need it for those.
+# it's not perfect but it's a lot better than just snapping the player to the nearest ledge.
+# TOFIX: make it so that your jump isn't calculated for the first few frames after leaving the water.  little... weird right now.
+# MAYBE: make it so that holding forward towards the ledge also pulls you out?
+
+var is_climbing : bool = false
+var reset_water_gravity : bool = false
+var climb_unstuck_timer : float = 0.0
+
+func ledge_climb(place_to_land: Vector3):
+	# Set climbing state to prevent other movements
+	is_climbing = true
+	climb_unstuck_timer = 0.5
+	# Create a Tween for smooth movement
+	var tween = get_tree().create_tween()
+
+	# Vertical movement (climb up)
+	var vertical_climb = Vector3(global_transform.origin.x, place_to_land.y + 1.0, global_transform.origin.z)
+	tween.tween_property(self, "global_transform:origin", vertical_climb, 0.4)
+
+	# Wait for the vertical climb to complete
+	await tween.finished
+	tween.stop()
+
+	# Forward movement (move onto the ledge)
+	var forward = global_transform.origin + (-global_transform.basis.z * 1.1)
+	tween.tween_property(self, "global_transform:origin", forward, 0.3)
+
+	# Wait for the forward movement to complete
+	await tween.finished
+	tween.stop()
+
+	# Reset climbing state
+	reset_water_gravity = true
+	is_climbing = false
+
+
+@onready var ledge_raycast = %LedgeRayCast3D
+
+func detect_ledge() -> Vector3:
+	# Cast the ray downwards to detect the top of the object
+	ledge_raycast.force_raycast_update()
+	if ledge_raycast.is_colliding():
+		var collision_point = ledge_raycast.get_collision_point()
+		return collision_point  # This is where the player should move to
+	else:
+		return Vector3.INF
+
 
