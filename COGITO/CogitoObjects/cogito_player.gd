@@ -7,7 +7,58 @@ extends CharacterBody3D
 signal menu_pressed(player_interaction_component: PlayerInteractionComponent)
 signal toggle_inventory_interface()
 signal player_state_loaded()
-## Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
+## Used to hide UI elements like the crosshair when another interface is active (like a co		is_jumping = false
+		is_in_air = true
+			
+	# Pushing RigidBody3Ds
+	for col_idx in get_slide_collision_count():
+		var col := get_slide_collision(col_idx)
+		if col.get_collider() is RigidBody3D:
+			col.get_collider().apply_central_impulse(-col.get_normal() * PLAYER_PUSH_FORCE)
+
+	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
+	if is_on_floor() and main_velocity.length() >= 0.2:
+		if not sliding_timer.is_stopped():
+			if !slide_audio_player.playing:
+				slide_audio_player.play()
+
+		else:
+			if slide_audio_player:
+				slide_audio_player.stop()
+			
+			if can_play_footstep && wiggle_vector.y > 0.9:
+				#dynamic volume for footsteps
+				if is_walking:
+					footstep_player.volume_db = walk_volume_db
+				elif is_crouching:
+					footstep_player.volume_db = crouch_volume_db
+				elif is_sprinting:
+					footstep_player.volume_db = sprint_volume_db
+				footstep_surface_detector.play_footstep()
+					
+				can_play_footstep = false
+				
+			if !can_play_footstep && wiggle_vector.y < 0.9:
+				can_play_footstep = true
+				
+	elif slide_audio_player:
+		slide_audio_player.stop()
+
+
+func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
+	var is_step: bool = false
+	
+	var step_height_main: Vector3 = STEP_HEIGHT_DEFAULT
+	var step_incremental_check_height: Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
+	
+	if is_in_air and is_enabled_stair_stepping_in_air:
+		step_height_main = STEP_HEIGHT_IN_AIR_DEFAULT
+		step_incremental_check_height = STEP_HEIGHT_IN_AIR_DEFAULT / STEP_CHECK_COUNT
+		
+	if main_velocity.y >= 0:
+		for i in range(STEP_CHECK_COUNT):
+			var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
+				ntainer or readable)
 signal toggled_interface(is_showing_ui:bool) 
 
 #region Variables
@@ -21,7 +72,7 @@ var is_showing_ui : bool
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
-@export var fall_damage_threshold : float = -5
+@export var fall_damage_threshold : float = -10
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : CogitoInventory
@@ -114,7 +165,6 @@ var gravity_vec : Vector3 = Vector3.ZERO
 var head_offset : Vector3 = Vector3.ZERO
 var is_jumping : bool = false
 var is_in_air : bool = false
-#water handling stuff
 var is_in_water : bool = false
 var was_in_water_recently : bool = false
 #this timer is for the fall damage, to kind of give a bit of a safety net for players falling too fast out of water.
@@ -154,12 +204,15 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var neck: Node3D = $Body/Neck
 @onready var head: Node3D = $Body/Neck/Head
 @onready var eyes: Node3D = $Body/Neck/Head/Eyes
+@onready var hand_location = $Body/Neck/Head/Eyes/Camera/HandLocation
+
 @onready var camera: Camera3D = $Body/Neck/Head/Eyes/Camera
 @onready var animationPlayer: AnimationPlayer = $Body/Neck/Head/Eyes/AnimationPlayer
 
 @onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
 @onready var crouch_raycast: RayCast3D = $CrouchRayCast
+#@onready var staircheck_ray_cast_3d = %StaircheckRaycast
 @onready var sliding_timer: Timer = $SlidingTimer
 @onready var jump_timer: Timer = $JumpCooldownTimer
 
@@ -202,8 +255,6 @@ func _ready():
 		health_attribute.death.connect(_on_death)
 	# Save reference to stamina attribute for movements that require stamina checks (null if not found)
 	stamina_attribute = player_attributes.get("stamina")
-	# Save reference to visibilty attribute for that require visibility checks (null if not found)
-	visibility_attribute = player_attributes.get("visibility")
 	# Hookup sanity attribute to visibility attribute
 	var sanity_attribute = player_attributes.get("sanity")
 	if sanity_attribute and visibility_attribute:
@@ -417,13 +468,17 @@ func _process_on_ladder(_delta):
 
 var jumped_from_slide = false
 
+func water_check() -> bool:
+	if get_tree().get_nodes_in_group("water_area").all(func(area): return !area.overlaps_body(self)):
+		return false
+	else:
+		return true
+
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
 	
 	if is_climbing:
-		# sometimes the climbing out of water tween gets you stuck and hard locked.  
-		# this is just a failsafe for that.  0.2-0.5 seconds feels right.
 		if climb_unstuck_timer > 0.0:
 			climb_unstuck_timer -= delta
 		else:
@@ -612,59 +667,7 @@ func _physics_process(delta):
 		if last_velocity.y <= -7.5:
 			head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 			standing_collision_shape.disabled = false
-			crouching_collision_shape.disabled = true					step_result.normal = test_motion_result.get_collision_normal()
-		elif is_zero_approx(test_motion_result.get_collision_normal().y):
-			var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal()
-			transform3d.origin += wall_collision_normal * WALL_MARGIN
-			motion = (main_velocity * delta).slide(wall_collision_normal)
-			test_motion_params.from = transform3d
-			test_motion_params.motion = motion
-			
-			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-			
-			if not is_player_collided:
-				transform3d.origin += motion
-				motion = -step_height_main
-				test_motion_params.from = transform3d
-				test_motion_params.motion = motion
-				
-				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-				
-				if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
-					if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
-						is_step = true
-						step_result.diff_position = test_motion_result.get_travel()
-						step_result.normal = test_motion_result.get_collision_normal()
-
-	return is_step
-	
-	
-func _on_sliding_timer_timeout():
-	is_free_looking = false
-
-
-func _on_animation_player_animation_finished(anim_name):
-	stand_after_roll = anim_name == 'roll' and !is_crouching
-
-
-class StepResult:
-	var diff_position: Vector3 = Vector3.ZERO
-	var normal: Vector3 = Vector3.ZERO
-	var is_step_up: bool = false
-
-var cam_aligned_wish_dir := Vector3.ZERO
-
-var swim_up_speed : float = 10.0
-var ledge_climb_height : float = 0.5
-var ledge_climb_offset : float = 0.75
-
-@onready var underwatercast = %Mouth
-
-
-func _handle_water_physics(delta) -> void:
-	is_climbing = false
-
-
+			crouching_collision_shape.disabled = true
 			if !disable_roll_anim:
 				animationPlayer.play("roll")
 		elif last_velocity.y <= -5.0:
@@ -871,6 +874,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 				test_motion_params.from = transform3d
 				test_motion_params.motion = motion
 				
+				
 				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
 				
 				if not is_player_collided:
@@ -909,7 +913,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 			
 			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
 			
-			if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
+			if is_player_collided and test_motion_result.get_travmetalel().y < -STEP_DOWN_MARGIN:
 				if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 					is_step = true
 					step_result.diff_position = test_motion_result.get_travel()
@@ -961,8 +965,6 @@ var ledge_climb_offset : float = 0.75
 
 @onready var underwatercast = %Mouth
 
-#THE MAGIC OF SWIMMING.
-# CC0 code by MajikayoGames adapated for my purposes and tweaked to feel nicer with CogitoPlayer defaults.
 
 func _handle_water_physics(delta) -> void:
 	is_climbing = false
@@ -1000,18 +1002,9 @@ func _handle_water_physics(delta) -> void:
 		else:
 			velocity.y += swim_up_speed * delta
 
-	# Dampen velocity to simulate water resistance
-	# Everything else in this code gives you proper swimming movement.  This is the magic line.
-	# this is what makes you feel like you're swimming.
+	# Dampen velocity to simulate water resistance, but maintain some consistent movement
 	velocity = velocity.lerp(Vector3.ZERO, delta * 2)
 	move_and_slide()
-
-# even with ideal movement, and physics, it is a PAIN to climb out of water.  
-# This is a tweened edge climb that helps players climb out of water.
-# it can probably be adapted for other uses, but I don't personally need it for those.
-# it's not perfect but it's a lot better than just snapping the player to the nearest ledge.
-# TOFIX: make it so that your jump isn't calculated for the first few frames after leaving the water.  little... weird right now.
-# MAYBE: make it so that holding forward towards the ledge also pulls you out?
 
 var is_climbing : bool = false
 var reset_water_gravity : bool = false
@@ -1055,5 +1048,3 @@ func detect_ledge() -> Vector3:
 		return collision_point  # This is where the player should move to
 	else:
 		return Vector3.INF
-
-
