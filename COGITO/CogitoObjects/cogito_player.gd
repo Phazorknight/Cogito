@@ -7,58 +7,7 @@ extends CharacterBody3D
 signal menu_pressed(player_interaction_component: PlayerInteractionComponent)
 signal toggle_inventory_interface()
 signal player_state_loaded()
-## Used to hide UI elements like the crosshair when another interface is active (like a co		is_jumping = false
-		is_in_air = true
-			
-	# Pushing RigidBody3Ds
-	for col_idx in get_slide_collision_count():
-		var col := get_slide_collision(col_idx)
-		if col.get_collider() is RigidBody3D:
-			col.get_collider().apply_central_impulse(-col.get_normal() * PLAYER_PUSH_FORCE)
-
-	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
-	if is_on_floor() and main_velocity.length() >= 0.2:
-		if not sliding_timer.is_stopped():
-			if !slide_audio_player.playing:
-				slide_audio_player.play()
-
-		else:
-			if slide_audio_player:
-				slide_audio_player.stop()
-			
-			if can_play_footstep && wiggle_vector.y > 0.9:
-				#dynamic volume for footsteps
-				if is_walking:
-					footstep_player.volume_db = walk_volume_db
-				elif is_crouching:
-					footstep_player.volume_db = crouch_volume_db
-				elif is_sprinting:
-					footstep_player.volume_db = sprint_volume_db
-				footstep_surface_detector.play_footstep()
-					
-				can_play_footstep = false
-				
-			if !can_play_footstep && wiggle_vector.y < 0.9:
-				can_play_footstep = true
-				
-	elif slide_audio_player:
-		slide_audio_player.stop()
-
-
-func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
-	var is_step: bool = false
-	
-	var step_height_main: Vector3 = STEP_HEIGHT_DEFAULT
-	var step_incremental_check_height: Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
-	
-	if is_in_air and is_enabled_stair_stepping_in_air:
-		step_height_main = STEP_HEIGHT_IN_AIR_DEFAULT
-		step_incremental_check_height = STEP_HEIGHT_IN_AIR_DEFAULT / STEP_CHECK_COUNT
-		
-	if main_velocity.y >= 0:
-		for i in range(STEP_CHECK_COUNT):
-			var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
-				ntainer or readable)
+## Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
 signal toggled_interface(is_showing_ui:bool) 
 
 #region Variables
@@ -874,7 +823,6 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 				test_motion_params.from = transform3d
 				test_motion_params.motion = motion
 				
-				
 				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
 				
 				if not is_player_collided:
@@ -913,7 +861,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 			
 			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
 			
-			if is_player_collided and test_motion_result.get_travmetalel().y < -STEP_DOWN_MARGIN:
+			if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
 				if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 					is_step = true
 					step_result.diff_position = test_motion_result.get_travel()
