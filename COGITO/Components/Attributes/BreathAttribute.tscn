@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://tdontgpampvk"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Attributes/cogito_breath_attribute.gd" id="1_5aiua"]
+[ext_resource type="Texture2D" uid="uid://bi27fw31w4ssi" path="res://addons/cyclops_level_builder/art/icons/select_face.svg" id="2_ia6uq"]
+
+[node name="CogitoBreathAttribute" type="Node"]
+script = ExtResource("1_5aiua")
+attribute_name = "breath"
+attribute_display_name = "Oxygen"
+attribute_color = Color(0.457334, 0.630597, 1, 1)
+attribute_icon = ExtResource("2_ia6uq")
+value_max = 100.0
