@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=25 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_player.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_iyhv4"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="3_7ds3n"]
 [ext_resource type="AudioStream" uid="uid://b7wmxwvtbpfu1" path="res://COGITO/Assets/Audio/537275__laughingfish78__dirt-sliding.ogg" id="4_1i2kv"]
+[ext_resource type="PackedScene" uid="uid://tdontgpampvk" path="res://COGITO/Components/Attributes/BreathAttribute.tscn" id="6_ulr8n"]
 [ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://COGITO/Components/Attributes/SanityAttribute.tscn" id="7_27cpi"]
 [ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://COGITO/Components/Attributes/StaminaAttribute.tscn" id="8_kodbk"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="9_ky5mf"]
@@ -15,8 +16,8 @@
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="15_wtp0a"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="16_buq0c"]
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="17_t5305"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_material_library.gd" id="18_g7eo2"]
 [ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="18_mdors"]
-[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="19_pc36t"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://COGITO/Components/PlayerInteractionComponent.tscn" id="20_4f25o"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://COGITO/PackedScenes/Player_HUD.tscn" id="21_j3p88"]
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://COGITO/EasyMenus/Scenes/PauseMenu.tscn" id="22_haksr"]
@@ -42,6 +43,7 @@ stream_4/weight = 1.0
 
 [node name="CogitoPlayer" type="CharacterBody3D" groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+collision_mask = 129
 script = ExtResource("1_87we8")
 pause_menu = NodePath("PauseMenu")
 player_hud = NodePath("Player_HUD")
@@ -55,10 +57,15 @@ HEADBOBBLE = 1
 STEP_MAX_SLOPE_DEGREE = 1.0
 
 [node name="SanityAttribute" parent="." instance=ExtResource("7_27cpi")]
-decay_in_darkness = false
 value_start = 100.0
 
+[node name="CogitoBreathAttribute" parent="." instance=ExtResource("6_ulr8n")]
+suffocation_damage_timer = 0.5
+
 [node name="StaminaAttribute" parent="." instance=ExtResource("8_kodbk")]
+stamina_regen_speed = 5.0
+run_exhaustion_speed = 4.0
+regenerate_after = 1.0
 value_max = 80.0
 value_start = 50.0
 
@@ -85,21 +92,27 @@ target_position = Vector3(0, 1.6, 0)
 collision_mask = 3
 
 [node name="Body" type="Node3D" parent="."]
+unique_name_in_owner = true
 
 [node name="Neck" type="Node3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 
 [node name="Head" type="Node3D" parent="Body/Neck"]
+unique_name_in_owner = true
 
 [node name="Mouth" type="RayCast3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
-visible = false
-target_position = Vector3(0, -0.5, 0)
+target_position = Vector3(0, -0.6, 0)
 collision_mask = 128
 hit_from_inside = true
+hit_back_faces = false
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="LedgeRayCast3D" type="RayCast3D" parent="Body/Neck/Head"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+target_position = Vector3(0, -0.25, 0)
 
 [node name="Eyes" type="Node3D" parent="Body/Neck/Head"]
 
@@ -118,12 +131,6 @@ target_position = Vector3(0, 0, -2.5)
 collision_mask = 3
 script = ExtResource("11_miluh")
 
-[node name="LedgeRayCast3D" type="RayCast3D" parent="Body/Neck/Head/Eyes/Camera"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
-visible = false
-target_position = Vector3(0, -0.5, 0)
-
 [node name="HandLocation" type="Node3D" parent="Body/Neck/Head/Eyes/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -0.25)
 
@@ -138,9 +145,10 @@ one_shot = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488, 0)
 stream = SubResource("AudioStreamRandomizer_af0lu")
 volume_db = -38.0
+bus = &"SFX"
 script = ExtResource("17_t5305")
 generic_fallback_footstep_profile = ExtResource("18_mdors")
-footstep_material_library = ExtResource("19_pc36t")
+footstep_material_library = ExtResource("18_g7eo2")
 
 [node name="JumpCooldownTimer" type="Timer" parent="."]
 wait_time = 0.25
