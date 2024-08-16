@@ -1,0 +1,170 @@
+[gd_scene load_steps=33 format=3 uid="uid://bbyprinr67l2v"]
+
+[ext_resource type="Script" path="res://game/objects/water_splash.gd" id="1_828h4"]
+[ext_resource type="Texture2D" uid="uid://dyjjiic3lw3os" path="res://COGITO/Assets/VFX/Impacts/Textures/Flare00.PNG" id="1_divo8"]
+[ext_resource type="Material" uid="uid://c71aysyxsuq0t" path="res://COGITO/Assets/VFX/Impacts/Materials/Mat_flare00.tres" id="2_2ww3i"]
+[ext_resource type="AudioStream" uid="uid://gjmuqaqal3ma" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_03.ogg" id="3_5jwcv"]
+[ext_resource type="AudioStream" uid="uid://7tgwdvfam2yq" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_04.ogg" id="4_ror2t"]
+[ext_resource type="AudioStream" uid="uid://c6xd6rj1remg8" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_11.ogg" id="5_qngmg"]
+[ext_resource type="AudioStream" uid="uid://dhpboa5822x6n" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_12.ogg" id="6_eknys"]
+[ext_resource type="AudioStream" uid="uid://cjo8khfsrec76" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_13.ogg" id="7_v3xhc"]
+[ext_resource type="AudioStream" uid="uid://ljjme7inllso" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_14.ogg" id="8_7m8f8"]
+[ext_resource type="AudioStream" uid="uid://c0bd4y10jsw1d" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_15.ogg" id="9_tcpix"]
+[ext_resource type="AudioStream" uid="uid://tmitknlcmpsr" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_05.ogg" id="10_ctkyo"]
+[ext_resource type="AudioStream" uid="uid://b5w78r2jjluq4" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_07.ogg" id="11_i4j1m"]
+[ext_resource type="AudioStream" uid="uid://b2feo3x720k0w" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_06.ogg" id="12_yijqc"]
+[ext_resource type="AudioStream" uid="uid://bfnsxxisx8otv" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_01.ogg" id="13_b034s"]
+[ext_resource type="AudioStream" uid="uid://f82vq1vdo7ya" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_02.ogg" id="14_8acr5"]
+[ext_resource type="AudioStream" uid="uid://0l1loq7jnanf" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_08.ogg" id="15_728fy"]
+[ext_resource type="AudioStream" uid="uid://dfbllrn25depn" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_09.ogg" id="16_8xlog"]
+[ext_resource type="AudioStream" uid="uid://xqq4k80wimya" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_10.ogg" id="17_qpsyj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aagyb"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_divo8")
+
+[sub_resource type="Curve" id="Curve_crplj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.55148, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_nfnra"]
+curve = SubResource("Curve_crplj")
+
+[sub_resource type="Curve" id="Curve_3bht2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.40898, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_uvd6u"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.44796, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_xvkdr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_qaryk"]
+curve_x = SubResource("Curve_3bht2")
+curve_y = SubResource("Curve_uvd6u")
+curve_z = SubResource("Curve_xvkdr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qndyw"]
+particle_flag_align_y = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 0, 0.3)
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 5.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -20, 0)
+scale_min = 0.01
+scale_max = 0.05
+scale_curve = SubResource("CurveXYZTexture_qaryk")
+color = Color(0.7, 0.8, 1, 1)
+alpha_curve = SubResource("CurveTexture_nfnra")
+
+[sub_resource type="QuadMesh" id="QuadMesh_vsa7t"]
+
+[sub_resource type="Curve" id="Curve_wunie"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.194553, 0.294165), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_r21wt"]
+curve = SubResource("Curve_wunie")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjcxw"]
+lifetime_randomness = 0.5
+emission_shape = 3
+emission_box_extents = Vector3(1, 0, 0.2)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.5
+gravity = Vector3(0, 0.3, 0)
+scale_min = 0.5
+color = Color(0.698039, 0.698039, 0.698039, 1)
+alpha_curve = SubResource("CurveTexture_r21wt")
+
+[sub_resource type="QuadMesh" id="QuadMesh_l36ji"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b33wg"]
+random_pitch = 1.2
+random_volume_offset_db = 0.5
+streams_count = 15
+stream_0/stream = ExtResource("3_5jwcv")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_ror2t")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_ctkyo")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_i4j1m")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_yijqc")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("13_b034s")
+stream_5/weight = 1.0
+stream_6/stream = ExtResource("14_8acr5")
+stream_6/weight = 1.0
+stream_7/stream = ExtResource("15_728fy")
+stream_7/weight = 1.0
+stream_8/stream = ExtResource("16_8xlog")
+stream_8/weight = 1.0
+stream_9/stream = ExtResource("17_qpsyj")
+stream_9/weight = 1.0
+stream_10/stream = ExtResource("5_qngmg")
+stream_10/weight = 1.0
+stream_11/stream = ExtResource("6_eknys")
+stream_11/weight = 1.0
+stream_12/stream = ExtResource("7_v3xhc")
+stream_12/weight = 1.0
+stream_13/stream = ExtResource("8_7m8f8")
+stream_13/weight = 1.0
+stream_14/stream = ExtResource("9_tcpix")
+stream_14/weight = 1.0
+
+[node name="WaterSplash" type="Node3D"]
+script = ExtResource("1_828h4")
+
+[node name="Droplets" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_aagyb")
+emitting = false
+amount = 20
+lifetime = 0.8
+one_shot = true
+randomness = 0.04
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qndyw")
+draw_pass_1 = SubResource("QuadMesh_vsa7t")
+
+[node name="Steam" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = ExtResource("2_2ww3i")
+emitting = false
+amount = 40
+lifetime = 1.5
+one_shot = true
+fixed_fps = 60
+visibility_aabb = AABB(-2, -4, -4, 4, 8, 8)
+process_material = SubResource("ParticleProcessMaterial_fjcxw")
+draw_pass_1 = SubResource("QuadMesh_l36ji")
+
+[node name="SplashStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_b33wg")
+attenuation_model = 1
+volume_db = -8.0
+max_db = -4.0
+pitch_scale = 1.2
+autoplay = true
+max_distance = 30.0
+bus = &"SFX"
+emission_angle_degrees = 0.1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="finished" from="Steam" to="." method="_on_steam_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
