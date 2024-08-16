@@ -1,0 +1,129 @@
+[gd_scene load_steps=23 format=3 uid="uid://ca0wevg1lb4rx"]
+
+[ext_resource type="Script" path="res://utils/WaterMaker3D/WaterMaker3D.gd" id="1_7s6ww"]
+[ext_resource type="Shader" path="res://utils/WaterMaker3D/FogFade.gdshader" id="2_5f01f"]
+[ext_resource type="Script" path="res://addons/floatable_body/fluid_area_3d.gd" id="2_8vnkc"]
+[ext_resource type="Shader" path="res://utils/WaterMaker3D/CameraWaterOverlay.gdshader" id="2_12cox"]
+[ext_resource type="Script" path="res://utils/WaterMaker3D/FogVolumeFadeScript.gd" id="3_b5ytn"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="7_5yg4p"]
+[ext_resource type="AudioStream" uid="uid://bfnsxxisx8otv" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_01.ogg" id="8_0xhso"]
+[ext_resource type="AudioStream" uid="uid://f82vq1vdo7ya" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_02.ogg" id="9_0f4jp"]
+[ext_resource type="AudioStream" uid="uid://gjmuqaqal3ma" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_03.ogg" id="10_whyr1"]
+[ext_resource type="AudioStream" uid="uid://7tgwdvfam2yq" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_04.ogg" id="11_eyp76"]
+[ext_resource type="AudioStream" uid="uid://tmitknlcmpsr" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_05.ogg" id="12_qxqx2"]
+[ext_resource type="AudioStream" uid="uid://b2feo3x720k0w" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_06.ogg" id="13_cyucw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1bimf"]
+resource_local_to_scene = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mdx3j"]
+resource_local_to_scene = true
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_1bimf")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xl6ub"]
+resource_local_to_scene = true
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_1bimf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdho2"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.309804, 0.541176, 0.866667, 0.388235)
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_mdx3j")
+refraction_enabled = true
+refraction_texture = SubResource("NoiseTexture2D_xl6ub")
+uv1_scale = Vector3(0.04, 0.04, 0.04)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_om5f8"]
+resource_local_to_scene = true
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_274vi"]
+streams_count = 6
+stream_0/stream = ExtResource("8_0xhso")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("9_0f4jp")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_whyr1")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_eyp76")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_qxqx2")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("13_cyucw")
+stream_5/weight = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cfplo"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wrt5a"]
+resource_local_to_scene = true
+shader = ExtResource("2_5f01f")
+shader_parameter/density = 1.0
+shader_parameter/albedo = Color(0, 0.0431373, 0.156863, 1)
+shader_parameter/emission = Color(0, 0.0431373, 0.156863, 1)
+shader_parameter/height_falloff = 0.0
+shader_parameter/edge_fade = 0.1
+shader_parameter/fade_plane = Vector4(0, 1, 0, -999)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dwxo5"]
+shader = ExtResource("2_12cox")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dcd7l"]
+
+[node name="WaterMaker3D" type="CSGBox3D"]
+process_priority = 999
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0082494, 2.38419e-07, 0.00450706)
+material = SubResource("StandardMaterial3D_gdho2")
+script = ExtResource("1_7s6ww")
+
+[node name="SwimmableArea3D" type="Area3D" parent="." groups=["water_area"]]
+unique_name_in_owner = true
+collision_layer = 129
+script = ExtResource("2_8vnkc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwimmableArea3D"]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_om5f8")
+
+[node name="FootstepSurface" type="Node3D" parent="SwimmableArea3D"]
+script = ExtResource("7_5yg4p")
+footstep_profile = SubResource("AudioStreamRandomizer_274vi")
+
+[node name="CameraPosShapeCast3D" type="ShapeCast3D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_cfplo")
+target_position = Vector3(0, 0, 0)
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="FogVolume" type="FogVolume" parent="."]
+unique_name_in_owner = true
+size = Vector3(1, 1, 1)
+material = SubResource("ShaderMaterial_wrt5a")
+script = ExtResource("3_b5ytn")
+
+[node name="WaterRippleOverlay" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = -10
+z_as_relative = false
+material = SubResource("ShaderMaterial_dwxo5")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_dcd7l")
+
+[connection signal="body_entered" from="SwimmableArea3D" to="SwimmableArea3D" method="_on_body_entered"]
+[connection signal="body_exited" from="SwimmableArea3D" to="SwimmableArea3D" method="_on_body_exited"]
