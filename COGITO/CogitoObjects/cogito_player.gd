@@ -21,7 +21,7 @@ var is_showing_ui : bool
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
-@export var fall_damage_threshold : float = -5
+@export var fall_damage_threshold : float = -10
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : CogitoInventory
@@ -114,6 +114,12 @@ var gravity_vec : Vector3 = Vector3.ZERO
 var head_offset : Vector3 = Vector3.ZERO
 var is_jumping : bool = false
 var is_in_air : bool = false
+var is_in_water : bool = false
+var was_in_water_recently : bool = false
+#this timer is for the fall damage, to kind of give a bit of a safety net for players falling too fast out of water.
+var was_in_water_timer : float = 0.0
+var was_in_water_timer_reset : float = 0.5
+@onready var fluid_interactor := FluidInteractor3D.new()
 
 var joystick_h_event
 var joystick_v_event
@@ -148,12 +154,15 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var neck: Node3D = $Body/Neck
 @onready var head: Node3D = $Body/Neck/Head
 @onready var eyes: Node3D = $Body/Neck/Head/Eyes
+@onready var hand_location = $Body/Neck/Head/Eyes/Camera/HandLocation
+
 @onready var camera: Camera3D = $Body/Neck/Head/Eyes/Camera
 @onready var animationPlayer: AnimationPlayer = $Body/Neck/Head/Eyes/AnimationPlayer
 
 @onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
 @onready var crouch_raycast: RayCast3D = $CrouchRayCast
+#@onready var staircheck_ray_cast_3d = %StaircheckRaycast
 @onready var sliding_timer: Timer = $SlidingTimer
 @onready var jump_timer: Timer = $JumpCooldownTimer
 
@@ -196,8 +205,6 @@ func _ready():
 		health_attribute.death.connect(_on_death)
 	# Save reference to stamina attribute for movements that require stamina checks (null if not found)
 	stamina_attribute = player_attributes.get("stamina")
-	# Save reference to visibilty attribute for that require visibility checks (null if not found)
-	visibility_attribute = player_attributes.get("visibility")
 	# Hookup sanity attribute to visibility attribute
 	var sanity_attribute = player_attributes.get("sanity")
 	if sanity_attribute and visibility_attribute:
@@ -411,15 +418,29 @@ func _process_on_ladder(_delta):
 
 var jumped_from_slide = false
 
+func water_check() -> bool:
+	if get_tree().get_nodes_in_group("water_area").all(func(area): return !area.overlaps_body(self)):
+		return false
+	else:
+		return true
+
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
-		
+	
+	if is_climbing:
+		if climb_unstuck_timer > 0.0:
+			climb_unstuck_timer -= delta
+		else:
+			is_climbing = false
+	
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
+		
 	
 	# Getting input direction
+	
 	var input_dir
 	if !is_movement_paused:
 		input_dir = Input.get_vector("left", "right", "forward", "back")
@@ -447,8 +468,24 @@ func _physics_process(delta):
 		stand_after_roll = false
 	
 	var crouched_jump = false
+	
+	
+		#hacked in solution for swimming using WaterMaker3D's built in water area.
+	if is_in_water:
+		_handle_water_physics(delta)
+		return
+	
+	if is_climbing:
+		return
+	if was_in_water_recently :
+		if was_in_water_timer > 0.0:
+			was_in_water_timer -= delta
+		else:
+			was_in_water_recently = false
+	
 	if is_on_floor():
 		# reset our slide-jump state
+		reset_water_gravity = false
 		jumped_from_slide = false
 	else:
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
@@ -580,7 +617,7 @@ func _physics_process(delta):
 			animationPlayer.play("landing")
 		
 		# Taking fall damage
-		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
+		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold and !(is_in_water or was_in_water_recently):
 			#health_component.subtract(fall_damage)
 			decrease_attribute("health",fall_damage)
 	
@@ -862,3 +899,141 @@ class StepResult:
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
 
+var cam_aligned_wish_dir := Vector3.ZERO
+
+var swim_up_speed : float = 10.0
+var ledge_climb_height : float = 0.5
+var ledge_climb_offset : float = 0.75
+
+@onready var underwatercast = %Mouth
+
+
+func _handle_water_physics(delta) -> void:
+	var input_dir: Vector2
+	if !is_movement_paused:
+		input_dir = Input.get_vector("left", "right", "forward", "back")
+	else:
+		input_dir = Vector2.ZERO
+	input_dir = -input_dir
+
+	var look_vector = camera.get_camera_transform().basis
+	var direction = (look_vector * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+	if not is_on_floor():
+		if !reset_water_gravity:
+			velocity.y -= gravity * 0.1 * delta
+		else:
+			reset_water_gravity = false
+
+	velocity -= direction * WALKING_SPEED * delta
+	if climb_out_of_water_check():
+		return
+	if Input.is_action_pressed("jump"):
+		velocity.y += swim_up_speed * delta
+
+	velocity = velocity.lerp(Vector3.ZERO, delta * 2)
+	
+	move_and_slide()
+
+var is_climbing : bool = false
+var reset_water_gravity : bool = false
+var climb_unstuck_timer : float = 0.0
+@onready var mouth_raycast = %Mouth
+
+func climb_out_of_water_check() -> bool:
+	mouth_raycast.force_raycast_update()
+	if mouth_raycast.is_colliding():
+		return false
+	if (Input.is_action_pressed("jump") or Input.is_action_pressed("forward")) and (ledge_raycast.is_colliding() and can_climb_out_of_water()):
+		ledge_raycast.force_raycast_update()
+		var collider = ledge_raycast.get_collider()
+		if collider != WaterMaker3D and can_climb_out_of_water():
+			var ledge_position = detect_ledge()
+			if ledge_position != Vector3.INF:
+				ledge_climb(ledge_position)
+			return true
+	return false
+
+func ledge_climb(place_to_land: Vector3):
+	velocity = Vector3.ZERO
+	# Set climbing state to prevent other movements
+	is_climbing = true
+	climb_unstuck_timer = 0.5
+	# Create a Tween for smooth movement
+	var tween = get_tree().create_tween()
+
+	# Vertical movement (climb up)
+	var vertical_climb = Vector3(global_transform.origin.x, place_to_land.y + 1.0, global_transform.origin.z)
+	tween.tween_property(self, "global_transform:origin", vertical_climb, 0.5)
+
+	# Wait for the vertical climb to complete
+	await tween.finished
+	tween.stop()
+
+	# Forward movement (move onto the ledge)
+	var forward = global_transform.origin + (-global_transform.basis.z * 1.1)
+	tween.tween_property(self, "global_transform:origin", forward, 0.5)
+
+	# Wait for the forward movement to complete
+	await tween.finished
+	tween.stop()
+
+	# Reset climbing state
+	reset_water_gravity = true
+	is_climbing = false
+
+
+@onready var ledge_raycast = %LedgeRayCast3D
+
+func detect_ledge() -> Vector3:
+	# Cast the ray downwards to detect the top of the object
+	ledge_raycast.force_raycast_update()
+	if ledge_raycast.is_colliding():
+		%Mouth.force_raycast_update()
+		if %Mouth.is_colliding():
+			return Vector3.INF
+		var collision_point = ledge_raycast.get_collision_point()
+		return collision_point  # This is where the player should move to
+	else:
+		return Vector3.INF
+
+func is_head_submerged() -> bool:
+	var head_position : Vector3 = global_position
+	if fluid_interactor.fluid_area == null:
+		return false
+
+	var surface_height = fluid_interactor.fluid_area.get_height(head_position)
+	return head_position.y < surface_height + 1.0
+
+var fluid_dampening : float = 0.75
+
+func can_climb_out_of_water() -> bool:
+	if !is_on_wall() or fluid_interactor.fluid_area == null:
+		return false
+	#if head.rotation.x < deg_to_rad(-45):
+		#return false
+	var torso_position = global_transform.origin + Vector3(0, global_position.y, 0)  # Adjust torso_height for your model
+	var surface_height = fluid_interactor.fluid_area.get_height(torso_position)
+	return torso_position.y -1.0 > surface_height
+
+func fluid_area_enter(area: FluidArea3D) -> void:
+	is_sprinting = false
+	if is_crouching:
+		var delta = get_process_delta_time()
+		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+		is_crouching = false
+		standing_collision_shape.disabled = false
+		crouching_collision_shape.disabled = true
+	is_climbing = false
+	is_in_water = true
+	was_in_water_timer = 0.0
+	was_in_water_recently = false
+	velocity.y = velocity.y * fluid_dampening
+	fluid_interactor.fluid_area_enter(area)
+
+
+func fluid_area_exit(area: FluidArea3D) -> void:
+	is_in_water = false
+	was_in_water_recently = true
+	was_in_water_timer = was_in_water_timer_reset
+	fluid_interactor.fluid_area_exit(area)
