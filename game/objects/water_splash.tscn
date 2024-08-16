@@ -1,8 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://bbyprinr67l2v"]
+[gd_scene load_steps=28 format=3 uid="uid://bbyprinr67l2v"]
 
 [ext_resource type="Script" path="res://game/objects/water_splash.gd" id="1_828h4"]
 [ext_resource type="Texture2D" uid="uid://dyjjiic3lw3os" path="res://COGITO/Assets/VFX/Impacts/Textures/Flare00.PNG" id="1_divo8"]
-[ext_resource type="Material" uid="uid://c71aysyxsuq0t" path="res://COGITO/Assets/VFX/Impacts/Materials/Mat_flare00.tres" id="2_2ww3i"]
 [ext_resource type="AudioStream" uid="uid://gjmuqaqal3ma" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_03.ogg" id="3_5jwcv"]
 [ext_resource type="AudioStream" uid="uid://7tgwdvfam2yq" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_04.ogg" id="4_ror2t"]
 [ext_resource type="AudioStream" uid="uid://c6xd6rj1remg8" path="res://audio/SFX/WaterSFX/water-splash-slime-sfx/splash_11.ogg" id="5_qngmg"]
@@ -67,28 +66,6 @@ alpha_curve = SubResource("CurveTexture_nfnra")
 
 [sub_resource type="QuadMesh" id="QuadMesh_vsa7t"]
 
-[sub_resource type="Curve" id="Curve_wunie"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.194553, 0.294165), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_r21wt"]
-curve = SubResource("Curve_wunie")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjcxw"]
-lifetime_randomness = 0.5
-emission_shape = 3
-emission_box_extents = Vector3(1, 0, 0.2)
-direction = Vector3(0, 1, 0)
-spread = 180.0
-initial_velocity_min = 0.1
-initial_velocity_max = 0.5
-gravity = Vector3(0, 0.3, 0)
-scale_min = 0.5
-color = Color(0.698039, 0.698039, 0.698039, 1)
-alpha_curve = SubResource("CurveTexture_r21wt")
-
-[sub_resource type="QuadMesh" id="QuadMesh_l36ji"]
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b33wg"]
 random_pitch = 1.2
 random_volume_offset_db = 0.5
@@ -139,18 +116,6 @@ fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_qndyw")
 draw_pass_1 = SubResource("QuadMesh_vsa7t")
 
-[node name="Steam" type="GPUParticles3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-material_override = ExtResource("2_2ww3i")
-emitting = false
-amount = 40
-lifetime = 1.5
-one_shot = true
-fixed_fps = 60
-visibility_aabb = AABB(-2, -4, -4, 4, 8, 8)
-process_material = SubResource("ParticleProcessMaterial_fjcxw")
-draw_pass_1 = SubResource("QuadMesh_l36ji")
-
 [node name="SplashStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_b33wg")
 attenuation_model = 1
@@ -165,6 +130,8 @@ emission_angle_degrees = 0.1
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+autostart = true
 
-[connection signal="finished" from="Steam" to="." method="_on_steam_finished"]
+[connection signal="finished" from="Droplets" to="." method="_on_droplets_finished"]
+[connection signal="finished" from="SplashStreamPlayer3D" to="." method="_on_splash_stream_player_3d_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
