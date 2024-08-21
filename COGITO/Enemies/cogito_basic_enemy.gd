@@ -4,6 +4,11 @@ class_name CogitoEnemy
 ## Emitted when received damage. Used with the HitboxComponent
 signal damage_received(damage_value:float)
 
+# COGITO system variables
+var cogito_properties : CogitoProperties = null
+var properties : int
+
+# ENEMY specific variables
 var current_state : EnemyState  #State for simple state machine
 var is_waiting : bool = false
 var patrol_point_index: int = 0 #Patrol point for patrolling
@@ -43,7 +48,17 @@ enum EnemyState{
 
 
 func _ready() -> void:
+	self.add_to_group("Persist") #Adding object to group for persistence
+	find_cogito_properties()
+	
 	current_state = start_state
+
+
+func find_cogito_properties():
+	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
+	if property_nodes:
+		cogito_properties = property_nodes[0]
+		#print(name, ": cogito_properties set to ", cogito_properties)
 
 
 func _physics_process(delta: float) -> void:
@@ -67,7 +82,8 @@ func handle_chasing(_delta: float):
 	#Currently just chasing the player. TODO: Change to have a dynamic target.
 	chase_target = CogitoSceneManager._current_player_node
 	
-	look_at(Vector3(chase_target.global_position.x,global_position.y,chase_target.global_position.z))
+	# This is basicallya a lerped look-at
+	_look_at_target_interpolated(chase_target.global_position)
 	
 	if _target_in_range() and attack_cooldown <= 0:
 		attack(chase_target)
@@ -90,8 +106,10 @@ func handle_patrolling(_delta: float):
 			is_waiting = false
 		
 		else:
+			var look_ahead := Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z)
+			_look_at_target_interpolated(look_ahead)
+			
 			# Move towards patrol point
-			look_at(Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z))
 			move_toward_target(patrol_points[patrol_point_index],patrol_speed)
 
 
@@ -102,6 +120,12 @@ func move_toward_target(target: Node3D, passed_speed:float):
 	var next_nav_point = nav_agent.get_next_path_position()
 	velocity = (next_nav_point - global_position).normalized() * passed_speed
 	move_and_slide()
+
+
+func _look_at_target_interpolated(look_direction: Vector3) -> void:
+	var look_at_target = global_position.direction_to(look_direction)
+	var target_basis= Basis.looking_at(look_at_target)
+	basis = basis.slerp(target_basis, 0.2)
 
 
 func _target_in_range() -> bool:
@@ -127,3 +151,38 @@ func switch_to_aware():
 
 func switch_to_chasing():
 	current_state = EnemyState.CHASING
+
+
+# Future method to set object state when a scene state file is loaded.
+func set_state():	
+	#TODO: Find a way to possibly save health of health attribute.
+	find_cogito_properties()
+	pass
+
+
+# Function to handle persistence and saving
+func save():
+	var node_data = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_path(),
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		
+	}
+	return node_data
+
+
+func _on_body_entered(body: Node) -> void:
+	# Using this check to only call interactions on other Cogito Objects. #TODO: could be a better check...
+	if body.has_method("save") and cogito_properties:
+		cogito_properties.start_reaction_threshold_timer(body)
+
+
+func _on_body_exited(body: Node) -> void:
+	# Using this check to only call interactions on other Cogito Objects. #TODO: could be a better check...
+	if body.has_method("save") and cogito_properties:
+		cogito_properties.check_for_reaction_timer_interrupt(body)

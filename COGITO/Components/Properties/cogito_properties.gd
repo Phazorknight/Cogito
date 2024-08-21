@@ -5,7 +5,7 @@ class_name CogitoProperties
 
 signal has_ignited()
 signal has_been_extinguished()
-signal deal_burn_damage(burn_damage_amount:int)
+signal deal_burn_damage(burn_damage_amount:float)
 signal has_become_wet()
 signal has_become_dry()
 signal has_become_electric()
@@ -39,7 +39,7 @@ enum MaterialProperties{
 ## Sets if the object should ignite itself on ready. Needs to be flammable for this to work.
 @export var ignite_on_ready : bool
 ## Amount of damage dealt to the health component while object is on fire.
-@export var burn_damage_amount : int
+@export var burn_damage_amount : float
 ## Interval the burn damage is applied in seconds.
 @export var burn_damage_interval : float = 1.0
 
@@ -221,6 +221,9 @@ func start_burn_damage_timer():
 
 func apply_burn_damage():
 	deal_burn_damage.emit(burn_damage_amount)
+	# Calling damage received on Cogito Object or Enemy parent node.
+	get_parent().damage_received.emit(burn_damage_amount)
+	
 	if is_on_fire:
 		start_burn_damage_timer()
 

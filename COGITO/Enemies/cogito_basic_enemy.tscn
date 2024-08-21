@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dn4e1k7u3suoo"]
+[gd_scene load_steps=14 format=3 uid="uid://dn4e1k7u3suoo"]
 
 [ext_resource type="Script" path="res://COGITO/Enemies/cogito_basic_enemy.gd" id="1_0lcvu"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_security_camera.gd" id="2_6jysp"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="4_y8n8v"]
 [ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://COGITO/PackedScenes/simple_particle_puff.tscn" id="5_ni6ul"]
 [ext_resource type="Script" path="res://COGITO/Components/HitboxComponent.gd" id="5_qh1ls"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="7_15n6t"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3jhp"]
 height = 1.8
@@ -92,6 +93,12 @@ value_start = 5.0
 [node name="HitboxComponent" type="Node" parent="." node_paths=PackedStringArray("health_attribute")]
 script = ExtResource("5_qh1ls")
 health_attribute = NodePath("../HealthAttribute")
+
+[node name="CogitoProperties" parent="." instance=ExtResource("7_15n6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42562, 0)
+elemental_properties = 2
+material_properties = 1
+burn_damage_amount = 1.0
 
 [connection signal="object_detected" from="SecurityCamera" to="." method="switch_to_chasing"]
 [connection signal="object_no_longer_detected" from="SecurityCamera" to="." method="switch_to_patrolling"]
