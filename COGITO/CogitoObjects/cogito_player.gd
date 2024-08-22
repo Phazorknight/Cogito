@@ -160,6 +160,7 @@ var slide_audio_player : AudioStreamPlayer3D
 # Adding carryable position for item control.
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
+@onready var landing_player = $LandingPlayer
 
 ## performance saving variable
 @onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
@@ -541,6 +542,9 @@ func _physics_process(delta):
 	
 	### STAIR HANDLING, jumping and gravity
 	if is_on_floor():
+		if is_in_air:
+			# Play landing sound when landing after being in the air
+			landing_player.play_landing()
 		is_jumping = false
 		is_in_air = false
 		main_velocity.y = 0
@@ -861,4 +865,3 @@ class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
-
