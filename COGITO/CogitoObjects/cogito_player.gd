@@ -161,6 +161,7 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 @onready var landing_player = $LandingPlayer
+var landing_threshold = -2.0  # Threshold for triggering landing sound
 
 ## performance saving variable
 @onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
@@ -411,11 +412,23 @@ func _process_on_ladder(_delta):
 		on_ladder = false
 
 var jumped_from_slide = false
+var was_in_air = false
 
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
+	# Check if the player is on the ground
+	if is_on_floor():
+		# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
+		if was_in_air and last_velocity.y < landing_threshold:
+			landing_player.play_landing()
+		was_in_air = false  # Reset airborne state
+	else:
+		was_in_air = true  # Set airborne state
 		
+	# Store current velocity for the next frame
+	last_velocity = main_velocity
+	
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
@@ -542,9 +555,6 @@ func _physics_process(delta):
 	
 	### STAIR HANDLING, jumping and gravity
 	if is_on_floor():
-		if is_in_air:
-			# Play landing sound when landing after being in the air
-			landing_player.play_landing()
 		is_jumping = false
 		is_in_air = false
 		main_velocity.y = 0
