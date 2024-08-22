@@ -162,6 +162,14 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 @onready var landing_player = $LandingPlayer
 var landing_threshold = -2.0  # Threshold for triggering landing sound
+# Define the range for velocity that maps to sound volume or pitch
+var max_landing_velocity = -8  # Maximum velocity (in negative) for the hardest landing
+var min_landing_velocity = -2	# Minimum velocity for a soft landing
+var max_volume = 1.0			  # Max volume for the landing sound
+var min_volume = 0.3			  # Min volume for the landing sound
+var max_pitch = 0.95			   # Higher pitch for lighter landing
+var min_pitch = 0.7			   # Lower pitch for harder landing
+
 
 ## performance saving variable
 @onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
@@ -421,6 +429,14 @@ func _physics_process(delta):
 	if is_on_floor():
 		# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
 		if was_in_air and last_velocity.y < landing_threshold:
+			# Calculate the volume and pitch based on the landing velocity
+			var velocity_ratio = clamp((last_velocity.y - min_landing_velocity) / (max_landing_velocity - min_landing_velocity), 0.0, 1.0)
+			var volume = lerp(min_volume, max_volume, velocity_ratio)
+			var pitch = lerp(max_pitch, min_pitch, velocity_ratio)
+			# Adjust the volume and pitch of the landing sound
+			landing_player.volume_db = linear_to_db(volume)
+			landing_player.pitch_scale = pitch
+			# Play the landing sound
 			landing_player.play_landing()
 		was_in_air = false  # Reset airborne state
 	else:
