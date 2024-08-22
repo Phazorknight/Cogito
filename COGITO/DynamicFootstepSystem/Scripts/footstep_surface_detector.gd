@@ -5,13 +5,17 @@ class_name FootstepSurfaceDetector
 @export var generic_fallback_footstep_profile : AudioStreamRandomizer
 @export var footstep_material_library : FootstepMaterialLibrary
 var last_result
+var parent_rid : RID
+
 
 func _ready():
+	parent_rid = get_parent().get_rid()
 	if not generic_fallback_footstep_profile:
 		printerr("FootstepSurfaceDetector - No generic fallback footstep profile is assigned")
 
 func play_footstep():
 	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + Vector3(0, -1, 0))
+	query.exclude = [parent_rid]
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	if result:
 		
