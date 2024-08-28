@@ -318,7 +318,9 @@ script = ExtResource("7_fhl3i")
 quest_to_update = ExtResource("8_wpbw8")
 update_type = 2
 
-[connection signal="container_closed" from="." to="InventoryCheckerWIN" method="check_inventory"]
-[connection signal="container_closed" from="." to="InventoryCheckerFAIL" method="check_inventory"]
+[connection signal="container_closed" from="." to="InventoryCheckerWIN" method="check_inventory" flags=3]
+[connection signal="container_closed" from="." to="InventoryCheckerWIN" method="update_inventory"]
+[connection signal="container_closed" from="." to="InventoryCheckerFAIL" method="check_inventory" flags=3]
+[connection signal="container_closed" from="." to="InventoryCheckerFAIL" method="update_inventory"]
 [connection signal="item_found" from="InventoryCheckerWIN" to="QuestUpdaterWIN" method="update_quest"]
 [connection signal="item_found" from="InventoryCheckerFAIL" to="QuestUpdaterFAIL" method="update_quest"]
