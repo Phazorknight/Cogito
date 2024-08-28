@@ -20,6 +20,10 @@ func is_item_in_inventory(sought_item:InventoryItemPD, inventory: CogitoInventor
 	return false
 
 
+func update_inventory() -> void:
+	container_inventory = container_to_check.inventory_data
+
+
 func check_inventory() -> void:
 	print("Inventory checker: Checking for ", item_to_check_for.name, " in ", container_inventory)
 	if is_item_in_inventory(item_to_check_for, container_inventory):
