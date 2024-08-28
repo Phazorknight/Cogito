@@ -26,6 +26,8 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 func _ready() -> void:
 	_player_state = get_existing_player_state(_active_slot) #Setting active slot (per default it's A)
 	_scene_state = get_existing_scene_state(_active_slot)
+	
+	reset_scene_states()
 
 
 func switch_active_slot_to(slot_name:String):
@@ -325,8 +327,33 @@ func delete_save(passed_slot: String) -> void:
 	var file_to_remove = cogito_state_dir + cogito_player_state_prefix + passed_slot + ".res"
 	OS.move_to_trash(ProjectSettings.globalize_path(file_to_remove))
 	print("CSM: Save file removed: ", file_to_remove)
+	
+	var scene_to_remove = cogito_state_dir + cogito_scene_state_prefix + passed_slot + ".res"
 
 
 func reset_scene_states():
 	# TODO: CREATE FUNCTION THAT DELETES SCENE STATE FILES.
-	pass
+	
+	var scene_state_files : Dictionary
+
+	var dir = DirAccess.open(cogito_state_dir)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			if dir.current_is_dir():
+				print("Found directory: " + file_name, ". skipping ahead.")
+
+			# Look for _temp_ files
+			if file_name.find(cogito_scene_state_prefix,0) != -1:
+				print("CSM: Found scene state file file: " + file_name)
+				if file_name.find("temp",0) != -1:
+					print("CSM: This file is a temp scene state.")
+					# DELETE HERE
+			
+			# iterate to next file
+			file_name = dir.get_next()
+			
+	else:
+		print("An error occurred when trying to access the path.")

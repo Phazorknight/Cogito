@@ -107,7 +107,6 @@ ambient_light_sky_contribution = 0.1
 ambient_light_energy = 0.2
 tonemap_mode = 1
 ssao_enabled = true
-ssil_enabled = true
 glow_enabled = true
 glow_intensity = 2.5
 glow_strength = 0.37
