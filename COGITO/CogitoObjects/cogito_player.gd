@@ -31,6 +31,7 @@ var is_showing_ui : bool
 @export var jump_sound : AudioStream
 ## AudioStream that gets played when the player slides (sprint + crouch).
 @export var slide_sound : AudioStream
+@export_subgroup ("Footstep Audio")
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
@@ -48,13 +49,13 @@ var is_showing_ui : bool
 @export var max_landing_velocity = -8
 ## Defines Minimum velocity for a soft landing
 @export var min_landing_velocity = -2
-## Max volume for the landing sound
-@export var max_volume = 0.8
-## Min volume for the landing sound
-@export var min_volume = 0.5
-## Higher pitch for lighter landing
-@export var max_pitch = 0.95
-## Lower pitch for harder landing
+## Max volume in dB for the landing sound
+@export var max_volume = 0
+## Min volume in dB for the landing sound
+@export var min_volume = -40
+## Highest pitch for lightest landing
+@export var max_pitch = 0.8
+## Lowest pitch for hardest landing
 @export var min_pitch = 0.7
 
 @export_group("Movement Properties")
@@ -442,7 +443,7 @@ func _physics_process(delta):
 			var volume = lerp(min_volume, max_volume, velocity_ratio)
 			var pitch = lerp(max_pitch, min_pitch, velocity_ratio)
 			# Adjust the volume and pitch of the landing sound
-			landing_player.volume_db = linear_to_db(volume)
+			landing_player.volume_db = volume
 			landing_player.pitch_scale = pitch
 			# Play the landing sound
 			landing_player.play_landing()
