@@ -41,6 +41,22 @@ var is_showing_ui : bool
 ## the speed at which the player must be moving before the footsteps change from walk to sprint.
 @export var footstep_interval_change_velocity : float = 5.2
 
+@export_subgroup ("Landing Audio")
+## Threshold for triggering landing sound
+@export var landing_threshold = -2.0  
+## Defines Maximum velocity (in negative) for the hardest landing
+@export var max_landing_velocity = -8
+## Defines Minimum velocity for a soft landing
+@export var min_landing_velocity = -2
+## Max volume for the landing sound
+@export var max_volume = 0.8
+## Min volume for the landing sound
+@export var min_volume = 0.5
+## Higher pitch for lighter landing
+@export var max_pitch = 0.95
+## Lower pitch for harder landing
+@export var min_pitch = 0.7
+
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
 @export var CROUCH_JUMP_VELOCITY : float = 3.0
@@ -161,14 +177,6 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 @onready var landing_player = $LandingPlayer
-var landing_threshold = -2.0  # Threshold for triggering landing sound
-# Define the range for velocity that maps to sound volume or pitch
-var max_landing_velocity = -8  # Maximum velocity (in negative) for the hardest landing
-var min_landing_velocity = -2	# Minimum velocity for a soft landing
-var max_volume = 1.0			  # Max volume for the landing sound
-var min_volume = 0.3			  # Min volume for the landing sound
-var max_pitch = 0.95			   # Higher pitch for lighter landing
-var min_pitch = 0.7			   # Lower pitch for harder landing
 
 
 ## performance saving variable

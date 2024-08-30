@@ -53,6 +53,7 @@ fall_damage = 10
 inventory_data = ExtResource("2_iyhv4")
 jump_sound = ExtResource("3_7ds3n")
 slide_sound = ExtResource("4_1i2kv")
+max_pitch = 0.8
 HEADBOBBLE = 1
 STEP_MAX_SLOPE_DEGREE = 1.0
 
