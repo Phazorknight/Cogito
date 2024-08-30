@@ -59,7 +59,6 @@ STEP_MAX_SLOPE_DEGREE = 1.0
 decay_in_darkness = false
 
 [node name="StaminaAttribute" parent="." instance=ExtResource("8_kodbk")]
-value_start = 999.0
 
 [node name="HealthAttribute" parent="." instance=ExtResource("9_ky5mf")]
 
