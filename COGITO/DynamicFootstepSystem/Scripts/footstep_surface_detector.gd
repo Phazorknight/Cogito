@@ -18,15 +18,12 @@ func play_footstep():
 	query.exclude = [parent_rid]
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	if result:
-		
 		last_result = result
 		if _play_by_footstep_surface(result.collider):
 			return
-		elif _play_by_material(result.collider):
+		elif _play_by_material(result.collider, footstep_material_library, generic_fallback_footstep_profile):
 			return
-		#if no material, play generics
-		else:
-			_play_footstep(generic_fallback_footstep_profile)
+
 
 func _play_by_footstep_surface(collider : Node3D) -> bool:
 	#check for footstep surface as a child of the collider
@@ -41,20 +38,22 @@ func _play_by_footstep_surface(collider : Node3D) -> bool:
 		return true
 	return false
 
-func _play_by_material(collider : Node3D) -> bool:
-	# if no footstep surface, see if we can get a material
-	if footstep_material_library:
+func _play_by_material(collider: Node3D, material_library: FootstepMaterialLibrary, fallback_profile: AudioStreamRandomizer) -> bool:
+	if material_library:
 		#find surface material
-		var material : Material = _get_surface_material(collider)
+		var material: Material = _get_surface_material(collider)
 		#if a material was found
 		if material:
 			#get a profile from our library
-			var footstep_profile = footstep_material_library.get_footstep_profile_by_material(material)
+			var profile: AudioStreamRandomizer = material_library.get_footstep_profile_by_material(material)
 			#found profile, use it
-			if footstep_profile:
-				_play_footstep(footstep_profile)
+			if profile:
+				_play_footstep(profile)
 				return true
+	# If no specific material profile is found, play the fallback profile
+	_play_footstep(fallback_profile)
 	return false
+
 
 func _get_footstep_surface_child(collider : Node3D) -> AudioStreamRandomizer:
 	#find all children of the collider static body that are of type "FootstepSurface"

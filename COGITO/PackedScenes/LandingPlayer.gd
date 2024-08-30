@@ -16,20 +16,11 @@ func play_landing():
 		last_result = result
 		if _play_by_landing_surface(result.collider):
 			return
-		elif _play_by_material(result.collider):
+		elif _play_by_material(result.collider, landing_material_library, generic_fallback_landing_profile):
 			return
-		else:
-			_play_footstep(generic_fallback_landing_profile)
+
 
 func _play_by_landing_surface(collider: Node3D) -> bool:
 	return _play_by_footstep_surface(collider)
 
-func _play_by_material(collider: Node3D) -> bool:
-	if landing_material_library:
-		var material : Material = _get_surface_material(collider)
-		if material:
-			var landing_profile = landing_material_library.get_footstep_profile_by_material(material)
-			if landing_profile:
-				_play_footstep(landing_profile)
-				return true
-	return false
+
