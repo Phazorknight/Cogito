@@ -4,6 +4,8 @@ class_name FootstepSurfaceDetector
 
 @export var generic_fallback_footstep_profile : AudioStreamRandomizer
 @export var footstep_material_library : FootstepMaterialLibrary
+@export var generic_fallback_landing_profile : AudioStreamRandomizer
+@export var landing_material_library : FootstepMaterialLibrary
 var last_result
 var parent_rid : RID
 
@@ -12,7 +14,10 @@ func _ready():
 	parent_rid = get_parent().get_rid()
 	if not generic_fallback_footstep_profile:
 		printerr("FootstepSurfaceDetector - No generic fallback footstep profile is assigned")
+	if not generic_fallback_landing_profile:
+		printerr("FootstepSurfaceDetector - No generic fallback landing profile is assigned")
 
+		
 func play_footstep():
 	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + Vector3(0, -1, 0))
 	query.exclude = [parent_rid]
@@ -23,7 +28,16 @@ func play_footstep():
 			return
 		elif _play_by_material(result.collider, footstep_material_library, generic_fallback_footstep_profile):
 			return
-
+			
+func play_landing():
+	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + Vector3(0, -1, 0))
+	var result = get_world_3d().direct_space_state.intersect_ray(query)
+	if result:
+		last_result = result
+		if _play_by_landing_surface(result.collider):
+			return
+		elif _play_by_material(result.collider, landing_material_library, generic_fallback_landing_profile):
+			return
 
 func _play_by_footstep_surface(collider : Node3D) -> bool:
 	#check for footstep surface as a child of the collider
@@ -37,6 +51,9 @@ func _play_by_footstep_surface(collider : Node3D) -> bool:
 		_play_footstep(collider.footstep_profile)
 		return true
 	return false
+
+func _play_by_landing_surface(collider: Node3D) -> bool:
+	return _play_by_footstep_surface(collider)
 
 func _play_by_material(collider: Node3D, material_library: FootstepMaterialLibrary, fallback_profile: AudioStreamRandomizer) -> bool:
 	if material_library:

@@ -177,7 +177,7 @@ var slide_audio_player : AudioStreamPlayer3D
 # Adding carryable position for item control.
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
-@onready var landing_player = $LandingPlayer
+@onready var landing_player = $FootstepPlayer
 
 
 ## performance saving variable
@@ -753,6 +753,8 @@ func _physics_process(delta):
 					footstep_player.volume_db = crouch_volume_db
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
+				#reset pitch to 1 before every footstep due to possible change by landing sfx
+				footstep_player.pitch_scale = 1
 				footstep_surface_detector.play_footstep()
 					
 				can_play_footstep = false
