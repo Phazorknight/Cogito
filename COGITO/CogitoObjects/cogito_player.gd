@@ -177,8 +177,6 @@ var slide_audio_player : AudioStreamPlayer3D
 # Adding carryable position for item control.
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
-@onready var landing_player = $FootstepPlayer
-
 
 ## performance saving variable
 @onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
@@ -443,10 +441,10 @@ func _physics_process(delta):
 			var volume = lerp(min_volume, max_volume, velocity_ratio)
 			var pitch = lerp(max_pitch, min_pitch, velocity_ratio)
 			# Adjust the volume and pitch of the landing sound
-			landing_player.volume_db = volume
-			landing_player.pitch_scale = pitch
+			footstep_player.volume_db = volume
+			footstep_player.pitch_scale = pitch
 			# Play the landing sound
-			landing_player.play_landing()
+			footstep_player._play_interaction("landing")
 		was_in_air = false  # Reset airborne state
 	else:
 		was_in_air = true  # Set airborne state
@@ -755,7 +753,7 @@ func _physics_process(delta):
 					footstep_player.volume_db = sprint_volume_db
 				#reset pitch to 1 before every footstep due to possible change by landing sfx
 				footstep_player.pitch_scale = 1
-				footstep_surface_detector.play_footstep()
+				footstep_player._play_interaction("footstep")
 					
 				can_play_footstep = false
 				

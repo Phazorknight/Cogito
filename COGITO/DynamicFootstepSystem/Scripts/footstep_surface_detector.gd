@@ -19,25 +19,27 @@ func _ready():
 
 		
 func play_footstep():
+	_play_interaction("footstep")
+
+func play_landing():
+	_play_interaction("landing")
+
+func _play_interaction(interaction_type: String):
 	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + Vector3(0, -1, 0))
 	query.exclude = [parent_rid]
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	if result:
 		last_result = result
-		if _play_by_footstep_surface(result.collider):
-			return
-		elif _play_by_material(result.collider, footstep_material_library, generic_fallback_footstep_profile):
-			return
-			
-func play_landing():
-	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + Vector3(0, -1, 0))
-	var result = get_world_3d().direct_space_state.intersect_ray(query)
-	if result:
-		last_result = result
-		if _play_by_landing_surface(result.collider):
-			return
-		elif _play_by_material(result.collider, landing_material_library, generic_fallback_landing_profile):
-			return
+		if interaction_type == "footstep":
+			if _play_by_footstep_surface(result.collider):
+				return
+			elif _play_by_material(result.collider, footstep_material_library, generic_fallback_footstep_profile):
+				return
+		elif interaction_type == "landing":
+			if _play_by_landing_surface(result.collider):
+				return
+			elif _play_by_material(result.collider, landing_material_library, generic_fallback_landing_profile):
+				return
 
 func _play_by_footstep_surface(collider : Node3D) -> bool:
 	#check for footstep surface as a child of the collider
@@ -71,7 +73,6 @@ func _play_by_material(collider: Node3D, material_library: FootstepMaterialLibra
 	_play_footstep(fallback_profile)
 	return false
 
-
 func _get_footstep_surface_child(collider : Node3D) -> AudioStreamRandomizer:
 	#find all children of the collider static body that are of type "FootstepSurface"
 	var footstep_surfaces = collider.find_children("", "FootstepSurface")
@@ -79,6 +80,7 @@ func _get_footstep_surface_child(collider : Node3D) -> AudioStreamRandomizer:
 		#use the first footstep_surface child found
 		return footstep_surfaces[0].footstep_profile
 	return null
+
 
 func _get_surface_material(collider : Node3D) -> Material:
 	var mesh_instance = null
