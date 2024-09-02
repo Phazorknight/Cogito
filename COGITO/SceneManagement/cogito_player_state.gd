@@ -56,18 +56,22 @@ func clear_saved_wieldable_charges():
 
 
 func write_state(state_slot : String) -> void:
-	var player_state_file = str(player_state_dir + state_slot + ".res")
-	
+	var dir = DirAccess.open(CogitoSceneManager.cogito_state_dir)
+	dir.make_dir(str(state_slot))
+	var player_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".res")
+	#var player_state_file = str(player_state_dir + state_slot + ".res")
 	ResourceSaver.save(self, player_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Player state saved as ", player_state_file)
 
 
 
 func state_exists(state_slot : String) -> bool:
-	var player_state_file = str(player_state_dir + state_slot + ".res")
+	#var player_state_file = str(player_state_dir + state_slot + ".res")
+	var player_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".res")
 	return ResourceLoader.exists(player_state_file)
  
 
 func load_state(state_slot : String) -> Resource:
-	var player_state_file = str(player_state_dir + state_slot + ".res")
+	#var player_state_file = str(player_state_dir + state_slot + ".res")
+	var player_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".res")
 	return ResourceLoader.load(player_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)
