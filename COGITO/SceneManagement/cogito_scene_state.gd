@@ -20,16 +20,19 @@ func add_state_data_to_array(state_data):
 	saved_states.append(state_data)
 
 func write_state(state_slot : String, scene_name : String) -> void:
-	var scene_state_file = str(scene_state_dir + state_slot + "_" + scene_name + ".res")
+	var dir = DirAccess.open(CogitoSceneManager.cogito_state_dir)
+	dir.make_dir(str(state_slot))
+	var scene_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_scene_state_prefix + scene_name + ".res")
 	ResourceSaver.save(self, scene_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Scene state saved as ", scene_state_file)
 
 
 func state_exists(state_slot : String, scene_name : String) -> bool:
-	var scene_state_file = str(scene_state_dir + state_slot + "_" + scene_name + ".res")
+	var scene_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_scene_state_prefix + scene_name + ".res")
+	print("Cogito_scene_state.gd: Looking if stat exists: ", scene_state_file)
 	return ResourceLoader.exists(scene_state_file)
  
 
 func load_state(state_slot : String, scene_name : String) -> Resource:
-	var scene_state_file = str(scene_state_dir + state_slot + "_" + scene_name + ".res")
+	var scene_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_scene_state_prefix + scene_name + ".res")
 	return ResourceLoader.load(scene_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)

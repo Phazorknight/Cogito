@@ -40,7 +40,7 @@ func switch_active_slot_to(slot_name:String):
 	
 
 func get_existing_player_state(passed_slot) -> CogitoPlayerState:
-	var player_state_file : String = cogito_state_dir + cogito_player_state_prefix + passed_slot + ".res"
+	var player_state_file : String = cogito_state_dir + passed_slot + "/" + cogito_player_state_prefix + ".res"
 	print("CSM: Looking for file: ", player_state_file)
 	if ResourceLoader.exists(player_state_file):
 		print("CSM: Get existing player state: found for slot ", passed_slot, ".")
@@ -54,7 +54,7 @@ func get_existing_scene_state(passed_slot) -> CogitoSceneState:
 	var current_scene : String = ""
 	if _player_state:
 		current_scene = _player_state.player_current_scene
-	var scene_state_file : String = cogito_state_dir + cogito_scene_state_prefix + passed_slot + "_" + current_scene + ".res"
+	var scene_state_file : String = cogito_state_dir + passed_slot + "/" + cogito_scene_state_prefix + current_scene + ".res"
 	print("CSM: Looking for file: ", scene_state_file)
 	if ResourceLoader.exists(scene_state_file):
 		print("CSM: Get existing scene state: found for slot ", passed_slot, ".")
@@ -90,6 +90,8 @@ func loading_saved_game(passed_slot: String):
 #region PLAYER SAVE HANDLING
 func load_player_state(player, passed_slot:String):
 	print("CSM: Loading player state...")
+	if !_player_state:
+		_player_state = CogitoPlayerState.new()
 	if _player_state and _player_state.state_exists(passed_slot):
 		print("CSM: Player State in slot ", passed_slot, " exists. Loading ", _player_state)
 		_player_state = _player_state.load_state(passed_slot) as CogitoPlayerState
@@ -178,6 +180,7 @@ func save_player_state(player, slot:String):
 			print("Saved charge for ", item_slot.inventory_item )
 	
 	_player_state.player_current_scene = _current_scene_name
+	print("CSM: save_player_state(): setting player_current_scene to ", _current_scene_name)
 	_player_state.player_current_scene_path = _current_scene_path
 	_player_state.player_position = player.global_position
 	_player_state.player_rotation = player.body.global_rotation
@@ -211,7 +214,8 @@ func save_player_state(player, slot:String):
 	_player_state.clear_saved_interaction_component_state()
 	_player_state.add_interaction_component_state_data_to_array(current_player_interaction_component.save())
 	
-	_player_state.write_state(slot)
+	#_player_state.write_state(slot)
+	_player_state.write_state("temp")
 #endregion
 
 
@@ -226,6 +230,8 @@ func get_active_slot_player_state_screenshot_path() -> String:
 
 func load_scene_state(_scene_name_to_load:String, slot:String):
 	print("CSM: Load scene state for:", _scene_name_to_load, ". Slot: ", slot)
+	if !_scene_state:
+		_scene_state = CogitoSceneState.new()
 	if _scene_state and _scene_state.state_exists(slot, _scene_name_to_load):
 		print("CSM: Scene state exists. Loading ", _scene_state)
 		_scene_state = _scene_state.load_state(slot,_scene_name_to_load) as CogitoSceneState
@@ -324,11 +330,94 @@ func load_next_scene(target : String, connector_name: String, passed_slot: Strin
 
 
 func delete_save(passed_slot: String) -> void:
-	var file_to_remove = cogito_state_dir + cogito_player_state_prefix + passed_slot + ".res"
-	OS.move_to_trash(ProjectSettings.globalize_path(file_to_remove))
-	print("CSM: Save file removed: ", file_to_remove)
+	#var file_to_remove = cogito_state_dir + cogito_player_state_prefix + passed_slot + ".res"
+	var dir_to_remove = cogito_state_dir + passed_slot
+	OS.move_to_trash(ProjectSettings.globalize_path(dir_to_remove))
+	print("CSM: Save file removed: ", dir_to_remove)
 	
-	var scene_to_remove = cogito_state_dir + cogito_scene_state_prefix + passed_slot + ".res"
+	#var scene_to_remove = cogito_state_dir + cogito_scene_state_prefix + passed_slot + ".res"
+
+
+func copy_slot_saves_to_temp(passed_slot:String) -> bool:
+	print("CSM: Attpemting to copy files from slot ", passed_slot, " to temp.")
+	var files : Dictionary
+	var slot_dir = DirAccess.open(cogito_state_dir + passed_slot)
+	
+	var cogito_dir = DirAccess.open(CogitoSceneManager.cogito_state_dir)
+	cogito_dir.make_dir("temp")
+
+	if slot_dir:
+		slot_dir.list_dir_begin()
+		var file_name = slot_dir.get_next()
+		
+		while file_name != "":
+			print("CSM: Copying file to temp: ", file_name)
+			if slot_dir.copy(str(CogitoSceneManager.cogito_state_dir + passed_slot + "/" + file_name), str(CogitoSceneManager.cogito_state_dir + "temp/" + file_name), -1) != OK:
+				print("CSM: Copying file ", file_name , " failed.")
+				return false
+			# iterate to next file
+			file_name = slot_dir.get_next()
+	
+	print("CSM: Copying files to temp finished.")
+	
+	loading_saved_game("temp") # This loads the temp save states after moving them from the slot.
+	return true
+	
+	
+	
+func copy_temp_saves_to_slot(passed_slot:String) -> bool:
+	print("CSM: Attpemting to copy files from temp to slot ", passed_slot, ".")
+	var files : Dictionary
+	var temp_dir = DirAccess.open(cogito_state_dir + "temp")
+	
+	var cogito_dir = DirAccess.open(CogitoSceneManager.cogito_state_dir)
+	cogito_dir.make_dir(passed_slot)
+
+	if temp_dir:
+		temp_dir.list_dir_begin()
+		var file_name = temp_dir.get_next()
+		
+		while file_name != "":
+			print("CSM: Copying file to temp: ", file_name)
+			if temp_dir.copy(str(CogitoSceneManager.cogito_state_dir + "temp/" + file_name), str(CogitoSceneManager.cogito_state_dir + passed_slot + "/" + file_name), -1) != OK:
+				print("CSM: Copying file ", file_name , " failed.")
+				return false
+			# iterate to next file
+			file_name = temp_dir.get_next()
+	
+	print("CSM: Copying temp files to slot ", passed_slot, " finished.")
+	return true
+
+
+func delete_temp_saves():
+	print("CSM: Attempting to delete temp saves...")
+	
+	var scene_temp_files : Dictionary
+	var dir = DirAccess.open(cogito_state_dir + "temp/")
+
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			print("CSM: Deleting file: ", file_name)
+			if dir.remove(file_name) != OK:
+				print("CSM: Deleting file ", file_name , " failed.")
+			# iterate to next file
+			file_name = dir.get_next()
+	
+	var dir2 = DirAccess.open(cogito_state_dir)
+	if dir2:
+		dir2.list_dir_begin()
+		var file_name = dir2.get_next()
+		while file_name != "":
+			if dir2.current_is_dir():
+				print("CSM: Deleting temp saves: Detected dir = ", file_name)
+				if file_name == "temp":
+					print("CSM: Deleting temp directory: ", file_name)
+					if dir2.remove(file_name) != OK:
+						print("CSM: Deleting temp dir failed.")
+			file_name = dir2.get_next()
 
 
 func reset_scene_states():
@@ -357,3 +446,7 @@ func reset_scene_states():
 			
 	else:
 		print("An error occurred when trying to access the path.")
+
+
+func _exit_tree() -> void:
+	delete_temp_saves()
