@@ -172,9 +172,9 @@ func _play_footstep(profile : AudioStreamRandomizer, interaction_type: String):
 		#Setup QuickAudio landing player so that it can use its own pitch/volume parameters
 		var playerNode = get_parent()
 		var LandingVolume = playerNode.LandingVolume
-		var pitch = playerNode.LandingPitch
+		var LandingPitch = playerNode.LandingPitch
 		var LandingPlayer = Audio.play_sound_3d(profile, false)
-		LandingPlayer.pitch_scale = pitch
+		LandingPlayer.pitch_scale = LandingPitch
 		LandingPlayer.volume_db = LandingVolume
 		LandingPlayer.global_position = global_position
 		LandingPlayer.play()

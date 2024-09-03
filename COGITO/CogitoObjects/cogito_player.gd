@@ -45,19 +45,19 @@ var is_showing_ui : bool
 @export_subgroup ("Landing Audio")
 ## Threshold for triggering landing sound
 @export var landing_threshold = -2.0  
-## Defines Maximum velocity (in negative) for the hardest landing
+## Defines Maximum velocity (in negative) for the hardest landing sound
 @export var max_landing_velocity = -8
-## Defines Minimum velocity for a soft landing
+## Defines Minimum velocity (in negative) for the softest landing sound
 @export var min_landing_velocity = -2
 ## Max volume in dB for the landing sound
-@export var max_volume = 0
+@export var max_volume_db = 0
 ## Min volume in dB for the landing sound
-@export var min_volume = -40
-## Highest pitch for lightest landing
+@export var min_volume_db = -40
+## Highest pitch for lightest landing sound
 @export var max_pitch = 0.8
-## Lowest pitch for hardest landing
+## Lowest pitch for hardest landing sound
 @export var min_pitch = 0.7
-#Setup pitch for Landing Audio
+#Setup Dynamic Pitch & Volume for Landing Audio, used to store velocity based results
 var LandingPitch: float = 1.0
 var LandingVolume: float = 0.8
 
@@ -442,7 +442,7 @@ func _physics_process(delta):
 			# Calculate the volume and pitch based on the landing velocity
 			var velocity_ratio = clamp((last_velocity.y - min_landing_velocity) / (max_landing_velocity - min_landing_velocity), 0.0, 1.0)
 			# Set the volume and pitch of the landing sound
-			LandingVolume = lerp(min_volume, max_volume, velocity_ratio)
+			LandingVolume = lerp(min_volume_db, max_volume_db, velocity_ratio)
 			LandingPitch = lerp(max_pitch, min_pitch, velocity_ratio)
 			# Play the landing sound
 			footstep_player._play_interaction("landing")
