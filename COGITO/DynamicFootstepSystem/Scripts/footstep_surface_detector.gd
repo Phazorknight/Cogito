@@ -31,33 +31,33 @@ func _play_interaction(interaction_type: String):
 	if result:
 		last_result = result
 		if interaction_type == "footstep":
-			if _play_by_footstep_surface(result.collider):
+			if _play_by_footstep_surface(result.collider, interaction_type):
 				return
-			elif _play_by_material(result.collider, footstep_material_library, generic_fallback_footstep_profile):
+			elif _play_by_material(result.collider, footstep_material_library, generic_fallback_footstep_profile, interaction_type):
 				return
 		elif interaction_type == "landing":
-			if _play_by_landing_surface(result.collider):
+			if _play_by_landing_surface(result.collider, interaction_type):
 				return
-			elif _play_by_material(result.collider, landing_material_library, generic_fallback_landing_profile):
+			elif _play_by_material(result.collider, landing_material_library, generic_fallback_landing_profile, interaction_type):
 				return
 
-func _play_by_footstep_surface(collider : Node3D) -> bool:
+func _play_by_footstep_surface(collider : Node3D, interaction_type: String) -> bool:
 	#check for footstep surface as a child of the collider
 	var footstep_surface_child : AudioStreamRandomizer = _get_footstep_surface_child(collider)
 	#if a child footstep surface was found, then play the sound defined by it
 	if footstep_surface_child:
-		_play_footstep(footstep_surface_child)
+		_play_footstep(footstep_surface_child, interaction_type)
 		return true
 	#handle footstep surface settings
 	elif collider is FootstepSurface and collider.footstep_profile:
-		_play_footstep(collider.footstep_profile)
+		_play_footstep(collider.footstep_profile, interaction_type)
 		return true
 	return false
 
-func _play_by_landing_surface(collider: Node3D) -> bool:
-	return _play_by_footstep_surface(collider)
+func _play_by_landing_surface(collider: Node3D, interaction_type: String) -> bool:
+	return _play_by_footstep_surface(collider, interaction_type)
 
-func _play_by_material(collider: Node3D, material_library: FootstepMaterialLibrary, fallback_profile: AudioStreamRandomizer) -> bool:
+func _play_by_material(collider: Node3D, material_library: FootstepMaterialLibrary, fallback_profile: AudioStreamRandomizer, interaction_type: String) -> bool:
 	if material_library:
 		#find surface material
 		var material: Material = _get_surface_material(collider)
@@ -67,10 +67,10 @@ func _play_by_material(collider: Node3D, material_library: FootstepMaterialLibra
 			var profile: AudioStreamRandomizer = material_library.get_footstep_profile_by_material(material)
 			#found profile, use it
 			if profile:
-				_play_footstep(profile)
+				_play_footstep(profile, interaction_type)
 				return true
 	# If no specific material profile is found, play the fallback profile
-	_play_footstep(fallback_profile)
+	_play_footstep(fallback_profile, interaction_type)
 	return false
 
 func _get_footstep_surface_child(collider : Node3D) -> AudioStreamRandomizer:
@@ -161,6 +161,20 @@ func _get_surface_material(collider : Node3D) -> Material:
 			return mat
 	return null
 
-func _play_footstep(footstep_profile : AudioStreamRandomizer):
-	stream = footstep_profile
-	play()
+
+func _play_footstep(profile : AudioStreamRandomizer, interaction_type: String):
+	
+	if interaction_type == "footstep":
+		stream = profile
+		play()
+
+	elif interaction_type == "landing":
+		#Setup QuickAudio landing player so that it can use its own pitch/volume parameters
+		var playerNode = get_parent()
+		var LandingVolume = playerNode.LandingVolume
+		var pitch = playerNode.LandingPitch
+		var LandingPlayer = Audio.play_sound_3d(profile, false)
+		LandingPlayer.pitch_scale = pitch
+		LandingPlayer.volume_db = LandingVolume
+		LandingPlayer.global_position = global_position
+		LandingPlayer.play()

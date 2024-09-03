@@ -57,6 +57,9 @@ var is_showing_ui : bool
 @export var max_pitch = 0.8
 ## Lowest pitch for hardest landing
 @export var min_pitch = 0.7
+#Setup pitch for Landing Audio
+var LandingPitch: float = 1.0
+var LandingVolume: float = 0.8
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
@@ -438,11 +441,9 @@ func _physics_process(delta):
 		if was_in_air and last_velocity.y < landing_threshold:
 			# Calculate the volume and pitch based on the landing velocity
 			var velocity_ratio = clamp((last_velocity.y - min_landing_velocity) / (max_landing_velocity - min_landing_velocity), 0.0, 1.0)
-			var volume = lerp(min_volume, max_volume, velocity_ratio)
-			var pitch = lerp(max_pitch, min_pitch, velocity_ratio)
-			# Adjust the volume and pitch of the landing sound
-			footstep_player.volume_db = volume
-			footstep_player.pitch_scale = pitch
+			# Set the volume and pitch of the landing sound
+			LandingVolume = lerp(min_volume, max_volume, velocity_ratio)
+			LandingPitch = lerp(max_pitch, min_pitch, velocity_ratio)
 			# Play the landing sound
 			footstep_player._play_interaction("landing")
 		was_in_air = false  # Reset airborne state
@@ -751,8 +752,6 @@ func _physics_process(delta):
 					footstep_player.volume_db = crouch_volume_db
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
-				#reset pitch to 1 before every footstep due to possible change by landing sfx
-				footstep_player.pitch_scale = 1
 				footstep_player._play_interaction("footstep")
 					
 				can_play_footstep = false
