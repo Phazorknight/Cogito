@@ -23,6 +23,7 @@ name = "Diamond Half B"
 description = "Looks incomplete. Maybe I can find the rest of it?"
 icon = ExtResource("1_gdixu")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_diamond_key_b.tscn"
 hint_icon_on_use = ExtResource("1_txwkg")

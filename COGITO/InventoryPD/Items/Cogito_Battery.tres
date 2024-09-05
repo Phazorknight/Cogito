@@ -13,6 +13,7 @@ name = "Battery"
 description = "Can be combined with the Flashlight. Non-rechargeable."
 icon = ExtResource("1_fjosn")
 is_stackable = true
+is_droppable = true
 stack_size = 5
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_battery.tscn"
 hint_icon_on_use = ExtResource("1_54cn8")

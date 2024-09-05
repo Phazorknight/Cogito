@@ -18,6 +18,7 @@ name = "Fire Dart"
 description = "Who needs matches if you got these."
 icon = ExtResource("1_w1vsy")
 is_stackable = true
+is_droppable = true
 stack_size = 5
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_dart_fire.tscn"
 hint_text_on_use = ""

@@ -31,6 +31,7 @@ var is_showing_ui : bool
 @export var jump_sound : AudioStream
 ## AudioStream that gets played when the player slides (sprint + crouch).
 @export var slide_sound : AudioStream
+@export_subgroup ("Footstep Audio")
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
@@ -40,6 +41,25 @@ var is_showing_ui : bool
 @export var sprint_footstep_interval : float = 0.3
 ## the speed at which the player must be moving before the footsteps change from walk to sprint.
 @export var footstep_interval_change_velocity : float = 5.2
+
+@export_subgroup ("Landing Audio")
+## Threshold for triggering landing sound
+@export var landing_threshold = -2.0  
+## Defines Maximum velocity (in negative) for the hardest landing sound
+@export var max_landing_velocity = -8
+## Defines Minimum velocity (in negative) for the softest landing sound
+@export var min_landing_velocity = -2
+## Max volume in dB for the landing sound
+@export var max_volume_db = 0
+## Min volume in dB for the landing sound
+@export var min_volume_db = -40
+## Highest pitch for lightest landing sound
+@export var max_pitch = 0.8
+## Lowest pitch for hardest landing sound
+@export var min_pitch = 0.7
+#Setup Dynamic Pitch & Volume for Landing Audio, used to store velocity based results
+var LandingPitch: float = 1.0
+var LandingVolume: float = 0.8
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
@@ -410,11 +430,29 @@ func _process_on_ladder(_delta):
 		on_ladder = false
 
 var jumped_from_slide = false
+var was_in_air = false
 
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
+	# Check if the player is on the ground
+	if is_on_floor():
+		# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
+		if was_in_air and last_velocity.y < landing_threshold:
+			# Calculate the volume and pitch based on the landing velocity
+			var velocity_ratio = clamp((last_velocity.y - min_landing_velocity) / (max_landing_velocity - min_landing_velocity), 0.0, 1.0)
+			# Set the volume and pitch of the landing sound
+			LandingVolume = lerp(min_volume_db, max_volume_db, velocity_ratio)
+			LandingPitch = lerp(max_pitch, min_pitch, velocity_ratio)
+			# Play the landing sound
+			footstep_player._play_interaction("landing")
+		was_in_air = false  # Reset airborne state
+	else:
+		was_in_air = true  # Set airborne state
 		
+	# Store current velocity for the next frame
+	last_velocity = main_velocity
+	
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
@@ -714,7 +752,7 @@ func _physics_process(delta):
 					footstep_player.volume_db = crouch_volume_db
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
-				footstep_surface_detector.play_footstep()
+				footstep_player._play_interaction("footstep")
 					
 				can_play_footstep = false
 				
@@ -861,4 +899,3 @@ class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
-

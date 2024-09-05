@@ -18,6 +18,7 @@ name = "Foam Pistol"
 description = "There's a reason it looks like a toy. Shoots foam bullets."
 icon = ExtResource("1_dj2ew")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_pistol.tscn"
 hint_text_on_use = ""

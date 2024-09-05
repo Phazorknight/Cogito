@@ -10,6 +10,7 @@ name = "Combined Page"
 description = "Reassembled page from the ripped pieces. It says \"New code is 0451\" on it."
 icon = ExtResource("1_g83kf")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/page_combined_pickup.tscn"
 hint_text_on_use = "I should probably read this."
