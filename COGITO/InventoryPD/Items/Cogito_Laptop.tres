@@ -12,6 +12,7 @@ description = "Feels light and doesn't turn on.
 Does that matter?"
 icon = ExtResource("1_ovk1j")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop.tscn"
 hint_text_on_use = "I was supposed to do something with this."

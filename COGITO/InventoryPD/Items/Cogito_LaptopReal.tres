@@ -11,6 +11,7 @@ name = "CEOs Laptop"
 description = "The CEO's laptop. There's probably a lot of valuable data on here."
 icon = ExtResource("1_bw20e")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/DemoScenes/DemoPrefabs/laptop_real.tscn"
 hint_text_on_use = "I was supposed to do somoething with this."

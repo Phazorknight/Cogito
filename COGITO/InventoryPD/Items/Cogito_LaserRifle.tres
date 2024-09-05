@@ -18,6 +18,7 @@ name = "Laser Rifle"
 description = "Goes pew pew pew. Needs Laser Ammo to reload."
 icon = ExtResource("1_jjb1o")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_laser_rifle.tscn"
 hint_text_on_use = ""
