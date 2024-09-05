@@ -5,7 +5,7 @@ class_name CogitoSittable
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 
 ##Path to node used as the Sit marker
-@export var sit_position_node_path: NodePath  
+@export var sit_position_node_path: NodePath
 @export var tween_duration: float = 1.0
 ##Interaction text when Sat Down
 @export var interaction_text_when_on : String = "Stand Up"
@@ -80,7 +80,7 @@ func _stand_up():
 	if is_player_sitting and player_node:
 		is_player_sitting = false
 		player_node.is_sitting = false
-		
+		player_node.set_physics_process(false)
 		# Tween the player back to the original position
 		var tween = create_tween()
 		tween.tween_property(player_node, "global_transform", original_position, tween_duration)
@@ -91,8 +91,11 @@ func _stand_up():
 				component.is_disabled = false
 
 func _on_stand_up_finished():
+	player_node.global_transform = original_position
 	player_node.is_sitting = false  
-
+	player_node.set_physics_process(true)
+	
+	
 func switch():
 	if is_player_sitting:
 		_stand_up()
