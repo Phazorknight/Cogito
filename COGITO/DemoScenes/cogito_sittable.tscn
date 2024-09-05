@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnkwohkxd2xix"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_22lyd"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_76fng"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vcd5y"]
+size = Vector3(0.2, 0.05, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5cwmc"]
+size = Vector3(0.150977, 0.069043, 0.147333)
+
+[node name="CogitoSittable" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.466632, 0)
+
+[node name="Seat" type="StaticBody3D" parent="."]
+script = ExtResource("1_22lyd")
+sit_position_node_path = NodePath("Sit Marker")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
+mesh = SubResource("BoxMesh_vcd5y")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0041995, -0.00710738, -0.00178528)
+shape = SubResource("BoxShape3D_5cwmc")
+
+[node name="BasicInteraction" parent="Seat" instance=ExtResource("2_76fng")]
+interaction_text = "Sit"
+
+[node name="Sit Marker" type="Marker3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.192697, 0)
+
+[connection signal="was_interacted_with" from="Seat/BasicInteraction" to="." method="_on_basic_interaction_was_interacted_with"]

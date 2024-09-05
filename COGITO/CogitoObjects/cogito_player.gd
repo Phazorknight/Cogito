@@ -283,20 +283,34 @@ func _on_pause_menu_resume():
 	_reload_options()
 	_on_resume_movement()
 
+var is_sitting = false
 
 func _input(event):
+	if event.is_action_pressed("sit"):
+		toggle_sitting()
 	if event is InputEventMouseMotion and !is_movement_paused:
-		if is_free_looking:
+		if is_sitting:
 			neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			
+			if INVERT_Y_AXIS:
+				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+			else:
+				head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 		else:
-			body.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-		
-		if INVERT_Y_AXIS:
-			head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
-		else:
-			head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
-		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			if is_free_looking:
+				neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+				neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			else:
+				body.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+			
+			if INVERT_Y_AXIS:
+				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+			else:
+				head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
 		
 	# Checking Analog stick input for mouse look
 	if event is InputEventJoypadMotion and !is_movement_paused:
@@ -329,6 +343,25 @@ func get_params(transform3d, motion):
 	params.motion = motion
 	params.recovery_as_collision = true
 	return params
+
+func toggle_sitting():
+	if is_sitting:
+		_stand_up()
+	else:
+		_sit_down()
+
+func _sit_down():
+	is_sitting = true
+	current_speed = 0  # Stop the player's movement
+	$StandingCollisionShape.disabled = true
+	$CrouchingCollisionShape.disabled = true
+	print("Player is now sitting.")
+
+func _stand_up():
+	is_sitting = false
+	$StandingCollisionShape.disabled = false
+	#$CrouchingCollisionShape.disabled = true
+	print("Player has stood up.")
 
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
@@ -414,6 +447,11 @@ var jumped_from_slide = false
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
+	if is_sitting:
+		# Prevent movement when sitting
+		$StandingCollisionShape.disabled = true
+		$CrouchingCollisionShape.disabled = true
+		return
 		
 	if on_ladder:
 		_process_on_ladder(delta)
