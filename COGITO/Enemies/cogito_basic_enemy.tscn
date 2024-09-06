@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dn4e1k7u3suoo"]
+[gd_scene load_steps=23 format=3 uid="uid://dn4e1k7u3suoo"]
 
 [ext_resource type="Script" path="res://COGITO/Enemies/cogito_basic_enemy.gd" id="1_0lcvu"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_security_camera.gd" id="2_6jysp"]
@@ -7,6 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://COGITO/PackedScenes/simple_particle_puff.tscn" id="5_ni6ul"]
 [ext_resource type="Script" path="res://COGITO/Components/HitboxComponent.gd" id="5_qh1ls"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="7_15n6t"]
+[ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="8_vyi83"]
+[ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="9_5fsuu"]
+[ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="10_ab7fy"]
+[ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="11_jlhg4"]
+[ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="12_3m7c4"]
+[ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="13_mhpd1"]
+[ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="14_kpkpk"]
+[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="15_vx81w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3jhp"]
 height = 1.8
@@ -30,7 +38,21 @@ size = Vector3(0.5, 0.32, 0.5)
 custom_solver_bias = 1.0
 size = Vector3(4, 4, 4)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hnplu"]
+streams_count = 5
+stream_0/stream = ExtResource("8_vyi83")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("9_5fsuu")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_ab7fy")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_jlhg4")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_3m7c4")
+stream_4/weight = 1.0
+
 [node name="CogitoEnemy" type="CharacterBody3D"]
+motion_mode = 1
 script = ExtResource("1_0lcvu")
 attack_stagger = 20.0
 
@@ -99,6 +121,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42562, 0)
 elemental_properties = 2
 material_properties = 1
 burn_damage_amount = 1.0
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0020133, 0)
+stream = SubResource("AudioStreamRandomizer_hnplu")
+max_polyphony = 2
+bus = &"SFX"
+script = ExtResource("13_mhpd1")
+generic_fallback_footstep_profile = ExtResource("14_kpkpk")
+footstep_material_library = ExtResource("15_vx81w")
+generic_fallback_landing_profile = ExtResource("14_kpkpk")
+landing_material_library = ExtResource("15_vx81w")
 
 [connection signal="object_detected" from="SecurityCamera" to="." method="switch_to_chasing"]
 [connection signal="object_no_longer_detected" from="SecurityCamera" to="." method="switch_to_patrolling"]
