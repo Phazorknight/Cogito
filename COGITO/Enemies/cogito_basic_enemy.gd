@@ -185,8 +185,9 @@ func npc_footsteps(delta):
 	#Need to check if not waiting, as Velocity.length is unreliable here
 	if not is_waiting:
 		
-		# Sprinting Case, so using defined number from Chase speed
-		if velocity.length() >= chase_speed:
+		# Sprinting Case, so using defined number from Chase speed.
+		# rounded velocity.length used due to tiny speed fluctuations
+		if round(velocity.length()) >= chase_speed:
 			wiggle_vector.y = sin(wiggle_index)
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			
