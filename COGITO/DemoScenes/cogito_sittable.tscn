@@ -9,26 +9,25 @@ size = Vector3(0.2, 0.05, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5cwmc"]
 size = Vector3(0.150977, 0.069043, 0.147333)
 
-[node name="CogitoSittable" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.466632, 0)
-
-[node name="Seat" type="StaticBody3D" parent="."]
+[node name="Seat" type="StaticBody3D"]
 script = ExtResource("1_22lyd")
 sit_position_node_path = NodePath("Sit Marker")
+look_marker_node_path = NodePath("Look Marker")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Seat"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
 mesh = SubResource("BoxMesh_vcd5y")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Seat"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0041995, -0.00710738, -0.00178528)
 shape = SubResource("BoxShape3D_5cwmc")
 
-[node name="BasicInteraction" parent="Seat" instance=ExtResource("2_76fng")]
+[node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
 interaction_text = "Sit"
 
-[node name="Sit Marker" type="Marker3D" parent="Seat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.192697, 0)
+[node name="Sit Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 
-[connection signal="was_interacted_with" from="Seat/BasicInteraction" to="." method="_on_basic_interaction_was_interacted_with"]
+[node name="Look Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649196, 0.720994)

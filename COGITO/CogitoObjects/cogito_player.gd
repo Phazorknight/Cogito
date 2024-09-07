@@ -283,7 +283,10 @@ func _on_pause_menu_resume():
 	_reload_options()
 	_on_resume_movement()
 
+#Sittable Vars - here for testing
 var is_sitting = false
+var sittable_look_marker
+var sittable_look_angle
 
 func _input(event):
 	if event.is_action_pressed("sit"):
@@ -291,7 +294,7 @@ func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
 		if is_sitting:
 			neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-sittable_look_angle), deg_to_rad(sittable_look_angle))
 			
 			if INVERT_Y_AXIS:
 				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
