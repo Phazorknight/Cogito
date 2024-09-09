@@ -22,9 +22,11 @@ signal player_stand_up()
 @export var disable_carry : bool = true
 ##Players maximum Look angle when Sitting
 @export var look_angle: float = 120
+##Height amount to lower Sit marker by
+@export var sit_marker_displacement: float = 0.5
+
 
 var interaction_text : String 
-var player_node: Node3D = null
 var sit_position_node: Node3D = null
 var look_marker_node: Node3D = null
 var is_player_sitting: bool = false
@@ -36,16 +38,16 @@ var carryable_components: Array = [Node]
 
 func _ready():
 	#find player node
-	player_node = CogitoSceneManager._current_player_node
-	
 	self.add_to_group("interactable")
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	
 	#find sit position node
-	sit_position_node = get_node(sit_position_node_path)
+	sit_position_node = get_node_or_null(sit_position_node_path)
 	if not sit_position_node:
 		print("Sit position node not found. Ensure the path is correct.")
+	else:
+		displace_sit_marker()
 		
 	# find the look marker node
 	look_marker_node = get_node_or_null(look_marker_node_path)
@@ -66,53 +68,33 @@ func get_sibling_carryable_components() -> Array:
 	
 	return components
 	
+func displace_sit_marker():
+	if sit_position_node:
+		# Adjust the sit marker node downward based on sit_marker_displacement
+		var adjusted_transform = sit_position_node.transform
+		adjusted_transform.origin.y -= sit_marker_displacement
+		sit_position_node.transform = adjusted_transform
+	
 	
 func _sit_down():
-	player_node = CogitoSceneManager._current_player_node
+	is_player_sitting = true
+	interaction_text = interaction_text_when_on
+	object_state_updated.emit(interaction_text)
 	
-	if player_node:
-		# Store original position before sitting, used for standing up
-		original_position = player_node.global_transform
-		player_node.sittable_look_marker = look_marker_node.global_transform.origin
-		player_node.sittable_look_angle = look_angle
-		# Temporarily disable physics interactions
-		player_node.set_physics_process(false)
-		
-		# Tween the player to the sit position
-		var tween = create_tween()
-		tween.tween_property(player_node, "global_transform", sit_position_node.global_transform, tween_duration)
-		tween.tween_callback(Callable(self, "_sit_down_finished"))
-		is_player_sitting = true
-		emit_signal("player_sit_down")
-		if disable_carry:
-			for component in carryable_components:
-				component.is_disabled = true
-
-func _sit_down_finished():
-	player_node.global_transform = sit_position_node.global_transform
-	player_node.set_physics_process(true)
-	player_node.is_sitting = true
+	# Disable carryable components if necessary
+	if disable_carry:
+		for component in carryable_components:
+			component.is_disabled = true
 
 func _stand_up():
-	if is_player_sitting and player_node:
-		is_player_sitting = false
-		emit_signal("player_stand_up")
-		player_node.is_sitting = false
-		player_node.set_physics_process(false)
-		# Tween the player back to the original position
-		var tween = create_tween()
-		tween.tween_property(player_node, "global_transform", original_position, tween_duration)
-		tween.tween_callback(Callable(self, "_on_stand_up_finished"))
-		
-		if disable_carry:
-			for component in carryable_components:
-				component.is_disabled = false
-
-func _on_stand_up_finished():
-	player_node.global_transform = original_position
-	player_node.is_sitting = false  
-	player_node.set_physics_process(true)
+	is_player_sitting = false
+	interaction_text = interaction_text_when_off
+	object_state_updated.emit(interaction_text)
 	
+	# Enable carryable components if necessary
+	if disable_carry:
+		for component in carryable_components:
+			component.is_disabled = false
 	
 func switch():
 	if is_player_sitting:
@@ -126,4 +108,19 @@ func switch():
 		object_state_updated.emit(interaction_text)
 		
 func interact(player_interaction_component):
-	switch()
+	CogitoSceneManager._current_sittable_node = self
+	
+	# Check if the player is already sitting in a seat
+	if is_player_sitting:
+		# Emit the stand request via CogitoSceneManagers
+		CogitoSceneManager.emit_signal("stand_requested")
+		print("signal stand emitted")
+		_stand_up()
+	else:
+		# Emit the sit request via CogitoSceneManager
+		CogitoSceneManager.emit_signal("sit_requested", self)
+		print("signal sit emitted")
+		_sit_down()
+		
+#TODO Fix Logic of Switching from one seat directly to another
+

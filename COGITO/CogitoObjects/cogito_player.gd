@@ -173,8 +173,8 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var wieldables = %Wieldables
 #endregion
 
-
 func _ready():
+	
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
@@ -211,6 +211,10 @@ func _ready():
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
 		print("Player has no reference to pause menu.")
+	
+	#Sittable Signals setup
+	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
+	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
 
 	call_deferred("slide_audio_init")
 
@@ -283,24 +287,11 @@ func _on_pause_menu_resume():
 	_reload_options()
 	_on_resume_movement()
 
-#Sittable Vars - here for testing
-var is_sitting = false
-var sittable_look_marker
-var sittable_look_angle
 
 func _input(event):
-	if event.is_action_pressed("sit"):
-		toggle_sitting()
 	if event is InputEventMouseMotion and !is_movement_paused:
 		if is_sitting:
-			neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-sittable_look_angle), deg_to_rad(sittable_look_angle))
-			
-			if INVERT_Y_AXIS:
-				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
-			else:
-				head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
-			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			handle_sitting_look(event)
 		else:
 			if is_free_looking:
 				neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
@@ -347,25 +338,79 @@ func get_params(transform3d, motion):
 	params.recovery_as_collision = true
 	return params
 
+#region Sittable Interaction Handling
+
+#Sittable Vars
+var original_position: Transform3D  
+var is_sitting = false
+var sittable_look_marker
+var sittable_look_angle
+
 func toggle_sitting():
 	if is_sitting:
 		_stand_up()
 	else:
 		_sit_down()
+		
+func _on_sit_requested(sittable: Node):
+	if is_sitting and CogitoSceneManager._current_sittable_node != sittable:
+		# If switching between seats, directly sit in the new seat without standing up
+		_sit_down()
+	elif not is_sitting:
+		_sit_down()
+
+func _on_stand_requested():
+	if is_sitting:
+		_stand_up()	
+		
+func handle_sitting_look(event):
+	neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+	neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-sittable_look_angle), deg_to_rad(sittable_look_angle))
+
+	if INVERT_Y_AXIS:
+		head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+	else:
+		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 func _sit_down():
+	var sittable = CogitoSceneManager._current_sittable_node
+	if sittable:
+		is_sitting = true
+		set_physics_process(false)
+		sittable_look_marker = sittable.look_marker_node.global_transform.origin
+		sittable_look_angle = sittable.look_angle
+		original_position = self.global_transform
+		# Tween to the sit position
+		var tween = create_tween()
+		tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
+		tween.tween_callback(Callable(self, "_sit_down_finished"))
+		
+func _sit_down_finished():
 	is_sitting = true
-	current_speed = 0  # Stop the player's movement
+	set_physics_process(true)
 	$StandingCollisionShape.disabled = true
 	$CrouchingCollisionShape.disabled = true
-	print("Player is now sitting.")
 
 func _stand_up():
+	var sittable = CogitoSceneManager._current_sittable_node
+	#if sittable:
 	is_sitting = false
-	$StandingCollisionShape.disabled = false
-	#$CrouchingCollisionShape.disabled = true
-	print("Player has stood up.")
+	set_physics_process(false)
+	# Tween back to the original position
+	var tween = create_tween()
+	tween.tween_property(self, "global_transform", original_position, 1)
+	tween.tween_callback(Callable(self, "_stand_up_finished"))
 
+
+func _stand_up_finished():
+	is_sitting = false
+	set_physics_process(true)
+	$StandingCollisionShape.disabled = false
+	#$CrouchingCollisionShape.disabled = false
+	
+	
+#endregion
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 	return PhysicsServer3D.body_test_motion(self_rid, get_params(transform3d, motion), test_motion_result)	

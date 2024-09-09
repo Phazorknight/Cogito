@@ -6,6 +6,12 @@ extends Node
 # Variables for player state
 @export var _current_player_node : Node
 @export var _player_state : CogitoPlayerState
+
+#Variables & Signals for Player siting
+@export var _current_sittable_node : Node
+signal sit_requested(Node)
+signal stand_requested()
+
 # Used to pass a screenshot to the player state when saved. This is created by the TabMenu/PauseMenu
 @export var _screenshot_to_save : Image
 
