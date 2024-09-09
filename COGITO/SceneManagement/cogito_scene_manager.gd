@@ -11,6 +11,7 @@ extends Node
 @export var _current_sittable_node : Node
 signal sit_requested(Node)
 signal stand_requested()
+signal seat_move_requested(Node)
 
 # Used to pass a screenshot to the player state when saved. This is created by the TabMenu/PauseMenu
 @export var _screenshot_to_save : Image

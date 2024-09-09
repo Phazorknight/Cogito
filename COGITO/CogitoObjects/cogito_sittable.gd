@@ -25,19 +25,21 @@ signal player_stand_up()
 ##Height amount to lower Sit marker by
 @export var sit_marker_displacement: float = 0.5
 
+@onready var AudioStream3D = $AudioStreamPlayer3D
 
 var interaction_text : String 
 var sit_position_node: Node3D = null
 var look_marker_node: Node3D = null
-var is_player_sitting: bool = false
 var original_position: Transform3D  
 var interaction_nodes : Array[Node]
 var carryable_components: Array = [Node]
+var player_node: Node3D = null
 
 #endregion
 
 func _ready():
 	#find player node
+	player_node = CogitoSceneManager._current_player_node
 	self.add_to_group("interactable")
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
@@ -67,7 +69,8 @@ func get_sibling_carryable_components() -> Array:
 			components.append(child)
 	
 	return components
-	
+
+
 func displace_sit_marker():
 	if sit_position_node:
 		# Adjust the sit marker node downward based on sit_marker_displacement
@@ -77,7 +80,6 @@ func displace_sit_marker():
 	
 	
 func _sit_down():
-	is_player_sitting = true
 	interaction_text = interaction_text_when_on
 	object_state_updated.emit(interaction_text)
 	
@@ -87,7 +89,6 @@ func _sit_down():
 			component.is_disabled = true
 
 func _stand_up():
-	is_player_sitting = false
 	interaction_text = interaction_text_when_off
 	object_state_updated.emit(interaction_text)
 	
@@ -97,7 +98,7 @@ func _stand_up():
 			component.is_disabled = false
 	
 func switch():
-	if is_player_sitting:
+	if player_node.is_sitting:
 		_stand_up()
 		interaction_text = interaction_text_when_off
 		object_state_updated.emit(interaction_text)
@@ -108,19 +109,23 @@ func switch():
 		object_state_updated.emit(interaction_text)
 		
 func interact(player_interaction_component):
-	CogitoSceneManager._current_sittable_node = self
 	
-	# Check if the player is already sitting in a seat
-	if is_player_sitting:
-		# Emit the stand request via CogitoSceneManagers
+	AudioStream3D.play()
+	# If the player is already sitting in a seat, and interacts with that seat then stand
+	if player_node.is_sitting and CogitoSceneManager._current_sittable_node == self:
 		CogitoSceneManager.emit_signal("stand_requested")
-		print("signal stand emitted")
 		_stand_up()
-	else:
-		# Emit the sit request via CogitoSceneManager
-		CogitoSceneManager.emit_signal("sit_requested", self)
-		print("signal sit emitted")
-		_sit_down()
+
 		
-#TODO Fix Logic of Switching from one seat directly to another
+	# If the player is already sitting in a seat, and interacts with a different seat then move seat
+	elif player_node.is_sitting and CogitoSceneManager._current_sittable_node != self :
+		CogitoSceneManager._current_sittable_node = self
+		CogitoSceneManager.emit_signal("seat_move_requested", self)
+		_sit_down()
+
+	# If the player is not in any seat, then sit down
+	elif not player_node.is_sitting:
+		CogitoSceneManager._current_sittable_node = self
+		CogitoSceneManager.emit_signal("sit_requested", self)
+		_sit_down()
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnkwohkxd2xix"]
+[gd_scene load_steps=6 format=3 uid="uid://dnkwohkxd2xix"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_22lyd"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_76fng"]
+[ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="3_wmd07"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vcd5y"]
 size = Vector3(0.2, 0.05, 0.2)
@@ -13,6 +14,7 @@ size = Vector3(0.150977, 0.069043, 0.147333)
 script = ExtResource("1_22lyd")
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
+look_angle = 360.0
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
@@ -31,3 +33,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 
 [node name="Look Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649196, 0.720994)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_wmd07")
+volume_db = -35.0
+pitch_scale = 0.5

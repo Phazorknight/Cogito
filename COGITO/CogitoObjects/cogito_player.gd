@@ -215,6 +215,7 @@ func _ready():
 	#Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
 	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
+	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
 
 	call_deferred("slide_audio_init")
 
@@ -345,7 +346,7 @@ var original_position: Transform3D
 var is_sitting = false
 var sittable_look_marker
 var sittable_look_angle
-
+var moving_seat = false
 func toggle_sitting():
 	if is_sitting:
 		_stand_up()
@@ -353,16 +354,21 @@ func toggle_sitting():
 		_sit_down()
 		
 func _on_sit_requested(sittable: Node):
-	if is_sitting and CogitoSceneManager._current_sittable_node != sittable:
-		# If switching between seats, directly sit in the new seat without standing up
-		_sit_down()
-	elif not is_sitting:
+	if not is_sitting:
+		print("_on_sit_requested")
 		_sit_down()
 
 func _on_stand_requested():
+	print("_on_stand_requested")
 	if is_sitting:
 		_stand_up()	
-		
+
+func _on_seat_move_requested(sittable: Node):
+	print("_on_seat_move_requested")
+	moving_seat = true
+	_sit_down()
+
+	
 func handle_sitting_look(event):
 	neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
 	neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-sittable_look_angle), deg_to_rad(sittable_look_angle))
@@ -374,13 +380,16 @@ func handle_sitting_look(event):
 	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 func _sit_down():
+	$StandingCollisionShape.disabled = true
+	$CrouchingCollisionShape.disabled = true
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
 		is_sitting = true
 		set_physics_process(false)
 		sittable_look_marker = sittable.look_marker_node.global_transform.origin
 		sittable_look_angle = sittable.look_angle
-		original_position = self.global_transform
+		if moving_seat == false:
+			original_position = self.global_transform
 		# Tween to the sit position
 		var tween = create_tween()
 		tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
@@ -401,7 +410,7 @@ func _stand_up():
 	var tween = create_tween()
 	tween.tween_property(self, "global_transform", original_position, 1)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
-
+	moving_seat = false
 
 func _stand_up_finished():
 	is_sitting = false
@@ -495,10 +504,14 @@ var jumped_from_slide = false
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
+	
 	if is_sitting:
-		# Prevent movement when sitting
+		# Prevent Collisions when sitting
 		$StandingCollisionShape.disabled = true
 		$CrouchingCollisionShape.disabled = true
+		#Update Player location if Chair has moved
+		var sittable = CogitoSceneManager._current_sittable_node
+		self.global_transform = sittable.sit_position_node.global_transform
 		return
 		
 	if on_ladder:
