@@ -23,14 +23,6 @@ enum EnemyState{
 	DEAD
 }
 
-## If the target is within this range, the enemy attacks
-@export var attack_range: float = 1.0
-## How much health the target loses when hit.
-@export var attack_damage: int = 10
-## How often the player can attack (eg. 2.0 = once every 2 seconds)
-@export var attack_interval: float = 2.0
-## The stagger/bounce back strength of the attack
-@export var attack_stagger: float = 8.0
 ## The state the enemy starts in.
 @export var start_state : EnemyState
 ## The enemy speed when chasing.
@@ -44,8 +36,17 @@ enum EnemyState{
 ## Time the enemy will wait at each patrol point
 @export var patrol_point_wait_time : float = 2.0
 
-@onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
-
+@export_group("Attack Settings")
+## If the target is within this range, the enemy attacks
+@export var attack_range: float = 1.0
+## How much health the target loses when hit.
+@export var attack_damage: int = 10
+## How often the player can attack (eg. 2.0 = once every 2 seconds)
+@export var attack_interval: float = 2.0
+## The stagger/bounce back strength of the attack
+@export var attack_stagger: float = 8.0
+## Sound that plays when attacking
+@export var attack_sound : AudioStream
 
 #FootstepPlayer variables
 @export_group ("Footstep Player")
@@ -60,7 +61,9 @@ enum EnemyState{
 ##Determines the footstep occurence frequency for Sprinting
 @export var WIGGLE_ON_SPRINTING_SPEED: float = 16.0
 
+
 @onready var footstep_player = $FootstepPlayer
+@onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 
 var can_play_footstep: bool = true
 var wiggle_vector : Vector2 = Vector2.ZERO
@@ -106,13 +109,19 @@ func handle_chasing(_delta: float):
 	# This is basically a lerped look-at
 	_look_at_target_interpolated(chase_target.global_position)
 	
-	if _target_in_range() and attack_cooldown <= 0:
-		attack(chase_target)
-	
-	move_toward_target(chase_target,chase_speed)
+	if _target_in_range():
+		is_waiting = true
+		if attack_cooldown <= 0:
+			attack(chase_target)
+	else:
+		is_waiting = false
+		move_toward_target(chase_target,chase_speed)
 
 
 func handle_patrolling(_delta: float):
+	if !patrol_points:
+		switch_to_idle()
+	
 	if !is_waiting:
 		if global_position.distance_to(patrol_points[patrol_point_index].global_position) < patrol_point_threshold:
 			is_waiting = true
@@ -145,7 +154,8 @@ func move_toward_target(target: Node3D, passed_speed:float):
 
 func _look_at_target_interpolated(look_direction: Vector3) -> void:
 	var look_at_target = global_position.direction_to(look_direction)
-	var target_basis= Basis.looking_at(look_at_target)
+	var look_at_target_xz := Vector3(look_at_target.x, 0, look_at_target.z)
+	var target_basis= Basis.looking_at(look_at_target_xz)
 	basis = basis.slerp(target_basis, 0.2)
 
 
@@ -157,8 +167,12 @@ func attack(target: Node3D):
 	attack_cooldown = attack_interval
 	print("Enemy attacks!")
 	var dir = global_position.direction_to(target.global_position)
-	target.velocity += dir * attack_stagger
+	if attack_sound:
+		Audio.play_sound_3d(attack_sound).global_position = self.global_position
+	
 	if target is CogitoPlayer:
+		target.apply_external_force(dir * attack_stagger)
+		print("Enemy attack: Applying vector ", dir * attack_stagger, " to target. Target.main_velocity = ", target.main_velocity)
 		target.decrease_attribute("health", attack_damage)
 
 
@@ -170,6 +184,10 @@ func switch_to_aware():
 	current_state = EnemyState.AWARE
 
 
+func switch_to_idle():
+	current_state = EnemyState.IDLE
+
+
 func switch_to_chasing():
 	current_state = EnemyState.CHASING
 
@@ -179,6 +197,7 @@ func set_state():
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
 	pass
+
 
 # NPC Footstep system, adapted from players
 func npc_footsteps(delta):
@@ -225,6 +244,7 @@ func save():
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
+		"current_state" : current_state,
 		
 	}
 	return node_data

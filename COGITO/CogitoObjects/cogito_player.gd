@@ -895,6 +895,13 @@ func _on_animation_player_animation_finished(anim_name):
 	stand_after_roll = anim_name == 'roll' and !is_crouching
 
 
+func apply_external_force(force_vector: Vector3):
+	if force_vector and force_vector.length() > 0:
+		print("Cogito_Player.gd: Applying external force ", force_vector)
+		velocity += force_vector
+		move_and_slide()
+
+
 class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO

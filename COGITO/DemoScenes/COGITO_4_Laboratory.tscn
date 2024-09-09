@@ -3311,9 +3311,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0454833, 0)
 
 [node name="CogitoEnemy" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("52_mlseg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23556, -2.66908, 15.663)
-attack_range = 2.0
 start_state = 1
 patrol_points = [NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_A"), NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_B")]
+attack_range = 2.0
 
 [node name="CeilingLamp" parent="." instance=ExtResource("42_3rq3h")]
 transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 0.441994, 1.78403, 1.3986)
