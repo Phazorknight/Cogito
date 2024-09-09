@@ -119,6 +119,8 @@ func interact(player_interaction_component):
 		
 	# If the player is already sitting in a seat, and interacts with a different seat then move seat
 	elif player_node.is_sitting and CogitoSceneManager._current_sittable_node != self :
+		var previous_seat = CogitoSceneManager._current_sittable_node
+		previous_seat._stand_up()
 		CogitoSceneManager._current_sittable_node = self
 		CogitoSceneManager.emit_signal("seat_move_requested", self)
 		_sit_down()

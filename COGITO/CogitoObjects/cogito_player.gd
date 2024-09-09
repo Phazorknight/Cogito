@@ -355,16 +355,13 @@ func toggle_sitting():
 		
 func _on_sit_requested(sittable: Node):
 	if not is_sitting:
-		print("_on_sit_requested")
 		_sit_down()
 
 func _on_stand_requested():
-	print("_on_stand_requested")
 	if is_sitting:
 		_stand_up()	
 
 func _on_seat_move_requested(sittable: Node):
-	print("_on_seat_move_requested")
 	moving_seat = true
 	_sit_down()
 
