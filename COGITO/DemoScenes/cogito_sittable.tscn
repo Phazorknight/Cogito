@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnkwohkxd2xix"]
+[gd_scene load_steps=7 format=3 uid="uid://dnkwohkxd2xix"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_22lyd"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_76fng"]
@@ -10,11 +10,14 @@ size = Vector3(0.2, 0.05, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5cwmc"]
 size = Vector3(0.150977, 0.069043, 0.147333)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_k44cf"]
+size = Vector3(1, 1.02782, 0.992249)
+
 [node name="Seat" type="StaticBody3D"]
 script = ExtResource("1_22lyd")
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
-look_angle = 360.0
+sit_area_node_path = NodePath("sit_area")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
@@ -24,6 +27,7 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0041995, -0.00710738, -0.00178528)
 shape = SubResource("BoxShape3D_5cwmc")
+disabled = true
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
 interaction_text = "Sit"
@@ -32,9 +36,18 @@ interaction_text = "Sit"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 
 [node name="Look Marker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649196, 0.720994)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.472748, 0.720994)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_wmd07")
 volume_db = -35.0
 pitch_scale = 0.5
+
+[node name="sit_area" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sit_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.177345, 0.266693)
+shape = SubResource("BoxShape3D_k44cf")
+
+[connection signal="body_entered" from="sit_area" to="." method="_on_sit_area_body_entered"]
+[connection signal="body_exited" from="sit_area" to="." method="_on_sit_area_body_exited"]

@@ -22,8 +22,9 @@ signal player_stand_up()
 @export var disable_carry : bool = true
 ##Players maximum Look angle when Sitting
 @export var look_angle: float = 120
-##Height amount to lower Sit marker by
-@export var sit_marker_displacement: float = 0.5
+##Height to lower Sit marker by, to account for the difference between player head and body height
+@export var sit_marker_displacement: float = 0.7
+@export var sit_area_node_path: NodePath
 
 @onready var AudioStream3D = $AudioStreamPlayer3D
 
@@ -34,6 +35,7 @@ var original_position: Transform3D
 var interaction_nodes : Array[Node]
 var carryable_components: Array = [Node]
 var player_node: Node3D = null
+var player_in_sit_area: bool = false
 
 #endregion
 
@@ -107,16 +109,38 @@ func switch():
 		#Update interaction text
 		interaction_text = interaction_text_when_on
 		object_state_updated.emit(interaction_text)
-		
-func interact(player_interaction_component):
+
+func _on_sit_area_body_entered(body):
+	if body == player_node:
+		player_in_sit_area = true
+
+
+func _on_sit_area_body_exited(body):
+	if body == player_node:
+		player_in_sit_area = false
+
+func _physics_process(delta):
+
+	if not player_in_sit_area and not player_node.is_sitting:
+		#disabling collisions as a way of disabling the interaction, and its UI
+		$CollisionShape3D2.disabled = true
 	
+	#allow interaction if players in the sit area
+	elif player_in_sit_area:
+		$CollisionShape3D2.disabled = false
+	
+	#allow interaction if player is already sitting, ignore sit are in this case
+	elif player_node.is_sitting:
+		$CollisionShape3D2.disabled = false
+
+func interact(player_interaction_component):
+			
 	AudioStream3D.play()
 	# If the player is already sitting in a seat, and interacts with that seat then stand
 	if player_node.is_sitting and CogitoSceneManager._current_sittable_node == self:
 		CogitoSceneManager.emit_signal("stand_requested")
 		_stand_up()
 
-		
 	# If the player is already sitting in a seat, and interacts with a different seat then move seat
 	elif player_node.is_sitting and CogitoSceneManager._current_sittable_node != self :
 		var previous_seat = CogitoSceneManager._current_sittable_node
@@ -130,4 +154,8 @@ func interact(player_interaction_component):
 		CogitoSceneManager._current_sittable_node = self
 		CogitoSceneManager.emit_signal("sit_requested", self)
 		_sit_down()
+
+
+
+
 

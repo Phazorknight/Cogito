@@ -137,4 +137,4 @@ shape = SubResource("BoxShape3D_eedpt")
 [node name="ImpactSounds" parent="." instance=ExtResource("3_gk1dv")]
 
 [node name="Seat" parent="." instance=ExtResource("4_f35hp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0219837, 0.588947, 0.118503)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.603723, 0.123073)
