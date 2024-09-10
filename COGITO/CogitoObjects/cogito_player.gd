@@ -379,6 +379,7 @@ func handle_sitting_look(event):
 func _sit_down():
 	$StandingCollisionShape.disabled = true
 	$CrouchingCollisionShape.disabled = true
+		
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
 		is_sitting = true
@@ -387,6 +388,13 @@ func _sit_down():
 		sittable_look_angle = sittable.look_angle
 		if moving_seat == false:
 			original_position = self.global_transform
+		
+		#raise position up when crouching
+		if is_crouching:
+			var adjusted_transform = sittable.sit_position_node.transform
+			adjusted_transform.origin.y += sittable.sit_marker_displacement
+			sittable.sit_position_node.transform = adjusted_transform
+			
 		# Tween to the sit position
 		var tween = create_tween()
 		tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
@@ -403,11 +411,19 @@ func _stand_up():
 	#if sittable:
 	is_sitting = false
 	set_physics_process(false)
+	
+	#reset sit position from crouching
+	if is_crouching:
+		var adjusted_transform = sittable.sit_position_node.transform
+		adjusted_transform.origin.y -= sittable.sit_marker_displacement
+		sittable.sit_position_node.transform = adjusted_transform
+		
 	# Tween back to the original position
 	var tween = create_tween()
 	tween.tween_property(self, "global_transform", original_position, 1)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
 	moving_seat = false
+
 
 func _stand_up_finished():
 	is_sitting = false

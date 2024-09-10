@@ -92,7 +92,7 @@
 [ext_resource type="PackedScene" uid="uid://c0yox8yh1bexx" path="res://COGITO/PackedScenes/Pickups/ripped_page_a_pickup.tscn" id="91_qq2p0"]
 [ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PackedScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
 [ext_resource type="PackedScene" uid="uid://dqlue11vwpc5y" path="res://COGITO/PackedScenes/cogito_security_camera.tscn" id="92_nldkd"]
-[ext_resource type="PackedScene" uid="uid://dnkwohkxd2xix" path="res://COGITO/DemoScenes/cogito_sittable.tscn" id="93_cmkbc"]
+[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/cogito_sittable.tscn" id="93_cmkbc"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("2_a8imk")
