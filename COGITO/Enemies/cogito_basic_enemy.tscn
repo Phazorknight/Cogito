@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dn4e1k7u3suoo"]
+[gd_scene load_steps=25 format=3 uid="uid://dn4e1k7u3suoo"]
 
 [ext_resource type="Script" path="res://COGITO/Enemies/cogito_basic_enemy.gd" id="1_0lcvu"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_security_camera.gd" id="2_6jysp"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://COGITO/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="13_mhpd1"]
 [ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://COGITO/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="14_kpkpk"]
 [ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://COGITO/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="15_vx81w"]
+[ext_resource type="Script" path="res://COGITO/Scripts/interaction_raycast.gd" id="17_x20mi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3jhp"]
 height = 1.8
@@ -135,5 +136,12 @@ footstep_material_library = ExtResource("15_vx81w")
 generic_fallback_landing_profile = ExtResource("14_kpkpk")
 landing_material_library = ExtResource("15_vx81w")
 
+[node name="InteractionRaycast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 0, -2.5)
+collision_mask = 3
+script = ExtResource("17_x20mi")
+
 [connection signal="object_detected" from="SecurityCamera" to="." method="switch_to_chasing"]
 [connection signal="object_no_longer_detected" from="SecurityCamera" to="." method="switch_to_patrolling"]
+[connection signal="interactable_seen" from="InteractionRaycast" to="." method="_on_interaction_raycast_interactable_seen"]
