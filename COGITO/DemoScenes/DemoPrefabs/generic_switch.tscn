@@ -59,7 +59,6 @@ shape = SubResource("BoxShape3D_nti18")
 [node name="HitboxComponent" parent="." instance=ExtResource("4_dkn68")]
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_mihmv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42562, 0)
 material_properties = 1
 burn_damage_amount = 1.0
 
