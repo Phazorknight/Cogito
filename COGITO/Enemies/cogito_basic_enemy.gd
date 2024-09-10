@@ -15,7 +15,6 @@ var patrol_point_index: int = 0 #Patrol point for patrolling
 var chase_target : Node3D = null #Target for chasing
 var attack_cooldown : float = 0 #Value used for attack frequency
 
-var patrol_point_paths : Array[NodePath]
 
 enum EnemyState{
 	IDLE,
@@ -31,8 +30,10 @@ enum EnemyState{
 @export var chase_speed: float = 5.0
 ## The enemy speed when patrolling.
 @export var patrol_speed: float = 3.0
-## List of patrol points which the enemy will move to in order.
-@export var patrol_points : Array[Node3D]
+### List of patrol points which the enemy will move to in order.
+#@export var patrol_points : Array[Node3D]
+## Reference to Patrol Path Node
+@export var patrol_path : CogitoPatrolPath
 ## Distance threshold in which the enemy will stop (to make patrolling smoother)
 @export var patrol_point_threshold : float = 0.4
 ## Time the enemy will wait at each patrol point
@@ -63,10 +64,10 @@ enum EnemyState{
 ##Determines the footstep occurence frequency for Sprinting
 @export var WIGGLE_ON_SPRINTING_SPEED: float = 16.0
 
-
 @onready var footstep_player = $FootstepPlayer
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 
+var patrol_path_nodepath : NodePath
 var can_play_footstep: bool = true
 var wiggle_vector : Vector2 = Vector2.ZERO
 var wiggle_index : float = 0.0
@@ -75,10 +76,6 @@ func _ready() -> void:
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_cogito_properties()
 	current_state = start_state
-	
-	patrol_point_paths.clear()
-	for node in patrol_points:
-		patrol_point_paths.append(node.get_path())
 
 
 func find_cogito_properties():
@@ -124,19 +121,19 @@ func handle_chasing(_delta: float):
 
 
 func handle_patrolling(_delta: float):
-	if !patrol_points:
+	if !patrol_path:
 		switch_to_idle()
 	
 	if !is_waiting:
-		if patrol_points.size() <= 0:
+		if patrol_path.patrol_points.size() <= 0:
 			print("Cogito_basic_enemy: Patrol points array is empty. Switching to idle.")
 			switch_to_idle()
 			return
-		if global_position.distance_to(patrol_points[patrol_point_index].global_position) < patrol_point_threshold:
+		if global_position.distance_to(patrol_path.patrol_points[patrol_point_index].global_position) < patrol_point_threshold:
 			is_waiting = true
 			await get_tree().create_timer(patrol_point_wait_time).timeout
 			# Checking to see if we've reached the end of the patrol point list.
-			if patrol_point_index == patrol_points.size() - 1:
+			if patrol_point_index == patrol_path.patrol_points.size() - 1:
 				# If yes, we're starting over.
 				patrol_point_index = 0
 			else:
@@ -149,7 +146,7 @@ func handle_patrolling(_delta: float):
 			_look_at_target_interpolated(look_ahead)
 			
 			# Move towards patrol point
-			move_toward_target(patrol_points[patrol_point_index],patrol_speed)
+			move_toward_target(patrol_path.patrol_points[patrol_point_index],patrol_speed)
 
 
 func move_toward_target(target: Node3D, passed_speed:float):
@@ -206,7 +203,7 @@ func set_state():
 	print("Cogito_basic_enemy.gd: set_state()")
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
-	load_patrol_points()
+	load_patrol_points.call_deferred()
 
 
 # NPC Footstep system, adapted from players
@@ -244,15 +241,15 @@ func npc_footsteps(delta):
 
 
 func load_patrol_points():
-	print("Cogito_basic_enemy.gd: Loading patrol points.")
-	patrol_points.clear()
-	for path in patrol_point_paths:
-		patrol_points.append(get_node(path))
-		print("Cogito_basic_enemy.gd: Set patrol point: ", path)
+	if patrol_path_nodepath:
+		print("Cogito_basic_enemy.gd: Loading patrol path: ", patrol_path_nodepath)
+		patrol_path = get_node(patrol_path_nodepath)
 
 
 # Function to handle persistence and saving
 func save():
+	patrol_path_nodepath = patrol_path.get_path()
+	
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
@@ -262,7 +259,7 @@ func save():
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
-		"patrol_point_paths" : patrol_point_paths,
+		"patrol_path_nodepath" : patrol_path_nodepath,
 		"patrol_point_index" : patrol_point_index,
 		"current_state" : current_state,
 		"is_waiting" : is_waiting,
