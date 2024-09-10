@@ -90,7 +90,7 @@ func press():
 			object.interact(player_interaction_component)
 
 
-func on_damage_received():
+func _on_damage_received():
 	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 
