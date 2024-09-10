@@ -15,6 +15,8 @@ var patrol_point_index: int = 0 #Patrol point for patrolling
 var chase_target : Node3D = null #Target for chasing
 var attack_cooldown : float = 0 #Value used for attack frequency
 
+var patrol_point_paths : Array[NodePath]
+
 enum EnemyState{
 	IDLE,
 	PATROLLING,
@@ -72,8 +74,11 @@ var wiggle_index : float = 0.0
 func _ready() -> void:
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_cogito_properties()
-	
 	current_state = start_state
+	
+	patrol_point_paths.clear()
+	for node in patrol_points:
+		patrol_point_paths.append(node.get_path())
 
 
 func find_cogito_properties():
@@ -123,6 +128,10 @@ func handle_patrolling(_delta: float):
 		switch_to_idle()
 	
 	if !is_waiting:
+		if patrol_points.size() <= 0:
+			print("Cogito_basic_enemy: Patrol points array is empty. Switching to idle.")
+			switch_to_idle()
+			return
 		if global_position.distance_to(patrol_points[patrol_point_index].global_position) < patrol_point_threshold:
 			is_waiting = true
 			await get_tree().create_timer(patrol_point_wait_time).timeout
@@ -193,10 +202,11 @@ func switch_to_chasing():
 
 
 # Future method to set object state when a scene state file is loaded.
-func set_state():	
+func set_state():
+	print("Cogito_basic_enemy.gd: set_state()")
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
-	pass
+	load_patrol_points()
 
 
 # NPC Footstep system, adapted from players
@@ -233,6 +243,14 @@ func npc_footsteps(delta):
 
 
 
+func load_patrol_points():
+	print("Cogito_basic_enemy.gd: Loading patrol points.")
+	patrol_points.clear()
+	for path in patrol_point_paths:
+		patrol_points.append(get_node(path))
+		print("Cogito_basic_enemy.gd: Set patrol point: ", path)
+
+
 # Function to handle persistence and saving
 func save():
 	var node_data = {
@@ -244,8 +262,11 @@ func save():
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
+		"patrol_point_paths" : patrol_point_paths,
+		"patrol_point_index" : patrol_point_index,
 		"current_state" : current_state,
-		
+		"is_waiting" : is_waiting,
+ 		
 	}
 	return node_data
 

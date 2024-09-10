@@ -259,6 +259,9 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 			if new_object.has_method("update_wieldable_data"): #Check if item is wieldable
 				print("Setting charge of ", new_object, " to ", node_data["item_charge"])
 				new_object.slot_data.inventory_item.charge_current = node_data["item_charge"]
+				
+			new_object.set_state()
+		
 		
 		#Loading states of objects in save_object_state
 		var array_of_state_data = _scene_state.saved_states
