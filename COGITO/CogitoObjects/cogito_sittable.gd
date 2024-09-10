@@ -120,8 +120,11 @@ func _on_sit_area_body_exited(body):
 		player_in_sit_area = false
 
 func _physics_process(delta):
+	
+	if player_node.is_in_air:
+		$CollisionShape3D2.disabled = true
 
-	if not player_in_sit_area and not player_node.is_sitting:
+	elif not player_in_sit_area and not player_node.is_sitting:
 		#disabling collisions as a way of disabling the interaction, and its UI
 		$CollisionShape3D2.disabled = true
 	
