@@ -367,9 +367,33 @@ func _on_seat_move_requested(sittable: Node):
 
 	
 func handle_sitting_look(event):
-	neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-	neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-sittable_look_angle), deg_to_rad(sittable_look_angle))
 
+	var neck_position = neck.global_transform.origin
+	var look_marker_position = sittable_look_marker
+	var target_direction = Vector2(look_marker_position.x - neck_position.x, look_marker_position.z - neck_position.z).normalized()
+
+	# Get the current neck forward direction
+	var neck_forward = neck.global_transform.basis.z
+	var neck_direction = Vector2(neck_forward.x, neck_forward.z).normalized()
+
+	# Angle between neck direction and look marker direction
+	var angle_to_marker = rad_to_deg(neck_direction.angle_to(target_direction))
+
+	# Apply mouse input to rotate neck
+	neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+
+	# Updated neck direction after rotation
+	neck_forward = neck.global_transform.basis.z
+	neck_direction = Vector2(neck_forward.x, neck_forward.z).normalized()
+
+	# New angle after rotation
+	var new_angle_to_marker = rad_to_deg(neck_direction.angle_to(target_direction))
+	new_angle_to_marker = wrapf(new_angle_to_marker, 0, 360)
+	
+	# Check if the new angle is within the limits
+	if not (new_angle_to_marker > 180-sittable_look_angle and new_angle_to_marker < (180 + sittable_look_angle)):
+		neck.rotation.y -= deg_to_rad(-event.relative.x * MOUSE_SENS)
+	
 	if INVERT_Y_AXIS:
 		head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
 	else:
