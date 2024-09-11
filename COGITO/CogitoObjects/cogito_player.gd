@@ -399,7 +399,15 @@ func handle_sitting_look(event):
 		head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
 	else:
 		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
-	head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	
+	var sittable = CogitoSceneManager._current_sittable_node
+	
+	if sittable.physics_sittable == false:
+		#static sittables are fine to be clamped this way
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	else:
+		#physics sittables get wider range for now, TODO replace with dynamic vertical look range based on look marker
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-120), deg_to_rad(120))
 
 func _sit_down():
 	$StandingCollisionShape.disabled = true
