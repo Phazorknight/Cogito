@@ -420,11 +420,20 @@ func _sit_down():
 			var adjusted_transform = sittable.sit_position_node.transform
 			adjusted_transform.origin.y += sittable.sit_marker_displacement
 			sittable.sit_position_node.transform = adjusted_transform
-			
-		# Tween to the sit position
-		var tween = create_tween()
-		tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
-		tween.tween_callback(Callable(self, "_sit_down_finished"))
+				
+		# Check if the sittable is physics-based
+		if sittable.physics_sittable:
+			set_physics_process(true)
+			#just using same tween for now with less tween time on chair_desk, TODO create a more dynamic 'tween' in physics process
+			var tween = create_tween()
+			tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
+			tween.tween_callback(Callable(self, "_sit_down_finished"))
+
+		else:
+			# Static tween for non-physics sittable
+			var tween = create_tween()
+			tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
+			tween.tween_callback(Callable(self, "_sit_down_finished"))
 		
 func _sit_down_finished():
 	is_sitting = true
@@ -452,7 +461,7 @@ func _stand_up():
 	var tween = create_tween()
 	tween.tween_property(self, "global_transform", original_position, 1)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
-	tween.tween_property(neck, "global_transform:basis", original_neck_basis, 1.0)
+	tween.tween_property(neck, "global_transform:basis", original_neck_basis, 0.4)
 	moving_seat = false
 
 
@@ -550,12 +559,10 @@ func _physics_process(delta):
 		#return
 	
 	if is_sitting:
-		# Prevent Collisions when sitting
-		$StandingCollisionShape.disabled = true
-		$CrouchingCollisionShape.disabled = true
 		#Update Player location if Chair has moved
 		var sittable = CogitoSceneManager._current_sittable_node
-		self.global_transform = sittable.sit_position_node.global_transform
+		if sittable.physics_sittable == true:
+			self.global_transform = sittable.sit_position_node.global_transform
 		return
 		
 	if on_ladder:

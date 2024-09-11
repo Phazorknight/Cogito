@@ -7,11 +7,8 @@ signal player_sit_down()
 signal player_stand_up()
 
 #region Variables
-
-##Node used as the Sit marker, Defines Player location when sitting
-@export var sit_position_node_path: NodePath
-##Node used as the Look marker, Defines centre of vision when sitting
-@export var look_marker_node_path: NodePath
+##Is this Sittable static or a Physics object.? This determines if player should constantly update to Sittable location when sat
+@export var physics_sittable: bool =  false
 ##Length of time player tweens into seat
 @export var tween_duration: float = 1.0
 ##Interaction text when Sat Down
@@ -24,8 +21,12 @@ signal player_stand_up()
 @export var look_angle: float = 120
 ##Height to lower Sit marker by, to account for the difference between player head and body height
 @export var sit_marker_displacement: float = 0.7
+##Area in which the Sitable can be interacted with
 @export var sit_area_node_path: NodePath
-
+##Node used as the Sit marker, Defines Player location when sitting
+@export var sit_position_node_path: NodePath
+##Node used as the Look marker, Defines centre of vision when sitting
+@export var look_marker_node_path: NodePath
 @onready var AudioStream3D = $AudioStreamPlayer3D
 
 var interaction_text : String 
