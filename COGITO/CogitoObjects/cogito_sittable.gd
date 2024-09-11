@@ -10,7 +10,9 @@ signal player_stand_up()
 ##Is this Sittable static or a Physics object.? This determines if player should constantly update to Sittable location when sat
 @export var physics_sittable: bool =  false
 ##Length of time player tweens into seat
-@export var tween_duration: float = 1.0
+@export var tween_duration: float = 0.8
+##Time for rotation tween to face Look marker
+@export var rotation_tween_duration: float = 0.4
 ##Interaction text when Sat Down
 @export var interaction_text_when_on : String = "Stand Up"
 ##Interction text when not Sat Down

@@ -438,11 +438,12 @@ func _sit_down():
 func _sit_down_finished():
 	is_sitting = true
 	set_physics_process(true)
+	var sittable = CogitoSceneManager._current_sittable_node
 	$StandingCollisionShape.disabled = true
 	$CrouchingCollisionShape.disabled = true
 	var tween = create_tween()
 	var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
-	tween.tween_property(neck, "global_transform:basis", target_transform.basis, 1.0)
+	tween.tween_property(neck, "global_transform:basis", target_transform.basis, sittable.rotation_tween_duration)
 	
 	
 func _stand_up():
@@ -459,9 +460,9 @@ func _stand_up():
 		
 	# Tween back to the original position
 	var tween = create_tween()
-	tween.tween_property(self, "global_transform", original_position, 1)
+	tween.tween_property(self, "global_transform", original_position, sittable.tween_duration)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
-	tween.tween_property(neck, "global_transform:basis", original_neck_basis, 0.4)
+	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
 	moving_seat = false
 
 
