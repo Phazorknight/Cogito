@@ -28,16 +28,16 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0056826, -0.0377836, 0.00380526)
 shape = SubResource("BoxShape3D_5cwmc")
-disabled = true
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
 interaction_text = "Sit"
+is_disabled = true
 
 [node name="Sit Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 
 [node name="Look Marker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.472748, 0.720994)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.449, 0.721)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_wmd07")

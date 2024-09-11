@@ -114,31 +114,22 @@ func switch():
 func _on_sit_area_body_entered(body):
 	if body == player_node:
 		player_in_sit_area = true
-
+		$BasicInteraction.is_disabled = false
 
 func _on_sit_area_body_exited(body):
 	if body == player_node:
 		player_in_sit_area = false
-
-func _physics_process(delta):
+		if player_node.is_sitting:
+			#don't disable interactable if the players sitting to avoid player getting stuck
+			$BasicInteraction.is_disabled = false
+		else: 
+			$BasicInteraction.is_disabled = true
+			
+func interact(player_interaction_component):
 	
 	if player_node.is_in_air:
-		$CollisionShape3D2.disabled = true
-
-	elif not player_in_sit_area and not player_node.is_sitting:
-		#disabling collisions as a way of disabling the interaction, and its UI
-		$CollisionShape3D2.disabled = true
+		return
 	
-	#allow interaction if players in the sit area
-	elif player_in_sit_area:
-		$CollisionShape3D2.disabled = false
-	
-	#allow interaction if player is already sitting, ignore sit are in this case
-	elif player_node.is_sitting:
-		$CollisionShape3D2.disabled = false
-
-func interact(player_interaction_component):
-			
 	AudioStream3D.play()
 	# If the player is already sitting in a seat, and interacts with that seat then stand
 	if player_node.is_sitting and CogitoSceneManager._current_sittable_node == self:
