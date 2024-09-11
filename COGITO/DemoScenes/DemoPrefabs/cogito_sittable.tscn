@@ -11,7 +11,7 @@ size = Vector3(0.3, 0.05, 0.3)
 size = Vector3(0.327356, 0.110522, 0.308265)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k44cf"]
-size = Vector3(1.21485, 1.02782, 1.16031)
+size = Vector3(1.40192, 1.05004, 1.21932)
 
 [node name="Seat" type="StaticBody3D"]
 script = ExtResource("1_22lyd")
@@ -26,7 +26,6 @@ mesh = SubResource("BoxMesh_vcd5y")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0056826, -0.0377836, 0.00380526)
 shape = SubResource("BoxShape3D_5cwmc")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
@@ -47,7 +46,7 @@ pitch_scale = 0.5
 [node name="sit_area" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sit_area"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0175056, -0.177345, 0.350723)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179856, -0.188456, 0.380226)
 shape = SubResource("BoxShape3D_k44cf")
 
 [connection signal="body_entered" from="sit_area" to="." method="_on_sit_area_body_entered"]

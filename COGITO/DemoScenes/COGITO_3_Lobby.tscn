@@ -1,4 +1,4 @@
-[gd_scene load_steps=372 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=371 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -92,8 +92,8 @@
 [ext_resource type="PackedScene" uid="uid://c0yox8yh1bexx" path="res://COGITO/PackedScenes/Pickups/ripped_page_a_pickup.tscn" id="91_qq2p0"]
 [ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PackedScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
 [ext_resource type="PackedScene" uid="uid://dqlue11vwpc5y" path="res://COGITO/PackedScenes/cogito_security_camera.tscn" id="92_nldkd"]
-[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/cogito_sittable.tscn" id="93_cmkbc"]
-[ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="94_e7o71"]
+[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="93_cmkbc"]
+[ext_resource type="PackedScene" uid="uid://bdab2cuy8hue6" path="res://COGITO/DemoScenes/DemoPrefabs/Swing.tscn" id="94_kpmo1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("2_a8imk")
@@ -3277,10 +3277,6 @@ size = Vector3(3.37023, 3.70407, 8.35876)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4k13h"]
 size = Vector3(5.08541, 3.48608, 16.0137)
-
-[sub_resource type="BoxMesh" id="BoxMesh_j34nj"]
-material = ExtResource("94_e7o71")
-size = Vector3(0.15, 0.15, 1)
 
 [node name="Cogito04NewDemo" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_dracg")
@@ -7922,7 +7918,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.71305, 1.67676, -0.0526435
 shape = SubResource("BoxShape3D_4k13h")
 
 [node name="CogitoSittable" parent="." instance=ExtResource("93_cmkbc")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.54484, 0.58473, -9.79518)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.59378, 0.58473, -9.79518)
 
 [node name="CogitoSittable2" parent="." instance=ExtResource("93_cmkbc")]
 transform = Transform3D(0.999299, 0, 0.0374286, 0, 1, 0, -0.0374286, 0, 0.999299, -6.12185, 0.561183, -10.7732)
@@ -7930,16 +7926,8 @@ transform = Transform3D(0.999299, 0, 0.0374286, 0, 1, 0, -0.0374286, 0, 0.999299
 [node name="CogitoSittable3" parent="." instance=ExtResource("93_cmkbc")]
 transform = Transform3D(0.999299, 0, 0.0374286, 0, 1, 0, -0.0374286, 0, 0.999299, -6.94563, 0.561183, -10.7732)
 
-[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1.94172, 0)
-node_a = NodePath("chairDesk2")
-
-[node name="chairDesk2" parent="HingeJoint3D" instance=ExtResource("21_o6psl")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -1.45833, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="HingeJoint3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70968e-09, 0, 0.0391129)
-mesh = SubResource("BoxMesh_j34nj")
+[node name="Swing" parent="." instance=ExtResource("94_kpmo1")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.77791, -0.259389, 0.0061115)
 
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]

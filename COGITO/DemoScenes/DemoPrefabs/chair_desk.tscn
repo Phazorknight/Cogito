@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_5buw4"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="2_hg52m"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="3_gk1dv"]
-[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/cogito_sittable.tscn" id="4_f35hp"]
+[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="4_f35hp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmjq1"]
 resource_name = "metalMedium"
@@ -137,6 +137,6 @@ shape = SubResource("BoxShape3D_eedpt")
 [node name="ImpactSounds" parent="." instance=ExtResource("3_gk1dv")]
 
 [node name="Seat" parent="." instance=ExtResource("4_f35hp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.603723, 0.123073)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0595775, 0.567873, 0.123073)
 physics_sittable = true
 tween_duration = 0.2
