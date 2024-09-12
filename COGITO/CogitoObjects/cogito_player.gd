@@ -456,30 +456,56 @@ func _sit_down_finished():
 	
 func _stand_up():
 	var sittable = CogitoSceneManager._current_sittable_node
-	#if sittable:
-	is_sitting = false
-	set_physics_process(false)
-	
-	#reset sit position from crouching
-	if is_crouching:
-		var adjusted_transform = sittable.sit_position_node.transform
-		adjusted_transform.origin.y -= sittable.sit_marker_displacement
-		sittable.sit_position_node.transform = adjusted_transform
-		
-	# Tween back to the original position
+	if sittable:
+		is_sitting = false
+		set_physics_process(false)
+		# reset sit position if crouching
+		if is_crouching:
+			var adjusted_transform = sittable.sit_position_node.transform
+			adjusted_transform.origin.y -= sittable.sit_marker_displacement
+			sittable.sit_position_node.transform = adjusted_transform
+
+		# Handle player exit placement on stand-up based on the placement_leave_behaviour of the sittable
+		match sittable.placement_leave_behaviour:
+			sittable.PlacementOnLeave.ORIGINAL:
+				_move_to_original_position(sittable)
+			sittable.PlacementOnLeave.AUTO:
+				_move_to_nearby_location(sittable)
+			sittable.PlacementOnLeave.NODE:
+				_move_to_leave_node(sittable)
+					
+		moving_seat = false
+
+#Functions to handle Exit types
+
+func _move_to_original_position(sittable):
 	var tween = create_tween()
 	tween.tween_property(self, "global_transform", original_position, sittable.tween_duration)
-	tween.tween_callback(Callable(self, "_stand_up_finished"))
 	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
-	moving_seat = false
-
-
+	tween.tween_callback(Callable(self, "_stand_up_finished"))
+	
+func _move_to_leave_node(sittable):
+	if sittable.leave_node_path:
+		var leave_node = sittable.get_node(sittable.leave_node_path)
+		if leave_node:
+			var tween = create_tween()
+			tween.tween_property(self, "global_transform", leave_node.global_transform, sittable.tween_duration)
+			tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+			tween.tween_callback(Callable(self, "_stand_up_finished"))
+		else:
+			print("No leave node found. Returning to Original position")
+			_move_to_original_position(sittable)
+			
+func _move_to_nearby_location(sittable):
+	#TODO Implement this function
+	print("No available nearby location found. Testing for leave node.")
+	_move_to_leave_node(sittable)
+	
 func _stand_up_finished():
 	is_sitting = false
 	set_physics_process(true)
 	$StandingCollisionShape.disabled = false
 	#$CrouchingCollisionShape.disabled = false
-	
 	
 #endregion
 

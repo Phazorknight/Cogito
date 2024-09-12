@@ -9,7 +9,7 @@ signal player_stand_up()
 #region Variables
 ##
 @export var is_sat_on_start: bool = false
-##Is this Sittable static or a Physics object.? This determines if player should constantly update to Sittable location when sat
+##Is this Sittable static or a Physics object?
 @export var physics_sittable: bool =  false
 ##Interaction text when Sat Down
 @export var interaction_text_when_on : String = "Stand Up"
@@ -27,6 +27,8 @@ signal player_stand_up()
 @export var sit_marker_displacement: float = 0.7
 ##Area in which the Sitable can be interacted with
 @export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
+##Where should player be placed on Sittable exit
+@export var placement_leave_behaviour: PlacementOnLeave = PlacementOnLeave.ORIGINAL
 @export_group("Animation")
 ##Move the player to the Sit marker location using a Tween
 @export var tween_to_location : bool = true
@@ -43,6 +45,9 @@ signal player_stand_up()
 @export var look_marker_node_path: NodePath
 ##Area in which the Sitable can be interacted with
 @export var sit_area_node_path: NodePath
+## Node used to place player when Placement leave behaviour tells it to
+@export var leave_node_path: NodePath 
+
 @export_group("Interaction")
 ##Enable this node on sit (useful for enabling collision shapes)
 @export var enable_on_sit: Node
@@ -58,6 +63,12 @@ enum SitAreaBehaviour {
 	MANUAL,  ## Player needs to interact manually
 	AUTO,    ## Player sits automatically on entry
 	NONE     ## Player can interact from outside Sit Area
+}
+
+enum PlacementOnLeave {
+	ORIGINAL,  ## Player returns to original location
+	AUTO,    ## Player sent to nearby available location 
+	NODE     ## Player is placed at defined Leave node
 }
 
 @onready var AudioStream3D = $AudioStreamPlayer3D
