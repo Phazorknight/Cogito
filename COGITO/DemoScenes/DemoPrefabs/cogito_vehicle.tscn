@@ -16,9 +16,9 @@ size = Vector3(1.40192, 1.05004, 1.21932)
 [node name="Vehicle" type="StaticBody3D"]
 script = ExtResource("2_am12o")
 physics_sittable = true
-sit_area_node_path = NodePath("sit_area")
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
+sit_area_node_path = NodePath("sit_area")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)

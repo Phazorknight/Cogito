@@ -7,29 +7,47 @@ signal player_sit_down()
 signal player_stand_up()
 
 #region Variables
+
 ##Is this Sittable static or a Physics object.? This determines if player should constantly update to Sittable location when sat
 @export var physics_sittable: bool =  false
-##Length of time player tweens into seat
-@export var tween_duration: float = 0.8
-##Time for rotation tween to face Look marker
-@export var rotation_tween_duration: float = 0.4
 ##Interaction text when Sat Down
 @export var interaction_text_when_on : String = "Stand Up"
 ##Interction text when not Sat Down
 @export var interaction_text_when_off : String = "Sit"
 ##Disables (sibling) Carryable Component if found
 @export var disable_carry : bool = true
-##Players maximum Look angle when Sitting
+##Players maximum Horizontal Look angle when Sitting
 @export var look_angle: float = 120
 ##Height to lower Sit marker by, to account for the difference between player head and body height
 @export var sit_marker_displacement: float = 0.7
 ##Area in which the Sitable can be interacted with
-@export var sit_area_node_path: NodePath
+@export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
+@export_group("Animation")
+##Length of time player tweens into seat
+@export var tween_duration: float = 0.8
+##Time for rotation tween to face Look marker
+@export var rotation_tween_duration: float = 0.4
+@export_group("Nodes")
+##Enable this node on sit (useful for enabling collision shapes)
+@export var enable_on_sit: Node
 ##Node used as the Sit marker, Defines Player location when sitting
 @export var sit_position_node_path: NodePath
 ##Node used as the Look marker, Defines centre of vision when sitting
 @export var look_marker_node_path: NodePath
+##Area in which the Sitable can be interacted with
+@export var sit_area_node_path: NodePath
+
+enum SitAreaBehaviour {
+	MANUAL,  ## Player needs to interact manually
+	AUTO,    ## Player sits automatically on entry
+	NONE     ## Player can interact from outside Sit Area
+}
+
+#@export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
+
+
 @onready var AudioStream3D = $AudioStreamPlayer3D
+@onready var BasicInteraction = $BasicInteraction
 
 var interaction_text : String 
 var sit_position_node: Node3D = null
@@ -61,6 +79,13 @@ func _ready():
 	if not look_marker_node:
 		print("Look marker node not found.")	
 		
+	match sit_area_behaviour:
+			SitAreaBehaviour.MANUAL:
+				BasicInteraction.is_disabled = true
+			SitAreaBehaviour.MANUAL:
+				BasicInteraction.is_disabled = true
+			SitAreaBehaviour.NONE:
+				BasicInteraction.is_disabled = false
 	if disable_carry:
 		carryable_components = get_sibling_carryable_components()
 
@@ -87,7 +112,8 @@ func displace_sit_marker():
 func _sit_down():
 	interaction_text = interaction_text_when_on
 	object_state_updated.emit(interaction_text)
-	
+	if enable_on_sit:
+		enable_on_sit.disabled = false
 	# Disable carryable components if necessary
 	if disable_carry:
 		for component in carryable_components:
@@ -96,7 +122,8 @@ func _sit_down():
 func _stand_up():
 	interaction_text = interaction_text_when_off
 	object_state_updated.emit(interaction_text)
-	
+	if enable_on_sit:
+		enable_on_sit.disabled = true
 	# Enable carryable components if necessary
 	if disable_carry:
 		for component in carryable_components:
@@ -116,7 +143,18 @@ func switch():
 func _on_sit_area_body_entered(body):
 	if body == player_node:
 		player_in_sit_area = true
-		$BasicInteraction.is_disabled = false
+		
+		match sit_area_behaviour:
+			SitAreaBehaviour.MANUAL:
+				BasicInteraction.is_disabled = false
+			
+			SitAreaBehaviour.AUTO:
+				if not player_node.is_sitting:
+					interact(player_node.player_interaction_component)
+					BasicInteraction.is_disabled = false
+
+			SitAreaBehaviour.NONE:
+				BasicInteraction.is_disabled = false
 
 func _on_sit_area_body_exited(body):
 	if body == player_node:
