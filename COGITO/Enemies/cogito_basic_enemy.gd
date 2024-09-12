@@ -3,13 +3,22 @@ class_name CogitoEnemy
 
 ## Emitted when received damage. Used with the HitboxComponent
 signal damage_received(damage_value:float)
+## Emitted when enemy changes it's state.
+signal enemy_state_changed(enemy_state: EnemyState)
 
 # COGITO system variables
 var cogito_properties : CogitoProperties = null
 var properties : int
 
 # ENEMY specific variables
-var current_state : EnemyState  #State for simple state machine
+var current_state: EnemyState:  #State for simple state machine
+	set(new_state):
+		current_state = new_state
+		enemy_state_changed.emit(current_state)
+	get:
+		return current_state
+
+var saved_enemy_state : EnemyState #State for saving. Used to correctly load/save enemy state.
 var is_waiting : bool = false
 var patrol_point_index: int = 0 #Patrol point for patrolling
 var chase_target : Node3D = null #Target for chasing
@@ -72,6 +81,11 @@ var can_play_footstep: bool = true
 var wiggle_vector : Vector2 = Vector2.ZERO
 var wiggle_index : float = 0.0
 
+
+func _enter_tree() -> void:
+	current_state = EnemyState.IDLE
+	
+
 func _ready() -> void:
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_cogito_properties()
@@ -122,7 +136,9 @@ func handle_chasing(_delta: float):
 
 func handle_patrolling(_delta: float):
 	if !patrol_path:
+		print("Cogito_basic_enemy: No patrol path found. Switching to idle.")
 		switch_to_idle()
+		return
 	
 	if !is_waiting:
 		if patrol_path.patrol_points.size() <= 0:
@@ -203,7 +219,8 @@ func set_state():
 	print("Cogito_basic_enemy.gd: set_state()")
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
-	load_patrol_points.call_deferred()
+	load_patrol_points()
+	current_state = saved_enemy_state
 
 
 # NPC Footstep system, adapted from players
@@ -248,7 +265,10 @@ func load_patrol_points():
 
 # Function to handle persistence and saving
 func save():
-	patrol_path_nodepath = patrol_path.get_path()
+	if patrol_path:
+		patrol_path_nodepath = patrol_path.get_path()
+		
+	saved_enemy_state = current_state
 	
 	var node_data = {
 		"filename" : get_scene_file_path(),
@@ -261,7 +281,7 @@ func save():
 		"rot_z" : rotation.z,
 		"patrol_path_nodepath" : patrol_path_nodepath,
 		"patrol_point_index" : patrol_point_index,
-		"current_state" : current_state,
+		"saved_enemy_state" : saved_enemy_state,
 		"is_waiting" : is_waiting,
  		
 	}
