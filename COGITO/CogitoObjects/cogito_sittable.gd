@@ -17,13 +17,21 @@ signal player_stand_up()
 @export var interaction_text_when_off : String = "Sit"
 ##Disables (sibling) Carryable Component if found
 @export var disable_carry : bool = true
+##Limits horizontal view to the look angle
+@export var limit_horizontal_view : bool = true
 ##Players maximum Horizontal Look angle when Sitting
 @export var look_angle: float = 120
+##Limit vertical view
+@export var limit_vertical_view : bool = true
 ##Height to lower Sit marker by, to account for the difference between player head and body height
 @export var sit_marker_displacement: float = 0.7
 ##Area in which the Sitable can be interacted with
 @export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
 @export_group("Animation")
+##Move the player to the Sit marker location using a Tween
+@export var tween_to_location : bool = true
+##Make the player look at the look marker. Required for Limited look angles
+@export var tween_to_look_marker : bool = true
 ##Length of time player tweens into seat
 @export var tween_duration: float = 0.8
 ##Time for rotation tween to face Look marker
@@ -38,6 +46,10 @@ signal player_stand_up()
 @export_group("Interaction")
 ##Enable this node on sit (useful for enabling collision shapes)
 @export var enable_on_sit: Node
+## Nodes that will become visible when switch is ON. These will hide again when switch is OFF.
+@export var nodes_to_show_when_on : Array[Node]
+## Nodes that will become hidden when switch is ON. These will show again when switch is OFF.
+@export var nodes_to_hide_when_on : Array[Node]
 ## Nodes that will have their interact function called when this is used.
 @export var objects_call_interact : Array[NodePath]
 @export var objects_call_delay : float = 0.0
@@ -125,7 +137,12 @@ func _sit_down():
 	if disable_carry:
 		for component in carryable_components:
 			component.is_disabled = true
-
+	for node in nodes_to_show_when_on:
+		node.show()
+		
+	for node in nodes_to_hide_when_on:
+		node.hide()
+		
 func _stand_up():
 	interaction_text = interaction_text_when_off
 	object_state_updated.emit(interaction_text)
@@ -135,7 +152,12 @@ func _stand_up():
 	if disable_carry:
 		for component in carryable_components:
 			component.is_disabled = false
-	
+			
+	for node in nodes_to_show_when_on:
+		node.hide()
+	for node in nodes_to_hide_when_on:
+		node.show()
+			
 func switch():
 	if player_node.is_sitting:
 		_stand_up()
@@ -168,9 +190,9 @@ func _on_sit_area_body_exited(body):
 		player_in_sit_area = false
 		if player_node.is_sitting:
 			#don't disable interactable if the players sitting to avoid player getting stuck
-			$BasicInteraction.is_disabled = false
+			BasicInteraction.is_disabled = false
 		else: 
-			$BasicInteraction.is_disabled = true
+			BasicInteraction.is_disabled = true
 			
 func interact(player_interaction_component):
 	
@@ -197,6 +219,7 @@ func interact(player_interaction_component):
 		CogitoSceneManager.emit_signal("sit_requested", self)
 		_sit_down()
 
+		
 	if !objects_call_interact:
 		return
 	for nodepath in objects_call_interact:

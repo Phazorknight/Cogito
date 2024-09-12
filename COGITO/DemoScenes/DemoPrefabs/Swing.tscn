@@ -38,6 +38,7 @@ data = PackedVector3Array(-0.075, 0.075, 1, 0.075, 0.075, 1, -0.075, -0.075, 1, 
 [node name="Swing" type="HingeJoint3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.13976, 0)
 node_a = NodePath("swing")
+node_b = NodePath("../frame/MeshInstance3D/StaticBody3D")
 angular_limit/enable = true
 
 [node name="swing" type="RigidBody3D" parent="Swing"]

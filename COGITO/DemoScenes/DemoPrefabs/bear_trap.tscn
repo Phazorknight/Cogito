@@ -1,0 +1,120 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpuhybufkdmcf"]
+
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_787ou"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_3gte2"]
+[ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PackedScenes/hazard_zone.tscn" id="2_akbwk"]
+[ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="2_sgovw"]
+[ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="3_a3516"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vcd5y"]
+size = Vector3(0.3, 0.05, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5cwmc"]
+size = Vector3(0.327356, 0.110522, 0.308265)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k44cf"]
+size = Vector3(0.954323, 1.05004, 1.01967)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_th2mb"]
+material = ExtResource("2_sgovw")
+height = 0.05
+
+[sub_resource type="PrismMesh" id="PrismMesh_b3kdr"]
+size = Vector3(0.2, 0.2, 0.02)
+
+[node name="BearTrap" type="Node3D"]
+
+[node name="Seat" type="StaticBody3D" parent="." node_paths=PackedStringArray("nodes_to_show_when_on")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.135402, 0)
+script = ExtResource("1_787ou")
+interaction_text_when_on = "Escape"
+interaction_text_when_off = "Activate"
+sit_area_behaviour = 1
+tween_duration = 0.3
+rotation_tween_duration = 0.2
+sit_position_node_path = NodePath("Sit Marker")
+look_marker_node_path = NodePath("Look Marker")
+sit_area_node_path = NodePath("sit_area")
+nodes_to_show_when_on = [NodePath("../HazardZone")]
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
+visible = false
+mesh = SubResource("BoxMesh_vcd5y")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Seat"]
+shape = SubResource("BoxShape3D_5cwmc")
+
+[node name="Sit Marker" type="Marker3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
+
+[node name="Look Marker" type="Marker3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.449, 0.721)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Seat"]
+stream = ExtResource("3_a3516")
+volume_db = -35.0
+pitch_scale = 0.5
+
+[node name="sit_area" type="Area3D" parent="Seat"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Seat/sit_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00849776, -0.188456, 0.0130692)
+shape = SubResource("BoxShape3D_k44cf")
+
+[node name="BasicInteraction" parent="Seat" instance=ExtResource("2_3gte2")]
+interaction_text = "Sit"
+is_disabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.822452, 0)
+mesh = SubResource("CylinderMesh_th2mb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.101349, -0.478844)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.101349, 0.469335)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.47409, 0.101349, -0.00475428)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.47409, 0.101349, -0.00475433)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -0.335232, 0.101349, 0.330478)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0.335232, 0.101349, -0.339986)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0.335232, 0.101349, 0.330478)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -0.335232, 0.101349, -0.339986)
+mesh = SubResource("PrismMesh_b3kdr")
+
+[node name="HazardZone" parent="." instance=ExtResource("2_akbwk")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.002404, 0.709587, 0.101622)
+visible = false
+
+[node name="TransparentBox" parent="HazardZone" index="1"]
+visible = false
+skeleton = NodePath("../../Seat")
+
+[node name="Label3D" parent="HazardZone" index="2"]
+visible = false
+
+[connection signal="body_entered" from="Seat/sit_area" to="Seat" method="_on_sit_area_body_entered"]
+[connection signal="body_exited" from="Seat/sit_area" to="Seat" method="_on_sit_area_body_exited"]
+
+[editable path="HazardZone"]
