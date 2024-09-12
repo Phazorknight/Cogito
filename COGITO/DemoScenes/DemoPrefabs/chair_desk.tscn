@@ -136,5 +136,5 @@ shape = SubResource("BoxShape3D_eedpt")
 [node name="ImpactSounds" parent="." instance=ExtResource("3_gk1dv")]
 
 [node name="Vehicle" parent="." node_paths=PackedStringArray("vehicle_node") instance=ExtResource("4_aoovq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.650259, 0.122174)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0412261, 0.650259, 0.122174)
 vehicle_node = NodePath("..")

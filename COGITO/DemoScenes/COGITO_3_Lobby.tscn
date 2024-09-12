@@ -7932,9 +7932,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.777
 
 [node name="CogitoVehicle" parent="." instance=ExtResource("95_5ri67")]
 
-[node name="Node3D" parent="." instance=ExtResource("95_5ri67")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.04556, 7.07805e-08, -16.2019)
-
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Archive_QuestEnder" to="QUESTS/Archive_QuestEnder" method="_on_body_entered"]
