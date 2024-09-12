@@ -7,7 +7,8 @@ signal player_sit_down()
 signal player_stand_up()
 
 #region Variables
-
+##
+@export var is_sat_on_start: bool = false
 ##Is this Sittable static or a Physics object.? This determines if player should constantly update to Sittable location when sat
 @export var physics_sittable: bool =  false
 ##Interaction text when Sat Down
@@ -28,23 +29,24 @@ signal player_stand_up()
 ##Time for rotation tween to face Look marker
 @export var rotation_tween_duration: float = 0.4
 @export_group("Nodes")
-##Enable this node on sit (useful for enabling collision shapes)
-@export var enable_on_sit: Node
 ##Node used as the Sit marker, Defines Player location when sitting
 @export var sit_position_node_path: NodePath
 ##Node used as the Look marker, Defines centre of vision when sitting
 @export var look_marker_node_path: NodePath
 ##Area in which the Sitable can be interacted with
 @export var sit_area_node_path: NodePath
+@export_group("Interaction")
+##Enable this node on sit (useful for enabling collision shapes)
+@export var enable_on_sit: Node
+## Nodes that will have their interact function called when this is used.
+@export var objects_call_interact : Array[NodePath]
+@export var objects_call_delay : float = 0.0
 
 enum SitAreaBehaviour {
 	MANUAL,  ## Player needs to interact manually
 	AUTO,    ## Player sits automatically on entry
 	NONE     ## Player can interact from outside Sit Area
 }
-
-#@export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
-
 
 @onready var AudioStream3D = $AudioStreamPlayer3D
 @onready var BasicInteraction = $BasicInteraction
@@ -88,6 +90,11 @@ func _ready():
 				BasicInteraction.is_disabled = false
 	if disable_carry:
 		carryable_components = get_sibling_carryable_components()
+		
+	if is_sat_on_start:
+		interact(player_node.player_interaction_component)
+		BasicInteraction.is_disabled = false
+		
 
 func get_sibling_carryable_components() -> Array:
 	var components = []
@@ -190,7 +197,13 @@ func interact(player_interaction_component):
 		CogitoSceneManager.emit_signal("sit_requested", self)
 		_sit_down()
 
-
+	if !objects_call_interact:
+		return
+	for nodepath in objects_call_interact:
+		await get_tree().create_timer(objects_call_delay).timeout
+		if nodepath != null:
+			var object = get_node(nodepath)
+			object.interact(player_interaction_component)
 
 
 
