@@ -79,7 +79,7 @@ metallic = 1.0
 height = 0.28
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_o6kw1"]
+[sub_resource type="Resource" id="Resource_x5861"]
 resource_local_to_scene = true
 script = ExtResource("4_qk8k6")
 inventory_item = ExtResource("3_ohc35")
@@ -116,7 +116,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
 shape = SubResource("CylinderShape3D_xbicr")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_u01ym")]
-slot_data = SubResource("Resource_o6kw1")
+slot_data = SubResource("Resource_x5861")
 
 [node name="Lifespan" type="Timer" parent="."]
 
