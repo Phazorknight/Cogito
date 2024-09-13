@@ -471,7 +471,7 @@ func _stand_up():
 				_move_to_original_position(sittable)
 			sittable.PlacementOnLeave.AUTO:
 				_move_to_nearby_location(sittable)
-			sittable.PlacementOnLeave.NODE:
+			sittable.PlacementOnLeave.TRANSFORM:
 				_move_to_leave_node(sittable)
 					
 		moving_seat = false
@@ -495,12 +495,60 @@ func _move_to_leave_node(sittable):
 		else:
 			print("No leave node found. Returning to Original position")
 			_move_to_original_position(sittable)
-			
+
+
 func _move_to_nearby_location(sittable):
-	#TODO Implement this function
-	print("No available nearby location found. Testing for leave node.")
+	print("Attempting to find available locations to move player to")
+	var navigation_agent = $NavigationAgent3D 
+	var seat_position = sittable.global_transform.origin
+	var exit_distance = 1.0 
+	var max_distance = 10.0 # Max distance from Sittable to try, multiplies tha random direction
+	var step_increase = 0.5 
+	var max_attempts = 10
+	var navmesh_offset_y = 0.25 
+	var attempts = 0
+
+	var player_position = self.global_transform.origin
+
+	while attempts < max_attempts:
+		# Generate random direction
+		var random_direction = Vector3(
+			randf_range(-0.1, 0.1),
+			randf_range(-0.1, 0.1),  # Degree of Y random actually makes this work better at finding candidates
+			randf_range(-0.1, 0.1)
+		).normalized()
+		#print(random_direction)
+		
+		var candidate_pos = seat_position + (random_direction * exit_distance)
+		candidate_pos.y = navmesh_offset_y  # to check navmesh at navmesh height
+
+		navigation_agent.target_position = candidate_pos
+		#print("Checking position: ", candidate_pos)
+
+		# Check if position is reachable
+		if navigation_agent.is_navigation_finished():
+			print("Found available location, moving there.", candidate_pos, attempts)
+			var tween = create_tween()
+			navigation_agent.target_position.y += 1 # To avoid player going through floor
+			tween.tween_property(self, "global_transform:origin", navigation_agent.target_position, sittable.tween_duration)
+			tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+			tween.tween_callback(Callable(self, "_stand_up_finished"))
+			return
+		else:
+			#print("Position ", candidate_pos, " is not valid.")
+			exit_distance += step_increase
+			attempts += 1
+
+		if exit_distance > max_distance:
+			#print("Exceeded maximum exit distance. Distance has been reset")
+			exit_distance = 1
+
+	# If no valid location found, try leave node
+	print("No available location found after ",attempts, " tries. Testing for leave node.")
 	_move_to_leave_node(sittable)
-	
+
+
+
 func _stand_up_finished():
 	is_sitting = false
 	set_physics_process(true)

@@ -51,6 +51,8 @@ signal player_stand_up()
 @export var leave_node_path: NodePath 
 
 @export_group("Interaction")
+##Time before player can interact again. To prevent Spam which can cause issues with the player movement
+@export var interact_cooldown_duration = 0.4
 ##Enable this node on sit (useful for enabling collision shapes)
 @export var enable_on_sit: Node
 ## Nodes that will become visible when switch is ON. These will hide again when switch is OFF.
@@ -69,8 +71,8 @@ enum SitAreaBehaviour {
 
 enum PlacementOnLeave {
 	ORIGINAL,  ## Player returns to original location
-	AUTO,    ## Player sent to nearby available location 
-	NODE     ## Player is placed at defined Leave node
+	AUTO,    ## Attempt to find nearby available location for Player using Navmesh
+	TRANSFORM     ## Player is placed at defined Leave node  Make sure this is setup in Nodes section
 }
 
 @onready var AudioStream3D = $AudioStreamPlayer3D
@@ -208,7 +210,6 @@ func _on_sit_area_body_exited(body):
 			BasicInteraction.is_disabled = true
 			
 var interact_cooldown = 0.0
-var interact_cooldown_duration = 0.4
 
 func interact(player_interaction_component):
 	# Get the current time from the engine
