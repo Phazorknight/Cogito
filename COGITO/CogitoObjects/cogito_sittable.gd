@@ -29,6 +29,8 @@ signal player_stand_up()
 @export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
 ##Where should player be placed on Sittable exit
 @export var placement_leave_behaviour: PlacementOnLeave = PlacementOnLeave.ORIGINAL
+##Disable interaction while player is in the air
+@export var disable_on_jump: bool = true
 @export_group("Animation")
 ##Move the player to the Sit marker location using a Tween
 @export var tween_to_location : bool = true
@@ -205,10 +207,23 @@ func _on_sit_area_body_exited(body):
 		else: 
 			BasicInteraction.is_disabled = true
 			
+var interact_cooldown = 0.0
+var interact_cooldown_duration = 0.4
+
 func interact(player_interaction_component):
-	
-	if player_node.is_in_air:
+	# Get the current time from the engine
+	var current_time = Time.get_ticks_msec()/ 1000.0
+
+	# If cooldown hasn't passed, return early to prevent spamming
+	if current_time < interact_cooldown:
 		return
+	
+	# Reset cooldown to current time + duration
+	interact_cooldown = current_time + interact_cooldown_duration
+	
+	if disable_on_jump == true:
+		if player_node.is_in_air:
+			return
 	
 	AudioStream3D.play()
 	# If the player is already sitting in a seat, and interacts with that seat then stand
@@ -230,7 +245,6 @@ func interact(player_interaction_component):
 		CogitoSceneManager.emit_signal("sit_requested", self)
 		_sit_down()
 
-		
 	if !objects_call_interact:
 		return
 	for nodepath in objects_call_interact:
