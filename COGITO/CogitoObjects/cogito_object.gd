@@ -3,6 +3,9 @@ extends Node3D
 class_name CogitoObject
 
 signal damage_received(damage_value:float)
+signal object_exits_tree()
+
+@export var cogito_name : String = self.name
 
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
@@ -31,7 +34,6 @@ func find_cogito_properties():
 	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
 	if property_nodes:
 		cogito_properties = property_nodes[0]
-		#print(name, ": cogito_properties set to ", cogito_properties)
 
 
 # Function to handle persistence and saving
@@ -63,3 +65,7 @@ func _on_body_exited(body: Node) -> void:
 	# Using this check to only call interactions on other Cogito Objects. #TODO: could be a better check...
 	if body.has_method("save") and cogito_properties:
 		cogito_properties.check_for_reaction_timer_interrupt(body)
+
+
+func _exit_tree() -> void:
+	object_exits_tree.emit()
