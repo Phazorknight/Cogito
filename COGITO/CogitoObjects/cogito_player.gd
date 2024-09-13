@@ -349,6 +349,8 @@ var sittable_look_marker
 var sittable_look_angle
 var moving_seat = false
 var original_neck_basis = Basis()
+var is_ejected = false
+
 func toggle_sitting():
 	if is_sitting:
 		_stand_up()
@@ -413,6 +415,7 @@ func handle_sitting_look(event):
 func _sit_down():
 	$StandingCollisionShape.disabled = true
 	$CrouchingCollisionShape.disabled = true
+	is_ejected = false 
 		
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
@@ -649,6 +652,11 @@ func _physics_process(delta):
 		var sittable = CogitoSceneManager._current_sittable_node
 		if sittable.physics_sittable == true:
 			self.global_transform = sittable.sit_position_node.global_transform
+			#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
+			if sittable.eject_on_fall == true and self.global_transform.origin.y < sittable.eject_height and not is_ejected:
+				is_ejected = true  # Set the flag to avoid repeated ejections
+				CogitoSceneManager._current_sittable_node.interact() #Interact with sittable to reset state and eject
+
 		return
 		
 	if on_ladder:

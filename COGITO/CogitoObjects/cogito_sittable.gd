@@ -15,8 +15,8 @@ signal player_stand_up()
 @export var interaction_text_when_on : String = "Stand Up"
 ##Interction text when not Sat Down
 @export var interaction_text_when_off : String = "Sit"
-##Disables (sibling) Carryable Component if found
-@export var disable_carry : bool = true
+
+@export_category("Sittable Vision")
 ##Limits horizontal view to the look angle
 @export var limit_horizontal_view : bool = true
 ##Players maximum Horizontal Look angle when Sitting
@@ -25,12 +25,21 @@ signal player_stand_up()
 @export var limit_vertical_view : bool = true
 ##Height to lower Sit marker by, to account for the difference between player head and body height
 @export var sit_marker_displacement: float = 0.7
+
+@export_category("Sittable Behaviour")
 ##Area in which the Sitable can be interacted with
 @export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
 ##Where should player be placed on Sittable exit
 @export var placement_on_leave: PlacementOnLeave = PlacementOnLeave.ORIGINAL
 ##Disable interaction while player is in the air
 @export var disable_on_jump: bool = true
+##Disables (sibling) Carryable Component if found
+@export var disable_carry : bool = true
+##Should the player get ejected from the seat at a certain y?
+@export var eject_on_fall: bool = true
+##What y height should the player get ejected from Seat at?
+@export var eject_height: float = 0.35
+
 @export_group("Animation")
 ##Move the player to the Sit marker location using a Tween
 @export var tween_to_location : bool = true

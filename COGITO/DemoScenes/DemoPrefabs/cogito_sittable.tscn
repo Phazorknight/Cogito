@@ -15,6 +15,7 @@ size = Vector3(1.40192, 1.05004, 1.21932)
 
 [node name="Seat" type="StaticBody3D"]
 script = ExtResource("1_22lyd")
+eject_on_fall = false
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
 sit_area_node_path = NodePath("sit_area")
