@@ -74,6 +74,7 @@ func _exit_tree():
 func hold():
 	if lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(true)
+	parent_object.freeze = false
 	player_interaction_component.start_carrying(self)
 	player_interaction_component.interaction_raycast.add_exception(parent_object)
 	

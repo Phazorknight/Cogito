@@ -22,6 +22,7 @@ mass = 10.0
 max_contacts_reported = 8
 contact_monitor = true
 script = ExtResource("1_cx7i0")
+cogito_name = "Metalbar"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_gtrvf")
