@@ -18,22 +18,33 @@ func set_quantity(value: int):
 		quantity = 1
 		push_error("%s is not stackable, setting quantity to 1" % inventory_item.name )
 
+
 func can_merge_with(other_slot_data: InventorySlotPD) -> bool:
 	return inventory_item == other_slot_data.inventory_item \
 			and inventory_item.is_stackable \
 			and quantity < inventory_item.stack_size
+
 
 func can_fully_merge_with(other_slot_data: InventorySlotPD) -> bool:
 	return inventory_item == other_slot_data.inventory_item \
 			and inventory_item.is_stackable \
 			and quantity + other_slot_data.quantity <= inventory_item.stack_size
 
+
 func fully_merge_with(other_slot_data: InventorySlotPD):
 	quantity += other_slot_data.quantity
-	
+
+
 func create_single_slot_data(index: int) -> InventorySlotPD:
 	var new_slot_data = duplicate()
 	new_slot_data.origin_index = index
 	new_slot_data.quantity = 1
 	quantity -= 1
+	return new_slot_data
+	
+	
+func create_single_slot_data_gamepad_drop(index: int) -> InventorySlotPD:
+	var new_slot_data = duplicate()
+	new_slot_data.origin_index = index
+	new_slot_data.quantity = 1
 	return new_slot_data

@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=118 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -52,6 +52,7 @@
 [ext_resource type="PackedScene" uid="uid://dlm5kc3g1g18h" path="res://COGITO/PackedScenes/Pickups/pickup_dart_water.tscn" id="47_gb8en"]
 [ext_resource type="PackedScene" uid="uid://dyngdr0rnqwlb" path="res://COGITO/PackedScenes/Pickups/pickup_dart_fire.tscn" id="48_sg5rf"]
 [ext_resource type="PackedScene" uid="uid://dn4e1k7u3suoo" path="res://COGITO/Enemies/cogito_basic_enemy.tscn" id="52_mlseg"]
+[ext_resource type="Script" path="res://COGITO/Enemies/cogito_patrol_path.gd" id="53_xiupp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -3133,12 +3134,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 
 [node name="KSI_wall_doorway_wide_painted6" parent="NavigationRegion3D/MOVEMENT" instance=ExtResource("15_mnt7d")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3, 0, 2)
 
-[node name="Patrolpoint_A" type="Marker3D" parent="NavigationRegion3D/MOVEMENT"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.1, 26.8231)
-
-[node name="Patrolpoint_B" type="Marker3D" parent="NavigationRegion3D/MOVEMENT"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.1, 26.8231)
-
 [node name="SYSTEMIC_PROPERTIES" type="Node3D" parent="NavigationRegion3D"]
 
 [node name="Pickup_Dart_Water" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
@@ -3309,10 +3304,20 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.249
 [node name="Cogito_Pressureplate" parent="." instance=ExtResource("41_0755m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0454833, 0)
 
-[node name="CogitoEnemy" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("52_mlseg")]
+[node name="EnemyPatrolpath" type="Node3D" parent="." node_paths=PackedStringArray("patrol_points")]
+script = ExtResource("53_xiupp")
+patrol_points = [NodePath("Patrolpoint_A"), NodePath("Patrolpoint_B")]
+
+[node name="Patrolpoint_A" type="Marker3D" parent="EnemyPatrolpath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.1, 26.8231)
+
+[node name="Patrolpoint_B" type="Marker3D" parent="EnemyPatrolpath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.1, 26.8231)
+
+[node name="CogitoEnemy" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("52_mlseg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23556, -2.66908, 15.663)
 start_state = 1
-patrol_points = [NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_A"), NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_B")]
+patrol_path = NodePath("../EnemyPatrolpath")
 attack_range = 2.0
 
 [node name="CeilingLamp" parent="." instance=ExtResource("42_3rq3h")]

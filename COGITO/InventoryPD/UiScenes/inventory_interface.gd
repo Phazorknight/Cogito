@@ -171,10 +171,12 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 					print("Can't drop while wielding this item.")
 					grabbed_slot_data = null
 				else:
-					print("Dropping slot data via gamepad")
+					print("Dropping slot data via gamepad ")
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
-					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(index))
+					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data_gamepad_drop(index))
 					grabbed_slot_data = null
+					
+					
 		[_, "inventory_drop_item"]:
 			Audio.play_sound(sound_error)
 			print("Can't drop while moving an item.")

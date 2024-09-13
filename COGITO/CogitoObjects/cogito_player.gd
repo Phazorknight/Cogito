@@ -262,7 +262,7 @@ func increase_attribute(attribute_name: String, value: float, value_type: Consum
 func decrease_attribute(attribute_name: String, value: float):
 	var attribute = player_attributes.get(attribute_name)
 	if not attribute:
-		print("Player.gd decrease attribute: Attribute not found")
+		print("Player.gd decrease attribute: ", attribute_name, " - Attribute not found")
 		return
 	attribute.subtract(value)
 

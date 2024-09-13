@@ -65,6 +65,7 @@ func grab_slot_data(index: int) -> InventorySlotPD:
 	else:
 		return null
 
+
 func grab_single_slot_data(index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
 	if slot_data:
@@ -75,6 +76,7 @@ func grab_single_slot_data(index: int) -> InventorySlotPD:
 		return slot_data
 	else:
 		return null
+
 
 func use_slot_data(index: int):
 	if index == -1: # No item assigned to hotbar
@@ -120,6 +122,7 @@ func remove_item_from_stack(slot_data: InventorySlotPD):
 		if inventory_slots[index].quantity <= 0:
 			null_out_slots(slot_data)
 		inventory_updated.emit(self)
+
 
 func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
 	var slot_data = inventory_slots[index]
