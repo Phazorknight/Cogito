@@ -20,7 +20,7 @@ signal player_stand_up()
 ##Limits horizontal view to the look angle
 @export var limit_horizontal_view : bool = true
 ##Players maximum Horizontal Look angle when Sitting
-@export var look_angle: float = 120
+@export var horizontal_look_angle: float = 120
 ##Limit vertical view
 @export var limit_vertical_view : bool = true
 ##Height to lower Sit marker by, to account for the difference between player head and body height
@@ -28,7 +28,7 @@ signal player_stand_up()
 ##Area in which the Sitable can be interacted with
 @export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
 ##Where should player be placed on Sittable exit
-@export var placement_leave_behaviour: PlacementOnLeave = PlacementOnLeave.ORIGINAL
+@export var placement_on_leave: PlacementOnLeave = PlacementOnLeave.ORIGINAL
 ##Disable interaction while player is in the air
 @export var disable_on_jump: bool = true
 @export_group("Animation")
@@ -71,7 +71,7 @@ enum SitAreaBehaviour {
 
 enum PlacementOnLeave {
 	ORIGINAL,  ## Player returns to original location
-	AUTO,    ## Attempt to find nearby available location for Player using Navmesh
+	AUTO,    ## Attempt to find nearby available location for Player using Navmesh - Experimental
 	TRANSFORM     ## Player is placed at defined Leave node  Make sure this is setup in Nodes section
 }
 

@@ -291,7 +291,8 @@ func _on_pause_menu_resume():
 
 func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
-		if is_sitting:
+		#If players sitting & look marker is present, use sittable look handling
+		if is_sitting and CogitoSceneManager._current_sittable_node.look_marker_node:
 			handle_sitting_look(event)
 		else:
 			if is_free_looking:
@@ -417,8 +418,9 @@ func _sit_down():
 	if sittable:
 		is_sitting = true
 		set_physics_process(false)
-		sittable_look_marker = sittable.look_marker_node.global_transform.origin
-		sittable_look_angle = sittable.look_angle
+		if sittable.look_marker_node:
+			sittable_look_marker = sittable.look_marker_node.global_transform.origin
+		sittable_look_angle = sittable.horizontal_look_angle
 		if moving_seat == false:
 			original_position = self.global_transform
 			original_neck_basis = neck.global_transform.basis
@@ -449,10 +451,11 @@ func _sit_down_finished():
 	var sittable = CogitoSceneManager._current_sittable_node
 	$StandingCollisionShape.disabled = true
 	$CrouchingCollisionShape.disabled = true
-	var tween = create_tween()
-	var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
-	tween.tween_property(neck, "global_transform:basis", target_transform.basis, sittable.rotation_tween_duration)
-	
+	if sittable_look_marker:
+		var tween = create_tween()
+		var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
+		tween.tween_property(neck, "global_transform:basis", target_transform.basis, sittable.rotation_tween_duration)
+
 	
 func _stand_up():
 	var sittable = CogitoSceneManager._current_sittable_node
@@ -466,7 +469,7 @@ func _stand_up():
 			sittable.sit_position_node.transform = adjusted_transform
 
 		# Handle player exit placement on stand-up based on the placement_leave_behaviour of the sittable
-		match sittable.placement_leave_behaviour:
+		match sittable.placement_on_leave:
 			sittable.PlacementOnLeave.ORIGINAL:
 				_move_to_original_position(sittable)
 			sittable.PlacementOnLeave.AUTO:
