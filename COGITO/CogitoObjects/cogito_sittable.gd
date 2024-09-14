@@ -23,6 +23,8 @@ signal player_stand_up()
 @export var placement_on_leave: PlacementOnLeave = PlacementOnLeave.ORIGINAL
 ##Disable interaction while player is in the air
 @export var disable_on_jump: bool = true
+##Disable interaction while player is in the Crouching
+@export var disable_on_crouch: bool = true
 ##Disables (sibling) Carryable Component if found
 @export var disable_carry : bool = true
 ##Should the player get ejected from the seat at a certain y?
@@ -277,6 +279,10 @@ func interact(player_interaction_component):
 	
 	# Reset cooldown to current time + duration
 	interact_cooldown = current_time + interact_cooldown_duration
+	
+	if disable_on_crouch == true:
+		if player_node.is_crouching:
+			return
 	
 	if disable_on_jump == true:
 		if player_node.is_in_air:

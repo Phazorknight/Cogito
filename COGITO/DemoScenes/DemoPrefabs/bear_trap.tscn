@@ -137,6 +137,7 @@ script = ExtResource("1_787ou")
 interaction_text_when_on = "Escape"
 interaction_text_when_off = "Activate"
 sit_area_behaviour = 1
+disable_on_crouch = false
 tween_duration = 0.3
 rotation_tween_duration = 0.2
 animation_on_enter = "trap_close"

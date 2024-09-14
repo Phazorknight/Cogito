@@ -429,14 +429,9 @@ func _sit_down():
 			original_position = self.global_transform
 			original_neck_basis = neck.global_transform.basis
 			displacement_position = sittable.global_transform.origin - self.global_transform.origin
-
 		
-		#raise position up when crouching
-		if is_crouching:
-			var adjusted_transform = sittable.sit_position_node.transform
-			adjusted_transform.origin.y += sittable.sit_marker_displacement
-			sittable.sit_position_node.transform = adjusted_transform
-				
+		#TODO: Implement crouch handling
+		
 		# Check if the sittable is physics-based
 		if sittable.physics_sittable:
 			set_physics_process(true)
@@ -468,12 +463,7 @@ func _stand_up():
 	if sittable:
 		is_sitting = false
 		set_physics_process(false)
-		# reset sit position if crouching
-		if is_crouching:
-			var adjusted_transform = sittable.sit_position_node.transform
-			adjusted_transform.origin.y -= sittable.sit_marker_displacement
-			sittable.sit_position_node.transform = adjusted_transform
-
+		#TODO: Implement crouch handling
 		# Handle player exit placement on stand-up based on the placement_leave_behaviour of the sittable
 		match sittable.placement_on_leave:
 			sittable.PlacementOnLeave.ORIGINAL:
@@ -661,8 +651,8 @@ func _physics_process(delta):
 		#return
 	
 	if is_sitting:
-		#Update Player location if Chair has moved
 		var sittable = CogitoSceneManager._current_sittable_node
+		#Update Player location if Chair has moved - only applicable to physics sittables
 		if sittable.physics_sittable == true:
 			self.global_transform = sittable.sit_position_node.global_transform
 			#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
