@@ -7762,6 +7762,75 @@ Keypads are set up to work with doors, but you can also use them to trigger othe
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_07_Keypad"]
 shape = SubResource("SphereShape3D_n25yf")
 
+[node name="Hint_08_Sittable_Static" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 5.79255, 0.551412, -10.6608)
+
+[node name="ReadableComponent" parent="DEMO_HINTS/Hint_08_Sittable_Static" index="6"]
+readable_title = "Sittables"
+readable_content = "This chair contains a 'Cogito Sittable'
+
+This is an instance of a non-physics Sittable. 
+It tweens the player to a 'Sit Marker' & looks toward the 'Look Marker'  when interacted with. 
+
+The player is then held there until they interact again.
+
+On exit the player can be placed using these behaviours:
+
+They can be sent back to Original location.  
+
+Sent to a 'Leave Marker' with Transform.
+
+or Auto, which places the player in a free spot using the Navmesh.
+
+To prevent the player interacting behind the chair. This Sittable is setup to use a 'Sit Area' which defines where the player can interact from (in manual mode). "
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_08_Sittable_Static"]
+shape = SubResource("SphereShape3D_n25yf")
+
+[node name="Hint_09_Sittable_Auto" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -1.63305, 0.551412, -2.57468)
+
+[node name="ReadableComponent" parent="DEMO_HINTS/Hint_09_Sittable_Auto" index="6"]
+readable_title = "Sittables - Alternate mode"
+readable_content = "Sittables aren't just for seats!
+
+In this instance it has been used to make a trap. 
+
+The Trap utilises an alternate 'Sit area' behaviour, Auto which makes the Player \"sit\" automatically on entry
+
+This sittable also avoids using the Sittable look mode by not having a look marker node, so the player retains their normal look mode."
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_09_Sittable_Auto"]
+shape = SubResource("SphereShape3D_n25yf")
+
+[node name="Hint_10_Sittable_Physics" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -4.26676, 0.551412, -1.0637)
+
+[node name="ReadableComponent" parent="DEMO_HINTS/Hint_10_Sittable_Physics" index="6"]
+readable_title = "Sittables - Physics Sittable"
+readable_content = "The swing is an example of a Physics sittable. 
+
+Unlike the non-physics sittable it updates the player to stay on the Sit marker every frame.
+
+View angle is also dynamically adjusted to the look marker"
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_10_Sittable_Physics"]
+shape = SubResource("SphereShape3D_n25yf")
+
+[node name="Hint_11_Sittable_Vehicle" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 4.05165, 1.67329, 0.113413)
+
+[node name="ReadableComponent" parent="DEMO_HINTS/Hint_11_Sittable_Vehicle" index="6"]
+readable_title = "Sittables - Basic Vehicles"
+readable_content = "The Office chairs here are 'Cogito Vehicles' a very basic demo of how the Sittable class can be employed further.
+
+The Vehicle is essentially a physics sittable, that uses player input to move 
+
+"
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_11_Sittable_Vehicle"]
+shape = SubResource("SphereShape3D_n25yf")
+
 [node name="Note_Welcome" parent="." instance=ExtResource("80_g3r0x")]
 
 [node name="FrontDoor" type="AnimatableBody3D" parent="."]
@@ -7949,6 +8018,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70265, 0.923573, -1.51698)
 [editable path="DEMO_HINTS/Hint_05_Platform"]
 [editable path="DEMO_HINTS/Hint_06_AdvancedDoors"]
 [editable path="DEMO_HINTS/Hint_07_Keypad"]
+[editable path="DEMO_HINTS/Hint_08_Sittable_Static"]
+[editable path="DEMO_HINTS/Hint_09_Sittable_Auto"]
+[editable path="DEMO_HINTS/Hint_10_Sittable_Physics"]
+[editable path="DEMO_HINTS/Hint_11_Sittable_Vehicle"]
 [editable path="Platform/GenericSwitch"]
 [editable path="LIGHTZONES/LZ_General"]
 [editable path="LIGHTZONES/LZ_fromMainWindows"]

@@ -1,3 +1,4 @@
+@icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoVehicle.svg")
 extends CogitoSittable
 class_name CogitoVehicle
 

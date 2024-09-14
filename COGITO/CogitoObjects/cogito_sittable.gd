@@ -16,16 +16,6 @@ signal player_stand_up()
 ##Interction text when not Sat Down
 @export var interaction_text_when_off : String = "Sit"
 
-@export_category("Sittable Vision")
-##Limits horizontal view to the look angle
-@export var limit_horizontal_view : bool = true
-##Players maximum Horizontal Look angle when Sitting
-@export var horizontal_look_angle: float = 120
-##Limit vertical view
-@export var limit_vertical_view : bool = true
-##Height to lower Sit marker by, to account for the difference between player head and body height
-@export var sit_marker_displacement: float = 0.7
-
 @export_category("Sittable Behaviour")
 ##Area in which the Sitable can be interacted with
 @export var sit_area_behaviour: SitAreaBehaviour = SitAreaBehaviour.MANUAL
@@ -36,9 +26,20 @@ signal player_stand_up()
 ##Disables (sibling) Carryable Component if found
 @export var disable_carry : bool = true
 ##Should the player get ejected from the seat at a certain y?
-@export var eject_on_fall: bool = true
+@export var eject_on_fall: bool = false
 ##What y height should the player get ejected from Seat at?
 @export var eject_height: float = 0.35
+
+
+@export_group("Vision")
+##Limits horizontal view to the look angle
+@export var limit_horizontal_view : bool = true
+##Players maximum Horizontal Look angle when Sitting
+@export var horizontal_look_angle: float = 120
+##Limit vertical view
+@export var limit_vertical_view : bool = true
+##Height to lower Sit marker by, to account for the difference between player head and body height
+@export var sit_marker_displacement: float = 0.7
 
 @export_group("Animation")
 ##Move the player to the Sit marker location using a Tween
@@ -49,6 +50,13 @@ signal player_stand_up()
 @export var tween_duration: float = 0.8
 ##Time for rotation tween to face Look marker
 @export var rotation_tween_duration: float = 0.4
+
+@export_group("Audio")
+@export var sit_sound : AudioStream
+@export var stand_sound : AudioStream
+@export var sit_pitch : float = 0.5
+@export var stand_pitch : float = 0.5
+
 @export_group("Nodes")
 ##Node used as the Sit marker, Defines Player location when sitting
 @export var sit_position_node_path: NodePath
@@ -84,7 +92,7 @@ enum PlacementOnLeave {
 	TRANSFORM     ## Player is placed at defined Leave node  Make sure this is setup in Nodes section
 }
 
-@onready var AudioStream3D = $AudioStreamPlayer3D
+@onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var BasicInteraction = $BasicInteraction
 
 var interaction_text : String 
@@ -153,30 +161,52 @@ func displace_sit_marker():
 	
 	
 func _sit_down():
+	
+	#sit down audio
+	audio_stream_player_3d.stream = sit_sound
+	audio_stream_player_3d.pitch_scale = sit_pitch
+	audio_stream_player_3d.play()
+	
+	#update interaction text
 	interaction_text = interaction_text_when_on
 	object_state_updated.emit(interaction_text)
+	
+	#enable any enable on sit node
 	if enable_on_sit:
 		enable_on_sit.disabled = false
+		
 	# Disable carryable components if necessary
 	if disable_carry:
 		for component in carryable_components:
 			component.is_disabled = true
+			
+	#show any show on sit node		
 	for node in nodes_to_show_when_on:
 		node.show()
-		
 	for node in nodes_to_hide_when_on:
 		node.hide()
 		
 func _stand_up():
+	
+	#stand up audio
+	audio_stream_player_3d.stream = stand_sound
+	audio_stream_player_3d.pitch_scale = stand_pitch
+	audio_stream_player_3d.play()
+	
+	#update interaction text
 	interaction_text = interaction_text_when_off
 	object_state_updated.emit(interaction_text)
+	
+	#disable any enable_on_sit node
 	if enable_on_sit:
 		enable_on_sit.disabled = true
+		
 	# Enable carryable components if necessary
 	if disable_carry:
 		for component in carryable_components:
 			component.is_disabled = false
-			
+	
+	#hide any show on sit node		
 	for node in nodes_to_show_when_on:
 		node.hide()
 	for node in nodes_to_hide_when_on:
@@ -235,7 +265,6 @@ func interact(player_interaction_component):
 		if player_node.is_in_air:
 			return
 	
-	AudioStream3D.play()
 	# If the player is already sitting in a seat, and interacts with that seat then stand
 	if player_node.is_sitting and CogitoSceneManager._current_sittable_node == self:
 		CogitoSceneManager.emit_signal("stand_requested")

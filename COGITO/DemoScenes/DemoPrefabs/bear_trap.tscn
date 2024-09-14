@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://dpuhybufkdmcf"]
+[gd_scene load_steps=17 format=3 uid="uid://dpuhybufkdmcf"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_787ou"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_3gte2"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://COGITO/PackedScenes/hazard_zone.tscn" id="2_akbwk"]
+[ext_resource type="AudioStream" uid="uid://cpc4gy6hisxa8" path="res://COGITO/Assets/Audio/Kenney/Impacts/chipsCollide4.ogg" id="2_cy8a5"]
 [ext_resource type="AudioStream" uid="uid://c6ep078xmtg45" path="res://COGITO/Assets/Audio/Kenney/Impacts/impactPlank_medium_004.ogg" id="2_df47o"]
 [ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="2_sgovw"]
+[ext_resource type="AudioStream" uid="uid://bfmqga66x7l1k" path="res://COGITO/Assets/Audio/Kenney/rockHit2.ogg" id="3_uf32n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="5_tb0hg"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vcd5y"]
@@ -48,9 +50,11 @@ interaction_text_when_on = "Escape"
 interaction_text_when_off = "Activate"
 sit_area_behaviour = 1
 disable_on_jump = false
-eject_on_fall = false
 tween_duration = 0.3
 rotation_tween_duration = 0.2
+sit_sound = ExtResource("2_cy8a5")
+stand_sound = ExtResource("3_uf32n")
+sit_pitch = 0.35
 sit_position_node_path = NodePath("Sit Marker")
 sit_area_node_path = NodePath("sit_area")
 objects_call_interact = Array[NodePath]([NodePath("../HazardZone")])

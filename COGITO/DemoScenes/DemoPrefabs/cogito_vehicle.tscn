@@ -18,6 +18,8 @@ script = ExtResource("2_am12o")
 physics_sittable = true
 sit_area_behaviour = 2
 placement_on_leave = 1
+sit_sound = ExtResource("3_wbi0e")
+stand_sound = ExtResource("3_wbi0e")
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
 sit_area_node_path = NodePath("sit_area")
@@ -41,6 +43,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 [node name="Look Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.449, 0.721)
 
+[node name="Leave Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.139682, 0, 0.694907)
+
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_wbi0e")
 volume_db = -35.0
@@ -51,6 +56,3 @@ pitch_scale = 0.5
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sit_area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179856, -0.188456, 0.380226)
 shape = SubResource("BoxShape3D_h33nq")
-
-[node name="Leave Marker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.139682, 0, 0.694907)

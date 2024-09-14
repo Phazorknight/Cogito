@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=117 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -52,7 +52,6 @@
 [ext_resource type="PackedScene" uid="uid://dlm5kc3g1g18h" path="res://COGITO/PackedScenes/Pickups/pickup_dart_water.tscn" id="47_gb8en"]
 [ext_resource type="PackedScene" uid="uid://dyngdr0rnqwlb" path="res://COGITO/PackedScenes/Pickups/pickup_dart_fire.tscn" id="48_sg5rf"]
 [ext_resource type="PackedScene" uid="uid://dn4e1k7u3suoo" path="res://COGITO/Enemies/cogito_basic_enemy.tscn" id="52_mlseg"]
-[ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://COGITO/DemoScenes/DemoPrefabs/chair_desk.tscn" id="53_t5vst"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -3318,9 +3317,6 @@ patrol_points = [NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_A"), NodeP
 
 [node name="CeilingLamp" parent="." instance=ExtResource("42_3rq3h")]
 transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 0.441994, 1.78403, 1.3986)
-
-[node name="chairDesk" parent="." instance=ExtResource("53_t5vst")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82504, -9.68575e-08, -4.79404)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="body_entered" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" method="_on_body_entered"]

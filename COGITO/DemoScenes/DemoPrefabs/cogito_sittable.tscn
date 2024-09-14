@@ -15,7 +15,8 @@ size = Vector3(1.40192, 1.05004, 1.21932)
 
 [node name="Seat" type="StaticBody3D"]
 script = ExtResource("1_22lyd")
-eject_on_fall = false
+sit_sound = ExtResource("3_wmd07")
+stand_sound = ExtResource("3_wmd07")
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
 sit_area_node_path = NodePath("sit_area")
@@ -40,19 +41,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 [node name="Look Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.449, 0.721)
 
+[node name="LeaveMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.954016, 0, 0.839058)
+
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_wmd07")
 volume_db = -35.0
 pitch_scale = 0.5
+bus = &"SFX"
 
 [node name="sit_area" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sit_area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179856, -0.188456, 0.380226)
 shape = SubResource("BoxShape3D_k44cf")
-
-[node name="LeaveMarker" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.954016, 0, 0.839058)
 
 [connection signal="body_entered" from="sit_area" to="." method="_on_sit_area_body_entered"]
 [connection signal="body_exited" from="sit_area" to="." method="_on_sit_area_body_exited"]
