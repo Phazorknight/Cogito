@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dpuhybufkdmcf"]
+[gd_scene load_steps=21 format=3 uid="uid://dpuhybufkdmcf"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_787ou"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_3gte2"]
@@ -16,7 +16,7 @@ size = Vector3(0.3, 0.05, 0.3)
 size = Vector3(0.327356, 0.110522, 0.308265)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k44cf"]
-size = Vector3(0.954323, 1.05004, 1.01967)
+size = Vector3(0.181812, 0.165645, 0.111036)
 
 [sub_resource type="TorusMesh" id="TorusMesh_2lx5v"]
 material = ExtResource("5_tb0hg")
@@ -41,6 +41,94 @@ size = Vector3(0.2, 0.2, 0.02)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ykivb"]
 height = 0.172379
 
+[sub_resource type="Animation" id="Animation_utvqt"]
+resource_name = "trap_open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrapFrame/TeethLeft:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -0.834739), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrapFrame/TeethRight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.834267), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hgmjh"]
+resource_name = "trap_close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrapFrame/TeethLeft:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 4),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.834739)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrapFrame/TeethRight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 4),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.834267)]
+}
+
+[sub_resource type="Animation" id="Animation_eh08n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrapFrame/TeethLeft:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrapFrame/TeethRight:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i0hjo"]
+_data = {
+"RESET": SubResource("Animation_eh08n"),
+"trap_close": SubResource("Animation_hgmjh"),
+"trap_open": SubResource("Animation_utvqt")
+}
+
 [node name="BearTrap" type="Node3D"]
 
 [node name="Seat" type="StaticBody3D" parent="."]
@@ -49,14 +137,16 @@ script = ExtResource("1_787ou")
 interaction_text_when_on = "Escape"
 interaction_text_when_off = "Activate"
 sit_area_behaviour = 1
-disable_on_jump = false
 tween_duration = 0.3
 rotation_tween_duration = 0.2
+animation_on_enter = "trap_close"
+animation_on_leave = "trap_open"
 sit_sound = ExtResource("2_cy8a5")
 stand_sound = ExtResource("3_uf32n")
 sit_pitch = 0.35
 sit_position_node_path = NodePath("Sit Marker")
 sit_area_node_path = NodePath("sit_area")
+animation_player_node_path = NodePath("../AnimationPlayer")
 objects_call_interact = Array[NodePath]([NodePath("../HazardZone")])
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Seat"]
@@ -66,6 +156,7 @@ mesh = SubResource("BoxMesh_vcd5y")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.990049, 0)
 shape = SubResource("BoxShape3D_5cwmc")
 
 [node name="Sit Marker" type="Marker3D" parent="Seat"]
@@ -75,15 +166,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.449, 0.721)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Seat"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.881818, 0)
 stream = ExtResource("2_df47o")
-volume_db = -20.0
+volume_db = -10.0
 pitch_scale = 0.6
 bus = &"SFX"
 
 [node name="sit_area" type="Area3D" parent="Seat"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Seat/sit_area"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00849776, -0.188456, 0.0130692)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00989439, -0.630654, -0.012381)
 shape = SubResource("BoxShape3D_k44cf")
 
 [node name="BasicInteraction" parent="Seat" instance=ExtResource("2_3gte2")]
@@ -91,7 +183,7 @@ interaction_text = "Sit"
 is_disabled = true
 
 [node name="HazardZone" parent="." instance=ExtResource("2_akbwk")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.002404, 0.709587, 0.101622)
+transform = Transform3D(-2.84124e-08, 0, 0.65, 0, 0.65, 0, -0.65, 0, -2.84124e-08, -0.002, 0, 0.102)
 visible = false
 is_active = false
 
@@ -123,46 +215,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0104019, -0.254956)
 mesh = SubResource("BoxMesh_axi0e")
 skeleton = NodePath("")
 
-[node name="HingeRight" type="HingeJoint3D" parent="TrapFrame"]
-node_a = NodePath("../TeethRight")
-angular_limit/enable = true
-angular_limit/upper = 0.785398
-angular_limit/lower = -0.785398
-motor/enable = true
-motor/max_impulse = 5.0
-
-[node name="TeethRight" type="RigidBody3D" parent="TrapFrame"]
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
-transform = Transform3D(0.933104, 0, 0.359606, 0, 1, 0, -0.359606, 0, 0.933104, 0.170485, 0.128917, 0.43762)
-mesh = SubResource("PrismMesh_b3kdr")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
-transform = Transform3D(-0.359606, 0, 0.933104, 0, 1, 0, -0.933104, 0, -0.359606, 0.442375, 0.128917, -0.17524)
-mesh = SubResource("PrismMesh_b3kdr")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D6" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
-transform = Transform3D(-0.914084, 0, 0.405525, 0, 1, 0, -0.405525, 0, -0.914084, 0.192255, 0.128917, -0.438112)
-mesh = SubResource("PrismMesh_b3kdr")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D7" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
-transform = Transform3D(-0.405525, 0, -0.914084, 0, 1, 0, 0.914084, 0, -0.405525, 0.433358, 0.128917, 0.187501)
-mesh = SubResource("PrismMesh_b3kdr")
-skeleton = NodePath("")
-
-[node name="HingeLeft" type="HingeJoint3D" parent="TrapFrame"]
-node_a = NodePath("../TeethLeft")
-angular_limit/enable = true
-angular_limit/upper = 0.785398
-angular_limit/lower = -0.785398
-motor/enable = true
-motor/target_velocity = -1.00007
-motor/max_impulse = 5.0
-
-[node name="TeethLeft" type="RigidBody3D" parent="TrapFrame"]
+[node name="TeethLeft" type="Node3D" parent="TrapFrame"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TrapFrame/TeethLeft"]
 transform = Transform3D(0.933104, 0, 0.359606, 0, 1, 0, -0.359606, 0, 0.933104, -0.170486, 0.128917, -0.447129)
@@ -184,9 +237,37 @@ transform = Transform3D(-0.405525, 0, -0.914084, 0, 1, 0, 0.914084, 0, -0.405525
 mesh = SubResource("PrismMesh_b3kdr")
 skeleton = NodePath("")
 
+[node name="TeethRight" type="Node3D" parent="TrapFrame"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
+transform = Transform3D(0.933104, 0, 0.359606, 0, 1, 0, -0.359606, 0, 0.933104, 0.170485, 0.128917, 0.43762)
+mesh = SubResource("PrismMesh_b3kdr")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
+transform = Transform3D(-0.359606, 0, 0.933104, 0, 1, 0, -0.933104, 0, -0.359606, 0.442375, 0.128917, -0.17524)
+mesh = SubResource("PrismMesh_b3kdr")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
+transform = Transform3D(-0.914084, 0, 0.405525, 0, 1, 0, -0.405525, 0, -0.914084, 0.192255, 0.128917, -0.438112)
+mesh = SubResource("PrismMesh_b3kdr")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="TrapFrame/TeethRight"]
+transform = Transform3D(-0.405525, 0, -0.914084, 0, 1, 0, 0.914084, 0, -0.405525, 0.433358, 0.128917, 0.187501)
+mesh = SubResource("PrismMesh_b3kdr")
+skeleton = NodePath("")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.838821, 0)
 shape = SubResource("CylinderShape3D_ykivb")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i0hjo")
+}
 
 [connection signal="body_entered" from="Seat/sit_area" to="Seat" method="_on_sit_area_body_entered"]
 [connection signal="body_exited" from="Seat/sit_area" to="Seat" method="_on_sit_area_body_exited"]

@@ -50,6 +50,10 @@ signal player_stand_up()
 @export var tween_duration: float = 0.8
 ##Time for rotation tween to face Look marker
 @export var rotation_tween_duration: float = 0.4
+##Name of animation in the Animation player node, to play on enter
+@export var animation_on_enter: String 
+##Name of animation in the Animation player node, to play on leave
+@export var animation_on_leave: String
 
 @export_group("Audio")
 @export var sit_sound : AudioStream
@@ -66,6 +70,8 @@ signal player_stand_up()
 @export var sit_area_node_path: NodePath
 ## Node used to place player when Placement leave behaviour tells it to
 @export var leave_node_path: NodePath 
+##Animation player node
+@export var animation_player_node_path: NodePath
 
 @export_group("Interaction")
 ##Time before player can interact again. To prevent Spam which can cause issues with the player movement
@@ -98,6 +104,7 @@ enum PlacementOnLeave {
 var interaction_text : String 
 var sit_position_node: Node3D = null
 var look_marker_node: Node3D = null
+var animation_player: AnimationPlayer
 var original_position: Transform3D  
 var interaction_nodes : Array[Node]
 var carryable_components: Array = [Node]
@@ -124,7 +131,10 @@ func _ready():
 	look_marker_node = get_node_or_null(look_marker_node_path)
 	if not look_marker_node:
 		print("Look marker node not found.")	
-		
+	
+	#find optional animation player node
+	animation_player = get_node_or_null(animation_player_node_path)
+	
 	match sit_area_behaviour:
 			SitAreaBehaviour.MANUAL:
 				BasicInteraction.is_disabled = true
@@ -162,6 +172,9 @@ func displace_sit_marker():
 	
 func _sit_down():
 	
+	if animation_player:
+		animation_player.play(animation_on_enter)
+	
 	#sit down audio
 	audio_stream_player_3d.stream = sit_sound
 	audio_stream_player_3d.pitch_scale = sit_pitch
@@ -187,6 +200,9 @@ func _sit_down():
 		node.hide()
 		
 func _stand_up():
+	
+	if animation_player:
+		animation_player.play(animation_on_leave)
 	
 	#stand up audio
 	audio_stream_player_3d.stream = stand_sound

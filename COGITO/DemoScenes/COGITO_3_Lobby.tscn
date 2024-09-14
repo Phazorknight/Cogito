@@ -7763,7 +7763,7 @@ Keypads are set up to work with doors, but you can also use them to trigger othe
 shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Hint_08_Sittable_Static" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
-transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 5.79255, 0.551412, -10.6608)
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 4.61808, 0.551412, -9.63398)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_08_Sittable_Static" index="6"]
 readable_title = "Sittables"
@@ -7788,7 +7788,7 @@ To prevent the player interacting behind the chair. This Sittable is setup to us
 shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Hint_09_Sittable_Auto" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
-transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -1.63305, 0.551412, -2.57468)
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -2.26547, 1.00668, 11.2442)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_09_Sittable_Auto" index="6"]
 readable_title = "Sittables - Alternate mode"
@@ -7796,7 +7796,7 @@ readable_content = "Sittables aren't just for seats!
 
 In this instance it has been used to make a trap. 
 
-The Trap utilises an alternate 'Sit area' behaviour, Auto which makes the Player \"sit\" automatically on entry
+The Trap utilises an alternate Sit area behaviour; Auto which makes the Player \"sit\" automatically on entry
 
 This sittable also avoids using the Sittable look mode by not having a look marker node, so the player retains their normal look mode."
 
@@ -8000,7 +8000,7 @@ transform = Transform3D(0.999299, 0, 0.0374286, 0, 1, 0, -0.0374286, 0, 0.999299
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.77791, -0.259389, 0.0061115)
 
 [node name="BearTrap" parent="." instance=ExtResource("96_vec6d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.70265, 0.923573, -1.51698)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58288, 0.921004, 12.0337)
 
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
