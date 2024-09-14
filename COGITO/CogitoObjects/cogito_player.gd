@@ -461,6 +461,19 @@ func _sit_down_finished():
 func _stand_up():
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
+		
+		#Need to check if Physics chairs have fallen over, and thus reset orientations. Camera will break otherwise
+		var chair_up_vector = sittable.global_transform.basis.y
+		var global_up_vector = Vector3(0, 1, 0)
+		# Calculate angle between chair's up vector and the global up vector
+		var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
+		# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
+		if angle_to_up > 45.0:
+			# Fix player orientation if chair has fallen over
+			var upright_basis = Basis()
+			self.global_transform.basis = upright_basis
+			neck.global_transform.basis = upright_basis  
+			
 		is_sitting = false
 		set_physics_process(false)
 		#TODO: Implement crouch handling
@@ -528,7 +541,7 @@ func _move_to_nearby_location(sittable):
 
 		# Check if position is reachable
 		if navigation_agent.is_navigation_finished():
-			print("Found available location, moving there.", candidate_pos, attempts)
+			#print("Found available location, moving there.", candidate_pos, attempts)
 			var tween = create_tween()
 			navigation_agent.target_position.y += 1 # To avoid player going through floor
 			tween.tween_property(self, "global_transform:origin", navigation_agent.target_position, sittable.tween_duration)
@@ -656,9 +669,15 @@ func _physics_process(delta):
 		if sittable.physics_sittable == true:
 			self.global_transform = sittable.sit_position_node.global_transform
 			#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
-			if sittable.eject_on_fall == true and self.global_transform.origin.y < sittable.eject_height and not is_ejected:
-				is_ejected = true  # Set the flag to avoid repeated ejections
-				CogitoSceneManager._current_sittable_node.interact() #Interact with sittable to reset state and eject
+			if sittable.eject_on_fall == true and not is_ejected:
+				var chair_up_vector = sittable.global_transform.basis.y
+				var global_up_vector = Vector3(0, 1, 0)
+				# Calculate angle between chair's up vector and the global up vector
+				var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
+				# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
+				if angle_to_up > 45.0:
+					is_ejected = true  # Set the flag to avoid repeated ejections
+					CogitoSceneManager._current_sittable_node.interact() #Interact with sittable to reset state and eject
 
 		return
 		
