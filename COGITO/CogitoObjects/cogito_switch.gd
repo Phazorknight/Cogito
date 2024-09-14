@@ -116,7 +116,8 @@ func check_for_item() -> bool:
 		if slot_data != null and slot_data.inventory_item == required_item:
 			player_interaction_component.send_hint(null, required_item.name + " used.") # Sends a hint with the key item name.
 			if slot_data.inventory_item.discard_after_use:
-				inventory.remove_slot_data(slot_data)
+				inventory.remove_item_from_stack(slot_data)
+				# inventory.remove_slot_data(slot_data) (removed on 20240913, leaving line just in case there's bugs.
 			return true
 	
 	if item_hint != "":

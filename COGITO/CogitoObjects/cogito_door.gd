@@ -168,7 +168,8 @@ func check_for_key(interactor):
 		if slot_data != null and slot_data.inventory_item == key:
 			interactor.send_hint(null, key.name + " used.") # Sends a hint with the key item name.
 			if slot_data.inventory_item.discard_after_use:
-				inventory.remove_slot_data(slot_data)
+				inventory.remove_item_from_stack(slot_data)
+				# inventory.remove_slot_data(slot_data) (removed on 20240913, leaving line just in case there's bugs.
 			unlock_door()
 			
 			for nodepath in doors_to_sync_with:
