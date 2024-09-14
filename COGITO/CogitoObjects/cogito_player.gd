@@ -344,6 +344,7 @@ func get_params(transform3d, motion):
 
 #Sittable Vars
 var original_position: Transform3D  
+var displacement_position: Vector3
 var is_sitting = false
 var sittable_look_marker
 var sittable_look_angle
@@ -427,6 +428,8 @@ func _sit_down():
 		if moving_seat == false:
 			original_position = self.global_transform
 			original_neck_basis = neck.global_transform.basis
+			displacement_position = sittable.global_transform.origin - self.global_transform.origin
+
 		
 		#raise position up when crouching
 		if is_crouching:
@@ -479,6 +482,8 @@ func _stand_up():
 				_move_to_nearby_location(sittable)
 			sittable.PlacementOnLeave.TRANSFORM:
 				_move_to_leave_node(sittable)
+			sittable.PlacementOnLeave.DISPLACEMENT:
+				_move_to_displacement_position(sittable) 
 					
 		moving_seat = false
 
@@ -553,6 +558,14 @@ func _move_to_nearby_location(sittable):
 	print("No available location found after ",attempts, " tries. Testing for leave node.")
 	_move_to_leave_node(sittable)
 
+func _move_to_displacement_position(sittable):
+	var tween = create_tween()
+	var new_position = sittable.global_transform.origin - displacement_position
+	var new_transform = self.global_transform
+	new_transform.origin = new_position
+	tween.tween_property(self, "global_transform", new_transform, sittable.tween_duration)
+	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+	tween.tween_callback(Callable(self, "_stand_up_finished"))
 
 
 func _stand_up_finished():

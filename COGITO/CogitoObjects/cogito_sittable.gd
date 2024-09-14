@@ -95,7 +95,8 @@ enum SitAreaBehaviour {
 enum PlacementOnLeave {
 	ORIGINAL,  ## Player returns to original location
 	AUTO,    ## Attempt to find nearby available location for Player using Navmesh - Experimental
-	TRANSFORM     ## Player is placed at defined Leave node  Make sure this is setup in Nodes section
+	TRANSFORM,     ## Player is placed at defined Leave node  Make sure this is setup in Nodes section
+	DISPLACEMENT	## The displacement between player and Sittable is taken on sit down, and used on standup relative to Sittables new location
 }
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
@@ -307,6 +308,5 @@ func interact(player_interaction_component):
 		if nodepath != null:
 			var object = get_node(nodepath)
 			object.interact(player_interaction_component)
-
 
 

@@ -7780,7 +7780,11 @@ They can be sent back to Original location.
 
 Sent to a 'Leave Marker' with Transform.
 
+They can be sent back to original Displacement.
+
 or Auto, which places the player in a free spot using the Navmesh.
+
+
 
 To prevent the player interacting behind the chair. This Sittable is setup to use a 'Sit Area' which defines where the player can interact from (in manual mode). "
 
