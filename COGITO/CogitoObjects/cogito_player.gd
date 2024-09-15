@@ -462,18 +462,6 @@ func _stand_up():
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
 		
-		#Need to check if Physics chairs have fallen over, and thus reset orientations. Camera will break otherwise
-		var chair_up_vector = sittable.global_transform.basis.y
-		var global_up_vector = Vector3(0, 1, 0)
-		# Calculate angle between chair's up vector and the global up vector
-		var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
-		# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
-		if angle_to_up > 45.0:
-			# Fix player orientation if chair has fallen over
-			var upright_basis = Basis()
-			self.global_transform.basis = upright_basis
-			neck.global_transform.basis = upright_basis  
-			
 		is_sitting = false
 		set_physics_process(false)
 		#TODO: Implement crouch handling
@@ -576,6 +564,8 @@ func _stand_up_finished():
 	set_physics_process(true)
 	$StandingCollisionShape.disabled = false
 	#$CrouchingCollisionShape.disabled = false
+	self.global_transform.basis = Basis()
+	neck.global_transform.basis = original_neck_basis  
 	
 #endregion
 
@@ -677,7 +667,8 @@ func _physics_process(delta):
 				# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
 				if angle_to_up > 45.0:
 					is_ejected = true  # Set the flag to avoid repeated ejections
-					CogitoSceneManager._current_sittable_node.interact() #Interact with sittable to reset state and eject
+					_stand_up()
+					CogitoSceneManager._current_sittable_node.interact(player_interaction_component) #Interact with sittable to reset state and eject
 
 		return
 		
