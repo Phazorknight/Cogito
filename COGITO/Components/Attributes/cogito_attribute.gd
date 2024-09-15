@@ -24,13 +24,27 @@ signal attribute_reached_zero(attribute_name:String, value_current:float, value_
 ## Use this when you don't want an attribute's current value to not be saved.
 @export var dont_save_current_value : bool = false
 
-var value_current : float
+var value_current : float:
+	set(value):
+		var prev_value = value_current
+		value_current = value
+		if prev_value < value_current:
+			attribute_changed.emit(attribute_name,value_current,value_max,true)
+		elif prev_value > value_current:
+			attribute_changed.emit(attribute_name,value_current,value_max,false)
+		
+		if value_current <= 0:
+			value_current = 0
+			attribute_reached_zero.emit(attribute_name,value_current,value_max)
+		
+		if value_current > value_max:
+			value_current = value_max
+
 
 # Used when loading/setting an attribute
 func set_attribute(_value_current:float, _value_max:float):
 	value_current = _value_current
 	value_max = _value_max
-	attribute_changed.emit(attribute_name,value_current,value_max,true)
 
 
 func add(amount):
@@ -39,10 +53,6 @@ func add(amount):
 		return
 		
 	value_current += amount
-	
-	if value_current > value_max:
-		value_current = value_max
-	attribute_changed.emit(attribute_name,value_current,value_max,true)
 
 
 func subtract(amount):
@@ -51,9 +61,3 @@ func subtract(amount):
 		return
 		
 	value_current -= amount
-	
-	if value_current <= 0:
-		value_current = 0
-		attribute_reached_zero.emit(attribute_name,value_current,value_max)
-		
-	attribute_changed.emit(attribute_name,value_current,value_max,false)
