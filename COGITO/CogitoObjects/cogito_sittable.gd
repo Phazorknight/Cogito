@@ -104,6 +104,7 @@ enum PlacementOnLeave {
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var BasicInteraction = $BasicInteraction
 
+var is_occupied: bool = false
 var interaction_text : String 
 var sit_position_node: Node3D = null
 var look_marker_node: Node3D = null
@@ -201,6 +202,8 @@ func _sit_down():
 		node.show()
 	for node in nodes_to_hide_when_on:
 		node.hide()
+	
+	is_occupied = true
 		
 func _stand_up():
 	
@@ -230,17 +233,20 @@ func _stand_up():
 		node.hide()
 	for node in nodes_to_hide_when_on:
 		node.show()
-			
+	
+	is_occupied = false
+
 func switch():
-	if player_node.is_sitting:
+	if is_occupied:
 		_stand_up()
-		interaction_text = interaction_text_when_off
-		object_state_updated.emit(interaction_text)
 	else:
 		_sit_down()
-		#Update interaction text
-		interaction_text = interaction_text_when_on
-		object_state_updated.emit(interaction_text)
+
+func set_state():
+	if is_occupied:
+		_sit_down()
+	else:
+		_stand_up()
 
 func _on_sit_area_body_entered(body):
 	if body == player_node:
@@ -315,4 +321,18 @@ func interact(player_interaction_component):
 			var object = get_node(nodepath)
 			object.interact(player_interaction_component)
 
+
+func save():
+	var state_dict = {
+		"node_path" : self.get_path(),
+		"is_occupied" : is_occupied,
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		
+	}
+	return state_dict
 
