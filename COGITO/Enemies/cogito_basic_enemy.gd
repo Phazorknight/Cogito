@@ -255,7 +255,23 @@ func npc_footsteps(delta):
 			if !can_play_footstep and wiggle_vector.y < 0.9:
 				can_play_footstep = true
 
-
+#Door handling
+func _on_interaction_raycast_interactable_seen(interactable):
+	if interactable is CogitoDoor:
+		interact_with_door(interactable)
+		
+func interact_with_door(door: CogitoDoor):
+	if door.is_locked:
+		print("Door is locked.")
+		#TODO on NPC inventory addition, add key check here	
+		door.audio_stream_player_3d.stream = door.rattle_sound
+		door.audio_stream_player_3d.play()
+		#TODO Recalculate path on locked door encountered, set avoidance around locked door
+	else:
+		if door.is_open:
+			door.close_door(self)
+		else:
+			door.open_door(self)
 
 func load_patrol_points():
 	if patrol_path_nodepath:
