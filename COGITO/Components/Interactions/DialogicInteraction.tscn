@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://7sgndjwrwe64"]
+
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/DialogicInteraction.gd" id="1_qrj3n"]
+
+[node name="DialogicInteraction" type="Node3D"]
+script = ExtResource("1_qrj3n")
+input_map_action = "interact"
+interaction_text = "Start Dialogic"
