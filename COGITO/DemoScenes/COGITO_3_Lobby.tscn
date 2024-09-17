@@ -7767,26 +7767,14 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 4.61808, 0.551412, -9.63398)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_08_Sittable_Static" index="6"]
 readable_title = "Sittables"
-readable_content = "This chair contains a 'Cogito Sittable'
+readable_content = "This chair contains a [b]Cogito Sittable[/b]
 
-This is an instance of a non-physics Sittable. 
-It tweens the player to a 'Sit Marker' & looks toward the 'Look Marker'  when interacted with. 
+This is a non-physics Sittable.  
 
-The player is then held there until they interact again.
+It tweens the player to a 'Sit Marker' and makes them look at the 'Look Marker' when interacted with.
 
-On exit the player can be placed using these behaviours:
-
-They can be sent back to Original location.  
-
-Sent to a 'Leave Marker' with Transform.
-
-They can be sent back to original Displacement.
-
-or Auto, which places the player in a free spot using the Navmesh.
-
-
-
-To prevent the player interacting behind the chair. This Sittable is setup to use a 'Sit Area' which defines where the player can interact from (in manual mode). "
+The player stays seated until they interact again."
+rich_text = true
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_08_Sittable_Static"]
 shape = SubResource("SphereShape3D_n25yf")
@@ -7795,14 +7783,21 @@ shape = SubResource("SphereShape3D_n25yf")
 transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -2.26547, 1.00668, 11.2442)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_09_Sittable_Auto" index="6"]
-readable_title = "Sittables - Alternate mode"
-readable_content = "Sittables aren't just for seats!
+readable_title = "Sittables - Sit Area"
+readable_content = "[b]Sittables aren't just for seats![/b]
 
-In this instance it has been used to make a trap. 
+In this instance, a Sittable is used for a trap.  
+It uses the [b]Auto[/b] sit area behaviour, causing the player to sit automatically upon entering the area.
 
-The Trap utilises an alternate Sit area behaviour; Auto which makes the Player \"sit\" automatically on entry
+No \"Look Marker\" is used here, so the player retains full control of their view.
 
-This sittable also avoids using the Sittable look mode by not having a look marker node, so the player retains their normal look mode."
+[b]Other Sit Area behaviours:[/b]  
+
+[b] Manual[/b] : The player can only interact when inside the defined Sit Area. This avoids the player interacting with the seats from behind or any undesired location.
+
+[b]  None[/b]  : The player can interact with the Sittable from anywhere.
+"
+rich_text = true
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_09_Sittable_Auto"]
 shape = SubResource("SphereShape3D_n25yf")
@@ -7812,11 +7807,23 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -4.26676, 0.551412, -1.0637)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_10_Sittable_Physics" index="6"]
 readable_title = "Sittables - Physics Sittable"
-readable_content = "The swing is an example of a Physics sittable. 
+readable_content = "The swing is an example of a [b]Physics Sittable[/b]. 
 
-Unlike the non-physics sittable it updates the player to stay on the Sit marker every frame.
+It keeps the player on the Sit Marker & dynamically adjusts the view angle to follow the Look Marker.
 
-View angle is also dynamically adjusted to the look marker"
+[b]Exit Behaviour[/b]
+
+On exit the player can be placed using these behaviours:
+
+Original: Places player at pre-sitting position
+
+Transform : Places player at a 'Leave Marker'.
+
+Displacement: Places player at pre-sitting displacement
+
+Auto: Places the player in a free spot using the Navmesh.
+"
+rich_text = true
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_10_Sittable_Physics"]
 shape = SubResource("SphereShape3D_n25yf")
@@ -7826,11 +7833,12 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 4.05165, 1.67329, 0.113413)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_11_Sittable_Vehicle" index="6"]
 readable_title = "Sittables - Basic Vehicles"
-readable_content = "The Office chairs here are 'Cogito Vehicles' a very basic demo of how the Sittable class can be employed further.
+readable_content = "These chairs are examples of [b]Cogito Vehicles[/b], a basic example of extending the Sittable class
 
 The Vehicle is essentially a physics sittable, that uses player input to move 
 
 "
+rich_text = true
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="DEMO_HINTS/Hint_11_Sittable_Vehicle"]
 shape = SubResource("SphereShape3D_n25yf")
