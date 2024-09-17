@@ -7816,8 +7816,8 @@ door_speed = 3.0
 [node name="GenericSwitch" parent="Platform" instance=ExtResource("66_4pwwj")]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.986555, 0.88378, -0.198246)
 sync_to_physics = false
-interaction_text_when_on = "Lift platform"
-interaction_text_when_off = "Lower platform"
+interaction_text_when_on = "Lower platform"
+interaction_text_when_off = "Lift platform"
 objects_call_interact = Array[NodePath]([NodePath("..")])
 
 [node name="floorFull(Clone)" type="MeshInstance3D" parent="Platform"]
