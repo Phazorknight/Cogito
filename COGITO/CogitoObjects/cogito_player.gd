@@ -351,6 +351,7 @@ var sittable_look_angle
 var moving_seat = false
 var original_neck_basis = Basis()
 var is_ejected = false
+var currently_tweening = false
 
 func toggle_sitting():
 	if is_sitting:
@@ -434,6 +435,7 @@ func _sit_down():
 		
 		# Check if the sittable is physics-based
 		if sittable.physics_sittable:
+			currently_tweening = true
 			set_physics_process(true)
 			#just using same tween for now with less tween time on chair_desk, TODO create a more dynamic 'tween' in physics process
 			var tween = create_tween()
@@ -447,6 +449,7 @@ func _sit_down():
 			tween.tween_callback(Callable(self, "_sit_down_finished"))
 		
 func _sit_down_finished():
+	currently_tweening = false
 	is_sitting = true
 	set_physics_process(true)
 	var sittable = CogitoSceneManager._current_sittable_node
@@ -503,12 +506,13 @@ func _move_to_nearby_location(sittable):
 	print("Attempting to find available locations to move player to")
 	var navigation_agent = $NavigationAgent3D 
 	var seat_position = sittable.global_transform.origin
-	var exit_distance = 1.0 
-	var max_distance = 10.0 # Max distance from Sittable to try, multiplies tha random direction
-	var step_increase = 0.5 
-	var max_attempts = 10
-	var navmesh_offset_y = 0.25 
-	var attempts = 0
+	var exit_distance: float = 1.0
+	var max_distance: float = 10.0 # Max distance from Sittable to try, multiplies the random direction
+	var step_increase: float = 0.5
+	var max_attempts: int = 10
+	var navmesh_offset_y: float = 0.25
+	var attempts: int = 0
+
 
 	var player_position = self.global_transform.origin
 
@@ -652,12 +656,13 @@ var jumped_from_slide = false
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
-	
 	if is_sitting:
 		var sittable = CogitoSceneManager._current_sittable_node
 		#Update Player location if Chair has moved - only applicable to physics sittables
 		if sittable.physics_sittable == true:
-			self.global_transform = sittable.sit_position_node.global_transform
+			#avoids instantly moving to seat before tween is finished
+			if not currently_tweening:
+				self.global_transform = sittable.sit_position_node.global_transform
 			#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
 			if sittable.eject_on_fall == true and not is_ejected:
 				var chair_up_vector = sittable.global_transform.basis.y

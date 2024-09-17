@@ -56,3 +56,18 @@ func apply_momentum(delta):
 	velocity += acceleration
 	velocity *= momentum_damping
 	acceleration = Vector3.ZERO
+
+func save():
+	var state_dict = {
+		"node_path" : self.get_path(),
+		"is_occupied" : is_occupied,
+		"physics_sittable" : physics_sittable,
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		
+	}
+	return state_dict
