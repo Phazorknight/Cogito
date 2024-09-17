@@ -20,6 +20,7 @@ const msaa_3d_key = "msaa_3d"
 
 # Gameplay options
 const invert_vertical_axis_key = "invert_vertical_axis"
+const toggle_crouching_key = "toggle_crouching"
 const mouse_sens_key = "mouse_sens"
 const gp_looksens_key = "gp_looksens"
 const head_bobble_key = "head_bobble"

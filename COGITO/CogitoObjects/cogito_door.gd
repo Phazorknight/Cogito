@@ -32,6 +32,8 @@ enum DoorType {
 @export var interaction_text_when_closed : String = "Open"
 ## Text that appears on the interaction prompt when open.
 @export var interaction_text_when_open : String = "Close"
+## Use this if you don't want the door mesh to be detected by the interaction raycast. Useful if you have doors that are controlled by other interactables.
+@export var ignore_interaction_raycast: bool = false
 @export var is_locked : bool = false
 ## Item resources that is needed to unlock the door.
 @export var key : InventoryItemPD
@@ -103,7 +105,8 @@ var player_interaction_component : PlayerInteractionComponent
 
 
 func _ready():
-	add_to_group("interactable")
+	if !ignore_interaction_raycast:
+		add_to_group("interactable")
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	

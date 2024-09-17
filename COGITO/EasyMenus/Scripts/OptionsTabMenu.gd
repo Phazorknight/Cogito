@@ -7,11 +7,13 @@ var config = ConfigFile.new()
 
 # GAMEPLAY
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
+@onready var toggle_crouching_check_button: CheckButton = %ToggleCrouchingCheckButton
 @onready var headbob_option_button: OptionButton = %HeadbobOptionButton
 @onready var mouse_sens_slider: HSlider = %MouseSensSlider
 @onready var mouse_sens_value_label: Label = %MouseSensValueLabel
 @onready var gp_look_sens_value_label: Label = %GPLookSensValueLabel
 @onready var gp_look_sens_slider: HSlider = %GPLookSensSlider
+
 
 var gp_looksens : float
 var mouse_sens : float
@@ -166,6 +168,7 @@ func set_volume(bus_index, value):
 # Saves the options
 func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, invert_y_check_button.button_pressed)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, toggle_crouching_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, headbob_strength)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, mouse_sens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, gp_looksens)
@@ -190,6 +193,7 @@ func load_options():
 		print("Loading options config failed. Assuming and saving defaults.")
 	
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+	var toggle_crouching = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
 	mouse_sens = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 	gp_looksens = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
@@ -208,6 +212,11 @@ func load_options():
 	# LOADING GAMEPLAY CFG
 	invert_y_check_button.set_pressed_no_signal(invert_y)
 	invert_y_check_button.emit_signal("toggled", invert_y) #TODO: change this to the new signal emitting syntax
+	
+	toggle_crouching_check_button.set_pressed(toggle_crouching)
+	toggle_crouching_check_button.toggled.emit()
+	
+	
 
 	match headbob_strength:
 		1: headbob_option_button.selected = 0

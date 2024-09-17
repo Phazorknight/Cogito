@@ -79,6 +79,8 @@ var LandingVolume: float = 0.8
 @export var CAN_BUNNYHOP : bool = true
 @export var BUNNY_HOP_ACCELERATION : float = 0.1
 @export var INVERT_Y_AXIS : bool = true
+## Controled by the game config. If false, player has to hold the crouch key to stay crouched.
+@export var TOGGLE_CROUCH : bool = false
 ## How much strength the player has to push RigidBody3D objects.
 @export var PLAYER_PUSH_FORCE : float = 1.3
 
@@ -150,6 +152,7 @@ var is_walking : bool = false
 var is_sprinting : bool = false
 var is_crouching : bool = false
 var is_free_looking : bool  = false
+var try_crouch : bool
 var slide_vector : Vector2 = Vector2.ZERO
 var wiggle_vector : Vector2 = Vector2.ZERO
 var wiggle_index : float = 0.0
@@ -294,6 +297,7 @@ func _reload_options():
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+		TOGGLE_CROUCH = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
 		JOY_H_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 		JOY_V_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 
@@ -492,7 +496,14 @@ func _physics_process(delta):
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
 		crouched_jump = is_crouching and not jumped_from_slide
 	
-	if crouched_jump or (not jumped_from_slide and is_on_floor() and Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding()):
+	# CROUCH HANDLING dependant on toggle_crouch
+	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+		try_crouch = !try_crouch
+	elif !TOGGLE_CROUCH:
+		try_crouch = Input.is_action_pressed("crouch")
+	
+	
+	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch and !is_movement_paused or crouch_raycast.is_colliding()):
 		# should we be sliding?
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
 			sliding_timer.start()
