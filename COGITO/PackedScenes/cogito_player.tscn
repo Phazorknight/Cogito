@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=27 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_player.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_iyhv4"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://COGITO/Components/Attributes/StaminaAttribute.tscn" id="8_kodbk"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="9_ky5mf"]
 [ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://COGITO/Assets/Animations/player_eyes.tres" id="10_tp6cj"]
+[ext_resource type="Script" path="res://COGITO/Scripts/interaction_shapecast.gd" id="11_fryyl"]
 [ext_resource type="Script" path="res://COGITO/Scripts/interaction_raycast.gd" id="11_miluh"]
 [ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="12_ug3wt"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="13_fyfhw"]
@@ -27,6 +28,9 @@ size = Vector3(0.6, 1.7, 0.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ut3wm"]
 size = Vector3(0.6, 0.7, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e32pq"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_af0lu"]
 streams_count = 5
@@ -104,6 +108,14 @@ target_position = Vector3(0, 0, -2.5)
 collision_mask = 3
 script = ExtResource("11_miluh")
 
+[node name="InteractionShapecast" type="ShapeCast3D" parent="Body/Neck/Head/Eyes/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
+shape = SubResource("BoxShape3D_e32pq")
+target_position = Vector3(0, 0, -1.55)
+max_results = 10
+collision_mask = 3
+script = ExtResource("11_fryyl")
+
 [node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
 
@@ -127,8 +139,9 @@ landing_material_library = ExtResource("19_pc36t")
 wait_time = 0.5
 one_shot = true
 
-[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "wieldable_container") instance=ExtResource("20_4f25o")]
-interaction_raycast = NodePath("../Body/Neck/Head/Eyes/Camera/InteractionRaycast")
+[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_shapecast", "wieldable_container") instance=ExtResource("20_4f25o")]
+use_shapecast = true
+interaction_shapecast = NodePath("../Body/Neck/Head/Eyes/Camera/InteractionShapecast")
 wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("21_j3p88")]
@@ -137,6 +150,6 @@ player = NodePath("..")
 [node name="PauseMenu" parent="." instance=ExtResource("22_haksr")]
 
 [connection signal="animation_finished" from="Body/Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
-[connection signal="interactable_unseen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
+[connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionShapecast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
+[connection signal="interactable_unseen" from="Body/Neck/Head/Eyes/Camera/InteractionShapecast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]

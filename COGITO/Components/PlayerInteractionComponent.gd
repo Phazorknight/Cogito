@@ -13,13 +13,17 @@ signal started_carrying(interaction_node: Node)
 var look_vector: Vector3
 var device_id: int = -1  # Used for displaying correct input prompts depending on input device.
 
+@export var use_shapecast : bool = false
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
+@export var interaction_shapecast: InteractionShapeCast
+
 var interactable: # Updated via signals from InteractionRayCast
 	set = _set_interactable
 
 var carried_object = null:  # Used for carryable handling.
 	set = _set_carried_object
+	
 var is_carrying: bool:
 	get: return carried_object != null
 ## Power with which object are thrown (opposed to being dropped)
@@ -35,6 +39,7 @@ var equipped_wieldable_node = null
 var wieldable_was_on: bool = false
 var is_wielding: bool:
 	get: return equipped_wieldable_item != null
+	
 var player_rid
 
 
@@ -45,6 +50,8 @@ func _ready():
 func exclude_player(rid: RID):
 	player_rid = rid
 	interaction_raycast.add_exception_rid(rid)
+	if interaction_shapecast:
+		interaction_shapecast.add_exception_rid(rid)
 
 
 func _process(_delta):
@@ -104,14 +111,24 @@ func _handle_interaction(action: String) -> void:
 
 ## Helper function to always get raycast destination point
 func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
-	var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
-	if interaction_raycast.is_colliding():
-		if destination_point == interaction_raycast.get_collision_point():
-			return interaction_raycast.get_collision_point()
+	if !use_shapecast:
+		var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
+		if interaction_raycast.is_colliding():
+			if destination_point == interaction_raycast.get_collision_point():
+				return interaction_raycast.get_collision_point()
+			else:
+				return destination_point
 		else:
 			return destination_point
 	else:
-		return destination_point
+		var destination_point = interaction_shapecast.global_position + (interaction_shapecast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
+		if interaction_shapecast.is_colliding():
+			if destination_point == interaction_shapecast.get_collision_point(0):
+				return interaction_shapecast.get_collision_point(0)
+			else:
+				return destination_point
+		else:
+			return destination_point
 
 
 ### Carryable Management
