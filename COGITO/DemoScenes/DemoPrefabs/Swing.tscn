@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdab2cuy8hue6"]
+[gd_scene load_steps=13 format=3 uid="uid://bdab2cuy8hue6"]
 
 [ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="2_g611i"]
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="2_qidcx"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="3_4okg1"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="4_oxytt"]
 [ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="4_xwhvl"]
@@ -43,7 +42,6 @@ angular_limit/enable = true
 
 [node name="swing" type="RigidBody3D" parent="Swing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.36643, 0)
-script = ExtResource("2_qidcx")
 
 [node name="ImpactSounds" parent="Swing/swing" instance=ExtResource("3_4okg1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0063231, 0)

@@ -34,6 +34,41 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var player_state_savetime : int
 @export var player_state_slot_name : String
 
+# Sitting vars
+@export var is_sitting: bool = false
+@export var sittable_look_marker: Vector3 = Vector3()
+@export var sittable_look_angle: float = 0.0
+@export var moving_seat: bool = false
+@export var displacement_position: Vector3 = Vector3()
+@export var original_position: Transform3D = Transform3D()
+@export var original_neck_basis: Basis = Basis()
+@export var is_ejected: bool = false
+@export var currently_tweening: bool = false
+
+func save_sitting_state(player):
+	is_sitting = player.is_sitting
+	sittable_look_marker = player.sittable_look_marker if player.is_sitting else Vector3()
+	sittable_look_angle = player.sittable_look_angle if player.is_sitting else 0.0
+	moving_seat = player.moving_seat
+	displacement_position = player.displacement_position if player.is_sitting else Vector3()
+	original_position = player.original_position if player.is_sitting else Transform3D()
+	original_neck_basis = player.original_neck_basis if player.is_sitting else Basis()
+	is_ejected = player.is_ejected
+	currently_tweening = player.currently_tweening
+
+func load_sitting_state(player):
+	player.is_sitting = is_sitting
+	player.sittable_look_marker = sittable_look_marker
+	player.sittable_look_angle = sittable_look_angle
+	player.moving_seat = moving_seat
+	player.displacement_position = displacement_position
+	player.original_position = original_position
+	player.original_neck_basis = original_neck_basis
+	player.is_ejected = is_ejected
+	player.currently_tweening = currently_tweening
+
+
+
 func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
 	player_attributes[name] = attribute_data
 	
@@ -62,6 +97,11 @@ func write_state(state_slot : String) -> void:
 	#var player_state_file = str(player_state_dir + state_slot + ".res")
 	ResourceSaver.save(self, player_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Player state saved as ", player_state_file)
+	
+	## For debug save as .tres
+	var player_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".tres")
+	ResourceSaver.save(self, player_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
+	print("Scene state saved as .tres: ", player_state_file_tres)
 
 
 

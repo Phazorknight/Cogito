@@ -144,6 +144,9 @@ func load_player_state(player, passed_slot:String):
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
 		
+		## Loading player sitting state
+		_player_state.load_sitting_state(player) 
+		
 		#Loading player interaction component state
 		var player_interaction_component_state = _player_state.interaction_component_state
 		for state_data in player_interaction_component_state:
@@ -203,7 +206,8 @@ func save_player_state(player, slot:String):
 		var max_value = player.player_attributes[attribute].value_max
 		var attribute_data := Vector2(cur_value, max_value)
 		_player_state.add_player_attribute_to_state_data(attribute, attribute_data)
-
+	## Save player sitting state
+	_player_state.save_sitting_state(player)
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")
 	if _screenshot_to_save:
