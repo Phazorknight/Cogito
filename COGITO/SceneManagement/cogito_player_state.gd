@@ -99,9 +99,9 @@ func write_state(state_slot : String) -> void:
 	print("Player state saved as ", player_state_file)
 	
 	## For debug save as .tres
-	var player_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".tres")
-	ResourceSaver.save(self, player_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
-	print("Scene state saved as .tres: ", player_state_file_tres)
+	#var player_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".tres")
+	#ResourceSaver.save(self, player_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
+	#print("Scene state saved as .tres: ", player_state_file_tres)
 
 
 

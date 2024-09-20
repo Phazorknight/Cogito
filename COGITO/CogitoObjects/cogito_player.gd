@@ -415,8 +415,8 @@ func handle_sitting_look(event):
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-120), deg_to_rad(120))
 
 func _sit_down():
-	$StandingCollisionShape.disabled = true
-	$CrouchingCollisionShape.disabled = true
+	standing_collision_shape.disabled = true
+	crouching_collision_shape.disabled = true
 	is_ejected = false 
 		
 	var sittable = CogitoSceneManager._current_sittable_node
@@ -453,8 +453,8 @@ func _sit_down_finished():
 	is_sitting = true
 	set_physics_process(true)
 	var sittable = CogitoSceneManager._current_sittable_node
-	$StandingCollisionShape.disabled = true
-	$CrouchingCollisionShape.disabled = true
+	standing_collision_shape.disabled = true
+	crouching_collision_shape.disabled = true
 	if sittable_look_marker:
 		var tween = create_tween()
 		var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
@@ -566,8 +566,8 @@ func _move_to_displacement_position(sittable):
 func _stand_up_finished():
 	is_sitting = false
 	set_physics_process(true)
-	$StandingCollisionShape.disabled = false
-	#$CrouchingCollisionShape.disabled = false
+	standing_collision_shape.disabled = false
+	#crouching_collision_shape.disabled = false
 	self.global_transform.basis = Basis()
 	neck.global_transform.basis = original_neck_basis  
 	

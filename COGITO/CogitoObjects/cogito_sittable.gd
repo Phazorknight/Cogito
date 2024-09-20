@@ -25,7 +25,7 @@ signal player_stand_up()
 @export var disable_on_jump: bool = true
 ##Disable interaction while player is in the Crouching
 @export var disable_on_crouch: bool = true
-##Disables (sibling) Carryable Component if found
+##Disables (child) Carryable Component if found
 @export var disable_carry : bool = true
 ##Should the player get ejected from the seat at a certain y?
 @export var eject_on_fall: bool = false
@@ -147,22 +147,19 @@ func _ready():
 			SitAreaBehaviour.NONE:
 				BasicInteraction.is_disabled = false
 	if disable_carry:
-		carryable_components = get_sibling_carryable_components()
+		carryable_components = get_child_carryable_components()
 		
 	if is_sat_on_start:
 		interact(player_node.player_interaction_component)
 		BasicInteraction.is_disabled = false
 		
 
-func get_sibling_carryable_components() -> Array:
+func get_child_carryable_components() -> Array:
 	var components = []
-	var parent = get_parent()
-	
-	# iterate through sibling nodes and check for CogitoCarryableComponent
-	for child in parent.get_children():
+	# iterate through child nodes and check for CogitoCarryableComponent
+	for child in self.get_children():
 		if child is CogitoCarryableComponent:
 			components.append(child)
-	
 	return components
 
 

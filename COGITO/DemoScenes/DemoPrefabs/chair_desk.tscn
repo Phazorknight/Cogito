@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8nhffak4g0c6"]
+[gd_scene load_steps=15 format=3 uid="uid://b8nhffak4g0c6"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="1_5buw4"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_vehicle.gd" id="1_14400"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="2_hg52m"]
+[ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="2_tkltg"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_ag03y"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="3_gk1dv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmjq1"]
@@ -106,11 +108,23 @@ size = Vector3(0.671021, 0.5, 0.526855)
 [sub_resource type="BoxShape3D" id="BoxShape3D_eedpt"]
 size = Vector3(0.671021, 0.714905, 0.136169)
 
-[node name="chairDesk" type="RigidBody3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_h33nq"]
+size = Vector3(1.40192, 1.05004, 1.21932)
+
+[node name="chairDesk" type="RigidBody3D" node_paths=PackedStringArray("vehicle_node")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0202361, -0.543261, -0.168468)
 collision_layer = 3
 max_contacts_reported = 6
 contact_monitor = true
-script = ExtResource("1_5buw4")
+script = ExtResource("1_14400")
+vehicle_node = NodePath(".")
+sit_area_behaviour = 2
+sit_sound = ExtResource("2_tkltg")
+stand_sound = ExtResource("2_tkltg")
+sit_position_node_path = NodePath("Sit Marker")
+look_marker_node_path = NodePath("Look Marker")
+sit_area_node_path = NodePath("sit_area")
+leave_node_path = NodePath("Leave Marker")
 
 [node name="chairDesk(Clone)" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0, 0.4)
@@ -133,3 +147,29 @@ shape = SubResource("BoxShape3D_eedpt")
 [node name="CarryableComponent" parent="." instance=ExtResource("2_hg52m")]
 
 [node name="ImpactSounds" parent="." instance=ExtResource("3_gk1dv")]
+
+[node name="BasicInteraction" parent="." instance=ExtResource("3_ag03y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.543261, 0.168468)
+interaction_text = "Sit"
+
+[node name="Sit Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.991896, 0.168468)
+
+[node name="Look Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.992261, 0.889468)
+
+[node name="Leave Marker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119446, 0.543261, 0.863375)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.543261, 0.168468)
+stream = ExtResource("2_tkltg")
+volume_db = -35.0
+pitch_scale = 0.5
+
+[node name="sit_area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.543261, 0.168468)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sit_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179856, -0.188456, 0.380226)
+shape = SubResource("BoxShape3D_h33nq")
