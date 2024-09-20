@@ -45,6 +45,20 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var is_ejected: bool = false
 @export var currently_tweening: bool = false
 
+#Collision shapes
+@export var standing_collision_shape_enabled : bool = true
+@export var crouching_collision_shape_enabled : bool = false
+
+# Save the state of the player's collision shapes
+func save_collision_shapes(player):
+	standing_collision_shape_enabled = not player.standing_collision_shape.disabled
+	crouching_collision_shape_enabled = not player.crouching_collision_shape.disabled
+
+# Load the state of the player's collision shapes
+func load_collision_shapes(player):
+	player.standing_collision_shape.disabled = not standing_collision_shape_enabled
+	player.crouching_collision_shape.disabled = not crouching_collision_shape_enabled
+
 func save_sitting_state(player):
 	is_sitting = player.is_sitting
 	sittable_look_marker = player.sittable_look_marker if player.is_sitting else Vector3()
