@@ -10,7 +10,7 @@ signal interactable_unseen()
 # if shapecasting, the collider closest to the hotspot's position is used
 @onready var hotspot : Node3D = $ShapecastHotspot
 # the starting position of the hotspot, which is closer to the raycast target position
-var hotspot_base_pos_z : float
+var hotspot_base_pos_z : float = -1.5
 
 # DEBUGGING
 @onready var raycast_highlighter = $RaycastHighlighter
@@ -59,10 +59,11 @@ func _update_interactable() -> void:
 	if collider != null and not collider.is_in_group("interactable"):
 		collider = null
 		
-		# move the hotspot to the distance of the hit point to better
+		# conver the global position to local position and move
+		# the hotspot out to the distance of the hit point to better
 		# predict what the player seems to intend to interact with
-		# this could be a problem when attempting to interact around corners...
-		hotspot.transform.origin = hotspot_global_position
+		# **this could be a problem when attempting to interact around corners**
+		hotspot.transform.origin = to_local(hotspot_global_position)
 		
 		# DEBUGGING
 		raycast_highlighter.global_position = hotspot_global_position
@@ -86,12 +87,12 @@ func _update_interactable() -> void:
 				var closest_distance = INF
 				for i in range(shapecast.get_collision_count()):
 					var shape_collider = shapecast.get_collider(i)
-					print("shapecast colliding with %s" % shape_collider)
 					if shape_collider != null and shape_collider.is_in_group("interactable"):
 						var collision_point = shapecast.get_collision_point(i)
 						#print("shapecast colliding with %s" % shape_collider)
 						var distance = collision_point.distance_squared_to(hotspot_global_position)
-						# always return the spherecasted collider closest to the hotspot
+						# always return the spherecasted collider closest to the
+						# hotspot's global position
 						if distance < closest_distance:
 							collider = shape_collider
 							closest_distance = distance
@@ -100,9 +101,10 @@ func _update_interactable() -> void:
 							target_highlighter.global_position = collision_point
 							target_highlighter.visible = true
 		else:
-			# issue arose on scene change
+			# issue arose on scene change to Laboratory
+			# This wasn't an issue when loading into my own scenes
 			printerr("shapecast still not found")
-			shapecast = $ShapecastHotspot
+			shapecast = $InteractionShapecast as ShapeCast3D
 	else:
 		# DEBUGGING
 		target_highlighter.global_position = hotspot_global_position

@@ -153,6 +153,7 @@ mesh = SubResource("SphereMesh_1juxf")
 mesh = SubResource("SphereMesh_4320q")
 
 [node name="InteractionShapecast" type="ShapeCast3D" parent="Body/Neck/Head/Eyes/Camera"]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
 visible = false
 shape = SubResource("BoxShape3D_e32pq")
