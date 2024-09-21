@@ -17,6 +17,8 @@ var hotspot_base_pos_z : float = -1.5
 @onready var target_highlighter = $TargetHighlighter
 
 
+@export var show_debug_shapes : bool = false
+
 var _interactable = null:
 	set = _set_interactable
 
@@ -44,8 +46,9 @@ func _update_interactable() -> void:
 	var collider = raycasted_collider
 	# used for positioning the hotspot to refine shapecasted target selection
 	var hotspot_global_position: Vector3 = get_collision_point() if collider else global_position
-	# DEBUGGING
-	target_highlighter.visible = false
+
+	if show_debug_shapes: 	# DEBUGGING
+		target_highlighter.visible = false
 
 	# Handle freed objects.
 	# is_instance_valid() will be false for null and for freed objects, but only
@@ -65,16 +68,16 @@ func _update_interactable() -> void:
 		# **this could be a problem when attempting to interact around corners**
 		hotspot.transform.origin = to_local(hotspot_global_position)
 		
-		# DEBUGGING
-		raycast_highlighter.global_position = hotspot_global_position
-		raycast_highlighter.visible = true
+		if show_debug_shapes: 	# DEBUGGING
+			raycast_highlighter.global_position = hotspot_global_position
+			raycast_highlighter.visible = true
 	else:
 		# set the hotspot to the base position if not raycasting anything
 		hotspot.transform.origin = Vector3(0.0, 0.0, hotspot_base_pos_z)
 		
-		# DEBUGGING
-		raycast_highlighter.transform.origin = Vector3(0.0, 0.0, hotspot_base_pos_z)
-		raycast_highlighter.visible = false
+		if show_debug_shapes: 	# DEBUGGING
+			raycast_highlighter.transform.origin = Vector3(0.0, 0.0, hotspot_base_pos_z)
+			raycast_highlighter.visible = false
 
 
 	# if not raycasting a collider, then attempt a shapecast
@@ -106,9 +109,9 @@ func _update_interactable() -> void:
 			printerr("shapecast still not found")
 			shapecast = $InteractionShapecast as ShapeCast3D
 	else:
-		# DEBUGGING
-		target_highlighter.global_position = hotspot_global_position
-		target_highlighter.visible = true
+		if show_debug_shapes: 	# DEBUGGING
+			target_highlighter.global_position = hotspot_global_position
+			target_highlighter.visible = true
 
 	if collider == _interactable:
 		return
