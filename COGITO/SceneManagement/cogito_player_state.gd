@@ -82,10 +82,10 @@ func load_sitting_state(player):
 	player.currently_tweening = currently_tweening
 
 
-
 func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
 	player_attributes[name] = attribute_data
-	
+
+
 func clear_saved_attribute_data():
 	player_attributes.clear()
 
@@ -93,13 +93,14 @@ func clear_saved_attribute_data():
 func add_interaction_component_state_data_to_array(state_data):
 	interaction_component_state.append(state_data)
 
+
 func clear_saved_interaction_component_state():
 	interaction_component_state.clear()
 
-	
+
 func append_saved_wieldable_charges(saved_item_data):
 	saved_wieldable_charges.append(saved_item_data)
-	
+
 func clear_saved_wieldable_charges():
 	saved_wieldable_charges.clear()
 
@@ -116,7 +117,6 @@ func write_state(state_slot : String) -> void:
 	#var player_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".tres")
 	#ResourceSaver.save(self, player_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
 	#print("Scene state saved as .tres: ", player_state_file_tres)
-
 
 
 func state_exists(state_slot : String) -> bool:

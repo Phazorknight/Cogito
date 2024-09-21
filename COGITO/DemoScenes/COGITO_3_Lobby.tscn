@@ -6199,6 +6199,7 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
+ignore_interaction_raycast = null
 door_type = 1
 open_position = Vector3(0, 0, 0.28)
 
@@ -6244,6 +6245,7 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
+ignore_interaction_raycast = null
 door_type = 1
 closed_position = Vector3(0.625, 0.785, -0.03)
 open_position = Vector3(0.625, 1.285, -0.03)
@@ -6314,12 +6316,14 @@ shape = SubResource("BoxShape3D_ecok4")
 
 [node name="FrontDoor" parent="UPPER_OFFICE_CEO/WindowedDoor" index="0"]
 unlock_sound = ExtResource("18_sk7n4")
+ignore_interaction_raycast = null
 is_locked = true
 key = ExtResource("19_vxibd")
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0289998, -4.15)
 script = ExtResource("13_5x4ip")
+ignore_interaction_raycast = null
 open_rotation_deg = 275.0
 closed_rotation_deg = 180.0
 door_speed = 0.2
@@ -6493,6 +6497,7 @@ transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332
 
 [node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
 interaction_text_when_locked = "Locked."
+ignore_interaction_raycast = null
 is_locked = true
 
 [node name="Wall81" type="StaticBody3D" parent="ARCHIVE"]
@@ -6880,6 +6885,7 @@ transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048
 
 [node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
 interaction_text_when_locked = "Locked."
+ignore_interaction_raycast = null
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="MEETING_ROOM"]
 transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, -7.26615, 0, -20.9217)
@@ -7260,6 +7266,7 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("49_uekwd")
 close_sound = ExtResource("50_air2v")
+ignore_interaction_raycast = null
 open_rotation_deg = 95.0
 
 [node name="door" type="MeshInstance3D" parent="BATHROOM_STALL2/wallDoorway2/DoorBasic/Door"]
@@ -7327,6 +7334,7 @@ shape = SubResource("ConvexPolygonShape3D_3vij5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4688, -2.57192, -1.98452)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+ignore_interaction_raycast = null
 open_rotation_deg = 92.0
 
 [node name="paneling" type="MeshInstance3D" parent="BATHROOM_STALL2/DuctDoor"]
@@ -7850,6 +7858,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
 rattle_sound = ExtResource("65_cw5kp")
+ignore_interaction_raycast = null
 is_locked = true
 key_hint = "I should look around more."
 open_rotation_deg = 95.0
@@ -7892,6 +7901,7 @@ transform = Transform3D(0.985497, 0, 0.169694, 0, 1, 0, -0.169694, 0, 0.985497, 
 [node name="Platform" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.017, 0, 7.568)
 script = ExtResource("13_5x4ip")
+ignore_interaction_raycast = true
 door_type = 1
 closed_position = Vector3(-5.017, 0, 7.568)
 open_position = Vector3(-5.017, 2.614, 7.568)
@@ -7900,8 +7910,8 @@ door_speed = 3.0
 [node name="GenericSwitch" parent="Platform" instance=ExtResource("66_4pwwj")]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.986555, 0.88378, -0.198246)
 sync_to_physics = false
-interaction_text_when_on = "Lift platform"
-interaction_text_when_off = "Lower platform"
+interaction_text_when_on = "Lower platform"
+interaction_text_when_off = "Lift platform"
 objects_call_interact = Array[NodePath]([NodePath("..")])
 
 [node name="floorFull(Clone)" type="MeshInstance3D" parent="Platform"]

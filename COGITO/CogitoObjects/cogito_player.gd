@@ -31,6 +31,7 @@ var is_showing_ui : bool
 @export var jump_sound : AudioStream
 ## AudioStream that gets played when the player slides (sprint + crouch).
 @export var slide_sound : AudioStream
+@export_subgroup ("Footstep Audio")
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
 @export var crouch_volume_db : float = -60.0
@@ -40,6 +41,25 @@ var is_showing_ui : bool
 @export var sprint_footstep_interval : float = 0.3
 ## the speed at which the player must be moving before the footsteps change from walk to sprint.
 @export var footstep_interval_change_velocity : float = 5.2
+
+@export_subgroup ("Landing Audio")
+## Threshold for triggering landing sound
+@export var landing_threshold = -2.0  
+## Defines Maximum velocity (in negative) for the hardest landing sound
+@export var max_landing_velocity = -8
+## Defines Minimum velocity (in negative) for the softest landing sound
+@export var min_landing_velocity = -2
+## Max volume in dB for the landing sound
+@export var max_volume_db = 0
+## Min volume in dB for the landing sound
+@export var min_volume_db = -40
+## Highest pitch for lightest landing sound
+@export var max_pitch = 0.8
+## Lowest pitch for hardest landing sound
+@export var min_pitch = 0.7
+#Setup Dynamic Pitch & Volume for Landing Audio, used to store velocity based results
+var LandingPitch: float = 1.0
+var LandingVolume: float = 0.8
 
 @export_group("Movement Properties")
 @export var JUMP_VELOCITY : float= 4.5
@@ -59,6 +79,8 @@ var is_showing_ui : bool
 @export var CAN_BUNNYHOP : bool = true
 @export var BUNNY_HOP_ACCELERATION : float = 0.1
 @export var INVERT_Y_AXIS : bool = true
+## Controled by the game config. If false, player has to hold the crouch key to stay crouched.
+@export var TOGGLE_CROUCH : bool = false
 ## How much strength the player has to push RigidBody3D objects.
 @export var PLAYER_PUSH_FORCE : float = 1.3
 
@@ -130,6 +152,7 @@ var is_walking : bool = false
 var is_sprinting : bool = false
 var is_crouching : bool = false
 var is_free_looking : bool  = false
+var try_crouch : bool
 var slide_vector : Vector2 = Vector2.ZERO
 var wiggle_vector : Vector2 = Vector2.ZERO
 var wiggle_index : float = 0.0
@@ -247,7 +270,7 @@ func increase_attribute(attribute_name: String, value: float, value_type: Consum
 func decrease_attribute(attribute_name: String, value: float):
 	var attribute = player_attributes.get(attribute_name)
 	if not attribute:
-		print("Player.gd decrease attribute: Attribute not found")
+		print("Player.gd decrease attribute: ", attribute_name, " - Attribute not found")
 		return
 	attribute.subtract(value)
 
@@ -279,6 +302,7 @@ func _reload_options():
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+		TOGGLE_CROUCH = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
 		JOY_H_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 		JOY_V_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 
@@ -652,10 +676,12 @@ func _process_on_ladder(_delta):
 		on_ladder = false
 
 var jumped_from_slide = false
+var was_in_air = false
 
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
+    
 	if is_sitting:
 		var sittable = CogitoSceneManager._current_sittable_node
 		#Update Player location if Chair has moved - only applicable to physics sittables
@@ -677,6 +703,24 @@ func _physics_process(delta):
 
 		return
 		
+	# Store current velocity for the next frame
+	last_velocity = main_velocity
+  
+  	# Check if the player is on the ground
+	if is_on_floor():
+		# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
+		if was_in_air and last_velocity.y < landing_threshold:
+			# Calculate the volume and pitch based on the landing velocity
+			var velocity_ratio = clamp((last_velocity.y - min_landing_velocity) / (max_landing_velocity - min_landing_velocity), 0.0, 1.0)
+			# Set the volume and pitch of the landing sound
+			LandingVolume = lerp(min_volume_db, max_volume_db, velocity_ratio)
+			LandingPitch = lerp(max_pitch, min_pitch, velocity_ratio)
+			# Play the landing sound
+			footstep_player._play_interaction("landing")
+		was_in_air = false  # Reset airborne state
+	else:
+		was_in_air = true  # Set airborne state
+	
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
@@ -716,7 +760,14 @@ func _physics_process(delta):
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
 		crouched_jump = is_crouching and not jumped_from_slide
 	
-	if crouched_jump or (not jumped_from_slide and is_on_floor() and Input.is_action_pressed("crouch") and !is_movement_paused or crouch_raycast.is_colliding()):
+	# CROUCH HANDLING dependant on toggle_crouch
+	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+		try_crouch = !try_crouch
+	elif !TOGGLE_CROUCH:
+		try_crouch = Input.is_action_pressed("crouch")
+	
+	
+	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch and !is_movement_paused or crouch_raycast.is_colliding()):
 		# should we be sliding?
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
 			sliding_timer.start()
@@ -976,7 +1027,7 @@ func _physics_process(delta):
 					footstep_player.volume_db = crouch_volume_db
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
-				footstep_surface_detector.play_footstep()
+				footstep_player._play_interaction("footstep")
 					
 				can_play_footstep = false
 				
@@ -1119,8 +1170,14 @@ func _on_animation_player_animation_finished(anim_name):
 	stand_after_roll = anim_name == 'roll' and !is_crouching
 
 
+func apply_external_force(force_vector: Vector3):
+	if force_vector and force_vector.length() > 0:
+		print("Cogito_Player.gd: Applying external force ", force_vector)
+		velocity += force_vector
+		move_and_slide()
+
+
 class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
-

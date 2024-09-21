@@ -18,6 +18,7 @@ name = "Dart"
 description = "A simple foam dart. Squishy."
 icon = ExtResource("1_m1vko")
 is_stackable = true
+is_droppable = true
 stack_size = 5
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_dart.tscn"
 hint_text_on_use = ""

@@ -76,6 +76,7 @@ size = Vector3(0.2, 0.2, 0.2)
 transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.325805, -0.279839, -0.531526)
 script = ExtResource("1_hb7ed")
 damage_area = NodePath("PickaxeMesh/DamageArea")
+uses_stamina = true
 swing_sound = ExtResource("2_hp6wh")
 wieldable_mesh = NodePath("PickaxeMesh")
 anim_action_primary = "swing"

@@ -65,6 +65,7 @@ func setup_player(new_player : Node):
 	player = new_player
 	_setup_player()
 
+
 func _setup_player():
 	#prevent stuck prompts when changing players
 	delete_interaction_prompts()
@@ -132,10 +133,8 @@ func _is_steam_deck() -> bool:
 
 
 func _on_input_device_change(_device, _device_index):
-	if _device == "keyboard":
-		$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.hide()
-	else:
-		$InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxDrop.show()
+	# Used to update HUD on device change.
+	pass
 
 
 func toggle_inventory_interface(external_inventory_owner = null):

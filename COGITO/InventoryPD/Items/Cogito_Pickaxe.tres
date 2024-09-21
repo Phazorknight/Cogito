@@ -18,6 +18,7 @@ name = "Pickaxe"
 description = "Don't go digging for diamonds now."
 icon = ExtResource("1_a7clm")
 is_stackable = false
+is_droppable = true
 stack_size = 0
 drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_pickaxe.tscn"
 hint_text_on_use = ""

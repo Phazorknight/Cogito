@@ -1210,6 +1210,7 @@ material = ExtResource("1_lsda4")
 
 [node name="Door_A" parent="INTERACTIVE_OBJECTS" instance=ExtResource("8_xabdk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 9.2)
+ignore_interaction_raycast = null
 bidirectional_swing = true
 open_rotation_deg = -95.0
 closed_position = Vector3(-14.9, 0, 9.2)
@@ -1265,6 +1266,7 @@ hold_audio_stream = ExtResource("25_3nnou")
 [node name="RampA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(-0.0871558, -0.996195, 0, 0.996195, -0.0871558, 0, 0, 0, 1, -35, 0, 10)
 script = ExtResource("23_rfav8")
+ignore_interaction_raycast = null
 use_z_axis = true
 open_rotation_deg = 180.0
 closed_rotation_deg = 95.0
@@ -1282,6 +1284,7 @@ shape = SubResource("BoxShape3D_rkvi0")
 [node name="RampB" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(0.0871558, 0.996195, -1.50996e-07, 0.996195, -0.0871558, 0, -1.31602e-08, -1.50421e-07, -1, -43, 0, 10)
 script = ExtResource("23_rfav8")
+ignore_interaction_raycast = null
 use_z_axis = true
 open_rotation_deg = 180.0
 closed_rotation_deg = 95.0
@@ -1298,6 +1301,7 @@ shape = SubResource("ConvexPolygonShape3D_hq8yc")
 
 [node name="DoorLocked" parent="INTERACTIVE_OBJECTS" instance=ExtResource("8_xabdk")]
 transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -24.9, 0, 9.2)
+ignore_interaction_raycast = null
 is_locked = true
 key = ExtResource("9_g1bqh")
 key_hint = "Locked. Is there a key nearby?"
@@ -1355,6 +1359,7 @@ transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -1
 [node name="GateA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -45, 0, 14.6)
 script = ExtResource("23_rfav8")
+ignore_interaction_raycast = null
 open_rotation_deg = -80.0
 closed_rotation_deg = -180.0
 door_speed = 0.04
@@ -1372,6 +1377,7 @@ shape = SubResource("ConvexPolygonShape3D_qb88g")
 [node name="GateB" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 14.6)
 script = ExtResource("23_rfav8")
+ignore_interaction_raycast = null
 open_rotation_deg = -100.0
 door_speed = 0.02
 
@@ -1454,6 +1460,7 @@ skeleton = NodePath("../../..")
 [node name="MovingPlattform" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, -0.05, 17.5)
 script = ExtResource("23_rfav8")
+ignore_interaction_raycast = null
 door_type = 1
 closed_position = Vector3(-42, -0.05, 17.5)
 open_position = Vector3(-7.8, -0.05, 15.8)
@@ -1704,6 +1711,7 @@ target_position = Vector3(0, 0, -1)
 [node name="Door_for_Keypad" type="AnimatableBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.8, 0, 2.91)
 script = ExtResource("23_rfav8")
+ignore_interaction_raycast = null
 is_locked = true
 key_hint = "Key needed."
 door_type = 1

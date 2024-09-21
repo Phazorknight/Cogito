@@ -94,6 +94,15 @@ tooltip_text = "Inverts looking up and down direction."
 theme_override_font_sizes/font_size = 25
 text = "Invert Y Axis"
 
+[node name="ToggleCrouchingCheckButton" type="CheckButton" parent="Gameplay/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Inverts looking up and down direction."
+theme_override_font_sizes/font_size = 25
+text = "Toggle Crouching"
+
 [node name="HBoxContainer_Group" type="HBoxContainer" parent="Gameplay/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=122 format=3 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -44,14 +44,18 @@
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://COGITO/PackedScenes/Pickups/pickup_health_potion.tscn" id="37_0wxqc"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://COGITO/PackedScenes/Pickups/pickup_stamina_extension.tscn" id="38_ayqrv"]
 [ext_resource type="PackedScene" uid="uid://bekq2c16juwa1" path="res://COGITO/PackedScenes/Pickups/pickup_dart.tscn" id="40_hi3jw"]
+[ext_resource type="PackedScene" uid="uid://b458yjhvdd7xn" path="res://COGITO/PackedScenes/snap_slot_metalbar.tscn" id="40_qk2no"]
 [ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://COGITO/PackedScenes/cogito_pressure_plate.tscn" id="41_0755m"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://COGITO/PackedScenes/ceiling_lamp.tscn" id="42_3rq3h"]
 [ext_resource type="PackedScene" uid="uid://x23tip44172h" path="res://COGITO/PackedScenes/metal_bar.tscn" id="42_8g4m7"]
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_object.gd" id="43_g50k4"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_static_interactable.gd" id="43_ynyfa"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="44_f6cgn"]
+[ext_resource type="PackedScene" uid="uid://cd2fwmwe8n1no" path="res://COGITO/PackedScenes/snap_slot_battery.tscn" id="47_71h2t"]
 [ext_resource type="PackedScene" uid="uid://dlm5kc3g1g18h" path="res://COGITO/PackedScenes/Pickups/pickup_dart_water.tscn" id="47_gb8en"]
 [ext_resource type="PackedScene" uid="uid://dyngdr0rnqwlb" path="res://COGITO/PackedScenes/Pickups/pickup_dart_fire.tscn" id="48_sg5rf"]
+[ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://COGITO/PackedScenes/Pickups/pickup_battery.tscn" id="48_y72lj"]
 [ext_resource type="PackedScene" uid="uid://dn4e1k7u3suoo" path="res://COGITO/Enemies/cogito_basic_enemy.tscn" id="52_mlseg"]
+[ext_resource type="Script" path="res://COGITO/Enemies/cogito_patrol_path.gd" id="53_xiupp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -775,6 +779,10 @@ albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_6fdh2"]
 material = SubResource("StandardMaterial3D_lfkf8")
 size = Vector3(0.1, 0.1, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w38aj"]
+material = SubResource("StandardMaterial3D_lfkf8")
+size = Vector3(0.1, 0.1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xpdqy"]
 resource_name = "metalLight"
@@ -3133,13 +3141,12 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 
 [node name="KSI_wall_doorway_wide_painted6" parent="NavigationRegion3D/MOVEMENT" instance=ExtResource("15_mnt7d")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3, 0, 2)
 
-[node name="Patrolpoint_A" type="Marker3D" parent="NavigationRegion3D/MOVEMENT"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.1, 26.8231)
-
-[node name="Patrolpoint_B" type="Marker3D" parent="NavigationRegion3D/MOVEMENT"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.1, 26.8231)
-
 [node name="SYSTEMIC_PROPERTIES" type="Node3D" parent="NavigationRegion3D"]
+
+[node name="SnapSlotMetalbar" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("40_qk2no")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.65, 0.613, 0)
+interaction_text_to_remove = ""
+expected_object_hint = ""
 
 [node name="Pickup_Dart_Water" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
 transform = Transform3D(0.754801, 6.99125e-15, -0.655954, 0, 1, 1.06581e-14, 0.655954, -8.04478e-15, 0.754801, -11.0006, 0.76828, -12.2038)
@@ -3181,7 +3188,7 @@ can_sleep = false
 freeze = true
 max_contacts_reported = 4
 contact_monitor = true
-script = ExtResource("43_g50k4")
+script = ExtResource("43_ynyfa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A"]
 mesh = SubResource("SphereMesh_x0e65")
@@ -3209,6 +3216,40 @@ shape = SubResource("SphereShape3D_el8pq")
 elemental_properties = 1
 electric_on_ready = true
 
+[node name="Cathode_C" type="RigidBody3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES"]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -9.1418, 1, -3)
+sleeping = true
+can_sleep = false
+freeze = true
+max_contacts_reported = 4
+contact_monitor = true
+script = ExtResource("43_ynyfa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C"]
+mesh = SubResource("SphereMesh_x0e65")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.2)
+shape = SubResource("BoxShape3D_m1ld1")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.2)
+mesh = SubResource("BoxMesh_li0gy")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.2)
+shape = SubResource("BoxShape3D_m1ld1")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.2)
+mesh = SubResource("BoxMesh_li0gy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C"]
+shape = SubResource("SphereShape3D_el8pq")
+
+[node name="CogitoProperties" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C" instance=ExtResource("44_f6cgn")]
+electric_on_ready = true
+
 [node name="Cathode_B" type="RigidBody3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6418, 0, 0)
 sleeping = true
@@ -3216,7 +3257,7 @@ can_sleep = false
 freeze = true
 max_contacts_reported = 4
 contact_monitor = true
-script = ExtResource("43_g50k4")
+script = ExtResource("43_ynyfa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B"]
 mesh = SubResource("SphereMesh_x0e65")
@@ -3254,6 +3295,19 @@ mesh = SubResource("BoxMesh_6fdh2")
 [node name="CableA2" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -12.7, 1, 1.66153)
 mesh = SubResource("BoxMesh_6fdh2")
+
+[node name="CableA3" type="MeshInstance3D" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, -9.392, 1.4, -3)
+mesh = SubResource("BoxMesh_w38aj")
+
+[node name="SnapSlotBattery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_71h2t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.77805, 0.958914, -2.99995)
+
+[node name="Lamp_ElectricWire2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("42_3rq3h")]
+transform = Transform3D(-1.81058e-08, 1, -2.70212e-15, 6.18173e-08, 0, 1, 1, 1.81059e-08, -6.18173e-08, -9.524, 1.93194, -3)
+
+[node name="Pickup_Battery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("48_y72lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.94467, 0.180138, -3.20706)
 
 [node name="VendingMachine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
@@ -3309,11 +3363,21 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.249
 [node name="Cogito_Pressureplate" parent="." instance=ExtResource("41_0755m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0454833, 0)
 
-[node name="CogitoEnemy" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("52_mlseg")]
+[node name="EnemyPatrolpath" type="Node3D" parent="." node_paths=PackedStringArray("patrol_points")]
+script = ExtResource("53_xiupp")
+patrol_points = [NodePath("Patrolpoint_A"), NodePath("Patrolpoint_B")]
+
+[node name="Patrolpoint_A" type="Marker3D" parent="EnemyPatrolpath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.1, 26.8231)
+
+[node name="Patrolpoint_B" type="Marker3D" parent="EnemyPatrolpath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.1, 26.8231)
+
+[node name="CogitoEnemy" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("52_mlseg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23556, -2.66908, 15.663)
-attack_range = 2.0
 start_state = 1
-patrol_points = [NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_A"), NodePath("../NavigationRegion3D/MOVEMENT/Patrolpoint_B")]
+patrol_path = NodePath("../EnemyPatrolpath")
+attack_range = 2.0
 
 [node name="CeilingLamp" parent="." instance=ExtResource("42_3rq3h")]
 transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8.74228e-08, 0.707107, -0.707107, 0.441994, 1.78403, 1.3986)
@@ -3321,10 +3385,14 @@ transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="body_entered" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" method="_on_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" method="_on_body_exited"]
+[connection signal="body_entered" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C" method="_on_body_entered"]
+[connection signal="body_exited" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_C" method="_on_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B" method="_on_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B" method="_on_body_exited"]
 [connection signal="has_become_electric" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire" method="switch_on"]
 [connection signal="has_lost_electricity" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire" method="switch_off"]
+[connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotBattery" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire2" method="switch_on"]
+[connection signal="object_removed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotBattery" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire2" method="switch_off"]
 [connection signal="pressed" from="VendingMachine/GenericButton" to="VendingMachine/Spawnzone_VendingMachine" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton2" to="VendingMachine/Spawnzone_VendingMachine2" method="_on_generic_button_pressed"]
 [connection signal="plate_activated" from="Cogito_Pressureplate" to="CeilingLamp" method="switch_on"]

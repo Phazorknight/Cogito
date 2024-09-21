@@ -145,7 +145,8 @@ func _on_save_button_pressed() -> void:
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
 	CogitoSceneManager._screenshot_to_save = temp_screenshot
 	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node,CogitoSceneManager._active_slot)
-	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
+	#CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
+	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,"temp")
 	CogitoSceneManager.copy_temp_saves_to_slot(CogitoSceneManager._active_slot)
 	
 	_on_resume_game_button_pressed()
@@ -155,6 +156,7 @@ func _on_load_button_pressed() -> void:
 	print("LOAD BUTTON PRESSED")
 	CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
+	CogitoSceneManager.delete_temp_saves()
 	CogitoSceneManager.copy_slot_saves_to_temp(CogitoSceneManager._active_slot)
 	#CogitoSceneManager.loading_saved_game(CogitoSceneManager._active_slot)
 	
