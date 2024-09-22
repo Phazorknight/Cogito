@@ -100,7 +100,6 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 4.46638e-06, 0, -4.46638e-06, 1, 0, 0, 0)
 
 [node name="InteractionRaycast" parent="Body/Neck/Head/Eyes/Camera" instance=ExtResource("10_2dndr")]
-show_debug_shapes = true
 
 [node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
