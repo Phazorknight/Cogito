@@ -1,5 +1,8 @@
 extends Node
 
+## Emitted when a fade finishes
+signal fade_finished
+
 # Used to set active save slot. This could be set/modified, when selecting a save slot from the MainMenu.
 @export var _active_slot : String = "A"
 
@@ -23,11 +26,15 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 @export var cogito_scene_state_prefix : String = "COGITO_scene_state_"
 @export var cogito_player_state_prefix : String = "COGITO_player_state_"
 
+@export var default_fade_duration : float = .4
+@export var fade_panel : Panel = null
+
 func _ready() -> void:
 	_player_state = get_existing_player_state(_active_slot) #Setting active slot (per default it's A)
 	_scene_state = get_existing_scene_state(_active_slot)
 	
 	reset_scene_states()
+	instantiate_fade_panel()
 
 
 func switch_active_slot_to(slot_name:String):
@@ -145,6 +152,7 @@ func load_player_state(player, passed_slot:String):
 			player.player_interaction_component.set_state.call_deferred() #Calling this deferred as some state calls need to make sure the scene is finished loading.
 		
 		player.player_state_loaded.emit()
+		CogitoSceneManager.fade_in()
 	else:
 		print("CSM: Player state of slot ", passed_slot, " doesn't exist.")
 		
@@ -342,6 +350,8 @@ func save_scene_state(_scene_name_to_save, slot: String):
 
 # Function to transition to another scene via the loading screen.
 func load_next_scene(target : String, connector_name: String, passed_slot: String, load_mode: CogitoSceneLoadMode) -> void:
+	# fade_out()
+	
 	var loading_screen = preload("res://COGITO/SceneManagement/LoadingScene.tscn").instantiate()
 	loading_screen.next_scene_path = target
 	loading_screen.connector_name = connector_name
@@ -478,3 +488,38 @@ func _exit_tree() -> void:
 func cogito_print(is_logging: bool, _class: String, _message: String) -> void:
 	if is_logging:
 		print("COGITO: ", _class, ": ", _message)
+
+
+### FUNCTIONS TO HANDLE SCREEN FADING
+
+func instantiate_fade_panel() -> void:
+	fade_panel = Panel.new()
+	
+	var black_stylebox := StyleBoxFlat.new()
+	black_stylebox.bg_color = Color.BLACK
+	
+	fade_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade_panel.focus_mode = Control.FOCUS_NONE
+	fade_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fade_panel.set_modulate(Color.TRANSPARENT)
+	fade_panel.add_theme_stylebox_override("panel", black_stylebox)
+	
+	add_child(fade_panel)
+
+
+func fade_in(fade_duration:float = default_fade_duration) -> void:
+	fade_panel.set_modulate(Color.BLACK)
+	var fade_tween = get_tree().create_tween()
+	
+	fade_tween.tween_property(fade_panel, "modulate", Color.TRANSPARENT, fade_duration).set_trans(Tween.TRANS_CUBIC)
+	await fade_tween.finished
+	fade_finished.emit()
+
+
+func fade_out(fade_duration:float = default_fade_duration) -> void:
+	fade_panel.set_modulate(Color.TRANSPARENT)
+	var fade_tween = get_tree().create_tween()
+	
+	fade_tween.tween_property(fade_panel, "modulate", Color.BLACK, fade_duration).set_trans(Tween.TRANS_CUBIC)
+	await fade_tween.finished
+	fade_finished.emit()

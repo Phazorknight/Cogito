@@ -46,7 +46,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 script = ExtResource("1_87we8")
 pause_menu = NodePath("PauseMenu")
 player_hud = NodePath("Player_HUD")
-is_logging = true
 fall_damage = 10
 inventory_data = ExtResource("2_iyhv4")
 jump_sound = ExtResource("3_7ds3n")
