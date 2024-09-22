@@ -248,8 +248,15 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 			if get_node(node_data["parent"]):
 				get_node(node_data["parent"]).add_child(new_object)
 				print("Adding to scene: ", new_object.get_name())
+				
 			new_object.position = Vector3(node_data["pos_x"],node_data["pos_y"],node_data["pos_z"])
 			new_object.rotation = Vector3(node_data["rot_x"],node_data["rot_y"],node_data["rot_z"])
+			# Restore physics properties if it's a RigidBody3D
+			if new_object is RigidBody3D:
+				if "linear_velocity_x" in node_data and "linear_velocity_y" in node_data and "linear_velocity_z" in node_data:
+					new_object.linear_velocity = Vector3(node_data["linear_velocity_x"], node_data["linear_velocity_y"], node_data["linear_velocity_z"])
+				if "angular_velocity_x" in node_data and "angular_velocity_y" in node_data and "angular_velocity_z" in node_data:
+					new_object.angular_velocity = Vector3(node_data["angular_velocity_x"], node_data["angular_velocity_y"], node_data["angular_velocity_z"])
 			# Set the remaining variables.
 			for data in node_data.keys():
 				if data == "filename" or data == "parent" or data == "pos_x" or data == "pos_y" or data == "pos_z" or data == "rot_x" or data == "rot_y" or data == "rot_z" or data == "item_charge":
@@ -301,8 +308,20 @@ func save_scene_state(_scene_name_to_save, slot: String):
 			if !node.has_method("save"): # Check the node has a save function.
 				print("persistent node '%s' is missing a save() function, skipped" % node.name)
 				continue
+				
+			# If the node is a RigidBody3D, then save the physics properties
+			if node is RigidBody3D:
+				var node_data = node.save()
+				node_data["linear_velocity_x"] = node.linear_velocity.x
+				node_data["linear_velocity_y"] = node.linear_velocity.y
+				node_data["linear_velocity_z"] = node.linear_velocity.z
+				node_data["angular_velocity_x"] = node.angular_velocity.x
+				node_data["angular_velocity_y"] = node.angular_velocity.y
+				node_data["angular_velocity_z"] = node.angular_velocity.z
+				_scene_state.add_node_data_to_array(node_data)
+			else:
+				_scene_state.add_node_data_to_array(node.save())
 		
-			_scene_state.add_node_data_to_array(node.save())
 	
 	# Saving states of objects
 	var state_nodes = get_tree().get_nodes_in_group("save_object_state")
