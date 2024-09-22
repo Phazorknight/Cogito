@@ -453,3 +453,9 @@ func reset_scene_states():
 
 func _exit_tree() -> void:
 	delete_temp_saves()
+	
+	
+	
+func cogito_print(is_logging: bool, _class: String, _message: String) -> void:
+	if is_logging:
+		print("COGITO: ", _class, ": ", _message)
