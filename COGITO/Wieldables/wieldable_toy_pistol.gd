@@ -57,6 +57,8 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	# Spawning projectile
 	var Projectile = get_projectile()
 	bullet_point.add_child(Projectile)
+	Projectile.set_global_position(Vector3(bullet_point.global_position.x,bullet_point.global_position.y,bullet_point.global_position.z))
+	Projectile.global_transform.basis = bullet_point.global_transform.basis
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
 	Projectile.reparent(get_tree().get_current_scene())
