@@ -29,4 +29,8 @@ func transition_to_next_scene():
 	current_scene_statename = get_tree().get_current_scene().get_name()
 	CogitoSceneManager.save_scene_state(current_scene_statename,"temp")
 	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node, "temp")
+	
+	CogitoSceneManager.fade_out()
+	await CogitoSceneManager.fade_finished
+	
 	CogitoSceneManager.load_next_scene(path_to_new_scene, target_connector, "temp", CogitoSceneManager.CogitoSceneLoadMode.TEMP)

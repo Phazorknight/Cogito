@@ -497,7 +497,7 @@ func _physics_process(delta):
 	
 	if stand_after_roll:
 		if !is_movement_paused or !is_showing_ui:
-			print("COGITO Player 500: Standing after roll.")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "500: Standing after roll.")
 			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 			standing_collision_shape.disabled = true
 			crouching_collision_shape.disabled = false
@@ -533,7 +533,7 @@ func _physics_process(delta):
 		is_crouching = true
 	else:
 		if !is_showing_ui or !is_movement_paused:
-			print("COGITO Player 536: Standing up...")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "536: Standing up...")
 			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 			if head.position.y < CROUCHING_DEPTH/4:
 				# still transitioning from state
@@ -573,7 +573,7 @@ func _physics_process(delta):
 			# STANDING UP HANDLING
 			if is_crouching:
 				if !is_showing_ui or !is_movement_paused:
-					print("COGITO Player: standing up...")
+					CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "576 standing up...")
 					current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
 					wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
 					wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
@@ -635,7 +635,7 @@ func _physics_process(delta):
 		)
 	else:
 		if !is_movement_paused or !is_showing_ui:
-			print("COGITO Player 638: Standing up...")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "638 Standing up...")
 			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
 			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
 			if last_velocity.y <= -7.5:
