@@ -339,7 +339,6 @@ func save():
 	# If the node is a RigidBody3D, then save the physics properties of it
 	var rigid_body = find_rigid_body()
 	if rigid_body:
-		print("POS.X ON SAVE: ",position.x , "OF NODE", self.get_path() )
 		state_dict["linear_velocity_x"] = rigid_body.linear_velocity.x
 		state_dict["linear_velocity_y"] = rigid_body.linear_velocity.y
 		state_dict["linear_velocity_z"] = rigid_body.linear_velocity.z
