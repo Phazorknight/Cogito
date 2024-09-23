@@ -289,6 +289,11 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 						new_transform.origin = Vector3(state_data["pos_x"], (state_data["pos_y"]), state_data["pos_z"])
 						var new_rotation = Vector3(state_data["rot_x"], state_data["rot_y"], state_data["rot_z"])
 						var rotation_quat = Quaternion.from_euler(new_rotation)
+						# Account for parent node rotation as this can affect node rotation
+						if node_to_set.get_parent():
+							var parent_global_transform = node_to_set.get_parent().global_transform
+							var parent_rotation = parent_global_transform.basis.get_rotation_quaternion()
+							rotation_quat = parent_rotation.inverse() * rotation_quat
 						new_transform.basis = Basis(rotation_quat)
 						node_to_set.call_deferred("set_global_transform", new_transform)
 						node_to_set.sleeping = false
