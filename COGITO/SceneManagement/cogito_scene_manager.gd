@@ -285,6 +285,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 					print("CSM: Setting state for physics object:", node_to_set.name)
 					var physics_state = PhysicsServer3D.body_get_direct_state(node_to_set.get_rid())
 					if physics_state:
+						var rid = node_to_set.get_rid()
 						node_to_set.sleeping = true
 						var new_transform = physics_state.transform
 						#temp for debug
@@ -295,9 +296,9 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 						#new_transform.basis = Basis().rotated(Vector3(1, 0, 0), (state_data["rot_x"]))
 						#new_transform.basis = new_transform.basis.rotated(Vector3(0, 1, 0), (state_data["rot_y"]))
 						#new_transform.basis = new_transform.basis.rotated(Vector3(0, 0, 1), (state_data["rot_z"]))
-
 						print("CSM: PHYSICS STATE TRANSFORM: ", new_transform, node_to_set.name)
-						node_to_set.call_deferred("set_global_transform", new_transform)
+						PhysicsServer3D.body_set_state(rid, PhysicsServer3D.BODY_STATE_TRANSFORM, new_transform)
+						#node_to_set.call_deferred("set_global_transform", new_transform)
 						node_to_set.sleeping = false
 				else:
 					# Handle non-physics nodes
