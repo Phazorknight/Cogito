@@ -274,6 +274,11 @@ func _on_sit_area_body_exited(body):
 var interact_cooldown = 0.0
 
 func interact(player_interaction_component):
+	
+	#Prevent entering fallen chair
+	if !is_occupied and _is_fallen():
+		return
+	
 	# Get the current time from the engine
 	var current_time = Time.get_ticks_msec()/ 1000.0
 
@@ -319,6 +324,13 @@ func interact(player_interaction_component):
 			var object = get_node(nodepath)
 			object.interact(player_interaction_component)
 
+func _is_fallen() -> bool:
+	var current_rotation = global_transform.basis.get_euler()
+	var pitch_angle = rad_to_deg(abs(current_rotation.x))
+	var roll_angle = rad_to_deg(abs(current_rotation.z))
+	if pitch_angle > eject_angle or roll_angle > eject_angle:
+		return true
+	return false
 
 func save():
 	var state_dict = {
