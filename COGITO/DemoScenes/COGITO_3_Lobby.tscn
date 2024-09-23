@@ -1,4 +1,4 @@
-[gd_scene load_steps=372 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=371 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -93,7 +93,6 @@
 [ext_resource type="PackedScene" uid="uid://uoru03g0vtp" path="res://COGITO/PackedScenes/Pickups/ripped_page_b_pickup.tscn" id="92_11u5w"]
 [ext_resource type="PackedScene" uid="uid://dqlue11vwpc5y" path="res://COGITO/PackedScenes/cogito_security_camera.tscn" id="92_nldkd"]
 [ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="93_cmkbc"]
-[ext_resource type="PackedScene" uid="uid://bdab2cuy8hue6" path="res://COGITO/DemoScenes/DemoPrefabs/Swing.tscn" id="94_kpmo1"]
 [ext_resource type="PackedScene" uid="uid://dpuhybufkdmcf" path="res://COGITO/DemoScenes/DemoPrefabs/bear_trap.tscn" id="96_vec6d"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
@@ -7804,11 +7803,11 @@ rich_text = true
 shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Hint_10_Sittable_Physics" parent="DEMO_HINTS" instance=ExtResource("62_y3og2")]
-transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -4.26676, 0.551412, -1.0637)
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -5.24664, 0.551412, -14.7463)
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_10_Sittable_Physics" index="6"]
 readable_title = "Sittables - Physics Sittable"
-readable_content = "The swing is an example of a [b]Physics Sittable[/b]. 
+readable_content = "These chair are examples of a [b]Physics Sittable[/b]. 
 
 It keeps the player on the Sit Marker & dynamically adjusts the view angle to follow the Look Marker.
 
@@ -8009,9 +8008,6 @@ transform = Transform3D(0.999299, 0, 0.0374286, 0, 1, 0, -0.0374286, 0, 0.999299
 
 [node name="CogitoSittable3" parent="." instance=ExtResource("93_cmkbc")]
 transform = Transform3D(0.999299, 0, 0.0374286, 0, 1, 0, -0.0374286, 0, 0.999299, -6.94563, 0.561183, -10.7732)
-
-[node name="Swing" parent="." instance=ExtResource("94_kpmo1")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.77791, -0.259389, 0.0061115)
 
 [node name="BearTrap" parent="." instance=ExtResource("96_vec6d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58288, 0.921004, 12.0337)
