@@ -681,7 +681,6 @@ var was_in_air = false
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
-    
 	if is_sitting:
 		var sittable = CogitoSceneManager._current_sittable_node
 		#Update Player location if Chair has moved - only applicable to physics sittables
@@ -696,9 +695,8 @@ func _physics_process(delta):
 				# Calculate angle between chair's up vector and the global up vector
 				var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
 				# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
-				if angle_to_up > 45.0:
+				if angle_to_up > sittable.eject_angle:
 					is_ejected = true  # Set the flag to avoid repeated ejections
-					_stand_up()
 					CogitoSceneManager._current_sittable_node.interact(player_interaction_component) #Interact with sittable to reset state and eject
 
 		return
@@ -1181,3 +1179,11 @@ class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
+
+
+
+func _on_player_state_loaded():
+	#TODO - reset look on load if needed
+	#self.global_transform.basis = Basis()
+	#neck.global_transform.basis = Basis()
+	pass

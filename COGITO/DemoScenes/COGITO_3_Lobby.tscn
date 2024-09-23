@@ -6199,7 +6199,6 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
-ignore_interaction_raycast = null
 door_type = 1
 open_position = Vector3(0, 0, 0.28)
 
@@ -6245,7 +6244,6 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
-ignore_interaction_raycast = null
 door_type = 1
 closed_position = Vector3(0.625, 0.785, -0.03)
 open_position = Vector3(0.625, 1.285, -0.03)
@@ -6316,14 +6314,12 @@ shape = SubResource("BoxShape3D_ecok4")
 
 [node name="FrontDoor" parent="UPPER_OFFICE_CEO/WindowedDoor" index="0"]
 unlock_sound = ExtResource("18_sk7n4")
-ignore_interaction_raycast = null
 is_locked = true
 key = ExtResource("19_vxibd")
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0289998, -4.15)
 script = ExtResource("13_5x4ip")
-ignore_interaction_raycast = null
 open_rotation_deg = 275.0
 closed_rotation_deg = 180.0
 door_speed = 0.2
@@ -6381,7 +6377,7 @@ shape = SubResource("BoxShape3D_ecok4")
 transform = Transform3D(-0.772999, 0, -0.634407, 0, 1, 0, 0.634407, 0, -0.772999, 4.83506, 0.03, -1.4792)
 
 [node name="chairDesk" parent="UPPER_OFFICE_CEO" instance=ExtResource("21_o6psl")]
-transform = Transform3D(0.718733, 0, 0.695286, 0, 1, 0, -0.695286, 0, 0.718733, 1.90557, 0.0300002, -1.5372)
+transform = Transform3D(0.718733, 0, 0.695286, 0, 1, 0, -0.695286, 0, 0.718733, 1.90557, 0.0788033, -1.5372)
 
 [node name="bear" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO" node_paths=PackedStringArray("nodes_to_trigger")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.100001, 1.56287, -2.09816)
@@ -6497,7 +6493,6 @@ transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332
 
 [node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
 interaction_text_when_locked = "Locked."
-ignore_interaction_raycast = null
 is_locked = true
 
 [node name="Wall81" type="StaticBody3D" parent="ARCHIVE"]
@@ -6885,7 +6880,6 @@ transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048
 
 [node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
 interaction_text_when_locked = "Locked."
-ignore_interaction_raycast = null
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="MEETING_ROOM"]
 transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, -7.26615, 0, -20.9217)
@@ -7099,6 +7093,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.8684
 
 [node name="chairCushion" parent="BREAK_ROOM" instance=ExtResource("42_ys0cu")]
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 6.83518, 7.07805e-08, 4.13016)
+placement_on_leave = 0
 
 [node name="chairCushion2" parent="BREAK_ROOM" instance=ExtResource("42_ys0cu")]
 transform = Transform3D(-0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, -0.819152, 6.92151, 7.07805e-08, 5.5356)
@@ -7266,7 +7261,6 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("49_uekwd")
 close_sound = ExtResource("50_air2v")
-ignore_interaction_raycast = null
 open_rotation_deg = 95.0
 
 [node name="door" type="MeshInstance3D" parent="BATHROOM_STALL2/wallDoorway2/DoorBasic/Door"]
@@ -7334,7 +7328,6 @@ shape = SubResource("ConvexPolygonShape3D_3vij5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4688, -2.57192, -1.98452)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
-ignore_interaction_raycast = null
 open_rotation_deg = 92.0
 
 [node name="paneling" type="MeshInstance3D" parent="BATHROOM_STALL2/DuctDoor"]
@@ -7408,7 +7401,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.45827, 2.38419e-07, -1.0542
 transform = Transform3D(0.942717, 0, 0.333593, 0, 1, 0, -0.333593, 0, 0.942717, 4.92015, 7.07805e-08, -1.06486)
 
 [node name="chairDesk3" parent="CUBICLE_AREA" instance=ExtResource("21_o6psl")]
-transform = Transform3D(-0.661482, 0, -0.749961, 0, 1, 0, 0.749961, 0, -0.661482, 5.4596, -1.67638e-07, 1.41107)
+transform = Transform3D(-0.661482, 0, -0.749961, 0, 1, 0, 0.749961, 0, -0.661482, 5.4596, 0.0763606, 1.41107)
 
 [node name="chairDesk4" parent="CUBICLE_AREA" instance=ExtResource("21_o6psl")]
 transform = Transform3D(-0.945904, 0, -0.324446, 0, 1, 0, 0.324446, 0, -0.945904, 7.15862, -1.67638e-07, 0.929278)
@@ -7858,7 +7851,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
 rattle_sound = ExtResource("65_cw5kp")
-ignore_interaction_raycast = null
 is_locked = true
 key_hint = "I should look around more."
 open_rotation_deg = 95.0

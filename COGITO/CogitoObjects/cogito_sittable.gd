@@ -27,10 +27,10 @@ signal player_stand_up()
 @export var disable_on_crouch: bool = true
 ##Disables (child) Carryable Component if found
 @export var disable_carry : bool = true
-##Should the player get ejected from the seat at a certain y?
+##Should the player get ejected from the seat if it falls beyond eject_angle?
 @export var eject_on_fall: bool = false
-##What y height should the player get ejected from Seat at?
-@export var eject_height: float = 0.35
+##What angle should the player get ejected from Seat at?
+@export var eject_angle: float = 45
 
 
 @export_group("Vision")
@@ -105,6 +105,7 @@ enum PlacementOnLeave {
 @onready var BasicInteraction = $BasicInteraction
 
 var is_occupied: bool = false
+var occupant_id: String = "" 
 var interaction_text : String 
 var sit_position_node: Node3D = null
 var look_marker_node: Node3D = null
@@ -323,15 +324,36 @@ func save():
 	var state_dict = {
 		"node_path" : self.get_path(),
 		"is_occupied" : is_occupied,
+		"occupant_id" : occupant_id,
 		"physics_sittable" : physics_sittable,
 		"interaction_text" : interaction_text,
-		"pos_x" : position.x,
-		"pos_y" : position.y,
-		"pos_z" : position.z,
+		"pos_x" : global_position.x,
+		"pos_y" : global_position.y,
+		"pos_z" : global_position.z,
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
 		
 	}
 	return state_dict
+	# If the node is a RigidBody3D, then save the physics properties of it
+	var rigid_body = find_rigid_body()
+	if rigid_body:
+		print("POS.X ON SAVE: ",position.x , "OF NODE", self.get_path() )
+		state_dict["linear_velocity_x"] = rigid_body.linear_velocity.x
+		state_dict["linear_velocity_y"] = rigid_body.linear_velocity.y
+		state_dict["linear_velocity_z"] = rigid_body.linear_velocity.z
+		state_dict["angular_velocity_x"] = rigid_body.angular_velocity.x
+		state_dict["angular_velocity_y"] = rigid_body.angular_velocity.y
+		state_dict["angular_velocity_z"] = rigid_body.angular_velocity.z
+	return state_dict
+
+
+func find_rigid_body() -> RigidBody3D:
+	var current = self
+	while current:
+		if current is RigidBody3D:
+			return current as RigidBody3D
+		current = current.get_parent()
+	return null
 

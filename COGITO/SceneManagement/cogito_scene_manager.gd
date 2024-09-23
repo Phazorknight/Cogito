@@ -279,19 +279,40 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 		var array_of_state_data = _scene_state.saved_states
 		for state_data in array_of_state_data:
 			var node_to_set = get_node(state_data["node_path"])
-			# Set variables here
-			node_to_set.position = Vector3(state_data["pos_x"],state_data["pos_y"],state_data["pos_z"])
-			node_to_set.rotation = Vector3(state_data["rot_x"],state_data["rot_y"],state_data["rot_z"])
-			for data in state_data.keys():
-				if data == "filename" or data == "parent" or data == "pos_x" or data == "pos_y" or data == "pos_z" or data == "rot_x" or data == "rot_y" or data == "rot_z":
-					continue
-				node_to_set.set(data, state_data[data])
-			node_to_set.set_state()
-		
+			if node_to_set:
+				if node_to_set is RigidBody3D or node_to_set is CharacterBody3D or (node_to_set is CogitoSittable and node_to_set.physics_sittable):
+					# Apply position and rotation using the physics server
+					print("CSM: Setting state for physics object:", node_to_set.name)
+					var physics_state = PhysicsServer3D.body_get_direct_state(node_to_set.get_rid())
+					if physics_state:
+						node_to_set.sleeping = true
+						var new_transform = physics_state.transform
+						#temp for debug
+						print("CSM: PHYSICS STATE POSITIONS: X:", state_data["pos_x"],"Y: ", (state_data["pos_y"]),"Z: ", state_data["pos_z"], node_to_set.name)
+						print("CSM: PHYSICS STATE ROTATION: X:", state_data["rot_x"],"Y: ", (state_data["rot_y"]),"Z: ", state_data["rot_z"], node_to_set.name)
+						new_transform.origin = Vector3(state_data["pos_x"], (state_data["pos_y"]), state_data["pos_z"])
+						#Rotation broken currently
+						#new_transform.basis = Basis().rotated(Vector3(1, 0, 0), (state_data["rot_x"]))
+						#new_transform.basis = new_transform.basis.rotated(Vector3(0, 1, 0), (state_data["rot_y"]))
+						#new_transform.basis = new_transform.basis.rotated(Vector3(0, 0, 1), (state_data["rot_z"]))
+
+						print("CSM: PHYSICS STATE TRANSFORM: ", new_transform, node_to_set.name)
+						node_to_set.call_deferred("set_global_transform", new_transform)
+						node_to_set.sleeping = false
+				else:
+					# Handle non-physics nodes
+					node_to_set.position = Vector3(state_data["pos_x"], state_data["pos_y"], state_data["pos_z"])
+					node_to_set.rotation = Vector3(state_data["rot_x"], state_data["rot_y"], state_data["rot_z"])
+
+				# Set the remaining variables.
+				for data in state_data.keys():
+					if data == "filename" or data == "parent" or data == "pos_x" or data == "pos_y" or data == "pos_z" or data == "rot_x" or data == "rot_y" or data == "rot_z":
+						continue
+					node_to_set.set(data, state_data[data])
+				
+				node_to_set.set_state()
+
 		print("CSM: Loading scene state finished.")
-			
-	else:
-		print("CSM: Scene state doesn't exist.")
 
 
 func save_scene_state(_scene_name_to_save, slot: String):
