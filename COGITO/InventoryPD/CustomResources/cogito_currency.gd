@@ -51,6 +51,11 @@ func set_attribute(_value_current:float, _value_max:float):
 	value_max = _value_max
 
 
+# Used when loading/setting a currency
+func set_currency(_value_current:float, _value_max:float):
+	value_current = _value_current
+	value_max = _value_max
+
 func add(amount):
 	if is_locked:
 		currency_changed.emit(currency_name,value_current,value_max,true)
