@@ -2,7 +2,8 @@ extends Control
 
 signal drop_slot_data(slot_data : InventorySlotPD)
 
-@onready var inventory_ui = $InventoryUI
+@onready var inventory_ui = $VBoxContainer/InventoryUI
+@onready var player_currencies_ui = $VBoxContainer/PlayerCurrencies
 @onready var grabbed_slot_node = $GrabbedSlot
 @onready var external_inventory_ui = $ExternalInventoryUI
 @onready var hot_bar_inventory = $HotBarInventory
@@ -48,6 +49,7 @@ func open_inventory():
 		info_panel.hide()
 		get_viewport().gui_focus_changed.connect(_on_focus_changed)
 		inventory_ui.show()
+		player_currencies_ui.show()
 		if InputHelper.device_index != -1: # Check if gamepad is used
 			inventory_ui.slot_array[0].grab_focus() # Grab focus of inventory slot for gamepad users.
 #		inventory_interface.grabbed_slot_node.show()
@@ -67,6 +69,7 @@ func close_inventory():
 		is_inventory_open = false
 		get_viewport().gui_focus_changed.disconnect(_on_focus_changed)
 		inventory_ui.hide()
+		player_currencies_ui.hide()
 		if external_inventory_owner:
 			external_inventory_owner.close()
 		grabbed_slot_node.hide()

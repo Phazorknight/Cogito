@@ -25,6 +25,8 @@ signal hide_inventory
 
 ## Reference to PackedScene that gets instantiated for each player attribute.
 @export var ui_attribute_prefab : PackedScene
+## Reference to PackedScene that gets instantiated for each player currency.
+@export var ui_currency_prefab : PackedScene
 
 var hurt_tween : Tween
 var is_inventory_open : bool = false
@@ -37,6 +39,7 @@ var interaction_texture : Texture2D
 @onready var prompt_area: Control = $PromptArea
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : VBoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
+@onready var ui_currency_area: VBoxContainer = $InventoryInterface/VBoxContainer/PlayerCurrencies/MarginContainer/VBoxContainer
 @onready var crosshair: Control = $Crosshair
 
 #endregion
@@ -70,6 +73,7 @@ func _setup_player():
 
 	connect_to_player_signals()
 	instantiate_player_attribute_ui()
+	instantiate_player_currency_ui()
 	
 	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
@@ -100,6 +104,17 @@ func instantiate_player_attribute_ui():
 			attribute.death.connect(_on_player_death)
 		
 		spawned_attribute_ui.initiate_attribute_ui(attribute)
+
+
+func instantiate_player_currency_ui():
+	for n in ui_currency_area.get_children():
+		ui_currency_area.remove_child(n)
+		n.queue_free()
+	
+	for currency in player.player_currencies.values():
+		var spawned_currency_ui = ui_currency_prefab.instantiate()
+		ui_currency_area.add_child(spawned_currency_ui)
+		spawned_currency_ui.initiate_currency_ui(currency)
 
 
 func connect_to_external_inventories(): # Grabbing external inventories in scene.

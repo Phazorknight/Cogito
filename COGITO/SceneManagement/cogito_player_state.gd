@@ -21,6 +21,8 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 #New way of saving player attributes
 @export var player_attributes : Dictionary
 
+@export var player_currencies : Dictionary
+
 #Saving parameters from the player interaction component
 @export var interaction_component_state : Array
 
@@ -41,6 +43,14 @@ func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
 
 func clear_saved_attribute_data():
 	player_attributes.clear()
+
+
+func add_player_currency_to_state_data(name: String, currency_data:Vector2):
+	player_currencies[name] = currency_data
+
+
+func clear_saved_currency_data():
+	player_currencies.clear()
 
 
 func add_interaction_component_state_data_to_array(state_data):

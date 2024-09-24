@@ -126,6 +126,9 @@ var player_attributes : Dictionary
 var stamina_attribute : CogitoAttribute = null
 var visibility_attribute : CogitoAttribute
 
+### CURRENCIES
+var player_currencies: Dictionary
+
 ## STAIR HANDLING STUFF
 const WALL_MARGIN : float = 0.001
 const STEP_DOWN_MARGIN : float = 0.01
@@ -229,6 +232,13 @@ func _ready():
 		visibility_attribute.attribute_changed.connect(sanity_attribute.on_visibility_changed)
 		visibility_attribute.check_current_visibility()
 
+
+	### CURRENCY SETUP
+	for currency in find_children("", "CogitoCurrency", false):
+		player_currencies[currency.currency_name] = currency
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Cogito Currency found: " + currency.currency_name)
+
+
 	# Pause Menu setup
 	if pause_menu:
 		var pause_menu_node = get_node(pause_menu)
@@ -270,6 +280,26 @@ func decrease_attribute(attribute_name: String, value: float):
 		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Decrease attribute: " + attribute_name + " - Attribute not found")
 		return
 	attribute.subtract(value)
+
+
+# Use these functions to manipulate player currencies.
+func increase_currency(currency_name: String, value: float) -> bool:
+	var currency = player_currencies.get(currency_name)
+	if not currency:
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Increase currency: Currency not found")
+		return false
+	else:
+		currency.add(value)
+		return true
+
+
+func decrease_currency(currency_name: String, value: float):
+	var currency = player_currencies.get(currency_name)
+	if not currency:
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Decrease currency: " + currency_name + " - Currency not found")
+		return
+	currency.subtract(value)
+
 
 
 func _on_death():

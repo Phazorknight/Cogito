@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=26 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://COGITO/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://COGITO/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -10,6 +10,7 @@
 [ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://COGITO/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://COGITO/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://COGITO/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
+[ext_resource type="PackedScene" uid="uid://c3ti1cb2o1a11" path="res://COGITO/Components/UI/UI_CurrencyComponent.tscn" id="6_kmqyf"]
 [ext_resource type="Script" path="res://COGITO/Scripts/ui_wieldable_hud.gd" id="8_2nbvg"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://COGITO/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
@@ -51,6 +52,7 @@ default_hint_icon = ExtResource("3_o56n0")
 prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
 ui_attribute_prefab = ExtResource("20_lscav")
+ui_currency_prefab = ExtResource("6_kmqyf")
 
 [node name="DamageOverlay" type="Control" parent="."]
 layout_mode = 1
@@ -214,17 +216,43 @@ script = ExtResource("3_lyywb")
 sound_error = ExtResource("8_bxpra")
 metadata/_edit_lock_ = true
 
-[node name="InventoryUI" parent="InventoryInterface" instance=ExtResource("3_krf2d")]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = 5.0
-offset_top = -245.0
-offset_right = 63.0
-offset_bottom = -199.0
-grow_vertical = 0
+offset_top = -31.0
+offset_right = 66.0
+offset_bottom = 31.0
+grow_vertical = 2
+
+[node name="PlayerCurrencies" type="PanelContainer" parent="InventoryInterface/VBoxContainer"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+mouse_filter = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/VBoxContainer/PlayerCurrencies"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/VBoxContainer/PlayerCurrencies/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="InventoryUI" parent="InventoryInterface/VBoxContainer" instance=ExtResource("3_krf2d")]
+visible = false
+layout_mode = 2
 inventory_name = "Player Inventory"
 
 [node name="ExternalInventoryUI" parent="InventoryInterface" instance=ExtResource("3_krf2d")]

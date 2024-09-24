@@ -141,6 +141,13 @@ func load_player_state(player, passed_slot:String):
 			var max_value = attribute_data.y
 			player.player_attributes[attribute].set_attribute(cur_value, max_value)
 
+		var loaded_currency_data = _player_state.player_currencies
+		for currency in loaded_currency_data:
+			var currency_data: Vector2 = loaded_currency_data[currency]
+			var cur_value = currency_data.x
+			var max_value = currency_data.y
+			player.player_currencies[currency].set_currency(cur_value, max_value)
+
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
 		
@@ -204,6 +211,19 @@ func save_player_state(player, slot:String):
 		var max_value = player.player_attributes[attribute].value_max
 		var attribute_data := Vector2(cur_value, max_value)
 		_player_state.add_player_attribute_to_state_data(attribute, attribute_data)
+	
+	
+	_player_state.clear_saved_currency_data()
+	for currency in player.player_currencies:
+		var cur_value
+		if !player.player_currencies[currency].dont_save_current_value:
+			cur_value = player.player_currencies[currency].value_current
+		else:
+			cur_value = 0
+		var max_value = player.player_currencies[currency].value_max
+		var currency_data := Vector2(cur_value, max_value)
+		_player_state.add_player_currency_to_state_data(currency, currency_data)
+	
 
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")

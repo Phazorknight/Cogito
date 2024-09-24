@@ -11,6 +11,18 @@ func interact(_player_interaction_component: PlayerInteractionComponent):
 
 
 func pick_up(_player_interaction_component: PlayerInteractionComponent):
+	### Currency Item handling
+	if slot_data.inventory_item is CurrencyItemPD and slot_data.inventory_item.add_on_pickup:
+		if slot_data.inventory_item.use(_player_interaction_component.get_parent()):
+			#_player_interaction_component.send_hint(slot_data.inventory_item.hint_icon_on_use, slot_data.inventory_item.hint_text_on_use)
+			Audio.play_sound(slot_data.inventory_item.sound_pickup)
+			was_interacted_with.emit(interaction_text, input_map_action)
+			self.get_parent().queue_free()
+			return
+		else:
+			_player_interaction_component.send_hint(slot_data.inventory_item.icon, slot_data.inventory_item.name + " couldn't be picked up.")
+			return
+	
 	if not _player_interaction_component.get_parent().inventory_data.pick_up_slot_data(slot_data):
 		return
 

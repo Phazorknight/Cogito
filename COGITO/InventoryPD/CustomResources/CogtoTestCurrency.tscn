@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://n1doui0jpn1v"]
+
+[ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/cogito_currency.gd" id="1_61vow"]
+[ext_resource type="Texture2D" uid="uid://b1evxgj7t01ho" path="res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Currency.png" id="2_vqb8i"]
+
+[node name="CogtoTestCurrency" type="Node"]
+script = ExtResource("1_61vow")
+currency_name = "credits"
+currency_display_name = "Credits"
+currency_color = Color(0.717647, 0.631373, 0, 1)
+currency_icon = ExtResource("2_vqb8i")
+value_max = 999.0
+value_start = 10.0

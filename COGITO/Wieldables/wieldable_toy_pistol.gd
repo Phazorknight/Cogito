@@ -17,7 +17,6 @@ extends CogitoWieldable
 @export var sound_secondary_use : AudioStream
 @export var sound_reload : AudioStream
 
-
 const POOL_SIZE := 50
 var projectile_pool := []
 var _last_index := -1
