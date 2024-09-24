@@ -277,6 +277,7 @@ func interact(player_interaction_component):
 	
 	#Prevent entering fallen chair
 	if !is_occupied and _is_fallen():
+		player_interaction_component.send_hint(null, "I can't sit there!")
 		return
 	
 	# Get the current time from the engine
@@ -291,10 +292,12 @@ func interact(player_interaction_component):
 	
 	if disable_on_crouch == true:
 		if player_node.is_crouching:
+			player_interaction_component.send_hint(null, "I should stand up first")
 			return
 	
 	if disable_on_jump == true:
 		if player_node.is_in_air:
+			player_interaction_component.send_hint(null, "I should land first")
 			return
 	
 	# If the player is already sitting in a seat, and interacts with that seat then stand
