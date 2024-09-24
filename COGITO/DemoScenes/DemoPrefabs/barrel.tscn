@@ -98,7 +98,7 @@ health_attribute = NodePath("../HealthAttribute")
 
 [node name="HealthAttribute" parent="." instance=ExtResource("3_kqaad")]
 destroy_on_death = Array[NodePath]([NodePath("..")])
-spawn_on_death = ExtResource("4_y2b0x")
+spawn_on_death = Array[PackedScene]([ExtResource("4_y2b0x")])
 value_max = 3.0
 value_start = 3.0
 
