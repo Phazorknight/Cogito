@@ -363,8 +363,11 @@ func _input(event):
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
 				toggle_inventory_interface.emit()
 		elif !is_movement_paused and !is_dead:
-			_on_pause_movement()
-			get_node(pause_menu).open_pause_menu()
+			if !currently_tweening:
+				_on_pause_movement()
+				get_node(pause_menu).open_pause_menu()
+			else:
+				player_interaction_component.send_hint(null, "Wait until I’m seated or standing")
 
 	# Open/closes Inventory if Inventory button is pressed
 	if event.is_action_pressed("inventory") and !is_dead:
@@ -485,17 +488,18 @@ func _sit_down():
 
 		else:
 			# Static tween for non-physics sittable
+			currently_tweening = true
 			var tween = create_tween()
 			tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
 			tween.tween_callback(Callable(self, "_sit_down_finished"))
 		
 func _sit_down_finished():
-	currently_tweening = false
 	is_sitting = true
 	set_physics_process(true)
 	var sittable = CogitoSceneManager._current_sittable_node
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = true
+	currently_tweening = false
 	if sittable_look_marker:
 		var tween = create_tween()
 		var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
@@ -525,12 +529,14 @@ func _stand_up():
 #Functions to handle Exit types
 
 func _move_to_original_position(sittable):
+	currently_tweening = true
 	var tween = create_tween()
 	tween.tween_property(self, "global_transform", original_position, sittable.tween_duration)
 	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
 	
 func _move_to_leave_node(sittable):
+	currently_tweening = true
 	if sittable.leave_node_path:
 		var leave_node = sittable.get_node(sittable.leave_node_path)
 		if leave_node:
@@ -574,6 +580,7 @@ func _move_to_nearby_location(sittable):
 
 		# Check if position is reachable
 		if navigation_agent.is_navigation_finished():
+			currently_tweening = true
 			#print("Found available location, moving there.", candidate_pos, attempts)
 			var tween = create_tween()
 			navigation_agent.target_position.y += 1 # To avoid player going through floor
@@ -611,7 +618,7 @@ func _stand_up_finished():
 	#crouching_collision_shape.disabled = false
 	self.global_transform.basis = Basis()
 	neck.global_transform.basis = original_neck_basis  
-	
+	currently_tweening = false
 #endregion
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
@@ -696,6 +703,7 @@ var was_in_air = false
 
 
 func _physics_process(delta):
+	print(currently_tweening)
 	#if is_movement_paused:
 		#return
 	if is_sitting:
