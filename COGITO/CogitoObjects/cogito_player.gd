@@ -243,7 +243,7 @@ func _ready():
 	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
 	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
 	
-  CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
+	CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
 
 
 	call_deferred("slide_audio_init")

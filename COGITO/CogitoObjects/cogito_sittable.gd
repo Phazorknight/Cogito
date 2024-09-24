@@ -115,7 +115,7 @@ var interaction_nodes : Array[Node]
 var carryable_components: Array = [Node]
 var player_node: Node3D = null
 var player_in_sit_area: bool = false
-
+var cogito_properties : CogitoProperties = null
 #endregion
 
 func _ready():
@@ -153,7 +153,8 @@ func _ready():
 	if is_sat_on_start:
 		interact(player_node.player_interaction_component)
 		BasicInteraction.is_disabled = false
-		
+	
+	find_cogito_properties()
 
 func get_child_carryable_components() -> Array:
 	var components = []
@@ -241,6 +242,7 @@ func switch():
 		_sit_down()
 
 func set_state():
+	find_cogito_properties()
 	if is_occupied:
 		_sit_down()
 	else:
@@ -271,6 +273,12 @@ func _on_sit_area_body_exited(body):
 		else: 
 			BasicInteraction.is_disabled = true
 			
+
+func find_cogito_properties():
+	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
+	if property_nodes:
+		cogito_properties = property_nodes[0]
+
 var interact_cooldown = 0.0
 
 func interact(player_interaction_component):
