@@ -14,8 +14,8 @@ signal death()
 @export var sound_on_death : AudioStream
 ## Nodepaths to nodes that get destroyed on death.
 @export var destroy_on_death : Array[NodePath]
-## PackedScene that will get spawned on parent position on death.
-@export var spawn_on_death : PackedScene
+## Array of Scenes that will get spawned on parent position on death.
+@export var spawn_on_death : Array[PackedScene] = []
 
 var parent_position : Vector3
 
@@ -41,10 +41,11 @@ func on_death(_attribute_name:String, _value_current:float, _value_max:float):
 	if sound_on_death:
 		Audio.play_sound_3d(sound_on_death).position = parent_position
 	
-	if spawn_on_death:
-		var spawned_object = spawn_on_death.instantiate()
-		spawned_object.position = parent_position
-		get_tree().current_scene.add_child(spawned_object)
+	for scene in spawn_on_death:
+		if scene:
+			var spawned_object = scene.instantiate()
+			spawned_object.position = parent_position
+			get_tree().current_scene.add_child(spawned_object)
 	
 	for nodepath in destroy_on_death:
 		if get_node(nodepath):
