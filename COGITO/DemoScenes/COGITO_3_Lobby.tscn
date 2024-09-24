@@ -7414,7 +7414,7 @@ transform = Transform3D(0.999399, 0, 0.0346727, 0, 1, 0, -0.0346727, 0, 0.999399
 
 [node name="loungeDesignChair" parent="ENTRANCE_AREA" instance=ExtResource("81_yj30c")]
 
-[node name="loungeDesignChair3" parent="ENTRANCE_AREA" instance=ExtResource("81_yj30c")]
+[node name="loungeDesignChair2" parent="ENTRANCE_AREA" instance=ExtResource("81_yj30c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.684, 2.7, 5.062)
 
 [node name="loungeDesignSofa" parent="ENTRANCE_AREA" instance=ExtResource("81_12qcq")]

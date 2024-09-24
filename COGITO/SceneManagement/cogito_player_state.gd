@@ -44,6 +44,7 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var original_neck_basis: Basis = Basis()
 @export var is_ejected: bool = false
 @export var currently_tweening: bool = false
+@export var current_sittable_path: NodePath
 
 #Collision shapes
 @export var standing_collision_shape_enabled : bool = true
@@ -69,6 +70,7 @@ func save_sitting_state(player):
 	original_neck_basis = player.original_neck_basis if player.is_sitting else Basis()
 	is_ejected = player.is_ejected
 	currently_tweening = player.currently_tweening
+	current_sittable_path = CogitoSceneManager._current_sittable_node.get_path()
 
 func load_sitting_state(player):
 	player.is_sitting = is_sitting
@@ -80,7 +82,8 @@ func load_sitting_state(player):
 	player.original_neck_basis = original_neck_basis
 	player.is_ejected = is_ejected
 	player.currently_tweening = currently_tweening
-
+	if is_sitting and current_sittable_path != null:
+		CogitoSceneManager._current_sittable_node = CogitoSceneManager.get_node(current_sittable_path)
 
 func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
 	player_attributes[name] = attribute_data
