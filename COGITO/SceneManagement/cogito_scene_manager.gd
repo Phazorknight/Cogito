@@ -312,6 +312,10 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 						new_transform.basis = Basis(rotation_quat)
 						node_to_set.call_deferred("set_global_transform", new_transform)
 						node_to_set.sleeping = false
+						if "linear_velocity_x" in state_data and "linear_velocity_y" in state_data and "linear_velocity_z" in state_data:
+							node_to_set.linear_velocity = Vector3(state_data["linear_velocity_x"], state_data["linear_velocity_y"], state_data["linear_velocity_z"])
+						if "angular_velocity_x" in state_data and "angular_velocity_y" in state_data and "angular_velocity_z" in state_data:
+							node_to_set.angular_velocity = Vector3(state_data["angular_velocity_x"], state_data["angular_velocity_y"], state_data["angular_velocity_z"])
 				else:
 					# Handle non-physics nodes
 					node_to_set.position = Vector3(state_data["pos_x"], state_data["pos_y"], state_data["pos_z"])

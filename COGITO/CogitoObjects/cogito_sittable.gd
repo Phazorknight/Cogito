@@ -361,7 +361,7 @@ func save():
 		"global_pos_z" : global_position.z,
 		
 	}
-	return state_dict
+
 	# If the node is a RigidBody3D, then save the physics properties of it
 	var rigid_body = find_rigid_body()
 	if rigid_body:
