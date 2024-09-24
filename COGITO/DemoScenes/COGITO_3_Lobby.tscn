@@ -7619,7 +7619,7 @@ transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, -5.24664, 0.551412, -14.7463
 
 [node name="ReadableComponent" parent="DEMO_HINTS/Hint_10_Sittable_Physics" index="6"]
 readable_title = "Sittables - Physics Sittable"
-readable_content = "These chair are examples of a [b]Physics Sittable[/b]. 
+readable_content = "These chairs are examples of a [b]Physics Sittable[/b]. 
 
 It keeps the player on the Sit Marker & dynamically adjusts the view angle to follow the Look Marker.
 

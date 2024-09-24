@@ -120,6 +120,7 @@ script = ExtResource("1_14400")
 vehicle_node = NodePath(".")
 sit_area_behaviour = 2
 eject_on_fall = true
+horizontal_look_angle = 360.0
 sit_sound = ExtResource("2_tkltg")
 stand_sound = ExtResource("2_tkltg")
 sit_position_node_path = NodePath("Sit Marker")

@@ -397,7 +397,7 @@ func _on_seat_move_requested(sittable: Node):
 
 	
 func handle_sitting_look(event):
-
+	#TODO - Fix for vehicles by handling dynamic look marker, Fix for controller support
 	var neck_position = neck.global_transform.origin
 	var look_marker_position = sittable_look_marker
 	var target_direction = Vector2(look_marker_position.x - neck_position.x, look_marker_position.z - neck_position.z).normalized()
