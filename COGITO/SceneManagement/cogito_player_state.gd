@@ -70,7 +70,8 @@ func save_sitting_state(player):
 	original_neck_basis = player.original_neck_basis if player.is_sitting else Basis()
 	is_ejected = player.is_ejected
 	currently_tweening = player.currently_tweening
-	current_sittable_path = CogitoSceneManager._current_sittable_node.get_path()
+	if is_sitting:
+		current_sittable_path = CogitoSceneManager._current_sittable_node.get_path()
 
 func load_sitting_state(player):
 	player.is_sitting = is_sitting

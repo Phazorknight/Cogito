@@ -286,7 +286,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 						var rid = node_to_set.get_rid()
 						node_to_set.sleeping = true
 						var new_transform = physics_state.transform
-						new_transform.origin = Vector3(state_data["pos_x"], (state_data["pos_y"]), state_data["pos_z"])
+						new_transform.origin = Vector3(state_data["global_pos_x"], (state_data["global_pos_y"]), state_data["global_pos_z"])
 						var new_rotation = Vector3(state_data["rot_x"], state_data["rot_y"], state_data["rot_z"])
 						var rotation_quat = Quaternion.from_euler(new_rotation)
 						# Account for parent node rotation as this can affect node rotation
