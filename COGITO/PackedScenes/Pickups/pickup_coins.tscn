@@ -17,12 +17,10 @@ height = 0.01
 radial_segments = 8
 rings = 1
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_4mxs4"]
-margin = 0.01
-height = 0.05
-radius = 0.1
+[sub_resource type="BoxShape3D" id="BoxShape3D_k343l"]
+size = Vector3(0.205469, 0.0422119, 0.170801)
 
-[sub_resource type="Resource" id="Resource_pb4mu"]
+[sub_resource type="Resource" id="Resource_iq4sy"]
 resource_local_to_scene = true
 script = ExtResource("4_wdnhm")
 inventory_item = ExtResource("3_q3la1")
@@ -57,8 +55,8 @@ transform = Transform3D(0.906256, 0, -0.422729, 0, 1, 0, 0.422729, 0, 0.906256, 
 mesh = SubResource("CylinderMesh_u08uv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0529228, 0.0252476, 0.00999682)
-shape = SubResource("CylinderShape3D_4mxs4")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0501884, 0.0155918, 0.0245964)
+shape = SubResource("BoxShape3D_k343l")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_028c2")]
-slot_data = SubResource("Resource_pb4mu")
+slot_data = SubResource("Resource_iq4sy")
