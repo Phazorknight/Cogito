@@ -125,6 +125,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.196674, 0.390145, -0.319466
 stream = ExtResource("4_n3nyb")
 volume_db = -35.0
 pitch_scale = 0.5
+bus = &"SFX"
 
 [node name="sit_area" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.196674, 0.390145, -0.319466)
