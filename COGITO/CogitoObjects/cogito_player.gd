@@ -17,6 +17,8 @@ signal toggled_interface(is_showing_ui:bool)
 @export var player_hud : NodePath
 # Used for handling input when UI is open/displayed
 var is_showing_ui : bool
+## Toggle printing debug messages or not. Works with the CogitoSceneManager
+@export var is_logging : bool
 
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
@@ -211,7 +213,7 @@ func _ready():
 	# Grabs all attached player attributes
 	for attribute in find_children("","CogitoAttribute",false):
 		player_attributes[attribute.attribute_name] = attribute
-		print("Cogito Attribute found: ", attribute.attribute_name)
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Cogito Attribute found: " + attribute.attribute_name)
 
 	# If found, hookup health attribute signal to detect player death
 	var health_attribute = player_attributes.get("health")
@@ -233,12 +235,16 @@ func _ready():
 		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
+
 		print("Player has no reference to pause menu.")
 	
 	#Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
 	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
 	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
+	
+  CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
+
 
 	call_deferred("slide_audio_init")
 
@@ -253,7 +259,7 @@ func slide_audio_init():
 func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
 	var attribute = player_attributes.get(attribute_name)
 	if not attribute:
-		print("Player.gd increase attribute: Attribute not found")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Increase attribute: Attribute not found")
 		return false
 	if value_type == ConsumableItemPD.ValueType.CURRENT:
 		if attribute.value_current == attribute.value_max:
@@ -270,7 +276,7 @@ func increase_attribute(attribute_name: String, value: float, value_type: Consum
 func decrease_attribute(attribute_name: String, value: float):
 	var attribute = player_attributes.get(attribute_name)
 	if not attribute:
-		print("Player.gd decrease attribute: ", attribute_name, " - Attribute not found")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Decrease attribute: " + attribute_name + " - Attribute not found")
 		return
 	attribute.subtract(value)
 
@@ -297,7 +303,7 @@ func _on_resume_movement():
 func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err == 0:
-		print("Player.gd: Options reloaded.")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Options reloaded.")
 		
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
@@ -338,6 +344,17 @@ func _input(event):
 			joystick_v_event = event
 		if event.get_axis() == 3:
 			joystick_h_event = event
+	
+	
+	# CROUCH HANDLING dependant on toggle_crouch
+	if TOGGLE_CROUCH and !is_movement_paused and event.is_action_pressed("crouch"):
+		try_crouch = !try_crouch
+	elif !TOGGLE_CROUCH and !is_movement_paused:
+		if event.is_action_pressed("crouch"):
+			try_crouch = true
+		elif event.is_action_released("crouch"):
+			try_crouch = false
+	
 	
 	# Opens Pause Menu if Menu button is proessed.
 	if event.is_action_pressed("menu"):
@@ -667,7 +684,6 @@ func _process_on_ladder(_delta):
 	if jump:
 		main_velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
 	
-	# print("Input_dir:", input_dir, ". direction:", direction)
 	velocity = main_velocity
 	move_and_slide()
 	
@@ -677,6 +693,7 @@ func _process_on_ladder(_delta):
 
 var jumped_from_slide = false
 var was_in_air = false
+
 
 func _physics_process(delta):
 	#if is_movement_paused:
@@ -745,10 +762,12 @@ func _physics_process(delta):
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 	
 	if stand_after_roll:
-		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-		standing_collision_shape.disabled = true
-		crouching_collision_shape.disabled = false
-		stand_after_roll = false
+		if !is_movement_paused or !is_showing_ui:
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "500: Standing after roll.")
+			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+			standing_collision_shape.disabled = true
+			crouching_collision_shape.disabled = false
+			stand_after_roll = false
 	
 	var crouched_jump = false
 	if is_on_floor():
@@ -757,13 +776,6 @@ func _physics_process(delta):
 	else:
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
 		crouched_jump = is_crouching and not jumped_from_slide
-	
-	# CROUCH HANDLING dependant on toggle_crouch
-	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-		try_crouch = !try_crouch
-	elif !TOGGLE_CROUCH:
-		try_crouch = Input.is_action_pressed("crouch")
-	
 	
 	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch and !is_movement_paused or crouch_raycast.is_colliding()):
 		# should we be sliding?
@@ -786,15 +798,17 @@ func _physics_process(delta):
 		is_sprinting = false
 		is_crouching = true
 	else:
-		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-		if head.position.y < CROUCHING_DEPTH/4:
-			# still transitioning from state
-			crouching_collision_shape.disabled = false
-			standing_collision_shape.disabled = true
-		else:
-			standing_collision_shape.disabled = false
-			crouching_collision_shape.disabled = true
-		sliding_timer.stop()
+		if !is_showing_ui or !is_movement_paused:
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "536: Standing up...")
+			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+			if head.position.y < CROUCHING_DEPTH/4:
+				# still transitioning from state
+				crouching_collision_shape.disabled = false
+				standing_collision_shape.disabled = true
+			else:
+				standing_collision_shape.disabled = false
+				crouching_collision_shape.disabled = true
+			sliding_timer.stop()
 		# Prevent sprinting if player is out of stamina.
 		if Input.is_action_pressed("sprint") and stamina_attribute and stamina_attribute.value_current > 0:
 			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
@@ -807,7 +821,8 @@ func _physics_process(delta):
 			is_walking = false
 			if is_on_floor():
 				is_sprinting = true
-			is_crouching = false
+			if is_crouching:
+				is_crouching = false
 		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
 			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
 				bunny_hop_speed = SPRINTING_SPEED
@@ -818,14 +833,20 @@ func _physics_process(delta):
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 			is_walking = false
 			is_sprinting = true
-			is_crouching = false
+			if is_crouching:
+				is_crouching = false
 		else:
-			current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
-			wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
-			wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
-			is_walking = true
-			is_sprinting = false
-			is_crouching = false
+			# STANDING UP HANDLING
+			if is_crouching:
+				if !is_showing_ui or !is_movement_paused:
+					CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "576 standing up...")
+					current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
+					wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
+					wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
+					is_walking = true
+					is_sprinting = false
+					if is_crouching:
+						is_crouching = false
 	
 	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() and !is_movement_paused:
 		is_free_looking = true
@@ -879,16 +900,18 @@ func _physics_process(delta):
 			delta * LERP_SPEED
 		)
 	else:
-		eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
-		eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
-		if last_velocity.y <= -7.5:
-			head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-			standing_collision_shape.disabled = false
-			crouching_collision_shape.disabled = true
-			if !disable_roll_anim:
-				animationPlayer.play("roll")
-		elif last_velocity.y <= -5.0:
-			animationPlayer.play("landing")
+		if !is_movement_paused or !is_showing_ui:
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "638 Standing up...")
+			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
+			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
+			if last_velocity.y <= -7.5:
+				head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
+				standing_collision_shape.disabled = false
+				crouching_collision_shape.disabled = true
+				if !disable_roll_anim:
+					animationPlayer.play("roll")
+			elif last_velocity.y <= -5.0:
+				animationPlayer.play("landing")
 		
 		# Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
@@ -938,7 +961,7 @@ func _physics_process(delta):
 				standing_collision_shape.disabled = false
 				crouching_collision_shape.disabled = true
 		elif not doesnt_need_stamina:
-			print("Not enough stamina to jump.")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd","Not enough stamina to jump.")
 
 	if sliding_timer.is_stopped():
 		if is_on_floor():
@@ -1170,7 +1193,7 @@ func _on_animation_player_animation_finished(anim_name):
 
 func apply_external_force(force_vector: Vector3):
 	if force_vector and force_vector.length() > 0:
-		print("Cogito_Player.gd: Applying external force ", force_vector)
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
 		velocity += force_vector
 		move_and_slide()
 

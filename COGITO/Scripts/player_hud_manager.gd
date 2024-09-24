@@ -37,7 +37,6 @@ var interaction_texture : Texture2D
 @onready var prompt_area: Control = $PromptArea
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : VBoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
-@onready var fade_in_screen: Panel = $FadeInScreen
 @onready var crosshair: Control = $Crosshair
 
 #endregion
@@ -57,13 +56,12 @@ func _ready():
 	
 	_setup_player.call_deferred()
 	connect_to_external_inventories.call_deferred()
-	
-	fade_in.call_deferred(1.5)
 
 
 func setup_player(new_player : Node):
 	player = new_player
 	_setup_player()
+	
 
 
 func _setup_player():
@@ -87,12 +85,6 @@ func connect_to_player_signals():
 	player.toggled_interface.connect(_on_external_ui_toggle)
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
 	player.player_state_loaded.connect(_on_player_state_load)
-
-
-func fade_in(fade_in_duration: float):
-	fade_in_screen.set_modulate(Color.BLACK)
-	var fade_tween = get_tree().create_tween()
-	fade_tween.tween_property(fade_in_screen, "modulate", Color.TRANSPARENT, fade_in_duration)
 
 
 func instantiate_player_attribute_ui():

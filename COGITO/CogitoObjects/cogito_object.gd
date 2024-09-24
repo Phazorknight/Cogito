@@ -52,7 +52,26 @@ func save():
 		"rot_z" : rotation.z,
 		
 	}
+
+	# If the node is a RigidBody3D, then save the physics properties of it
+	var rigid_body = find_rigid_body()
+	if rigid_body:
+		node_data["linear_velocity_x"] = rigid_body.linear_velocity.x
+		node_data["linear_velocity_y"] = rigid_body.linear_velocity.y
+		node_data["linear_velocity_z"] = rigid_body.linear_velocity.z
+		node_data["angular_velocity_x"] = rigid_body.angular_velocity.x
+		node_data["angular_velocity_y"] = rigid_body.angular_velocity.y
+		node_data["angular_velocity_z"] = rigid_body.angular_velocity.z
 	return node_data
+
+
+func find_rigid_body() -> RigidBody3D:
+	var current = self
+	while current:
+		if current is RigidBody3D:
+			return current as RigidBody3D
+		current = current.get_parent()
+	return null
 
 
 func _on_body_entered(body: Node) -> void:

@@ -1,5 +1,8 @@
 extends Node
 
+## Emitted when a fade finishes
+signal fade_finished
+
 # Used to set active save slot. This could be set/modified, when selecting a save slot from the MainMenu.
 @export var _active_slot : String = "A"
 
@@ -30,11 +33,15 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 @export var cogito_scene_state_prefix : String = "COGITO_scene_state_"
 @export var cogito_player_state_prefix : String = "COGITO_player_state_"
 
+@export var default_fade_duration : float = .4
+@export var fade_panel : Panel = null
+
 func _ready() -> void:
 	_player_state = get_existing_player_state(_active_slot) #Setting active slot (per default it's A)
 	_scene_state = get_existing_scene_state(_active_slot)
 	
 	reset_scene_states()
+	instantiate_fade_panel()
 
 
 func switch_active_slot_to(slot_name:String):
@@ -155,6 +162,7 @@ func load_player_state(player, passed_slot:String):
 			player.player_interaction_component.set_state.call_deferred() #Calling this deferred as some state calls need to make sure the scene is finished loading.
 		
 		player.player_state_loaded.emit()
+		CogitoSceneManager.fade_in()
 	else:
 		print("CSM: Player state of slot ", passed_slot, " doesn't exist.")
 		
@@ -260,8 +268,15 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 			if get_node(node_data["parent"]):
 				get_node(node_data["parent"]).add_child(new_object)
 				print("Adding to scene: ", new_object.get_name())
+				
 			new_object.position = Vector3(node_data["pos_x"],node_data["pos_y"],node_data["pos_z"])
 			new_object.rotation = Vector3(node_data["rot_x"],node_data["rot_y"],node_data["rot_z"])
+			# Restore physics properties if it's a RigidBody3D
+			if new_object is RigidBody3D:
+				if "linear_velocity_x" in node_data and "linear_velocity_y" in node_data and "linear_velocity_z" in node_data:
+					new_object.linear_velocity = Vector3(node_data["linear_velocity_x"], node_data["linear_velocity_y"], node_data["linear_velocity_z"])
+				if "angular_velocity_x" in node_data and "angular_velocity_y" in node_data and "angular_velocity_z" in node_data:
+					new_object.angular_velocity = Vector3(node_data["angular_velocity_x"], node_data["angular_velocity_y"], node_data["angular_velocity_z"])
 			# Set the remaining variables.
 			for data in node_data.keys():
 				if data == "filename" or data == "parent" or data == "pos_x" or data == "pos_y" or data == "pos_z" or data == "rot_x" or data == "rot_y" or data == "rot_z" or data == "item_charge":
@@ -332,8 +347,20 @@ func save_scene_state(_scene_name_to_save, slot: String):
 			if !node.has_method("save"): # Check the node has a save function.
 				print("persistent node '%s' is missing a save() function, skipped" % node.name)
 				continue
+				
+			# If the node is a RigidBody3D, then save the physics properties
+			if node is RigidBody3D:
+				var node_data = node.save()
+				node_data["linear_velocity_x"] = node.linear_velocity.x
+				node_data["linear_velocity_y"] = node.linear_velocity.y
+				node_data["linear_velocity_z"] = node.linear_velocity.z
+				node_data["angular_velocity_x"] = node.angular_velocity.x
+				node_data["angular_velocity_y"] = node.angular_velocity.y
+				node_data["angular_velocity_z"] = node.angular_velocity.z
+				_scene_state.add_node_data_to_array(node_data)
+			else:
+				_scene_state.add_node_data_to_array(node.save())
 		
-			_scene_state.add_node_data_to_array(node.save())
 	
 	# Saving states of objects
 	var state_nodes = get_tree().get_nodes_in_group("save_object_state")
@@ -354,6 +381,8 @@ func save_scene_state(_scene_name_to_save, slot: String):
 
 # Function to transition to another scene via the loading screen.
 func load_next_scene(target : String, connector_name: String, passed_slot: String, load_mode: CogitoSceneLoadMode) -> void:
+	# fade_out()
+	
 	var loading_screen = preload("res://COGITO/SceneManagement/LoadingScene.tscn").instantiate()
 	loading_screen.next_scene_path = target
 	loading_screen.connector_name = connector_name
@@ -484,3 +513,44 @@ func reset_scene_states():
 
 func _exit_tree() -> void:
 	delete_temp_saves()
+	
+	
+	
+func cogito_print(is_logging: bool, _class: String, _message: String) -> void:
+	if is_logging:
+		print("COGITO: ", _class, ": ", _message)
+
+
+### FUNCTIONS TO HANDLE SCREEN FADING
+
+func instantiate_fade_panel() -> void:
+	fade_panel = Panel.new()
+	
+	var black_stylebox := StyleBoxFlat.new()
+	black_stylebox.bg_color = Color.BLACK
+	
+	fade_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade_panel.focus_mode = Control.FOCUS_NONE
+	fade_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fade_panel.set_modulate(Color.TRANSPARENT)
+	fade_panel.add_theme_stylebox_override("panel", black_stylebox)
+	
+	add_child(fade_panel)
+
+
+func fade_in(fade_duration:float = default_fade_duration) -> void:
+	fade_panel.set_modulate(Color.BLACK)
+	var fade_tween = get_tree().create_tween()
+	
+	fade_tween.tween_property(fade_panel, "modulate", Color.TRANSPARENT, fade_duration).set_trans(Tween.TRANS_CUBIC)
+	await fade_tween.finished
+	fade_finished.emit()
+
+
+func fade_out(fade_duration:float = default_fade_duration) -> void:
+	fade_panel.set_modulate(Color.TRANSPARENT)
+	var fade_tween = get_tree().create_tween()
+	
+	fade_tween.tween_property(fade_panel, "modulate", Color.BLACK, fade_duration).set_trans(Tween.TRANS_CUBIC)
+	await fade_tween.finished
+	fade_finished.emit()

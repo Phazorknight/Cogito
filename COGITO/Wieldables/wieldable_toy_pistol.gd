@@ -18,6 +18,22 @@ extends CogitoWieldable
 @export var sound_reload : AudioStream
 
 
+const POOL_SIZE := 50
+var projectile_pool := []
+var _last_index := -1
+
+func _ready() -> void:
+	# Here, we pre-instantiate `POOL_SIZE` bullets and store them in the `bullets` array.
+	for i in POOL_SIZE:
+		projectile_pool.append(projectile_prefab.instantiate())
+
+
+func get_projectile() -> Node3D:
+	# Cycle the index between `0` (included) and `POOL_SIZE` (excluded).
+	_last_index = wrapi(_last_index + 1, 0, POOL_SIZE)
+	return projectile_pool[_last_index]
+
+
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
 func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool):
 	if _is_released:
@@ -39,7 +55,7 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	var Direction = (_camera_collision - bullet_point.get_global_transform().origin).normalized()
 	
 	# Spawning projectile
-	var Projectile = projectile_prefab.instantiate()
+	var Projectile = get_projectile()
 	bullet_point.add_child(Projectile)
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
@@ -67,3 +83,4 @@ func reload():
 	animation_player.play(anim_reload)
 	audio_stream_player_3d.stream = sound_reload
 	audio_stream_player_3d.play()
+

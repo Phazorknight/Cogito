@@ -15,11 +15,14 @@ var device_id: int = -1  # Used for displaying correct input prompts depending o
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
+
+
 var interactable: # Updated via signals from InteractionRayCast
 	set = _set_interactable
 
 var carried_object = null:  # Used for carryable handling.
 	set = _set_carried_object
+	
 var is_carrying: bool:
 	get: return carried_object != null
 ## Power with which object are thrown (opposed to being dropped)
@@ -35,6 +38,7 @@ var equipped_wieldable_node = null
 var wieldable_was_on: bool = false
 var is_wielding: bool:
 	get: return equipped_wieldable_item != null
+	
 var player_rid
 
 

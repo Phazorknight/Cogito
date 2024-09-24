@@ -81,6 +81,8 @@ func _ready() -> void:
 	
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
+	sfx_volume_slider.hslider.value_changed.connect(_on_sfx_volume_slider_value_changed)
+	music_volume_slider.hslider.value_changed.connect(_on_music_volume_slider_value_changed)
 	
 	load_options()
 
