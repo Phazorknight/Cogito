@@ -50,6 +50,29 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var standing_collision_shape_enabled : bool = true
 @export var crouching_collision_shape_enabled : bool = false
 
+
+@export var body_transform: Transform3D
+@export var neck_transform: Transform3D
+@export var head_transform: Transform3D
+@export var eyes_transform: Transform3D
+@export var camera_transform: Transform3D
+
+
+func save_node_transforms(player):
+	body_transform = player.get_node("Body").transform
+	neck_transform = player.get_node("Body/Neck").transform
+	head_transform = player.get_node("Body/Neck/Head").transform
+	eyes_transform = player.get_node("Body/Neck/Head/Eyes").transform
+	camera_transform = player.get_node("Body/Neck/Head/Eyes/Camera").transform
+	
+func load_node_transforms(player):
+	player.get_node("Body").transform = body_transform
+	player.get_node("Body/Neck").transform = neck_transform
+	player.get_node("Body/Neck/Head").transform = head_transform
+	player.get_node("Body/Neck/Head/Eyes").transform = eyes_transform
+	player.get_node("Body/Neck/Head/Eyes/Camera").transform = camera_transform
+
+
 # Save the state of the player's collision shapes
 func save_collision_shapes(player):
 	standing_collision_shape_enabled = not player.standing_collision_shape.disabled

@@ -154,6 +154,7 @@ func load_player_state(player, passed_slot:String):
 		## Loading player sitting state
 		_player_state.load_sitting_state(player) 
 		_player_state.load_collision_shapes(player)
+		_player_state.load_node_transforms(player)
 		#Loading player interaction component state
 		var player_interaction_component_state = _player_state.interaction_component_state
 		for state_data in player_interaction_component_state:
@@ -217,6 +218,7 @@ func save_player_state(player, slot:String):
 	## Save player sitting state
 	_player_state.save_sitting_state(player)
 	_player_state.save_collision_shapes(player)
+	_player_state.save_node_transforms(player)
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")
 	if _screenshot_to_save:

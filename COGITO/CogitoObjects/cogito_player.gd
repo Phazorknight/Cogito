@@ -703,7 +703,6 @@ var was_in_air = false
 
 
 func _physics_process(delta):
-	print(currently_tweening)
 	#if is_movement_paused:
 		#return
 	if is_sitting:
