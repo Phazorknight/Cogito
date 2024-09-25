@@ -1,6 +1,6 @@
 @icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends CogitoObject
-## Derived from CogitoOBject, this class handles additional information for projectiles like lifespan, damage, destroy_on_impact. Some of these are inherited from the Wieldable that spawns this projectile.
+## Derived from CogitoObject, this class handles additional information for projectiles like lifespan, damage, destroy_on_impact. Some of these are inherited from the Wieldable that spawns this projectile.
 class_name CogitoProjectile
 
 # Lifespan is being set by the Lifespan timer.
@@ -11,6 +11,8 @@ var damage_amount : int = 0
 @export var destroy_on_impact : bool = false
 ## Sound that gets played when projectile dies.
 @export var sound_on_death : AudioStream
+## Should the projectile stick to what it hits?
+@export var stick_on_impact : bool = false
 
 func _ready():
 	add_to_group("interactable")
@@ -21,16 +23,19 @@ func _ready():
 	if lifespan:
 		lifespan.timeout.connect(on_timeout)
 
-
 func on_timeout():
 	die()
 
-
 ## Checking collision event for property tags.
 func _on_body_entered(collider: Node):
+	if stick_on_impact:
+		self.linear_velocity = Vector3.ZERO
+		self.angular_velocity = Vector3.ZERO
+		stick_to_object(collider)
+		
 	if collider.has_signal("damage_received"):
 		if( !collider.cogito_properties && !cogito_properties): # Case where neither projectile nor the object hit have properties defined.
-			print("Projectile: Collider nor projecte have CogitoProperties, damaging as usual.")
+			print("Projectile: Collider nor projectile have CogitoProperties, damaging as usual.")
 			deal_damage(collider)
 			return
 		
@@ -61,6 +66,20 @@ func _on_body_entered(collider: Node):
 		if destroy_on_impact:
 			die()
 
+
+
+# Make the projectile stick to the object it hits using a pin joint
+func stick_to_object(collider: Node):
+	var joint = PinJoint3D.new()
+	joint.node_a = self.get_path()
+	joint.node_b = collider.get_path()
+
+	joint.position = global_transform.origin
+
+	# Add the joint to the scene 
+	get_tree().root.add_child(joint)
+	#self.linear_velocity = Vector3.ZERO
+	#self.angular_velocity = Vector3.ZERO
 
 func deal_damage(collider: Node):
 	print(self.name, ": dealing damage amount ", damage_amount, " on collider ", collider.name)
