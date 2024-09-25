@@ -25,21 +25,18 @@ signal player_stand_up()
 @export var disable_on_jump: bool = true
 ##Disable interaction while player is in the Crouching
 @export var disable_on_crouch: bool = true
-##Disables (child) Carryable Component if found
+##Disables child Carryable Component if found, prevents Carrying sat on Chair
 @export var disable_carry : bool = true
 ##Should the player get ejected from the seat if it falls beyond eject_angle?
 @export var eject_on_fall: bool = false
-##What angle should the player get ejected from Seat at?
+##What angle should the player get ejected from Seat at? Also used to define fallen chair angle, to prevent interaction with fallen chairs
 @export var eject_angle: float = 45
 
-
 @export_group("Vision")
-##Limits horizontal view to the look angle
-@export var limit_horizontal_view : bool = true
-##Players maximum Horizontal Look angle when Sitting
+##Players maximum Horizontal Look angle in either direction when Sitting
 @export var horizontal_look_angle: float = 120
-##Limit vertical view
-@export var limit_vertical_view : bool = true
+##Players maximum Vertical Look angle in either direction when Sitting
+@export var vertical_look_angle: float = 90
 ##Height to lower Sit marker by, to account for the difference between player head and body height
 @export var sit_marker_displacement: float = 0.7
 

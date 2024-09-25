@@ -53,6 +53,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.36643, 0)
 script = ExtResource("1_ljpjm")
 physics_sittable = true
 sit_area_behaviour = 2
+vertical_look_angle = 120.0
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
 sit_area_node_path = NodePath("sit_area")

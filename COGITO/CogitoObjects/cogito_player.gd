@@ -453,10 +453,10 @@ func handle_sitting_look(event):
 	
 	if sittable.physics_sittable == false:
 		#static sittables are fine to be clamped this way
-		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
 	else:
 		#physics sittables get wider range for now, TODO replace with dynamic vertical look range based on look marker
-		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-120), deg_to_rad(120))
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
 
 func _sit_down():
 	standing_collision_shape.disabled = true
