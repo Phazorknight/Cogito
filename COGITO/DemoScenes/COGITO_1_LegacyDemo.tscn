@@ -1604,11 +1604,20 @@ transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-0
 [node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.359148, 1.47946, 12.0464)
 
+[node name="HealthAttribute" parent="TargetDestructable" index="0"]
+spawn_on_death = Array[PackedScene]([])
+
 [node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.38405, 2.27151, 14.1442)
 
+[node name="HealthAttribute" parent="TargetDestructable2" index="0"]
+spawn_on_death = Array[PackedScene]([])
+
 [node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.14804, 1.65236, 13.3596)
+
+[node name="HealthAttribute" parent="TargetDestructable3" index="0"]
+spawn_on_death = Array[PackedScene]([])
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
