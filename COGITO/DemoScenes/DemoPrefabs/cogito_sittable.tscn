@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bn04jtk86pe0w"]
+[gd_scene load_steps=8 format=3 uid="uid://bn04jtk86pe0w"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_22lyd"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="2_76fng"]
@@ -13,7 +13,10 @@ size = Vector3(0.327356, 0.110522, 0.308265)
 [sub_resource type="BoxShape3D" id="BoxShape3D_k44cf"]
 size = Vector3(1.40192, 1.05004, 1.21932)
 
-[node name="Seat" type="StaticBody3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_uhwn6"]
+size = Vector3(1, 1.19324, 1)
+
+[node name="Seat" type="StaticBody3D" node_paths=PackedStringArray("enable_on_sit")]
 script = ExtResource("1_22lyd")
 sit_sound = ExtResource("3_wmd07")
 stand_sound = ExtResource("3_wmd07")
@@ -21,6 +24,7 @@ sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
 sit_area_node_path = NodePath("sit_area")
 leave_node_path = NodePath("LeaveMarker")
+enable_on_sit = NodePath("SittingEscape")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.052103, 0)
@@ -33,7 +37,6 @@ shape = SubResource("BoxShape3D_5cwmc")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
 interaction_text = "Sit"
-is_disabled = true
 
 [node name="Sit Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
@@ -55,6 +58,11 @@ bus = &"SFX"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sit_area"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179856, -0.0291935, 0.380226)
 shape = SubResource("BoxShape3D_k44cf")
+
+[node name="SittingEscape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0966187, 0)
+shape = SubResource("BoxShape3D_uhwn6")
+disabled = true
 
 [connection signal="body_entered" from="sit_area" to="." method="_on_sit_area_body_entered"]
 [connection signal="body_exited" from="sit_area" to="." method="_on_sit_area_body_exited"]

@@ -707,8 +707,8 @@ func _physics_process(delta):
 		#return
 	if is_sitting:
 		var sittable = CogitoSceneManager._current_sittable_node
-		#Update Player location if Chair has moved - only applicable to physics sittables
-		if sittable.physics_sittable == true:
+		#Update Player location if Chair has moved
+		if sittable:
 			#avoids instantly moving to seat before tween is finished
 			if not currently_tweening:
 				self.global_transform = sittable.sit_position_node.global_transform

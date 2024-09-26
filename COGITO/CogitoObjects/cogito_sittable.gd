@@ -113,6 +113,8 @@ var carryable_components: Array = [Node]
 var player_node: Node3D = null
 var player_in_sit_area: bool = false
 var cogito_properties : CogitoProperties = null
+
+var interaction_component_state:bool = false
 #endregion
 
 func _ready():
@@ -121,7 +123,7 @@ func _ready():
 	self.add_to_group("interactable")
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
-	
+	interaction_component_state = false # set interaction component to disabled on startup
 	#find sit position node
 	sit_position_node = get_node_or_null(sit_position_node_path)
 	if not sit_position_node:
@@ -144,6 +146,7 @@ func _ready():
 				BasicInteraction.is_disabled = true
 			SitAreaBehaviour.NONE:
 				BasicInteraction.is_disabled = false
+				
 	if disable_carry:
 		carryable_components = get_child_carryable_components()
 		
@@ -238,8 +241,23 @@ func switch():
 	else:
 		_sit_down()
 
+
 func set_state():
+	#On loadet behaviour
+	match sit_area_behaviour:
+			SitAreaBehaviour.MANUAL:
+				BasicInteraction.is_disabled = true
+			SitAreaBehaviour.MANUAL:
+				BasicInteraction.is_disabled = true
+			SitAreaBehaviour.NONE:
+				BasicInteraction.is_disabled = false
+	
 	find_cogito_properties()
+	
+	#If the saved interaction state is true, override on load to avoid player getting stuck. Can ignore the reverse
+	if interaction_component_state == true:
+		BasicInteraction.is_disabled = false
+		
 	if is_occupied:
 		_sit_down()
 	else:
@@ -252,24 +270,27 @@ func _on_sit_area_body_entered(body):
 		match sit_area_behaviour:
 			SitAreaBehaviour.MANUAL:
 				BasicInteraction.is_disabled = false
+				interaction_component_state = true
 			
 			SitAreaBehaviour.AUTO:
 				if not player_node.is_sitting:
 					interact(player_node.player_interaction_component)
 					BasicInteraction.is_disabled = false
-
+					interaction_component_state = true
 			SitAreaBehaviour.NONE:
 				BasicInteraction.is_disabled = false
-
+				interaction_component_state = true
+				
 func _on_sit_area_body_exited(body):
 	if body == player_node:
 		player_in_sit_area = false
 		if player_node.is_sitting:
 			#don't disable interactable if the players sitting to avoid player getting stuck
+			interaction_component_state = true
 			BasicInteraction.is_disabled = false
 		else: 
 			BasicInteraction.is_disabled = true
-			
+			interaction_component_state = false
 
 func find_cogito_properties():
 	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
@@ -347,6 +368,7 @@ func save():
 		"occupant_id" : occupant_id,
 		"physics_sittable" : physics_sittable,
 		"interaction_text" : interaction_text,
+		"interaction_component_state" : interaction_component_state,
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,
@@ -358,7 +380,6 @@ func save():
 		"global_pos_z" : global_position.z,
 		
 	}
-
 	# If the node is a RigidBody3D, then save the physics properties of it
 	var rigid_body = find_rigid_body()
 	if rigid_body:

@@ -80,11 +80,14 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_b43dv")
 
-[node name="Seat" parent="." instance=ExtResource("1_hph0v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.646061, 0.475371, -0.330321)
+[node name="Node3D" type="Node3D" parent="."]
 
-[node name="Seat2" parent="." instance=ExtResource("1_hph0v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66085, 0.475371, -0.330321)
+[node name="loungeDesignSofaSeat" parent="Node3D" instance=ExtResource("1_hph0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09991, 0.426794, -0.343356)
 
-[node name="Seat3" parent="." instance=ExtResource("1_hph0v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14215, 0.475371, -0.330319)
+[node name="loungeDesignSofaSeat2" parent="Node3D" instance=ExtResource("1_hph0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75263, 0.426794, -0.343357)
+
+[node name="loungeDesignSofaSeat3" parent="Node3D" node_paths=PackedStringArray("enable_on_sit") instance=ExtResource("1_hph0v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.541353, 0.426794, -0.343356)
+enable_on_sit = NodePath("../loungeDesignSofaSeat2/SittingEscape")

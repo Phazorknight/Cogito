@@ -301,7 +301,6 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 					var physics_state = PhysicsServer3D.body_get_direct_state(node_to_set.get_rid())
 					if physics_state:
 						var rid = node_to_set.get_rid()
-						node_to_set.sleeping = true
 						var new_transform = physics_state.transform
 						new_transform.origin = Vector3(state_data["global_pos_x"], (state_data["global_pos_y"]), state_data["global_pos_z"])
 						var new_rotation = Vector3(state_data["rot_x"], state_data["rot_y"], state_data["rot_z"])
@@ -313,7 +312,6 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 							rotation_quat = parent_rotation.inverse() * rotation_quat
 						new_transform.basis = Basis(rotation_quat)
 						node_to_set.call_deferred("set_global_transform", new_transform)
-						node_to_set.sleeping = false
 						if "linear_velocity_x" in state_data and "linear_velocity_y" in state_data and "linear_velocity_z" in state_data:
 							node_to_set.linear_velocity = Vector3(state_data["linear_velocity_x"], state_data["linear_velocity_y"], state_data["linear_velocity_z"])
 						if "angular_velocity_x" in state_data and "angular_velocity_y" in state_data and "angular_velocity_z" in state_data:

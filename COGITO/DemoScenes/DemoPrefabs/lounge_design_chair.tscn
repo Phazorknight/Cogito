@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://ccm32rl5d67al"]
 
-[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="1_d31tp"]
+[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="2_qn6d8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7pgte"]
 resource_name = "carpetBlue"
@@ -99,5 +99,5 @@ shape = SubResource("BoxShape3D_37btv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.732133, 0.28104, -0.279459)
 shape = SubResource("BoxShape3D_f5b0t")
 
-[node name="Seat" parent="." instance=ExtResource("1_d31tp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.682961, 0.484272, -0.22556)
+[node name="loungeDesignSofaSeat" parent="." instance=ExtResource("2_qn6d8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.681584, 0.426794, -0.343356)
