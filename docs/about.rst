@@ -50,12 +50,7 @@ Contributors
 * `pcbeard <https://github.com/pcbeard>`_: Performance tweaks and bug fixes.
 * `FailSpy <https://github.com/FailSpy>`_: improved input handling as well as UI and Player Controller quality-of-life fixes.
 * `kk1201 <https://github.com/kk1201>`_: improving Lightzone component.
-  `aronand <https://github.com/aronand>`_: improvements to Player Interaction system
-  `PeterD23 <https://github.com/PeterD23>`_: added Grid Inventory
-  `niefia <https://github.com/niefia>`_: improvements to audio, physics interactions and more
-  `mrezai <https://github.com/mrezai>`_: improvements and bugfixes to scene transitions, wieldables, player physics and raycasts
   
-
 |
 
 * Player controller is based on `Like475's First Person Controller Advanced <https://github.com/Like475/fpc-godot>`_
