@@ -4,6 +4,7 @@ class_name CogitoDoor
 extends Node3D
 
 signal object_state_updated(interaction_text:String)
+signal lock_state_updated(lock_interaction_text:String)
 signal door_state_changed(is_open:bool)
 signal lock_state_changed(is_locked:bool)
 signal damage_received(damage_value:float)
@@ -22,12 +23,15 @@ enum DoorType {
 ## Sound that plays when attempting to open while locked.
 @export var rattle_sound : AudioStream
 @export var unlock_sound : AudioStream
+@export var lock_sound : AudioStream
 
 @export_group("Door Settings")
 ## Start state of the door (usually closed).
 @export var is_open : bool = false
 ## Text that appears on the interaction prompt when locked.
 @export var interaction_text_when_locked : String = "Unlock"
+## Text that appears on the interaction prompt when locked.
+@export var interaction_text_when_unlocked : String = "Lock"
 ## Text that appears on the interaction prompt when closed.
 @export var interaction_text_when_closed : String = "Open"
 ## Text that appears on the interaction prompt when open.
@@ -93,6 +97,7 @@ var anim_player : AnimationPlayer
 var is_moving : bool = false
 var target_rotation_rad : float 
 var interaction_text
+var lock_interaction_text
 var close_timer : Timer #Used for auto-close
 
 var interaction_nodes : Array[Node]
@@ -117,15 +122,19 @@ func _ready():
 		target_rotation_rad = rotation.z
 	else:
 		target_rotation_rad = rotation.y
+		
 	if is_open:
 		interaction_text = interaction_text_when_open
-	elif is_locked:
-		interaction_text = interaction_text_when_locked
 	else:
 		interaction_text = interaction_text_when_closed
+	
+	if is_locked:
+		lock_interaction_text = interaction_text_when_locked
+	else:
+		lock_interaction_text = interaction_text_when_unlocked
 		
 	object_state_updated.emit(interaction_text)
-
+	lock_state_updated.emit(lock_interaction_text)
 
 func interact(interactor: Node3D):
 	player_interaction_component = interactor
@@ -145,11 +154,10 @@ func interact(interactor: Node3D):
 					var object = get_node(nodepath)
 					object.close_door(interactor)
 	else:
+		
 		audio_stream_player_3d.stream = rattle_sound
 		audio_stream_player_3d.play()
-		
-		check_for_key(interactor)
-
+		interactor.send_hint(null,"Locked")
 
 func _physics_process(_delta):
 	if door_type == DoorType.ROTATING:
@@ -173,24 +181,37 @@ func check_for_key(interactor):
 			if slot_data.inventory_item.discard_after_use:
 				inventory.remove_item_from_stack(slot_data)
 				# inventory.remove_slot_data(slot_data) (removed on 20240913, leaving line just in case there's bugs.
-			unlock_door()
+			lock_unlock_switch()
 			
 			for nodepath in doors_to_sync_with:
 				if nodepath != null:
 					var object = get_node(nodepath)
-					object.unlock_door()
+					object.lock_unlock_switch()
 			return
 	
 	if key_hint != "":
 		interactor.send_hint(null,key_hint) # Sends the key hint with the default hint icon.
 
+func lock_unlock_switch():
+	if is_locked:
+		unlock_door()
+	else: 
+		lock_door()
 
 func unlock_door():
 	audio_stream_player_3d.stream = unlock_sound
 	audio_stream_player_3d.play()
 	is_locked = false
-	interaction_text = interaction_text_when_closed	
-	object_state_updated.emit(interaction_text)
+	lock_interaction_text = interaction_text_when_unlocked	
+	lock_state_updated.emit(lock_interaction_text)
+	lock_state_changed.emit(is_locked)
+	
+func lock_door():
+	audio_stream_player_3d.stream = lock_sound
+	audio_stream_player_3d.play()
+	is_locked = true
+	lock_interaction_text = interaction_text_when_locked	
+	lock_state_updated.emit(lock_interaction_text)
 	lock_state_changed.emit(is_locked)
 
 
@@ -270,9 +291,13 @@ func set_state():
 		set_to_closed_position()
 		interaction_text = interaction_text_when_closed
 	if is_locked:
-		interaction_text = interaction_text_when_locked
+		lock_interaction_text = interaction_text_when_locked
+	else:
+		lock_interaction_text = interaction_text_when_unlocked
+		
 	object_state_updated.emit(interaction_text)
-
+	lock_state_updated.emit(lock_interaction_text)
+	print(lock_interaction_text)
 
 func set_to_open_position():
 	if door_type == DoorType.SLIDING:
@@ -293,6 +318,12 @@ func set_to_closed_position():
 		else:
 			rotation.y = deg_to_rad(closed_rotation_deg)
 
+#alternate interaction for locking/unlocking
+func interact2(interactor: Node3D):
+	if not is_open:
+		check_for_key(interactor)
+	else:
+		interactor.send_hint(null,"Can't lock an open door")
 
 func save():
 	var state_dict = {

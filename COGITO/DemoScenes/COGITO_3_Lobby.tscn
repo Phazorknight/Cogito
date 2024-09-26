@@ -1,4 +1,4 @@
-[gd_scene load_steps=370 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=371 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://bdf8go8xjwqqb" path="res://COGITO/DemoScenes/DemoPrefabs/lounge_chair.tscn" id="20_rf47m"]
 [ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://COGITO/DemoScenes/DemoPrefabs/chair_desk.tscn" id="21_o6psl"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
+[ext_resource type="Script" path="res://COGITO/Components/Interactions/LockInteraction.gd" id="22_n8ilm"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://COGITO/Assets/Audio/Kenney/stoneDrag4.ogg" id="23_q1spm"]
 [ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://COGITO/Components/Interactions/HoldInteraction.tscn" id="24_7t6yl"]
 [ext_resource type="PackedScene" uid="uid://dkundghktg5ol" path="res://COGITO/DemoScenes/DemoPrefabs/lamp_round_floor.tscn" id="25_ohpwf"]
@@ -6314,6 +6315,12 @@ shape = SubResource("BoxShape3D_ecok4")
 unlock_sound = ExtResource("18_sk7n4")
 is_locked = true
 key = ExtResource("19_vxibd")
+key_hint = "Key not found!"
+
+[node name="LockInteractionComponent" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="3" instance=ExtResource("14_qtguo")]
+script = ExtResource("22_n8ilm")
+input_map_action = "interact2"
+interaction_text = "Unlock"
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0289998, -4.15)
