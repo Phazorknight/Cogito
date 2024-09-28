@@ -11,8 +11,8 @@ signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 ## Buffer time until the hold is first registered, prevents showing Hold UI for presses
 @export var buffer_time : float = 0.1  
 
-@export var press_interaction_text: String
-@export var hold_interaction_text: String
+@onready var press_interaction_text: String
+@onready var hold_interaction_text: String
 ##Text that joins Press and Hold interaction text, for example:   " | (HOLD) " in  "Open | (HOLD) Unlock"
 @export var interaction_text_joiner: String = " | (HOLD) "
 
@@ -39,10 +39,10 @@ func _ready() -> void:
 
 
 func interact(_player_interaction_component):
+	was_interacted_with.emit(interaction_text,input_map_action)
 	player_interaction_component = _player_interaction_component
 	if !is_holding:
 		is_holding = true
-		hold_ui.show()
 		hold_timer.start()
 		
 func _on_object_state_change(_interaction_text: String):
@@ -57,6 +57,8 @@ func update_interaction_text():
 
 func _process(_delta: float) -> void:
 	if is_holding:
+		if hold_timer.time_left  < hold_timer.wait_time-buffer_time:
+			hold_ui.show()
 		is_being_held.emit(hold_timer.time_left)
 		progress_bar.value = hold_timer.time_left / hold_time * 100
 		

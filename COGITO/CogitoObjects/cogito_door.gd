@@ -157,7 +157,7 @@ func interact(interactor: Node3D):
 		
 		audio_stream_player_3d.stream = rattle_sound
 		audio_stream_player_3d.play()
-		interactor.send_hint(null,"Locked")
+		interactor.send_hint(null,"I can't open it")
 
 func _physics_process(_delta):
 	if door_type == DoorType.ROTATING:

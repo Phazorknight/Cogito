@@ -6329,10 +6329,7 @@ is_disabled = true
 
 [node name="DualInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="5" instance=ExtResource("23_mluj1")]
 hold_time = 1.0
-press_interaction_text = "Open"
-hold_interaction_text = "Unlock"
 input_map_action = "interact"
-interaction_text = "Open | (HOLD) Unlock"
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0289998, -4.15)
