@@ -6,7 +6,15 @@ signal is_being_held(time_left:float)
 signal on_quick_press(player_interaction_component:PlayerInteractionComponent)
 signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 
+##Time for hold to complete
 @export var hold_time : float = 3.0
+## Buffer time until the hold is first registered, prevents showing Hold UI for presses
+@export var buffer_time : float = 0.1  
+
+@export var press_interaction_text: String
+@export var hold_interaction_text: String
+##Text that joins Press and Hold interaction text, for example:   " | (HOLD) " in  "Open | (HOLD) Unlock"
+@export var interaction_text_joiner: String = " | (HOLD) "
 
 @onready var parent_node = get_parent() #Grabbing reference to door
 @onready var hold_timer: Timer = $HoldTimer
@@ -17,7 +25,13 @@ var is_holding : bool = false
 var player_interaction_component
 
 
+
 func _ready() -> void:
+	if parent_node.has_signal("object_state_updated"):
+		parent_node.object_state_updated.connect(_on_object_state_change)
+	if parent_node.has_signal("lock_state_updated"):
+		parent_node.lock_state_updated.connect(_lock_state_updated)
+	
 	hold_ui.hide()
 	hold_timer.timeout.connect(_on_hold_complete)
 	hold_timer.wait_time = hold_time
@@ -30,11 +44,16 @@ func interact(_player_interaction_component):
 		is_holding = true
 		hold_ui.show()
 		hold_timer.start()
-
-
+		
 func _on_object_state_change(_interaction_text: String):
-	interaction_text = _interaction_text
+	press_interaction_text = _interaction_text
+	update_interaction_text()
+func _lock_state_updated(lock_interaction_text: String):
+	hold_interaction_text = lock_interaction_text
+	update_interaction_text()
 
+func update_interaction_text():
+	interaction_text = press_interaction_text + interaction_text_joiner + hold_interaction_text
 
 func _process(_delta: float) -> void:
 	if is_holding:
@@ -47,14 +66,12 @@ func _process(_delta: float) -> void:
 			hold_ui.hide()
 			is_holding = false
 
-
 func _input(event):
 	if is_holding and event.is_action_released(input_map_action):
 		hold_timer.stop()
 		hold_ui.hide()
 		is_holding = false
 		on_quick_press.emit(player_interaction_component)
-		
 
 
 func _on_hold_complete():

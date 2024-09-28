@@ -1,4 +1,4 @@
-[gd_scene load_steps=371 format=3 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=372 format=3 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://COGITO/DemoScenes/DemoPrefabs/chair_desk.tscn" id="21_o6psl"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
 [ext_resource type="Script" path="res://COGITO/Components/Interactions/LockInteraction.gd" id="22_n8ilm"]
+[ext_resource type="PackedScene" uid="uid://bqp8nl7x2c37m" path="res://COGITO/Components/Interactions/DualInteraction.tscn" id="23_mluj1"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://COGITO/Assets/Audio/Kenney/stoneDrag4.ogg" id="23_q1spm"]
 [ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://COGITO/Components/Interactions/HoldInteraction.tscn" id="24_7t6yl"]
 [ext_resource type="PackedScene" uid="uid://dkundghktg5ol" path="res://COGITO/DemoScenes/DemoPrefabs/lamp_round_floor.tscn" id="25_ohpwf"]
@@ -6317,10 +6318,21 @@ is_locked = true
 key = ExtResource("19_vxibd")
 key_hint = "Key not found!"
 
+[node name="BasicInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="2"]
+is_disabled = true
+
 [node name="LockInteractionComponent" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="3" instance=ExtResource("14_qtguo")]
 script = ExtResource("22_n8ilm")
 input_map_action = "interact2"
 interaction_text = "Unlock"
+is_disabled = true
+
+[node name="DualInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="5" instance=ExtResource("23_mluj1")]
+hold_time = 1.0
+press_interaction_text = "Open"
+hold_interaction_text = "Unlock"
+input_map_action = "interact"
+interaction_text = "Open | (HOLD) Unlock"
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0289998, -4.15)
@@ -7933,6 +7945,8 @@ transform = Transform3D(-0.821508, 0, -0.570197, 0, 1, 0, 0.570197, 0, -0.821508
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Archive_QuestEnder" to="QUESTS/Archive_QuestEnder" method="_on_body_entered"]
+[connection signal="on_hold_complete" from="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/DualInteraction" to="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/LockInteractionComponent" method="interact"]
+[connection signal="on_quick_press" from="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/DualInteraction" to="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/BasicInteraction" method="interact"]
 [connection signal="pressed" from="ARCHIVE/CameraButton" to="ARCHIVE/SecurityCamera" method="turn_off"]
 [connection signal="body_entered" from="CUBICLE_AREA/WaterFeature/WetZone" to="CUBICLE_AREA/WaterFeature/WetZone" method="_on_body_entered"]
 [connection signal="body_entered" from="CUBICLE_AREA/WaterFeature2/WetZone2" to="CUBICLE_AREA/WaterFeature2/WetZone2" method="_on_body_entered"]
