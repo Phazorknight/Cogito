@@ -21,6 +21,7 @@ render_target_update_mode = 4
 [node name="LightDetection" type="Node3D" parent="SubViewport"]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/LightDetection"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 far = 20.0
 
 [node name="TextureRect" type="TextureRect" parent="SubViewport/LightDetection"]
