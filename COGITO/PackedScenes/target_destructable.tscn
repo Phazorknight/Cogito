@@ -66,7 +66,7 @@ script = ExtResource("1_e8c88")
 [node name="HealthAttribute" parent="." instance=ExtResource("1_c1b02")]
 sound_on_death = ExtResource("4_k2oo6")
 destroy_on_death = Array[NodePath]([NodePath("..")])
-spawn_on_death = ExtResource("4_rjxm0")
+spawn_on_death = Array[PackedScene]([ExtResource("4_rjxm0")])
 value_max = 1.0
 value_start = 1.0
 

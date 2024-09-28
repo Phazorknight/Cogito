@@ -77,7 +77,7 @@ bus = &"SFX"
 
 [node name="Bullet_Point" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, -1.81899e-12, 0, 1, 0, 0, 0, 1, 0.277335, 0.0601448, 0.00182778)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.277335, 0.0601448, 0.00182778)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
