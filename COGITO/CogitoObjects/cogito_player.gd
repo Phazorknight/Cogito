@@ -362,16 +362,6 @@ func _input(event):
 			joystick_h_event = event
 	
 	
-	# CROUCH HANDLING dependant on toggle_crouch
-	if TOGGLE_CROUCH and !is_movement_paused and event.is_action_pressed("crouch"):
-		try_crouch = !try_crouch
-	elif !TOGGLE_CROUCH and !is_movement_paused:
-		if event.is_action_pressed("crouch"):
-			try_crouch = true
-		elif event.is_action_released("crouch"):
-			try_crouch = false
-	
-	
 	# Opens Pause Menu if Menu button is proessed.
 	if event.is_action_pressed("menu"):
 		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
@@ -527,7 +517,7 @@ func _physics_process(delta):
 	
 	if stand_after_roll:
 		if !is_movement_paused or !is_showing_ui:
-			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "500: Standing after roll.")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "523: Standing after roll.")
 			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 			standing_collision_shape.disabled = true
 			crouching_collision_shape.disabled = false
@@ -540,6 +530,14 @@ func _physics_process(delta):
 	else:
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
 		crouched_jump = is_crouching and not jumped_from_slide
+	
+	
+	# CROUCH HANDLING dependant on toggle_crouch
+	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+		try_crouch = !try_crouch
+	elif !TOGGLE_CROUCH:
+		try_crouch = Input.is_action_pressed("crouch")
+	
 	
 	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch and !is_movement_paused or crouch_raycast.is_colliding()):
 		# should we be sliding?
@@ -563,7 +561,7 @@ func _physics_process(delta):
 		is_crouching = true
 	else:
 		if !is_showing_ui or !is_movement_paused:
-			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "536: Standing up...")
+			#CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "567: Standing up...")
 			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 			if head.position.y < CROUCHING_DEPTH/4:
 				# still transitioning from state
@@ -601,17 +599,16 @@ func _physics_process(delta):
 				is_crouching = false
 		else:
 			# STANDING UP HANDLING
-			if is_crouching:
-				if !is_showing_ui or !is_movement_paused:
-					CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "576 standing up...")
-					current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
-					wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
-					wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
-					is_walking = true
-					is_sprinting = false
-					if is_crouching:
-						is_crouching = false
-	
+			if !is_showing_ui or !is_movement_paused:
+				CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "606 standing up...")
+				current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
+				wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
+				wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
+				is_walking = true
+				is_sprinting = false
+				if is_crouching:
+					is_crouching = false
+
 	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() and !is_movement_paused:
 		is_free_looking = true
 		if sliding_timer.is_stopped():
@@ -665,7 +662,7 @@ func _physics_process(delta):
 		)
 	else:
 		if !is_movement_paused or !is_showing_ui:
-			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "638 Standing up...")
+			#CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "668 Standing up...")
 			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
 			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
 			if last_velocity.y <= -7.5:
