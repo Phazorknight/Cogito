@@ -99,5 +99,5 @@ shape = SubResource("BoxShape3D_37btv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.732133, 0.28104, -0.279459)
 shape = SubResource("BoxShape3D_f5b0t")
 
-[node name="loungeDesignSofaSeat" parent="." instance=ExtResource("2_qn6d8")]
+[node name="loungeDesignChairSeat" parent="." instance=ExtResource("2_qn6d8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.681584, 0.426794, -0.343356)

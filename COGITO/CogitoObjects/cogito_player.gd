@@ -186,6 +186,9 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 
+#Navigation agent for Player auto seat exit handling
+@onready var navigation_agent = $NavigationAgent3D
+
 ## performance saving variable
 @onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
 
@@ -387,15 +390,16 @@ func get_params(transform3d, motion):
 #region Sittable Interaction Handling
 
 #Sittable Vars
-var original_position: Transform3D  
+var original_position: Transform3D
 var displacement_position: Vector3
-var is_sitting = false
-var sittable_look_marker
-var sittable_look_angle
-var moving_seat = false
-var original_neck_basis = Basis()
-var is_ejected = false
-var currently_tweening = false
+var is_sitting: bool  = false
+var sittable_look_marker: Vector3
+var sittable_look_angle: float
+var moving_seat: bool = false
+var original_neck_basis: Basis = Basis()
+var is_ejected: bool = false
+var currently_tweening: bool = false
+
 
 func toggle_sitting():
 	if is_sitting:
@@ -455,7 +459,7 @@ func handle_sitting_look(event):
 		#static sittables are fine to be clamped this way
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
 	else:
-		#physics sittables get wider range for now, TODO replace with dynamic vertical look range based on look marker
+		# TODO replace with dynamic vertical look range based on look marker
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
 
 func _sit_down():
@@ -528,13 +532,14 @@ func _stand_up():
 
 #Functions to handle Exit types
 
+#Return player to Original position
 func _move_to_original_position(sittable):
 	currently_tweening = true
 	var tween = create_tween()
 	tween.tween_property(self, "global_transform", original_position, sittable.tween_duration)
 	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
-	
+#Return player to Leave node position
 func _move_to_leave_node(sittable):
 	currently_tweening = true
 	if sittable.leave_node_path:
@@ -548,10 +553,9 @@ func _move_to_leave_node(sittable):
 			print("No leave node found. Returning to Original position")
 			_move_to_original_position(sittable)
 
-
+#Find location using navmesh to place player
 func _move_to_nearby_location(sittable):
 	print("Attempting to find available locations to move player to")
-	var navigation_agent = $NavigationAgent3D 
 	var seat_position = sittable.global_transform.origin
 	var exit_distance: float = 1.0
 	var max_distance: float = 10.0 # Max distance from Sittable to try, multiplies the random direction
@@ -619,6 +623,7 @@ func _stand_up_finished():
 	self.global_transform.basis = Basis()
 	neck.global_transform.basis = original_neck_basis  
 	currently_tweening = false
+
 #endregion
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:

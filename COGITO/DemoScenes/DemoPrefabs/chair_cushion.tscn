@@ -96,6 +96,8 @@ physics_sittable = true
 sit_area_behaviour = 2
 placement_on_leave = 2
 eject_on_fall = true
+sit_sound = ExtResource("6_jxoog")
+stand_sound = ExtResource("6_jxoog")
 sit_position_node_path = NodePath("Sit Marker")
 look_marker_node_path = NodePath("Look Marker")
 sit_area_node_path = NodePath("sit_area")
@@ -132,7 +134,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.196676, 0.950224, 0.401541)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.898392, 0.714839, 0.00110054)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.196674, 0.390145, -0.319466)
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0.196674, 0.390145, -0.319466)
 stream = ExtResource("6_jxoog")
 volume_db = -35.0
 pitch_scale = 0.5

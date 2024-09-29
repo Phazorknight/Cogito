@@ -1,11 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bdab2cuy8hue6"]
+[gd_scene load_steps=17 format=3 uid="uid://bdab2cuy8hue6"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_sittable.gd" id="1_ljpjm"]
 [ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://COGITO/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="2_g611i"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://COGITO/Components/ImpactSounds.tscn" id="3_4okg1"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="4_oxytt"]
 [ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://COGITO/Assets/Materials/Lamp_Shade.tres" id="5_cs71e"]
-[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://COGITO/Components/Interactions/CarryableComponent.tscn" id="5_fxwun"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="6_bpx36"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://COGITO/Assets/Audio/Kenney/cloth2.ogg" id="7_sy63g"]
 
@@ -84,9 +83,6 @@ mesh = SubResource("CylinderMesh_ik2aq")
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="Swing/swing"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13907e-08, 0.680656, 0.260589)
 mesh = SubResource("CylinderMesh_ik2aq")
-
-[node name="CarryableComponent" parent="Swing/swing" instance=ExtResource("5_fxwun")]
-transform = Transform3D(-0.00612593, 0, 0.999981, 0, 1, 0, -0.999981, 0, -0.00612593, 0.374111, -0.139194, 0.397618)
 
 [node name="BasicInteraction" parent="Swing/swing" instance=ExtResource("6_bpx36")]
 transform = Transform3D(-0.00612593, 0, 0.999981, 0, 1, 0, -0.999981, 0, -0.00612593, 0.0534464, 0.250951, 0.202905)
