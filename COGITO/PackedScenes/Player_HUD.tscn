@@ -16,8 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
 [ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://COGITO/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="10_bnneb"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://COGITO/Components/DynamicInputIcon.tscn" id="12_jgxar"]
-[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
-[ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://COGITO/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
+[ext_resource type="Script" path="res://addons/cogito_plugin/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
+[ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://addons/cogito_plugin/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://COGITO/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
 [ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://COGITO/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
 

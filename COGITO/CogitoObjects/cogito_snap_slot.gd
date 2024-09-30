@@ -6,7 +6,6 @@ signal object_placed
 signal object_removed
 signal object_state_updated(interaction_text:String)
 
-
 @onready var snap_area_3d: Area3D = $SnapArea3D
 @onready var snap_shape: Node3D = $SnapShape
 @onready var snap_position: Node3D = $SnapPosition
@@ -21,19 +20,16 @@ enum SnapSlotType {
 		snap_slot_type = value
 		notify_property_list_changed()
 
-
 func _validate_property(property: Dictionary):
 	if property.name in ["expected_item", interaction_text_to_place] and snap_slot_type != SnapSlotType.ITEM:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 	elif property.name in ["expected_object"] and snap_slot_type != SnapSlotType.CARRYABLE:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 
-
 ## PackedScene of the carryable object that this snapslot is expecting.
 @export var expected_object : PackedScene
 ## Item resource  of the object that this snapslot is expecting.
 @export var expected_item : InventoryItemPD
-
 
 @export_group("Audio")
 ## Plays when object is snapped into place.
@@ -53,6 +49,11 @@ func _validate_property(property: Dictionary):
 
 ## Hint that is displayed if the player interacts while the snapslot is empty.
 @export var expected_object_hint : String = "Looks like an object could fit here."
+
+
+@export_group("Debug Settings")
+## Enables messages from this object in the Cogito Debug Log
+@export var debug_log : bool = true
 
 var instanced_expected_object
 var preloaded_expected_item
@@ -76,6 +77,7 @@ var is_holding_object : bool:
 			object_removed.emit()
 			interaction_text = interaction_text_to_place
 		
+		CogitoMain.debug_log(debug_log,"Snap Slot", "is_holding_object=" + str(is_holding_object))
 		object_state_updated.emit(interaction_text)
 
 
@@ -84,7 +86,7 @@ func _ready() -> void:
 	
 	if expected_object:
 		instanced_expected_object = load(expected_object.resource_path).instantiate()
-		print("Cogito_snap_slot: expected object cogito_name=", instanced_expected_object.cogito_name)
+		CogitoMain.debug_log(debug_log,"Snap Slot", "Expected object cogito_name=" + str(instanced_expected_object.cogito_name))
 
 
 func interact(interactor: Node3D):
@@ -127,7 +129,7 @@ func place_carryable(world_carryable: Node3D):
 	if !world_carryable:
 		return
 	if !world_carryable.is_class("RigidBody3D"):
-		print("Cogito_snap_slot: place_carryable(): body wasn't a RigidBody3D.")
+		CogitoMain.debug_log(debug_log,"Snap Slot", "place_carryable(): body wasn't a RigidBody3D.")
 		return
 		
 	Audio.play_sound_3d(object_placement_sound).global_position = self.global_position
@@ -153,11 +155,11 @@ func _on_body_entered_snap_area(body : Node3D):
 	if !player_interaction_component:
 		player_interaction_component = CogitoSceneManager._current_player_node.player_interaction_component
 	
-	print("Cogito_snap_slot: _on_body_entered = ", body)
+	CogitoMain.debug_log(debug_log,"Snap Slot","_on_body_entered = " + body.name)
 	if body is CogitoObject:
-		print("Cogito_snap_slot: body is CogitoObject with cogito_name=", body.cogito_name)
+		CogitoMain.debug_log(debug_log,"Snap Slot", "body is CogitoObject with cogito_name=" + body.cogito_name)
 		if instanced_expected_object.cogito_name == body.cogito_name:
-			print("Cogito_snap_slot: Expected object detected: ", body.cogito_name)
+			CogitoMain.debug_log(debug_log,"Snap Slot","Expected object detected: " + body.cogito_name)
 			place_carryable(body)
 	pass
 
@@ -165,7 +167,7 @@ func _on_body_entered_snap_area(body : Node3D):
 func _on_body_exited_snap_area(body: Node3D):
 	if !expected_object:
 		return
-	print("Cogito_snap_slot: _on_body_exited = ", body)
+	CogitoMain.debug_log(debug_log,"Snap Slot","_on_body_exited = " + body.name)
 	if body is CogitoObject and instanced_expected_object.cogito_name == body.cogito_name:
 		remove_object()
 
@@ -182,9 +184,17 @@ func set_state():
 	
 	if snap_slot_type == SnapSlotType.ITEM:
 		preloaded_expected_item = load(expected_item.drop_scene)
-	
-	if snap_shape:
-		snap_shape.visible = is_active
+
+
+	if is_holding_object:
+		# Setting the CogitoObject in the snap slot to be the spawned object to enable proper removal.
+		var bodies_in_area = snap_area_3d.get_overlapping_bodies()
+		for body in bodies_in_area:
+			CogitoMain.debug_log(debug_log,"Snap Slot", "body detected: " + body.name)
+			if body is CogitoObject:
+				CogitoMain.debug_log(debug_log,"snap slot", "spawned_object set to " + body.name)
+				spawned_object = body
+		
 	
 	interaction_text = interaction_text_to_place
 	object_state_updated.emit(interaction_text)
@@ -195,6 +205,7 @@ func save():
 	var state_dict = {
 		"node_path" : self.get_path(),
 		"is_active" : is_active,
+		"is_holding_object" : is_holding_object,
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,

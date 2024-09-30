@@ -1,6 +1,6 @@
 [gd_scene load_steps=122 format=3 uid="uid://6hh7o77unixk"]
 
-[ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
+[ext_resource type="Script" path="res://addons/cogito_plugin/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://COGITO/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PackedScenes/cogito_player.tscn" id="2_7qwrr"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
@@ -3145,8 +3145,11 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3, 0, 2)
 
 [node name="SnapSlotMetalbar" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("40_qk2no")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.65, 0.613, 0)
+snap_slot_type = 0
+is_active = true
 interaction_text_to_remove = ""
 expected_object_hint = ""
+debug_log = true
 
 [node name="Pickup_Dart_Water" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
 transform = Transform3D(0.754801, 6.99125e-15, -0.655954, 0, 1, 1.06581e-14, 0.655954, -8.04478e-15, 0.754801, -11.0006, 0.76828, -12.2038)
@@ -3302,6 +3305,11 @@ mesh = SubResource("BoxMesh_w38aj")
 
 [node name="SnapSlotBattery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_71h2t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.77805, 0.958914, -2.99995)
+is_active = true
+interaction_text_to_place = "Place"
+interaction_text_to_remove = "Remove"
+expected_object_hint = "Looks like an object could fit here."
+debug_log = true
 
 [node name="Lamp_ElectricWire2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("42_3rq3h")]
 transform = Transform3D(-1.81058e-08, 1, -2.70212e-15, 6.18173e-08, 0, 1, 1, 1.81059e-08, -6.18173e-08, -9.524, 1.93194, -3)
@@ -3391,8 +3399,6 @@ transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8
 [connection signal="body_exited" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B" method="_on_body_exited"]
 [connection signal="has_become_electric" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire" method="switch_on"]
 [connection signal="has_lost_electricity" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire" method="switch_off"]
-[connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotBattery" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire2" method="switch_on"]
-[connection signal="object_removed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotBattery" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Lamp_ElectricWire2" method="switch_off"]
 [connection signal="pressed" from="VendingMachine/GenericButton" to="VendingMachine/Spawnzone_VendingMachine" method="_on_generic_button_pressed"]
 [connection signal="pressed" from="VendingMachine/GenericButton2" to="VendingMachine/Spawnzone_VendingMachine2" method="_on_generic_button_pressed"]
 [connection signal="plate_activated" from="Cogito_Pressureplate" to="CeilingLamp" method="switch_on"]

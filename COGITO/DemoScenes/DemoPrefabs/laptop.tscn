@@ -5,9 +5,9 @@
 [ext_resource type="Script" path="res://COGITO/Components/Interactions/PickupComponent.gd" id="3_cmtpl"]
 [ext_resource type="Resource" uid="uid://b7myxblvr7lty" path="res://COGITO/InventoryPD/Items/Cogito_Laptop.tres" id="4_r0qpn"]
 [ext_resource type="Script" path="res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd" id="5_cln8f"]
-[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="6_xhh5j"]
-[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="7_ccijb"]
-[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_n8ylu"]
+[ext_resource type="Script" path="res://addons/cogito_plugin/QuestSystem/Components/cogito_quest_updater.gd" id="6_xhh5j"]
+[ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://addons/cogito_plugin/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="7_ccijb"]
+[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://addons/cogito_plugin/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_n8ylu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0826t"]
 resource_name = "metalDark"

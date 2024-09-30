@@ -6,8 +6,8 @@
 [ext_resource type="Script" path="res://COGITO/Scripts/inventory_checker.gd" id="4_trges"]
 [ext_resource type="Resource" uid="uid://ca0wjra4aq00v" path="res://COGITO/InventoryPD/Items/Cogito_LaptopReal.tres" id="5_838le"]
 [ext_resource type="Resource" uid="uid://b7myxblvr7lty" path="res://COGITO/InventoryPD/Items/Cogito_Laptop.tres" id="6_6xc2m"]
-[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="7_fhl3i"]
-[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://COGITO/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_wpbw8"]
+[ext_resource type="Script" path="res://addons/cogito_plugin/QuestSystem/Components/cogito_quest_updater.gd" id="7_fhl3i"]
+[ext_resource type="Resource" uid="uid://dhadvbqjxigfo" path="res://addons/cogito_plugin/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres" id="8_wpbw8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmsn7"]
 resource_name = "metalLight"

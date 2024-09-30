@@ -14,7 +14,7 @@ config/name="Cogito"
 run/main_scene="res://COGITO/DemoScenes/COGITO_0_MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=120
-boot_splash/image="res://COGITO/COGITO_icon.png"
+boot_splash/image="res://COGITO/COGITO_Card.png"
 boot_splash/fullsize=false
 config/icon="res://COGITO/COGITO_icon.png"
 
@@ -23,8 +23,9 @@ config/icon="res://COGITO/COGITO_icon.png"
 MenuTemplateManager="*res://COGITO/EasyMenus/Nodes/menu_template_manager.tscn"
 InputHelper="*res://addons/input_helper/input_helper.gd"
 Audio="*res://addons/quick_audio/./Audio.gd"
-CogitoSceneManager="*res://COGITO/SceneManagement/cogito_scene_manager.gd"
-CogitoQuestManager="*res://COGITO/QuestSystem/cogito_quest_manager.gd"
+CogitoMain="*res://addons/cogito_plugin/./cogito_main.gd"
+CogitoSceneManager="*res://addons/cogito_plugin/./SceneManagement/cogito_scene_manager.gd"
+CogitoQuestManager="*res://addons/cogito_plugin/./QuestSystem/cogito_quest_manager.gd"
 
 [display]
 
@@ -36,7 +37,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
+enabled=PackedStringArray("res://addons/cogito_plugin/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
 
 [file_customization]
 

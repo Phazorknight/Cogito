@@ -43,15 +43,17 @@ metallic_specular = 0.2
 height = 0.3
 radius = 0.1
 
-[sub_resource type="Resource" id="Resource_g1f2m"]
+[sub_resource type="Resource" id="Resource_4vwwy"]
 resource_local_to_scene = true
 script = ExtResource("3_12bow")
 inventory_item = ExtResource("2_hmjxw")
 quantity = 1
+origin_index = -1
 
 [node name="Pickup_Battery" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_ab3qi")
+cogito_name = "Battery"
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_jpa6y")
@@ -75,6 +77,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0504714, 0)
 shape = SubResource("CylinderShape3D_emdw8")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_5yg6i")]
-slot_data = SubResource("Resource_g1f2m")
+slot_data = SubResource("Resource_4vwwy")
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_q7tof")]

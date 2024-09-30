@@ -1,7 +1,7 @@
 [gd_scene load_steps=140 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://COGITO/PackedScenes/cogito_player.tscn" id="1_7d2n7"]
-[ext_resource type="Script" path="res://COGITO/SceneManagement/cogito_scene.gd" id="1_b15oo"]
+[ext_resource type="Script" path="res://addons/cogito_plugin/SceneManagement/cogito_scene.gd" id="1_b15oo"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://COGITO/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://COGITO/PackedScenes/Pickups/pickup_flashlight.tscn" id="1_oweej"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://COGITO/Assets/Materials/Prototype_Orange.tres" id="2_4ig6i"]
@@ -43,9 +43,9 @@
 [ext_resource type="Script" path="res://COGITO/Scripts/scene_transition_zone.gd" id="43_bchdf"]
 [ext_resource type="PackedScene" uid="uid://bhj146kxvb3s5" path="res://COGITO/PackedScenes/document.tscn" id="44_im51b"]
 [ext_resource type="PackedScene" uid="uid://i4rqcx7lyrfd" path="res://COGITO/PackedScenes/keypad_prefab.tscn" id="48_150m3"]
-[ext_resource type="Script" path="res://COGITO/QuestSystem/Components/cogito_quest_updater.gd" id="49_obvm3"]
-[ext_resource type="Resource" uid="uid://yb7k8evveqdp" path="res://COGITO/QuestSystem/Quests/QuestA.tres" id="50_blav1"]
-[ext_resource type="Resource" uid="uid://bmkcm7tkpqjwb" path="res://COGITO/QuestSystem/Quests/QuestB.tres" id="51_cmhea"]
+[ext_resource type="Script" path="res://addons/cogito_plugin/QuestSystem/Components/cogito_quest_updater.gd" id="49_obvm3"]
+[ext_resource type="Resource" uid="uid://yb7k8evveqdp" path="res://addons/cogito_plugin/QuestSystem/Quests/QuestA.tres" id="50_blav1"]
+[ext_resource type="Resource" uid="uid://bmkcm7tkpqjwb" path="res://addons/cogito_plugin/QuestSystem/Quests/QuestB.tres" id="51_cmhea"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2veog"]
 sky_top_color = Color(0.576471, 0.960784, 1, 1)
