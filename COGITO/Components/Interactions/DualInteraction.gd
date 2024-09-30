@@ -41,9 +41,12 @@ func _ready() -> void:
 func interact(_player_interaction_component):
 	was_interacted_with.emit(interaction_text,input_map_action)
 	player_interaction_component = _player_interaction_component
-	if !is_holding:
-		is_holding = true
-		hold_timer.start()
+	if check_for_key(_player_interaction_component):
+		if !is_holding:
+			is_holding = true
+			hold_timer.start()
+	else:
+		parent_node.door_rattle(_player_interaction_component)
 		
 func _on_object_state_change(_interaction_text: String):
 	press_interaction_text = _interaction_text
@@ -54,7 +57,7 @@ func _lock_state_updated(lock_interaction_text: String):
 
 func update_interaction_text():
 	interaction_text = press_interaction_text + interaction_text_joiner + hold_interaction_text
-
+	
 func _process(_delta: float) -> void:
 	if is_holding:
 		if hold_timer.time_left  < hold_timer.wait_time-buffer_time:
@@ -68,13 +71,21 @@ func _process(_delta: float) -> void:
 			hold_ui.hide()
 			is_holding = false
 
+
+
 func _input(event):
 	if is_holding and event.is_action_released(input_map_action):
 		hold_timer.stop()
 		hold_ui.hide()
 		is_holding = false
 		on_quick_press.emit(player_interaction_component)
-
+		
+func check_for_key(interactor) -> bool:
+	var inventory = interactor.get_parent().inventory_data
+	for slot_data in inventory.inventory_slots:
+		if slot_data != null and slot_data.inventory_item == parent_node.key:
+			return true
+	return false
 
 func _on_hold_complete():
 	hold_timer.stop()

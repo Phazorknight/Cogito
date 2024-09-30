@@ -154,10 +154,13 @@ func interact(interactor: Node3D):
 					var object = get_node(nodepath)
 					object.close_door(interactor)
 	else:
-		
-		audio_stream_player_3d.stream = rattle_sound
-		audio_stream_player_3d.play()
-		interactor.send_hint(null,"I can't open it")
+		door_rattle(interactor)
+
+func door_rattle(interactor):
+	audio_stream_player_3d.stream = rattle_sound
+	audio_stream_player_3d.play()
+	interactor.send_hint(null,"I can't open it")
+	print("rattle")
 
 func _physics_process(_delta):
 	if door_type == DoorType.ROTATING:
@@ -199,6 +202,7 @@ func lock_unlock_switch():
 		lock_door()
 
 func unlock_door():
+	
 	audio_stream_player_3d.stream = unlock_sound
 	audio_stream_player_3d.play()
 	is_locked = false
@@ -207,6 +211,7 @@ func unlock_door():
 	lock_state_changed.emit(is_locked)
 	
 func lock_door():
+	
 	audio_stream_player_3d.stream = lock_sound
 	audio_stream_player_3d.play()
 	is_locked = true

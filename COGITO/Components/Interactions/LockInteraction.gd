@@ -16,3 +16,10 @@ func interact(_player_interaction_component):
 
 func _lock_state_updated(lock_interaction_text: String):
 	interaction_text = lock_interaction_text
+
+func check_for_key(interactor) -> bool:
+	var inventory = interactor.get_parent().inventory_data
+	for slot_data in inventory.inventory_slots:
+		if slot_data != null and slot_data.inventory_item == parent_node.key:
+			return true
+	return false
