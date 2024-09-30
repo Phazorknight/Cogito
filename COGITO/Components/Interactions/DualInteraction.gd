@@ -10,6 +10,8 @@ signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 @export var hold_time : float = 3.0
 ## Buffer time until the hold is first registered, prevents showing Hold UI for presses
 @export var buffer_time : float = 0.1  
+##Should a key check run before hold interaction begins? 
+@export var hold_key_check : bool = false
 
 @onready var press_interaction_text: String
 @onready var hold_interaction_text: String
@@ -20,6 +22,7 @@ signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 @onready var hold_timer: Timer = $HoldTimer
 @onready var hold_ui: Control = $HoldUi
 @onready var progress_bar: ProgressBar = $HoldUi/ProgressBar
+
 
 var is_holding : bool = false
 var player_interaction_component
@@ -41,7 +44,11 @@ func _ready() -> void:
 func interact(_player_interaction_component):
 	was_interacted_with.emit(interaction_text,input_map_action)
 	player_interaction_component = _player_interaction_component
-	if check_for_key(_player_interaction_component):
+	if !hold_key_check:
+		if !is_holding:
+			is_holding = true
+			hold_timer.start()
+	elif check_for_key(_player_interaction_component):
 		if !is_holding:
 			is_holding = true
 			hold_timer.start()

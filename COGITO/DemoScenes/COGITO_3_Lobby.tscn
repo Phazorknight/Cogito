@@ -23,8 +23,8 @@
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://COGITO/InventoryPD/Items/Cogito_Key.tres" id="19_vxibd"]
 [ext_resource type="PackedScene" uid="uid://bdf8go8xjwqqb" path="res://COGITO/DemoScenes/DemoPrefabs/lounge_chair.tscn" id="20_rf47m"]
 [ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://COGITO/DemoScenes/DemoPrefabs/chair_desk.tscn" id="21_o6psl"]
+[ext_resource type="PackedScene" uid="uid://bbt5twbnrlcfj" path="res://COGITO/Components/Interactions/LockInteraction.tscn" id="22_2fd6x"]
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
-[ext_resource type="Script" path="res://COGITO/Components/Interactions/LockInteraction.gd" id="22_n8ilm"]
 [ext_resource type="PackedScene" uid="uid://bqp8nl7x2c37m" path="res://COGITO/Components/Interactions/DualInteraction.tscn" id="23_mluj1"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://COGITO/Assets/Audio/Kenney/stoneDrag4.ogg" id="23_q1spm"]
 [ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://COGITO/Components/Interactions/HoldInteraction.tscn" id="24_7t6yl"]
@@ -6321,14 +6321,12 @@ key_hint = "Key not found!"
 [node name="BasicInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="2"]
 is_disabled = true
 
-[node name="LockInteractionComponent" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="3" instance=ExtResource("14_qtguo")]
-script = ExtResource("22_n8ilm")
-input_map_action = "interact2"
-interaction_text = "Unlock"
+[node name="LockInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="3" instance=ExtResource("22_2fd6x")]
 is_disabled = true
 
 [node name="DualInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="5" instance=ExtResource("23_mluj1")]
 hold_time = 1.0
+hold_key_check = true
 input_map_action = "interact"
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
@@ -7942,7 +7940,7 @@ transform = Transform3D(-0.821508, 0, -0.570197, 0, 1, 0, 0.570197, 0, -0.821508
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Archive_QuestEnder" to="QUESTS/Archive_QuestEnder" method="_on_body_entered"]
-[connection signal="on_hold_complete" from="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/DualInteraction" to="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/LockInteractionComponent" method="interact"]
+[connection signal="on_hold_complete" from="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/DualInteraction" to="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/LockInteraction" method="interact"]
 [connection signal="on_quick_press" from="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/DualInteraction" to="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor/BasicInteraction" method="interact"]
 [connection signal="pressed" from="ARCHIVE/CameraButton" to="ARCHIVE/SecurityCamera" method="turn_off"]
 [connection signal="body_entered" from="CUBICLE_AREA/WaterFeature/WetZone" to="CUBICLE_AREA/WaterFeature/WetZone" method="_on_body_entered"]
