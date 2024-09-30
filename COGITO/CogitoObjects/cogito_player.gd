@@ -539,7 +539,7 @@ func _physics_process(delta):
 		try_crouch = Input.is_action_pressed("crouch")
 	
 	
-	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch and !is_movement_paused or crouch_raycast.is_colliding()):
+	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch or crouch_raycast.is_colliding()):
 		# should we be sliding?
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
 			sliding_timer.start()
