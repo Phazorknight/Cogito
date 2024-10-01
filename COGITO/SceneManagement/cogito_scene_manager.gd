@@ -9,6 +9,13 @@ signal fade_finished
 # Variables for player state
 @export var _current_player_node : Node
 @export var _player_state : CogitoPlayerState
+
+#Variables & Signals for Player siting
+@export var _current_sittable_node : Node
+signal sit_requested(Node)
+signal stand_requested()
+signal seat_move_requested(Node)
+
 # Used to pass a screenshot to the player state when saved. This is created by the TabMenu/PauseMenu
 @export var _screenshot_to_save : Image
 
@@ -141,16 +148,13 @@ func load_player_state(player, passed_slot:String):
 			var max_value = attribute_data.y
 			player.player_attributes[attribute].set_attribute(cur_value, max_value)
 
-		var loaded_currency_data = _player_state.player_currencies
-		for currency in loaded_currency_data:
-			var currency_data: Vector2 = loaded_currency_data[currency]
-			var cur_value = currency_data.x
-			var max_value = currency_data.y
-			player.player_currencies[currency].set_currency(cur_value, max_value)
-
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
 		
+		## Loading player sitting state
+		_player_state.load_sitting_state(player) 
+		_player_state.load_collision_shapes(player)
+		_player_state.load_node_transforms(player)
 		#Loading player interaction component state
 		var player_interaction_component_state = _player_state.interaction_component_state
 		for state_data in player_interaction_component_state:
@@ -211,20 +215,10 @@ func save_player_state(player, slot:String):
 		var max_value = player.player_attributes[attribute].value_max
 		var attribute_data := Vector2(cur_value, max_value)
 		_player_state.add_player_attribute_to_state_data(attribute, attribute_data)
-	
-	
-	_player_state.clear_saved_currency_data()
-	for currency in player.player_currencies:
-		var cur_value
-		if !player.player_currencies[currency].dont_save_current_value:
-			cur_value = player.player_currencies[currency].value_current
-		else:
-			cur_value = 0
-		var max_value = player.player_currencies[currency].value_max
-		var currency_data := Vector2(cur_value, max_value)
-		_player_state.add_player_currency_to_state_data(currency, currency_data)
-	
-
+	## Save player sitting state
+	_player_state.save_sitting_state(player)
+	_player_state.save_collision_shapes(player)
+	_player_state.save_node_transforms(player)
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")
 	if _screenshot_to_save:
@@ -302,19 +296,40 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 		var array_of_state_data = _scene_state.saved_states
 		for state_data in array_of_state_data:
 			var node_to_set = get_node(state_data["node_path"])
-			# Set variables here
-			node_to_set.position = Vector3(state_data["pos_x"],state_data["pos_y"],state_data["pos_z"])
-			node_to_set.rotation = Vector3(state_data["rot_x"],state_data["rot_y"],state_data["rot_z"])
-			for data in state_data.keys():
-				if data == "filename" or data == "parent" or data == "pos_x" or data == "pos_y" or data == "pos_z" or data == "rot_x" or data == "rot_y" or data == "rot_z":
-					continue
-				node_to_set.set(data, state_data[data])
-			node_to_set.set_state()
-		
+			if node_to_set:
+				if node_to_set is RigidBody3D or node_to_set is CharacterBody3D or (node_to_set is CogitoSittable and node_to_set.physics_sittable):
+					var physics_state = PhysicsServer3D.body_get_direct_state(node_to_set.get_rid())
+					if physics_state:
+						var rid = node_to_set.get_rid()
+						var new_transform = physics_state.transform
+						new_transform.origin = Vector3(state_data["global_pos_x"], (state_data["global_pos_y"]), state_data["global_pos_z"])
+						var new_rotation = Vector3(state_data["rot_x"], state_data["rot_y"], state_data["rot_z"])
+						var rotation_quat = Quaternion.from_euler(new_rotation)
+						# Account for parent node rotation as this can affect node rotation
+						if node_to_set.get_parent():
+							var parent_global_transform = node_to_set.get_parent().global_transform
+							var parent_rotation = parent_global_transform.basis.get_rotation_quaternion()
+							rotation_quat = parent_rotation.inverse() * rotation_quat
+						new_transform.basis = Basis(rotation_quat)
+						node_to_set.call_deferred("set_global_transform", new_transform)
+						if "linear_velocity_x" in state_data and "linear_velocity_y" in state_data and "linear_velocity_z" in state_data:
+							node_to_set.linear_velocity = Vector3(state_data["linear_velocity_x"], state_data["linear_velocity_y"], state_data["linear_velocity_z"])
+						if "angular_velocity_x" in state_data and "angular_velocity_y" in state_data and "angular_velocity_z" in state_data:
+							node_to_set.angular_velocity = Vector3(state_data["angular_velocity_x"], state_data["angular_velocity_y"], state_data["angular_velocity_z"])
+				else:
+					# Handle non-physics nodes
+					node_to_set.position = Vector3(state_data["pos_x"], state_data["pos_y"], state_data["pos_z"])
+					node_to_set.rotation = Vector3(state_data["rot_x"], state_data["rot_y"], state_data["rot_z"])
+
+				# Set the remaining variables.
+				for data in state_data.keys():
+					if data == "filename" or data == "parent" or data == "pos_x" or data == "pos_y" or data == "pos_z" or data == "rot_x" or data == "rot_y" or data == "rot_z":
+						continue
+					node_to_set.set(data, state_data[data])
+				
+				node_to_set.set_state()
+
 		print("CSM: Loading scene state finished.")
-			
-	else:
-		print("CSM: Scene state doesn't exist.")
 
 
 func save_scene_state(_scene_name_to_save, slot: String):

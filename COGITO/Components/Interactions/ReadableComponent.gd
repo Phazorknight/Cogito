@@ -11,7 +11,7 @@ signal has_been_read
 @export var interact_sound : AudioStream
 @export var readable_title : String
 @export_multiline var readable_content : String
-
+@export var rich_text : bool
 var is_open : bool
 
 
@@ -19,11 +19,14 @@ func _ready():
 	readable_ui.hide()
 	is_open = false
 	label_title.text = readable_title
-	label_content.text = readable_content
- 
+	if rich_text:
+		label_content.bbcode_enabled = true
+		label_content.bbcode_text = readable_content
+	else: 
+		label_content.text = readable_content
+	
 
 func interact(_player_interaction_component: PlayerInteractionComponent):
-	
 	Audio.play_sound_3d(interact_sound).global_position = self.global_position
 	
 	if is_open:

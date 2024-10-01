@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cml4428ohsdq0"]
+[gd_scene load_steps=7 format=3 uid="uid://cml4428ohsdq0"]
+
+[ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://COGITO/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="1_n6v3r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ud61f"]
 resource_name = "carpet"
@@ -76,3 +78,12 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConcavePolygonShape3D_wu5y3")
+
+[node name="Seat" parent="." instance=ExtResource("1_n6v3r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.516187, 0.444034, -1.47905)
+
+[node name="Seat2" parent="." instance=ExtResource("1_n6v3r")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.48684, 0.444034, -0.501952)
+
+[node name="Seat3" parent="." instance=ExtResource("1_n6v3r")]
+transform = Transform3D(0.7198, 0, -0.694181, 0, 1, 0, 0.694181, 0, 0.7198, 1.43099, 0.444034, -1.49616)

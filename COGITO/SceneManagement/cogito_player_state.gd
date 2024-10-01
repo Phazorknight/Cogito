@@ -36,6 +36,80 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var player_state_savetime : int
 @export var player_state_slot_name : String
 
+# Sitting vars
+@export var is_sitting: bool = false
+@export var sittable_look_marker: Vector3 = Vector3()
+@export var sittable_look_angle: float = 0.0
+@export var moving_seat: bool = false
+@export var displacement_position: Vector3 = Vector3()
+@export var original_position: Transform3D = Transform3D()
+@export var original_neck_basis: Basis = Basis()
+@export var is_ejected: bool = false
+@export var currently_tweening: bool = false
+@export var current_sittable_path: NodePath
+
+#Collision shapes
+@export var standing_collision_shape_enabled : bool = true
+@export var crouching_collision_shape_enabled : bool = false
+
+
+@export var body_transform: Transform3D
+@export var neck_transform: Transform3D
+@export var head_transform: Transform3D
+@export var eyes_transform: Transform3D
+@export var camera_transform: Transform3D
+
+
+func save_node_transforms(player):
+	body_transform = player.get_node("Body").transform
+	neck_transform = player.get_node("Body/Neck").transform
+	head_transform = player.get_node("Body/Neck/Head").transform
+	eyes_transform = player.get_node("Body/Neck/Head/Eyes").transform
+	camera_transform = player.get_node("Body/Neck/Head/Eyes/Camera").transform
+	
+func load_node_transforms(player):
+	player.get_node("Body").transform = body_transform
+	player.get_node("Body/Neck").transform = neck_transform
+	player.get_node("Body/Neck/Head").transform = head_transform
+	player.get_node("Body/Neck/Head/Eyes").transform = eyes_transform
+	player.get_node("Body/Neck/Head/Eyes/Camera").transform = camera_transform
+
+
+# Save the state of the player's collision shapes
+func save_collision_shapes(player):
+	standing_collision_shape_enabled = not player.standing_collision_shape.disabled
+	crouching_collision_shape_enabled = not player.crouching_collision_shape.disabled
+
+# Load the state of the player's collision shapes
+func load_collision_shapes(player):
+	player.standing_collision_shape.disabled = not standing_collision_shape_enabled
+	player.crouching_collision_shape.disabled = not crouching_collision_shape_enabled
+
+func save_sitting_state(player):
+	is_sitting = player.is_sitting
+	sittable_look_marker = player.sittable_look_marker if player.is_sitting else Vector3()
+	sittable_look_angle = player.sittable_look_angle if player.is_sitting else 0.0
+	moving_seat = player.moving_seat
+	displacement_position = player.displacement_position if player.is_sitting else Vector3()
+	original_position = player.original_position if player.is_sitting else Transform3D()
+	original_neck_basis = player.original_neck_basis if player.is_sitting else Basis()
+	is_ejected = player.is_ejected
+	currently_tweening = player.currently_tweening
+	if is_sitting:
+		current_sittable_path = CogitoSceneManager._current_sittable_node.get_path()
+
+func load_sitting_state(player):
+	player.is_sitting = is_sitting
+	player.sittable_look_marker = sittable_look_marker
+	player.sittable_look_angle = sittable_look_angle
+	player.moving_seat = moving_seat
+	player.displacement_position = displacement_position
+	player.original_position = original_position
+	player.original_neck_basis = original_neck_basis
+	player.is_ejected = is_ejected
+	player.currently_tweening = currently_tweening
+	if is_sitting and current_sittable_path != null:
+		CogitoSceneManager._current_sittable_node = CogitoSceneManager.get_node(current_sittable_path)
 
 func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
 	player_attributes[name] = attribute_data
@@ -75,6 +149,11 @@ func write_state(state_slot : String) -> void:
 	#var player_state_file = str(player_state_dir + state_slot + ".res")
 	ResourceSaver.save(self, player_state_file, ResourceSaver.FLAG_CHANGE_PATH)
 	print("Player state saved as ", player_state_file)
+	
+	## For debug save as .tres
+	#var player_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".tres")
+	#ResourceSaver.save(self, player_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
+	#print("Scene state saved as .tres: ", player_state_file_tres)
 
 
 func state_exists(state_slot : String) -> bool:
