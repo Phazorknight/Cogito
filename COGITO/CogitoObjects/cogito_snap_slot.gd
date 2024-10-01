@@ -183,9 +183,6 @@ func set_state():
 	if snap_slot_type == SnapSlotType.ITEM:
 		preloaded_expected_item = load(expected_item.drop_scene)
 	
-	if snap_shape:
-		snap_shape.visible = is_active
-	
 	interaction_text = interaction_text_to_place
 	object_state_updated.emit(interaction_text)
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
@@ -195,6 +192,7 @@ func save():
 	var state_dict = {
 		"node_path" : self.get_path(),
 		"is_active" : is_active,
+		"is_holding_object" : is_holding_object,
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,
