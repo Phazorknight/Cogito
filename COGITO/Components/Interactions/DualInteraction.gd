@@ -44,6 +44,10 @@ func _ready() -> void:
 func interact(_player_interaction_component):
 	was_interacted_with.emit(interaction_text,input_map_action)
 	player_interaction_component = _player_interaction_component
+	check_before_hold_start(_player_interaction_component)
+
+#Runs check before allowing hold to start, currently used to stop lock/unlock interaction if key not present.
+func check_before_hold_start(_player_interaction_component):
 	if !hold_key_check:
 		if !is_holding:
 			is_holding = true
@@ -54,10 +58,11 @@ func interact(_player_interaction_component):
 			hold_timer.start()
 	else:
 		parent_node.door_rattle(_player_interaction_component)
-		
+
 func _on_object_state_change(_interaction_text: String):
 	press_interaction_text = _interaction_text
 	update_interaction_text()
+	
 func _lock_state_updated(lock_interaction_text: String):
 	hold_interaction_text = lock_interaction_text
 	update_interaction_text()
@@ -77,8 +82,6 @@ func _process(_delta: float) -> void:
 			hold_timer.stop()
 			hold_ui.hide()
 			is_holding = false
-
-
 
 func _input(event):
 	if is_holding and event.is_action_released(input_map_action):

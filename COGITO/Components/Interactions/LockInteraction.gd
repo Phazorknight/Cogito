@@ -8,11 +8,13 @@ func _ready() -> void:
 		parent_node.lock_state_updated.connect(_lock_state_updated)
 
 func interact(_player_interaction_component):
-	if parent_node.has_method("interact2"):
-		parent_node.interact2(_player_interaction_component)
-	
-	was_interacted_with.emit(interaction_text,input_map_action)
-
+	if check_for_key(_player_interaction_component):
+		if parent_node.has_method("interact2"):
+			parent_node.interact2(_player_interaction_component)
+		
+		was_interacted_with.emit(interaction_text,input_map_action)
+	else:
+		_player_interaction_component.send_hint(null,parent_node.key_hint)
 
 func _lock_state_updated(lock_interaction_text: String):
 	interaction_text = lock_interaction_text
