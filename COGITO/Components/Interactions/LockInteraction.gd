@@ -25,3 +25,8 @@ func check_for_key(interactor) -> bool:
 		if slot_data != null and slot_data.inventory_item == parent_node.key:
 			return true
 	return false
+
+##Used for dual interaction component. This function checks keys presence before allowing a hold to start.
+func start_hold_check(interactor) -> bool:
+	var keyResult: bool = check_for_key(interactor)
+	return keyResult

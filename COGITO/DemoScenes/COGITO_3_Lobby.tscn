@@ -6314,6 +6314,7 @@ shape = SubResource("BoxShape3D_ecok4")
 
 [node name="FrontDoor" parent="UPPER_OFFICE_CEO/WindowedDoor" index="0"]
 unlock_sound = ExtResource("18_sk7n4")
+lock_sound = ExtResource("18_sk7n4")
 is_locked = true
 key = ExtResource("19_vxibd")
 key_hint = "Key not found!"
@@ -6324,9 +6325,9 @@ is_disabled = true
 [node name="LockInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="3" instance=ExtResource("22_2fd6x")]
 is_disabled = true
 
-[node name="DualInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="5" instance=ExtResource("23_mluj1")]
+[node name="DualInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="5" node_paths=PackedStringArray("hold_node") instance=ExtResource("23_mluj1")]
 hold_time = 1.0
-hold_key_check = true
+hold_node = NodePath("../LockInteraction")
 input_map_action = "interact"
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]

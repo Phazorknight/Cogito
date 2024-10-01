@@ -16,3 +16,4 @@ func interact(_player_interaction_component):
 
 func _on_object_state_change(_interaction_text: String):
 	interaction_text = _interaction_text
+
