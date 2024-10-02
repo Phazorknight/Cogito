@@ -5,6 +5,7 @@ signal is_being_held(time_left:float)
 
 signal on_quick_press(player_interaction_component:PlayerInteractionComponent)
 signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
+signal interaction_complete(player_interaction_component: PlayerInteractionComponent)
 
 ##Time for hold to complete
 @export var hold_time : float = 3.0
@@ -72,6 +73,7 @@ func _lock_state_updated(lock_interaction_text: String):
 
 func update_interaction_text():
 	interaction_text = press_interaction_text + interaction_text_joiner + hold_interaction_text
+	interaction_complete.emit(player_interaction_component) #Signal to rebuild interaction prompt after text updated
 	
 func _process(_delta: float) -> void:
 	if is_holding:
