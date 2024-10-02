@@ -43,6 +43,8 @@ enum DoorType {
 @export var key : InventoryItemPD
 ## Hint that is displayed if the player attempts to open the door but doesn't have the key item.
 @export var key_hint : String
+##Alternate item resource that can unlock this door
+@export var lockpick : InventoryItemPD
 ## Other doors that should sync their state (locked, unlocked, open, closed) with this door. Useful for double-doors, etc.
 @export var doors_to_sync_with : Array[NodePath]
 
@@ -175,31 +177,19 @@ func _physics_process(_delta):
 			is_moving = false
 
 
-func check_for_key(interactor):
-	var inventory = interactor.get_parent().inventory_data
-	for slot_data in inventory.inventory_slots:
-		if slot_data != null and slot_data.inventory_item == key:
-			interactor.send_hint(null, key.name + " used.") # Sends a hint with the key item name.
-			if slot_data.inventory_item.discard_after_use:
-				inventory.remove_item_from_stack(slot_data)
-				# inventory.remove_slot_data(slot_data) (removed on 20240913, leaving line just in case there's bugs.
-			lock_unlock_switch()
-			
-			for nodepath in doors_to_sync_with:
-				if nodepath != null:
-					var object = get_node(nodepath)
-					object.lock_unlock_switch()
-			return
-	
-	if key_hint != "":
-		interactor.send_hint(null,key_hint) # Sends the key hint with the default hint icon.
 
 func lock_unlock_switch():
 	if is_locked:
 		unlock_door()
+		
 	else: 
 		lock_door()
-
+		
+	for nodepath in doors_to_sync_with:
+		if nodepath != null:
+			var object = get_node(nodepath)
+			object.lock_unlock_switch()
+			
 func unlock_door():
 	
 	audio_stream_player_3d.stream = unlock_sound
@@ -325,7 +315,7 @@ func set_to_closed_position():
 #alternate interaction for locking/unlocking
 func interact2(interactor: Node3D):
 	if not is_open:
-		check_for_key(interactor)
+		lock_unlock_switch()
 	else:
 		interactor.send_hint(null,"Can't lock an open door")
 
