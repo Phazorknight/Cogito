@@ -726,28 +726,42 @@ func _process_on_ladder(_delta):
 var jumped_from_slide = false
 var was_in_air = false
 
+##Sittables Process
+func _process_on_sittable(delta):
+	var sittable = CogitoSceneManager._current_sittable_node
+	# Processing analog stick mouselook  TODO Rewrite for Look angle marker support
+	if joystick_h_event:
+			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
+				if INVERT_Y_AXIS:
+					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				else:
+					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.horizontal_look_angle), deg_to_rad(sittable.horizontal_look_angle))
+				
+	if joystick_v_event:
+		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
+			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-180), deg_to_rad(180))
 
+	#avoids instantly moving to seat before tween is finished
+	if not currently_tweening:
+		self.global_transform = sittable.sit_position_node.global_transform
+	#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
+	if sittable.eject_on_fall == true and not is_ejected:
+		var chair_up_vector = sittable.global_transform.basis.y
+		var global_up_vector = Vector3(0, 1, 0)
+		# Calculate angle between chair's up vector and the global up vector
+		var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
+		# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
+		if angle_to_up > sittable.eject_angle:
+			is_ejected = true  # Set the flag to avoid repeated ejections
+			CogitoSceneManager._current_sittable_node.interact(player_interaction_component) #Interact with sittable to reset state and eject
+	
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
 	if is_sitting:
-		var sittable = CogitoSceneManager._current_sittable_node
-		#Update Player location if Chair has moved
-		if sittable:
-			#avoids instantly moving to seat before tween is finished
-			if not currently_tweening:
-				self.global_transform = sittable.sit_position_node.global_transform
-			#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
-			if sittable.eject_on_fall == true and not is_ejected:
-				var chair_up_vector = sittable.global_transform.basis.y
-				var global_up_vector = Vector3(0, 1, 0)
-				# Calculate angle between chair's up vector and the global up vector
-				var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
-				# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
-				if angle_to_up > sittable.eject_angle:
-					is_ejected = true  # Set the flag to avoid repeated ejections
-					CogitoSceneManager._current_sittable_node.interact(player_interaction_component) #Interact with sittable to reset state and eject
-
+		_process_on_sittable(delta)
 		return
 		
 	# Store current velocity for the next frame
