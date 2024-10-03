@@ -8,6 +8,8 @@ signal object_no_longer_detected
 signal turned_off
 
 @onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
+@onready var lightmeter:CogitoAttribute = (CogitoSceneManager._current_player_node.player_attributes.get("lightmeter"))
+@onready var player_light_level: float = lightmeter.value_current
 
 @export var detection_ray_cast_3d: RayCast3D
 @export var indicator_light: OmniLight3D
@@ -15,7 +17,10 @@ signal turned_off
 @export var detection_area : Area3D 
 @export var start_state : DetectorState
 @export var only_detect_player : bool = true
-@export var spot_time : float = 4.0
+##Threshold at which Player is detected
+@export var detection_threshold : float = 4.0
+##Determines impact player light level has on detection
+@export var light_level_detection_multipler : float = 0.05
 @export var alarm_sound : AudioStream
 
 @export_group("Detection indicator settings")
@@ -79,9 +84,11 @@ func detecting(delta: float):
 	if detected_objects.size() <= 0:
 		print("SecurityCamera DETECTING: No visible targets in detection area. Stopping detection.")
 		stop_detecting()
-		
-	detection_time += delta
-	if detection_time >= spot_time:
+	
+	player_light_level = lightmeter.value_current
+	detection_time += delta * (player_light_level*light_level_detection_multipler)
+	
+	if detection_time >= detection_threshold:
 		# === THIS IS WHERE THE FULL DETECTION HAPPENS ===
 		print("SecurityCamera: Detected!")
 		current_state = DetectorState.DETECTED
