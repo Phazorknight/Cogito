@@ -12,6 +12,7 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var player_current_scene_path : String
 @export var player_position : Vector3
 @export var player_rotation : Vector3
+@export var player_try_crouch : bool
 
 #Using Vector2 for saving player attributes. X = current, Y = max.
 @export var player_health: Vector2
