@@ -150,6 +150,10 @@ func load_player_state(player, passed_slot:String):
 
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
+		player.try_crouch = _player_state.player_try_crouch
+		# important: ensures the player isn't crouching on game load, regardless
+		# of whether the option "Toggle Crouching" is set to OFF or ON
+		player.is_crouching = player.try_crouch
 		
 		## Loading player sitting state
 		_player_state.load_sitting_state(player) 
@@ -203,6 +207,7 @@ func save_player_state(player, slot:String):
 	_player_state.player_current_scene_path = _current_scene_path
 	_player_state.player_position = player.global_position
 	_player_state.player_rotation = player.body.global_rotation
+	_player_state.player_try_crouch = player.try_crouch
 	
 	## New way of saving attributes:
 	_player_state.clear_saved_attribute_data()

@@ -811,10 +811,11 @@ func _physics_process(delta):
 	
 	
 	# CROUCH HANDLING dependant on toggle_crouch
-	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-		try_crouch = !try_crouch
-	elif !TOGGLE_CROUCH:
-		try_crouch = Input.is_action_pressed("crouch")
+	if !is_movement_paused:
+		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+			try_crouch = !try_crouch
+		elif !TOGGLE_CROUCH:
+			try_crouch = Input.is_action_pressed("crouch")
 	
 	
 	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch or crouch_raycast.is_colliding()):
@@ -863,6 +864,7 @@ func _physics_process(delta):
 				is_sprinting = true
 			if is_crouching:
 				is_crouching = false
+				try_crouch = false
 		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
 			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
 				bunny_hop_speed = SPRINTING_SPEED
@@ -875,6 +877,7 @@ func _physics_process(delta):
 			is_sprinting = true
 			if is_crouching:
 				is_crouching = false
+				try_crouch = false
 		else:
 			# STANDING UP HANDLING
 			if !is_showing_ui or !is_movement_paused:
@@ -886,6 +889,7 @@ func _physics_process(delta):
 				is_sprinting = false
 				if is_crouching:
 					is_crouching = false
+					try_crouch = false
 
 	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() and !is_movement_paused:
 		is_free_looking = true
