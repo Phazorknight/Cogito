@@ -117,6 +117,7 @@ var cogito_properties : CogitoProperties = null
 var interaction_component_state:bool = false
 #endregion
 
+
 func _ready():
 	#find player node
 	player_node = CogitoSceneManager._current_player_node
@@ -156,6 +157,7 @@ func _ready():
 	
 	find_cogito_properties()
 
+
 func get_child_carryable_components() -> Array:
 	var components = []
 	# iterate through child nodes and check for CogitoCarryableComponent
@@ -171,8 +173,8 @@ func displace_sit_marker():
 		var adjusted_transform = sit_position_node.transform
 		adjusted_transform.origin.y -= sit_marker_displacement
 		sit_position_node.transform = adjusted_transform
-	
-	
+
+
 func _sit_down():
 	
 	if animation_player:
@@ -203,7 +205,8 @@ func _sit_down():
 		node.hide()
 	
 	is_occupied = true
-		
+
+
 func _stand_up():
 	
 	if animation_player:
@@ -235,6 +238,7 @@ func _stand_up():
 	
 	is_occupied = false
 
+
 func switch():
 	if is_occupied:
 		_stand_up()
@@ -263,6 +267,7 @@ func set_state():
 	else:
 		_stand_up()
 
+
 func _on_sit_area_body_entered(body):
 	if body == player_node:
 		player_in_sit_area = true
@@ -280,7 +285,8 @@ func _on_sit_area_body_entered(body):
 			SitAreaBehaviour.NONE:
 				BasicInteraction.is_disabled = false
 				interaction_component_state = true
-				
+
+
 func _on_sit_area_body_exited(body):
 	if body == player_node:
 		player_in_sit_area = false
@@ -292,12 +298,14 @@ func _on_sit_area_body_exited(body):
 			BasicInteraction.is_disabled = true
 			interaction_component_state = false
 
+
 func find_cogito_properties():
 	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
 	if property_nodes:
 		cogito_properties = property_nodes[0]
 
 var interact_cooldown = 0.0
+
 
 func interact(player_interaction_component):
 	
@@ -353,6 +361,7 @@ func interact(player_interaction_component):
 			var object = get_node(nodepath)
 			object.interact(player_interaction_component)
 
+
 func _is_fallen() -> bool:
 	var current_rotation = global_transform.basis.get_euler()
 	var pitch_angle = rad_to_deg(abs(current_rotation.x))
@@ -360,6 +369,7 @@ func _is_fallen() -> bool:
 	if pitch_angle > eject_angle or roll_angle > eject_angle:
 		return true
 	return false
+
 
 func save():
 	var state_dict = {
@@ -390,8 +400,8 @@ func save():
 		state_dict["angular_velocity_y"] = rigid_body.angular_velocity.y
 		state_dict["angular_velocity_z"] = rigid_body.angular_velocity.z
 	return state_dict
-
-
+	
+	
 func find_rigid_body() -> RigidBody3D:
 	var current = self
 	while current:

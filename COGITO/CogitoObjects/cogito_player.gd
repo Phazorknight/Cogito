@@ -407,6 +407,7 @@ func get_params(transform3d, motion):
 	params.recovery_as_collision = true
 	return params
 
+
 #region Sittable Interaction Handling
 
 #Sittable Vars
@@ -426,20 +427,23 @@ func toggle_sitting():
 		_stand_up()
 	else:
 		_sit_down()
-		
+
+
 func _on_sit_requested(sittable: Node):
 	if not is_sitting:
 		_sit_down()
+
 
 func _on_stand_requested():
 	if is_sitting:
 		_stand_up()	
 
+
 func _on_seat_move_requested(sittable: Node):
 	moving_seat = true
 	_sit_down()
 
-	
+
 func handle_sitting_look(event):
 	#TODO - Fix for vehicles by handling dynamic look marker, Fix for controller support
 	var neck_position = neck.global_transform.origin
@@ -482,6 +486,7 @@ func handle_sitting_look(event):
 		# TODO replace with dynamic vertical look range based on look marker
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
 
+
 func _sit_down():
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = true
@@ -516,7 +521,8 @@ func _sit_down():
 			var tween = create_tween()
 			tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
 			tween.tween_callback(Callable(self, "_sit_down_finished"))
-		
+
+
 func _sit_down_finished():
 	is_sitting = true
 	set_physics_process(true)
@@ -529,7 +535,7 @@ func _sit_down_finished():
 		var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
 		tween.tween_property(neck, "global_transform:basis", target_transform.basis, sittable.rotation_tween_duration)
 
-	
+
 func _stand_up():
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
@@ -552,6 +558,7 @@ func _stand_up():
 
 #Functions to handle Exit types
 
+
 #Return player to Original position
 func _move_to_original_position(sittable):
 	currently_tweening = true
@@ -559,6 +566,8 @@ func _move_to_original_position(sittable):
 	tween.tween_property(self, "global_transform", original_position, sittable.tween_duration)
 	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
 	tween.tween_callback(Callable(self, "_stand_up_finished"))
+
+
 #Return player to Leave node position
 func _move_to_leave_node(sittable):
 	currently_tweening = true
@@ -572,6 +581,7 @@ func _move_to_leave_node(sittable):
 		else:
 			print("No leave node found. Returning to Original position")
 			_move_to_original_position(sittable)
+
 
 #Find location using navmesh to place player
 func _move_to_nearby_location(sittable):
@@ -624,6 +634,7 @@ func _move_to_nearby_location(sittable):
 	# If no valid location found, try leave node
 	print("No available location found after ",attempts, " tries. Testing for leave node.")
 	_move_to_leave_node(sittable)
+
 
 func _move_to_displacement_position(sittable):
 	var tween = create_tween()
@@ -725,6 +736,7 @@ func _process_on_ladder(_delta):
 
 var jumped_from_slide = false
 var was_in_air = false
+
 
 ##Sittables Process
 func _process_on_sittable(delta):
