@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("3_2pl2b")
-discard_after_use = true
+discard_after_use = false
 name = "Key"
 description = "Opens a locked door."
 icon = ExtResource("1_n8yj5")

@@ -189,6 +189,9 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var footstep_player = $FootstepPlayer
 @onready var footstep_surface_detector : FootstepSurfaceDetector = $FootstepPlayer
 
+#Navigation agent for Player auto seat exit handling
+@onready var navigation_agent = $NavigationAgent3D
+
 ## performance saving variable
 @onready var footstep_interval_change_velocity_square : float = footstep_interval_change_velocity * footstep_interval_change_velocity
 
@@ -201,8 +204,8 @@ var slide_audio_player : AudioStreamPlayer3D
 @onready var wieldables = %Wieldables
 #endregion
 
-
 func _ready():
+	
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
@@ -216,7 +219,7 @@ func _ready():
 	# Grabs all attached player attributes
 	for attribute in find_children("","CogitoAttribute",false):
 		player_attributes[attribute.attribute_name] = attribute
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Cogito Attribute found: " + attribute.attribute_name)
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Cogito Attribute found: " + attribute.attribute_name)
 
 	# If found, hookup health attribute signal to detect player death
 	var health_attribute = player_attributes.get("health")
@@ -236,7 +239,7 @@ func _ready():
 	### CURRENCY SETUP
 	for currency in find_children("", "CogitoCurrency", false):
 		player_currencies[currency.currency_name] = currency
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Cogito Currency found: " + currency.currency_name)
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Cogito Currency found: " + currency.currency_name)
 
 
 	# Pause Menu setup
@@ -245,7 +248,16 @@ func _ready():
 		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
+
+		print("Player has no reference to pause menu.")
+	
+	#Sittable Signals setup
+	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
+	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
+	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
+	
+	CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
+
 
 	call_deferred("slide_audio_init")
 
@@ -260,7 +272,7 @@ func slide_audio_init():
 func increase_attribute(attribute_name: String, value: float, value_type: ConsumableItemPD.ValueType) -> bool:
 	var attribute = player_attributes.get(attribute_name)
 	if not attribute:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Increase attribute: Attribute not found")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Increase attribute: Attribute not found")
 		return false
 	if value_type == ConsumableItemPD.ValueType.CURRENT:
 		if attribute.value_current == attribute.value_max:
@@ -277,7 +289,7 @@ func increase_attribute(attribute_name: String, value: float, value_type: Consum
 func decrease_attribute(attribute_name: String, value: float):
 	var attribute = player_attributes.get(attribute_name)
 	if not attribute:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Decrease attribute: " + attribute_name + " - Attribute not found")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Decrease attribute: " + attribute_name + " - Attribute not found")
 		return
 	attribute.subtract(value)
 
@@ -286,7 +298,7 @@ func decrease_attribute(attribute_name: String, value: float):
 func increase_currency(currency_name: String, value: float) -> bool:
 	var currency = player_currencies.get(currency_name)
 	if not currency:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Increase currency: Currency not found")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Increase currency: Currency not found")
 		return false
 	else:
 		currency.add(value)
@@ -296,7 +308,7 @@ func increase_currency(currency_name: String, value: float) -> bool:
 func decrease_currency(currency_name: String, value: float):
 	var currency = player_currencies.get(currency_name)
 	if not currency:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Decrease currency: " + currency_name + " - Currency not found")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Decrease currency: " + currency_name + " - Currency not found")
 		return
 	currency.subtract(value)
 
@@ -324,7 +336,7 @@ func _on_resume_movement():
 func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err == 0:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Options reloaded.")
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Options reloaded.")
 		
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
@@ -342,17 +354,22 @@ func _on_pause_menu_resume():
 
 func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
-		if is_free_looking:
-			neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+		#If players sitting & look marker is present, use sittable look handling
+		if is_sitting and CogitoSceneManager._current_sittable_node.look_marker_node:
+			handle_sitting_look(event)
 		else:
-			body.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-		
-		if INVERT_Y_AXIS:
-			head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
-		else:
-			head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
-		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			if is_free_looking:
+				neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+				neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+			else:
+				body.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+			
+			if INVERT_Y_AXIS:
+				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+			else:
+				head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
 		
 	# Checking Analog stick input for mouse look
 	if event is InputEventJoypadMotion and !is_movement_paused:
@@ -369,8 +386,11 @@ func _input(event):
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
 				toggle_inventory_interface.emit()
 		elif !is_movement_paused and !is_dead:
-			_on_pause_movement()
-			get_node(pause_menu).open_pause_menu()
+			if !currently_tweening:
+				_on_pause_movement()
+				get_node(pause_menu).open_pause_menu()
+			else:
+				player_interaction_component.send_hint(null, "Wait until I’m seated or standing")
 
 	# Open/closes Inventory if Inventory button is pressed
 	if event.is_action_pressed("inventory") and !is_dead:
@@ -387,6 +407,244 @@ func get_params(transform3d, motion):
 	params.recovery_as_collision = true
 	return params
 
+#region Sittable Interaction Handling
+
+#Sittable Vars
+var original_position: Transform3D
+var displacement_position: Vector3
+var is_sitting: bool  = false
+var sittable_look_marker: Vector3
+var sittable_look_angle: float
+var moving_seat: bool = false
+var original_neck_basis: Basis = Basis()
+var is_ejected: bool = false
+var currently_tweening: bool = false
+
+
+func toggle_sitting():
+	if is_sitting:
+		_stand_up()
+	else:
+		_sit_down()
+		
+func _on_sit_requested(sittable: Node):
+	if not is_sitting:
+		_sit_down()
+
+func _on_stand_requested():
+	if is_sitting:
+		_stand_up()	
+
+func _on_seat_move_requested(sittable: Node):
+	moving_seat = true
+	_sit_down()
+
+	
+func handle_sitting_look(event):
+	#TODO - Fix for vehicles by handling dynamic look marker, Fix for controller support
+	var neck_position = neck.global_transform.origin
+	var look_marker_position = sittable_look_marker
+	var target_direction = Vector2(look_marker_position.x - neck_position.x, look_marker_position.z - neck_position.z).normalized()
+
+	# Get the current neck forward direction
+	var neck_forward = neck.global_transform.basis.z
+	var neck_direction = Vector2(neck_forward.x, neck_forward.z).normalized()
+
+	# Angle between neck direction and look marker direction
+	var angle_to_marker = rad_to_deg(neck_direction.angle_to(target_direction))
+
+	# Apply mouse input to rotate neck
+	neck.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+
+	# Updated neck direction after rotation
+	neck_forward = neck.global_transform.basis.z
+	neck_direction = Vector2(neck_forward.x, neck_forward.z).normalized()
+
+	# New angle after rotation
+	var new_angle_to_marker = rad_to_deg(neck_direction.angle_to(target_direction))
+	new_angle_to_marker = wrapf(new_angle_to_marker, 0, 360)
+	
+	# Check if the new angle is within the limits
+	if not (new_angle_to_marker > 180-sittable_look_angle and new_angle_to_marker < (180 + sittable_look_angle)):
+		neck.rotation.y -= deg_to_rad(-event.relative.x * MOUSE_SENS)
+	
+	if INVERT_Y_AXIS:
+		head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+	else:
+		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+	
+	var sittable = CogitoSceneManager._current_sittable_node
+	
+	if sittable.physics_sittable == false:
+		#static sittables are fine to be clamped this way
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
+	else:
+		# TODO replace with dynamic vertical look range based on look marker
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
+
+func _sit_down():
+	standing_collision_shape.disabled = true
+	crouching_collision_shape.disabled = true
+	is_ejected = false 
+		
+	var sittable = CogitoSceneManager._current_sittable_node
+	if sittable:
+		is_sitting = true
+		set_physics_process(false)
+		if sittable.look_marker_node:
+			sittable_look_marker = sittable.look_marker_node.global_transform.origin
+		sittable_look_angle = sittable.horizontal_look_angle
+		if moving_seat == false:
+			original_position = self.global_transform
+			original_neck_basis = neck.global_transform.basis
+			displacement_position = sittable.global_transform.origin - self.global_transform.origin
+		
+		#TODO: Implement crouch handling
+		
+		# Check if the sittable is physics-based
+		if sittable.physics_sittable:
+			currently_tweening = true
+			set_physics_process(true)
+			#just using same tween for now with less tween time on chair_desk, TODO create a more dynamic 'tween' in physics process
+			var tween = create_tween()
+			tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
+			tween.tween_callback(Callable(self, "_sit_down_finished"))
+
+		else:
+			# Static tween for non-physics sittable
+			currently_tweening = true
+			var tween = create_tween()
+			tween.tween_property(self, "global_transform", sittable.sit_position_node.global_transform, sittable.tween_duration)
+			tween.tween_callback(Callable(self, "_sit_down_finished"))
+		
+func _sit_down_finished():
+	is_sitting = true
+	set_physics_process(true)
+	var sittable = CogitoSceneManager._current_sittable_node
+	standing_collision_shape.disabled = true
+	crouching_collision_shape.disabled = true
+	currently_tweening = false
+	if sittable_look_marker:
+		var tween = create_tween()
+		var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
+		tween.tween_property(neck, "global_transform:basis", target_transform.basis, sittable.rotation_tween_duration)
+
+	
+func _stand_up():
+	var sittable = CogitoSceneManager._current_sittable_node
+	if sittable:
+		
+		is_sitting = false
+		set_physics_process(false)
+		#TODO: Implement crouch handling
+		# Handle player exit placement on stand-up based on the placement_leave_behaviour of the sittable
+		match sittable.placement_on_leave:
+			sittable.PlacementOnLeave.ORIGINAL:
+				_move_to_original_position(sittable)
+			sittable.PlacementOnLeave.AUTO:
+				_move_to_nearby_location(sittable)
+			sittable.PlacementOnLeave.TRANSFORM:
+				_move_to_leave_node(sittable)
+			sittable.PlacementOnLeave.DISPLACEMENT:
+				_move_to_displacement_position(sittable) 
+					
+		moving_seat = false
+
+#Functions to handle Exit types
+
+#Return player to Original position
+func _move_to_original_position(sittable):
+	currently_tweening = true
+	var tween = create_tween()
+	tween.tween_property(self, "global_transform", original_position, sittable.tween_duration)
+	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+	tween.tween_callback(Callable(self, "_stand_up_finished"))
+#Return player to Leave node position
+func _move_to_leave_node(sittable):
+	currently_tweening = true
+	if sittable.leave_node_path:
+		var leave_node = sittable.get_node(sittable.leave_node_path)
+		if leave_node:
+			var tween = create_tween()
+			tween.tween_property(self, "global_transform", leave_node.global_transform, sittable.tween_duration)
+			tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+			tween.tween_callback(Callable(self, "_stand_up_finished"))
+		else:
+			print("No leave node found. Returning to Original position")
+			_move_to_original_position(sittable)
+
+#Find location using navmesh to place player
+func _move_to_nearby_location(sittable):
+	print("Attempting to find available locations to move player to")
+	var seat_position = sittable.global_transform.origin
+	var exit_distance: float = 1.0
+	var max_distance: float = 10.0 # Max distance from Sittable to try, multiplies the random direction
+	var step_increase: float = 0.5
+	var max_attempts: int = 10
+	var navmesh_offset_y: float = 0.25
+	var attempts: int = 0
+
+
+	var player_position = self.global_transform.origin
+
+	while attempts < max_attempts:
+		# Generate random direction
+		var random_direction = Vector3(
+			randf_range(-0.1, 0.1),
+			randf_range(-0.1, 0.1),  # Degree of Y random actually makes this work better at finding candidates
+			randf_range(-0.1, 0.1)
+		).normalized()
+		#print(random_direction)
+		
+		var candidate_pos = seat_position + (random_direction * exit_distance)
+		candidate_pos.y = navmesh_offset_y  # to check navmesh at navmesh height
+
+		navigation_agent.target_position = candidate_pos
+		#print("Checking position: ", candidate_pos)
+
+		# Check if position is reachable
+		if navigation_agent.is_navigation_finished():
+			currently_tweening = true
+			#print("Found available location, moving there.", candidate_pos, attempts)
+			var tween = create_tween()
+			navigation_agent.target_position.y += 1 # To avoid player going through floor
+			tween.tween_property(self, "global_transform:origin", navigation_agent.target_position, sittable.tween_duration)
+			tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+			tween.tween_callback(Callable(self, "_stand_up_finished"))
+			return
+		else:
+			#print("Position ", candidate_pos, " is not valid.")
+			exit_distance += step_increase
+			attempts += 1
+
+		if exit_distance > max_distance:
+			#print("Exceeded maximum exit distance. Distance has been reset")
+			exit_distance = 1
+
+	# If no valid location found, try leave node
+	print("No available location found after ",attempts, " tries. Testing for leave node.")
+	_move_to_leave_node(sittable)
+
+func _move_to_displacement_position(sittable):
+	var tween = create_tween()
+	var new_position = sittable.global_transform.origin - displacement_position
+	var new_transform = self.global_transform
+	new_transform.origin = new_position
+	tween.tween_property(self, "global_transform", new_transform, sittable.tween_duration)
+	tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
+	tween.tween_callback(Callable(self, "_stand_up_finished"))
+
+
+func _stand_up_finished():
+	is_sitting = false
+	set_physics_process(true)
+	standing_collision_shape.disabled = false
+	#crouching_collision_shape.disabled = false
+	self.global_transform.basis = Basis()
+	neck.global_transform.basis = original_neck_basis  
+	currently_tweening = false
+
+#endregion
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 	return PhysicsServer3D.body_test_motion(self_rid, get_params(transform3d, motion), test_motion_result)	
@@ -472,7 +730,30 @@ var was_in_air = false
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return
-	# Check if the player is on the ground
+	if is_sitting:
+		var sittable = CogitoSceneManager._current_sittable_node
+		#Update Player location if Chair has moved
+		if sittable:
+			#avoids instantly moving to seat before tween is finished
+			if not currently_tweening:
+				self.global_transform = sittable.sit_position_node.global_transform
+			#Check if the player should be ejected, is_ejected is flag to prevent multiple calls
+			if sittable.eject_on_fall == true and not is_ejected:
+				var chair_up_vector = sittable.global_transform.basis.y
+				var global_up_vector = Vector3(0, 1, 0)
+				# Calculate angle between chair's up vector and the global up vector
+				var angle_to_up = rad_to_deg(chair_up_vector.angle_to(global_up_vector))
+				# If the angle is greater than a threshold of 45 degrees, the chair has fallen over
+				if angle_to_up > sittable.eject_angle:
+					is_ejected = true  # Set the flag to avoid repeated ejections
+					CogitoSceneManager._current_sittable_node.interact(player_interaction_component) #Interact with sittable to reset state and eject
+
+		return
+		
+	# Store current velocity for the next frame
+	last_velocity = main_velocity
+  
+  	# Check if the player is on the ground
 	if is_on_floor():
 		# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
 		if was_in_air and last_velocity.y < landing_threshold:
@@ -486,9 +767,6 @@ func _physics_process(delta):
 		was_in_air = false  # Reset airborne state
 	else:
 		was_in_air = true  # Set airborne state
-		
-	# Store current velocity for the next frame
-	last_velocity = main_velocity
 	
 	if on_ladder:
 		_process_on_ladder(delta)
@@ -517,7 +795,7 @@ func _physics_process(delta):
 	
 	if stand_after_roll:
 		if !is_movement_paused or !is_showing_ui:
-			CogitoMain.debug_log(is_logging, "cogito_player.gd", "523: Standing after roll.")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "523: Standing after roll.")
 			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 			standing_collision_shape.disabled = true
 			crouching_collision_shape.disabled = false
@@ -533,10 +811,11 @@ func _physics_process(delta):
 	
 	
 	# CROUCH HANDLING dependant on toggle_crouch
-	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-		try_crouch = !try_crouch
-	elif !TOGGLE_CROUCH:
-		try_crouch = Input.is_action_pressed("crouch")
+	if !is_movement_paused:
+		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+			try_crouch = !try_crouch
+		elif !TOGGLE_CROUCH:
+			try_crouch = Input.is_action_pressed("crouch")
 	
 	
 	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch or crouch_raycast.is_colliding()):
@@ -561,7 +840,7 @@ func _physics_process(delta):
 		is_crouching = true
 	else:
 		if !is_showing_ui or !is_movement_paused:
-			#CogitoMain.debug_log(is_logging, "cogito_player.gd", "567: Standing up...")
+			#CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "567: Standing up...")
 			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 			if head.position.y < CROUCHING_DEPTH/4:
 				# still transitioning from state
@@ -585,6 +864,7 @@ func _physics_process(delta):
 				is_sprinting = true
 			if is_crouching:
 				is_crouching = false
+				try_crouch = false
 		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
 			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
 				bunny_hop_speed = SPRINTING_SPEED
@@ -597,10 +877,11 @@ func _physics_process(delta):
 			is_sprinting = true
 			if is_crouching:
 				is_crouching = false
+				try_crouch = false
 		else:
 			# STANDING UP HANDLING
 			if !is_showing_ui or !is_movement_paused:
-				CogitoMain.debug_log(is_logging, "cogito_player.gd", "606 standing up...")
+				CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "606 standing up...")
 				current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
 				wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
 				wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
@@ -608,6 +889,7 @@ func _physics_process(delta):
 				is_sprinting = false
 				if is_crouching:
 					is_crouching = false
+					try_crouch = false
 
 	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() and !is_movement_paused:
 		is_free_looking = true
@@ -662,7 +944,7 @@ func _physics_process(delta):
 		)
 	else:
 		if !is_movement_paused or !is_showing_ui:
-			#CogitoMain.debug_log(is_logging, "cogito_player.gd", "668 Standing up...")
+			#CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "668 Standing up...")
 			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
 			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
 			if last_velocity.y <= -7.5:
@@ -722,7 +1004,7 @@ func _physics_process(delta):
 				standing_collision_shape.disabled = false
 				crouching_collision_shape.disabled = true
 		elif not doesnt_need_stamina:
-			CogitoMain.debug_log(is_logging, "cogito_player.gd","Not enough stamina to jump.")
+			CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd","Not enough stamina to jump.")
 
 	if sliding_timer.is_stopped():
 		if is_on_floor():
@@ -954,7 +1236,7 @@ func _on_animation_player_animation_finished(anim_name):
 
 func apply_external_force(force_vector: Vector3):
 	if force_vector and force_vector.length() > 0:
-		CogitoMain.debug_log(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
+		CogitoSceneManager.cogito_print(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
 		velocity += force_vector
 		move_and_slide()
 
@@ -963,3 +1245,11 @@ class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
 	var is_step_up: bool = false
+
+
+
+func _on_player_state_loaded():
+	#TODO - reset look on load if needed
+	#self.global_transform.basis = Basis()
+	#neck.global_transform.basis = Basis()
+	pass

@@ -99,21 +99,31 @@ func _handle_interaction(action: String) -> void:
 			if node.input_map_action == action and not node.is_disabled:
 				if !node.ignore_open_gui and get_parent().is_showing_ui:
 					return
-					
 				node.interact(self)
-				# Update the prompts after an interaction. This is especially crucial for doors and switches.
-				_rebuild_interaction_prompts()
+				
+				#Dual interaction components need to await signal to update correctly
+				if node is DualInteraction:
+					await node.interaction_complete  # Wait until the interaction_complete signal is recieved
+					_rebuild_interaction_prompts()  # rebuild prompt after signal is received
+				else:
+					# Update the prompts after an interaction. This is especially crucial for doors and switches.
+					_rebuild_interaction_prompts()
 				break
+
+
+func is_interaction_raycast_colliding() -> bool:
+	if interaction_raycast.is_colliding():
+		return true
+	else:
+		return false
 
 
 ## Helper function to always get raycast destination point
 func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
 	var destination_point = interaction_raycast.global_position + (interaction_raycast.target_position.z - distance_offset) * get_viewport().get_camera_3d().get_global_transform().basis.z
 	if interaction_raycast.is_colliding():
-		if destination_point == interaction_raycast.get_collision_point():
-			return interaction_raycast.get_collision_point()
-		else:
-			return destination_point
+		#if destination_point == interaction_raycast.get_collision_point():
+		return interaction_raycast.get_collision_point()
 	else:
 		return destination_point
 
