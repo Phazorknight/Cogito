@@ -6,9 +6,9 @@ var main_panel_instance
 
 
 func _enter_tree():
-	add_autoload_singleton("CogitoMain", "./cogito_main.gd")
-	add_autoload_singleton("CogitoSceneManager", "./SceneManagement/cogito_scene_manager.gd")
-	add_autoload_singleton("CogitoQuestManager", "./QuestSystem/cogito_quest_manager.gd")
+	add_autoload_singleton("CogitoMain", "/cogito_main.gd")
+	add_autoload_singleton("CogitoSceneManager", "/SceneManagement/cogito_scene_manager.gd")
+	add_autoload_singleton("CogitoQuestManager", "/QuestSystem/cogito_quest_manager.gd")
 	main_panel_instance = MainPanel.instantiate()
 	# Add the main panel to the editor's main viewport.
 	EditorInterface.get_editor_main_screen().add_child(main_panel_instance)

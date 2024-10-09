@@ -3146,11 +3146,8 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 3, 0, 2)
 
 [node name="SnapSlotMetalbar" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("40_qk2no")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.65, 0.613, 0)
-snap_slot_type = 0
-is_active = true
 interaction_text_to_remove = ""
 expected_object_hint = ""
-debug_log = true
 
 [node name="Pickup_Dart_Water" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_gb8en")]
 transform = Transform3D(0.754801, 6.99125e-15, -0.655954, 0, 1, 1.06581e-14, 0.655954, -8.04478e-15, 0.754801, -11.0006, 0.76828, -12.2038)
@@ -3306,11 +3303,6 @@ mesh = SubResource("BoxMesh_w38aj")
 
 [node name="SnapSlotBattery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_71h2t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.77805, 0.958914, -2.99995)
-is_active = true
-interaction_text_to_place = "Place"
-interaction_text_to_remove = "Remove"
-expected_object_hint = "Looks like an object could fit here."
-debug_log = true
 
 [node name="Lamp_ElectricWire2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("42_3rq3h")]
 transform = Transform3D(-1.81058e-08, 1, -2.70212e-15, 6.18173e-08, 0, 1, 1, 1.81059e-08, -6.18173e-08, -9.524, 1.93194, -3)
