@@ -99,10 +99,15 @@ func _handle_interaction(action: String) -> void:
 			if node.input_map_action == action and not node.is_disabled:
 				if !node.ignore_open_gui and get_parent().is_showing_ui:
 					return
-					
 				node.interact(self)
-				# Update the prompts after an interaction. This is especially crucial for doors and switches.
-				_rebuild_interaction_prompts()
+				
+				#Dual interaction components need to await signal to update correctly
+				if node is DualInteraction:
+					await node.interaction_complete  # Wait until the interaction_complete signal is recieved
+					_rebuild_interaction_prompts()  # rebuild prompt after signal is received
+				else:
+					# Update the prompts after an interaction. This is especially crucial for doors and switches.
+					_rebuild_interaction_prompts()
 				break
 
 
