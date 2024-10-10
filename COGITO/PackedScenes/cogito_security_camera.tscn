@@ -26,6 +26,7 @@ script = ExtResource("1_c4ulv")
 detection_ray_cast_3d = NodePath("CameraMesh/DetectionRayCast3D")
 indicator_light = NodePath("CameraMesh/IndicatorLight")
 detection_area = NodePath("CameraMesh/DetectionArea3D")
+non_player_detection_list = Array[String](["CogitoEnemy"])
 alarm_sound = ExtResource("2_41o63")
 indicator_mesh = NodePath("CameraMesh/IndicatorMesh")
 
