@@ -19,6 +19,7 @@ func _ready():
 	super._ready()
 	physics_sittable = true
 
+
 func _physics_process(delta):
 
 	if player_node and player_node.is_sitting and CogitoSceneManager._current_sittable_node == self:
@@ -30,6 +31,7 @@ func _physics_process(delta):
 			vehicle_node.rotate_y(rotation_momentum * delta)
 
 		vehicle_moved.emit()
+
 
 func handle_input(delta):
 
@@ -49,6 +51,7 @@ func handle_input(delta):
 		var local_direction = vehicle_node.global_transform.basis * input_vector
 		acceleration = local_direction * move_speed * delta
 	rotation_momentum += rotation_input * rotation_speed
+
 
 func apply_momentum(delta):
 	if rotation_momentum != 0:
