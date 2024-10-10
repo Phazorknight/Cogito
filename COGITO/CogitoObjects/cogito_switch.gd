@@ -53,7 +53,12 @@ func _ready():
 		switch_on()
 	else:
 		switch_off()
-
+		
+	find_cogito_properties()
+func find_cogito_properties():
+	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
+	if property_nodes:
+		cogito_properties = property_nodes[0]
 
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component
@@ -124,6 +129,8 @@ func check_for_item() -> bool:
 		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
 
+func _on_damage_received():
+	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 func set_state():
 	if is_on:
@@ -145,7 +152,6 @@ func set_state():
 	
 	object_state_updated.emit(interaction_text)
 
-
 func save():
 	var state_dict = {
 		"node_path" : self.get_path(),
@@ -159,3 +165,4 @@ func save():
 		
 	}
 	return state_dict
+

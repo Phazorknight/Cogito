@@ -44,6 +44,11 @@ func _ready() -> void:
 	cooldown = 0 #Enabling button to be pressed right away.
 	interaction_text = usable_interaction_text
 	object_state_updated.emit(interaction_text)
+	find_cogito_properties()
+func find_cogito_properties():
+	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
+	if property_nodes:
+		cogito_properties = property_nodes[0]
 
 func _physics_process(delta: float) -> void:
 	if cooldown > 0:
@@ -85,7 +90,7 @@ func press():
 			object.interact(player_interaction_component)
 
 
-func on_damage_received():
+func _on_damage_received():
 	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 

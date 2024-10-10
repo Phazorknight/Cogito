@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://6k5rvlwcpys1"]
+[gd_scene load_steps=11 format=3 uid="uid://6k5rvlwcpys1"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_switch.gd" id="1_8r8fc"]
 [ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_m3jxc"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
+[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="4_dkn68"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="5_mihmv"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
 top_radius = 0.05
@@ -53,3 +55,11 @@ shape = SubResource("BoxShape3D_nti18")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_v8dn1")]
+
+[node name="HitboxComponent" parent="." instance=ExtResource("4_dkn68")]
+
+[node name="CogitoProperties" parent="." instance=ExtResource("5_mihmv")]
+material_properties = 1
+burn_damage_amount = 1.0
+
+[connection signal="damage_received" from="." to="." method="_on_damage_received"]
