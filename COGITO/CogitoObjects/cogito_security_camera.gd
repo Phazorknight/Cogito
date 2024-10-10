@@ -8,19 +8,33 @@ signal object_no_longer_detected
 signal turned_off
 
 @onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
-@onready var lightmeter:CogitoAttribute = (CogitoSceneManager._current_player_node.player_attributes.get("lightmeter"))
-@onready var player_light_level: float = lightmeter.value_current
+@onready var lightmeter:CogitoAttribute
+@onready var detected_light_level: float
 
 @export var detection_ray_cast_3d: RayCast3D
 @export var indicator_light: OmniLight3D
-
 @export var detection_area : Area3D 
 @export var start_state : DetectorState
+
+
+@export_category("Detection Settings")
 @export var only_detect_player : bool = true
 ##Threshold at which Player is detected
 @export var detection_threshold : float = 4.0
-##Determines impact player light level has on detection
-@export var light_level_detection_multipler : float = 0.05
+
+
+enum DetectionMethod{
+	TIME, ##Uses Time directly to until detection is trigger
+	LIGHTMETER ##Uses Time * Lightmeter until detection is triggered. Scaled by light_level_detection_multipler.
+}
+
+##How should the player be detected?
+@export var detection_method: DetectionMethod = DetectionMethod.TIME
+##Determines impact player light level has on detection for Lightmeter method
+@export var light_level_detection_multipler : float = 0.01
+##Names of non player objects that should trigger detection
+@export var non_player_detection_list: Array[String] = []
+## Sound played on detection triggered
 @export var alarm_sound : AudioStream
 
 @export_group("Detection indicator settings")
@@ -85,9 +99,12 @@ func detecting(delta: float):
 		print("SecurityCamera DETECTING: No visible targets in detection area. Stopping detection.")
 		stop_detecting()
 	
-	player_light_level = lightmeter.value_current
-	detection_time += delta * (player_light_level*light_level_detection_multipler)
-	
+	if detection_method == DetectionMethod.LIGHTMETER and lightmeter != null: 
+		detected_light_level = lightmeter.value_current
+		detection_time += delta * (detected_light_level*light_level_detection_multipler)
+	else:
+		detection_time += delta
+		
 	if detection_time >= detection_threshold:
 		# === THIS IS WHERE THE FULL DETECTION HAPPENS ===
 		print("SecurityCamera: Detected!")
@@ -97,6 +114,7 @@ func detecting(delta: float):
 			audio_stream_player_3d.play()
 		object_detected.emit()
 		update_indicator_mesh()
+
  
 
 func stop_detecting():
@@ -147,11 +165,43 @@ func on_body_entered_detection(body: Node3D):
 	if only_detect_player and body.is_in_group("Player"):
 		print("SecurityCamera: Player entered detection area: ", body)
 		objects_in_detection_area.append(body)
-	
-	
+
+	# For non-player objects, check they are in the non_player_detection_list, and not a player
+	elif !only_detect_player and !body.is_in_group("Player"):
+		if is_relevant_non_player(body):
+			print("SecurityCamera: Relevant object entered detection area: ", body)
+			objects_in_detection_area.append(body)
+	if detection_method == DetectionMethod.LIGHTMETER:
+		find_lightmeter(body) 	# Check for Lightmeter on any entered body, if using Lightmeter detection method
+
+func find_lightmeter(body):
+	var found_lightmeter: CogitoLightmeter = null
+	for attribute in body.find_children("", "CogitoLightmeter", false):
+		if attribute is CogitoLightmeter:
+			found_lightmeter = attribute
+			break
+
+	if found_lightmeter:
+		lightmeter = found_lightmeter
+		print("Lightmeter found on entity:", body.name)
+	else:
+		print("No lightmeter found on entity:", body.name)
+
+func is_relevant_non_player(body: Node3D) -> bool:
+	##TODO Better way of defining this than names array
+	if body.name in non_player_detection_list:
+		return true
+	else:
+		print("SecurityCamera: Non-relevant object ignored:", body.name)
+		return false
+
+
 func on_body_left_detection(body: Node3D):
 	if only_detect_player and body.is_in_group("Player"):
 		print("SecurityCamera: Player left detection area: ", body)
+		objects_in_detection_area.erase(body)
+	elif is_relevant_non_player(body):
+		print("SecurityCamera:",body," left detection area: ")
 		objects_in_detection_area.erase(body)
 
 
