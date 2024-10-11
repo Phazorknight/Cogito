@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ConsumableItemPD" load_steps=6 format=3 uid="uid://geac0jkegsqu"]
+
+[ext_resource type="Texture2D" uid="uid://ra2d8abru67o" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_StaminaExtension.png" id="2_cliso"]
+[ext_resource type="Texture2D" uid="uid://d0so3oo1yk4kh" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Heart.png" id="2_nd8qm"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="4_6v3ug"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="5_j8yea"]
+[ext_resource type="AudioStream" uid="uid://bna1nc66vw053" path="res://addons/cogito/Assets/Audio/Kenney/phaserUp5.ogg" id="6_vslkv"]
+
+[resource]
+script = ExtResource("4_6v3ug")
+attribute_name = "stamina"
+attribute_change_amount = 15.0
+value_to_change = 1
+consumable_effects = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd")]([])
+name = "Stamina Extension"
+description = "Tastes better than it looks."
+icon = ExtResource("2_cliso")
+is_stackable = true
+is_droppable = true
+stack_size = 5
+drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_stamina_extension.tscn"
+hint_icon_on_use = ExtResource("2_nd8qm")
+hint_text_on_use = "Your max stamina has increased by 15."
+item_size = Vector2(1, 1)
+sound_use = ExtResource("6_vslkv")
+sound_pickup = ExtResource("5_j8yea")

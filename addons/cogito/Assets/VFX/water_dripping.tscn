@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://cfxd8tbelqpj3"]
+
+[ext_resource type="Texture2D" uid="uid://bl66h6wddat6m" path="res://addons/cogito/Assets/VFX/Impacts/Textures/Drop.png" id="1_r5bra"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_avvni"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.470588, 0.698039, 1, 0.678431)
+albedo_texture = ExtResource("1_r5bra")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_y2e31"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qaki8"]
+gradient = SubResource("Gradient_y2e31")
+
+[sub_resource type="Curve" id="Curve_wwomp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.07604, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_brv64"]
+curve = SubResource("Curve_wwomp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lfxjp"]
+lifetime_randomness = 1.0
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 2
+emission_sphere_radius = 0.5
+gravity = Vector3(0, -2, 0)
+damping_max = 1.0
+scale_min = 0.3
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_brv64")
+color = Color(5, 2, 1, 1)
+color_ramp = SubResource("GradientTexture1D_qaki8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_h6fu1"]
+
+[node name="WaterDripping" type="GPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_avvni")
+amount = 13
+lifetime = 1.3
+randomness = 0.03
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_lfxjp")
+draw_pass_1 = SubResource("QuadMesh_h6fu1")

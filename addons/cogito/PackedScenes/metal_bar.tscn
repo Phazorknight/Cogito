@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://x23tip44172h"]
+
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_cx7i0"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="2_xr7sm"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="3_3kade"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2gqr"]
+albedo_color = Color(0.317647, 0.364706, 0.486275, 1)
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.55
+
+[sub_resource type="BoxMesh" id="BoxMesh_gtrvf"]
+material = SubResource("StandardMaterial3D_f2gqr")
+size = Vector3(2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_thbwj"]
+size = Vector3(2, 0.2, 0.2)
+
+[node name="Metalbar" type="RigidBody3D"]
+mass = 10.0
+max_contacts_reported = 8
+contact_monitor = true
+script = ExtResource("1_cx7i0")
+cogito_name = "Metalbar"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gtrvf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_thbwj")
+
+[node name="CogitoProperties" parent="." instance=ExtResource("2_xr7sm")]
+elemental_properties = 1
+reaction_threshold_time = 1.0
+
+[node name="CarryableComponent" parent="." instance=ExtResource("3_3kade")]
+carry_distance_offset = -0.8
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://yjrkuurlcylb"]
+
+[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/remap_button.gd" id="1_5r8lp"]
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="2_omv26"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="2_yhh5l"]
+
+[node name="RemapButton" type="Button"]
+custom_minimum_size = Vector2(40, 30)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1240.0
+offset_bottom = -690.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5r8lp")
+
+[node name="Container" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_omv26")
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="DynamicInputIcon" parent="Container" instance=ExtResource("2_yhh5l")]
+position = Vector2(0, 0)
+scale = Vector2(0.3, 0.3)
+centered = false
+frame = 6

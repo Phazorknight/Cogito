@@ -1,0 +1,145 @@
+[gd_scene load_steps=26 format=3 uid="uid://dn4e1k7u3suoo"]
+
+[ext_resource type="Script" path="res://addons/cogito/Enemies/cogito_basic_enemy.gd" id="1_0lcvu"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_security_camera.gd" id="2_6jysp"]
+[ext_resource type="AudioStream" uid="uid://cn4rtt8qbtiti" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactPlank_medium_000.ogg" id="2_q5685"]
+[ext_resource type="AudioStream" uid="uid://bd7xfxmsaeu0o" path="res://addons/cogito/Assets/Audio/435666__mirkosukovic__alarm-siren.wav" id="3_7u8yw"]
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="4_y8n8v"]
+[ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://addons/cogito/PackedScenes/simple_particle_puff.tscn" id="5_ni6ul"]
+[ext_resource type="Script" path="res://addons/cogito/Components/HitboxComponent.gd" id="5_qh1ls"]
+[ext_resource type="PackedScene" uid="uid://crv3r7dscbxlx" path="res://addons/cogito/Enemies/body/basic_enemy_corpse.tscn" id="7_8vdb4"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="7_15n6t"]
+[ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="8_vyi83"]
+[ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="9_5fsuu"]
+[ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="10_ab7fy"]
+[ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="11_jlhg4"]
+[ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="12_3m7c4"]
+[ext_resource type="Script" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="13_mhpd1"]
+[ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://addons/cogito/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="14_kpkpk"]
+[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://addons/cogito/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="15_vx81w"]
+[ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://addons/cogito/Components/interaction_raycast.tscn" id="17_0qkwj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p3jhp"]
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8jni4"]
+albedo_color = Color(1, 0.12549, 0.537255, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_r2sfk"]
+material = SubResource("StandardMaterial3D_8jni4")
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ouco8"]
+albedo_color = Color(1, 0.12549, 0.537255, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o5pq8"]
+material = SubResource("StandardMaterial3D_ouco8")
+size = Vector3(0.5, 0.32, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qaig8"]
+custom_solver_bias = 1.0
+size = Vector3(4, 4, 4)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hnplu"]
+streams_count = 5
+stream_0/stream = ExtResource("8_vyi83")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("9_5fsuu")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_ab7fy")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_jlhg4")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_3m7c4")
+stream_4/weight = 1.0
+
+[node name="CogitoEnemy" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_0lcvu")
+attack_stagger = 20.0
+attack_sound = ExtResource("2_q5685")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_p3jhp")
+
+[node name="Mesh_Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("CapsuleMesh_r2sfk")
+
+[node name="Mesh_Face" type="MeshInstance3D" parent="Mesh_Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.202423)
+mesh = SubResource("BoxMesh_o5pq8")
+
+[node name="IndicatorLight" type="OmniLight3D" parent="Mesh_Body/Mesh_Face"]
+transform = Transform3D(-0.707107, -0.183013, -0.683013, 0, 0.965926, -0.258819, 0.707107, -0.183013, -0.683013, 0.0609554, -0.00331843, -0.478758)
+light_color = Color(1, 0, 0, 1)
+light_energy = 0.1
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_height_offset = 0.2
+
+[node name="SecurityCamera" type="Node3D" parent="." node_paths=PackedStringArray("detection_ray_cast_3d", "indicator_light", "detection_area", "indicator_mesh")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.29646, -0.464078)
+script = ExtResource("2_6jysp")
+detection_ray_cast_3d = NodePath("DetectionRayCast3D")
+indicator_light = NodePath("../Mesh_Body/Mesh_Face/IndicatorLight")
+detection_area = NodePath("DetectionArea3D")
+spot_time = 2.0
+alarm_sound = ExtResource("3_7u8yw")
+indicator_mesh = NodePath("../Mesh_Body/Mesh_Face")
+
+[node name="DetectionRayCast3D" type="RayCast3D" parent="SecurityCamera"]
+transform = Transform3D(1, 2.68221e-07, 2.106e-07, 2.68221e-07, 1, 2.68221e-07, 2.36434e-07, 2.68221e-07, 1, -1.09301e-09, 0, 0.0125026)
+exclude_parent = false
+target_position = Vector3(0.85, -1.1, 1.94)
+collision_mask = 3
+hit_back_faces = false
+debug_shape_custom_color = Color(1, 0, 1, 1)
+
+[node name="DetectionArea3D" type="Area3D" parent="SecurityCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76357e-09, 0, 0.0201729)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SecurityCamera/DetectionArea3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 2)
+shape = SubResource("BoxShape3D_qaig8")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SecurityCamera"]
+volume_db = -10.0
+max_distance = 30.0
+bus = &"SFX"
+
+[node name="HealthAttribute" parent="." instance=ExtResource("4_y8n8v")]
+destroy_on_death = Array[NodePath]([NodePath("..")])
+spawn_on_death = Array[PackedScene]([ExtResource("5_ni6ul"), ExtResource("7_8vdb4")])
+value_max = 5.0
+value_start = 5.0
+
+[node name="HitboxComponent" type="Node" parent="." node_paths=PackedStringArray("health_attribute")]
+script = ExtResource("5_qh1ls")
+health_attribute = NodePath("../HealthAttribute")
+
+[node name="CogitoProperties" parent="." instance=ExtResource("7_15n6t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42562, 0)
+elemental_properties = 2
+material_properties = 1
+burn_damage_amount = 1.0
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0020133, 0)
+stream = SubResource("AudioStreamRandomizer_hnplu")
+max_polyphony = 2
+bus = &"SFX"
+script = ExtResource("13_mhpd1")
+generic_fallback_footstep_profile = ExtResource("14_kpkpk")
+footstep_material_library = ExtResource("15_vx81w")
+generic_fallback_landing_profile = ExtResource("14_kpkpk")
+landing_material_library = ExtResource("15_vx81w")
+
+[node name="InteractionRaycast" parent="." instance=ExtResource("17_0qkwj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[connection signal="object_detected" from="SecurityCamera" to="." method="switch_to_chasing"]
+[connection signal="object_no_longer_detected" from="SecurityCamera" to="." method="switch_to_patrolling"]
+[connection signal="interactable_seen" from="InteractionRaycast" to="." method="_on_interaction_raycast_interactable_seen"]

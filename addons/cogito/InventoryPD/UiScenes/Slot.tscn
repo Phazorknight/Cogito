@@ -1,0 +1,79 @@
+[gd_scene load_steps=7 format=3 uid="uid://cg41w2fijcp4q"]
+
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/Slot.gd" id="1_hcuh3"]
+[ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_qlqw8"]
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="3_m2h1n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jj7a"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_35t0l"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_c2nn1"]
+font_size = 20
+
+[node name="Slot" type="PanelContainer"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 40.0
+offset_bottom = 40.0
+focus_mode = 2
+theme = ExtResource("3_m2h1n")
+script = ExtResource("1_hcuh3")
+highlight_color = Color(1, 1, 1, 1)
+sound_highlight = ExtResource("2_qlqw8")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.0392157)
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("3_m2h1n")
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jj7a")
+
+[node name="Selected" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_35t0l")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+
+[node name="QuantityLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource("3_m2h1n")
+theme_type_variation = &"HUDLabel"
+text = "x99"
+
+[node name="ChargeLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = ExtResource("3_m2h1n")
+theme_type_variation = &"HUDLabel"
+theme_override_font_sizes/font_size = 12
+text = "100%"
+label_settings = SubResource("LabelSettings_c2nn1")
+vertical_alignment = 1
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="hidden" from="." to="." method="_on_hidden"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

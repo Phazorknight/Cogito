@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://3gwo23kpr58f"]
+
+[ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://addons/cogito/Assets/Materials/Lamp_Shade.tres" id="1_id4jn"]
+[ext_resource type="PackedScene" uid="uid://ctr7n0w3hgys7" path="res://addons/cogito/Components/LightzoneComponent.tscn" id="2_6j8r6"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c3n65"]
+material = ExtResource("1_id4jn")
+top_radius = 0.1
+bottom_radius = 0.3
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3p6l5"]
+albedo_color = Color(1, 0.890196, 0.631373, 1)
+emission_enabled = true
+emission = Color(1, 0.890196, 0.631373, 1)
+rim = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_556ji"]
+height = 2.62204
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7vl4j"]
+transparency = 1
+albedo_color = Color(0.94902, 0.854902, 0.627451, 1)
+metallic_specular = 1.0
+emission_enabled = true
+emission = Color(0.839216, 0.756863, 0.568627, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bu6wk"]
+material = SubResource("StandardMaterial3D_7vl4j")
+bottom_radius = 1.0
+height = 3.0
+
+[node name="Lightzone_Lamp" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.8914, 2.9, 6.50757)
+
+[node name="Lightzone_Lampmesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_c3n65")
+
+[node name="Lightzone_Lampmesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0468059, 0)
+mesh = SubResource("CylinderMesh_c3n65")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3p6l5")
+
+[node name="LightzoneComponent" parent="." instance=ExtResource("2_6j8r6")]
+
+[node name="CollisionShape3D" parent="LightzoneComponent" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5774, 0)
+shape = SubResource("CylinderShape3D_556ji")
+
+[node name="Lightzone_Ray" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.59569, 0)
+visible = false
+mesh = SubResource("CylinderMesh_bu6wk")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+light_energy = 10.0
+spot_range = 4.0
+spot_angle = 18.6956
+spot_angle_attenuation = 0.0625004
+
+[editable path="LightzoneComponent"]

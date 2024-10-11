@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://txiu5yxexevm"]
+
+[ext_resource type="Texture2D" uid="uid://bdh5i4gqsyn72" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_LaserRifle_new.png" id="1_jjb1o"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_o1rdd"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_yhudh"]
+[ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://addons/cogito/Wieldables/laser_rifle.tscn" id="4_eksg8"]
+
+[resource]
+script = ExtResource("2_o1rdd")
+wieldable_scene = ExtResource("4_eksg8")
+no_reload = false
+charge_max = 100.0
+ammo_item_name = "Laser Ammo"
+charge_current = 100.0
+wieldable_range = 100.0
+wieldable_damage = 1.0
+name = "Laser Rifle"
+description = "Goes pew pew pew. Needs Laser Ammo to reload."
+icon = ExtResource("1_jjb1o")
+is_stackable = false
+is_droppable = true
+stack_size = 0
+drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_laser_rifle.tscn"
+hint_text_on_use = ""
+item_size = Vector2(3, 2)
+sound_pickup = ExtResource("3_yhudh")

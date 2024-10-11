@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://tkwv6b5arrw2"]
+
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_0tix8"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_028c2"]
+[ext_resource type="Resource" uid="uid://d7r4y7pbhify" path="res://addons/cogito/InventoryPD/Items/Cogito_Coins.tres" id="3_q3la1"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_wdnhm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7vn6a"]
+albedo_color = Color(0.823529, 0.576471, 0.0862745, 1)
+metallic = 1.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_u08uv"]
+material = SubResource("StandardMaterial3D_7vn6a")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.01
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k343l"]
+size = Vector3(0.205469, 0.0422119, 0.170801)
+
+[sub_resource type="Resource" id="Resource_iq4sy"]
+resource_local_to_scene = true
+script = ExtResource("4_wdnhm")
+inventory_item = ExtResource("3_q3la1")
+quantity = 1
+origin_index = -1
+
+[node name="Coins" type="RigidBody3D"]
+script = ExtResource("1_0tix8")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00476105, 0)
+mesh = SubResource("CylinderMesh_u08uv")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.952225, 0, -0.305396, 0, 1, 0, 0.305396, 0, 0.952225, -0.102983, 0.00476105, 0)
+mesh = SubResource("CylinderMesh_u08uv")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.997869, 0.013298, 0.0638768, -9.31323e-10, 0.97901, -0.203813, -0.0652463, 0.203378, 0.976924, -0.0986842, 0.0118866, 0.0571064)
+mesh = SubResource("CylinderMesh_u08uv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.892586, 0, -0.450878, 0, 1, 0, 0.450878, 0, 0.892586, 0.000976941, 0.0147261, 0.000493488)
+mesh = SubResource("CylinderMesh_u08uv")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.957536, 0, -0.288313, 0, 1, 0, 0.288313, 0, 0.957536, -0.00084999, 0.0244556, 0.00282296)
+mesh = SubResource("CylinderMesh_u08uv")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.906256, 0, -0.422729, 0, 1, 0, 0.422729, 0, 0.906256, -0.00084999, 0.0342899, 0.00282296)
+mesh = SubResource("CylinderMesh_u08uv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0501884, 0.0155918, 0.0245964)
+shape = SubResource("BoxShape3D_k343l")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_028c2")]
+slot_data = SubResource("Resource_iq4sy")

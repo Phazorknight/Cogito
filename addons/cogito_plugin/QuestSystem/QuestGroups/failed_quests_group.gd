@@ -1,2 +1,0 @@
-extends CogitoQuestGroup
-class_name FailedQuestsGroup
