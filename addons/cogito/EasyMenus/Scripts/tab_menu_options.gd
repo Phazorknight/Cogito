@@ -2,7 +2,7 @@ extends Control
 class_name TabMenuOptions
 signal options_updated
 
-const HSliderWLabel = preload("res://COGITO/EasyMenus/Scripts/slider_w_labels.gd")
+const HSliderWLabel = preload("./slider_w_labels.gd")
 
 @onready var sfx_volume_slider : HSliderWLabel = $%SFXVolumeSlider
 @onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
@@ -86,15 +86,18 @@ func on_window_mode_selected(index: int) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 
+
 func refresh_render():
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
+
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
 	render_resolution = RESOLUTION_DICTIONARY.values()[index]
 	refresh_render()
 	get_window().size = render_resolution
+
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)

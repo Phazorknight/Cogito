@@ -3,6 +3,9 @@ extends Node
 
 var config = ConfigFile.new()
 
+@onready var sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
+@onready var music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
+
 # Loads settings from config file. Loads with standard values if settings not 
 # existing
 func load_settings():
@@ -11,14 +14,14 @@ func load_settings():
 	if err != OK:
 		return
 	
-	var sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
-	var music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
-	var sfx_volume = linear_to_db(config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1))
-	var music_volume = linear_to_db(config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1))
-	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 2)
-	#var fullscreen = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_key_name, false)
+	var sfx_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, 1)
+	var music_volume = config.get_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, 1)
+	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
+	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
+	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
+	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
 	var msaa_3d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_3d_key, 0)
 	
@@ -48,9 +51,11 @@ func load_settings():
 		
 	set_msaa("msaa_2d", msaa_2d)
 	set_msaa("msaa_3d", msaa_3d)
-	
+
+
 func _ready():
 	load_settings()
+
 
 func set_msaa(mode, index):
 	match index:

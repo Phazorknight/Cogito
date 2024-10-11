@@ -1,7 +1,6 @@
 class_name CogitoPlayerState
 extends Resource
 
-#var player_state_dir : String = "user://COGITO_player_state_"
 var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoSceneManager.cogito_player_state_prefix
 
 @export var version : int = 1

@@ -1,7 +1,7 @@
 extends Node
 
-const InputMapUpdater = preload("res://addons/cogito/EasyMenus/Scripts/input_map_updater.gd")
-const OptionsConstants = preload("res://addons/cogito/EasyMenus/Scripts/options_constants.gd")
+const InputMapUpdater = preload("./input_map_updater.gd")
+const OptionsConstants = preload("./options_constants.gd")
 
 @onready var ControllerEchoInputGenerator = $ControllerEchoInputGenerator
 @onready var startup_loader = $StartupLoader

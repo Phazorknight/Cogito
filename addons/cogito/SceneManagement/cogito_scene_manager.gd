@@ -12,6 +12,12 @@ signal fade_finished
 # Used to pass a screenshot to the player state when saved. This is created by the TabMenu/PauseMenu
 @export var _screenshot_to_save : Image
 
+#Variables & Signals for Player siting
+@export var _current_sittable_node : Node
+signal sit_requested(Node)
+signal stand_requested()
+signal seat_move_requested(Node)
+
 # Variables for scene state
 @export var _current_scene_name : String
 @export var _current_scene_path : String
@@ -153,6 +159,15 @@ func load_player_state(player, passed_slot:String):
 
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
+		player.try_crouch = _player_state.player_try_crouch
+		# important: ensures the player isn't crouching on game load, regardless
+		# of whether the option "Toggle Crouching" is set to OFF or ON
+		player.is_crouching = player.try_crouch
+		
+		## Loading player sitting state
+		_player_state.load_sitting_state(player) 
+		_player_state.load_collision_shapes(player)
+		_player_state.load_node_transforms(player)
 		
 		#Loading player interaction component state
 		var player_interaction_component_state = _player_state.interaction_component_state
@@ -202,6 +217,7 @@ func save_player_state(player, slot:String):
 	_player_state.player_current_scene_path = _current_scene_path
 	_player_state.player_position = player.global_position
 	_player_state.player_rotation = player.body.global_rotation
+	_player_state.player_try_crouch = player.try_crouch
 	
 	## New way of saving attributes:
 	_player_state.clear_saved_attribute_data()
@@ -215,6 +231,10 @@ func save_player_state(player, slot:String):
 		var attribute_data := Vector2(cur_value, max_value)
 		_player_state.add_player_attribute_to_state_data(attribute, attribute_data)
 	
+	## Save player sitting state
+	_player_state.save_sitting_state(player)
+	_player_state.save_collision_shapes(player)
+	_player_state.save_node_transforms(player)
 	
 	_player_state.clear_saved_currency_data()
 	for currency in player.player_currencies:
