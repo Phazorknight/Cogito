@@ -54,7 +54,7 @@ func quit():
 
 
 func _input(event):
-	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause")) and !game_menu.visible:
+	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and !game_menu.visible:
 		accept_event()
 		options_tab_menu.hide()
 		game_menu.show()

@@ -154,11 +154,11 @@ offset_top = 603.0
 offset_right = 600.0
 offset_bottom = 603.0
 script = ExtResource("13_4uenq")
-start_game_scene = "res://addons/cogito_plugin/DemoScenes/COGITO_3_Lobby.tscn"
+start_game_scene = "res://addons/cogito/DemoScenes/COGITO_3_Lobby.tscn"
 
 [node name="LegacyDemoSceneSwitcher" type="Node" parent="."]
 script = ExtResource("9_kfsif")
-start_game_scene = "res://addons/cogito_plugin/DemoScenes/COGITO_1_LegacyDemo.tscn"
+start_game_scene = "res://addons/cogito/DemoScenes/COGITO_1_LegacyDemo.tscn"
 
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainerA/DeleteSlot_A" to="ContentMain/GameMenu/VBoxContainer/HBoxContainerA/SaveSlot_A" method="_on_delete_slot_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainerB/DeleteSlot_B" to="ContentMain/GameMenu/VBoxContainer/HBoxContainerB/SaveSlot_B" method="_on_delete_slot_pressed"]
