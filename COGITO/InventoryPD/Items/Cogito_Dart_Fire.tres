@@ -9,6 +9,7 @@
 script = ExtResource("2_ujs5g")
 wieldable_scene = ExtResource("4_uut2u")
 no_reload = true
+hint_on_empty = ""
 charge_max = 1.0
 ammo_item_name = "Fire Dart"
 charge_current = 1.0

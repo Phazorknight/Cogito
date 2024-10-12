@@ -21,6 +21,9 @@ const POOL_SIZE := 50
 var projectile_pool := []
 var _last_index := -1
 
+var inventory_item_reference : WieldableItemPD
+
+
 func _ready() -> void:
 	# Here, we pre-instantiate `POOL_SIZE` bullets and store them in the `bullets` array.
 	for i in POOL_SIZE:
@@ -35,11 +38,17 @@ func get_projectile() -> Node3D:
 
 # This gets called by player interaction compoment when the wieldable is equipped and primary action is pressed
 func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool):
+	inventory_item_reference = _passed_item_reference
+	
 	if _is_released:
 		return
 	
 	# Not firing if animation player is playing. This enforces fire rate.
 	if animation_player.is_playing():
+		return
+	
+	if inventory_item_reference.charge_current <= 0: # Can't fire if empty + send hint.
+		inventory_item_reference.send_empty_hint()
 		return
 	
 	# Sound and animation
@@ -84,4 +93,3 @@ func reload():
 	animation_player.play(anim_reload)
 	audio_stream_player_3d.stream = sound_reload
 	audio_stream_player_3d.play()
-

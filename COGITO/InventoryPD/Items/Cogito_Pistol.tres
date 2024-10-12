@@ -9,6 +9,7 @@
 script = ExtResource("2_dk2he")
 wieldable_scene = ExtResource("4_f2ej1")
 no_reload = false
+hint_on_empty = "Out of bullets."
 charge_max = 10.0
 ammo_item_name = "Foam Bullets"
 charge_current = 10.0
