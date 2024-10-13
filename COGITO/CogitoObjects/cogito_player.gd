@@ -323,7 +323,10 @@ func _on_death():
 func _on_pause_movement():
 	if !is_movement_paused:
 		is_movement_paused = true
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		# Only show the mouse cursor if it's being used
+		# Also prevents mouse interaction interference while using gamepad
+		if InputHelper.device_index == -1:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _on_resume_movement():

@@ -114,11 +114,15 @@ size = Vector3(1.40192, 1.05004, 1.21932)
 [node name="chairDesk" type="RigidBody3D" node_paths=PackedStringArray("vehicle_node")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0202361, -0.543261, -0.168468)
 collision_layer = 3
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 max_contacts_reported = 6
 contact_monitor = true
 script = ExtResource("1_14400")
+rotation_speed = 0.2
 vehicle_node = NodePath(".")
 sit_area_behaviour = 2
+placement_on_leave = 2
 eject_on_fall = true
 horizontal_look_angle = 360.0
 sit_sound = ExtResource("2_tkltg")
