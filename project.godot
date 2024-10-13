@@ -25,7 +25,7 @@ Audio="*res://addons/quick_audio/./Audio.gd"
 CogitoMain="*res://addons/cogito/cogito_main.gd"
 CogitoSceneManager="*res://addons/cogito/SceneManagement/cogito_scene_manager.gd"
 CogitoQuestManager="*res://addons/cogito/QuestSystem/cogito_quest_manager.gd"
-MenuTemplateManager="*res://addons/cogito/EasyMenus/Scripts/menu_template_manager.gd"
+MenuTemplateManager="*res://addons/cogito/EasyMenus/Nodes/menu_template_manager.tscn"
 
 [display]
 

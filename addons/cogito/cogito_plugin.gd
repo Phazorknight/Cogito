@@ -9,7 +9,7 @@ func _enter_tree():
 	add_autoload_singleton("CogitoMain", "/cogito_main.gd")
 	add_autoload_singleton("CogitoSceneManager", "/SceneManagement/cogito_scene_manager.gd")
 	add_autoload_singleton("CogitoQuestManager", "/QuestSystem/cogito_quest_manager.gd")
-	add_autoload_singleton("MenuTemplateManager", "/EasyMenus/Scripts/menu_template_manager.gd")
+	add_autoload_singleton("MenuTemplateManager", "/EasyMenus/Nodes/menu_template_manager.tscn")
 	
 	main_panel_instance = MainPanel.instantiate()
 	
