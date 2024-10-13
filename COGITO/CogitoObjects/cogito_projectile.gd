@@ -13,6 +13,8 @@ var damage_amount : int = 0
 @export var sound_on_death : AudioStream
 ## Should the projectile stick to what it hits?
 @export var stick_on_impact : bool = false
+## Array of Scenes that will get spawned on parent position on death.
+@export var spawn_on_death : Array[PackedScene] = []
 
 func _ready():
 	add_to_group("interactable")
@@ -25,6 +27,7 @@ func _ready():
 
 func on_timeout():
 	die()
+
 
 ## Checking collision event for property tags.
 func _on_body_entered(collider: Node):
@@ -91,4 +94,11 @@ func deal_damage(collider: Node):
 func die():
 	if sound_on_death:
 		Audio.play_sound_3d(sound_on_death).global_position = global_position
+		
+	for scene in spawn_on_death:
+		if scene:
+			var spawned_object = scene.instantiate()
+			spawned_object.position = position
+			get_tree().current_scene.add_child(spawned_object)
+			
 	queue_free()

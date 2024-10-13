@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=27 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_player.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ev2xuamhfojm" path="res://COGITO/InventoryPD/Inventories/PlayerInventory.tres" id="2_iyhv4"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://COGITO/Components/Attributes/HealthAttribute.tscn" id="9_ky5mf"]
 [ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://COGITO/Components/interaction_raycast.tscn" id="10_2dndr"]
 [ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://COGITO/Assets/Animations/player_eyes.tres" id="10_tp6cj"]
+[ext_resource type="Script" path="res://COGITO/Scripts/wieldables_sway.gd" id="12_lr21i"]
 [ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="12_ug3wt"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="13_fyfhw"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://COGITO/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="14_opnk5"]
@@ -106,6 +107,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 4.46638e-06, 0, -4.46638e-06, 1, 0, 0, 0)
 
 [node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
+script = ExtResource("12_lr21i")
 
 [node name="SlidingTimer" type="Timer" parent="."]
 wait_time = 1.5
@@ -137,6 +139,7 @@ player = NodePath("..")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
+[connection signal="mouse_movement" from="." to="Body/Neck/Head/Wieldables" method="sway"]
 [connection signal="player_state_loaded" from="." to="." method="_on_player_state_loaded"]
 [connection signal="animation_finished" from="Body/Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
