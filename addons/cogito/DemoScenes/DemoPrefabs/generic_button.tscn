@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cs6raqlyejqul"]
 
-[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_button.gd" id="1_l32yq"]
-[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
-[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="5_dudfk"]
-[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="6_w5n86"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_button.gd" id="1_l32yq"]
+[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
+[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="5_dudfk"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="6_w5n86"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
 top_radius = 0.05
