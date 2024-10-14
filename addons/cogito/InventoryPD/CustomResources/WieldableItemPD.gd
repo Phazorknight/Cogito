@@ -10,7 +10,8 @@ signal charge_changed()
 @export var wieldable_data_icon : Texture2D
 ## Check this if your wieldable doesn't use reload (for example melee weapons)
 @export var no_reload : bool = false
-
+## Message to display when wieldable is empty (no ammo in clip/no charge). Leave empty if you don't want to show any message.
+@export var hint_on_empty: String
 ## The maximum charge of the item (this equals fully charged battery in a flashlight or magazine size in guns)
 @export var charge_max : float
 ## Name of the item this item uses as Ammo. Needs to match exactly.
@@ -80,13 +81,16 @@ func subtract(amount):
 	charge_current -= amount
 	if charge_current < 0:
 		charge_current = 0
-		player_interaction_component.send_hint(null, name + " is out of battery.")
 	
 	if is_being_wielded:
 		update_wieldable_data(player_interaction_component)
 	
 	charge_changed.emit()
-	
+
+func send_empty_hint():
+	if hint_on_empty:
+		player_interaction_component.send_hint(null, name + ": "+ hint_on_empty)
+
 
 func add(amount):
 	charge_current += amount

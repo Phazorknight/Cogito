@@ -9,6 +9,7 @@
 script = ExtResource("2_o1rdd")
 wieldable_scene = ExtResource("4_eksg8")
 no_reload = false
+hint_on_empty = "Out of ammo."
 charge_max = 100.0
 ammo_item_name = "Laser Ammo"
 charge_current = 100.0

@@ -10,6 +10,9 @@ signal player_state_loaded()
 ## Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
 signal toggled_interface(is_showing_ui:bool) 
 
+signal mouse_movement(relative_mouse_movement:Vector2)
+
+
 #region Variables
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
@@ -354,6 +357,8 @@ func _on_pause_menu_resume():
 
 func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
+		var look_movement: Vector2 = Vector2(0.0,0.0)
+		
 		#If players sitting & look marker is present, use sittable look handling
 		if is_sitting and CogitoSceneManager._current_sittable_node.look_marker_node:
 			handle_sitting_look(event)
@@ -363,12 +368,18 @@ func _input(event):
 				neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 			else:
 				body.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+				look_movement.x = -event.relative.x
 			
 			if INVERT_Y_AXIS:
 				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
+				look_movement.y = -event.relative.y
 			else:
 				head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+				look_movement.y = event.relative.y
 			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			
+		mouse_movement.emit(look_movement)
+		print("CogPlayer: mouse_movement relative= ", look_movement)
 
 		
 	# Checking Analog stick input for mouse look

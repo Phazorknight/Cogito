@@ -105,7 +105,7 @@ func toggle_on_off():
 	elif player_interaction_component.equipped_wieldable_item.charge_current > 0:
 		toggle_flashlight(true)
 	else:
-		player_interaction_component.send_hint(null, player_interaction_component.equipped_wieldable_item.name + " is out of battery.")
+		player_interaction_component.equipped_wieldable_item.send_empty_hint()
 
 # Function to set the flashlight state
 func toggle_flashlight(new_state: bool):

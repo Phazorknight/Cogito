@@ -176,10 +176,10 @@ func attempt_action_primary(is_released: bool):
 	if equipped_wieldable_node == null:
 		print("Nothing equipped, but is_wielding was true. This shouldn't happen!")
 		return
-	if equipped_wieldable_item.charge_current == 0:
-		send_hint(null, equipped_wieldable_item.name + " is out of " + equipped_wieldable_item.ammo_item_name)
-	else:
-		equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
+	#if equipped_wieldable_item.charge_current == 0:
+		#send_hint(null, equipped_wieldable_item.name + " is out of " + equipped_wieldable_item.ammo_item_name)
+	#else:
+	equipped_wieldable_node.action_primary(equipped_wieldable_item, is_released)
 
 
 func attempt_action_secondary(is_released: bool):

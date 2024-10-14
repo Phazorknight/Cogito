@@ -62,6 +62,12 @@ func _physics_process(_delta: float) -> void:
 func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool):
 	inventory_item_reference = _passed_item_reference
 	
+	if !_is_released and inventory_item_reference.charge_current <= 0: # Can't fire if empty + send hint.
+		inventory_item_reference.send_empty_hint()
+		return
+	if _is_released and inventory_item_reference.charge_current <= 0: # Can't fire if empty + don't send hint.
+		return
+	
 	if _is_released:
 		is_firing = false
 	else:

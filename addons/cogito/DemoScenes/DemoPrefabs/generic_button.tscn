@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cs6raqlyejqul"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_button.gd" id="1_l32yq"]
-[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
-[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="4_26rcl"]
-[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="5_dudfk"]
+[ext_resource type="Script" path="res://COGITO/CogitoObjects/cogito_button.gd" id="1_l32yq"]
+[ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://COGITO/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://COGITO/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
+[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://COGITO/Components/HitboxComponent.tscn" id="5_dudfk"]
+[ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://COGITO/Components/Properties/CogitoProperties.tscn" id="6_w5n86"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
 top_radius = 0.05
@@ -43,12 +43,10 @@ shape = SubResource("BoxShape3D_nti18")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_v8dn1")]
 
-[node name="HealthAttribute" parent="." instance=ExtResource("4_26rcl")]
-value_max = 1.0
-value_start = 1.0
-is_locked = true
+[node name="HitboxComponent" parent="." instance=ExtResource("5_dudfk")]
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_attribute") instance=ExtResource("5_dudfk")]
-health_attribute = NodePath("../HealthAttribute")
+[node name="CogitoProperties" parent="." instance=ExtResource("6_w5n86")]
+material_properties = 1
+burn_damage_amount = 1.0
 
-[connection signal="damage_taken" from="HealthAttribute" to="." method="on_damage_received"]
+[connection signal="damage_received" from="." to="." method="_on_damage_received"]
