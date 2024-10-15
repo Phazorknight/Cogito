@@ -29,9 +29,12 @@ tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
 
-[sub_resource type="Resource" id="Resource_uw6b5"]
+[sub_resource type="Resource" id="Resource_5g3s0"]
 resource_local_to_scene = true
 script = ExtResource("2_w4txe")
+grid = false
+starter_inventory = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+inventory_size = Vector2i(4, 1)
 inventory_slots = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_ntr4m"]
@@ -60,7 +63,7 @@ environment = SubResource("Environment_ai7l5")
 
 [node name="Player" parent="." instance=ExtResource("1_8f7tt")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.63987, 1.19987, 3.00969)
-inventory_data = SubResource("Resource_uw6b5")
+inventory_data = SubResource("Resource_5g3s0")
 step_height_camera_lerp = 1.5
 
 [node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
@@ -139,7 +142,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.39538, 0.273078, 6.10744)
 [node name="TransitionZone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.6, -6.2)
 script = ExtResource("7_34j8q")
-path_to_new_scene = "res://COGITO/DemoScenes/COGITO_1_LegacyDemo.tscn"
+path_to_new_scene = "res://addons/cogito/DemoScenes/COGITO_1_LegacyDemo.tscn"
 target_connector = "ConnectorA"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TransitionZone"]
