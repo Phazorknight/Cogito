@@ -3,8 +3,7 @@ extends Node3D
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal pressed()
 signal damage_received(damage_value:float)
-signal transaction_success
-signal transaction_failed
+
 
 @export_group("Cogito Button Settings")
 ## Sound that plays when pressed.
@@ -31,37 +30,24 @@ signal transaction_failed
 @export var objects_call_delay : float = 0
 
 
-@export_subgroup("Currency Interaction")
-##How much it costs to use this button, If set to 0 currency interaction will be ignored
-@export var currency_cost : int  = 0
-##Text that joins Press & Cost for Interaction 
-@export var currency_text_joiner : String = " | Cost: "
-##Hint that displays if player doesn't have enough currency to interact
-@export var not_enough_currency_hint : String
-##Name of the currency needed for this interaction to proceed - default is credits
-@export var currency_name : String = "credits"
-@export var currency_icon = "res://COGITO/Assets/Graphics/UiIcons/Ui_Icon_Currency.png"
-
-
-var icon_bbcode : String
 var has_been_used : bool = false
 var interaction_text : String 
 var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
+var currency_check : CurrencyCheck = null
 var cooldown : float
-var currency_text : String
-
 
 func _ready() -> void:
 	self.add_to_group("interactable")
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	cooldown = 0 #Enabling button to be pressed right away.
-	if currency_cost != 0: 
-		icon_bbcode = "[img width=16 height=16]" + currency_icon + "[/img]"
-		currency_text = currency_text_joiner + str(currency_cost)  + icon_bbcode
-	interaction_text = usable_interaction_text  + currency_text
+	currency_check = find_child("CurrencyCheck", true, true)
+	if currency_check:
+		interaction_text = usable_interaction_text + (currency_check.currency_text if currency_check.currency_cost != 0 else "")
+	else:
+		interaction_text = usable_interaction_text
 	object_state_updated.emit(interaction_text)
 	find_cogito_properties()
 
@@ -82,10 +68,12 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 		return
 		
 	player_interaction_component = _player_interaction_component
-	if currency_cost != 0:
-		if !check_for_currency():
-			player_interaction_component.send_hint(null, not_enough_currency_hint)
+	
+	if currency_check and currency_check.currency_cost != 0:
+		if not currency_check.check_for_currency(player_interaction_component.get_parent()):
+			player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
 			return
+	
 	if !allows_repeated_interaction and has_been_used:
 		player_interaction_component.send_hint(null, has_been_used_hint)
 		return
@@ -99,6 +87,7 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 func press():
 	pressed.emit()
 	Audio.play_sound_3d(press_sound).global_position = global_position
+	
 	if !allows_repeated_interaction:
 		has_been_used = true
 		interaction_text = unusable_interaction_text
@@ -132,27 +121,7 @@ func check_for_item() -> bool:
 	if item_hint != "":
 		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
-
-
-func check_for_currency() -> bool:
-	var found_currency
-	var player = player_interaction_component.get_parent()
-	for attribute in player.find_children("", "CogitoCurrency", false):
-		if attribute is CogitoCurrency:
-			if attribute.currency_name == currency_name:
-				found_currency = attribute
-			break
-
-	if found_currency.value_current >= currency_cost:
-		##Player has enough currency, apply transaction and return true
-		found_currency.value_current = found_currency.value_current-currency_cost
-		transaction_success.emit()
-		return true 
-	else:
-		##Player doesn't have enough currency, don't apply transaction and return false
-		transaction_failed.emit()
-		return false
-
+	
 
 func set_state():
 	if has_been_used:
