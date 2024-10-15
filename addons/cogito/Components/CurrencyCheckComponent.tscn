@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://6d6is2x1egew"]
+
+[ext_resource type="Script" path="res://addons/cogito/Components/CurrencyCheckComponent.gd" id="1_5ilxc"]
+
+[node name="CurrencyCheck" type="Node"]
+script = ExtResource("1_5ilxc")
+currency_cost = 5
+not_enough_currency_hint = "I can't afford it"

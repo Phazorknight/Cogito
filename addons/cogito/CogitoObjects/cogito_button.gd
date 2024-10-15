@@ -35,6 +35,7 @@ var interaction_text : String
 var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
+var currency_check : CurrencyCheck = null
 var cooldown : float
 
 func _ready() -> void:
@@ -42,13 +43,20 @@ func _ready() -> void:
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	cooldown = 0 #Enabling button to be pressed right away.
-	interaction_text = usable_interaction_text
+	currency_check = find_child("CurrencyCheck", true, true)
+	if currency_check:
+		interaction_text = usable_interaction_text + (currency_check.currency_text if currency_check.currency_cost != 0 else "")
+	else:
+		interaction_text = usable_interaction_text
 	object_state_updated.emit(interaction_text)
 	find_cogito_properties()
+
+
 func find_cogito_properties():
 	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
 	if property_nodes:
 		cogito_properties = property_nodes[0]
+
 
 func _physics_process(delta: float) -> void:
 	if cooldown > 0:
@@ -60,6 +68,12 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 		return
 		
 	player_interaction_component = _player_interaction_component
+	
+	if currency_check and currency_check.currency_cost != 0:
+		if not currency_check.check_for_currency(player_interaction_component.get_parent()):
+			player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
+			return
+	
 	if !allows_repeated_interaction and has_been_used:
 		player_interaction_component.send_hint(null, has_been_used_hint)
 		return
@@ -90,7 +104,7 @@ func press():
 			object.interact(player_interaction_component)
 
 
-func _on_damage_received():
+func _on_damage_received(damage):
 	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 
@@ -112,11 +126,13 @@ func check_for_item() -> bool:
 func set_state():
 	if has_been_used:
 		interaction_text = unusable_interaction_text
+	elif currency_check:
+		interaction_text = usable_interaction_text + (currency_check.currency_text if currency_check.currency_cost != 0 else "")
 	else:
 		interaction_text = usable_interaction_text
-
-	object_state_updated.emit(interaction_text)
 	
+	object_state_updated.emit(interaction_text)
+
 
 func save():
 	var state_dict = {
