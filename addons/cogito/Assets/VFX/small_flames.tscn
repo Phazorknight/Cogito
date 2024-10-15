@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://bw16ij33r272n"]
+
+[ext_resource type="Material" uid="uid://c71aysyxsuq0t" path="res://addons/cogito/Assets/VFX/Impacts/Materials/Mat_flare00.tres" id="1_q2s6m"]
+
+[sub_resource type="Gradient" id="Gradient_y2e31"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qaki8"]
+gradient = SubResource("Gradient_y2e31")
+
+[sub_resource type="Curve" id="Curve_wwomp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.07604, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_brv64"]
+curve = SubResource("Curve_wwomp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_12xom"]
+lifetime_randomness = 1.0
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 2
+emission_sphere_radius = 0.5
+angular_velocity_min = 0.5
+angular_velocity_max = 2.0
+gravity = Vector3(0, 2, 0)
+scale_min = 0.3
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_brv64")
+color = Color(5, 2, 1, 1)
+color_ramp = SubResource("GradientTexture1D_qaki8")
+hue_variation_max = 0.01
+
+[sub_resource type="QuadMesh" id="QuadMesh_h6fu1"]
+
+[node name="SmallFlames" type="GPUParticles3D"]
+material_override = ExtResource("1_q2s6m")
+amount = 14
+lifetime = 1.4
+randomness = 0.03
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_12xom")
+draw_pass_1 = SubResource("QuadMesh_h6fu1")

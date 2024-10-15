@@ -11,20 +11,21 @@ config_version=5
 [application]
 
 config/name="Cogito"
-run/main_scene="res://COGITO/DemoScenes/COGITO_0_MainMenu.tscn"
+run/main_scene="res://addons/cogito/DemoScenes/COGITO_0_MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=120
-boot_splash/image="res://COGITO/COGITO_icon.png"
+boot_splash/image="res://addons/cogito/COGITO_Card.png"
 boot_splash/fullsize=false
-config/icon="res://COGITO/COGITO_icon.png"
+config/icon="res://addons/cogito/COGITO_icon.png"
 
 [autoload]
 
-MenuTemplateManager="*res://COGITO/EasyMenus/Nodes/menu_template_manager.tscn"
 InputHelper="*res://addons/input_helper/input_helper.gd"
 Audio="*res://addons/quick_audio/./Audio.gd"
-CogitoSceneManager="*res://COGITO/SceneManagement/cogito_scene_manager.gd"
-CogitoQuestManager="*res://COGITO/QuestSystem/cogito_quest_manager.gd"
+CogitoMain="*res://addons/cogito/cogito_main.gd"
+CogitoSceneManager="*res://addons/cogito/SceneManagement/cogito_scene_manager.gd"
+CogitoQuestManager="*res://addons/cogito/QuestSystem/cogito_quest_manager.gd"
+MenuTemplateManager="*res://addons/cogito/EasyMenus/Nodes/menu_template_manager.tscn"
 
 [display]
 
@@ -36,15 +37,15 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
+enabled=PackedStringArray("res://addons/cogito/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
-"res://COGITO/Components/": "green",
-"res://COGITO/DemoScenes/": "orange",
-"res://COGITO/PackedScenes/": "blue",
-"res://COGITO/Scripts/": "gray"
+"res://addons/cogito/Components/": "green",
+"res://addons/cogito/DemoScenes/": "orange",
+"res://addons/cogito/PackedScenes/": "blue",
+"res://addons/cogito/Scripts/": "gray"
 }
 
 [importer_defaults]

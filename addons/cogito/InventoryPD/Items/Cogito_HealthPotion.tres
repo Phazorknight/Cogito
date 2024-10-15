@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ConsumableItemPD" load_steps=8 format=3 uid="uid://cpqxudfjtjw66"]
+
+[ext_resource type="Texture2D" uid="uid://d0so3oo1yk4kh" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Heart.png" id="1_5eqwj"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_d40ao"]
+[ext_resource type="Texture2D" uid="uid://bmg715kqyjb77" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoHealthPotion.png" id="1_net5f"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="3_4qsd3"]
+[ext_resource type="AudioStream" uid="uid://bna1nc66vw053" path="res://addons/cogito/Assets/Audio/Kenney/phaserUp5.ogg" id="4_41mfm"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="4_sr2jy"]
+
+[sub_resource type="Resource" id="Resource_e0gov"]
+script = ExtResource("1_d40ao")
+attribute_name = ""
+attribute_change_amount = 0.0
+value_to_change = 0
+
+[resource]
+script = ExtResource("3_4qsd3")
+attribute_name = "health"
+attribute_change_amount = 10.0
+value_to_change = 0
+consumable_effects = Array[ExtResource("1_d40ao")]([SubResource("Resource_e0gov")])
+name = "Health Potion"
+description = "Tastes better than it looks."
+icon = ExtResource("1_net5f")
+is_stackable = true
+is_droppable = true
+stack_size = 5
+drop_scene = "res://COGITO/PackedScenes/Pickups/pickup_health_potion.tscn"
+hint_icon_on_use = ExtResource("1_5eqwj")
+hint_text_on_use = "You've gained 10 health."
+item_size = Vector2(1, 1)
+sound_use = ExtResource("4_41mfm")
+sound_pickup = ExtResource("4_sr2jy")

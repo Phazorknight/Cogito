@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="CombinableItemPD" load_steps=9 format=3 uid="uid://1sito351mi08"]
+
+[ext_resource type="Texture2D" uid="uid://bcabonpdkte7d" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_DiamondKey_B.png" id="1_gdixu"]
+[ext_resource type="Texture2D" uid="uid://bttj6m78b6odm" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Cog.png" id="1_txwkg"]
+[ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://addons/cogito/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="3_pk5ng"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_ki7lq"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="5_3fxls"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="6_de5x0"]
+[ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="7_m8rd7"]
+
+[sub_resource type="Resource" id="Resource_xp6cd"]
+resource_local_to_scene = true
+script = ExtResource("4_ki7lq")
+inventory_item = ExtResource("3_pk5ng")
+quantity = 1
+origin_index = -1
+
+[resource]
+script = ExtResource("5_3fxls")
+target_item_combine = "Diamond Half A"
+resulting_item = SubResource("Resource_xp6cd")
+name = "Diamond Half B"
+description = "Looks incomplete. Maybe I can find the rest of it?"
+icon = ExtResource("1_gdixu")
+is_stackable = false
+is_droppable = true
+stack_size = 0
+drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_diamond_key_b.tscn"
+hint_icon_on_use = ExtResource("1_txwkg")
+hint_text_on_use = "Can't be used by itself."
+item_size = Vector2(1, 1)
+sound_use = ExtResource("7_m8rd7")
+sound_pickup = ExtResource("6_de5x0")

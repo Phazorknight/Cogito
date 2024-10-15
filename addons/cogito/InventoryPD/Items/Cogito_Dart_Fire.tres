@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://r1q0s5gopc0u"]
+
+[ext_resource type="Texture2D" uid="uid://be0yg6a74f2ha" path="res://addons/cogito/Assets/Graphics/ItemIcons/Dart_Fire.png" id="1_w1vsy"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_ujs5g"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_0cghm"]
+[ext_resource type="PackedScene" uid="uid://uvmb36mlw8ea" path="res://addons/cogito/Wieldables/throw_dart_fire.tscn" id="4_lhyfl"]
+
+[resource]
+script = ExtResource("2_ujs5g")
+wieldable_scene = ExtResource("4_lhyfl")
+no_reload = true
+hint_on_empty = ""
+charge_max = 1.0
+ammo_item_name = "Fire Dart"
+charge_current = 1.0
+wieldable_range = 10.0
+wieldable_damage = 1.0
+name = "Fire Dart"
+description = "Who needs matches if you got these."
+icon = ExtResource("1_w1vsy")
+is_stackable = true
+is_droppable = true
+stack_size = 5
+drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_dart_fire.tscn"
+hint_text_on_use = ""
+item_size = Vector2(1, 1)
+sound_pickup = ExtResource("3_0cghm")

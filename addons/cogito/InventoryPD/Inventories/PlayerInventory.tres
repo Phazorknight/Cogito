@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CogitoInventory" load_steps=2 format=3 uid="uid://ev2xuamhfojm"]
+
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="1_vgg6i"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_vgg6i")
+grid = true
+starter_inventory = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+inventory_size = Vector2i(5, 3)
+inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

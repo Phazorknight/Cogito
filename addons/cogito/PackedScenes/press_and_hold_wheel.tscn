@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnygtkw3tvet6"]
+
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="1_lrgpg"]
+[ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://addons/cogito/Components/Interactions/HoldInteraction.tscn" id="2_3ajd8"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_yqbba"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.1
+radial_segments = 6
+rings = 1
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qspks"]
+points = PackedVector3Array(0.259808, 0.05, 0.149941, 0, 0.05, 0.3, 0.259808, -0.05, 0.149941, 0.259808, 0.05, -0.150059, 0, -0.05, 0.3, -0.259808, 0.05, 0.149941, 0.259808, -0.05, -0.150059, 0, 0.05, -0.3, -0.259808, -0.05, 0.149941, -0.259808, 0.05, -0.15, 0, -0.05, -0.3, -0.259808, -0.05, -0.15)
+
+[node name="TurnWheel" type="AnimatableBody3D"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -34.7594, 0.763037, 7.5)
+collision_layer = 3
+script = ExtResource("1_lrgpg")
+rotation_axis = Vector3(0, 1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_yqbba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_qspks")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -20.0
+bus = &"SFX"
+
+[node name="HoldInteraction" parent="." instance=ExtResource("2_3ajd8")]

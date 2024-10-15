@@ -1,0 +1,145 @@
+[gd_scene load_steps=17 format=3 uid="uid://bdab2cuy8hue6"]
+
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_sittable.gd" id="1_ljpjm"]
+[ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://addons/cogito/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="2_g611i"]
+[ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://addons/cogito/Components/ImpactSounds.tscn" id="3_4okg1"]
+[ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="4_oxytt"]
+[ext_resource type="Material" uid="uid://cprws42ycnkgk" path="res://addons/cogito/Assets/Materials/Lamp_Shade.tres" id="5_cs71e"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="6_bpx36"]
+[ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://addons/cogito/Assets/Audio/Kenney/cloth2.ogg" id="7_sy63g"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_w77fs"]
+material = ExtResource("4_oxytt")
+size = Vector3(0.4, 0.05, 0.6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gkghl"]
+data = PackedVector3Array(-0.2, 0.05, 0.3, 0.2, 0.05, 0.3, -0.2, -0.05, 0.3, 0.2, 0.05, 0.3, 0.2, -0.05, 0.3, -0.2, -0.05, 0.3, 0.2, 0.05, -0.3, -0.2, 0.05, -0.3, 0.2, -0.05, -0.3, -0.2, 0.05, -0.3, -0.2, -0.05, -0.3, 0.2, -0.05, -0.3, 0.2, 0.05, 0.3, 0.2, 0.05, -0.3, 0.2, -0.05, 0.3, 0.2, 0.05, -0.3, 0.2, -0.05, -0.3, 0.2, -0.05, 0.3, -0.2, 0.05, -0.3, -0.2, 0.05, 0.3, -0.2, -0.05, -0.3, -0.2, 0.05, 0.3, -0.2, -0.05, 0.3, -0.2, -0.05, -0.3, 0.2, 0.05, 0.3, -0.2, 0.05, 0.3, 0.2, 0.05, -0.3, -0.2, 0.05, 0.3, -0.2, 0.05, -0.3, 0.2, 0.05, -0.3, -0.2, -0.05, 0.3, 0.2, -0.05, 0.3, -0.2, -0.05, -0.3, 0.2, -0.05, 0.3, 0.2, -0.05, -0.3, -0.2, -0.05, -0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dha7n"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ik2aq"]
+material = ExtResource("5_cs71e")
+top_radius = 0.01
+bottom_radius = 0.01
+height = 1.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t1kkb"]
+size = Vector3(1.40192, 1.05004, 1.21932)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j34nj"]
+material = ExtResource("2_g611i")
+size = Vector3(0.15, 0.15, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_j6idh"]
+data = PackedVector3Array(-0.075, 0.075, 1, 0.075, 0.075, 1, -0.075, -0.075, 1, 0.075, 0.075, 1, 0.075, -0.075, 1, -0.075, -0.075, 1, 0.075, 0.075, -1, -0.075, 0.075, -1, 0.075, -0.075, -1, -0.075, 0.075, -1, -0.075, -0.075, -1, 0.075, -0.075, -1, 0.075, 0.075, 1, 0.075, 0.075, -1, 0.075, -0.075, 1, 0.075, 0.075, -1, 0.075, -0.075, -1, 0.075, -0.075, 1, -0.075, 0.075, -1, -0.075, 0.075, 1, -0.075, -0.075, -1, -0.075, 0.075, 1, -0.075, -0.075, 1, -0.075, -0.075, -1, 0.075, 0.075, 1, -0.075, 0.075, 1, 0.075, 0.075, -1, -0.075, 0.075, 1, -0.075, 0.075, -1, 0.075, 0.075, -1, -0.075, -0.075, 1, 0.075, -0.075, 1, -0.075, -0.075, -1, 0.075, -0.075, 1, 0.075, -0.075, -1, -0.075, -0.075, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ab4b1"]
+data = PackedVector3Array(-0.075, 0.075, 1, 0.075, 0.075, 1, -0.075, -0.075, 1, 0.075, 0.075, 1, 0.075, -0.075, 1, -0.075, -0.075, 1, 0.075, 0.075, -1, -0.075, 0.075, -1, 0.075, -0.075, -1, -0.075, 0.075, -1, -0.075, -0.075, -1, 0.075, -0.075, -1, 0.075, 0.075, 1, 0.075, 0.075, -1, 0.075, -0.075, 1, 0.075, 0.075, -1, 0.075, -0.075, -1, 0.075, -0.075, 1, -0.075, 0.075, -1, -0.075, 0.075, 1, -0.075, -0.075, -1, -0.075, 0.075, 1, -0.075, -0.075, 1, -0.075, -0.075, -1, 0.075, 0.075, 1, -0.075, 0.075, 1, 0.075, 0.075, -1, -0.075, 0.075, 1, -0.075, 0.075, -1, 0.075, 0.075, -1, -0.075, -0.075, 1, 0.075, -0.075, 1, -0.075, -0.075, -1, 0.075, -0.075, 1, 0.075, -0.075, -1, -0.075, -0.075, -1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_c3i7q"]
+data = PackedVector3Array(-0.075, 0.075, 1, 0.075, 0.075, 1, -0.075, -0.075, 1, 0.075, 0.075, 1, 0.075, -0.075, 1, -0.075, -0.075, 1, 0.075, 0.075, -1, -0.075, 0.075, -1, 0.075, -0.075, -1, -0.075, 0.075, -1, -0.075, -0.075, -1, 0.075, -0.075, -1, 0.075, 0.075, 1, 0.075, 0.075, -1, 0.075, -0.075, 1, 0.075, 0.075, -1, 0.075, -0.075, -1, 0.075, -0.075, 1, -0.075, 0.075, -1, -0.075, 0.075, 1, -0.075, -0.075, -1, -0.075, 0.075, 1, -0.075, -0.075, 1, -0.075, -0.075, -1, 0.075, 0.075, 1, -0.075, 0.075, 1, 0.075, 0.075, -1, -0.075, 0.075, 1, -0.075, 0.075, -1, 0.075, 0.075, -1, -0.075, -0.075, 1, 0.075, -0.075, 1, -0.075, -0.075, -1, 0.075, -0.075, 1, 0.075, -0.075, -1, -0.075, -0.075, -1)
+
+[node name="Swing" type="Node3D"]
+
+[node name="Swing" type="HingeJoint3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2.13976, 0)
+node_a = NodePath("swing")
+node_b = NodePath("../frame/MeshInstance3D/StaticBody3D")
+angular_limit/enable = true
+
+[node name="swing" type="RigidBody3D" parent="Swing" node_paths=PackedStringArray("enable_on_sit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.36643, 0)
+script = ExtResource("1_ljpjm")
+physics_sittable = true
+sit_area_behaviour = 2
+vertical_look_angle = 120.0
+sit_position_node_path = NodePath("Sit Marker")
+look_marker_node_path = NodePath("Look Marker")
+sit_area_node_path = NodePath("sit_area")
+leave_node_path = NodePath("Leave Marker")
+enable_on_sit = NodePath("SitCollisionShape3D")
+
+[node name="ImpactSounds" parent="Swing/swing" instance=ExtResource("3_4okg1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0063231, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Swing/swing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0063231, 0)
+mesh = SubResource("BoxMesh_w77fs")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Swing/swing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0063231, 0)
+shape = SubResource("ConcavePolygonShape3D_gkghl")
+
+[node name="SitCollisionShape3D" type="CollisionShape3D" parent="Swing/swing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49618, 0)
+shape = SubResource("BoxShape3D_dha7n")
+disabled = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Swing/swing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12743e-08, 0.680656, -0.257927)
+mesh = SubResource("CylinderMesh_ik2aq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Swing/swing"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13907e-08, 0.680656, 0.260589)
+mesh = SubResource("CylinderMesh_ik2aq")
+
+[node name="BasicInteraction" parent="Swing/swing" instance=ExtResource("6_bpx36")]
+transform = Transform3D(-0.00612593, 0, 0.999981, 0, 1, 0, -0.999981, 0, -0.00612593, 0.0534464, 0.250951, 0.202905)
+interaction_text = "Sit"
+
+[node name="Sit Marker" type="Marker3D" parent="Swing/swing"]
+transform = Transform3D(0.037725, 0, -0.999288, 0, 1, 0, 0.999288, 0, 0.037725, 0, 0.412119, 0)
+
+[node name="Look Marker" type="Marker3D" parent="Swing/swing"]
+transform = Transform3D(0.037725, 0, -0.999288, 0, 1, 0, 0.999288, 0, 0.037725, -0.421707, 0.394208, 0.0223105)
+
+[node name="Leave Marker" type="Marker3D" parent="Swing/swing"]
+transform = Transform3D(0.037725, 0, -0.999288, 0, 1, 0, 0.999288, 0, 0.037725, -0.686881, 0.432847, 0.625083)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Swing/swing"]
+transform = Transform3D(0.037725, 0, -0.999288, 0, 1, 0, 0.999288, 0, 0.037725, 0.52496, 0.108153, -0.00525069)
+stream = ExtResource("7_sy63g")
+volume_db = -35.0
+pitch_scale = 0.5
+bus = &"SFX"
+
+[node name="sit_area" type="Area3D" parent="Swing/swing"]
+transform = Transform3D(0.037725, 0, -0.999288, 0, 1, 0, 0.999288, 0, 0.037725, 0.522945, 0.108153, -0.088229)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Swing/swing/sit_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0179863, -0.188456, 0.380226)
+shape = SubResource("BoxShape3D_t1kkb")
+
+[node name="frame" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.70968e-09, 0.154058, 0.0391129)
+mesh = SubResource("BoxMesh_j34nj")
+skeleton = NodePath("../../Swing")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="frame/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="frame/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_j6idh")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="frame"]
+transform = Transform3D(1, 4.37113e-08, -4.36237e-08, -4.37113e-08, 0.00200708, -0.999998, -4.36237e-08, 0.999998, 0.00200708, -3.86509e-08, -0.927795, -0.884229)
+mesh = SubResource("BoxMesh_j34nj")
+skeleton = NodePath("../../Swing")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="frame/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="frame/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ab4b1")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="frame"]
+transform = Transform3D(1, 4.37113e-08, -4.36237e-08, -4.37113e-08, 0.00200708, -0.999998, -4.36237e-08, 0.999998, 0.00200708, 4.20398e-08, -0.927795, 0.961758)
+mesh = SubResource("BoxMesh_j34nj")
+skeleton = NodePath("../../Swing")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="frame/MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="frame/MeshInstance3D3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_c3i7q")

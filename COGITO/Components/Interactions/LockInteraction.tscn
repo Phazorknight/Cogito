@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbt5twbnrlcfj"]
-
-[ext_resource type="Script" path="res://COGITO/Components/Interactions/LockInteraction.gd" id="3_3fqsx"]
-
-[node name="LockInteraction" type="Node3D"]
-script = ExtResource("3_3fqsx")
-input_map_action = "interact2"
-interaction_text = "Unlock"

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bncvwxye2x1uq"]
+
+[ext_resource type="Texture2D" uid="uid://bdm400hlsqfgf" path="res://addons/cogito/Assets/Textures/Prototype Textures/PNG/Orange/texture_01.png" id="1_togyv"]
+
+[resource]
+albedo_color = Color(0.588235, 0.588235, 0.588235, 1)
+albedo_texture = ExtResource("1_togyv")
+uv1_triplanar = true

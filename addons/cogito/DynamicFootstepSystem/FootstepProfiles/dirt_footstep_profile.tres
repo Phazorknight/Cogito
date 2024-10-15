@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=5 format=3 uid="uid://dbmjsd7o6tdw6"]
+
+[ext_resource type="AudioStream" uid="uid://br82llud7e4qb" path="res://addons/cogito/DynamicFootstepSystem/Assets/Audio/Dirt/footstep_dirt-01.ogg" id="1_2n6gm"]
+[ext_resource type="AudioStream" uid="uid://dxe6p2fo1we4k" path="res://addons/cogito/DynamicFootstepSystem/Assets/Audio/Dirt/footstep_dirt-02.ogg" id="2_hfcyo"]
+[ext_resource type="AudioStream" uid="uid://bjeat5hnib5gl" path="res://addons/cogito/DynamicFootstepSystem/Assets/Audio/Dirt/footstep_dirt-03.ogg" id="3_4gnbm"]
+[ext_resource type="AudioStream" uid="uid://c7h4uvjoo0ely" path="res://addons/cogito/DynamicFootstepSystem/Assets/Audio/Dirt/footstep_dirt-04.ogg" id="4_cskor"]
+
+[resource]
+streams_count = 4
+stream_0/stream = ExtResource("1_2n6gm")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_hfcyo")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_4gnbm")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_cskor")
+stream_3/weight = 1.0

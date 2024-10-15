@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://tuqnu6aooyge"]
+
+[ext_resource type="Texture2D" uid="uid://c7blnmo6r1o5v" path="res://addons/cogito/Assets/VFX/Impacts/Textures/spark_05.png" id="1_fkwy1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4ot1"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_fkwy1")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_hd82b"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_orws8"]
+curve = SubResource("Curve_hd82b")
+
+[sub_resource type="Gradient" id="Gradient_y2e31"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qaki8"]
+gradient = SubResource("Gradient_y2e31")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ru654"]
+lifetime_randomness = 1.0
+emission_shape_scale = Vector3(0.8, 0.8, 0.8)
+emission_shape = 2
+emission_sphere_radius = 0.5
+angle_min = -90.0
+angle_max = 90.0
+spread = 180.0
+angular_velocity_min = 0.5
+angular_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 1.5
+color = Color(1, 1, 0.529412, 1)
+color_ramp = SubResource("GradientTexture1D_qaki8")
+alpha_curve = SubResource("CurveTexture_orws8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_h6fu1"]
+
+[node name="Electricity" type="GPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_a4ot1")
+amount = 13
+lifetime = 1.4
+randomness = 0.03
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_ru654")
+draw_pass_1 = SubResource("QuadMesh_h6fu1")
