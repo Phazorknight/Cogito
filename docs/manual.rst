@@ -30,7 +30,7 @@ The controls are currently not rebindable in-game, but you can adjust them to yo
 
 Cogito Player Packed Scene
 --------------------------
-You can find a pre-setup packed scene at ``/COGITO/PackedScenes/cogito_player.tscn``. It is pre-configured to suit most needs with little tweaking. This is all you need to add to a scene to get it to run via F6.
+You can find a pre-setup packed scene at ``/addons/cogito/PackedScenes/cogito_player.tscn``. It is pre-configured to suit most needs with little tweaking. This is all you need to add to a scene to get it to run via F6.
 If you look inside the packed scene you will find several components for the various systems of COGITO.
 
 
@@ -674,3 +674,11 @@ This InteractionComponent is made to be used with Nagi's Dialogue Nodes add-on f
 You need to have the add-on installed and activated for the component to work.
 To use it, open ``DialogueNodesInteraction.gd`` and un-comment the code to activate the script.
 Afterwards you can attach the component to any Cogito object and reference a dialogue resource, which will get started when interacting.
+
+
+Dialogic Component
+------------------------
+This InteractionComponent is made to be used with the Dialogic add-on for Godot 4.
+You need to have the add-on installed and activated for the component to work.
+To use it, open ``DialogicInteraction.gd`` and un-comment the code to activate the script.
+Afterwards you can attach the component to any Cogito object and reference a dialogic timeline, which will get started when interacting.

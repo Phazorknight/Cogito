@@ -50,10 +50,10 @@ Contributors
 * `pcbeard <https://github.com/pcbeard>`_: Performance tweaks and bug fixes.
 * `FailSpy <https://github.com/FailSpy>`_: improved input handling as well as UI and Player Controller quality-of-life fixes.
 * `kk1201 <https://github.com/kk1201>`_: improving Lightzone component.
-  `aronand <https://github.com/aronand>`_: improvements to Player Interaction system
-  `PeterD23 <https://github.com/PeterD23>`_: added Grid Inventory
-  `niefia <https://github.com/niefia>`_: improvements to audio, physics interactions and more
-  `mrezai <https://github.com/mrezai>`_: improvements and bugfixes to scene transitions, wieldables, player physics and raycasts
+* `aronand <https://github.com/aronand>`_: improvements to Player Interaction system
+* `PeterD23 <https://github.com/PeterD23>`_: added Grid Inventory
+* `niefia <https://github.com/niefia>`_: added Sitting feature, improvements to enemy behavior, interaction components, audio, physics and more
+* `mrezai <https://github.com/mrezai>`_: improvements and bugfixes to scene transitions, wieldables, player physics and raycasts
   
 
 |
@@ -90,7 +90,7 @@ Credits
 MIT License
 -----------
 
-Copyright © 2024 Phazorknight
+Copyright © 2024 Phazorknight + Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
