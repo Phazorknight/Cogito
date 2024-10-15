@@ -41,8 +41,12 @@ centered = false
 frame = 6
 action_name = "interact"
 
-[node name="InteractionText" type="Label" parent="HBoxContainer"]
+[node name="InteractionText" type="RichTextLabel" parent="HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_bet8p")
 theme_type_variation = &"PromptLabel"
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
 text = "Interact"
+fit_content = true
+autowrap_mode = 0

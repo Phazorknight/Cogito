@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs6raqlyejqul"]
+[gd_scene load_steps=11 format=3 uid="uid://cs6raqlyejqul"]
 
 [ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_button.gd" id="1_l32yq"]
 [ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="2_awyad"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="3_v8dn1"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="5_dudfk"]
+[ext_resource type="PackedScene" uid="uid://6d6is2x1egew" path="res://addons/cogito/Components/CurrencyCheckComponent.tscn" id="6_lhou4"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="6_w5n86"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_clo4d"]
@@ -48,5 +49,7 @@ shape = SubResource("BoxShape3D_nti18")
 [node name="CogitoProperties" parent="." instance=ExtResource("6_w5n86")]
 material_properties = 1
 burn_damage_amount = 1.0
+
+[node name="CurrencyCheck" parent="." instance=ExtResource("6_lhou4")]
 
 [connection signal="damage_received" from="." to="." method="_on_damage_received"]
