@@ -126,11 +126,13 @@ func check_for_item() -> bool:
 func set_state():
 	if has_been_used:
 		interaction_text = unusable_interaction_text
+	elif currency_check:
+		interaction_text = usable_interaction_text + (currency_check.currency_text if currency_check.currency_cost != 0 else "")
 	else:
 		interaction_text = usable_interaction_text
-
-	object_state_updated.emit(interaction_text)
 	
+	object_state_updated.emit(interaction_text)
+
 
 func save():
 	var state_dict = {
