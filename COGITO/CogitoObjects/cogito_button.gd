@@ -16,6 +16,8 @@ signal damage_received(damage_value:float)
 @export var press_cooldown_time : float
 ## Hint that displays after this has been used.
 @export var has_been_used_hint : String
+##Hint that displays if player doesn't have enough currency to interact
+@export var not_enough_currency_hint : String
 ## Prompt text when button has been pressed and can't be used repeatedly.
 @export var unusable_interaction_text : String = "Unavailable"
 ## Check this if player needs to have an item in the inventory to switch.
@@ -24,6 +26,13 @@ signal damage_received(damage_value:float)
 @export var required_item : InventoryItemPD
 ## Hint that gets displayed if the switch requires an item that the player currently doesn't have.
 @export var item_hint : String
+
+##How much it costs to use this button
+@export var currency_cost : int  = 0
+
+var currency_text : String
+##Text that joins Press & Cost for Interaction 
+@export var currency_text_joiner : String = " | Cost: "
 
 ## Nodes that will have their interact function called when this switch is used.
 @export var objects_call_interact : Array[NodePath]
@@ -42,7 +51,9 @@ func _ready() -> void:
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	cooldown = 0 #Enabling button to be pressed right away.
-	interaction_text = usable_interaction_text
+	if currency_cost != 0: 
+		currency_text = currency_text_joiner + str(currency_cost)
+	interaction_text = usable_interaction_text  + currency_text
 	object_state_updated.emit(interaction_text)
 	find_cogito_properties()
 func find_cogito_properties():
@@ -60,6 +71,9 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 		return
 		
 	player_interaction_component = _player_interaction_component
+	if !check_for_currency():
+		player_interaction_component.send_hint(null, not_enough_currency_hint)
+		return
 	if !allows_repeated_interaction and has_been_used:
 		player_interaction_component.send_hint(null, has_been_used_hint)
 		return
@@ -73,7 +87,6 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 func press():
 	pressed.emit()
 	Audio.play_sound_3d(press_sound).global_position = global_position
-	
 	if !allows_repeated_interaction:
 		has_been_used = true
 		interaction_text = unusable_interaction_text
@@ -107,6 +120,22 @@ func check_for_item() -> bool:
 	if item_hint != "":
 		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
+
+func check_for_currency() -> bool:
+	var found_currency
+	var player = player_interaction_component.get_parent()
+	for attribute in player.find_children("", "CogitoCurrency", false):
+		if attribute is CogitoCurrency:
+			found_currency = attribute
+			break
+	
+	if found_currency.value_current >= currency_cost:
+		##Player has enough currency, apply transaction and return true
+		found_currency.value_current = found_currency.value_current-currency_cost
+		return true 
+	else:
+		##Player doesn't have enough currency, don't apply transaction and return false
+		return false
 	
 
 func set_state():

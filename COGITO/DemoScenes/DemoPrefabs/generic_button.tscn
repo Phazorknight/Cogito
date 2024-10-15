@@ -28,6 +28,7 @@ collision_layer = 3
 script = ExtResource("1_l32yq")
 press_sound = ExtResource("2_awyad")
 press_cooldown_time = 1.0
+not_enough_currency_hint = "I can't afford it"
 
 [node name="ButtonMesh_off" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_clo4d")
