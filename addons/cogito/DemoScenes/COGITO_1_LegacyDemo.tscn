@@ -354,7 +354,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_fmb0d"]
+[sub_resource type="Resource" id="Resource_o0bgl"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 grid = true
@@ -1634,7 +1634,7 @@ spawn_on_death = Array[PackedScene]([])
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
-inventory_data = SubResource("Resource_fmb0d")
+inventory_data = SubResource("Resource_o0bgl")
 step_height_camera_lerp = 1.5
 
 [node name="Ladder" parent="." instance=ExtResource("41_q27ev")]

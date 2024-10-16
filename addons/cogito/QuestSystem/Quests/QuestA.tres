@@ -1,6 +1,9 @@
-[gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://yb7k8evveqdp"]
+[gd_resource type="Resource" script_class="CogitoQuest" load_steps=5 format=3 uid="uid://yb7k8evveqdp"]
 
+[ext_resource type="AudioStream" uid="uid://b88d1i6sdt33e" path="res://addons/cogito/Assets/Audio/Kenney/VoiceFemale/mission_completed.ogg" id="1_cbdma"]
 [ext_resource type="Script" path="res://addons/cogito/QuestSystem/CustomResources/cogito_quest.gd" id="1_t4vbj"]
+[ext_resource type="AudioStream" uid="uid://dk2oy5fliyxur" path="res://addons/cogito/Assets/Audio/Kenney/VoiceFemale/mission_failed.ogg" id="2_s4ily"]
+[ext_resource type="AudioStream" uid="uid://c02tkljgvmiaa" path="res://addons/cogito/Assets/Audio/Kenney/VoiceFemale/ready.ogg" id="3_titwm"]
 
 [resource]
 script = ExtResource("1_t4vbj")
@@ -12,3 +15,6 @@ quest_description_completed = "You completed this quest."
 quest_description_failed = "You failed this quest."
 quest_counter_current = 0
 quest_counter_goal = 0
+audio_on_start = ExtResource("3_titwm")
+audio_on_complete = ExtResource("1_cbdma")
+audio_on_fail = ExtResource("2_s4ily")

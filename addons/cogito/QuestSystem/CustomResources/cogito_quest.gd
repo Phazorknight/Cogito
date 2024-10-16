@@ -16,6 +16,12 @@ class_name CogitoQuest
 @export var quest_counter_current : int = 0
 @export var quest_counter_goal : int
 
+
+@export_group("Quest Audio")
+@export var audio_on_start: AudioStream
+@export var audio_on_complete: AudioStream
+@export var audio_on_fail: AudioStream
+
 var quest_description : String
 
 var quest_completed : bool = false:
@@ -33,6 +39,8 @@ var quest_counter : int:
 
 
 func start():
+	if audio_on_start:
+		Audio.play_sound(audio_on_start)
 	quest_description = quest_description_active
 
 
@@ -41,8 +49,12 @@ func update() -> void:
 
 
 func complete():
+	if audio_on_complete:
+		Audio.play_sound(audio_on_complete)
 	quest_description = quest_description_completed
 	
 
 func failed():
+	if audio_on_fail:
+		Audio.play_sound(audio_on_fail)
 	quest_description = quest_description_failed
