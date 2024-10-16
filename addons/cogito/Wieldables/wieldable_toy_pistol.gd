@@ -69,6 +69,7 @@ func action_primary(_passed_item_reference : InventoryItemPD, _is_released: bool
 	Projectile.global_transform.basis = bullet_point.global_transform.basis
 	Projectile.damage_amount = _passed_item_reference.wieldable_damage
 	Projectile.set_linear_velocity(Direction * projectile_velocity)
+	Projectile.Direction = Direction
 	Projectile.reparent(get_tree().get_current_scene())
 
 

@@ -54,5 +54,6 @@ func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 func _on_body_entered(collider):
 	if collider.has_signal("damage_received"):
 		var hit_position = collider.global_transform.origin
-		var bullet_direction = (collider.global_transform.origin - CogitoSceneManager._current_player_node.get_global_transform().origin).normalized() ##This is hacky TODO needs to be fixed for Multiplayer support
+		var player = player_interaction_component.get_parent()
+		var bullet_direction = (collider.global_transform.origin - player.get_global_transform().origin).normalized()
 		collider.damage_received.emit(item_reference.wieldable_damage,bullet_direction,hit_position)

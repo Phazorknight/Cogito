@@ -16,6 +16,8 @@ var damage_amount : int = 0
 ## Array of Scenes that will get spawned on parent position on death.
 @export var spawn_on_death : Array[PackedScene] = []
 
+var Direction
+
 func _ready():
 	add_to_group("interactable")
 	self.add_to_group("Persist") #Adding object to group for persistence
@@ -88,7 +90,9 @@ func stick_to_object(collider: Node):
 	#self.angular_velocity = Vector3.ZERO
 
 func deal_damage(collider: Node,bullet_direction,bullet_position):
-	print(self.name, ": dealing damage amount ", damage_amount, " on collider ", collider.name)
+	bullet_direction = Direction
+	print(self.name, ": dealing damage amount ", damage_amount, " on collider ", collider.name, " at ",bullet_position, " in direction ", Direction )
+
 	collider.damage_received.emit(damage_amount,bullet_direction,bullet_position)
 	if destroy_on_impact:
 		die()
