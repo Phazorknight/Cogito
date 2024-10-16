@@ -34,7 +34,7 @@ func _init():
 		POSITION = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX.xyz, 1.0);
 		
 		if(viewmodel_enabled){
-			POSITION.z = mix(POSITION.z, 0, -0.999);
+			POSITION.z = mix(POSITION.z, 0, -2.999);
 		}
 		/* end shader magic */
 	'''
