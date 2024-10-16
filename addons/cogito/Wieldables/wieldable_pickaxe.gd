@@ -16,7 +16,7 @@ func _ready():
 		wieldable_mesh.hide()
 		
 	damage_area.body_entered.connect(_on_body_entered)
-	
+
 	if uses_stamina:
 		player_stamina = grab_player_stamina_attribute()
 
@@ -53,4 +53,6 @@ func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 
 func _on_body_entered(collider):
 	if collider.has_signal("damage_received"):
-		collider.damage_received.emit(item_reference.wieldable_damage)
+		var hit_position = collider.global_transform.origin
+		var bullet_direction = (collider.global_transform.origin - CogitoSceneManager._current_player_node.get_global_transform().origin).normalized() ##This is hacky TODO needs to be fixed for Multiplayer support
+		collider.damage_received.emit(item_reference.wieldable_damage,bullet_direction,hit_position)
