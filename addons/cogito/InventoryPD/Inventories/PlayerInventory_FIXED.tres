@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="CogitoInventory" load_steps=2 format=3 uid="uid://ll11y3yjbqt"]
+[gd_resource type="Resource" script_class="CogitoInventory" load_steps=3 format=3 uid="uid://ll11y3yjbqt"]
 
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="1_ps87y"]
 [ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="1_sud3s"]
 
 [resource]
 script = ExtResource("1_sud3s")
 grid = true
-starter_inventory = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+starter_inventory = Array[ExtResource("1_ps87y")]([])
 inventory_size = Vector2i(5, 3)
-inventory_slots = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+inventory_slots = Array[ExtResource("1_ps87y")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

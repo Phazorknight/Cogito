@@ -10,7 +10,7 @@ Installation
 Installation steps:
 
 #. Clone this repo or download it and unzip it into its own directory.
-#. Open the project with the Godot editor (make sure you use a compatible version, currently 4.2.1)
+#. Open the project with the Godot editor (make sure you use a compatible version, currently 4.3)
 
 
 Setup
@@ -20,12 +20,8 @@ If you've used the COGITO Project as the base for your own project, you shouldn'
 
 Make sure the following plugins are activated:
 * Quick Audio (currently v1.0)
-* Input Helper (currently v4.2.2)
-* Also make sure the following Autoloads are set up in your project:
-
-   * res://COGITO/EsayMenus/Nodes/menu_template_manager.tscn
-   * res://COGITO/SceneManagement/cogito_scene_manager.gd
-   * res://COGITO/QuestSysteem/cogito_quest_manager.gd
+* Input Helper (currently v4.4.0)
+* Cogito
 
 Make sure that the Main Scene is set to ``res://COGITO/DemoScenes/COGITO_0_MainMenu.tscn``. This is not strictly necessary, but will make sure the Demo project runs as expected.
 
@@ -33,7 +29,7 @@ Make sure that the Main Scene is set to ``res://COGITO/DemoScenes/COGITO_0_MainM
 Running the Demo scenes
 -----------------------
 
-* You can find all included Demo scenes within ``/COGITO/DemoScenes/`` but if you've followed the steps above you can also just run the project by pressing ``F5`` and it should start at the Main Menu.
+* You can find all included Demo scenes within ``/addons/cogito/DemoScenes/`` but if you've followed the steps above you can also just run the project by pressing ``F5`` and it should start at the Main Menu.
 * You can also run the ``Lobby`` or the ``Laboratory`` scenes directly and explore.
 
 Feel free to explore the Demo scenes to discover everything COGITO has to offer!

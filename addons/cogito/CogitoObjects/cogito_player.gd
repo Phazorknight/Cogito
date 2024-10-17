@@ -379,7 +379,6 @@ func _input(event):
 			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 			
 		mouse_movement.emit(look_movement)
-		print("CogPlayer: mouse_movement relative= ", look_movement)
 
 		
 	# Checking Analog stick input for mouse look
