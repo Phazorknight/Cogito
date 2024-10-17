@@ -5,4 +5,4 @@
 [node name="HitboxComponent" type="Node"]
 script = ExtResource("1_7oy1x")
 apply_force_on_hit = true
-applied_force_multipler = 10
+applied_force_multipler = 2
