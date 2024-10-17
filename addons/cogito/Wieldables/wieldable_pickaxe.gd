@@ -11,14 +11,16 @@ extends CogitoWieldable
 var trigger_has_been_pressed : bool = false
 var player_stamina : CogitoAttribute = null
 
+
 func _ready():
 	if wieldable_mesh:
 		wieldable_mesh.hide()
 		
 	damage_area.body_entered.connect(_on_body_entered)
-	
+
 	if uses_stamina:
 		player_stamina = grab_player_stamina_attribute()
+		
 
 
 func grab_player_stamina_attribute() -> CogitoAttribute:
@@ -53,4 +55,8 @@ func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 
 func _on_body_entered(collider):
 	if collider.has_signal("damage_received"):
-		collider.damage_received.emit(item_reference.wieldable_damage)
+		var player = player_interaction_component.get_parent()
+		var hit_position = player_interaction_component.Get_Camera_Collision()
+		var bullet_direction = (hit_position - player.get_global_transform().origin).normalized()
+		collider.damage_received.emit(item_reference.wieldable_damage, bullet_direction, hit_position)
+
