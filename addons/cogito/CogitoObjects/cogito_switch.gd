@@ -129,7 +129,7 @@ func check_for_item() -> bool:
 		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
 
-func _on_damage_received():
+func _on_damage_received(_damage,_bullet_direction,_bullet_position):
 	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 func set_state():
