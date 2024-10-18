@@ -41,4 +41,6 @@ func damage(damage_amount: float, _hit_direction:= Vector3.ZERO, _hit_position:=
 		##TODO Handle CharacterBody3D for NPC knockback
 		if parent is RigidBody3D:
 			parent.apply_impulse(_hit_direction * damage_amount * applied_force_multipler, _hit_position)
+		if parent is CharacterBody3D:
+			parent.apply_knockback(_hit_direction *damage_amount * applied_force_multipler)
 

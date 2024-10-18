@@ -4,6 +4,8 @@ extends CogitoWieldable
 @export var damage_area : Area3D
 @export var uses_stamina : bool = false
 @export var stamina_cost : int = 4
+##Collision hit can be defined using Camera-Collider raycast, or Hitbox-Collider raycast. Camera-Collider is more reliable but less accurate, Hitbox-collider is more accurate but less reliable
+@export var use_camera_collision : bool
 
 @export_group("Audio")
 @export var swing_sound : AudioStream
@@ -56,7 +58,24 @@ func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 func _on_body_entered(collider):
 	if collider.has_signal("damage_received"):
 		var player = player_interaction_component.get_parent()
-		var hit_position = player_interaction_component.Get_Camera_Collision()
-		var bullet_direction = (hit_position - player.get_global_transform().origin).normalized()
+		var hit_position : Vector3
+		var bullet_direction : Vector3
+
+		if use_camera_collision:
+			#Camera-Collider raycast
+			hit_position = player_interaction_component.Get_Camera_Collision()
+			bullet_direction = (hit_position - player.get_global_transform().origin).normalized()
+		else:
+			#Hitbox-Collider raycast
+			var space_state = damage_area.get_world_3d().direct_space_state
+			var hitbox_origin = damage_area.global_transform.origin
+			var ray_params = PhysicsRayQueryParameters3D.new()
+			ray_params.from = hitbox_origin
+			ray_params.to = collider.global_transform.origin
+			var result = space_state.intersect_ray(ray_params)
+			if result.size() > 0:
+				hit_position = result.position
+				bullet_direction = (hit_position - hitbox_origin).normalized()
+		
 		collider.damage_received.emit(item_reference.wieldable_damage, bullet_direction, hit_position)
 

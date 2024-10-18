@@ -55,7 +55,6 @@ stream_4/stream = ExtResource("12_3m7c4")
 stream_4/weight = 1.0
 
 [node name="CogitoEnemy" type="CharacterBody3D"]
-motion_mode = 1
 script = ExtResource("1_0lcvu")
 attack_stagger = 20.0
 attack_sound = ExtResource("2_q5685")
