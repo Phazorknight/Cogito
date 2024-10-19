@@ -1,4 +1,4 @@
-@icon("res://addons/cogito/Graphics/Editor/Icon_CogitoObject.svg")
+@icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends Node3D
 class_name CogitoSecurityCamera
 

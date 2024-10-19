@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=141 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="1_7d2n7"]
 [ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_b15oo"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://d1rq8gm20sjo1" path="res://addons/cogito/PackedScenes/lamp_standing.tscn" id="18_oxm1j"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://addons/cogito/PackedScenes/Pickups/pickup_stamina_extension.tscn" id="18_pobhb"]
 [ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://addons/cogito/PackedScenes/heal_zone.tscn" id="19_2mngh"]
+[ext_resource type="PackedScene" uid="uid://bbt5twbnrlcfj" path="res://addons/cogito/Components/Interactions/LockInteraction.tscn" id="19_f55px"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://addons/cogito/PackedScenes/hazard_zone.tscn" id="20_dgnbq"]
 [ext_resource type="PackedScene" uid="uid://bnygtkw3tvet6" path="res://addons/cogito/PackedScenes/press_and_hold_wheel.tscn" id="22_ni6um"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="23_rfav8"]
@@ -352,7 +353,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_via4e"]
+[sub_resource type="Resource" id="Resource_nrxhb"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 grid = true
@@ -1303,6 +1304,8 @@ key = ExtResource("9_g1bqh")
 key_hint = "Locked. Is there a key nearby?"
 open_rotation_deg = -95.0
 
+[node name="LockInteraction" parent="INTERACTIVE_OBJECTS/DoorLocked" instance=ExtResource("19_f55px")]
+
 [node name="Cabinet_Prefab" parent="INTERACTIVE_OBJECTS" instance=ExtResource("35_ee66c")]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -12.0996, 0.600001, 14.2231)
 
@@ -1621,7 +1624,7 @@ spawn_on_death = Array[PackedScene]([])
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -7.5375, 0.905039, -3.30884)
-inventory_data = SubResource("Resource_via4e")
+inventory_data = SubResource("Resource_nrxhb")
 step_height_camera_lerp = 1.5
 
 [node name="Ladder" parent="." instance=ExtResource("41_q27ev")]
@@ -1876,6 +1879,7 @@ vertical_alignment = 0
 [connection signal="body_entered" from="QuestTriggerBprogress" to="QuestTriggerBprogress" method="_on_body_entered"]
 [connection signal="body_entered" from="QuestTriggerBprogress2" to="QuestTriggerBprogress2" method="_on_body_entered"]
 
+[editable path="INTERACTIVE_OBJECTS/DoorLocked"]
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery"]
 [editable path="INTERACTIVE_OBJECTS/Cabinet_Prefab/Pickup_Battery2"]
 [editable path="TargetDestructable"]

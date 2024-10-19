@@ -1,4 +1,4 @@
-@icon("res://addons/cogito/Graphics/Editor/Icon_CogitoObject.svg")
+@icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends CogitoObject
 ## Derived from CogitoObject, this class handles additional information for projectiles like lifespan, damage, destroy_on_impact. Some of these are inherited from the Wieldable that spawns this projectile.
 class_name CogitoProjectile

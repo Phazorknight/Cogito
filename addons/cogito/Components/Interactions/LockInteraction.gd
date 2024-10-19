@@ -46,4 +46,3 @@ func start_hold_check(interactor) -> bool:
 		return true
 	else:
 		return false
-
