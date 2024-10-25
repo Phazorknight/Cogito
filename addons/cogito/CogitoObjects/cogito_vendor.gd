@@ -18,8 +18,9 @@ extends Node3D
 @onready var stock_counter : Label3D = $StaticBody3D/StockCounter
 
 var player_interaction_component : PlayerInteractionComponent
-var amount_remaining : int
 var currency_attribute : CogitoCurrency
+
+var amount_remaining : int
 var is_dispensing : bool
 
 
@@ -28,6 +29,10 @@ func _ready():
 	amount_remaining = starting_amount
 	_update_vendor_state()
 	cogito_button.allows_repeated_interaction = amount_remaining > 1
+	# spawn delay must be shorter than the press cooldown or spawn count could be affected
+	if spawn_delay >= cogito_button.press_cooldown_time:
+		spawn_delay = cogito_button.press_cooldown_time - 0.1
+		printerr("spawn_delay exceeded button press cooldown time. It has been set to " + str(spawn_delay))
 	currency_check.connect("transaction_success", Callable(self, "_on_transaction_success"))
 	var player_node = CogitoSceneManager._current_player_node
 	player_interaction_component = (player_node as CogitoPlayer).player_interaction_component
