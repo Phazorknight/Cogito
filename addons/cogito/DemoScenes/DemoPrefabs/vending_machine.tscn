@@ -1,0 +1,108 @@
+[gd_scene load_steps=11 format=3 uid="uid://vlqfhilpj650"]
+
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_vendor.gd" id="1_lj27e"]
+[ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_potion.tscn" id="2_1u2dl"]
+[ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://addons/cogito/DemoScenes/DemoPrefabs/generic_button.tscn" id="2_wxk3g"]
+[ext_resource type="AudioStream" uid="uid://6thelsn58odx" path="res://addons/cogito/Assets/Audio/vending_machine_sfx.ogg" id="3_7lknv"]
+[ext_resource type="Texture2D" uid="uid://bmg715kqyjb77" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoHealthPotion.png" id="3_scac8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hgrek"]
+size = Vector3(1.15, 0.3, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qw18"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_2himx"]
+size = Vector2(0.75, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtrh8"]
+shading_mode = 0
+albedo_color = Color(0.25, 0.5, 0.283333, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ng26b"]
+material = SubResource("StandardMaterial3D_vtrh8")
+size = Vector2(0.25, 0.25)
+
+[node name="VendingMachine" type="Node3D"]
+script = ExtResource("1_lj27e")
+object_to_spawn = ExtResource("2_1u2dl")
+spawn_rotation = Vector3(90, 0, 0)
+dispensing_sound = ExtResource("3_7lknv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85, 0)
+shape = SubResource("BoxShape3D_hgrek")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="StaticBody3D"]
+operation = 2
+use_collision = true
+
+[node name="MeshInstance3D" type="CSGBox3D" parent="StaticBody3D/CSGCombiner3D"]
+size = Vector3(1.15, 2, 0.8)
+material = SubResource("StandardMaterial3D_6qw18")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.990268, -0.139173, 0, 0.139173, 0.990268, -0.1, -0.3893, 0.345541)
+operation = 2
+size = Vector3(0.8, 0.4, 0.6)
+material = SubResource("StandardMaterial3D_6qw18")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="StaticBody3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -0.1, 0.453041, -0.00217443)
+operation = 2
+size = Vector3(0.8, 0.595776, 0.582227)
+material = SubResource("StandardMaterial3D_6qw18")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="StaticBody3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.1, 0.0707678, 0.184345)
+operation = 2
+size = Vector3(0.8, 0.385535, 1.24217)
+material = SubResource("StandardMaterial3D_6qw18")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.4, 0.405)
+mesh = SubResource("QuadMesh_2himx")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.425, 0.5, 0.405)
+mesh = SubResource("QuadMesh_ng26b")
+
+[node name="StockLabel" type="Label3D" parent="StaticBody3D"]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0.42558, 0.570185, 0.41)
+double_sided = false
+modulate = Color(0, 0, 0, 1)
+text = "In Stock"
+outline_size = 0
+
+[node name="StockCounter" type="Label3D" parent="StaticBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.42558, 0.457513, 0.41)
+double_sided = false
+modulate = Color(0, 0, 0, 1)
+text = "3"
+font_size = 42
+outline_size = 6
+
+[node name="SpawnedItemIcon" type="Sprite3D" parent="StaticBody3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.1, 0.4, 0.41)
+cast_shadow = 0
+double_sided = false
+texture = ExtResource("3_scac8")
+
+[node name="GenericButton" parent="." instance=ExtResource("2_wxk3g")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.425, 1.2, 0.45)
+usable_interaction_text = "Buy Health Potion"
+press_cooldown_time = 3.0
+has_been_used_hint = "Out of stock"
+unusable_interaction_text = "Sold Out"
+
+[node name="CurrencyCheck" parent="GenericButton" index="6"]
+currency_cost = 5
+currency_text_joiner = " |  "
+
+[node name="Spawnpoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.40788, 0.0261086)
+
+[editable path="GenericButton"]

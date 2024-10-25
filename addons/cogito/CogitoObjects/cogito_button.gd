@@ -69,10 +69,11 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 		
 	player_interaction_component = _player_interaction_component
 	
-	if currency_check and currency_check.currency_cost != 0:
-		if not currency_check.check_for_currency(player_interaction_component.get_parent()):
-			player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
-			return
+	# moved to press(), as currency should only be charged when press is valid
+	#if currency_check and currency_check.currency_cost != 0:
+		#if not currency_check.check_for_currency(player_interaction_component.get_parent()):
+			#player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
+			#return
 	
 	if !allows_repeated_interaction and has_been_used:
 		player_interaction_component.send_hint(null, has_been_used_hint)
@@ -85,6 +86,13 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 
 
 func press():
+	# only run the currency check once the press is validated and triggered
+	# otherwise you can charge for a transaction and still not press the button
+	if currency_check and currency_check.currency_cost != 0:
+		if not currency_check.check_for_currency(player_interaction_component.get_parent()):
+			player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
+			return
+	
 	pressed.emit()
 	Audio.play_sound_3d(press_sound).global_position = global_position
 	
