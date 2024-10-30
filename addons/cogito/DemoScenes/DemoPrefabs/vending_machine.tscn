@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_potion.tscn" id="2_1u2dl"]
 [ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://addons/cogito/DemoScenes/DemoPrefabs/generic_button.tscn" id="2_wxk3g"]
 [ext_resource type="AudioStream" uid="uid://6thelsn58odx" path="res://addons/cogito/Assets/Audio/vending_machine_sfx.ogg" id="3_7lknv"]
-[ext_resource type="Texture2D" uid="uid://bmg715kqyjb77" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoHealthPotion.png" id="3_scac8"]
+[ext_resource type="Texture2D" uid="uid://s3qcosabxkgd" path="res://addons/cogito/Assets/Graphics/CogitoHealthPotion_vending_machine_sprite.png" id="4_wgwa5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hgrek"]
 size = Vector3(1.15, 0.3, 0.8)
@@ -86,10 +86,11 @@ font_size = 42
 outline_size = 6
 
 [node name="SpawnedItemIcon" type="Sprite3D" parent="StaticBody3D"]
-transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.1, 0.4, 0.41)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.1, 0.4, 0.41)
 cast_shadow = 0
 double_sided = false
-texture = ExtResource("3_scac8")
+alpha_cut = 1
+texture = ExtResource("4_wgwa5")
 
 [node name="GenericButton" parent="." instance=ExtResource("2_wxk3g")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.425, 1.2, 0.45)
