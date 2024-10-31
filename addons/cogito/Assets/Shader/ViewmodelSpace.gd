@@ -21,6 +21,8 @@ func _init():
 	instance uniform bool viewmodel_enabled = true;'''
 
 	injected_vertex = '''
+		UV = UV * uv1_scale.xy + uv1_offset.xy;
+	
 		/* begin shader magic*/
 		float onetanfov = 1.0f / tan(0.5f * (viewmodel_fov * PI / 180.0f));
 		float aspect = VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
@@ -32,7 +34,7 @@ func _init():
 		POSITION = PROJECTION_MATRIX * MODELVIEW_MATRIX * vec4(VERTEX.xyz, 1.0);
 		
 		if(viewmodel_enabled){
-			POSITION.z = mix(POSITION.z, 0, 0.999);
+			POSITION.z = mix(POSITION.z, 0, -2.999);
 		}
 		/* end shader magic */
 	'''

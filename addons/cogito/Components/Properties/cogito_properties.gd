@@ -1,4 +1,4 @@
-@icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoProperties.svg")
+@icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoProperties.svg")
 extends Node3D
 ## This class handles systeminc properties. Needs to be attached to a CogitoObject to work properly. For proper processing, said Object needs to have a signal hooked up to call check_for_systemic_interactions(collider).
 class_name CogitoProperties

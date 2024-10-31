@@ -1,4 +1,4 @@
-@icon("res://COGITO/Assets/Graphics/Editor/Icon_CogitoCurrency.svg")
+@icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoCurrency.svg")
 extends Node
 class_name CogitoCurrency
 

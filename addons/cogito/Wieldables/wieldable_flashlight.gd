@@ -91,12 +91,6 @@ func toggle_on_off():
 	await get_tree().create_timer(button_press_delay).timeout
 	play_sound(switch_sound)
 	
-	# Play the appropriate animation
-	if is_on:
-		animation_player.play("turn_off")
-	else:
-		animation_player.play("turn_on")
-	
 	# Wait for the animation to finish
 	await animation_player.animation_finished
 	

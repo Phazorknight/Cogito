@@ -1,4 +1,4 @@
-@icon("res://COGITO/Assets/Graphics/Editor/Icon_InteractionComponent.svg")
+@icon("res://addons/cogito/Assets/Graphics/Editor/Icon_InteractionComponent.svg")
 extends Node3D
 ## Base class for any interactions based on input map actions.
 class_name InteractionComponent

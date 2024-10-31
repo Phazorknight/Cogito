@@ -165,4 +165,3 @@ func save():
 		
 	}
 	return state_dict
-
