@@ -176,10 +176,9 @@ theme_override_font_sizes/font_size = 30
 text = "Quit"
 script = ExtResource("6_a8sll")
 
-[node name="OptionsTabMenu" parent="Content" node_paths=PackedStringArray("nodes_to_focus") instance=ExtResource("6_xdpcn")]
+[node name="OptionsTabMenu" parent="Content" instance=ExtResource("6_xdpcn")]
 visible = false
 layout_mode = 2
-nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/InvertYAxisCheckButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode/WindowModeOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"), null]
 
 [node name="MenuSceneSwitcher" type="Node" parent="."]
 script = ExtResource("12_4c47n")

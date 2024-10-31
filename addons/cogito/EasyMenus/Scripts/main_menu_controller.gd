@@ -63,7 +63,7 @@ func _input(event):
 
 func open_options_menu():
 	options_tab_menu.show()
-	options_tab_menu.nodes_to_focus[0].grab_focus.call_deferred()
+	options_tab_menu.tab_container.nodes_to_focus[0].grab_focus.call_deferred()
 	game_menu.hide()
 
 

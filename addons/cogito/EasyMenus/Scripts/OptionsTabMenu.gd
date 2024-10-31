@@ -1,9 +1,14 @@
 class_name OptionsTabMenu
-extends CogitoTabMenu
+extends Control
 signal options_updated
+
+# Grabbing TabContainer node for gamepad navigation
+@onready var tab_container: CogitoTabMenu = $VBoxContainer/TabContainer
 
 const HSliderWLabel = preload("res://addons/cogito/EasyMenus/Scripts/slider_w_labels.gd")
 var config = ConfigFile.new()
+
+var have_options_changed: bool = false
 
 # GAMEPLAY
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
@@ -38,16 +43,14 @@ var music_bus_index
 @onready var resolution_option_button: OptionButton = %ResolutionOptionButton
 
 var render_resolution : Vector2i
+var prev_resolution : Vector2i
 var render_scale_val : float
-
-
 
 const HEADBOB_DICTIONARY : Dictionary = {
 	"Minimal" : 1,
 	"Average" : 3,
 	"Full" : 7,
 }
-
 
 # Array to set window modes.
 const WINDOW_MODE_ARRAY : Array[String] = [
@@ -140,25 +143,25 @@ func on_window_mode_selected(index: int) -> void:
 
 
 func refresh_render():
+	get_window().size = render_resolution
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
 
 
 # Function to change resolution. Hooked up to the resolution_option_button.
 func on_resolution_selected(index:int) -> void:
+	prev_resolution = render_resolution
 	render_resolution = RESOLUTION_DICTIONARY.values()[index]
-	refresh_render()
-	get_window().size = render_resolution
+	if prev_resolution != render_resolution:
+		have_options_changed = true
 
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
-	_on_apply_changes_pressed()
 
 
 func _on_music_volume_slider_value_changed(value):
 	set_volume(music_bus_index, value)
-	_on_apply_changes_pressed()
 
 
 # Sets the volume for the given audio bus
@@ -189,7 +192,7 @@ func save_options():
 
 
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
-func load_options():
+func load_options(skip_applying:bool = false):
 	var err = config.load(OptionsConstants.config_file_name)
 	if err != 0:
 		print("Loading options config failed. Assuming and saving defaults.")
@@ -214,18 +217,18 @@ func load_options():
 
 	# LOADING GAMEPLAY CFG
 	invert_y_check_button.set_pressed_no_signal(invert_y)
-	invert_y_check_button.emit_signal("toggled", invert_y) #TODO: change this to the new signal emitting syntax
-	
 	toggle_crouching_check_button.set_pressed(toggle_crouching)
-	toggle_crouching_check_button.toggled.emit()
 	
+	if !skip_applying:
+		invert_y_check_button.toggled.emit()
+		toggle_crouching_check_button.toggled.emit()
 	
-
 	match headbob_strength:
 		1: headbob_option_button.selected = 0
 		3: headbob_option_button.selected = 1
 		7: headbob_option_button.selected = 2
-	headbob_option_button.item_selected.emit(headbob_option_button.selected)
+	if !skip_applying:
+		headbob_option_button.item_selected.emit(headbob_option_button.selected)
 
 	mouse_sens_slider.value = mouse_sens
 	mouse_sens_value_label.text = str(mouse_sens)
@@ -243,30 +246,32 @@ func load_options():
 	
 	gui_scale_slider.value = gui_scale
 	gui_scale_current_value_label.text = str(gui_scale)
-	apply_gui_scale_value()
+	if !skip_applying:
+		apply_gui_scale_value()
 	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
-	vsync_check_button.emit_signal("toggled", vsync)	
+	vsync_check_button.toggled.emit()
 	
 	anti_aliasing_2d_option_button.selected = msaa_2d
-	anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 	anti_aliasing_3d_option_button.selected = msaa_3d
-	anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
 	
 	window_mode_option_button.selected = window_mode
-	window_mode_option_button.item_selected.emit(window_mode)
 	resolution_option_button.selected = resolution_index
-	resolution_option_button.item_selected.emit(resolution_index)
 	
-	refresh_render()
-	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
+	if !skip_applying:
+		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
+		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
+		window_mode_option_button.item_selected.emit(window_mode)
+		resolution_option_button.item_selected.emit(resolution_index)
+		refresh_render()
+		window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
 
 
 func _on_render_scale_slider_value_changed(value):
 	render_scale_val = value
 	render_scale_current_value_label.text = str(value)
-	refresh_render()
+	have_options_changed = true
 
 
 func _on_gui_scale_slider_value_changed(value):
@@ -276,10 +281,12 @@ func _on_gui_scale_slider_value_changed(value):
 func _on_gui_scale_slider_drag_ended(_value_changed):
 	apply_gui_scale_value()
 
+
 # TODO: Apply changes if the slider is clicked but not dragged
 func apply_gui_scale_value():
 	get_viewport().content_scale_factor = gui_scale_slider.value
 	gui_scale_current_value_label.text = str(gui_scale_slider.value)
+	have_options_changed = true
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
@@ -314,6 +321,8 @@ func set_msaa(mode, index):
 
 func _on_apply_changes_pressed() -> void:
 	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
+	if have_options_changed:
+		refresh_render()
 	save_options()
 	options_updated.emit()
 
