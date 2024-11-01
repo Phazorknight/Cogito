@@ -62,6 +62,11 @@ func update_input_icon():
 		elif joypad_input is InputEventJoypadMotion:
 			#print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
 			set_texture(gamepad_icons)
+			if joypad_input.axis == 0 or joypad_input.axis == 1:
+				frame = 8
+			if joypad_input.axis == 2 or joypad_input.axis == 3:
+				frame = 9
+			
 			if joypad_input.axis == 5:
 				frame = 18 #Sets icon to RT
 			if joypad_input.axis == 4:

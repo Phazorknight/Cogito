@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://yjrkuurlcylb"]
+
+[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/remap_entry.gd" id="1_c35x6"]
+[ext_resource type="PackedScene" uid="uid://b4r85aw5fhgoh" path="res://addons/cogito/EasyMenus/Components/KbmBindButton.tscn" id="2_lt8x0"]
+[ext_resource type="PackedScene" uid="uid://cal6wr17d7pb4" path="res://addons/cogito/EasyMenus/Components/GamepadBindButton.tscn" id="3_fddyc"]
+
+[node name="RemapEntry" type="Control"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1240.0
+offset_bottom = -690.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c35x6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Button"
+vertical_alignment = 1
+
+[node name="KbmBindButton" parent="HBoxContainer" instance=ExtResource("2_lt8x0")]
+layout_mode = 2
+
+[node name="GamepadBindButton" parent="HBoxContainer" instance=ExtResource("3_fddyc")]
+layout_mode = 2

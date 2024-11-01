@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://citl6udy74ire"]
+
+[ext_resource type="Script" path="res://addons/cogito/Components/KbmInputIcon.gd" id="2_ftmot"]
+[ext_resource type="Texture2D" uid="uid://80dpyhwjgkka" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Keyboard.png" id="3_gnwns"]
+
+[node name="KbmInputIcon" type="Sprite2D"]
+position = Vector2(50, 50)
+hframes = 10
+vframes = 10
+frame = 18
+region_rect = Rect2(0, 0, 100, 100)
+script = ExtResource("2_ftmot")
+keyboard_icons = ExtResource("3_gnwns")

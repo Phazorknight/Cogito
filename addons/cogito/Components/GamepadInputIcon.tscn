@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cf8aqnpdf7c0h"]
+
+[ext_resource type="Script" path="res://addons/cogito/Components/GamepadInputIcon.gd" id="1_vq186"]
+[ext_resource type="Texture2D" uid="uid://5evydcsc3qjg" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Gamepad.png" id="2_k2fc4"]
+
+[node name="GamepadInputIcon" type="Sprite2D"]
+position = Vector2(50, 50)
+hframes = 10
+vframes = 10
+frame = 18
+region_rect = Rect2(0, 0, 100, 100)
+script = ExtResource("1_vq186")
+gamepad_icons = ExtResource("2_k2fc4")

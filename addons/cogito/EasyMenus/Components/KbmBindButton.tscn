@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4r85aw5fhgoh"]
+
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_oqol2"]
+[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/kbm_bind_button.gd" id="2_cj5if"]
+[ext_resource type="PackedScene" uid="uid://citl6udy74ire" path="res://addons/cogito/Components/KbmInputIcon.tscn" id="3_bp28t"]
+
+[node name="KbmBindButton" type="Button"]
+custom_minimum_size = Vector2(40, 40)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_oqol2")
+script = ExtResource("2_cj5if")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="KbmInputIcon" parent="MarginContainer" instance=ExtResource("3_bp28t")]
+position = Vector2(20, 20)
+scale = Vector2(0.35, 0.35)
