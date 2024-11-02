@@ -67,22 +67,25 @@ func set_data_from_state(_player_state:CogitoPlayerState):
 		var texture = ImageTexture.create_from_image(image)
 		screenshot_spot.texture = texture
 	else:
-		print("No screenshot for slot ", CogitoSceneManager._active_slot, " found.")
+		CogitoMain.debug_log(true,"SaveSlotButton.gd","No screenshot for slot " + CogitoSceneManager._active_slot + " found.")
 
 
 func _on_save_slot_button_pressed() -> void:
 	if !player_state:
-		print("SLOT BUTTON: No player state. Should start a new game.")
+		CogitoMain.debug_log(true,"SaveSlotButton.gd","No player state. Should start a new game.")
 		if save_slot_manager_node:
 			CogitoSceneManager.switch_active_slot_to(manual_save_slot_name)
 			save_slot_manager_node.start_new_game()
 	else:
-		print("SLOT BUTTON: Attempting to load player_state ", player_state.player_state_slot_name)
+		CogitoMain.debug_log(true,"SaveSlotButton.gd","Attempting to load player_state " + player_state.player_state_slot_name)
 		CogitoSceneManager._player_state = player_state
 		CogitoSceneManager.switch_active_slot_to(player_state.player_state_slot_name)
 		CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
 		CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
-		CogitoSceneManager.loading_saved_game(player_state.player_state_slot_name)
+		CogitoSceneManager.delete_temp_saves()
+		CogitoSceneManager.copy_slot_saves_to_temp(CogitoSceneManager._active_slot)
+
+
 
 
 func _on_delete_slot_pressed():
@@ -91,5 +94,5 @@ func _on_delete_slot_pressed():
 		CogitoSceneManager.delete_save(manual_save_slot_name)
 		save_slot_manager_node.load_all_save_slots()
 	else:
-		print("Slot is already empty!")
+		CogitoMain.debug_log(true,"SaveSlotButton.gd","Slot is already empty!")
 	

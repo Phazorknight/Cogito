@@ -154,7 +154,7 @@ func _on_save_button_pressed() -> void:
 
 
 func _on_load_button_pressed() -> void:
-	print("LOAD BUTTON PRESSED")
+	CogitoMain.debug_log(true,"pause_menu_controller.gd","LOAD button pressed.")
 	CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
 	CogitoSceneManager.delete_temp_saves()
