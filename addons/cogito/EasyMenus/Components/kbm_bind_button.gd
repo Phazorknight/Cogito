@@ -31,6 +31,10 @@ func _toggled(button_pressed):
 
 
 func _unhandled_input(event):
+	if event is InputEventJoypadMotion:
+		get_viewport().set_input_as_handled()
+		return
+		
 	if event.pressed:
 		InputHelper.set_keyboard_input_for_action(action,event,true)
 		get_viewport().set_input_as_handled()
