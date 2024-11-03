@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Montserrat-Light.ttf-9281df546a3392a9f244df97
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

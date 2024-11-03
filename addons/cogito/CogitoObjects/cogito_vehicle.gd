@@ -59,5 +59,3 @@ func apply_momentum(delta):
 	velocity += acceleration
 	velocity *= momentum_damping
 	acceleration = Vector3.ZERO
-
-

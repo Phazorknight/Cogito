@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Roboto-Slab-Bold.woff2-b47894a0214f9c0b453fb1
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

@@ -192,7 +192,7 @@ func is_relevant_non_player(body: Node3D) -> bool:
 	if body.name in non_player_detection_list:
 		return true
 	else:
-		print("SecurityCamera: Non-relevant object ignored:", body.name)
+		#print("SecurityCamera: Non-relevant object ignored:", body.name)
 		return false
 
 

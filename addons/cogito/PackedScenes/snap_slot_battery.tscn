@@ -1,17 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://cd2fwmwe8n1no"]
+[gd_scene load_steps=16 format=3 uid="uid://cd2fwmwe8n1no"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_snap_slot.gd" id="1_r3qoe"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_switch.gd" id="1_0xura"]
 [ext_resource type="AudioStream" uid="uid://dvbd46d7c28ee" path="res://addons/cogito/Assets/Audio/Kenney/bookPlace1.ogg" id="3_k5b51"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres" id="3_kncb8"]
-[ext_resource type="AudioStream" uid="uid://ocm2blyfthyq" path="res://addons/cogito/Assets/Audio/Kenney/woosh1.ogg" id="4_4h5wr"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_ivwep"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="5_sj4jl"]
+
+[sub_resource type="Resource" id="Resource_n5po6"]
+script = ExtResource("4_ivwep")
+inventory_item = ExtResource("3_kncb8")
+quantity = 1
+origin_index = -1
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_b63us"]
 height = 0.28
 radius = 0.09
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_a14a2"]
-size = Vector3(0.135498, 0.211621, 0.1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_cuujc"]
 top_radius = 0.1
@@ -29,27 +32,57 @@ rim_tint = 0.0
 backlight = Color(0.509804, 0.294118, 0.294118, 1)
 disable_receive_shadows = true
 
-[node name="SnapSlotBattery" type="StaticBody3D"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_l04x6"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.2
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4gn5o"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+metallic_specular = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2skuf"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.1
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_be8gj"]
+albedo_color = Color(0.658824, 0.396078, 0, 1)
+metallic_specular = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tkhmn"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.02
+radial_segments = 10
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y8o8d"]
+albedo_color = Color(0.658824, 0.658824, 0.658824, 1)
+metallic_specular = 0.2
+
+[node name="BatterySlot" type="StaticBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_r3qoe")
-snap_slot_type = 1
-expected_item = ExtResource("3_kncb8")
-object_placement_sound = ExtResource("3_k5b51")
-object_removed_sound = ExtResource("4_4h5wr")
+script = ExtResource("1_0xura")
+interaction_text_when_on = "Remove"
+interaction_text_when_off = "Place"
+switch_sound = ExtResource("3_k5b51")
+needs_item_to_operate = true
+required_item_slot = SubResource("Resource_n5po6")
+item_hint = "Looks like a battery would fit."
+nodes_to_show_when_on = [NodePath("BatteryMesh")]
+nodes_to_hide_when_on = [NodePath("SnapShape")]
 
 [node name="BasicInteraction" parent="." instance=ExtResource("5_sj4jl")]
 
 [node name="InteractionCollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0497775, 0)
 shape = SubResource("CylinderShape3D_b63us")
-
-[node name="SnapArea3D" type="Area3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SnapArea3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00305176, 0.0558105, -1.94289e-16)
-shape = SubResource("BoxShape3D_a14a2")
 
 [node name="SnapShape" type="Node3D" parent="."]
 
@@ -60,3 +93,22 @@ skeleton = NodePath("../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_l5j2y")
 
 [node name="SnapPosition" type="Marker3D" parent="."]
+
+[node name="BatteryMesh" type="Node3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="BatteryMesh"]
+mesh = SubResource("CylinderMesh_l04x6")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_4gn5o")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="BatteryMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_2skuf")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_be8gj")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="BatteryMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
+mesh = SubResource("CylinderMesh_tkhmn")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_y8o8d")

@@ -6,33 +6,12 @@ signal object_placed
 signal object_removed
 signal object_state_updated(interaction_text:String)
 
-
 @onready var snap_area_3d: Area3D = $SnapArea3D
 @onready var snap_shape: Node3D = $SnapShape
 @onready var snap_position: Node3D = $SnapPosition
 
-enum SnapSlotType {
-  CARRYABLE,
-  ITEM,
-}
-
-@export var snap_slot_type := SnapSlotType.CARRYABLE:
-	set(value):
-		snap_slot_type = value
-		notify_property_list_changed()
-
-
-func _validate_property(property: Dictionary):
-	if property.name in ["expected_item", interaction_text_to_place] and snap_slot_type != SnapSlotType.ITEM:
-		property.usage = PROPERTY_USAGE_NO_EDITOR
-	elif property.name in ["expected_object"] and snap_slot_type != SnapSlotType.CARRYABLE:
-		property.usage = PROPERTY_USAGE_NO_EDITOR
-
-
 ## PackedScene of the carryable object that this snapslot is expecting.
 @export var expected_object : PackedScene
-## Item resource  of the object that this snapslot is expecting.
-@export var expected_item : InventoryItemPD
 
 
 @export_group("Audio")
@@ -90,22 +69,6 @@ func _ready() -> void:
 func interact(interactor: Node3D):
 	player_interaction_component = interactor
 	
-	if snap_slot_type == SnapSlotType.ITEM:
-		if !is_holding_object:
-			check_for_item(player_interaction_component)
-
-
-func check_for_item(interactor: PlayerInteractionComponent):
-	var inventory = interactor.get_parent().inventory_data
-	for slot_data in inventory.inventory_slots:
-		if slot_data != null and slot_data.inventory_item == expected_item:
-			interactor.send_hint(null, expected_item.name + " placed.") # Sends a hint with the expected item name.
-			inventory.remove_item_from_stack(slot_data)
-			place_item()
-			return
-		
-	if expected_object_hint != "":
-		interactor.send_hint(null,expected_object_hint) # Sends the hint with the default hint icon.
 
 
 func place_item():
@@ -174,14 +137,10 @@ func set_state():
 	add_to_group("interactable")
 	add_to_group("save_object_state")
 	
-	if snap_slot_type == SnapSlotType.CARRYABLE:
-		if !snap_area_3d.body_entered.is_connected(_on_body_entered_snap_area):
-			snap_area_3d.body_entered.connect(_on_body_entered_snap_area)
-		if !snap_area_3d.body_exited.is_connected(_on_body_exited_snap_area):
-			snap_area_3d.body_exited.connect(_on_body_exited_snap_area)
-	
-	if snap_slot_type == SnapSlotType.ITEM:
-		preloaded_expected_item = load(expected_item.drop_scene)
+	if !snap_area_3d.body_entered.is_connected(_on_body_entered_snap_area):
+		snap_area_3d.body_entered.connect(_on_body_entered_snap_area)
+	if !snap_area_3d.body_exited.is_connected(_on_body_exited_snap_area):
+		snap_area_3d.body_exited.connect(_on_body_exited_snap_area)
 	
 	interaction_text = interaction_text_to_place
 	object_state_updated.emit(interaction_text)
