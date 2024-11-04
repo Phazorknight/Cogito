@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_si0pu"]
 [ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/gamepad_bind_button.gd" id="2_q5n4a"]
-[ext_resource type="PackedScene" uid="uid://cf8aqnpdf7c0h" path="res://addons/cogito/Components/GamepadInputIcon.tscn" id="3_irofb"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="3_hd6a1"]
 
 [node name="GamepadBindButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)
@@ -17,6 +17,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="GamepadInputIcon" parent="MarginContainer" instance=ExtResource("3_irofb")]
+[node name="DynamicInputIcon" parent="MarginContainer" instance=ExtResource("3_hd6a1")]
 position = Vector2(20, 20)
-scale = Vector2(0.35, 0.35)
+scale = Vector2(0.5, 0.5)
+input_icon_type = 3

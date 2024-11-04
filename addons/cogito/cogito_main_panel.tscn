@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt2gfg7ng6fw8"]
+[gd_scene load_steps=5 format=3 uid="uid://dt2gfg7ng6fw8"]
 
 [ext_resource type="Script" path="res://addons/cogito/cogito_main.gd" id="1_og8xv"]
+[ext_resource type="Texture2D" uid="uid://cb3ul86n4etxx" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Kenney_KeyboardMouse.png" id="2_dttpu"]
+[ext_resource type="Texture2D" uid="uid://bsf8v4qjtudck" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Kenney_Xbox.png" id="3_u7lrp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ph56b"]
 content_margin_left = 5.0
@@ -18,6 +20,8 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_og8xv")
+input_icons_kbm = ExtResource("2_dttpu")
+input_icons_xbox = ExtResource("3_u7lrp")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 1
@@ -26,10 +30,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+current_tab = 0
 
 [node name="General Settings" type="PanelContainer" parent="TabContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ph56b")
+metadata/_tab_index = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General Settings"]
 layout_mode = 2
@@ -110,6 +116,7 @@ max_length = 4
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ph56b")
+metadata/_tab_index = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/About"]
 layout_mode = 2

@@ -24,7 +24,7 @@ layout_mode = 2
 theme = ExtResource("2_bet8p")
 
 [node name="Container" type="MarginContainer" parent="HBoxContainer"]
-custom_minimum_size = Vector2(30, 30)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -36,13 +36,14 @@ theme_override_constants/margin_bottom = 15
 
 [node name="InteractionButton" parent="HBoxContainer/Container" instance=ExtResource("3_k0tgw")]
 position = Vector2(0, 0)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.5, 0.5)
 centered = false
 frame = 6
 action_name = "interact"
 
 [node name="InteractionText" type="RichTextLabel" parent="HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 theme = ExtResource("2_bet8p")
 theme_type_variation = &"PromptLabel"
 theme_override_font_sizes/normal_font_size = 20

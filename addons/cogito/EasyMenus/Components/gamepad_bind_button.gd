@@ -6,7 +6,7 @@ class_name GamepadBindButton
 		action = value
 		update_icon()
 
-@onready var gamepad_input_icon: Sprite2D = $MarginContainer/GamepadInputIcon
+@onready var gamepad_input_icon: Sprite2D = $MarginContainer/DynamicInputIcon
 
 func _init():
 	toggle_mode = true

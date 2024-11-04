@@ -1,10 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf2qmquc7ys81"]
+[gd_scene load_steps=3 format=3 uid="uid://bf2qmquc7ys81"]
 
 [ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/hot_bar_inventory.gd" id="1_0qfsu"]
-[ext_resource type="Texture2D" uid="uid://v5n8ollqt3qt" path="res://addons/cogito/Assets/Graphics/InputIcons/Gamepad/DPad_Left.png" id="3_xr4j1"]
-[ext_resource type="Texture2D" uid="uid://ebik12lcrif" path="res://addons/cogito/Assets/Graphics/InputIcons/Gamepad/DPad_Uppng.png" id="4_s68ar"]
-[ext_resource type="Texture2D" uid="uid://c2bynu0pq88st" path="res://addons/cogito/Assets/Graphics/InputIcons/Gamepad/DPad_Down.png" id="5_2cv2u"]
-[ext_resource type="Texture2D" uid="uid://cv0phb0f2xlns" path="res://addons/cogito/Assets/Graphics/InputIcons/Gamepad/DPad_Right.png" id="6_swbt2"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="10_ipb46"]
 
 [node name="HotBarInventory" type="PanelContainer"]
@@ -28,81 +24,56 @@ layout_mode = 2
 
 [node name="BottomRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 46
 alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 10
 
 [node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer" instance=ExtResource("10_ipb46")]
-position = Vector2(15, 15)
-scale = Vector2(0.3, 0.3)
+position = Vector2(32, 16)
+scale = Vector2(0.5, 0.5)
 action_name = "quickslot_1"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer2" instance=ExtResource("10_ipb46")]
-position = Vector2(15, 15)
-scale = Vector2(0.3, 0.3)
+position = Vector2(32, 16)
+scale = Vector2(0.5, 0.5)
 action_name = "quickslot_2"
 
 [node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer3" instance=ExtResource("10_ipb46")]
-position = Vector2(15, 15)
-scale = Vector2(0.3, 0.3)
+position = Vector2(32, 16)
+scale = Vector2(0.5, 0.5)
 action_name = "quickslot_3"
 
 [node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/VBoxContainer/BottomRow"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="DynamicInputIcon" parent="MarginContainer/VBoxContainer/BottomRow/MarginContainer4" instance=ExtResource("10_ipb46")]
-position = Vector2(15, 15)
-scale = Vector2(0.3, 0.3)
+position = Vector2(32, 16)
+scale = Vector2(0.5, 0.5)
 action_name = "quickslot_4"
-
-[node name="Button1" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
-visible = false
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("3_xr4j1")
-expand_mode = 5
-
-[node name="Button2" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
-visible = false
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("4_s68ar")
-expand_mode = 5
-
-[node name="Button3" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
-visible = false
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("5_2cv2u")
-expand_mode = 5
-
-[node name="Button4" type="TextureRect" parent="MarginContainer/VBoxContainer/BottomRow"]
-visible = false
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("6_swbt2")
-expand_mode = 5

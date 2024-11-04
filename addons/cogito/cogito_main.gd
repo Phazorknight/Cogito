@@ -11,6 +11,12 @@ extends Node
 ### Scene Settings
 @export var default_transition_duration : float = .5
 
+### Input Settings
+@export var input_icons_kbm: Texture2D
+@export var input_icons_xbox: Texture2D
+@export var input_icons_playstation: Texture2D
+@export var input_icons_steamdeck: Texture2D
+@export var input_icons_switch: Texture2D
 
 func debug_log(log_this: bool, _class: String, _message: String) -> void:
 	if is_logging and log_this:

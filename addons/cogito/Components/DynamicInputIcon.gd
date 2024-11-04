@@ -6,6 +6,25 @@ extends Sprite2D
 @export var gamepad_icons : Texture2D
 ## Spritesheet of keyboard icons
 @export var keyboard_icons : Texture2D
+## Spritesheet for Xbox gamepad icons
+@export var xbox_icons : Texture2D
+## Spritesheet for Playstation gamepad icons
+@export var playstation_icons : Texture2D
+## Spritesheet for Steam Deck gamepad icons
+@export var steam_deck_icons : Texture2D
+## Spritesheet for Nintendo Switch gamepad icons
+@export var switch_icons : Texture2D
+
+enum InputIconType{
+	DYNAMIC,
+	DYNAMIC_GAMEPAD,
+	KBM,
+	XBOX,
+	PS5,
+	SWITCH,
+}
+
+@export var input_icon_type: InputIconType
 
 var device
 var device_index
@@ -21,9 +40,94 @@ func update_device(_device, _device_index):
 	device_index = _device_index
 	# Rudimentary Steam Deck detection, treating it as an Xbox Controller
 	if _is_steam_deck():
-		device_index = 0
-	update_input_icon()
+		device = "steam_deck"
 	
+	match input_icon_type:
+		InputIconType.DYNAMIC:
+			update_input_icon()
+		InputIconType.DYNAMIC_GAMEPAD:
+			update_gamepad_icon()
+		InputIconType.KBM:
+			update_icon_kbm()
+		InputIconType.XBOX:
+			update_gamepad_icon(xbox_icons)
+		InputIconType.PS5:
+			update_gamepad_icon(playstation_icons)
+		InputIconType.SWITCH:
+			update_gamepad_icon(switch_icons)
+
+
+func update_input_icon():
+	match device:
+		"steam_deck":
+			update_gamepad_icon(steam_deck_icons)
+		InputHelper.DEVICE_KEYBOARD:
+			update_icon_kbm()
+		InputHelper.DEVICE_XBOX_CONTROLLER:
+			update_gamepad_icon(xbox_icons)
+		InputHelper.DEVICE_PLAYSTATION_CONTROLLER:
+			update_gamepad_icon(playstation_icons)
+		InputHelper.DEVICE_SWITCH_CONTROLLER:
+			update_gamepad_icon(switch_icons)
+
+
+func update_gamepad_icon(icon_textures:Texture2D = gamepad_icons):
+	hframes = 12
+	vframes = 12
+	set_texture(icon_textures)
+	
+	var joypad_input = InputHelper.get_joypad_input_for_action(action_name)
+	if joypad_input is InputEventJoypadButton:
+		frame = joypad_input.button_index
+	elif joypad_input is InputEventJoypadMotion:
+		frame = gamepad_motion_to_frame_index(joypad_input)
+
+
+func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
+	set_texture(keyboard_icons)
+	
+	var keyboard_input = InputHelper.get_keyboard_input_for_action(action_name)
+	if keyboard_input is InputEventKey:
+		frame = keycode_to_frame_index(OS.get_keycode_string(keyboard_input.get_physical_keycode()))
+	elif keyboard_input is InputEventMouseButton:
+		if keyboard_input.get_button_index() == 2:
+			frame = keycode_to_frame_index("Mouse Right")
+		if keyboard_input.get_button_index() == 1:
+			frame = keycode_to_frame_index("Mouse Left")
+		if keyboard_input.get_button_index() == 3:
+			frame = keycode_to_frame_index("Mouse Middle")
+		
+	else:
+		print("DynamicInputIcon: Action=", action_name, ". No primary keyboard/mouse input map assigned.")
+		frame = 0
+		return
+
+
+func update_icon_generic_gamepad():
+	hframes = 10
+	vframes = 10
+	set_texture(gamepad_icons)
+	
+	var joypad_input = InputHelper.get_joypad_input_for_action(action_name)
+	if joypad_input is InputEventJoypadButton:
+		#print("DynamicInputIcon: Action=", action_name, ". Joypad btn=", joypad_input.button_index)
+		set_texture(gamepad_icons)
+		frame = joypad_input.button_index
+		
+	elif joypad_input is InputEventJoypadMotion:
+		#print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
+		set_texture(gamepad_icons)
+		if joypad_input.axis == 0 or joypad_input.axis == 1:
+			frame = 8
+		if joypad_input.axis == 2 or joypad_input.axis == 3:
+			frame = 9
+		
+		if joypad_input.axis == 5:
+			frame = 18 #Sets icon to RT
+		if joypad_input.axis == 4:
+			frame = 17 #Sets icon to LT
+
+
 func _is_steam_deck() -> bool:
 	if RenderingServer.get_rendering_device() == null:
 		print("No rendering device detected.")
@@ -35,136 +139,163 @@ func _is_steam_deck() -> bool:
 		return false
 
 
-func update_input_icon():
-	if device == InputHelper.DEVICE_KEYBOARD:
-		set_texture(keyboard_icons)
-		var keyboard_input = InputHelper.get_keyboard_input_for_action(action_name)
-		if keyboard_input is InputEventKey:
-			#print("DynamicInputIcon: Action=", action_name, ". Physical keycode=", keyboard_input.get_physical_keycode(), ". Keycode string=", OS.get_keycode_string(keyboard_input.get_physical_keycode()))
-			frame = keycode_to_sprite_frame_index(OS.get_keycode_string(keyboard_input.get_physical_keycode()))
-		elif keyboard_input is InputEventMouseButton:
-			if keyboard_input.get_button_index() == 2:
-				frame = keycode_to_sprite_frame_index("Mouse Right")
-			if keyboard_input.get_button_index() == 1:
-				frame = keycode_to_sprite_frame_index("Mouse Left")
-		else:
-			print("DynamicInputIcon: Action=", action_name, ". No primary keyboard/mouse input map assigned.")
-			frame = 0
-			return
-		
-	else:
-		var joypad_input = InputHelper.get_joypad_input_for_action(action_name)
-		if joypad_input is InputEventJoypadButton:
-			#print("DynamicInputIcon: Action=", action_name, ". Joypad btn=", joypad_input.button_index)
-			set_texture(gamepad_icons)
-			frame = joypad_input.button_index
-			
-		elif joypad_input is InputEventJoypadMotion:
-			#print("DynamicInputIcon: Action=", action_name, ". Joypad motion=", joypad_motion.axis)
-			set_texture(gamepad_icons)
-			if joypad_input.axis == 0 or joypad_input.axis == 1:
-				frame = 8
-			if joypad_input.axis == 2 or joypad_input.axis == 3:
-				frame = 9
-			
-			if joypad_input.axis == 5:
-				frame = 18 #Sets icon to RT
-			if joypad_input.axis == 4:
-				frame = 17 #Sets icon to LT
+
+func gamepad_motion_to_frame_index(joypad_input_motion: InputEventJoypadMotion):
+	match joypad_input_motion.axis:
+		0: # LEFT STICK H AXIS
+			return 41
+		1: # LEFT STICK V AXIS
+			return 42
+		2: # RIGHT STICK H AXIS
+			return 53
+		3: # RIGHT STICK V AXIS
+			return 54
+		5: # RIGHT TRIGGER
+			return 8
+		6: # LEFT TRIGGER
+			return 9
+		null:
+			return 10
+		_:
+			return -1
 
 
-
-func keycode_to_sprite_frame_index(key_code_string: String) -> int:
+func keycode_to_frame_index(key_code_string: String) -> int:
 	match key_code_string:
 		null:
 			return 0
 		"Mouse Left":
-			return 28
+			return 108
 		"Mouse Right":
-			return 29
-		"A":
-			return 1
-		"B":
-			return 2
-		"C":
-			return 3
-		"D":
-			return 4
-		"E":
-			return 5
-		"F":
-			return 6
-		"G":
-			return 7
-		"H":
-			return 8
-		"I":
-			return 9
-		"J":
-			return 10
-		"K":
-			return 11
-		"L":
-			return 12
-		"M":
-			return 13
-		"N":
-			return 14
-		"O":
-			return 15
-		"P":
-			return 16
-		"Q":
-			return 17
-		"R":
-			return 18
-		"S":
-			return 19
-		"T":
-			return 20
-		"U":
-			return 21
-		"V":
-			return 22
-		"W":
-			return 23
-		"X":
-			return 24
-		"Y":
-			return 25
-		"Z":
-			return 26
-		"Space":
-			return 40
-		"Tab":
-			return 41
-		"Escape":
-			return 42
-		"Shift":
-			return 43
-		"Ctrl":
-			return 44
-		"Alt":
-			return 45
+			return 109
+		"Mouse Middle":
+			return 110
 		"0":
-			return 30
+			return 1
 		"1":
-			return 31
+			return 2
 		"2":
-			return 32
+			return 3
 		"3":
-			return 33
+			return 4
 		"4":
-			return 34
+			return 5
 		"5":
-			return 35
+			return 6
 		"6":
-			return 36
+			return 7
 		"7":
-			return 37
+			return 8
 		"8":
-			return 38
+			return 9
 		"9":
+			return 10
+		"A":
+			return 12
+		"B":
+			return 13
+		"C":
+			return 14
+		"D":
+			return 15
+		"E":
+			return 16
+		"F":
+			return 17
+		"G":
+			return 18
+		"H":
+			return 19
+		"I":
+			return 20
+		"J":
+			return 21
+		"K":
+			return 22
+		"L":
+			return 23
+		"M":
+			return 24
+		"N":
+			return 25
+		"O":
+			return 26
+		"P":
+			return 27
+		"Q":
+			return 28
+		"R":
+			return 29
+		"S":
+			return 30
+		"T":
+			return 31
+		"U":
+			return 32
+		"V":
+			return 33
+		"W":
+			return 34
+		"X":
+			return 35
+		"Y":
+			return 36
+		"Z":
+			return 37
+		"~":
+			return 38
+		"'":
 			return 39
+		"<":
+			return 40
+		">":
+			return 41
+		"[":
+			return 42
+		"]":
+			return 43
+		".":
+			return 44
+		":":
+			return 45
+		",":
+			return 46
+		";":
+			return 47
+		"=":
+			return 48
+		"+":
+			return 49
+		"-":
+			return 50
+		"^":
+			return 51
+		"\"":
+			return 52
+		"?":
+			return 53
+		"!":
+			return 54
+		"*":
+			return 55
+		"/":
+			return 56
+		"\\":
+			return 57
+		"Escape":
+			return 60
+		"Control":
+			return 61
+		"Alt":
+			return 62
+		"Space":
+			return 63
+		"Tab":
+			return 64
+		"Enter":
+			return 65
+		"Shift":
+			return 66
+		
 		_:
 			return -1

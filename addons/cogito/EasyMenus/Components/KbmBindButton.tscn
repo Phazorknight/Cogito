@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4r85aw5fhgoh"]
+[gd_scene load_steps=5 format=3 uid="uid://b4r85aw5fhgoh"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_oqol2"]
 [ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/kbm_bind_button.gd" id="2_cj5if"]
-[ext_resource type="PackedScene" uid="uid://citl6udy74ire" path="res://addons/cogito/Components/KbmInputIcon.tscn" id="3_bp28t"]
+[ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="3_0rc8b"]
+[ext_resource type="Texture2D" uid="uid://cb3ul86n4etxx" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Kenney_KeyboardMouse.png" id="4_587nv"]
 
 [node name="KbmBindButton" type="Button"]
 custom_minimum_size = Vector2(40, 40)
@@ -17,6 +18,8 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="KbmInputIcon" parent="MarginContainer" instance=ExtResource("3_bp28t")]
+[node name="DynamicInputIcon" parent="MarginContainer" instance=ExtResource("3_0rc8b")]
 position = Vector2(20, 20)
-scale = Vector2(0.35, 0.35)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_587nv")
+input_icon_type = 2

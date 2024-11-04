@@ -6,7 +6,7 @@ class_name KbmBindButton
 		action = value
 		update_icon()
 
-@onready var kbm_input_icon: Sprite2D = $MarginContainer/KbmInputIcon
+@onready var kbm_input_icon: Sprite2D = $MarginContainer/DynamicInputIcon
 
 
 func _init():
