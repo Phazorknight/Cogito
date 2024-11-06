@@ -1,0 +1,324 @@
+[gd_scene load_steps=13 format=3 uid="uid://bhbidfjqq4icg"]
+
+[ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_consumable.gd" id="1_0ugje"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="2_0hw38"]
+[ext_resource type="AnimationLibrary" uid="uid://dtnyvbl2d4lxg" path="res://addons/cogito/Wieldables/Animations/Wieldable_Flashlight.res" id="3_dfy7p"]
+[ext_resource type="Script" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="4_djm27"]
+
+[sub_resource type="Resource" id="Resource_law4r"]
+script = ExtResource("2_0hw38")
+attribute_name = "health"
+attribute_change_amount = 50.0
+value_to_change = 1
+
+[sub_resource type="Animation" id="Animation_ltq60"]
+resource_name = "drink_potion"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PotionMesh:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"apply_effects"
+}]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PotionMesh:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0.267942, -0.25, 0, 0.25, 0, 0.117027, -0.25, 0, 0.25, 0, 0.0725632, -0.25, 0, 0.25, 0, 0.0280489, -0.25, 0, 0.25, 0, 0.0793204, -0.25, 0, 0.25, 0, 0.0685912, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.46667, 2, 2.3, 2.73333, 4)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PotionMesh:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-0.522989, -0.25, 0, 0.25, 0, 0.0974845, -0.25, 0, 0.25, 0, 0.167079, -0.25, 0, 0.25, 0, 0.153827, -0.25, 0, 0.25, 0, 0.154347, -0.25, 0, 0.25, 0, -0.374625, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.46667, 2, 2.3, 2.73333, 4)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PotionMesh:position:z")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-0.323691, -0.25, 0, 0.25, 0, -0.328243, -0.25, 0, 0.25, 0, -0.325969, -0.25, 0, 0.25, 0, -0.328243, -0.25, 0, 0.25, 0, -0.325968, -0.25, 0, 0.25, 0, -0.368961, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.46667, 2, 2.3, 2.73333, 4)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PotionMesh:rotation:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-2.31695e-06, -0.25, 0, 0.25, 0, -2.31695e-06, -0.25, 0, 0.25, 0, -2.31695e-06, -0.25, 0, 0.25, 0, -2.31695e-06, -0.25, 0, 0.25, 0, -2.31695e-06, -0.25, 0, 0.25, 0, 0.320058, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.46667, 2, 2.3, 2.73333, 4)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PotionMesh:rotation:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-8.38609e-07, -0.25, 0, 0.25, 0, -8.38609e-07, -0.25, 0, 0.25, 0, -8.38609e-07, -0.25, 0, 0.25, 0, -8.38609e-07, -0.25, 0, 0.25, 0, -8.38609e-07, -0.25, 0, 0.25, 0, -0.00672398, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.46667, 2, 2.3, 2.73333, 4)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PotionMesh:rotation:z")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-0.0261799, -0.25, 0, 0.25, 0, 0.746984, -0.25, 0, 0.25, 0, 1.61853, -0.25, 0, 0.25, 0, 1.66051, -0.25, 0, 0.25, 0, 1.58094, -0.25, 0, 0.25, 0, -0.0213659, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1.46667, 2, 2.3, 2.73333, 4)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PotionMesh/CSGMesh3D2:scale:x")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.685, -0.25, 0, 0.25, 0, 0.685, -0.25, 0, 0.25, 0, 0.685, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2.03333, 2.7)
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PotionMesh/CSGMesh3D2:scale:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.685, -0.25, 0, 0.25, 0, 0.685, -0.25, 0, 0.25, 0, 0.01, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2.03333, 2.7)
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("PotionMesh/CSGMesh3D2:scale:z")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.685, -0.25, 0, 0.25, 0, 0.685, -0.25, 0, 0.25, 0, 0.685, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2.03333, 2.7)
+}
+
+[sub_resource type="Animation" id="Animation_sb6du"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PotionMesh:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PotionMesh:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.267942, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PotionMesh:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.522989, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PotionMesh:position:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.532988, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PotionMesh:rotation:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-2.31695e-06, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PotionMesh:rotation:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-8.38609e-07, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PotionMesh:rotation:z")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.746984, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("PotionMesh/CSGMesh3D2:scale:x")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.685, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PotionMesh/CSGMesh3D2:scale:y")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.685, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PotionMesh/CSGMesh3D2:scale:z")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.685, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_obeyx"]
+_data = {
+"RESET": SubResource("Animation_sb6du"),
+"drink_potion": SubResource("Animation_ltq60")
+}
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ag0uf"]
+top_radius = 0.07
+bottom_radius = 0.15
+height = 0.4
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfu1g"]
+albedo_color = Color(1, 0.419608, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_eljvy"]
+top_radius = 0.025
+bottom_radius = 0.15
+height = 0.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ivdm"]
+transparency = 1
+blend_mode = 1
+cull_mode = 1
+albedo_color = Color(0.815686, 1, 1, 0.196078)
+
+[node name="DrinkingHealthExtension" type="Node3D" node_paths=PackedStringArray("wieldable_mesh")]
+transform = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.325805, -0.279839, -0.531526)
+script = ExtResource("1_0ugje")
+consumable_effects = Array[ExtResource("2_0hw38")]([SubResource("Resource_law4r")])
+wieldable_mesh = NodePath("PotionMesh")
+anim_equip = "drink_potion"
+anim_unequip = ""
+anim_action_primary = ""
+anim_action_secondary = ""
+anim_reload = ""
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08616e-06, 0, -0.571551)
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_obeyx"),
+"Wieldable_Flashlight": ExtResource("3_dfy7p")
+}
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -4.37114e-08, -1, -1, 1.91069e-15, 4.37114e-08, 0, 1, -4.37114e-08, 0.174371, 0, 0)
+visible = false
+spot_range = 8.0
+spot_angle = 30.0
+
+[node name="PotionMesh" type="Node3D" parent="."]
+transform = Transform3D(0.733741, -0.679428, -8.38609e-07, 0.679428, 0.733741, 2.31695e-06, -9.58877e-07, -2.26982e-06, 1, 0.267942, -0.522989, -0.532988)
+script = ExtResource("4_djm27")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="PotionMesh"]
+transform = Transform3D(0.685, 0, 0, 0, 0.685, 0, 0, 0, 0.685, 0, -0.1043, 0)
+mesh = SubResource("CylinderMesh_ag0uf")
+material = SubResource("StandardMaterial3D_hfu1g")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="PotionMesh"]
+mesh = SubResource("CylinderMesh_eljvy")
+material = SubResource("StandardMaterial3D_3ivdm")

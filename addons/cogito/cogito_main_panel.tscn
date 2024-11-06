@@ -112,6 +112,30 @@ layout_mode = 2
 text = ".5"
 max_length = 4
 
+[node name="InputSettings" type="PanelContainer" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer"]
+layout_mode = 2
+text = "Input Settings"
+horizontal_alignment = 1
+
+[node name="Warning" type="RichTextLabel" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 0, 0, 1)
+text = "Warning: This will reset any changes to the Cogito InputMap and restart the editor!
+(WORK IN PROGRESS)"
+fit_content = true
+shortcut_keys_enabled = false
+
+[node name="Btn_ResetInputMap" type="Button" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer"]
+layout_mode = 2
+text = "Reset Input Map"
+
 [node name="About" type="PanelContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
@@ -133,5 +157,6 @@ text = "Documentation"
 [connection signal="text_submitted" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer/HBoxContainer2/lineedit_player_state" to="." method="_on_lineedit_player_state_text_submitted"]
 [connection signal="text_submitted" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer/HBoxContainer/lineedit_scene_state" to="." method="_on_lineedit_scene_state_text_submitted"]
 [connection signal="text_changed" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/SceneSettings/VBoxContainer/HBoxContainer/lineedit_fade_duration" to="." method="_on_lineedit_fade_duration_text_changed"]
+[connection signal="pressed" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer/Btn_ResetInputMap" to="." method="_on_btn_reset_input_map_pressed"]
 [connection signal="pressed" from="TabContainer/About/VBoxContainer/Btn_GitHub" to="." method="_on_btn_git_hub_pressed"]
 [connection signal="pressed" from="TabContainer/About/VBoxContainer/Btn_Documentation" to="." method="_on_btn_documentation_pressed"]

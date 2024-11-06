@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=125 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -58,6 +58,7 @@
 [ext_resource type="PackedScene" uid="uid://dn4e1k7u3suoo" path="res://addons/cogito/Enemies/cogito_basic_enemy.tscn" id="52_mlseg"]
 [ext_resource type="Script" path="res://addons/cogito/Enemies/cogito_patrol_path.gd" id="53_xiupp"]
 [ext_resource type="PackedScene" uid="uid://bdab2cuy8hue6" path="res://addons/cogito/DemoScenes/DemoPrefabs/Swing.tscn" id="57_sjmpt"]
+[ext_resource type="PackedScene" uid="uid://b60auyyy0apwb" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_extension.tscn" id="59_aok6v"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -85,7 +86,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_t47is"]
+[sub_resource type="Resource" id="Resource_3l411"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -898,7 +899,7 @@ environment = SubResource("Environment_obnk3")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_t47is")
+inventory_data = SubResource("Resource_3l411")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -3407,6 +3408,9 @@ transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8
 
 [node name="Swing" parent="." instance=ExtResource("57_sjmpt")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 0, 4)
+
+[node name="HealthExtension" parent="." instance=ExtResource("59_aok6v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.790922, -5.68077)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="body_entered" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" method="_on_body_entered"]
