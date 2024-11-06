@@ -13,6 +13,12 @@ extends CogitoWieldable
 @export var ads_fov = 65
 ## Default position for tweening from ADS
 @export var default_position : Vector3
+
+@export_group("Collisions")
+## Spawn hit decal on Collision hit
+@export var decal_spawn : bool = true
+## Hit decal texture, if blank will be set to default bullet decal texture
+@export var decal_texture : Texture2D
 ## Scene that spawns when a bullet of the weapon collides with anything
 @export var collision_scene : PackedScene
 
@@ -106,13 +112,17 @@ func hit_scan_collision(collision_point:Vector3):
 	
 	if bullet_collision:
 		hit_scan_damage(bullet_collision.collider, bullet_direction, bullet_collision.position)
-		hit_scan_scene(bullet_collision)
-		var obj = bullet_collision.collider
-		var bullet_collision_position = bullet_collision.position
-		var bullet_collision_normal = bullet_collision.normal
-		var bullet_global_basis = bullet_point.get_global_transform().basis
-		# Spawn bullet decal with collision parameters
-		BulletDecalPool.spawn_bullet_decal(bullet_collision_position, bullet_collision_normal, obj, bullet_global_basis)
+		
+		if collision_scene !=null:
+			hit_scan_scene(bullet_collision)
+		
+		if decal_spawn == true:
+			var bullet_collider = bullet_collision.collider
+			var bullet_collision_position = bullet_collision.position
+			var bullet_collision_normal = bullet_collision.normal
+			var bullet_global_basis = bullet_point.get_global_transform().basis
+			# Spawn bullet decal with collision parameters
+			BulletDecalPool.spawn_bullet_decal(bullet_collision_position, bullet_collision_normal, bullet_collider, bullet_global_basis,decal_texture)
 
 
 func hit_scan_damage(collider, bullet_direction, bullet_position):
