@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2ptmtes2fp8c"]
+
+[ext_resource type="Texture2D" uid="uid://csyaglhc6j7nw" path="res://addons/cogito/Assets/VFX/Impacts/Textures/bulletdecal.png" id="1_m4v46"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_egk1u"]
+radius = 0.03
+height = 0.06
+
+[node name="BulletDecal" type="Decal"]
+size = Vector3(0.075, 0.075, 0.075)
+texture_albedo = ExtResource("1_m4v46")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0739226, 0, 0)
+mesh = SubResource("SphereMesh_egk1u")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0798438, 0, 0)
+mesh = SubResource("SphereMesh_egk1u")
