@@ -24,3 +24,7 @@ const toggle_crouching_key = "toggle_crouching"
 const mouse_sens_key = "mouse_sens"
 const gp_looksens_key = "gp_looksens"
 const head_bobble_key = "head_bobble"
+
+# Key Bindings
+const key_binds = "key_bindings"
+const input_helper_string = "input_helper_string"

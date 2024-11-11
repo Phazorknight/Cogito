@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbv85ok0isnb3"]
+
+[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/menu_separator.gd" id="1_6oy01"]
+
+[node name="MenuSeparator" type="HBoxContainer"]
+alignment = 1
+script = ExtResource("1_6oy01")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Input Bindings (WIP!)"
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3

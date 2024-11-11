@@ -8,6 +8,8 @@ class_name GamepadBindButton
 
 @onready var gamepad_input_icon: Sprite2D = $MarginContainer/DynamicInputIcon
 
+var is_remapping: bool = false
+
 func _init():
 	toggle_mode = true
 	theme_type_variation = "RemapButton"
@@ -19,7 +21,7 @@ func _ready():
 
 
 func _toggled(button_pressed):
-	set_process_unhandled_input(button_pressed)
+	is_remapping = button_pressed
 	if button_pressed:
 		text = "..."
 		gamepad_input_icon.visible = false
@@ -29,19 +31,29 @@ func _toggled(button_pressed):
 		grab_focus()
 
 
-func _unhandled_input(event):
-	if event is InputEventJoypadMotion:
-		get_viewport().set_input_as_handled()
+func _input(event):
+	if !is_remapping:
 		return
 	
-	if event is InputEventJoypadButton:
-		if event.pressed:
-			InputHelper.set_joypad_input_for_action(action,event,true)
-			get_viewport().set_input_as_handled()
+	if event is InputEventJoypadMotion:
+		if abs(event.axis_value) > .1: # Adding threshold for joystick axis input mapping
+			InputHelper.set_joypad_input_for_action(action,event,false)
 			text = ""
 			gamepad_input_icon.visible = true
 			update_icon()
+			is_remapping = false
 			button_pressed = false
+	
+	if event is InputEventJoypadButton:
+		if event.pressed:
+			InputHelper.set_joypad_input_for_action(action,event,false)
+			text = ""
+			gamepad_input_icon.visible = true
+			update_icon()
+			is_remapping = false
+			button_pressed = false
+		
+	accept_event()
 
 
 func update_icon():

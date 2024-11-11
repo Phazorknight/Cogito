@@ -39,7 +39,7 @@ func _input(event):
 		return
 	
 	if event is InputEventKey || ( event is InputEventMouseButton && event.pressed):
-		InputHelper.set_keyboard_input_for_action(action,event,true)
+		InputHelper.set_keyboard_input_for_action(action,event,false)
 		text = ""
 		kbm_input_icon.visible = true
 		update_icon()
