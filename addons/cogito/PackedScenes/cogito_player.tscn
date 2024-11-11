@@ -96,7 +96,7 @@ libraries = {
 }
 
 [node name="Camera" type="Camera3D" parent="Body/Neck/Head/Eyes"]
-transform = Transform3D(1, 0, 0, 0, 1, 4.46638e-06, 0, -4.46638e-06, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 0, 0)
 
 [node name="InteractionRaycast" parent="Body/Neck/Head/Eyes/Camera" instance=ExtResource("10_2dndr")]
 

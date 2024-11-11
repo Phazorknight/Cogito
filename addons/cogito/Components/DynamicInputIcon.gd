@@ -33,6 +33,9 @@ var device_index
 func _ready():
 	InputHelper.device_changed.connect(update_device)
 	update_device(InputHelper.device,InputHelper.device_index)
+	
+	InputHelper.keyboard_input_changed.connect(check_for_input_change)
+	InputHelper.joypad_input_changed.connect(check_for_input_change)
 
 
 func update_device(_device, _device_index):
@@ -42,9 +45,13 @@ func update_device(_device, _device_index):
 	if _is_steam_deck():
 		device = "steam_deck"
 	
+	update_input_icon()
+	
+	
+func update_input_icon():
 	match input_icon_type:
 		InputIconType.DYNAMIC:
-			update_input_icon()
+			update_input_icon_dynamic()
 		InputIconType.DYNAMIC_GAMEPAD:
 			update_gamepad_icon()
 		InputIconType.KBM:
@@ -57,7 +64,12 @@ func update_device(_device, _device_index):
 			update_gamepad_icon(switch_icons)
 
 
-func update_input_icon():
+func check_for_input_change(_action, _input):
+	if _action == action_name:
+		update_input_icon()
+
+
+func update_input_icon_dynamic():
 	match device:
 		"steam_deck":
 			update_gamepad_icon(steam_deck_icons)

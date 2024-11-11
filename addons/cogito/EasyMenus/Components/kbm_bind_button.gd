@@ -8,6 +8,7 @@ class_name KbmBindButton
 
 @onready var kbm_input_icon: Sprite2D = $MarginContainer/DynamicInputIcon
 
+var is_remapping: bool = false
 
 func _init():
 	toggle_mode = true
@@ -20,7 +21,7 @@ func _ready():
 
 
 func _toggled(button_pressed):
-	set_process_unhandled_input(button_pressed)
+	is_remapping = button_pressed
 	if button_pressed:
 		text = "..."
 		kbm_input_icon.visible = false
@@ -30,18 +31,23 @@ func _toggled(button_pressed):
 		grab_focus()
 
 
-func _unhandled_input(event):
-	if event is InputEventJoypadMotion:
-		get_viewport().set_input_as_handled()
+func _input(event):
+	if !is_remapping:
 		return
-		
-	if event.pressed:
+	
+	if event is InputEventJoypadMotion:
+		return
+	
+	if event is InputEventKey || ( event is InputEventMouseButton && event.pressed):
 		InputHelper.set_keyboard_input_for_action(action,event,true)
-		get_viewport().set_input_as_handled()
 		text = ""
 		kbm_input_icon.visible = true
 		update_icon()
+		
+		is_remapping = false
 		button_pressed = false
+		
+	accept_event()
 
 
 func update_icon():

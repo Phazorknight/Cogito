@@ -11,6 +11,5 @@ func _ready():
 	update_entry()
 
 func update_entry():
-	label.text = action
 	kbm_bind_button.action = action
 	gamepad_bind_button.action = action

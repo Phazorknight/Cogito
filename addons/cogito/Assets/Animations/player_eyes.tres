@@ -28,7 +28,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1.62451, 0.435276),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0, -0.0349066), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(-0.0523599, 0, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_eqtd2"]

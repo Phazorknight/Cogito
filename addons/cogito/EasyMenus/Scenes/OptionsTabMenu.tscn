@@ -404,7 +404,6 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 25
 script = ExtResource("9_fg0hk")
-action_items = Array[String](["forward", "back", "left", "right", "jump", "crouch", "interact", "interact2", "menu", "inventory"])
 remap_entry = ExtResource("10_h6n2q")
 metadata/_tab_index = 3
 
