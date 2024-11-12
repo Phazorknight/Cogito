@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c62m84iy6lkk5"]
+
+[ext_resource type="Script" path="res://addons/cogito/Components/UI/ui_progress_wheel.gd" id="1_gcmeq"]
+
+[node name="ProgressWheel" type="CenterContainer"]
+script = ExtResource("1_gcmeq")

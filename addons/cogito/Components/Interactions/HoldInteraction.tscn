@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://poem1yjtmt3n"]
+[gd_scene load_steps=3 format=3 uid="uid://poem1yjtmt3n"]
 
 [ext_resource type="Script" path="res://addons/cogito/Components/Interactions/HoldInteraction.gd" id="1_lawwc"]
+[ext_resource type="PackedScene" uid="uid://c62m84iy6lkk5" path="res://addons/cogito/Components/UI/UI_ProgressWheel.tscn" id="2_win7c"]
 
 [node name="HoldInteraction" type="Node3D"]
 script = ExtResource("1_lawwc")
@@ -16,25 +17,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 10.0
-offset_right = 20.0
-offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="HoldUi"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -10.0
-offset_right = 50.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-value = 50.0
-show_percentage = false
+[node name="ProgressWheel" parent="HoldUi" instance=ExtResource("2_win7c")]
+layout_mode = 0

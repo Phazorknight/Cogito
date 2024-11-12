@@ -7,7 +7,7 @@ signal is_being_held(time_left:float)
 @onready var parent_node = get_parent() #Grabbing reference to door
 @onready var hold_timer: Timer = $HoldTimer
 @onready var hold_ui: Control = $HoldUi
-@onready var progress_bar: ProgressBar = $HoldUi/ProgressBar
+@onready var progress_wheel: CogitoProgressWheel = $HoldUi/ProgressWheel
 
 var is_holding : bool = false
 var player_interaction_component
@@ -18,7 +18,7 @@ func _ready() -> void:
 	parent_node.object_state_updated.connect(_on_object_state_change)
 	hold_timer.timeout.connect(_on_hold_complete)
 	hold_timer.wait_time = hold_time
-	progress_bar.value = hold_timer.time_left / hold_time * 100
+	progress_wheel.current_value = 1 - (hold_timer.time_left / hold_time)
 
 
 func interact(_player_interaction_component):
@@ -32,7 +32,8 @@ func interact(_player_interaction_component):
 func _process(_delta: float) -> void:
 	if is_holding:
 		is_being_held.emit(hold_timer.time_left)
-		progress_bar.value = hold_timer.time_left / hold_time * 100
+
+		progress_wheel.current_value = 1 - (hold_timer.time_left / hold_time)
 		
 		var interaction_distance = (parent_node.global_position - player_interaction_component.global_position).length()
 		if interaction_distance >= player_interaction_component.interaction_raycast.target_position.length() :
