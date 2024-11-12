@@ -45,7 +45,7 @@ func update_device(_device, _device_index):
 	if _is_steam_deck():
 		device = "steam_deck"
 	
-	update_input_icon()
+	update_input_icon.call_deferred() #Calling this deferred as there's been Input Icons that exist before the cfg is loaded.
 	
 	
 func update_input_icon():
@@ -99,16 +99,14 @@ func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
 	set_texture(keyboard_icons)
 	
 	var keyboard_input = InputHelper.get_keyboard_input_for_action(action_name)
-	print("Dynamic Input Icon: update_icon_kbm: keyboard_input for action ", action_name, " = ", keyboard_input)
 	if keyboard_input is InputEventKey:
-		print("Dynamic Input Icon: update_icon_kbm: Keycode string for action ", action_name, " is ", OS.get_keycode_string(keyboard_input.keycode) )
 		frame = keycode_to_frame_index(OS.get_keycode_string(keyboard_input.keycode))
 	elif keyboard_input is InputEventMouseButton:
-		if keyboard_input.get_button_index() == 2:
+		if keyboard_input.get_button_index() == MOUSE_BUTTON_RIGHT:
 			frame = keycode_to_frame_index("Mouse Right")
-		if keyboard_input.get_button_index() == 1:
+		if keyboard_input.get_button_index() == MOUSE_BUTTON_LEFT:
 			frame = keycode_to_frame_index("Mouse Left")
-		if keyboard_input.get_button_index() == 3:
+		if keyboard_input.get_button_index() == MOUSE_BUTTON_MIDDLE:
 			frame = keycode_to_frame_index("Mouse Middle")
 		
 	else:

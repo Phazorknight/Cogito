@@ -18,7 +18,6 @@ func equip(_player_interaction_component: PlayerInteractionComponent):
 	item_reference.is_being_wielded = false
 	player_interaction_component.change_wieldable_to(null)
 	
-	unequip()
 	if wieldable_mesh:
 		wieldable_mesh.hide()
 

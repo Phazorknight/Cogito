@@ -63,8 +63,6 @@ func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true
 	label_active_slot.text = "Current Slot: " + CogitoSceneManager._active_slot
-	#save_button.text = "Save Slot " + CogitoSceneManager._active_slot
-	#load_button.text = "Load Slot " + CogitoSceneManager._active_slot
 	temp_screenshot = grab_temp_screenshot()
 	show()
 	game_menu.show()
