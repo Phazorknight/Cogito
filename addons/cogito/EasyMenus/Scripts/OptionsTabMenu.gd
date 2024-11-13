@@ -73,15 +73,21 @@ const RESOLUTION_DICTIONARY : Dictionary = {
 
 
 func _ready() -> void:
+	# GAMEPLAY
 	add_headbob_items()
 	headbob_option_button.item_selected.connect(on_headbob_selected)
 	mouse_sens_slider.value_changed.connect(_on_mouse_sens_slider_value_changed)
 	gp_look_sens_slider.value_changed.connect(_on_gp_looksens_slider_value_changed)
+	
+	# GRAPHICS
 	add_window_mode_items()
 	add_resolution_items()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
 	resolution_option_button.item_selected.connect(on_resolution_selected)
+	render_scale_slider.value_changed.connect(_on_render_scale_slider_value_changed)
+	gui_scale_slider.value_changed.connect(_on_gui_scale_slider_value_changed)
 	
+	# AUDIO
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
 	sfx_volume_slider.hslider.value_changed.connect(_on_sfx_volume_slider_value_changed)
@@ -275,14 +281,13 @@ func _on_render_scale_slider_value_changed(value):
 
 
 func _on_gui_scale_slider_value_changed(value):
-	gui_scale_current_value_label.text = str(value)
+	apply_gui_scale_value()
 
 	
 func _on_gui_scale_slider_drag_ended(_value_changed):
 	apply_gui_scale_value()
 
 
-# TODO: Apply changes if the slider is clicked but not dragged
 func apply_gui_scale_value():
 	get_viewport().content_scale_factor = gui_scale_slider.value
 	gui_scale_current_value_label.text = str(gui_scale_slider.value)

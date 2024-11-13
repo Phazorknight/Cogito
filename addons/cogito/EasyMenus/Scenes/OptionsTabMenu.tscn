@@ -29,7 +29,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
-current_tab = 3
+current_tab = 1
 script = ExtResource("4_h483w")
 nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider/HSlider"), NodePath("Bindings")]
 
@@ -167,7 +167,6 @@ horizontal_alignment = 1
 
 [node name="Graphics" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -399,6 +398,7 @@ max_value = 1.0
 step = 0.1
 
 [node name="Bindings" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
