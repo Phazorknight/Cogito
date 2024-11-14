@@ -213,7 +213,7 @@ func attempt_reload():
 		return
 
 	if equipped_wieldable_item.get_item_amount_in_inventory(equipped_wieldable_item.ammo_item_name) <= 0:
-		print("You have no ammo for this wieldable.")
+		CogitoMain.debug_log(true,"PIC", "You have no ammo for this wieldable.")
 		return
 
 	if equipped_wieldable_node.animation_player.is_playing(): # Make sure reload isn't interrupting another animation.

@@ -4,6 +4,7 @@ const cogito_plugin_icon : Texture2D = preload("./Cogito.svg")
 const MainPanel = preload("./cogito_main_panel.tscn")
 var main_panel_instance
 
+var cog_settings : CogitoSettings
 
 func _enter_tree():
 	add_autoload_singleton("CogitoMain", "/cogito_main.gd")

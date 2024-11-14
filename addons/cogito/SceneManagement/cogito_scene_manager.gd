@@ -35,7 +35,8 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 var cogito_scene_state_prefix : String = CogitoMain.scene_state_prefix
 var cogito_player_state_prefix : String = CogitoMain.player_state_prefix
 
-@export var default_fade_duration : float = .4
+#@export var default_fade_duration : float = .4
+@export var default_fade_duration : float = CogitoMain.default_transition_duration
 @export var fade_panel : Panel = null
 
 func _ready() -> void:
