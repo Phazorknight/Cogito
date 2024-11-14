@@ -86,3 +86,17 @@ Tutorial Series
 .. image:: https://img.youtube.com/vi/i19e_mAZFN4/maxresdefault.jpg
     :alt: COGITO Tutorial 6b - Ammo
     :target: https://www.youtube.com/watch?v=i19e_mAZFN4
+
+
+**6b - Customize wieldables**
+
+.. image:: https://img.youtube.com/vi/4Gfei0GdgLU/maxresdefault.jpg
+    :alt: COGITO Tutorial 6c - Customize Weapon
+    :target: https://www.youtube.com/watch?v=4Gfei0GdgLU
+
+
+**7 - Puzzles & Destructables**
+
+.. image:: https://img.youtube.com/vi/4jD5ndRwIP0/maxresdefault.jpg
+    :alt: COGITO Tutorial 7 - Puzzles & Destructables
+    :target: https://www.youtube.com/watch?v=4jD5ndRwIP0

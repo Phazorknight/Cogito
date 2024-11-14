@@ -3,7 +3,7 @@ class_name OptionsConstants
 
 const sfx_bus_name = "SFX"
 const music_bus_name = "Music" 
-const config_file_name = "user://options.cfg"
+const config_file_name = "user://options_test.cfg"
 
 const section_name = "Options" 
 # Auido options

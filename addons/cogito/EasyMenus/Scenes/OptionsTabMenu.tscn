@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bly6wti1q8bsu"]
+[gd_scene load_steps=12 format=3 uid="uid://bly6wti1q8bsu"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_6plem"]
 [ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/OptionsTabMenu.gd" id="2_bufp8"]
@@ -7,9 +7,8 @@
 [ext_resource type="Script" path="res://addons/cogito/Theme/CogitoUiButton.gd" id="6_rlben"]
 [ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="7_27vxg"]
 [ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/option_button_input_propagator.gd" id="8_7fii0"]
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/input_bindings.gd" id="9_fg0hk"]
+[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/slider_w_labels.gd" id="9_3avtv"]
 [ext_resource type="PackedScene" uid="uid://cqniig2ks0xs2" path="res://addons/cogito/EasyMenus/Nodes/gamepad_closable.tscn" id="9_wft0n"]
-[ext_resource type="PackedScene" uid="uid://dyfwp0vhgfjd7" path="res://addons/cogito/EasyMenus/Nodes/slider_w_labels.tscn" id="10_45uhu"]
 [ext_resource type="PackedScene" uid="uid://yjrkuurlcylb" path="res://addons/cogito/EasyMenus/Components/RemapEntry.tscn" id="10_h6n2q"]
 [ext_resource type="PackedScene" uid="uid://cbv85ok0isnb3" path="res://addons/cogito/EasyMenus/Components/MenuSeparator.tscn" id="12_n7tcl"]
 
@@ -19,6 +18,8 @@ offset_bottom = 500.0
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
 script = ExtResource("2_bufp8")
+remap_entry = ExtResource("10_h6n2q")
+separator_entry = ExtResource("12_n7tcl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -29,12 +30,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
-current_tab = 1
+current_tab = 0
 script = ExtResource("4_h483w")
-nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider/HSlider"), NodePath("Bindings")]
+nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), null, NodePath("Bindings")]
 
 [node name="Gameplay" type="MarginContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
 theme_override_constants/margin_left = 0
@@ -167,6 +167,7 @@ horizontal_alignment = 1
 
 [node name="Graphics" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -346,7 +347,6 @@ text = "V-Sync"
 [node name="Audio" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider")
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 0
@@ -370,32 +370,63 @@ layout_mode = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_right = 100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="SFXVolumeSlider" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("10_45uhu")]
+[node name="HBoxContainer_SFXVolumeSlider" type="HBoxContainer" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
+script = ExtResource("9_3avtv")
+show_percentage = true
 title = "SFX Volume"
 
-[node name="Title" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="0"]
+[node name="Title" type="Label" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
 text = "SFX Volume"
 
-[node name="HSlider" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider" index="1"]
+[node name="HSlider" type="HSlider" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
 max_value = 1.0
 step = 0.1
 
-[node name="MusicVolumeSlider" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("10_45uhu")]
-unique_name_in_owner = true
+[node name="CurrentValue" type="Label" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider"]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0 %"
+horizontal_alignment = 1
+
+[node name="HBoxContainer_MusicVolumeSlider" type="HBoxContainer" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+script = ExtResource("9_3avtv")
+show_percentage = true
 title = "Music Volume"
 
-[node name="Title" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="0"]
+[node name="Title" type="Label" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
 text = "Music Volume"
 
-[node name="HSlider" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider" index="1"]
+[node name="HSlider" type="HSlider" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
 max_value = 1.0
 step = 0.1
+
+[node name="CurrentValue" type="Label" parent="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0 %"
+horizontal_alignment = 1
 
 [node name="Bindings" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
@@ -404,9 +435,6 @@ theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 25
-script = ExtResource("9_fg0hk")
-remap_entry = ExtResource("10_h6n2q")
-separator_entry = ExtResource("12_n7tcl")
 metadata/_tab_index = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TabContainer/Bindings"]
@@ -416,17 +444,12 @@ size_flags_horizontal = 4
 script = ExtResource("7_27vxg")
 transition_time = 0.15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Bindings/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/Bindings/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 15
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TabContainer/Bindings/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="BindingsContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Bindings/ScrollContainer/VBoxContainer/MarginContainer"]
+[node name="BindingsContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Bindings/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 3
@@ -463,8 +486,7 @@ theme_override_font_sizes/font_size = 25
 text = "Apply changes"
 script = ExtResource("6_rlben")
 
+[connection signal="value_changed" from="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider" to="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider" method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider/HSlider" to="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider" method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/ApplyChanges" to="VBoxContainer/TabContainer/Bindings" method="save_keybindings_to_config"]
-
-[editable path="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/SFXVolumeSlider"]
-[editable path="VBoxContainer/TabContainer/Audio/ScrollContainer/VBoxContainer/MarginContainer/VBoxContainer/MusicVolumeSlider"]

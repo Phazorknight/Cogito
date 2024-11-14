@@ -2,7 +2,7 @@
 extends Node
 
 @export var entered_string : String = "This is a test string."
-@export var is_logging: bool = false
+@export var is_logging: bool
 
 ### Save Game Settings
 @export var scene_state_prefix : String = "COGITO_scene_state_"
@@ -57,6 +57,10 @@ func _on_btn_git_hub_pressed() -> void:
 
 func _on_btn_documentation_pressed() -> void:
 	OS.shell_open("https://cogito.readthedocs.io/en/latest/index.html")
+
+
+func _on_btn_video_tutorials_pressed() -> void:
+	OS.shell_open("https://cogito.readthedocs.io/en/latest/tutorials.html")
 
 
 func _on_btn_reset_input_map_pressed() -> void:

@@ -5,7 +5,7 @@ Installation
 ------------
 
 .. tip::
-   It is strongly recommended to use the COGITO Project as your base Godot project, as it comes with a few pre-configured settings like Input Maps and Autoloads. After installation, you can import your own assets and get started making your game.
+   It is strongly recommended to use the COGITO Project as your base Godot project, as it comes with a few pre-configured settings like Input Maps and Globals/Autoloads. After installation, you can import your own assets and get started making your game.
 
 Installation steps:
 
@@ -19,11 +19,12 @@ Setup
 If you've used the COGITO Project as the base for your own project, you shouldn't have to do much else to get it running. But just in case here's some how it should be set up:
 
 Make sure the following plugins are activated:
+* Cogito
 * Quick Audio (currently v1.0)
 * Input Helper (currently v4.4.0)
-* Cogito
 
-Make sure that the Main Scene is set to ``res://COGITO/DemoScenes/COGITO_0_MainMenu.tscn``. This is not strictly necessary, but will make sure the Demo project runs as expected.
+
+Make sure that the Main Scene is set to ``res://addons/cogito/DemoScenes/COGITO_0_MainMenu.tscn``. This is not strictly necessary, but will make sure the Demo project runs as expected.
 
 
 Running the Demo scenes
@@ -50,6 +51,7 @@ Components
 ~~~~~~~~~~
 A lot of parts of COGITO heavily applies the component design pattern. This means that most functions are organized in a way where you will have a root node of an object, and can add or remove several child nodes as *Components* to change the object's behavior.
 For example:
+
 * Player scene has Attributes as child nodes.
 * Cogito Objects have InteractionComponents as child nodes.
 
@@ -59,6 +61,7 @@ Common object types
 ~~~~~~~~~~~~~~~~~~~
 COGITO includes a number of common object scripts which define an objects behavior.
 When you create your game, a common workflow would look like this:
+
 #. Create a new scene (usually a Node3D)
 #. Create / import an asset (like a door mesh)
 #. Add the imported mesh to your new scene. (MeshInstance of the door + collider)
@@ -68,4 +71,4 @@ When you create your game, a common workflow would look like this:
 #. Save packed scene.
 
 Voilà, you can now place the door in your level scenes and it should work.
-You can read more about them in the manual under *Cogito Objects*.
+You can read more about this and other objects in the manual under *Cogito Objects*.

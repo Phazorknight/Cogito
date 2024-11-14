@@ -17,6 +17,7 @@ The structure of this template always tries to adhere to the following principle
 * **Modular:** Don't want to use a feature? You will be able to hide it, ignore it or strip it out without breaking COGITO. At the same time, COGITO is designed to be extendable with your own custom features or other add-ons.
 * **Approachable:** While there will always be a learning curve, we strive to make COGTIO approachable and intuitive to use, so it doesn't get in your way of making your game.
 
+
 Current Features
 ----------------
 * First person player controller with:
@@ -29,19 +30,25 @@ Current Features
    * Inventory UI separate from inventory logic
    * Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)
    * Base class to easily add your custom item types
+   * Basic currency systems + vendors to buy items from
 * Interaction System
    * Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
-   * Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
-* Systemic Properties
+   * Examples for interactive objects like doors, drawers, carryable boxes, turn-wheels, elevators, readable objects, keypads, etc.
+* Wieldable System
+   * System for the player holding and using items, traditionally used for weapons.
+   * Examples for projectile weapon, raycast weapon, throwable weapon, flashlight and animated consumable.
+* Basic Enemy with a simple state machine
+* Basic Quest System
+* Systemic Properties (WIP)
    * Give objects properties like "FLAMMABLE" or "WET" and they will interact with each other depending on their state and properties.
    * For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.
    * Straight forward system to add your own properties and behaviors, all handled in one script. Also, easy to just ignore.
 * Fully featured Demo Scene
    * Set up like a game level including a variety of objects, weapons, and quests
    * In-game helper documents that explain how objects in the scene were set up
-* Quest System
-* Save and Load System as well as scene persistency
-* Full game pad support!
+* Options menu + rebindable inputs
+* Save slot-based save and load system + level scene persistency
+* Full gamepad support!
 
 
 Contributors
@@ -54,6 +61,7 @@ Contributors
 * `PeterD23 <https://github.com/PeterD23>`_: added Grid Inventory
 * `niefia <https://github.com/niefia>`_: added Sitting feature, improvements to enemy behavior, interaction components, audio, physics and more
 * `mrezai <https://github.com/mrezai>`_: improvements and bugfixes to scene transitions, wieldables, player physics and raycasts
+* `OvercastInteractive <https://github.com/OvercastInteractive>`_: added vendor feature, various improvements and fixes
   
 
 |

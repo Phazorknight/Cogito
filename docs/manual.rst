@@ -10,10 +10,16 @@ Manual
 
 
 
+Cogito Editor Tab
+=================
+When active as a plugin, Cogito will add an editor tab at the top of your Godot editor window. This tab gives you access to some general settings as well as links to the documentation and Github repo.
+The settings have tooltips that explains their use.
+
+
+
 Player Controller
 =================
 COGITO includes a first person player controller that has a variety of parameters and settings built-in. We recommend just reading through the descriptions and tweaking the parameters to your liking. Most common adjustments needed are walking, running and sprinting speeds, stair handling, and ladder handling. Be aware that a few of the player controller parameters will be controlled by the game options and are thus user controlled (for example Invert Y Axis).
-The controls are currently not rebindable in-game, but you can adjust them to your liking with the input map settings in the Godot project.
 
 **Default controls:**
 

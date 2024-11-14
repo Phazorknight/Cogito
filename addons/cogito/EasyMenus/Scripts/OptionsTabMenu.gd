@@ -25,8 +25,8 @@ var mouse_sens : float
 var headbob_strength : int
 
 # AUDIO
-@onready var sfx_volume_slider : HSliderWLabel = $%SFXVolumeSlider
-@onready var music_volume_slider: HSliderWLabel = $%MusicVolumeSlider
+@onready var sfx_volume_slider : HSliderWLabel = %HBoxContainer_SFXVolumeSlider
+@onready var music_volume_slider: HSliderWLabel = %HBoxContainer_MusicVolumeSlider
 
 var sfx_bus_index
 var music_bus_index
@@ -71,6 +71,38 @@ const RESOLUTION_DICTIONARY : Dictionary = {
 	"3840x2160 (16:9)" : Vector2i(3840,2160),
 }
 
+# INPUT BINDING
+@export var remap_entry: PackedScene
+@export var separator_entry: PackedScene
+
+@onready var bindings_container: VBoxContainer = %BindingsContainer
+
+var input_actions = {
+	"separator_movement": "MOVEMENT",
+	"forward": "Move forward",
+	"back": "Move back",
+	"left": "Move left",
+	"right": "Move right",
+	"jump": "Jump",
+	"crouch": "Crouch",
+	"separator_actions": "ACTIONS",
+	"action_primary": "Primary Action",
+	"action_secondary": "Secondary Action",
+	"interact": "Interact 1",
+	"interact2": "Interact 2",
+	"reload": "Reload",
+	"quickslot_1": "Quickslot 1",
+	"quickslot_2": "Quickslot 2",
+	"quickslot_3": "Quickslot 3",
+	"quickslot_4": "Quickslot 4",
+	"separator_inventory": "MENUS",
+	"menu": "Pause",
+	"inventory": "Inventory",
+	"inventory_drop_item": "Quick Drop Item",
+	"inventory_move_item": "Move Item",
+	"inventory_use_item": "Use Item",
+}
+
 
 func _ready() -> void:
 	# GAMEPLAY
@@ -94,6 +126,8 @@ func _ready() -> void:
 	music_volume_slider.hslider.value_changed.connect(_on_music_volume_slider_value_changed)
 	
 	load_options()
+	load_keybindings_from_config()
+	create_action_remap_items()
 
 
 # Called from outside initializes the options menu
@@ -152,6 +186,11 @@ func refresh_render():
 	get_window().size = render_resolution
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
+	
+	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
+	var msaa_3d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_3d_key, 0)
+	set_msaa("msaa_2d", msaa_2d)
+	set_msaa("msaa_3d", msaa_3d)
 
 
 # Function to change resolution. Hooked up to the resolution_option_button.
@@ -172,7 +211,6 @@ func _on_music_volume_slider_value_changed(value):
 
 # Sets the volume for the given audio bus
 func set_volume(bus_index, value):
-	print("Setting volume on bus_index ", bus_index, " to ", value)
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
 
 
@@ -194,14 +232,17 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, sfx_volume_slider.hslider.value)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, music_volume_slider.hslider.value)
 	
-	config.save(OptionsConstants.config_file_name)
+	if	config.save(OptionsConstants.config_file_name) != OK:
+		CogitoMain.debug_log(true, "OptionsTabMenu.gd", "Saving config file failed.")
+	else:
+		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Saving config file OK")
 
 
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
 func load_options(skip_applying:bool = false):
 	var err = config.load(OptionsConstants.config_file_name)
 	if err != 0:
-		print("Loading options config failed. Assuming and saving defaults.")
+		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Loading options config failed. Assuming and saving defaults.")
 	
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var toggle_crouching = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
@@ -324,11 +365,46 @@ func set_msaa(mode, index):
 			get_viewport().set(mode,Viewport.MSAA_8X)
 
 
+func load_keybindings_from_config():
+	var err = config.load(OptionsConstants.config_file_name)
+	if err != 0:
+		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Keybindings: Loading options config failed.")
+		#save_keybindings_to_config()
+		
+	var serialized_inputs = config.get_value(OptionsConstants.key_binds, OptionsConstants.input_helper_string)
+	if serialized_inputs:
+		InputHelper.deserialize_inputs_for_actions(serialized_inputs)
+	else:
+		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Keybindings: No saved bindings found.")
+
+
+
+func save_keybindings_to_config():
+	var serialized_inputs = InputHelper.serialize_inputs_for_actions()
+	config.set_value(OptionsConstants.key_binds, OptionsConstants.input_helper_string, serialized_inputs)
+	config.save(OptionsConstants.config_file_name)
+
+	
+func create_action_remap_items() -> void:
+	for action in input_actions:
+		if action.contains("separator"):
+			var separator = separator_entry.instantiate()
+			bindings_container.add_child(separator)
+			separator.separator_text = input_actions[action]
+		else:
+			var input_entry = remap_entry.instantiate()
+			input_entry.action = action
+			bindings_container.add_child(input_entry)
+			input_entry.label.text = input_actions[action]
+
+
+
 func _on_apply_changes_pressed() -> void:
 	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
+	save_options()
 	if have_options_changed:
 		refresh_render()
-	save_options()
+	
 	options_updated.emit()
 
 func _on_tab_menu_resume():

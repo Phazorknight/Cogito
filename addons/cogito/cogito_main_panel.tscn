@@ -45,6 +45,7 @@ layout_mode = 2
 
 [node name="CheckBox_PrintLogs" type="CheckBox" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "When active, Cogito will log debugging info in the output."
 text = "Print logs"
 
 [node name="SaveSystem" type="PanelContainer" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer"]
@@ -61,6 +62,7 @@ horizontal_alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "This string is added to player state save files before the slot name."
 
 [node name="Label" type="Label" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -75,6 +77,7 @@ max_length = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "This string is added to scene state save files before the slot name."
 
 [node name="Label" type="Label" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -101,6 +104,7 @@ horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/SceneSettings/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "The length of fade-out when activating a scene transition, in seconds."
 
 [node name="Label" type="Label" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/SceneSettings/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -127,13 +131,14 @@ horizontal_alignment = 1
 [node name="Warning" type="RichTextLabel" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(1, 0, 0, 1)
-text = "Warning: This will reset any changes to the Cogito InputMap and restart the editor!
-(WORK IN PROGRESS)"
+text = "Warning: This will reset any changes to the project's InputMap and restart the editor!
+"
 fit_content = true
 shortcut_keys_enabled = false
 
 [node name="Btn_ResetInputMap" type="Button" parent="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Resets the projects input map to Cogito defaults."
 text = "Reset Input Map"
 
 [node name="About" type="PanelContainer" parent="TabContainer"]
@@ -145,6 +150,11 @@ metadata/_tab_index = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/About"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="TabContainer/About/VBoxContainer"]
+layout_mode = 2
+text = "Links"
+horizontal_alignment = 1
+
 [node name="Btn_GitHub" type="Button" parent="TabContainer/About/VBoxContainer"]
 layout_mode = 2
 text = "GitHub Repo"
@@ -153,6 +163,10 @@ text = "GitHub Repo"
 layout_mode = 2
 text = "Documentation"
 
+[node name="Btn_VideoTutorials" type="Button" parent="TabContainer/About/VBoxContainer"]
+layout_mode = 2
+text = "Video Tutorials"
+
 [connection signal="toggled" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/CheckBox_PrintLogs" to="." method="_on_check_box_print_logs_toggled"]
 [connection signal="text_submitted" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer/HBoxContainer2/lineedit_player_state" to="." method="_on_lineedit_player_state_text_submitted"]
 [connection signal="text_submitted" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/SaveSystem/VBoxContainer/HBoxContainer/lineedit_scene_state" to="." method="_on_lineedit_scene_state_text_submitted"]
@@ -160,3 +174,4 @@ text = "Documentation"
 [connection signal="pressed" from="TabContainer/General Settings/HBoxContainer/VBoxContainer/InputSettings/VBoxContainer/Btn_ResetInputMap" to="." method="_on_btn_reset_input_map_pressed"]
 [connection signal="pressed" from="TabContainer/About/VBoxContainer/Btn_GitHub" to="." method="_on_btn_git_hub_pressed"]
 [connection signal="pressed" from="TabContainer/About/VBoxContainer/Btn_Documentation" to="." method="_on_btn_documentation_pressed"]
+[connection signal="pressed" from="TabContainer/About/VBoxContainer/Btn_VideoTutorials" to="." method="_on_btn_video_tutorials_pressed"]

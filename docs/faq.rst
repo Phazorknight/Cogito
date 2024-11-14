@@ -16,9 +16,9 @@ Open the ``main_menu.tscn`` and find the ``MainMenu_SaveSlotManager`` node. Ther
 .. image:: cog_ChangeGameScene.JPG
     :alt: COGITO Change Game Scene
 
+
 My own objects aren't working!
 ------------------------------
-
 There are a few reasons for them to not be working, so here's a checklist:
 
 * Make sure your interactive object has a ``CollisionShape3D`` and is set to the right layers.
@@ -35,7 +35,6 @@ COGITO uses this to identify which node is the parent to spawned objects (like d
 
 How do I get a reference to the player?
 ---------------------------------------
-
 There are multiple ways to get a reference to the player node.
 * Pass the player node directly with your signal/method. For example, if you use a node that has body_entered / body_exited signals, then these signals pass a ``body`` argument which references the node. You can then easily check if it's in the group "Player" to make sure you have the player node.
 * Find the node that's in the "Player" group.
