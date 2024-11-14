@@ -1,7 +1,6 @@
 class_name InteractionRayCast
 extends RayCast3D
 
-
 signal interactable_seen(interactable)
 signal interactable_unseen()
 

@@ -38,7 +38,7 @@ var interaction_texture : Texture2D
 @onready var wieldable_hud: PanelContainer = $MarginContainer_BottomUI/WieldableHud # Displays wieldable icons and data. Hides when no wieldable equipped.
 @onready var prompt_area: Control = $PromptArea
 @onready var hint_area: Control = $HintArea
-@onready var ui_attribute_area : VBoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
+@onready var ui_attribute_area : BoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
 @onready var ui_currency_area: VBoxContainer = $InventoryInterface/VBoxContainer/PlayerCurrencies/MarginContainer/VBoxContainer
 @onready var crosshair: Control = $Crosshair
 
@@ -46,6 +46,9 @@ var interaction_texture : Texture2D
 
 
 func _ready():
+	# TESTING THIS
+	set_process_unhandled_input(false)
+	
 	# Connect to signal that detects change of input device
 	InputHelper.device_changed.connect(_on_input_device_change)
 	# Calling this function once to set proper input icons
@@ -119,7 +122,7 @@ func instantiate_player_currency_ui():
 
 func connect_to_external_inventories(): # Grabbing external inventories in scene.
 	for node in get_tree().get_nodes_in_group("external_inventory"):
-		print("Is in external_inventory group: ", node)
+		CogitoMain.debug_log(true, "player_hud_manager", node.name + " is in external_inventory group.")
 		if !node.is_connected("toggle_inventory",toggle_inventory_interface):
 			node.toggle_inventory.connect(toggle_inventory_interface)
 
@@ -206,11 +209,6 @@ func _on_set_use_prompt(_passed_use_text):
 	print("Player HUD manager: _on_set_use_prompt called")
 	# DEPRECATED: Showing these prompts felt increasingly useless.
 	pass
-	#primary_use_label.text = passed_use_text
-	#if passed_use_text != "":
-		#primary_use_icon.show()
-	#else:
-		#primary_use_icon.hide()
 
 
 # Updating HUD wieldable data, used for stuff like flashlight battery charge, ammo display, etc

@@ -13,7 +13,7 @@ func equip(_player_interaction_component: PlayerInteractionComponent):
 	player_interaction_component.updated_wieldable_data.emit(null,0,null)
 	
 	animation_player.play(anim_equip)
-	await get_tree().create_timer(animation_player.current_animation_length).timeout
+	#await get_tree().create_timer(animation_player.current_animation_length).timeout
 	
 	item_reference.is_being_wielded = false
 	player_interaction_component.change_wieldable_to(null)

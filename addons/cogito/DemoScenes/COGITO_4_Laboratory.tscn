@@ -63,12 +63,12 @@
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
 
-[sub_resource type="Sky" id="Sky_h3ipr"]
+[sub_resource type="Sky" id="Sky_l7ydc"]
 sky_material = SubResource("PanoramaSkyMaterial_wjbty")
 
 [sub_resource type="Environment" id="Environment_obnk3"]
 background_mode = 2
-sky = SubResource("Sky_h3ipr")
+sky = SubResource("Sky_l7ydc")
 sky_rotation = Vector3(0, 1.74533, 0.174533)
 ambient_light_sky_contribution = 0.1
 ambient_light_energy = 0.2
@@ -86,7 +86,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_8my1s"]
+[sub_resource type="Resource" id="Resource_xv2ii"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -574,7 +574,7 @@ resource_name = "metal"
 albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
 emission_enabled = true
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_nvyq1"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_cxsl0"]
 _surfaces = [{
 "aabb": AABB(0, 0, -1.39449, 0.894, 0.996234, 1.3945),
 "format": 34896613377,
@@ -648,7 +648,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("PiH+//7/VNUAAAAA/v9U1T4h/v8AAFTVAAAAAAAAVNWr0wAAAAD//4G9jhsAAP//AAAAAAAA//8+If7/AAD//4G9HWsAAP////8dawAA/////46zAAD//wBv/v8AAP//lsiOGwAA//+BvY4b/v9U1YG9HWv+/1TVgb2OGwAAVNWBvR1rAABU1T4h/v/+/1TVPiH+/wAAVNUAb/7//v9U1QBv/v8AAFTV//8da/7///+BvR1r/v//////jrP+////PiH+//7///+BvY4b/v///wAAAAD+////lsiOG/7///+r0wAA/v///wBv/v/+////gb2OG/7/VNWBvY4bAABU1ZbIjhv+/1TVlsiOGwAAVNWBvR1rAABU1YG9HWv+/1TV//8dawAAVNX//x1r/v9U1avTAAD+/1TVlsiOG/7/VNWr0wAAAABU1ZbIjhsAAFTVAAAAAAAAVNUAAAAA/v9U1avTAAAAAFTVq9MAAP7/VNUAb/7/AABU1WuBSPYC81TVAG/+//7/VNX//46z/v9U1ZPtQ70C81TVk+1DvfwMVNVrgUj2/AxU1f//jrMAAFTV//8da/7/VNX//46z/v9U1f//HWsAAFTV//+OswAAVNVrgUO9AvNU1WuBSPYC81TVa4FDvfwMVNVrgUj2/AxU1WuBQ738DFTVa4FI9gLzVNWT7UO9/Az//2uBQ738DP//a4FI9vwM//9rgUO9AvP//5PtQ70C8///a4FI9gLz//9rgUO9AvP/v2uBQ738DP+/k+1DvQLz/7+T7UO9/Az/v1uNovJbjaLyW42i8luNovL/f////3////9/////f////3////9/////f////3////9/////fwAA/38AAP9/AAD/fwAA////f////3////9/////f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f////3////9/////f////38AAP9/AAD/fwAA/38AAP9/8KHwIfCh8CHwofAh8KHwIQAA/38AAP9/AAD/fwAA/3+g0KFQoNChUKDQoVCg0KFQoNChUKDQoVCg0KFQoNChUP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/f/9//3//f/9//3//f////3////9///////9/////f////3////9/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_nvyq1")
+shadow_mesh = SubResource("ArrayMesh_cxsl0")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_j3b43"]
 data = PackedVector3Array(0.1161, 0.9962, -1.3945, 0.1161, 0.9962, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.3945, 0.1161, 0.9962, -1.3945, 0, 0, -1.3945, 0.7392, 0, -1.3945, 0.6618, 0.1072, -1.3945, 0.6618, 0.1072, -1.3945, 0.1161, 0.9962, -1.3945, 0, 0, -1.3945, 0.6618, 0.1072, -1.3945, 0.6618, 0.4168, -1.3945, 0.1161, 0.9962, -1.3945, 0.6618, 0.4168, -1.3945, 0.894, 0.4168, -1.3945, 0.1161, 0.9962, -1.3945, 0.894, 0.4168, -1.3945, 0.894, 0.6988, -1.3945, 0.1161, 0.9962, -1.3945, 0.894, 0.6988, -1.3945, 0.3876, 0.9962, -1.3945, 0.1161, 0.9962, -1.3945, 0.7005, 0.1072, -1.3945, 0.6618, 0.1072, -1.3945, 0.7392, 0, -1.3945, 0.6618, 0.1072, -1.3945, 0.6618, 0.1072, 0, 0.6618, 0.4168, 0, 0.6618, 0.4168, 0, 0.6618, 0.4168, -1.3945, 0.6618, 0.1072, -1.3945, 0.3876, 0.9962, 0, 0.1161, 0.9962, 0, 0.1161, 0.9962, -1.3945, 0.1161, 0.9962, -1.3945, 0.3876, 0.9962, -1.3945, 0.3876, 0.9962, 0, 0.894, 0.6988, 0, 0.894, 0.4168, 0, 0.6618, 0.4168, 0, 0.1161, 0.9962, 0, 0.894, 0.6988, 0, 0.6618, 0.4168, 0, 0.1161, 0.9962, 0, 0.6618, 0.4168, 0, 0.6618, 0.1072, 0, 0, 0, 0, 0.1161, 0.9962, 0, 0.6618, 0.1072, 0, 0, 0, 0, 0.6618, 0.1072, 0, 0.7005, 0.1072, 0, 0.7005, 0.1072, 0, 0.7392, 0, 0, 0, 0, 0, 0.1161, 0.9962, 0, 0.3876, 0.9962, 0, 0.894, 0.6988, 0, 0.7005, 0.1072, 0, 0.6618, 0.1072, 0, 0.6618, 0.1072, -1.3945, 0.6618, 0.1072, -1.3945, 0.7005, 0.1072, -1.3945, 0.7005, 0.1072, 0, 0.894, 0.4168, -1.3945, 0.6618, 0.4168, -1.3945, 0.6618, 0.4168, 0, 0.6618, 0.4168, 0, 0.894, 0.4168, 0, 0.894, 0.4168, -1.3945, 0.7392, 0, -1.3945, 0.7392, 0, 0, 0.7005, 0.1072, 0, 0.7005, 0.1072, 0, 0.7005, 0.1072, -1.3945, 0.7392, 0, -1.3945, 0.7392, 0, -1.3945, 0, 0, -1.3945, 0, 0, 0, 0, 0, 0, 0.7392, 0, 0, 0.7392, 0, -1.3945, 0.3876, 0.9962, 0, 0.3876, 0.9962, -1.3945, 0.452, 0.9584, -0.0707, 0.452, 0.9584, -0.0707, 0.894, 0.6988, 0, 0.3876, 0.9962, 0, 0.452, 0.9584, -0.0707, 0.8297, 0.7365, -0.0707, 0.894, 0.6988, 0, 0.8297, 0.7365, -0.0707, 0.8297, 0.7365, -1.3238, 0.894, 0.6988, 0, 0.452, 0.9584, -1.3238, 0.452, 0.9584, -0.0707, 0.3876, 0.9962, -1.3945, 0.3876, 0.9962, -1.3945, 0.894, 0.6988, -1.3945, 0.452, 0.9584, -1.3238, 0.894, 0.6988, -1.3945, 0.8297, 0.7365, -1.3238, 0.452, 0.9584, -1.3238, 0.894, 0.6988, -1.3945, 0.894, 0.6988, 0, 0.8297, 0.7365, -1.3238, 0.894, 0.4168, -1.3945, 0.894, 0.4168, 0, 0.894, 0.6988, 0, 0.894, 0.6988, 0, 0.894, 0.6988, -1.3945, 0.894, 0.4168, -1.3945, 0.452, 0.7365, -1.3238, 0.452, 0.7365, -0.0707, 0.452, 0.9584, -0.0707, 0.452, 0.9584, -0.0707, 0.452, 0.9584, -1.3238, 0.452, 0.7365, -1.3238, 0.452, 0.9584, -1.3238, 0.8297, 0.7365, -1.3238, 0.452, 0.7365, -1.3238, 0.452, 0.9584, -0.0707, 0.452, 0.7365, -0.0707, 0.8297, 0.7365, -0.0707, 0.8297, 0.7365, -0.0707, 0.452, 0.7365, -0.0707, 0.452, 0.7365, -1.3238, 0.452, 0.7365, -1.3238, 0.8297, 0.7365, -1.3238, 0.8297, 0.7365, -0.0707)
@@ -668,7 +668,7 @@ resource_name = "metalRed"
 albedo_color = Color(0.874166, 0.585568, 0.688203, 1)
 emission_enabled = true
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_ljn1g"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_xumkj"]
 _surfaces = [{
 "aabb": AABB(0, 0, -1.39449, 0.894, 0.996224, 1.3945),
 "format": 34896613377,
@@ -742,7 +742,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("gb2OG/7/VNWBvY4bAABU1ZbIjhv+/1TVlsiOGwAAVNWr0wAA/v9U1ZbIjhv+/1TVq9MAAAAAVNWWyI4bAABU1f//HWv+////gb0da/7//////46z/v///z4h///+////gb2OG/7///8AAAAA/v///5bIjhv+////q9MAAP7///8Ab////v///4G9HWsAAFTVgb0da/7/VNX//x1rAABU1f//HWv+/1TVgb2OG/7/VNWBvR1r/v9U1YG9jhsAAFTVgb0dawAAVNU+If///v9U1QAAAAD+/1TVPiH//wAAVNUAAAAAAABU1T4h///+/1TVPiH//wAAVNUAb////v9U1QBv//8AAFTVAAAAAAAAVNUAAAAA/v9U1avTAAAAAFTVq9MAAP7/VNWr0wAAAAD//4G9jhsAAP//AAAAAAAA//8+If//AAD//4G9HWsAAP////8dawAA/////46zAAD//wBv//8AAP//lsiOGwAA/////x1r/v9U1f//jrP+/1TV//8dawAAVNX//46zAABU1QBv//8AAFTVa4FJ9gLzVNUAb////v9U1f//jrP+/1TVk+1EvQLzVNWT7US9/AxU1WuBSfb8DFTV//+OswAAVNV8lbTre04nyoLZ2Md7TifKgtnYx+gbJ8p8lbTr6Bsnyv///3////9/////f////3/wofAh8KHwIfCh8CHwofAh/3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9/AAD/fwAA/38AAP9/AAD/f/9/AAD/fwAA/38AAP9/AABbjaLyW42i8luNovJbjaLy////f////3////9/////fwAA/38AAP9/AAD/fwAA/3//f////3////9/////f////3////9/////f////3////9/////fwAA/38AAP9/AAD/fwAAoNChUKDQoVCg0KFQoNChUKDQoVCg0KFQoNChUKDQoVBQxCgiUMQoIlDEKCJQxCgi")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_ljn1g")
+shadow_mesh = SubResource("ArrayMesh_xumkj")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dvhp1"]
 size = Vector3(0.895866, 0.710388, 1.39068)
@@ -899,7 +899,7 @@ environment = SubResource("Environment_obnk3")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_8my1s")
+inventory_data = SubResource("Resource_xv2ii")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -2989,10 +2989,10 @@ transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37
 transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
 
 [node name="HealthPotion" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("37_0wxqc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.393674, 1.21509, -11.2257)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0588015, 1.21509, -11.2257)
 
 [node name="HealthPotion2" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("37_0wxqc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.064918, 1.21509, -11.2257)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27771, 1.21509, -11.2257)
 
 [node name="HealthPotion3" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("37_0wxqc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
@@ -3410,7 +3410,7 @@ transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 0, 4)
 
 [node name="HealthExtension" parent="." instance=ExtResource("59_aok6v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.790922, -5.68077)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.663539, 1.20757, -11.0947)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="body_entered" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_A" method="_on_body_entered"]
