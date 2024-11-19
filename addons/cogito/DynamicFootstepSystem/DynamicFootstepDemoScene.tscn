@@ -25,9 +25,9 @@
 resource_local_to_scene = true
 script = ExtResource("2_ivcyr")
 grid = true
-starter_inventory = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+starter_inventory = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
 inventory_size = Vector2i(5, 3)
-inventory_slots = Array[Resource("res://COGITO/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+inventory_slots = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_4k1rk"]
 material = ExtResource("1_xlgi6")
