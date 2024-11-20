@@ -2,33 +2,23 @@
 extends Node
 
 var cogito_settings : CogitoSettings
-var cogito_settings_file := "res://addons/cogito/CogitoSettings.tres"
+var cogito_settings_filepath := "res://addons/cogito/CogitoSettings.tres"
 
 ### Cached settings
-var is_logging : bool:
-	set(value):
-		is_logging = value
-		cogito_settings.is_logging = is_logging
-		save_cogito_settings()
-
+var is_logging : bool
 var player_state_prefix : String
 var scene_state_prefix : String
-
-var default_transition_duration : float:
-	set(value):
-		default_transition_duration = value
-		cogito_settings.default_transition_duration = default_transition_duration
-		save_cogito_settings()
+var default_transition_duration : float
 
 
-func _enter_tree() -> void:
-	load_cogito_project_settings.call_deferred()
+func _ready() -> void:
+	load_cogito_project_settings()
 
 
 func load_cogito_project_settings():
-	if ResourceLoader.exists(cogito_settings_file):
-		cogito_settings = ResourceLoader.load(cogito_settings_file, "", ResourceLoader.CACHE_MODE_IGNORE)
-		print("COGITO: Existing cogito settings loaded.")
+	if ResourceLoader.exists(cogito_settings_filepath):
+		cogito_settings = ResourceLoader.load(cogito_settings_filepath, "", ResourceLoader.CACHE_MODE_IGNORE)
+		print("COGITO: cogito settings loaded: ", cogito_settings_filepath)
 		
 		is_logging = cogito_settings.is_logging
 		player_state_prefix = cogito_settings.player_state_prefix
@@ -37,13 +27,6 @@ func load_cogito_project_settings():
 		
 	else:
 		print("COGITO: No cogito settings found.")
-
-
-
-func save_cogito_settings():
-	if cogito_settings:
-		if ResourceSaver.save(cogito_settings, cogito_settings_file, ResourceSaver.FLAG_CHANGE_PATH) == OK:
-			print("Cogito: CogitoSettings saved.")
 
 
 func debug_log(log_this: bool, _class: String, _message: String) -> void:
@@ -61,26 +44,6 @@ func _on_lineedit_fade_duration_text_changed(new_text: String) -> void:
 	else:
 		push_error("Must enter valid float value.")
 		default_transition_duration = .5
-
-
-func _on_lineedit_player_state_text_submitted(new_text: String) -> void:
-	if new_text.is_valid_filename():
-		cogito_settings.player_state_prefix = new_text
-	else:
-		push_error("Text must not contain invalid characters")
-		cogito_settings.player_state_prefix = "COGITO_player_state_"
-		
-	save_cogito_settings()
-
-
-func _on_lineedit_scene_state_text_submitted(new_text: String) -> void:
-	if new_text.is_valid_filename():
-		cogito_settings.scene_state_prefix = new_text
-	else:
-		push_error("Text must not contain invalid characters")
-		cogito_settings.scene_state_prefix = "COGITO_scene_state_"
-	
-	save_cogito_settings()
 
 
 func _on_btn_git_hub_pressed() -> void:

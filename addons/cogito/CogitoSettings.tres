@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CogitoSettings" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CogitoSettings" load_steps=2 format=3 uid="uid://ds73ojp51jrk0"]
 
 [ext_resource type="Script" path="res://addons/cogito/cogito_settings.gd" id="1_usejk"]
 
@@ -7,4 +7,4 @@ script = ExtResource("1_usejk")
 is_logging = false
 scene_state_prefix = "COGITO_scene_state_"
 player_state_prefix = "COGITO_player_state_"
-default_transition_duration = 8.0
+default_transition_duration = 0.5

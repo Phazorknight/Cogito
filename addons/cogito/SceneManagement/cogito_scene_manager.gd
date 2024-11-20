@@ -32,11 +32,11 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 #@export var cogito_scene_state_prefix : String = "COGITO_scene_state_"
 #@export var cogito_player_state_prefix : String = "COGITO_player_state_"
 
-var cogito_scene_state_prefix : String = CogitoMain.scene_state_prefix
-var cogito_player_state_prefix : String = CogitoMain.player_state_prefix
+var cogito_scene_state_prefix : String = CogitoGlobals.scene_state_prefix
+var cogito_player_state_prefix : String = CogitoGlobals.player_state_prefix
 
 #@export var default_fade_duration : float = .4
-@export var default_fade_duration : float = CogitoMain.default_transition_duration
+@export var default_fade_duration : float = CogitoGlobals.default_transition_duration
 @export var fade_panel : Panel = null
 
 func _ready() -> void:
@@ -51,19 +51,19 @@ func switch_active_slot_to(slot_name:String):
 	_player_state = null
 	_player_state = get_existing_player_state(slot_name)
 	if !_player_state:
-		CogitoMain.debug_log(true,"CSM","Existing player state for slot " + slot_name + " not found.")
+		CogitoGlobals.debug_log(true,"CSM","Existing player state for slot " + slot_name + " not found.")
 	_active_slot = slot_name
-	CogitoMain.debug_log(true,"CSM","Active slot switched to " + _active_slot)
+	CogitoGlobals.debug_log(true,"CSM","Active slot switched to " + _active_slot)
 	
 
 func get_existing_player_state(passed_slot) -> CogitoPlayerState:
 	var player_state_file : String = cogito_state_dir + passed_slot + "/" + cogito_player_state_prefix + ".res"
-	CogitoMain.debug_log(true,"CSM","Looking for file: "+ player_state_file)
+	CogitoGlobals.debug_log(true,"CSM","Looking for file: "+ player_state_file)
 	if ResourceLoader.exists(player_state_file):
-		CogitoMain.debug_log(true,"CSM","CSM: Get existing player state: found for slot "+ passed_slot)
+		CogitoGlobals.debug_log(true,"CSM","CSM: Get existing player state: found for slot "+ passed_slot)
 		return ResourceLoader.load(player_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)
 	else:
-		CogitoMain.debug_log(true,"CSM","Get existing player state: No player state found for slot "+ passed_slot)
+		CogitoGlobals.debug_log(true,"CSM","Get existing player state: No player state found for slot "+ passed_slot)
 		return null
 
 
@@ -71,46 +71,46 @@ func get_existing_scene_state(passed_slot) -> CogitoSceneState:
 	var current_scene : String = ""
 	if _player_state:
 		current_scene = _player_state.player_current_scene
-	var scene_state_file : String = cogito_state_dir + passed_slot + "/" + CogitoMain.scene_state_prefix + current_scene + ".res"
-	CogitoMain.debug_log(true,"CSM","Looking for file: "+ scene_state_file)
+	var scene_state_file : String = cogito_state_dir + passed_slot + "/" + CogitoGlobals.scene_state_prefix + current_scene + ".res"
+	CogitoGlobals.debug_log(true,"CSM","Looking for file: "+ scene_state_file)
 	if ResourceLoader.exists(scene_state_file):
-		CogitoMain.debug_log(true,"CSM","Get existing scene state: found for slot "+ passed_slot)
+		CogitoGlobals.debug_log(true,"CSM","Get existing scene state: found for slot "+ passed_slot)
 		return ResourceLoader.load(scene_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)
 	else:
-		CogitoMain.debug_log(true,"CSM","Get existing scene state: No scene state found for slot "+ passed_slot)
+		CogitoGlobals.debug_log(true,"CSM","Get existing scene state: No scene state found for slot "+ passed_slot)
 		return null
 
 
 func loading_saved_game(passed_slot: String):
-	CogitoMain.debug_log(true,"CSM","CSM: Loading saved game from slot "+ passed_slot)
+	CogitoGlobals.debug_log(true,"CSM","CSM: Loading saved game from slot "+ passed_slot)
 	if !_player_state or !_player_state.state_exists(passed_slot):
-		CogitoMain.debug_log(true,"CSM","CSM: Player state of passed slot doesn't exist.")
+		CogitoGlobals.debug_log(true,"CSM","CSM: Player state of passed slot doesn't exist.")
 		return
 		
 	_player_state = _player_state.load_state(_active_slot) as CogitoPlayerState
 	
-	CogitoMain.debug_log(true,"CSM","Current scene detected as "+ get_tree().current_scene.get_name())
+	CogitoGlobals.debug_log(true,"CSM","Current scene detected as "+ get_tree().current_scene.get_name())
 	# Check if player is currently in the same scene as in the game that is being attempted to load:
 	if _current_scene_name == _player_state.player_current_scene:
 		# ABOVE used to be: get_tree().current_scene.get_name() == 
-		CogitoMain.debug_log(true,"CSM","Player state for slot "+ passed_slot+ " is from current scene.")
+		CogitoGlobals.debug_log(true,"CSM","Player state for slot "+ passed_slot+ " is from current scene.")
 		# Do a simple scene state load and player state load.
 		load_scene_state(_player_state.player_current_scene, passed_slot)
 		load_player_state(_current_player_node, passed_slot)
 	else:
 		# Transition to target scene and then attempt to load the saved game again.
-		CogitoMain.debug_log(true,"CSM","Player state for slot "+ passed_slot + " is in different scene (" + _player_state.player_current_scene + "). Transitioning...")
+		CogitoGlobals.debug_log(true,"CSM","Player state for slot "+ passed_slot + " is in different scene (" + _player_state.player_current_scene + "). Transitioning...")
 		load_next_scene(_player_state.player_current_scene_path, "", passed_slot, CogitoSceneLoadMode.LOAD_SAVE) 
 
 
 
 #region PLAYER SAVE HANDLING
 func load_player_state(player, passed_slot:String):
-	CogitoMain.debug_log(true,"CSM","Loading player state...")
+	CogitoGlobals.debug_log(true,"CSM","Loading player state...")
 	if !_player_state:
 		_player_state = CogitoPlayerState.new()
 	if _player_state and _player_state.state_exists(passed_slot):
-		CogitoMain.debug_log(true,"CSM","Player State in slot " + passed_slot + " exists. Loading " + str(_player_state))
+		CogitoGlobals.debug_log(true,"CSM","Player State in slot " + passed_slot + " exists. Loading " + str(_player_state))
 		_player_state = _player_state.load_state(passed_slot) as CogitoPlayerState
 		
 		# Applying the save state to player node.
@@ -138,7 +138,7 @@ func load_player_state(player, passed_slot:String):
 			else:
 				for slot in player.inventory_data.inventory_slots:
 					if slot and slot.inventory_item and slot.inventory_item == data["resource"]:
-						CogitoMain.debug_log(true,"CSM","Match found: " + str(slot.inventory_item))
+						CogitoGlobals.debug_log(true,"CSM","Match found: " + str(slot.inventory_item))
 						slot.inventory_item.charge_current = data["charge_current"]
 						
 		player.inventory_data.force_inventory_update()
@@ -178,15 +178,15 @@ func load_player_state(player, passed_slot:String):
 			player.player_interaction_component.set_state.call_deferred() #Calling this deferred as some state calls need to make sure the scene is finished loading.
 		
 		player.player_state_loaded.emit()
-		CogitoSceneManager.fade_in()
+		fade_in()
 	else:
-		CogitoMain.debug_log(true,"CSM","Player state of slot " + passed_slot + " doesn't exist.")
+		CogitoGlobals.debug_log(true,"CSM","Player state of slot " + passed_slot + " doesn't exist.")
 		
 
 
 func save_player_state(player, slot:String):
 	if !_player_state:
-		CogitoMain.debug_log(true,"CSM","State doesn't exist. Creating for slot " + slot + "...")
+		CogitoGlobals.debug_log(true,"CSM","State doesn't exist. Creating for slot " + slot + "...")
 		_player_state = CogitoPlayerState.new()
 	
 	# Writing the save state from current player node.
@@ -211,10 +211,10 @@ func save_player_state(player, slot:String):
 		if item_slot and item_slot.inventory_item and item_slot.inventory_item.has_method("update_wieldable_data"): #Checking for wieldables.
 			var item_save_data = item_slot.inventory_item.save()
 			_player_state.append_saved_wieldable_charges(item_save_data)
-			CogitoMain.debug_log(true,"CSM","Saved charge for " + str(item_slot.inventory_item) )
+			CogitoGlobals.debug_log(true,"CSM","Saved charge for " + str(item_slot.inventory_item) )
 	
 	_player_state.player_current_scene = _current_scene_name
-	CogitoMain.debug_log(true,"CSM","Save_player_state(): setting player_current_scene to " + _current_scene_name)
+	CogitoGlobals.debug_log(true,"CSM","Save_player_state(): setting player_current_scene to " + _current_scene_name)
 	_player_state.player_current_scene_path = _current_scene_path
 	_player_state.player_position = player.global_position
 	_player_state.player_rotation = player.body.global_rotation
@@ -255,7 +255,7 @@ func save_player_state(player, slot:String):
 		_screenshot_to_save.save_png(screenshot_path)
 		_player_state.player_state_screenshot_file = screenshot_path
 	else:
-		CogitoMain.debug_log(true,"CSM","CSM: No screenshot to save was passed.")
+		CogitoGlobals.debug_log(true,"CSM","CSM: No screenshot to save was passed.")
 	
 	## Getting time of saving
 	_player_state.player_state_savetime = int(Time.get_unix_time_from_system())
@@ -281,17 +281,17 @@ func get_active_slot_player_state_screenshot_path() -> String:
 
 
 func load_scene_state(_scene_name_to_load:String, slot:String):
-	CogitoMain.debug_log(true,"CSM","Load scene state for:"+ _scene_name_to_load+ ". Slot: "+ slot)
+	CogitoGlobals.debug_log(true,"CSM","Load scene state for:"+ _scene_name_to_load+ ". Slot: "+ slot)
 	if !_scene_state:
 		_scene_state = CogitoSceneState.new()
 	if _scene_state and _scene_state.state_exists(slot, _scene_name_to_load):
-		CogitoMain.debug_log(true,"CSM","Scene state exists. Loading " + str(_scene_state))
+		CogitoGlobals.debug_log(true,"CSM","Scene state exists. Loading " + str(_scene_state))
 		_scene_state = _scene_state.load_state(slot,_scene_name_to_load) as CogitoSceneState
 		
 		# Deleting all current nodes that are in the Persist group as to not clone objects.
 		var save_nodes = get_tree().get_nodes_in_group("Persist")
 		for i in save_nodes:
-			CogitoMain.debug_log(true,"CSM","Deleting existing node: "+ i.name)
+			CogitoGlobals.debug_log(true,"CSM","Deleting existing node: "+ i.name)
 			i.queue_free()
 			
 		var array_of_node_data = _scene_state.saved_nodes
@@ -299,7 +299,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 			var new_object = load(node_data["filename"]).instantiate()
 			if get_node(node_data["parent"]):
 				get_node(node_data["parent"]).add_child(new_object)
-				CogitoMain.debug_log(true,"CSM","Adding to scene: "+ new_object.get_name())
+				CogitoGlobals.debug_log(true,"CSM","Adding to scene: "+ new_object.get_name())
 				
 			new_object.position = Vector3(node_data["pos_x"],node_data["pos_y"],node_data["pos_z"])
 			new_object.rotation = Vector3(node_data["rot_x"],node_data["rot_y"],node_data["rot_z"])
@@ -316,7 +316,7 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 				new_object.set(data, node_data[data])
 			
 			if new_object.has_method("update_wieldable_data"): #Check if item is wieldable
-				CogitoMain.debug_log(true,"CSM","Setting charge of "+ new_object+ " to "+ node_data["item_charge"])
+				CogitoGlobals.debug_log(true,"CSM","Setting charge of "+ new_object+ " to "+ node_data["item_charge"])
 				new_object.slot_data.inventory_item.charge_current = node_data["item_charge"]
 				
 			new_object.set_state.call_deferred()
@@ -335,30 +335,30 @@ func load_scene_state(_scene_name_to_load:String, slot:String):
 				node_to_set.set(data, state_data[data])
 			node_to_set.set_state()
 		
-		CogitoMain.debug_log(true,"CSM","CSM: Loading scene state finished.")
+		CogitoGlobals.debug_log(true,"CSM","CSM: Loading scene state finished.")
 			
 	else:
-		CogitoMain.debug_log(true,"CSM","CSM: Scene state doesn't exist.")
+		CogitoGlobals.debug_log(true,"CSM","CSM: Scene state doesn't exist.")
 
 
 func save_scene_state(_scene_name_to_save, slot: String):
 	if !_scene_state:
-		CogitoMain.debug_log(true,"CSM","CSM: Save doesn't exist. Creating...")
+		CogitoGlobals.debug_log(true,"CSM","CSM: Save doesn't exist. Creating...")
 		_scene_state = CogitoSceneState.new()
 		
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
 	if !save_nodes:
-		CogitoMain.debug_log(true,"CSM","No nodes in Persist group!")
+		CogitoGlobals.debug_log(true,"CSM","No nodes in Persist group!")
 	else:
 		_scene_state.clear_saved_nodes() # Clearing out old saved nodes
 	
 		for node in save_nodes:
 			if node.scene_file_path.is_empty(): # Check the node is an instanced scene so it can be instanced again during load.
-				CogitoMain.debug_log(true,"CSM","persistent node '%s' is not an instanced scene, skipped" % node.name)
+				CogitoGlobals.debug_log(true,"CSM","persistent node '%s' is not an instanced scene, skipped" % node.name)
 				continue
 
 			if !node.has_method("save"): # Check the node has a save function.
-				CogitoMain.debug_log(true,"CSM","persistent node '%s' is missing a save() function, skipped" % node.name)
+				CogitoGlobals.debug_log(true,"CSM","persistent node '%s' is missing a save() function, skipped" % node.name)
 				continue
 				
 			# If the node is a RigidBody3D, then save the physics properties
@@ -378,13 +378,13 @@ func save_scene_state(_scene_name_to_save, slot: String):
 	# Saving states of objects
 	var state_nodes = get_tree().get_nodes_in_group("save_object_state")
 	if !state_nodes:
-		CogitoMain.debug_log(true,"CSM","No nodes in save_object_state group!")
+		CogitoGlobals.debug_log(true,"CSM","No nodes in save_object_state group!")
 	else:
 		_scene_state.clear_saved_states()
 		
 		for node in state_nodes:
 			if !node.has_method("save"): # Check the node has a save function.
-				CogitoMain.debug_log(true,"CSM","persistent node '%s' is missing a save() function, skipped" % node.name)
+				CogitoGlobals.debug_log(true,"CSM","persistent node '%s' is missing a save() function, skipped" % node.name)
 				continue
 				
 			_scene_state.add_state_data_to_array(node.save())
@@ -409,13 +409,13 @@ func delete_save(passed_slot: String) -> void:
 	#var file_to_remove = cogito_state_dir + cogito_player_state_prefix + passed_slot + ".res"
 	var dir_to_remove = cogito_state_dir + passed_slot
 	OS.move_to_trash(ProjectSettings.globalize_path(dir_to_remove))
-	CogitoMain.debug_log(true,"CSM","Save file removed: "+ dir_to_remove)
+	CogitoGlobals.debug_log(true,"CSM","Save file removed: "+ dir_to_remove)
 	
 	#var scene_to_remove = cogito_state_dir + cogito_scene_state_prefix + passed_slot + ".res"
 
 
 func copy_slot_saves_to_temp(passed_slot:String) -> bool:
-	CogitoMain.debug_log(true,"CSM","Attpemting to copy files from slot " + passed_slot + " to temp.")
+	CogitoGlobals.debug_log(true,"CSM","Attpemting to copy files from slot " + passed_slot + " to temp.")
 	var files : Dictionary
 	var slot_dir = DirAccess.open(cogito_state_dir + passed_slot)
 	
@@ -427,14 +427,14 @@ func copy_slot_saves_to_temp(passed_slot:String) -> bool:
 		var file_name = slot_dir.get_next()
 		
 		while file_name != "":
-			CogitoMain.debug_log(true,"CSM","Copying file to temp: "+ file_name)
+			CogitoGlobals.debug_log(true,"CSM","Copying file to temp: "+ file_name)
 			if slot_dir.copy(str(CogitoSceneManager.cogito_state_dir + passed_slot + "/" + file_name), str(CogitoSceneManager.cogito_state_dir + "temp/" + file_name), -1) != OK:
-				CogitoMain.debug_log(true,"CSM","Copying file "+ file_name + " failed.")
+				CogitoGlobals.debug_log(true,"CSM","Copying file "+ file_name + " failed.")
 				return false
 			# iterate to next file
 			file_name = slot_dir.get_next()
 	
-	CogitoMain.debug_log(true,"CSM", "Copying files to temp finished.")
+	CogitoGlobals.debug_log(true,"CSM", "Copying files to temp finished.")
 	
 	loading_saved_game("temp") # This loads the temp save states after moving them from the slot.
 	return true
@@ -442,7 +442,7 @@ func copy_slot_saves_to_temp(passed_slot:String) -> bool:
 	
 	
 func copy_temp_saves_to_slot(passed_slot:String) -> bool:
-	CogitoMain.debug_log(true,"CSM","Attpemting to copy files from temp to slot " + passed_slot)
+	CogitoGlobals.debug_log(true,"CSM","Attpemting to copy files from temp to slot " + passed_slot)
 	var files : Dictionary
 	var temp_dir = DirAccess.open(cogito_state_dir + "temp")
 	
@@ -454,19 +454,19 @@ func copy_temp_saves_to_slot(passed_slot:String) -> bool:
 		var file_name = temp_dir.get_next()
 		
 		while file_name != "":
-			CogitoMain.debug_log(true,"CSM","Copying file to temp: "+ file_name)
+			CogitoGlobals.debug_log(true,"CSM","Copying file to temp: "+ file_name)
 			if temp_dir.copy(str(CogitoSceneManager.cogito_state_dir + "temp/" + file_name), str(CogitoSceneManager.cogito_state_dir + passed_slot + "/" + file_name), -1) != OK:
-				CogitoMain.debug_log(true,"CSM","Copying file " + file_name + " failed.")
+				CogitoGlobals.debug_log(true,"CSM","Copying file " + file_name + " failed.")
 				return false
 			# iterate to next file
 			file_name = temp_dir.get_next()
 	
-	CogitoMain.debug_log(true,"CSM","Copying temp files to slot " + passed_slot + " finished.")
+	CogitoGlobals.debug_log(true,"CSM","Copying temp files to slot " + passed_slot + " finished.")
 	return true
 
 
 func delete_temp_saves():
-	CogitoMain.debug_log(true,"CSM","Attempting to delete temp saves...")
+	CogitoGlobals.debug_log(true,"CSM","Attempting to delete temp saves...")
 	
 	var scene_temp_files : Dictionary
 	var dir = DirAccess.open(cogito_state_dir + "temp/")
@@ -476,9 +476,9 @@ func delete_temp_saves():
 		var file_name = dir.get_next()
 		
 		while file_name != "":
-			CogitoMain.debug_log(true,"CSM","Deleting file: " + file_name)
+			CogitoGlobals.debug_log(true,"CSM","Deleting file: " + file_name)
 			if dir.remove(file_name) != OK:
-				CogitoMain.debug_log(true,"CSM","Deleting file " + file_name + " failed.")
+				CogitoGlobals.debug_log(true,"CSM","Deleting file " + file_name + " failed.")
 			# iterate to next file
 			file_name = dir.get_next()
 	
@@ -488,11 +488,11 @@ func delete_temp_saves():
 		var file_name = dir2.get_next()
 		while file_name != "":
 			if dir2.current_is_dir():
-				CogitoMain.debug_log(true,"CSM","Deleting temp saves: Detected dir = " + file_name)
+				CogitoGlobals.debug_log(true,"CSM","Deleting temp saves: Detected dir = " + file_name)
 				if file_name == "temp":
-					CogitoMain.debug_log(true,"CSM","Deleting temp directory: " + file_name)
+					CogitoGlobals.debug_log(true,"CSM","Deleting temp directory: " + file_name)
 					if dir2.remove(file_name) != OK:
-						CogitoMain.debug_log(true,"CSM","Deleting temp dir failed.")
+						CogitoGlobals.debug_log(true,"CSM","Deleting temp dir failed.")
 			file_name = dir2.get_next()
 
 
@@ -508,20 +508,20 @@ func reset_scene_states():
 		
 		while file_name != "":
 			if dir.current_is_dir():
-				CogitoMain.debug_log(true,"CSM","Found directory: " + file_name + ". skipping ahead.")
+				CogitoGlobals.debug_log(true,"CSM","Found directory: " + file_name + ". skipping ahead.")
 
 			# Look for _temp_ files
 			if file_name.find(cogito_scene_state_prefix,0) != -1:
-				CogitoMain.debug_log(true,"CSM","Found scene state file file: " + file_name)
+				CogitoGlobals.debug_log(true,"CSM","Found scene state file file: " + file_name)
 				if file_name.find("temp",0) != -1:
-					CogitoMain.debug_log(true,"CSM","This file is a temp scene state.")
+					CogitoGlobals.debug_log(true,"CSM","This file is a temp scene state.")
 					# DELETE HERE
 			
 			# iterate to next file
 			file_name = dir.get_next()
 			
 	else:
-		CogitoMain.debug_log(true,"CSM","An error occurred when trying to access the path.")
+		CogitoGlobals.debug_log(true,"CSM","An error occurred when trying to access the path.")
 
 
 func _exit_tree() -> void:

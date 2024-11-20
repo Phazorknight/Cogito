@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dtyn807e22vww"]
 
-[ext_resource type="Theme" uid="uid://leudtt5jh16a" path="res://addons/cogito_plugin/Theme/Cogito_Theme_A.tres" id="1_4m36a"]
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_4m36a"]
 
 [node name="Options_Display_Button" type="Control"]
 custom_minimum_size = Vector2(0, 40)

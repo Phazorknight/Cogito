@@ -122,7 +122,7 @@ func instantiate_player_currency_ui():
 
 func connect_to_external_inventories(): # Grabbing external inventories in scene.
 	for node in get_tree().get_nodes_in_group("external_inventory"):
-		CogitoMain.debug_log(true, "player_hud_manager", node.name + " is in external_inventory group.")
+		CogitoGlobals.debug_log(true, "player_hud_manager", node.name + " is in external_inventory group.")
 		if !node.is_connected("toggle_inventory",toggle_inventory_interface):
 			node.toggle_inventory.connect(toggle_inventory_interface)
 

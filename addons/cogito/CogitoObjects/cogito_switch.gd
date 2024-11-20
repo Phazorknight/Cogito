@@ -74,7 +74,7 @@ func interact(_player_interaction_component):
 			var inventory = player_interaction_component.get_parent().inventory_data
 			inventory.pick_up_slot_data(required_item_slot)
 			
-			CogitoMain.debug_log(true,"cogito_switch.gd","Item " + required_item_slot.inventory_item.name + " added to player inventory")
+			CogitoGlobals.debug_log(true,"cogito_switch.gd","Item " + required_item_slot.inventory_item.name + " added to player inventory")
 			is_holding_item = false
 			
 			if is_on: switch_off()
