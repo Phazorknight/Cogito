@@ -103,6 +103,10 @@ libraries = {
 
 [node name="InteractionRaycast" parent="Body/Neck/Head/Eyes/Camera" instance=ExtResource("10_2dndr")]
 
+[node name="CarryablePosition" type="Marker3D" parent="Body/Neck/Head/Eyes/Camera"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
 [node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
 script = ExtResource("12_lr21i")
@@ -127,7 +131,8 @@ landing_material_library = ExtResource("19_pc36t")
 wait_time = 0.5
 one_shot = true
 
-[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("wieldable_container") instance=ExtResource("20_4f25o")]
+[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("carryable_position", "wieldable_container") instance=ExtResource("20_4f25o")]
+carryable_position = NodePath("../Body/Neck/Head/Eyes/Camera/CarryablePosition")
 wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
 
 [node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("21_j3p88")]

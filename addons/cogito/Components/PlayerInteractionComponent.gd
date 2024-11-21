@@ -15,7 +15,7 @@ var device_id: int = -1  # Used for displaying correct input prompts depending o
 
 ## Raycast3D for interaction check.
 @export var interaction_raycast: InteractionRayCast
-
+@export var carryable_position: Node3D
 
 var interactable: # Updated via signals from InteractionRayCast
 	set = _set_interactable
@@ -40,7 +40,6 @@ var is_wielding: bool:
 	get: return equipped_wieldable_item != null
 	
 var player_rid
-
 
 func _ready():
 	pass
@@ -126,6 +125,25 @@ func get_interaction_raycast_tip(distance_offset: float) -> Vector3:
 		return interaction_raycast.get_collision_point()
 	else:
 		return destination_point
+
+
+func get_carryable_destination_point(distance_offset: float) -> Vector3:
+	if !carryable_position:
+		print("PIC: Error, no carryable position reference set!")
+		return self.global_position
+	
+	var destination_point = carryable_position.global_position - distance_offset * get_viewport().get_camera_3d().get_global_transform().basis.z
+	
+	if interaction_raycast.is_colliding():
+		var collision_point = interaction_raycast.get_collision_point()
+		
+		if interaction_raycast.global_position.distance_squared_to(destination_point) < interaction_raycast.global_position.distance_squared_to(collision_point):
+			return destination_point
+		else:
+			return collision_point
+	
+	return destination_point
+
 
 
 ### Carryable Management
