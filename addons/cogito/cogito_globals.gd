@@ -185,7 +185,8 @@ func _on_btn_reset_input_map_pressed() -> void:
 	save_input_action_to_settings("reload",keyboard_key,gamepad_button)
 	
 	# I've not found a way to update the project settings input map editor but to restart the whole editor.
-	EditorInterface.restart_editor(true)
+	# WARNING: NEEDS TO BE COMMENTED OUT FOR EXPORT as it will otherwise break your build.
+	# EditorInterface.restart_editor(true)
 
 
 func save_input_action_to_settings(input_name: String, input_kbm:InputEventWithModifiers, input_gamepad:InputEvent):

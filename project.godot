@@ -35,6 +35,10 @@ window/size/initial_position_type=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor]
+
+export/convert_text_resources_to_binary=false
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/cogito/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
