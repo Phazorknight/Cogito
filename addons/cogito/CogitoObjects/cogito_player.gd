@@ -251,8 +251,7 @@ func _ready():
 		pause_menu_node.resume.connect(_on_pause_menu_resume) # Hookup resume signal from Pause Menu
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
-
-		print("Player has no reference to pause menu.")
+		printerr("Player has no reference to pause menu.")
 	
 	#Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
@@ -260,7 +259,6 @@ func _ready():
 	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
 	
 	CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
-
 
 	call_deferred("slide_audio_init")
 
@@ -616,18 +614,15 @@ func _move_to_nearby_location(sittable):
 			randf_range(-0.1, 0.1),  # Degree of Y random actually makes this work better at finding candidates
 			randf_range(-0.1, 0.1)
 		).normalized()
-		#print(random_direction)
 		
 		var candidate_pos = seat_position + (random_direction * exit_distance)
 		candidate_pos.y = navmesh_offset_y  # to check navmesh at navmesh height
 
 		navigation_agent.target_position = candidate_pos
-		#print("Checking position: ", candidate_pos)
 
 		# Check if position is reachable
 		if navigation_agent.is_navigation_finished():
 			currently_tweening = true
-			#print("Found available location, moving there.", candidate_pos, attempts)
 			var tween = create_tween()
 			navigation_agent.target_position.y += 1 # To avoid player going through floor
 			tween.tween_property(self, "global_transform:origin", navigation_agent.target_position, sittable.tween_duration)
@@ -635,12 +630,10 @@ func _move_to_nearby_location(sittable):
 			tween.tween_callback(Callable(self, "_stand_up_finished"))
 			return
 		else:
-			#print("Position ", candidate_pos, " is not valid.")
 			exit_distance += step_increase
 			attempts += 1
 
 		if exit_distance > max_distance:
-			#print("Exceeded maximum exit distance. Distance has been reset")
 			exit_distance = 1
 
 	# If no valid location found, try leave node

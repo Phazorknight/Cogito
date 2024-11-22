@@ -32,7 +32,7 @@ theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
 current_tab = 0
 script = ExtResource("4_h483w")
-nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), null, NodePath("Bindings")]
+nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), NodePath("Bindings")]
 
 [node name="Gameplay" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 layout_mode = 2

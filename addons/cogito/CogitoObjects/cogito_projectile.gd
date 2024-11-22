@@ -38,19 +38,19 @@ func _on_body_entered(collider: Node):
 		
 	if collider.has_signal("damage_received"):
 		if( !collider.cogito_properties && !cogito_properties): # Case where neither projectile nor the object hit have properties defined.
-			print("Projectile: Collider nor projectile have CogitoProperties, damaging as usual.")
+			CogitoGlobals.debug_log(true, "cogito_projectile.gd", "Collider nor projectile have CogitoProperties, damaging as usual.")
 			deal_damage(collider)
 			return
 		
 		if( collider.cogito_properties && !cogito_properties): # Case were only collider has properties.
-			print("Projectile: Collider has CogitoProperties, currently ignoring these and damaging as usual.")
+			CogitoGlobals.debug_log(true, "cogito_projectile.gd", "Collider has CogitoProperties, currently ignoring these and damaging as usual.")
 			deal_damage(collider)
 
 		if( !collider.cogito_properties && cogito_properties): # Case where only the projectile has properties defined.
 			match cogito_properties.material_properties:
 				CogitoProperties.MaterialProperties.SOFT:
 					# Defining what happens if a soft projectile hits an object with no properties.
-					print("Projectile: Soft projectile does no damage per default.")
+					CogitoGlobals.debug_log(true, "cogito_projectile.gd", "Soft projectile does no damage per default.")
 					if destroy_on_impact:
 						die()
 					return
@@ -58,7 +58,7 @@ func _on_body_entered(collider: Node):
 		if( collider.cogito_properties && cogito_properties): # Case where both projectile and the object hit have properties defined.
 			if( cogito_properties.material_properties == CogitoProperties.MaterialProperties.SOFT && collider.cogito_properties.material_properties == CogitoProperties.MaterialProperties.SOFT):
 				# When both objects are soft, damage the hit object.
-				print("Projectile: Soft object hit, dealing damage.")
+				CogitoGlobals.debug_log(true, "cogito_projectile.gd", "Soft object hit, dealing damage.")
 				deal_damage(collider)
 			
 			# Manually setting the reaction collider and calling reactions on object hit, skipping the reaction threshold time.
@@ -85,7 +85,7 @@ func stick_to_object(collider: Node):
 	#self.angular_velocity = Vector3.ZERO
 
 func deal_damage(collider: Node):
-	print(self.name, ": dealing damage amount ", damage_amount, " on collider ", collider.name)
+	CogitoGlobals.debug_log(true, "cogito_projectile.gd", self.name + " dealing damage amount " + str(damage_amount) + " on collider " + collider.name)
 	collider.damage_received.emit(damage_amount)
 	if destroy_on_impact:
 		die()

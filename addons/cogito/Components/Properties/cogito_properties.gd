@@ -77,6 +77,8 @@ func _ready():
 	reaction_timer.timeout.connect(check_for_systemic_reactions)
 	damage_timer.timeout.connect(apply_burn_damage)
 	
+	await get_parent().is_node_ready()
+	
 	if ignite_on_ready:
 		set_on_fire()
 		
@@ -200,7 +202,7 @@ func set_on_fire():
 	if elemental_properties & ElementalProperties.FLAMMABLE:
 		is_on_fire = true
 		if spawn_on_ignite:
-			spawn_elemental_vfx(spawn_on_ignite)
+			spawn_elemental_vfx(spawn_on_ignite) 
 			Audio.play_sound_3d(audio_igniting).position = self.position
 		has_ignited.emit()
 		

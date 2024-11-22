@@ -8,7 +8,7 @@ var cogito_settings_filepath := "res://addons/cogito/CogitoSettings.tres"
 var is_logging : bool
 var player_state_prefix : String
 var scene_state_prefix : String
-var default_transition_duration : float
+var default_transition_duration : float = .4
 
 
 func _ready() -> void:

@@ -7,7 +7,7 @@ extends TabContainer
 @export var nodes_to_focus: Array[Control]
 
 func _input(event):
-	if !visible:
+	if !is_visible_in_tree():
 		return
 	
 	#Tab navigation

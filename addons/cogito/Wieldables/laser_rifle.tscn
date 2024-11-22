@@ -1,10 +1,33 @@
-[gd_scene load_steps=20 format=4 uid="uid://bb8pm2nk8hwon"]
+[gd_scene load_steps=25 format=4 uid="uid://bb8pm2nk8hwon"]
 
 [ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_laser_rifle.gd" id="1_2rut3"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://addons/cogito/Assets/Audio/Kenney/error_004.ogg" id="2_f7ale"]
 [ext_resource type="PackedScene" uid="uid://dnauxhdncgngx" path="res://addons/cogito/PackedScenes/laser_ray.tscn" id="2_ic084"]
 [ext_resource type="AnimationLibrary" uid="uid://c1du0rcgmr542" path="res://addons/cogito/Wieldables/Animations/Wieldable_LaserRifle.res" id="3_fjq23"]
 [ext_resource type="Script" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_fa3wp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk8qb"]
+emission_enabled = true
+emission = Color(1, 0.699167, 0.05, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="Curve" id="Curve_3xdev"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kkwew"]
+curve = SubResource("Curve_3xdev")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d1eos"]
+direction = Vector3(0, 0, -1)
+spread = 20.0
+initial_velocity_min = 6.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_kkwew")
+
+[sub_resource type="BoxMesh" id="BoxMesh_rxstj"]
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g84md"]
 resource_name = "metal"
@@ -301,10 +324,24 @@ anim_reload = "LaserRifle/reload"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0083878, 0, 0)
 bus = &"SFX"
 
-[node name="LaserRifleMesh" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.540302, 0.841471, 0, -0.841471, 0.540302, 0, -0.31, 0)
-visible = false
+[node name="MuzzleFlash" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010919, 0.093681, -0.341702)
+material_override = SubResource("StandardMaterial3D_kk8qb")
+cast_shadow = 0
+emitting = false
+amount = 16
+lifetime = 0.1
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_d1eos")
+draw_pass_1 = SubResource("BoxMesh_rxstj")
+
+[node name="LaserRifleMesh" type="Node3D" parent="." node_paths=PackedStringArray("tracked_nodes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("5_fa3wp")
+tracked_nodes = [NodePath("blasterA"), NodePath("clipA")]
 
 [node name="blasterA" type="MeshInstance3D" parent="LaserRifleMesh"]
 transform = Transform3D(-0.8, 0, 1.20797e-07, 0, 0.8, 0, -1.20797e-07, 0, -0.8, 0, 0, 0)
