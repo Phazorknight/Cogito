@@ -239,16 +239,16 @@ func save_options():
 	config.set_value(OptionsConstants.key_binds, OptionsConstants.input_helper_string, serialized_inputs)
 	
 	if	config.save(OptionsConstants.config_file_name) != OK:
-		CogitoMain.debug_log(true, "OptionsTabMenu.gd", "Saving config file failed.")
+		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd", "Saving config file failed.")
 	else:
-		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Saving config file OK")
+		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd","Saving config file OK")
 
 
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
 func load_options(skip_applying:bool = false):
 	var err = config.load(OptionsConstants.config_file_name)
 	if err != 0:
-		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Loading options config failed. Assuming and saving defaults.")
+		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd","Loading options config failed. Assuming and saving defaults.")
 	
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var toggle_crouching = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
@@ -374,14 +374,14 @@ func set_msaa(mode, index):
 func load_keybindings_from_config():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err != 0:
-		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Keybindings: Loading options config failed.")
+		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd","Keybindings: Loading options config failed.")
 		#save_keybindings_to_config()
 		
 	var serialized_inputs = config.get_value(OptionsConstants.key_binds, OptionsConstants.input_helper_string, serialized_default_inputs)
 	if serialized_inputs:
 		InputHelper.deserialize_inputs_for_actions(serialized_inputs)
 	else:
-		CogitoMain.debug_log(true, "OptionsTabMenu.gd","Keybindings: No saved bindings found.")
+		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd","Keybindings: No saved bindings found.")
 
 
 

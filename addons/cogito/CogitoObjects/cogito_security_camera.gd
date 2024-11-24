@@ -87,7 +87,6 @@ func searching():
 
 
 func start_detecting():
-	print("SecuirtyCamera: Starting detection.")
 	current_state = DetectorState.DETECTING
 	started_detecting.emit()
 	update_indicator_mesh()
@@ -96,7 +95,7 @@ func start_detecting():
 func detecting(delta: float):
 	detected_objects = find_visible_targets_within_detection_area()
 	if detected_objects.size() <= 0:
-		print("SecurityCamera DETECTING: No visible targets in detection area. Stopping detection.")
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "DETECTING: No visible targets in detection area. Stopping detection.")
 		stop_detecting()
 	
 	if detection_method == DetectionMethod.LIGHTMETER and lightmeter != null: 
@@ -107,7 +106,7 @@ func detecting(delta: float):
 		
 	if detection_time >= detection_threshold:
 		# === THIS IS WHERE THE FULL DETECTION HAPPENS ===
-		print("SecurityCamera: Detected!")
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Detected!")
 		current_state = DetectorState.DETECTED
 		start_alarm_light()
 		if !audio_stream_player_3d.playing:
@@ -118,7 +117,7 @@ func detecting(delta: float):
  
 
 func stop_detecting():
-	print("SecurityCamera: Stopping detection.")
+	CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Stopping detection.")
 	detection_time = 0
 	current_state = DetectorState.SEARCHING
 	object_no_longer_detected.emit()
@@ -152,7 +151,7 @@ func find_visible_targets_within_detection_area() -> Array[Node3D]:
 
 func object_visibile_for_detector(target: Node3D) -> bool:
 	detection_ray_cast_3d.set_target_position(to_local(target.global_position))
-	print("Security Camera: Checking if detector can see ", target.name, " at position ", target.global_position, ".")
+	CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Checking if detector can see " +  target.name + " at position " + str(target.global_position) )
 	var detected_object = detection_ray_cast_3d.get_collider()
 
 	if detected_object == target:
@@ -163,16 +162,17 @@ func object_visibile_for_detector(target: Node3D) -> bool:
 
 func on_body_entered_detection(body: Node3D):
 	if only_detect_player and body.is_in_group("Player"):
-		print("SecurityCamera: Player entered detection area: ", body)
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Player entered detection area: " + body.name)
 		objects_in_detection_area.append(body)
 
 	# For non-player objects, check they are in the non_player_detection_list, and not a player
 	elif !only_detect_player and !body.is_in_group("Player"):
 		if is_relevant_non_player(body):
-			print("SecurityCamera: Relevant object entered detection area: ", body)
+			CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Relevant object entered detection area: " + body.name)
 			objects_in_detection_area.append(body)
 	if detection_method == DetectionMethod.LIGHTMETER:
 		find_lightmeter(body) 	# Check for Lightmeter on any entered body, if using Lightmeter detection method
+
 
 func find_lightmeter(body):
 	var found_lightmeter: CogitoLightmeter = null
@@ -183,25 +183,25 @@ func find_lightmeter(body):
 
 	if found_lightmeter:
 		lightmeter = found_lightmeter
-		print("Lightmeter found on entity:", body.name)
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Lightmeter found on entity:" + body.name)
 	else:
-		print("No lightmeter found on entity:", body.name)
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "No lightmeter found on entity:"  + body.name)
+
 
 func is_relevant_non_player(body: Node3D) -> bool:
 	##TODO Better way of defining this than names array
 	if body.name in non_player_detection_list:
 		return true
 	else:
-		#print("SecurityCamera: Non-relevant object ignored:", body.name)
 		return false
 
 
 func on_body_left_detection(body: Node3D):
 	if only_detect_player and body.is_in_group("Player"):
-		print("SecurityCamera: Player left detection area: ", body)
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", "Player left detection area: " +  body.name)
 		objects_in_detection_area.erase(body)
 	elif is_relevant_non_player(body):
-		print("SecurityCamera:",body," left detection area: ")
+		CogitoGlobals.debug_log(true,"cogito_security_camera.gd", body.name + " left detection area: ")
 		objects_in_detection_area.erase(body)
 
 

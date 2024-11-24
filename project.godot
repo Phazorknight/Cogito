@@ -22,7 +22,7 @@ config/icon="res://addons/cogito/COGITO_icon.png"
 
 InputHelper="*res://addons/input_helper/input_helper.gd"
 Audio="*res://addons/quick_audio/./Audio.gd"
-CogitoMain="*res://addons/cogito/cogito_main.gd"
+CogitoGlobals="*res://addons/cogito/cogito_globals.gd"
 CogitoSceneManager="*res://addons/cogito/SceneManagement/cogito_scene_manager.gd"
 CogitoQuestManager="*res://addons/cogito/QuestSystem/cogito_quest_manager.gd"
 MenuTemplateManager="*res://addons/cogito/EasyMenus/Nodes/menu_template_manager.tscn"
@@ -34,6 +34,10 @@ window/size/viewport_height=720
 window/size/initial_position_type=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor]
+
+export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 

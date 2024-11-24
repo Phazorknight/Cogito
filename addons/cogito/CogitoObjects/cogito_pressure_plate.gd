@@ -89,14 +89,14 @@ func save():
 
 func _on_plate_body_exited(body: Node) -> void:
 	if body is CogitoObject:
-		CogitoMain.debug_log(true,"cogito_pressure_plate.gd", str(body) + " has exited.")
+		CogitoGlobals.debug_log(true,"cogito_pressure_plate.gd", str(body) + " has exited.")
 		weight_lifted()
 	if body is CogitoPlayer:
 		plate_node.constant_force = Vector3(0, 0, 0)
 
 
 func _on_plate_body_entered(body: Node) -> void:
-	CogitoMain.debug_log(true,"cogito_pressure_plate.gd","Detected " + body.name)
+	CogitoGlobals.debug_log(true,"cogito_pressure_plate.gd","Detected " + body.name)
 	if body.is_in_group("Player"):
-		CogitoMain.debug_log(true,"cogito_pressure_plate.gd", "Player detected. applying force.")
+		CogitoGlobals.debug_log(true,"cogito_pressure_plate.gd", "Player detected. applying force.")
 		plate_node.add_constant_central_force(Vector3(0,-3,0))

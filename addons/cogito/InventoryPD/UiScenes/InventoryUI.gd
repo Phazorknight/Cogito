@@ -37,7 +37,7 @@ func clear_inventory_data(inventory_data : CogitoInventory):
 
 
 func populate_item_grid(inventory_data : CogitoInventory) -> void:
-	CogitoMain.debug_log(true,"InventoryUI.gd", "Populate_item_grid called." )
+	CogitoGlobals.debug_log(true,"InventoryUI.gd", "Populate_item_grid called." )
 	
 	for child in grid_container.get_children():
 		child.queue_free()

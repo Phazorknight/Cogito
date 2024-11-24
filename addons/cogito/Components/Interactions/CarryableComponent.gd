@@ -54,7 +54,8 @@ func carry(_player_interaction_component:PlayerInteractionComponent):
 
 func _physics_process(_delta):
 	if is_being_carried:
-		carry_position = player_interaction_component.get_interaction_raycast_tip(carry_distance_offset)
+		#carry_position = player_interaction_component.get_interaction_raycast_tip(carry_distance_offset)
+		carry_position = player_interaction_component.get_carryable_destination_point(carry_distance_offset)
 		parent_object.set_linear_velocity((carry_position - parent_object.global_position) * carrying_velocity_multiplier)
 		
 		if(carry_position-parent_object.global_position).length() >= drop_distance:

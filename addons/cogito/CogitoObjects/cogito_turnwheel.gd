@@ -43,7 +43,7 @@ func _is_being_turned(_time_remaining:float):
 func interact(_player_interaction_component):
 	audio_stream_player_3d.stop()
 	has_been_turned = !has_been_turned
-	print("Turnwheel has been turned: ", has_been_turned)
+	CogitoGlobals.debug_log(true,"cogito_turnwheel.gd", "Turnwheel has been turned: " + str(has_been_turned) )
 	for node in nodes_to_trigger:
 		node.interact(null)
 

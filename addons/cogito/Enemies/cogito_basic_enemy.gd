@@ -136,13 +136,13 @@ func handle_chasing(_delta: float):
 
 func handle_patrolling(_delta: float):
 	if !patrol_path:
-		CogitoMain.debug_log(true,"cogito_basic_enemy.gd","No patrol path found. Switching to idle.")
+		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","No patrol path found. Switching to idle.")
 		switch_to_idle()
 		return
 	
 	if !is_waiting:
 		if patrol_path.patrol_points.size() <= 0:
-			CogitoMain.debug_log(true,"cogito_basic_enemy.gd","Patrol points array is empty. Switching to idle.")
+			CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Patrol points array is empty. Switching to idle.")
 			switch_to_idle()
 			return
 		if global_position.distance_to(patrol_path.patrol_points[patrol_point_index].global_position) < patrol_point_threshold:
@@ -187,14 +187,14 @@ func _target_in_range() -> bool:
 
 func attack(target: Node3D):
 	attack_cooldown = attack_interval
-	CogitoMain.debug_log(true,"cogito_basic_enemy.gd","Enemy attacks!")
+	CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Enemy attacks!")
 	var dir = global_position.direction_to(target.global_position)
 	if attack_sound:
 		Audio.play_sound_3d(attack_sound).global_position = self.global_position
 	
 	if target is CogitoPlayer:
 		target.apply_external_force(dir * attack_stagger)
-		CogitoMain.debug_log(true,"cogito_basic_enemy.gd","Enemy attack: Applying vector " + dir * attack_stagger + " to target. Target.main_velocity = " + target.main_velocity)
+		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Enemy attack: Applying vector " + dir * attack_stagger + " to target. Target.main_velocity = " + target.main_velocity)
 		target.decrease_attribute("health", attack_damage)
 
 
@@ -261,7 +261,7 @@ func _on_interaction_raycast_interactable_seen(interactable):
 		
 func interact_with_door(door: CogitoDoor):
 	if door.is_locked:
-		CogitoMain.debug_log(true,"cogito_basic_enemy.gd","Door is locked.")
+		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Door is locked.")
 		#TODO on NPC inventory addition, add key check here	
 		door.audio_stream_player_3d.stream = door.rattle_sound
 		door.audio_stream_player_3d.play()
@@ -274,7 +274,7 @@ func interact_with_door(door: CogitoDoor):
 
 func load_patrol_points():
 	if patrol_path_nodepath:
-		CogitoMain.debug_log(true,"cogito_basic_enemy.gd","Loading patrol path: " + str(patrol_path_nodepath))
+		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Loading patrol path: " + str(patrol_path_nodepath))
 		patrol_path = get_node(patrol_path_nodepath)
 
 

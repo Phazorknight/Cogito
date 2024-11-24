@@ -28,7 +28,7 @@ var wieldable_data_text : String
 func use(target) -> bool:
 	# Target should always be player? Null check to override using the CogitoSceneManager, which stores a reference to current player node
 	if target == null or target.is_in_group("external_inventory"):
-		CogitoMain.debug_log(true,"WieldableItemPD.gd", "Bad target pass. Setting target to " + CogitoSceneManager._current_player_node.name )
+		CogitoGlobals.debug_log(true,"WieldableItemPD.gd", "Bad target pass. Setting target to " + CogitoSceneManager._current_player_node.name )
 		target = CogitoSceneManager._current_player_node
 		
 	player_interaction_component = target.player_interaction_component
@@ -36,11 +36,11 @@ func use(target) -> bool:
 		player_interaction_component.send_hint(null,"Can't equip item while carrying.")
 		return false
 	if is_being_wielded:
-		CogitoMain.debug_log(true,"WieldableItemPD.gd", player_interaction_component.name + " is putting away wieldable " + name )
+		CogitoGlobals.debug_log(true,"WieldableItemPD.gd", player_interaction_component.name + " is putting away wieldable " + name )
 		put_away()
 		return true
 	else:
-		CogitoMain.debug_log(true,"WieldableItemPD.gd", player_interaction_component.name + " is taking out wieldable " + name )
+		CogitoGlobals.debug_log(true,"WieldableItemPD.gd", player_interaction_component.name + " is taking out wieldable " + name )
 		take_out()
 		return true
 

@@ -63,7 +63,7 @@ func _ready() -> void:
 	
 	if expected_object:
 		instanced_expected_object = load(expected_object.resource_path).instantiate()
-		print("Cogito_snap_slot: expected object cogito_name=", instanced_expected_object.cogito_name)
+		CogitoGlobals.debug_log(true,"cogito_snap_slot.gd", "expected object cogito_name=" + instanced_expected_object.cogito_name)
 
 
 func interact(interactor: Node3D):
@@ -90,7 +90,7 @@ func place_carryable(world_carryable: Node3D):
 	if !world_carryable:
 		return
 	if !world_carryable.is_class("RigidBody3D"):
-		print("Cogito_snap_slot: place_carryable(): body wasn't a RigidBody3D.")
+		CogitoGlobals.debug_log(true,"cogito_snap_slot.gd", "place_carryable(): body wasn't a RigidBody3D.")
 		return
 		
 	Audio.play_sound_3d(object_placement_sound).global_position = self.global_position
@@ -116,11 +116,10 @@ func _on_body_entered_snap_area(body : Node3D):
 	if !player_interaction_component:
 		player_interaction_component = CogitoSceneManager._current_player_node.player_interaction_component
 	
-	print("Cogito_snap_slot: _on_body_entered = ", body)
 	if body is CogitoObject:
-		print("Cogito_snap_slot: body is CogitoObject with cogito_name=", body.cogito_name)
+		CogitoGlobals.debug_log(true,"cogito_snap_slot.gd", "body is CogitoObject with cogito_name=" + body.cogito_name)
 		if instanced_expected_object.cogito_name == body.cogito_name:
-			print("Cogito_snap_slot: Expected object detected: ", body.cogito_name)
+			CogitoGlobals.debug_log(true,"cogito_snap_slot.gd", "Expected object detected: " + body.cogito_name)
 			place_carryable(body)
 	pass
 
@@ -128,7 +127,6 @@ func _on_body_entered_snap_area(body : Node3D):
 func _on_body_exited_snap_area(body: Node3D):
 	if !expected_object:
 		return
-	print("Cogito_snap_slot: _on_body_exited = ", body)
 	if body is CogitoObject and instanced_expected_object.cogito_name == body.cogito_name:
 		remove_object()
 

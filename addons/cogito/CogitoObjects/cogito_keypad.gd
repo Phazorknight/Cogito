@@ -98,7 +98,7 @@ func close(_player_interaction_component):
 
 func _on_button_received(_passed_string:String):
 	if !is_locked:
-		print("Already unlocked!")
+		CogitoGlobals.debug_log(true, "cogito_keypad.gd","Already unlocked!")
 		return
 	
 	if !is_open:
