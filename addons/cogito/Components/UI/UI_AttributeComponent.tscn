@@ -2,13 +2,11 @@
 
 [ext_resource type="Script" path="res://addons/cogito/Components/UI/UI_AttributeComponent.gd" id="1_1g7if"]
 [ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_s50ws"]
+[ext_resource type="PackedScene" uid="uid://wagr1slqn2fn" path="res://addons/cogito/Components/UI/dynamic_bar.tscn" id="3_6r5vj"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="3_cqwdn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yjm3"]
 resource_local_to_scene = true
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yo8vr"]
 bg_color = Color(1, 1, 1, 1)
 
 [node name="UiAttributeComponent" type="Control"]
@@ -33,15 +31,8 @@ size_flags_horizontal = 0
 texture = ExtResource("2_s50ws")
 expand_mode = 2
 
-[node name="AttributeBar" type="ProgressBar" parent="HBoxContainer"]
-custom_minimum_size = Vector2(130, 10)
+[node name="AttributeBar" parent="HBoxContainer" instance=ExtResource("3_6r5vj")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme = ExtResource("3_cqwdn")
-theme_override_styles/fill = SubResource("StyleBoxFlat_yo8vr")
-value = 50.0
-show_percentage = false
 
 [node name="AttributeLabel" type="Label" parent="HBoxContainer"]
 custom_minimum_size = Vector2(30, 20)

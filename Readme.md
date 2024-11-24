@@ -28,17 +28,20 @@ The structure of this template always tries to adhere to the following principle
   - Inventory UI separate from inventory logic
   - Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)
   - Base class to easily add your custom item types
-  - Slot-based (Minecraft) or grid-based (Resident Evil 4), the choice is yours!
 - Interaction System
   - Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
   - Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
-- Systemic Properties
+- Basic Enemy
+  - NavigationAgent based enemy with a simple state machine
+  - Simple player detection system that uses detection areas + basic line-of-sight checks
+- Full gamepad support!
+- Systemic Properties (very WIP)
   - Give objects properties like "FLAMMABLE" or "WET" and they will interact with each other depending on their state and properties.
   - For example FLAMMABLE objects can be ignited by objects that are actively on fire. Can be extinguished by objects that are WET.
   - Straight forward system to add your own properties and behaviours, all handled in one script. Also easy to just ignore.
 - Quest System
 - Save and Load System as well as scene persistency
-- Full gamepad support!
+
 - Fully featured Demo Scene
   - Set up like a game level including a variety of objects, weapons and quests
   - In-game helper documents that explain how objects in the scene were set up

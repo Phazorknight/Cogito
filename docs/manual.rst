@@ -10,12 +10,6 @@ Manual
 
 
 
-Cogito Editor Tab
-=================
-When active as a plugin, Cogito will add an editor tab at the top of your Godot editor window. This tab gives you access to some general settings as well as links to the documentation and Github repo.
-The settings have tooltips that explains their use.
-
-
 
 Player Controller
 =================
@@ -28,6 +22,10 @@ COGITO includes a first person player controller that has a variety of parameter
 * Shift - Sprint
 * C - Crouch
 * F / E - Interact / Interact2
+* ESC - Pause Menu
+* Tab - Inventory
+* 1/2/3/4 - Quick Slots
+* Left Mouse Button / Right Mouse Button - Primary Action / Secondary Action
 
 
 .. tip::
@@ -636,6 +634,13 @@ The ``scene state`` is saved as a temporary state as soon as the player leaves t
 
 When the player loads a saved game, the scene as well as it’s state that is referenced in the ``player state`` is loaded. This works by checking if the player is currently in the scene that the ``player state`` has saved as the players location. If NOT, the game transitions to said scene and only then loads the ``player state`` and ``scene state``.
 If it exists, a temporary ``scene state`` is loaded when the player transitions into a scene. This is used to keep scene persistency, if the player is returning to this scene when they were previously in it. If no temporary ``scene state`` is found, the default scene is loaded.
+
+
+
+Cogito Settings
+===============
+Cogito uses a handful of settings and variables that are stored in a custom resource called ``CogitoSettings``, which you can find if you open the ``CogitoSettings.tres`` in the /addons/cogito/ directory.
+Changing any of these values and saving the resource should then take effect immediately.
 
 
 

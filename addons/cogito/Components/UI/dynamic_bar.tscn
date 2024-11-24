@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://wagr1slqn2fn"]
+
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_emfap"]
+[ext_resource type="Script" path="res://addons/cogito/Components/UI/dynamic_bar.gd" id="2_de88u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yo8vr"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ix36"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="DynamicBar" type="ProgressBar"]
+z_index = 1
+custom_minimum_size = Vector2(130, 10)
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("1_emfap")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yo8vr")
+value = 54.86
+show_percentage = false
+script = ExtResource("2_de88u")
+
+[node name="DifferenceBar" type="ProgressBar" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_3ix36")
+value = 70.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

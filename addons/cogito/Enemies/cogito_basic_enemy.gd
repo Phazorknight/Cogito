@@ -194,7 +194,7 @@ func attack(target: Node3D):
 	
 	if target is CogitoPlayer:
 		target.apply_external_force(dir * attack_stagger)
-		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Enemy attack: Applying vector " + dir * attack_stagger + " to target. Target.main_velocity = " + target.main_velocity)
+		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Enemy attack: Applying vector " + str(dir * attack_stagger) + " to target. Target.main_velocity = " + str(target.main_velocity) )
 		target.decrease_attribute("health", attack_damage)
 
 
