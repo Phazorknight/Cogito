@@ -16,9 +16,13 @@ Installation steps:
 Setup
 -----
 
-If you've used the COGITO Project as the base for your own project, you shouldn't have to do much else to get it running. But just in case here's some how it should be set up:
+If you've used the COGITO Project as the base for your own project, you shouldn't have to do much else to get it running.
 
-Make sure the following plugins are activated:
+If not, make sure you activate the the Cogito plugin under Project > Project Settings > Plugins
+It is recommended to install and activate Quick Audio and Input Helper before activating Cogito to avoid any issues.
+
+To re-iterate, the following plugins should be installed and activated:
+
 * Cogito
 * Quick Audio (currently v1.0)
 * Input Helper (currently v4.4.0)
@@ -34,6 +38,16 @@ Running the Demo scenes
 * You can also run the ``Lobby`` or the ``Laboratory`` scenes directly and explore.
 
 Feel free to explore the Demo scenes to discover everything COGITO has to offer!
+
+
+Known Errors
+------------
+When running Cogito, depending on the scenes you might get a few errors in the Debugger.
+If it's one of the following, they can be ignored for the most part:
+
+* Audio.gd:12 @ _play_sound(): Parent node is busy setting up children, `add_child()` failed. Consider using `add_child.call_deferred(child)` instead.
+* cogito_basic_enemy.gd:172 @ move_toward_target(): NavigationServer navigation map query failed because it was made before first map synchronization.
+* cogito_basic_enemy.gd:180 @ _look_at_target_interpolated(): The target vector can't be zero.
 
 
 How COGITO works in 60 seconds

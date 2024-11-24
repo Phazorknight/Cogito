@@ -86,7 +86,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_3rks0"]
+[sub_resource type="Resource" id="Resource_yycqv"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -899,7 +899,7 @@ environment = SubResource("Environment_obnk3")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_3rks0")
+inventory_data = SubResource("Resource_yycqv")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -3350,6 +3350,15 @@ transform = Transform3D(-1.81058e-08, 1, -2.70212e-15, 6.18173e-08, 0, 1, 1, 1.8
 
 [node name="Pickup_Battery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("48_y72lj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.94467, 0.180138, -3.20706)
+
+[node name="Pickup_Battery2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("48_y72lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.43, 0.180138, -2.75302)
+
+[node name="Pickup_Battery3" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("48_y72lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3912, 0.180138, -3.11469)
+
+[node name="Pickup_Battery4" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("48_y72lj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1637, 0.180138, -3.61538)
 
 [node name="VendingMachine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 8.2257, 2.23517e-08, -14.3489)
