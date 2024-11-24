@@ -1,3 +1,4 @@
+class_name CogitoAttributeUi
 extends Control
 
 @onready var attribute_icon: TextureRect = $HBoxContainer/AttributeIcon
