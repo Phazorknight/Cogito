@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=28 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://addons/cogito/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://addons/cogito/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
 [ext_resource type="PackedScene" uid="uid://c3ti1cb2o1a11" path="res://addons/cogito/Components/UI/UI_CurrencyComponent.tscn" id="6_kmqyf"]
+[ext_resource type="Script" path="res://addons/cogito/Components/UI/Ui_StaminaAttribute.gd" id="7_gti6b"]
 [ext_resource type="Script" path="res://addons/cogito/Scripts/ui_wieldable_hud.gd" id="8_2nbvg"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
@@ -20,6 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://addons/cogito/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://addons/cogito/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
 [ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://addons/cogito/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1f12m"]
 blend_mode = 1
@@ -40,7 +45,7 @@ bg_color = Color(0.101961, 0.101961, 0.101961, 0.784314)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbke8"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Player_HUD" type="Control"]
+[node name="Player_HUD" type="Control" node_paths=PackedStringArray("fixed_stamina_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,6 +58,30 @@ prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
 ui_attribute_prefab = ExtResource("20_lscav")
 ui_currency_prefab = ExtResource("6_kmqyf")
+fixed_stamina_bar = NodePath("FixedStaminaBar")
+
+[node name="FixedStaminaBar" parent="." instance=ExtResource("20_lscav")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -175.0
+offset_right = 100.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("7_gti6b")
+time_before_fadeout = 1.5
+bar_stylebox = SubResource("StyleBoxFlat_8x37p")
+
+[node name="AttributeBar" parent="FixedStaminaBar/HBoxContainer" index="1"]
+custom_minimum_size = Vector2(130, 5)
+
+[node name="AttributeLabel" parent="FixedStaminaBar/HBoxContainer" index="2"]
+visible = false
 
 [node name="DamageOverlay" type="Control" parent="."]
 layout_mode = 1
@@ -518,3 +547,5 @@ metadata/_tab_index = 2
 [connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]
 [connection signal="pressed" from="DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+
+[editable path="FixedStaminaBar"]

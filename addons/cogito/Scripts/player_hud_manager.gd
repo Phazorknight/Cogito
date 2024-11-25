@@ -27,6 +27,9 @@ signal hide_inventory
 @export var ui_attribute_prefab : PackedScene
 ## Reference to PackedScene that gets instantiated for each player currency.
 @export var ui_currency_prefab : PackedScene
+## If you want to have the stamina bar outside of the other attributes, you can set a reference here. This will remove it from the main attribute container
+@export var fixed_stamina_bar : CogitoAttributeUi
+
 
 var hurt_tween : Tween
 var is_inventory_open : bool = false
@@ -100,13 +103,16 @@ func instantiate_player_attribute_ui():
 		n.queue_free()
 		
 	for attribute in player.player_attributes.values():
-		var spawned_attribute_ui = ui_attribute_prefab.instantiate()
-		ui_attribute_area.add_child(spawned_attribute_ui)
-		if attribute.attribute_name == "health":
-			attribute.damage_taken.connect(_on_player_damage_taken)
-			attribute.death.connect(_on_player_death)
-		
-		spawned_attribute_ui.initiate_attribute_ui(attribute)
+		if fixed_stamina_bar and attribute.attribute_name == "stamina":
+			fixed_stamina_bar.initiate_attribute_ui(attribute)
+		else:
+			var spawned_attribute_ui = ui_attribute_prefab.instantiate()
+			ui_attribute_area.add_child(spawned_attribute_ui)
+			if attribute.attribute_name == "health":
+				attribute.damage_taken.connect(_on_player_damage_taken)
+				attribute.death.connect(_on_player_death)
+			
+			spawned_attribute_ui.initiate_attribute_ui(attribute)
 
 
 func instantiate_player_currency_ui():
