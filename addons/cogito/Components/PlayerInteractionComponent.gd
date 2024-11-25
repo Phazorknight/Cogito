@@ -25,13 +25,34 @@ var carried_object = null:  # Used for carryable handling.
 	
 var is_carrying: bool:
 	get: return carried_object != null
-## Power with which object are thrown (opposed to being dropped)
-@export var throw_power: float = 10
-var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 
+# Power with which object are thrown (opposed to being dropped)
+#@export var throw_power: float = 10
+@export_group("Throw Settings")
+## The maximum power you can apply to a thrown object
+@export var max_throw_power: float = 25.0
+## Multiplied with the mass of the thrown object, up to the Max Throw Power. Prevents throwing lightweight objects incredibly fast.
+@export var throw_power_mass_multiplier: float = 10.0
+## Drain stamina if calculated throw power exceeds this value
+@export var throw_stamina_threshold: float = 20.0
+@export var throw_stamina_drain: float = 5.0
+## When stamina is below cost on a throw attempt, drop instead
+@export var drop_when_cant_throw: bool = true
+## Leave empty to ignore stamina cost evaluation when throwing
+@export var stamina_attribute: CogitoAttribute
+var player: CogitoPlayer
+
+@export_group("Drop Settings")
+## The maximum power you can use when dropping objects
+@export var max_drop_power: float = 1.0
+## Multiplied by the mass of the thrown object, up to the Max Drop Power
+@export var drop_power_mass_multiplier: float = 1.0
+
+@export_group("Wieldable Settings")
 ## List of Wieldable nodes
 @export var wieldable_nodes: Array[Node]
 @export var wieldable_container: Node3D
+var is_changing_wieldables: bool = false # Used to avoid any input acitons while wieldables are being swapped
 # Various variables used for wieldable handling
 var equipped_wieldable_item: WieldableItemPD = null
 var equipped_wieldable_node = null
@@ -42,7 +63,8 @@ var is_wielding: bool:
 var player_rid
 
 func _ready():
-	pass
+	player = get_parent() as CogitoPlayer
+	#pass
 
 
 func exclude_player(rid: RID):
@@ -62,7 +84,8 @@ func _input(event: InputEvent) -> void:
 		
 	if is_carrying and !get_parent().is_movement_paused and is_instance_valid(carried_object):
 		if Input.is_action_just_pressed("action_primary"):
-			carried_object.throw(throw_power)
+			_attempt_throw()
+			#carried_object.throw(throw_power)
 		
 
 	# Wieldable primary Action Input
@@ -86,7 +109,8 @@ func _handle_interaction(action: String) -> void:
 	# if carrying an object, drop it.
 	if is_carrying:
 		if is_instance_valid(carried_object) and carried_object.input_map_action == action:
-			carried_object.throw(1)
+			_drop_carried_object()
+			#carried_object.throw(1)
 			return
 		elif !is_instance_valid(carried_object):
 			stop_carrying()
@@ -374,3 +398,30 @@ func _rebuild_interaction_prompts() -> void:
 	nothing_detected.emit() # Clears the prompts
 	if interactable != null:
 		interactive_object_detected.emit(interactable.interaction_nodes) # Builds the prompts
+
+
+func _attempt_throw() -> void:
+	if !is_carrying:
+		return
+	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
+	var throw_force: float = carried_object_mass * throw_power_mass_multiplier
+	throw_force = clamp(throw_force, 0, max_throw_power)
+	
+	if stamina_attribute and throw_force >= throw_stamina_threshold:
+		if stamina_attribute.value_current < throw_stamina_drain:
+			if drop_when_cant_throw:
+				_drop_carried_object()
+			return
+		else:
+			player.decrease_attribute(stamina_attribute.attribute_name, throw_stamina_drain)
+
+	carried_object.throw(throw_force)
+
+
+func _drop_carried_object() -> void:
+	if !is_carrying:
+		return
+	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
+	var drop_force: float = carried_object_mass * drop_power_mass_multiplier
+	drop_force = clamp(drop_force, 0, max_drop_power)
+	carried_object.throw(drop_force)
