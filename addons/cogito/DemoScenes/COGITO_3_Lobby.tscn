@@ -1,4 +1,4 @@
-[gd_scene load_steps=365 format=4 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=366 format=4 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -49,7 +49,6 @@
 [ext_resource type="PackedScene" uid="uid://crehxwgpwoblf" path="res://addons/cogito/DemoScenes/DemoPrefabs/television_modern.tscn" id="40_oaaxs"]
 [ext_resource type="PackedScene" uid="uid://cnw5nwe4guma2" path="res://addons/cogito/DemoScenes/DemoPrefabs/kitchen_sink.tscn" id="41_nf278"]
 [ext_resource type="PackedScene" uid="uid://w6hpf431lt3l" path="res://addons/cogito/DemoScenes/DemoPrefabs/chair_cushion.tscn" id="42_ys0cu"]
-[ext_resource type="PackedScene" uid="uid://cse4e4f61awy2" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/kitchenMicrowave.glb" id="43_rl17a"]
 [ext_resource type="PackedScene" uid="uid://u2b6ss4xaxp8" path="res://addons/cogito/DemoScenes/DemoPrefabs/coffee_mug.tscn" id="44_harbr"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://addons/cogito/PackedScenes/Pickups/pickup_battery.tscn" id="45_628oc"]
 [ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://addons/cogito/DemoScenes/DemoPrefabs/generic_button.tscn" id="45_mglg7"]
@@ -69,6 +68,7 @@
 [ext_resource type="PackedScene" uid="uid://3rlbofuf3x5s" path="res://addons/cogito/DemoScenes/DemoPrefabs/trashcan.tscn" id="58_no7q4"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="59_7mr36"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="60_oc6pu"]
+[ext_resource type="PackedScene" uid="uid://dxuon2cll702s" path="res://addons/cogito/DemoScenes/DemoPrefabs/kitchen_microwave.tscn" id="61_1x4um"]
 [ext_resource type="PackedScene" uid="uid://dlhn1jwgx0wjr" path="res://addons/cogito/DemoScenes/DemoPrefabs/table_coffee_glass.tscn" id="61_jhsd0"]
 [ext_resource type="PackedScene" uid="uid://c0mrdx8eegxuj" path="res://addons/cogito/DemoScenes/DemoPrefabs/rug_round.tscn" id="62_m13s3"]
 [ext_resource type="PackedScene" uid="uid://c2t21qbkevaof" path="res://addons/cogito/DemoScenes/DemoPrefabs/cogito_demo_hint.tscn" id="62_y3og2"]
@@ -80,7 +80,9 @@
 [ext_resource type="PackedScene" uid="uid://cik703x8nr8uj" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/rugSquare.glb" id="70_rt25y"]
 [ext_resource type="PackedScene" uid="uid://csmk1jgnppq7b" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/pillowBlue.glb" id="71_7r41f"]
 [ext_resource type="PackedScene" uid="uid://bmvweggv8f5p1" path="res://addons/cogito/DemoScenes/DemoPrefabs/laptop.tscn" id="72_fpgjy"]
+[ext_resource type="PackedScene" uid="uid://c1kdq421bm28m" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_ledge_corner_outer.tscn" id="74_2rhvg"]
 [ext_resource type="PackedScene" uid="uid://blll0724l8foj" path="res://addons/cogito/DemoScenes/DemoPrefabs/rug_rectangle.tscn" id="75_26fkw"]
+[ext_resource type="PackedScene" uid="uid://i0ybayaeafds" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_ledge_painted.tscn" id="75_ga2h6"]
 [ext_resource type="PackedScene" uid="uid://dqsod8j0c6qag" path="res://addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn" id="80_g3r0x"]
 [ext_resource type="PackedScene" uid="uid://84hxf8n08b4d" path="res://addons/cogito/DemoScenes/DemoPrefabs/lounge_design_sofa.tscn" id="81_12qcq"]
 [ext_resource type="PackedScene" uid="uid://ccm32rl5d67al" path="res://addons/cogito/DemoScenes/DemoPrefabs/lounge_design_chair.tscn" id="81_yj30c"]
@@ -90,7 +92,6 @@
 [ext_resource type="PackedScene" uid="uid://cn0bpqb4otng3" path="res://addons/cogito/Assets/VFX/Impacts/WaterSplashing.tscn" id="86_70b6h"]
 [ext_resource type="AudioStream" uid="uid://bd2ni82t6ht8t" path="res://addons/cogito/Assets/Audio/241842_poyekhali_running-water.ogg" id="87_ibv1p"]
 [ext_resource type="PackedScene" uid="uid://bqwcopwwk2x6s" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_steps_single.tscn" id="88_u6glq"]
-[ext_resource type="PackedScene" uid="uid://dueiqjrnnwseq" path="res://addons/cogito/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_corner_outer.glb" id="89_ifcfc"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="89_vc84d"]
 [ext_resource type="PackedScene" uid="uid://dqw7n4i3g4b7g" path="res://addons/cogito/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_ledge_painted.glb" id="90_0bo26"]
 [ext_resource type="PackedScene" uid="uid://ctr7n0w3hgys7" path="res://addons/cogito/Components/LightzoneComponent.tscn" id="91_1svd8"]
@@ -131,7 +132,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_b7m77"]
+[sub_resource type="Resource" id="Resource_ykh2n"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -2425,7 +2426,7 @@ shadow_mesh = SubResource("ArrayMesh_3ecdw")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_upcaa"]
 data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, 0.0903, -0.88, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 1.3856, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -1.2, 0.6128, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.6128, 0.0903, -0.72, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.72, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 0, 0.0903, -1.2, 0, 0.0903, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 1.3856, 0.0903, -0.4, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -1.2, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -1.2, 0.6928, 0.1935, 0, 0, 0.1935, -0.4, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -1.2, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, -1.6, 0.6928, 0.0903, -1.6, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -0.4, 1.3856, 0.0903, -0.4, 0.6928, 0.0903, 0, 0.6928, 0.0903, 0, 0.6928, 0.1935, 0, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.0903, 0, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.1935, -0.4, 0.6928, 0.1935, 0, 0, 0.1935, -1.2, 0, 0.1935, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.8, 0, 0.1935, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -1.2, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.6928, 0.0903, -1.6, 0.6928, 0.1935, -1.6, 0, 0.1935, -1.2, 0.7728, 0.0903, -0.72, 0.7728, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.88, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.6128, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.8128, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.68, 0.6128, -0.4, -0.72, 0.7728, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.72, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.6128, -0.4, -0.88, 0.6128, -0.4, -0.72, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.4, -0.92, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.7728, -0.4, -0.88, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.88, 0.4928, -0.44, -1, 0.4928, -0.44, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -1, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.4928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.5, -1, 0.8928, -0.5, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -1, 0.8928, -0.5, -1, 0.4928, -0.44, -0.6, 0.4928, -0.44, -1, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.4928, -0.44, -0.6, 0.5728, -0.44, -0.68, 0.8128, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.68, 0.8128, -0.44, -0.92, 0.8928, -0.44, -0.6, 0.5728, -0.44, -0.92, 0.5728, -0.44, -0.68, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -1, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8128, -0.44, -0.92, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.92, 0.9128, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.9128, -0.54, -0.58, 0.9128, -0.54, -1.02, 0.4928, -0.5, -1, 0.4728, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.8928, -0.5, -1, 0.4928, -0.5, -1, 0.9128, -0.54, -1.02, 0.9128, -0.54, -0.58, 0.8928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.8928, -0.5, -1, 0.9128, -0.54, -1.02, 0.8928, -0.5, -0.6, 0.9128, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4728, -0.54, -0.58, 0.4728, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4928, -0.5, -1, 0.4928, -0.5, -0.6, 0.5728, -0.4, -0.92, 0.5728, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.4, -0.92, 0.5728, -0.4, -0.92)
 
-[sub_resource type="Resource" id="Resource_0qo1c"]
+[sub_resource type="Resource" id="Resource_i5e2s"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -3167,7 +3168,7 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-inventory_data = SubResource("Resource_b7m77")
+inventory_data = SubResource("Resource_ykh2n")
 step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
@@ -6991,9 +6992,9 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 
 [node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
-inventory_data = SubResource("Resource_0qo1c")
+inventory_data = SubResource("Resource_i5e2s")
 
-[node name="kitchenMicrowave" parent="BREAK_ROOM" instance=ExtResource("43_rl17a")]
+[node name="kitchenMicrowave2" parent="BREAK_ROOM" instance=ExtResource("61_1x4um")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)
 
 [node name="kitchenCoffeeMachine" type="StaticBody3D" parent="BREAK_ROOM"]
@@ -7293,13 +7294,13 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.0351
 [node name="KSI_steps_single2" parent="CUBICLE_AREA" instance=ExtResource("88_u6glq")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.29077, -0.5, 4.01329)
 
-[node name="KSI_ledge_corner_outer" parent="CUBICLE_AREA" instance=ExtResource("89_ifcfc")]
+[node name="KSI_ledge_corner_outer3" parent="CUBICLE_AREA" instance=ExtResource("74_2rhvg")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.9, -0.7, -4.194)
 
-[node name="KSI_ledge_corner_outer2" parent="CUBICLE_AREA" instance=ExtResource("89_ifcfc")]
+[node name="KSI_ledge_corner_outer" parent="CUBICLE_AREA" instance=ExtResource("74_2rhvg")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 1.83071, -0.7, 1.106)
 
-[node name="KSI_ledge_painted" parent="CUBICLE_AREA" instance=ExtResource("90_0bo26")]
+[node name="KSI_ledge_painted3" parent="CUBICLE_AREA" instance=ExtResource("75_ga2h6")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.11504, -0.7, -1.2)
 
 [node name="KSI_ledge_painted2" parent="CUBICLE_AREA" instance=ExtResource("90_0bo26")]
