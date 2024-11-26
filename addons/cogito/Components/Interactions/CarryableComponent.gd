@@ -32,7 +32,7 @@ func _ready():
 	if parent_object.has_signal("body_entered"):
 		parent_object.body_entered.connect(_on_body_entered) #Connecting to body entered signal
 	else:
-		print(parent_object.name, ": CarriableComponent needs to be child to a RigidBody3D to work.")
+		CogitoGlobals.debug_log(true,"CarryableComponent.gd", parent_object.name + ": CarriableComponent needs to be child to a RigidBody3D to work.")
 
 
 func interact(_player_interaction_component:PlayerInteractionComponent):

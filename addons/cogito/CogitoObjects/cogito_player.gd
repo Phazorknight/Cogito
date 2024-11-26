@@ -132,6 +132,8 @@ var visibility_attribute : CogitoAttribute
 ### CURRENCIES
 var player_currencies: Dictionary
 
+var world_dictionary: Dictionary
+
 ## STAIR HANDLING STUFF
 const WALL_MARGIN : float = 0.001
 const STEP_DOWN_MARGIN : float = 0.01

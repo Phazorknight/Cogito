@@ -155,6 +155,9 @@ offset_right = 600.0
 offset_bottom = 603.0
 script = ExtResource("13_4uenq")
 new_game_start_scene = ExtResource("10_hdl4c")
+new_game_world_dict = {
+"lab_power": true
+}
 
 [node name="LegacyDemoSceneSwitcher" type="Node" parent="."]
 script = ExtResource("9_kfsif")

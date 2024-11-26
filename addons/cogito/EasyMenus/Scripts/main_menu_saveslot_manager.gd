@@ -9,6 +9,9 @@ extends Control
 
 @export var new_game_start_scene : PackedScene
 
+
+@export var new_game_world_dict : Dictionary
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	load_all_save_slots()
@@ -33,6 +36,10 @@ func start_new_game():
 	if new_game_start_scene:
 		var path_to_scene = new_game_start_scene.resource_path
 		CogitoSceneManager.load_next_scene(path_to_scene, "", "temp", CogitoSceneManager.CogitoSceneLoadMode.RESET) #Load_mode 2 means there's no attempt to load a state.
+		
+		#Setting new game world state:
+		CogitoSceneManager._current_world_dict = new_game_world_dict
+		
 	#if start_game_scene: 
 		#CogitoSceneManager.load_next_scene(start_game_scene, "", "temp", CogitoSceneManager.CogitoSceneLoadMode.RESET) #Load_mode 2 means there's no attempt to load a state.
 	else:

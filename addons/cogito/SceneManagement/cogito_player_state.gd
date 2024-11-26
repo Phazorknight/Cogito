@@ -21,7 +21,11 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 #New way of saving player attributes
 @export var player_attributes : Dictionary
 
+# Saving currencies
 @export var player_currencies : Dictionary
+
+# Saving world dict
+@export var world_dictionary : Dictionary
 
 #Saving parameters from the player interaction component
 @export var interaction_component_state : Array
@@ -66,7 +70,8 @@ func save_node_transforms(player):
 	head_transform = player.get_node("Body/Neck/Head").transform
 	eyes_transform = player.get_node("Body/Neck/Head/Eyes").transform
 	camera_transform = player.get_node("Body/Neck/Head/Eyes/Camera").transform
-	
+
+
 func load_node_transforms(player):
 	player.get_node("Body").transform = body_transform
 	player.get_node("Body/Neck").transform = neck_transform
@@ -80,10 +85,12 @@ func save_collision_shapes(player):
 	standing_collision_shape_enabled = not player.standing_collision_shape.disabled
 	crouching_collision_shape_enabled = not player.crouching_collision_shape.disabled
 
+
 # Load the state of the player's collision shapes
 func load_collision_shapes(player):
 	player.standing_collision_shape.disabled = not standing_collision_shape_enabled
 	player.crouching_collision_shape.disabled = not crouching_collision_shape_enabled
+
 
 func save_sitting_state(player):
 	is_sitting = player.is_sitting
@@ -98,6 +105,7 @@ func save_sitting_state(player):
 	if is_sitting:
 		current_sittable_path = CogitoSceneManager._current_sittable_node.get_path()
 
+
 func load_sitting_state(player):
 	player.is_sitting = is_sitting
 	player.sittable_look_marker = sittable_look_marker
@@ -111,6 +119,8 @@ func load_sitting_state(player):
 	if is_sitting and current_sittable_path != null:
 		CogitoSceneManager._current_sittable_node = CogitoSceneManager.get_node(current_sittable_path)
 
+
+# Functions for attributes
 func add_player_attribute_to_state_data(name: String, attribute_data:Vector2):
 	player_attributes[name] = attribute_data
 
@@ -119,12 +129,22 @@ func clear_saved_attribute_data():
 	player_attributes.clear()
 
 
+# Functions for currencies
 func add_player_currency_to_state_data(name: String, currency_data:Vector2):
 	player_currencies[name] = currency_data
 
 
 func clear_saved_currency_data():
 	player_currencies.clear()
+
+
+# Functions for world dictionary
+func add_to_world_dictionary(world_property_name: String, world_property_data):
+	world_dictionary[world_property_name] = world_property_data
+
+
+func clear_world_dictionary():
+	world_dictionary.clear()
 
 
 func add_interaction_component_state_data_to_array(state_data):

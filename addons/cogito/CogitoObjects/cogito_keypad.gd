@@ -120,7 +120,7 @@ func append_to_entered_code(_code_digit:String):
 		if entered_code.length() == passcode.length():
 			check_entered_code()
 	else:
-		print("Maximum code length reached")
+		CogitoGlobals.debug_log(true, "cogito_keypad.gd", "Maximum code length reached")
 
 
 func update_code_display():

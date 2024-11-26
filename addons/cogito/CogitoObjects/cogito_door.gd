@@ -291,7 +291,7 @@ func set_state():
 		
 	object_state_updated.emit(interaction_text)
 	lock_state_updated.emit(lock_interaction_text)
-	print(lock_interaction_text)
+
 
 func set_to_open_position():
 	if door_type == DoorType.SLIDING:

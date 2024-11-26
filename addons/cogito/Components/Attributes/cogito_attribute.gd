@@ -29,8 +29,10 @@ var value_current : float:
 		var prev_value = value_current
 		value_current = value
 		if prev_value < value_current:
+			value_current = clamp(value_current, 0, value_max)
 			attribute_changed.emit(attribute_name,value_current,value_max,true)
 		elif prev_value > value_current:
+			value_current = clamp(value_current, 0, value_max)
 			attribute_changed.emit(attribute_name,value_current,value_max,false)
 		
 		if value_current <= 0:

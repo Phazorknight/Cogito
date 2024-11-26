@@ -63,6 +63,10 @@ enum MaterialProperties{
 @export var audio_burning : AudioStream
 @export var audio_extinguishing : AudioStream
 
+@export_group("Debuging")
+## If turned on, this object will print log messages (only if the global is_logging is turned on as well!)
+@export var is_logging : bool = true
+
 var reaction_collider : Node3D = null
 var spawned_effects : Array[Node] # Used to store and clear out spawned effects
 var is_on_fire : bool = false
@@ -92,7 +96,7 @@ func _ready():
 func start_reaction_threshold_timer(passed_collider: Node3D):
 	# Quick check to see if the collider has any CogitoProperties.
 	if( !passed_collider.cogito_properties):
-		print("Collider ", passed_collider.name, " has no properties.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", "Collider " + passed_collider.name + " has no properties.")
 		return
 	
 	# Saving passed collider to make sure we're reaction to the right thing.
@@ -111,7 +115,7 @@ func check_for_reaction_timer_interrupt(passed_collider: Node3D):
 	
 	# Quick check to see if the collider has any CogitoProperties.
 	if( !passed_collider.cogito_properties):
-		print("Collider ", passed_collider.name, " has no properties.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", "Collider " + passed_collider.name + " has no properties.")
 		return
 	
 	remove_systemic_body(passed_collider)
@@ -130,7 +134,7 @@ func check_for_reaction_timer_interrupt(passed_collider: Node3D):
 
 func check_for_systemic_reactions():
 	if !reaction_collider:
-		print("Reaction collider was null.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd","Reaction collider was null.")
 		return
 	if !reaction_collider.cogito_properties:
 		# Case where the object has no properties defined.
@@ -212,7 +216,7 @@ func set_on_fire():
 		audio_stream_player_3d.stream = audio_burning
 		audio_stream_player_3d.play()
 	else:
-		print(get_parent().name, " is not FLAMMABLE.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", get_parent().name + " is not FLAMMABLE.")
 
 
 func start_burn_damage_timer():
@@ -242,7 +246,7 @@ func extinguish():
 
 func clear_spawned_effects():
 	for node in spawned_effects:
-		print("CogitoProperties: Clearing out spawned effect ", node)
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", "Clearing out spawned effect " + node.name)
 		node.queue_free()
 	spawned_effects.clear()
 
@@ -251,12 +255,12 @@ func make_electric():
 	if elemental_properties & ElementalProperties.CONDUCTIVE:
 		is_electric = true
 		spawn_elemental_vfx(spawn_on_electrified)
-		print(get_parent().name, " has become electric.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", get_parent().name + " has become electric.")
 		has_become_electric.emit()
 		
 		recheck_systemic_reactions()
 	else:
-		print(get_parent().name, " is not CONDUCTIVE.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", get_parent().name + " is not CONDUCTIVE.")
 
 
 func loose_electricity():
@@ -290,7 +294,7 @@ func remove_systemic_body(body: Node3D):
 
 func recheck_systemic_reactions():
 	if reaction_bodies.size() < 1:
-		print(get_parent().name, " systemic properties: Can't recheck reactions as there's no reaction bodies stored.")
+		CogitoGlobals.debug_log(is_logging, "cogito_properties.gd", get_parent().name + " systemic properties: Can't recheck reactions as there's no reaction bodies stored.")
 		return
 		
 	for reaction_body in reaction_bodies:

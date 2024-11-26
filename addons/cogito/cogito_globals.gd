@@ -15,6 +15,10 @@ func _ready() -> void:
 	load_cogito_project_settings()
 
 
+func _enter_tree() -> void:
+	load_cogito_project_settings()
+
+
 func load_cogito_project_settings():
 	if ResourceLoader.exists(cogito_settings_filepath):
 		cogito_settings = ResourceLoader.load(cogito_settings_filepath, "", ResourceLoader.CACHE_MODE_IGNORE)

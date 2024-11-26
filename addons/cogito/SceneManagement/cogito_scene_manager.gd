@@ -6,6 +6,9 @@ signal fade_finished
 # Used to set active save slot. This could be set/modified, when selecting a save slot from the MainMenu.
 @export var _active_slot : String = "A"
 
+# Cached World State Dictionary, used for checks while game is running
+@export var _current_world_dict : Dictionary
+
 # Variables for player state
 @export var _current_player_node : Node
 @export var _player_state : CogitoPlayerState
@@ -29,19 +32,18 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 @export var scene_load_mode: CogitoSceneLoadMode
 
 @export var cogito_state_dir : String = "user://"
-#@export var cogito_scene_state_prefix : String = "COGITO_scene_state_"
-#@export var cogito_player_state_prefix : String = "COGITO_player_state_"
 
-var cogito_scene_state_prefix : String = CogitoGlobals.scene_state_prefix
-var cogito_player_state_prefix : String = CogitoGlobals.player_state_prefix
+@onready var cogito_scene_state_prefix : String = CogitoGlobals.scene_state_prefix
+@onready var cogito_player_state_prefix : String = CogitoGlobals.player_state_prefix
 
 @onready var default_fade_duration : float = CogitoGlobals.default_transition_duration
 @export var fade_panel : Panel = null
 
+
 func _ready() -> void:
 	_player_state = get_existing_player_state(_active_slot) #Setting active slot (per default it's A)
 	_scene_state = get_existing_scene_state(_active_slot)
-	
+
 	reset_scene_states()
 	instantiate_fade_panel()
 
@@ -53,7 +55,7 @@ func switch_active_slot_to(slot_name:String):
 		CogitoGlobals.debug_log(true,"CSM","Existing player state for slot " + slot_name + " not found.")
 	_active_slot = slot_name
 	CogitoGlobals.debug_log(true,"CSM","Active slot switched to " + _active_slot)
-	
+
 
 func get_existing_player_state(passed_slot) -> CogitoPlayerState:
 	var player_state_file : String = cogito_state_dir + passed_slot + "/" + cogito_player_state_prefix + ".res"
@@ -100,7 +102,6 @@ func loading_saved_game(passed_slot: String):
 		# Transition to target scene and then attempt to load the saved game again.
 		CogitoGlobals.debug_log(true,"CSM","Player state for slot "+ passed_slot + " is in different scene (" + _player_state.player_current_scene + "). Transitioning...")
 		load_next_scene(_player_state.player_current_scene_path, "", passed_slot, CogitoSceneLoadMode.LOAD_SAVE) 
-
 
 
 #region PLAYER SAVE HANDLING
@@ -150,12 +151,16 @@ func load_player_state(player, passed_slot:String):
 			var max_value = attribute_data.y
 			player.player_attributes[attribute].set_attribute(cur_value, max_value)
 
+		# Loading player currencies
 		var loaded_currency_data = _player_state.player_currencies
 		for currency in loaded_currency_data:
 			var currency_data: Vector2 = loaded_currency_data[currency]
 			var cur_value = currency_data.x
 			var max_value = currency_data.y
 			player.player_currencies[currency].set_currency(cur_value, max_value)
+
+		# Loading world dictionary
+		player.world_dictionary = _player_state.world_dictionary.duplicate(true)
 
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
@@ -247,6 +252,9 @@ func save_player_state(player, slot:String):
 		var currency_data := Vector2(cur_value, max_value)
 		_player_state.add_player_currency_to_state_data(currency, currency_data)
 	
+	## Saving world dictionary
+	_player_state.clear_world_dictionary()
+	_player_state.world_dictionary = player.world_dictionary.duplicate(true)
 
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")

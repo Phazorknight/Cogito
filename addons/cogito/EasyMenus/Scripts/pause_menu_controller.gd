@@ -98,11 +98,13 @@ func load_current_slot_data():
 	var savetime : int
 	if CogitoSceneManager._player_state:
 		savetime = CogitoSceneManager._player_state.player_state_savetime
-	if savetime == null or typeof(savetime) != TYPE_INT:
+	if savetime == null or typeof(savetime) != TYPE_INT or savetime == 0:
 		%Label_SaveTime.text = ""
 	else:
 		var timeoffset = Time.get_time_zone_from_system().bias*60
-		%Label_SaveTime.text = Time.get_datetime_string_from_unix_time(savetime+timeoffset,true)
+		var save_time_string = Time.get_datetime_string_from_unix_time(savetime+timeoffset,true)
+		
+		%Label_SaveTime.text = save_time_string
 
 
 func close_pause_menu():
