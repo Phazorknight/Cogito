@@ -20,7 +20,7 @@ func _on_body_shape_entered(_body_rid,body,_body_shape_idx,local_shape_idx):
 		body.enter_ladder(local_shape_node,ladderDir)
 		if body.on_ladder and ladder_collision:
 			original_process_mode = ladder_collision.process_mode
-			ladder_collision.process_mode = Node.PROCESS_MODE_DISABLED
+			#ladder_collision.process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func _on_body_exited(body):
