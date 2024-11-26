@@ -44,3 +44,6 @@ offset_right = 40.0
 grow_vertical = 0
 
 [node name="LightLevel" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
