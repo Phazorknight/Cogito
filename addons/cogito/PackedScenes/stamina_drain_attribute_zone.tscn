@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://ks0xcampuu3h"]
+
+[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_attribute_zone.gd" id="1_720gr"]
+[ext_resource type="Texture2D" uid="uid://dre2xvgfoqv28" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Stamina.png" id="2_8mk41"]
+[ext_resource type="FontFile" uid="uid://b2jt4ktfqmihq" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-Black.ttf" id="3_1y8ld"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_in244"]
+size = Vector3(1.5, 0.5, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x600l"]
+size = Vector3(1.5, 0.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84cqo"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0.833333, 0, 0.392157)
+rim = 0.0
+rim_tint = 0.0
+backlight = Color(0.509804, 0.294118, 0.294118, 1)
+disable_receive_shadows = true
+
+[node name="StaminaDrainAttributeZone" type="Area3D"]
+script = ExtResource("1_720gr")
+player_attribute = "stamina"
+hint_icon = ExtResource("2_8mk41")
+hint_message = "You're losing energy!"
+hint_rate = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_in244")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_x600l")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_84cqo")
+
+[node name="Label3D" type="Label3D" parent="CollisionShape3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.5, 0)
+billboard = 1
+double_sided = false
+text = "STAMINA DRAIN
+ATTRIBUTE ZONE"
+font = ExtResource("3_1y8ld")
+font_size = 40
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
