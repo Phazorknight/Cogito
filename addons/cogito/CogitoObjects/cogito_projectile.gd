@@ -15,6 +15,10 @@ var damage_amount : int = 0
 @export var stick_on_impact : bool = false
 ## Array of Scenes that will get spawned on parent position on death.
 @export var spawn_on_death : Array[PackedScene] = []
+## This prevents being able to auto pick up projectiles that have just been fired
+@export_range(0.1, 3.0, 0.1, "or_greater") var pick_up_delay: float = 0.5
+var can_pick_up: bool = false
+
 
 func _ready():
 	add_to_group("interactable")
@@ -24,6 +28,17 @@ func _ready():
 	
 	if lifespan:
 		lifespan.timeout.connect(on_timeout)
+	
+	_pick_up_timer()
+
+
+func _pick_up_timer() -> void:
+	if lifespan and (lifespan as Timer).wait_time < pick_up_delay:
+		# The projectile cannot be picked up before it dies, so don't create the timer
+		return
+	await get_tree().create_timer(pick_up_delay).timeout
+	can_pick_up = true
+
 
 func on_timeout():
 	die()
