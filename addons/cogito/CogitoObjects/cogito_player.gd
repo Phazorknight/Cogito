@@ -132,8 +132,6 @@ var visibility_attribute : CogitoAttribute
 ### CURRENCIES
 var player_currencies: Dictionary
 
-var world_dictionary: Dictionary
-
 ## STAIR HANDLING STUFF
 const WALL_MARGIN : float = 0.001
 const STEP_DOWN_MARGIN : float = 0.01
@@ -775,7 +773,8 @@ func _process_on_sittable(delta):
 		if angle_to_up > sittable.eject_angle:
 			is_ejected = true  # Set the flag to avoid repeated ejections
 			CogitoSceneManager._current_sittable_node.interact(player_interaction_component) #Interact with sittable to reset state and eject
-	
+
+
 func _physics_process(delta):
 	#if is_movement_paused:
 		#return

@@ -140,7 +140,13 @@ func clear_saved_currency_data():
 
 # Functions for world dictionary
 func add_to_world_dictionary(world_property_name: String, world_property_data):
-	world_dictionary[world_property_name] = world_property_data
+	if world_dictionary.has(world_property_name):
+		world_dictionary[world_property_name] = world_property_data
+		print("CogitoPlayerState: world dict key found and value saved: ", world_property_name, world_property_data)
+	else:
+		world_dictionary.get_or_add(world_property_name)
+		world_dictionary[world_property_name] = world_property_data
+		print("CogitoPlayerState: world dict key not found. Added and value saved: ", world_property_name, world_property_data)
 
 
 func clear_world_dictionary():

@@ -160,7 +160,11 @@ func load_player_state(player, passed_slot:String):
 			player.player_currencies[currency].set_currency(cur_value, max_value)
 
 		# Loading world dictionary
-		player.world_dictionary = _player_state.world_dictionary.duplicate(true)
+		var local_dict_copy : Dictionary = _player_state.world_dictionary.duplicate(true)
+		_current_world_dict.clear()
+		for entry in local_dict_copy:
+			_current_world_dict.get_or_add(entry, local_dict_copy[entry])
+
 
 		player.global_position = _player_state.player_position
 		player.body.global_rotation = _player_state.player_rotation
@@ -253,8 +257,11 @@ func save_player_state(player, slot:String):
 		_player_state.add_player_currency_to_state_data(currency, currency_data)
 	
 	## Saving world dictionary
+	var local_dict_copy : Dictionary = _current_world_dict.duplicate(true)
 	_player_state.clear_world_dictionary()
-	_player_state.world_dictionary = player.world_dictionary.duplicate(true)
+	for entry in local_dict_copy:
+		print("CogitoSceneManager: World Dict: attemtping to save key: ", entry)
+		_player_state.add_to_world_dictionary(entry, local_dict_copy[entry])
 
 	## Adding a screenshot
 	var screenshot_path : String = str(_player_state.player_state_dir + _active_slot + ".png")
