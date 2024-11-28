@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2vpt8d74j5u"]
+
+[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_attribute_zone.gd" id="1_qemex"]
+[ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_cjlfs"]
+[ext_resource type="FontFile" uid="uid://b2jt4ktfqmihq" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-Black.ttf" id="3_832ve"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_in244"]
+size = Vector3(1.5, 0.5, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x600l"]
+size = Vector3(1.5, 0.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84cqo"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0, 0.67, 0, 0.392157)
+rim = 0.0
+rim_tint = 0.0
+backlight = Color(0.509804, 0.294118, 0.294118, 1)
+disable_receive_shadows = true
+
+[node name="SanityDrainAttributeZone" type="Area3D"]
+script = ExtResource("1_qemex")
+player_attribute = "sanity"
+effect_amount = 1.0
+effect_delay = 0.0
+hint_icon = ExtResource("2_cjlfs")
+hint_message = "You're going insane!"
+hint_rate = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_in244")
+
+[node name="TransparentBox" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_x600l")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_84cqo")
+
+[node name="Label3D" type="Label3D" parent="CollisionShape3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.5, 0)
+billboard = 1
+double_sided = false
+text = "SANITY DRAIN
+ATTRIBUTE ZONE"
+font = ExtResource("3_832ve")
+font_size = 40
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
