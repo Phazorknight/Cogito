@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dkie3md1cmsip"]
+[gd_scene load_steps=13 format=3 uid="uid://dkie3md1cmsip"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_1djt0"]
 [ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/pause_menu_controller.gd" id="2_473pa"]
@@ -6,13 +6,21 @@
 [ext_resource type="AudioStream" uid="uid://kbw2s407quul" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/click1.ogg" id="4_ccwo8"]
 [ext_resource type="Texture2D" uid="uid://tjkesqff2f4g" path="res://addons/cogito/Assets/Graphics/EmptySaveSlot.png" id="5_18sdt"]
 [ext_resource type="Script" path="res://addons/cogito/Theme/CogitoUiButton.gd" id="6_a8sll"]
+[ext_resource type="Shader" uid="uid://wn6mnfchf1w7" path="res://addons/cogito/Assets/Shader/BlurShader.tres" id="6_fg7i3"]
 [ext_resource type="PackedScene" uid="uid://bly6wti1q8bsu" path="res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn" id="6_xdpcn"]
 [ext_resource type="Script" path="res://addons/cogito/Scripts/menu_scene_switcher.gd" id="12_4c47n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8kcia"]
+shader = ExtResource("6_fg7i3")
+shader_parameter/BlurStrength = 0.7
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gjw0g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3a44o"]
 
 [node name="PauseMenu" type="Control" node_paths=PackedStringArray("nodes_to_focus")]
 process_mode = 3
+z_index = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,7 +34,18 @@ sound_hover = ExtResource("3_cekij")
 sound_click = ExtResource("4_ccwo8")
 empty_slot_texture = ExtResource("5_18sdt")
 
+[node name="BlurBG" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_8kcia")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_gjw0g")
+
 [node name="Panel" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
