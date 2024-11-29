@@ -15,6 +15,8 @@ height = 1.0
 radius = 0.75
 
 [node name="AutoPickUpZone" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_nbis2")
 auto_pick_up_items = Array[ExtResource("2_ulsma")]([ExtResource("3_jp7wc"), ExtResource("4_mlplg"), ExtResource("5_3whxy")])
 
