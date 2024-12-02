@@ -17,12 +17,17 @@ signal thrown(impulse)
 @export var carrying_velocity_multiplier : float = 10
 ## Sets how far away the carried object needs to be from the carry_position before it gets dropped.
 @export var drop_distance : float = 1.5
+## Sets if object can be rotated while being carried
+@export var enable_manual_rotating : bool = true
+## How fast the object rotates (in degrees per second)
+@export var rotation_speed : float = 2.0
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 @onready var camera : Camera3D = get_viewport().get_camera_3d()
 
 var parent_object
 var is_being_carried : bool
+var is_being_rotated : bool = false
 var player_interaction_component : PlayerInteractionComponent
 var carry_position : Vector3 #Position the carriable "floats towards".
 
@@ -58,8 +63,28 @@ func _physics_process(_delta):
 		carry_position = player_interaction_component.get_carryable_destination_point(carry_distance_offset)
 		parent_object.set_linear_velocity((carry_position - parent_object.global_position) * carrying_velocity_multiplier)
 		
+		if enable_manual_rotating:
+			if enable_manual_rotating and Input.is_action_pressed("action_secondary"):
+				player_interaction_component.player.is_movement_paused = true
+				is_being_rotated = true
+				rotate_object(_delta)
+		
+		# Resume player movement when input action is released
+		if is_being_rotated and Input.is_action_just_released("action_secondary"):
+			player_interaction_component.player.is_movement_paused = false
+		
 		if(carry_position-parent_object.global_position).length() >= drop_distance:
 			leave()
+
+
+func rotate_object(_delta):
+	var input_dir
+	input_dir = Input.get_vector("left", "right", "forward", "back")
+	
+	if input_dir.length() > 0:
+		var rotation_vector: Vector3 = Vector3(input_dir.y, input_dir.x, 0)
+		print("Rotating object by")
+		parent_object.global_rotate(rotation_vector, deg_to_rad(rotation_speed) )
 
 
 func _on_body_entered(body):
@@ -89,6 +114,10 @@ func hold():
 
 
 func leave():
+	# Making sure the player movement resumes when object is dropped while being rotated
+	if is_being_rotated:
+		player_interaction_component.player.is_movement_paused = false
+		
 	if lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(false)
 	if player_interaction_component and is_instance_valid(player_interaction_component):

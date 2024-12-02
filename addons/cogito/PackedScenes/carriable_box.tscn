@@ -34,6 +34,7 @@ script = ExtResource("1_2lkyl")
 [node name="CarryableComponent" parent="." instance=ExtResource("4_fui0y")]
 pick_up_sound = ExtResource("2_4d2c8")
 drop_sound = ExtResource("3_p1e4y")
+enable_manual_rotating = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_2t7p8")
