@@ -1179,7 +1179,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 					if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 						is_step = true
 						step_result.is_step_up = true
-						step_result.diff_position = -test_motion_result.get_remainder()
+						step_result.diff_position.y = -test_motion_result.get_remainder().y
 						step_result.normal = test_motion_result.get_collision_normal()
 						break
 			else:
@@ -1203,7 +1203,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 						if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 							is_step = true
 							step_result.is_step_up = true
-							step_result.diff_position = -test_motion_result.get_remainder()
+							step_result.diff_position.y = -test_motion_result.get_remainder().y
 							step_result.normal = test_motion_result.get_collision_normal()
 							break
 
@@ -1230,7 +1230,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 			if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
 				if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 					is_step = true
-					step_result.diff_position = test_motion_result.get_travel()
+					step_result.diff_position.y = test_motion_result.get_travel().y
 					step_result.normal = test_motion_result.get_collision_normal()
 		elif is_zero_approx(test_motion_result.get_collision_normal().y):
 			var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal()
@@ -1252,7 +1252,7 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 				if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
 					if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 						is_step = true
-						step_result.diff_position = test_motion_result.get_travel()
+						step_result.diff_position.y = test_motion_result.get_travel().y
 						step_result.normal = test_motion_result.get_collision_normal()
 
 	return is_step
