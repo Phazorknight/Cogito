@@ -39,7 +39,7 @@ size = Vector3(0.5, 0.32, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qaig8"]
 custom_solver_bias = 1.0
-size = Vector3(4, 4, 4)
+size = Vector3(4, 8.24512, 4)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hnplu"]
 streams_count = 5
@@ -96,7 +96,7 @@ debug_shape_custom_color = Color(1, 0, 1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76357e-09, 0, 0.0201729)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SecurityCamera/DetectionArea3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 2)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.9738e-14, 1.19209e-07, 4.12256)
 shape = SubResource("BoxShape3D_qaig8")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SecurityCamera"]
@@ -123,6 +123,8 @@ burn_damage_amount = 1.0
 [node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0020133, 0)
 stream = SubResource("AudioStreamRandomizer_hnplu")
+volume_db = -6.0
+max_distance = 18.0
 max_polyphony = 2
 bus = &"SFX"
 script = ExtResource("13_mhpd1")

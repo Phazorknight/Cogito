@@ -83,7 +83,6 @@ func rotate_object(_delta):
 	
 	if input_dir.length() > 0:
 		var rotation_vector: Vector3 = Vector3(input_dir.y, input_dir.x, 0)
-		print("Rotating object by")
 		parent_object.global_rotate(rotation_vector, deg_to_rad(rotation_speed) )
 
 
