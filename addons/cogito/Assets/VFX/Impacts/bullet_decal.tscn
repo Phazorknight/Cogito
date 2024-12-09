@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2ptmtes2fp8c"]
+
+[ext_resource type="Texture2D" uid="uid://csyaglhc6j7nw" path="res://addons/cogito/Assets/VFX/Impacts/Textures/bulletdecal.png" id="1_m4v46"]
+
+[node name="BulletDecal" type="Decal"]
+size = Vector3(0.075, 0.075, 0.075)
+texture_albedo = ExtResource("1_m4v46")

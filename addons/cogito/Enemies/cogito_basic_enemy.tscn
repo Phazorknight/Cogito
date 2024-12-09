@@ -6,9 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://bd7xfxmsaeu0o" path="res://addons/cogito/Assets/Audio/435666__mirkosukovic__alarm-siren.wav" id="3_7u8yw"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="4_y8n8v"]
 [ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://addons/cogito/PackedScenes/simple_particle_puff.tscn" id="5_ni6ul"]
-[ext_resource type="Script" path="res://addons/cogito/Components/HitboxComponent.gd" id="5_qh1ls"]
 [ext_resource type="PackedScene" uid="uid://crv3r7dscbxlx" path="res://addons/cogito/Enemies/body/basic_enemy_corpse.tscn" id="7_8vdb4"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="7_15n6t"]
+[ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="8_lq5js"]
 [ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="8_vyi83"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="9_5fsuu"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="10_ab7fy"]
@@ -50,7 +50,6 @@ stream_3/stream = ExtResource("11_jlhg4")
 stream_4/stream = ExtResource("12_3m7c4")
 
 [node name="CogitoEnemy" type="CharacterBody3D"]
-motion_mode = 1
 script = ExtResource("1_0lcvu")
 attack_stagger = 20.0
 attack_sound = ExtResource("2_q5685")
@@ -110,8 +109,7 @@ spawn_on_death = Array[PackedScene]([ExtResource("5_ni6ul"), ExtResource("7_8vdb
 value_max = 5.0
 value_start = 5.0
 
-[node name="HitboxComponent" type="Node" parent="." node_paths=PackedStringArray("health_attribute")]
-script = ExtResource("5_qh1ls")
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_attribute") instance=ExtResource("8_lq5js")]
 health_attribute = NodePath("../HealthAttribute")
 
 [node name="CogitoProperties" parent="." instance=ExtResource("7_15n6t")]

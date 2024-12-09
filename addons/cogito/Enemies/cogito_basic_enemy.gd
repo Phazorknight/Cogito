@@ -81,6 +81,16 @@ var can_play_footstep: bool = true
 var wiggle_vector : Vector2 = Vector2.ZERO
 var wiggle_index : float = 0.0
 
+var knockback_force: Vector3 = Vector3.ZERO
+var knockback_timer: float = 0.0
+@export var knockback_duration: float = 0.5
+@export var knockback_strength: float = 10.0
+
+
+func apply_knockback(direction: Vector3):
+	knockback_force = direction.normalized() * knockback_strength
+	knockback_timer = knockback_duration
+
 
 func _enter_tree() -> void:
 	current_state = EnemyState.IDLE
@@ -102,7 +112,14 @@ func find_cogito_properties():
 func _physics_process(delta: float) -> void:
 	if attack_cooldown > 0:
 		attack_cooldown -= delta
-	
+		
+	if knockback_timer > 0:
+		knockback_timer -= delta
+		velocity = knockback_force
+		knockback_force = lerp(knockback_force, Vector3.ZERO, delta * 5)
+		move_and_slide()
+		return
+		
 	match current_state:
 		EnemyState.PATROLLING:
 			handle_patrolling(delta)

@@ -21,7 +21,7 @@ signal damage_received(damage_value:float)
 ## Check this if player needs to have an item in the inventory to switch.
 @export var needs_item_to_operate : bool
 ## The item that the player needs to have in their inventory.
-@export var required_item_slot : InventorySlotPD
+@export var required_item : InventoryItemPD
 ## Hint that gets displayed if the switch requires an item that the player currently doesn't have.
 @export var item_hint : String
 ## Nodes that will become visible when switch is ON. These will hide again when switch is OFF.
@@ -37,7 +37,7 @@ var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 
-var is_holding_item : bool
+@onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
 #endregion
 
@@ -47,6 +47,7 @@ func _ready():
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	
+	audio_stream_player_3d.stream = switch_sound
 	
 	if is_on:
 		switch_on()
@@ -59,53 +60,26 @@ func find_cogito_properties():
 	if property_nodes:
 		cogito_properties = property_nodes[0]
 
-
 func interact(_player_interaction_component):
 	player_interaction_component = _player_interaction_component
 	if !allows_repeated_interaction and is_on:
 		player_interaction_component.send_hint(null, has_been_used_hint)
 		return
-
-	if !needs_item_to_operate:
-		switch()
+	if needs_item_to_operate:
+		if check_for_item() == true:
+			switch()
 	else:
-		if is_holding_item:
-			# Logic to for the player to pick up the required item
-			var inventory = player_interaction_component.get_parent().inventory_data
-			inventory.pick_up_slot_data(required_item_slot)
-			
-			CogitoGlobals.debug_log(true,"cogito_switch.gd","Item " + required_item_slot.inventory_item.name + " added to player inventory")
-			is_holding_item = false
-			
-			if is_on: switch_off()
-			else: switch_on()
-			call_interact_on_objects()
-			
-		else:
-			if check_for_item():
-				Audio.play_sound_3d(switch_sound).global_position = global_position
-				is_holding_item = true
-				if is_on: switch_off()
-				else: switch_on()
-				call_interact_on_objects()
+		switch()
 
 
 func switch():
-	if needs_item_to_operate and !is_holding_item:
-		if !check_for_item():
-			return
-	
-	Audio.play_sound_3d(switch_sound).global_position = global_position
+	audio_stream_player_3d.play()
 	
 	if !is_on:
 		switch_on()
 	else:
 		switch_off()
 	
-	call_interact_on_objects()
-
-
-func call_interact_on_objects():
 	if !objects_call_interact:
 		return
 	for nodepath in objects_call_interact:
@@ -144,20 +118,19 @@ func switch_off():
 func check_for_item() -> bool:
 	var inventory = player_interaction_component.get_parent().inventory_data
 	for slot_data in inventory.inventory_slots:
-		if slot_data != null and slot_data.inventory_item == required_item_slot.inventory_item:
-			player_interaction_component.send_hint(null, required_item_slot.inventory_item.name + " used.") # Sends a hint with the key item name.
-			inventory.remove_item_from_stack(slot_data)
+		if slot_data != null and slot_data.inventory_item == required_item:
+			player_interaction_component.send_hint(null, required_item.name + " used.") # Sends a hint with the key item name.
+			if slot_data.inventory_item.discard_after_use:
+				inventory.remove_item_from_stack(slot_data)
+				# inventory.remove_slot_data(slot_data) (removed on 20240913, leaving line just in case there's bugs.
 			return true
 	
 	if item_hint != "":
 		player_interaction_component.send_hint(null,item_hint) # Sends the key hint with the default hint icon.
 	return false
-	
-	
-func _on_damage_received():
-	if !needs_item_to_operate:
-		interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
+func _on_damage_received(_damage,_bullet_direction,_bullet_position):
+	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 func set_state():
 	if is_on:
@@ -183,7 +156,6 @@ func save():
 	var state_dict = {
 		"node_path" : self.get_path(),
 		"is_on" : is_on,
-		"is_holding_item": is_holding_item,
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,
@@ -193,3 +165,4 @@ func save():
 		
 	}
 	return state_dict
+

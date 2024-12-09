@@ -112,7 +112,7 @@ func press():
 			object.interact(player_interaction_component)
 
 
-func _on_damage_received(damage):
+func _on_damage_received(_damage,_bullet_direction,_bullet_position):
 	interact(CogitoSceneManager._current_player_node.player_interaction_component)
 
 

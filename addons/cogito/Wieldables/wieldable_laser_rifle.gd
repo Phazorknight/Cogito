@@ -14,6 +14,14 @@ extends CogitoWieldable
 ## Default position for tweening from ADS
 @export var default_position : Vector3
 
+@export_group("Collisions")
+## Spawn hit decal on Collision hit
+@export var decal_spawn : bool = true
+## Hit decal texture, if blank will be set to default bullet decal texture
+@export var decal_texture : Texture2D
+## Scene that spawns when a bullet of the weapon collides with anything
+@export var collision_scene : PackedScene
+
 @export_group("Audio")
 @export var sound_primary_use : AudioStream
 @export var sound_secondary_use : AudioStream
@@ -103,12 +111,31 @@ func hit_scan_collision(collision_point:Vector3):
 	spawn_node.add_child(instantiated_ray)
 	
 	if bullet_collision:
-		hit_scan_damage(bullet_collision.collider)
+		hit_scan_damage(bullet_collision.collider, bullet_direction, bullet_collision.position)
+		
+		if collision_scene !=null:
+			hit_scan_scene(bullet_collision)
+		
+		if decal_spawn == true:
+			var bullet_collider = bullet_collision.collider
+			var bullet_collision_position = bullet_collision.position
+			var bullet_collision_normal = bullet_collision.normal
+			var bullet_global_basis = bullet_point.get_global_transform().basis
+			# Spawn bullet decal with collision parameters
+			BulletDecalPool.spawn_bullet_decal(bullet_collision_position, bullet_collision_normal, bullet_collider, bullet_global_basis,decal_texture)
 
 
-func hit_scan_damage(collider):
+func hit_scan_damage(collider, bullet_direction, bullet_position):
 	if collider.has_signal("damage_received"):
-		collider.damage_received.emit(item_reference.wieldable_damage)
+		collider.damage_received.emit(item_reference.wieldable_damage,bullet_direction,bullet_position)
+
+
+func hit_scan_scene(bullet_collision):
+	if collision_scene !=null:
+		var hit_indicator = collision_scene.instantiate()
+		var world = get_tree().get_root().get_child(0)
+		world.add_child(hit_indicator)
+		hit_indicator.global_translate(bullet_collision.position)
 
 
 # Function called when wieldable reload is attempted
