@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_ivwep"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="5_sj4jl"]
 
-[sub_resource type="Resource" id="Resource_n5po6"]
+[sub_resource type="Resource" id="Resource_7jg67"]
 script = ExtResource("4_ivwep")
 inventory_item = ExtResource("3_kncb8")
 quantity = 1
@@ -73,7 +73,7 @@ interaction_text_when_on = "Remove"
 interaction_text_when_off = "Place"
 switch_sound = ExtResource("3_k5b51")
 needs_item_to_operate = true
-required_item_slot = SubResource("Resource_n5po6")
+required_item_slot = SubResource("Resource_7jg67")
 item_hint = "Looks like a battery would fit."
 nodes_to_show_when_on = [NodePath("BatteryMesh")]
 nodes_to_hide_when_on = [NodePath("SnapShape")]
@@ -112,3 +112,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
 mesh = SubResource("CylinderMesh_tkhmn")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y8o8d")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+bus = &"SFX"

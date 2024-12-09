@@ -35,13 +35,13 @@ func start_quest(quest: CogitoQuest) -> CogitoQuest:
 	assert(quest != null)
 
 	if active.is_quest_inside(quest):
-		print("Quest ", quest, " is already active.")
+		CogitoGlobals.debug_log(true, "QuestManager.gd", quest.quest_name + " is already active.")
 		return quest
 	if completed.is_quest_inside(quest):
-		print("Quest ", quest, " is already completed.")
+		CogitoGlobals.debug_log(true, "QuestManager.gd", quest.quest_name + " is already completed.")
 		return quest
 	if failed.is_quest_inside(quest):
-		print("Quest ", quest, " was already failed.")
+		CogitoGlobals.debug_log(true, "QuestManager.gd", quest.quest_name + " was already failed.")
 		return quest	
 	
 
@@ -52,7 +52,7 @@ func start_quest(quest: CogitoQuest) -> CogitoQuest:
 
 	quest.start()
 	Audio.play_sound(COGITO_QUEST_START).volume_db = quest_audio_volume_db
-	print("Quest ", quest.quest_name, " has been started.")
+	CogitoGlobals.debug_log(true, "QuestManager.gd", "Quest " + quest.quest_name + " has been started.")
 	return quest
 
 
@@ -99,7 +99,7 @@ func change_quest_counter(quest: CogitoQuest, value_change:int) -> CogitoQuest:
 	
 	# Checks if counter goal is reached:
 	if quest.quest_counter_current == quest.quest_counter_goal:
-		print(quest.quest_name, ": Quest coal reached!")
+		CogitoGlobals.debug_log(true, "QuestManager.gd", quest.quest_name + ": Quest coal reached!")
 		quest.update()
 		complete_quest(quest)
 	

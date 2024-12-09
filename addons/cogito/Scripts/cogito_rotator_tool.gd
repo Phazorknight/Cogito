@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 func check_for_power() -> void:
 	await CogitoSceneManager.is_node_ready()
 	var property_value = CogitoSceneManager._current_world_dict.get(world_state_property)
-	print("cogito_rotator_tool: world_dict: ", world_state_property, " = ", property_value)
+	CogitoGlobals.debug_log(true, "cogito_rotator_tool", "world_dict: " + str(world_state_property) + " = " + str(property_value) )
 
 	if property_value == true:
 		is_rotating = true

@@ -135,7 +135,7 @@ func _ready():
 	# find the look marker node
 	look_marker_node = get_node_or_null(look_marker_node_path)
 	if not look_marker_node:
-		print("Look marker node not found.")	
+		CogitoGlobals.debug_log(true, "cogito_sittable", "Look marker node not found.")	
 	
 	#find optional animation player node
 	animation_player = get_node_or_null(animation_player_node_path)
@@ -409,4 +409,3 @@ func find_rigid_body() -> RigidBody3D:
 			return current as RigidBody3D
 		current = current.get_parent()
 	return null
-

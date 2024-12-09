@@ -18,7 +18,7 @@ func _ready():
 
 func _process(_delta):
 	if ResourceLoader.load_threaded_get_status(next_scene_path) == ResourceLoader.THREAD_LOAD_LOADED:
-		print("Loading screen: Attempting to load ", next_scene_path)
+		CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load " + next_scene_path)
 		set_process(false)
 		await get_tree().create_timer(forced_delay).timeout
 		var new_scene_packed: PackedScene = ResourceLoader.load_threaded_get(next_scene_path)
@@ -26,7 +26,7 @@ func _process(_delta):
 		var current_scene = get_tree().current_scene # Stores currently active scene so it can be set later
 		get_tree().get_root().add_child(new_scene_node) # Adds the instatiated new scene as a node.
 		
-		print("Loading screen: Load_mode is ", load_mode)
+		CogitoGlobals.debug_log(true, "loading_screen.gd", "Load_mode is " + str(load_mode) )
 		
 		#If load_mode asks for it, scene state will be loaded.
 		if load_mode != 2: #Checking that load_mode is not set to 2 which would ignore scene states.
@@ -35,11 +35,11 @@ func _process(_delta):
 			
 			# This flag is used if the scene transition was called from loading a save
 			if load_mode == 1: #Load_Mode one is attempting to load a save
-				print("Loading screen: Attempting to load a save for passsed_slot ", passed_slot)
+				CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load a save for passsed_slot " + passed_slot)
 				CogitoSceneManager._current_scene_name = new_scene_node.name #Manually setting new scene name
 				CogitoSceneManager.loading_saved_game(passed_slot)
 			else:
-				print("Loading screen: Attempting to load scene state: ", next_scene_state_filename)
+				CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load scene state: " + next_scene_state_filename)
 				CogitoSceneManager.load_scene_state(next_scene_state_filename,"temp") # Loading temp scene state
 				CogitoSceneManager.load_player_state(CogitoSceneManager._current_player_node,"temp") # Loading temp player state.
 		

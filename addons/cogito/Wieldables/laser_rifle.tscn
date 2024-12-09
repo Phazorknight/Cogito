@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://bb8pm2nk8hwon"]
+[gd_scene load_steps=26 format=4 uid="uid://bb8pm2nk8hwon"]
 
 [ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_laser_rifle.gd" id="1_2rut3"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://addons/cogito/Assets/Audio/Kenney/error_004.ogg" id="2_f7ale"]
@@ -341,7 +341,6 @@ process_material = SubResource("ParticleProcessMaterial_d1eos")
 draw_pass_1 = SubResource("BoxMesh_rxstj")
 
 [node name="LaserRifleMesh" type="Node3D" parent="." node_paths=PackedStringArray("tracked_nodes")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("5_fa3wp")
 tracked_nodes = [NodePath("blasterA"), NodePath("clipA")]
 

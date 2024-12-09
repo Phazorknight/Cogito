@@ -23,7 +23,7 @@ rings = 1
 height = 0.25
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_w3sph"]
+[sub_resource type="Resource" id="Resource_i4rbf"]
 resource_local_to_scene = true
 script = ExtResource("4_tbkmk")
 inventory_item = ExtResource("3_7etap")
@@ -37,8 +37,8 @@ collision_layer = 2
 collision_mask = 3
 mass = 0.1
 continuous_cd = true
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_6pqxf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -62,7 +62,7 @@ wait_time = 30.0
 autostart = true
 
 [node name="PickupComponent" parent="." instance=ExtResource("4_acy7b")]
-slot_data = SubResource("Resource_w3sph")
+slot_data = SubResource("Resource_i4rbf")
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_6jfy1")]
 material_properties = 1

@@ -110,7 +110,7 @@ func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
 			frame = keycode_to_frame_index("Mouse Middle")
 		
 	else:
-		print("DynamicInputIcon: Action=", action_name, ". No primary keyboard/mouse input map assigned.")
+		CogitoGlobals.debug_log(true, "DynamicInputIcon.gd", "Action " + action_name + ": No primary keyboard/mouse input map assigned.")
 		frame = 0
 		return
 
