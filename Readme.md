@@ -1,7 +1,6 @@
 ![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
 # COGITO
-[![GodotEngine](https://img.shields.io/badge/Godot_4.3_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/beta_202412-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
-beta 202412.01
+[![GodotEngine](https://img.shields.io/badge/Godot_4.3_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/version_1.0-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
 
 ## What is it?
 COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
@@ -47,7 +46,7 @@ The structure of this template always tries to adhere to the following principle
   - In-game helper documents that explain how objects in the scene were set up
 
 > [!IMPORTANT]  
-> COGITO is still under active development. While some features are pretty much set, others might change. Use at your own risk and check Issues and Discussion pages for more information.
+> COGITO v1.0 is not 100% bug-free. While most features are set, be aware that this is hobbyist open source software. Use at your own risk and check Issues and Discussion pages for more information.
 
 ## [Full documentation here!](https://cogito.readthedocs.io/en/latest/index.html)
 
