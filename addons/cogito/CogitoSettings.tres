@@ -8,3 +8,4 @@ is_logging = false
 scene_state_prefix = "COGITO_scene_state_"
 player_state_prefix = "COGITO_player_state_"
 default_transition_duration = 0.4
+reset_project_input_map = false

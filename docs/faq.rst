@@ -41,6 +41,21 @@ The more overlap there is, the more likely it is that Cogito will work for your 
 Note that if you're an experienced programmer, you can modify Cogito to make it work with almost any kind of 3D game.
 
 
+My inputs aren't working!
+-------------------------
+
+Have you set up the project input map?
+Please see the section about **initiatlizing the input map** in the **Getting Started** section.
+
+
+
+My carryable object doesn't behave as I expect
+----------------------------------------------
+
+In 9 out of 10 cases, this is a Godot physics issue rather than a Cogito issue. We recommend playing around with
+RigidBody3D properties or using Jolt physics.
+
+
 How do I set the main menu to start/load my own level scene?
 ------------------------------------------------------------
 
