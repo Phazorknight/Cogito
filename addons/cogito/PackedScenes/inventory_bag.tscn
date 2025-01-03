@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://cuwptpgheq4l5"]
+
+[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_avnnw"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="2_da5wv"]
+[ext_resource type="PackedScene" uid="uid://1qmp8w30u0jy" path="res://addons/cogito/Components/Interactions/BackpackComponent.tscn" id="3_fg43q"]
+[ext_resource type="PackedScene" uid="uid://debjsdl174kkw" path="res://addons/cogito/Assets/Models/Kenney/bag.glb" id="4_skhg5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rd5pj"]
+size = Vector3(0.213806, 0.597458, 0.408279)
+
+[node name="InventoryBag" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 3
+script = ExtResource("1_avnnw")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("2_da5wv")]
+
+[node name="BackpackComponent" parent="." instance=ExtResource("3_fg43q")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00131226, -0.200554, -0.000480652)
+shape = SubResource("BoxShape3D_rd5pj")
+
+[node name="bag2" parent="." instance=ExtResource("4_skhg5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

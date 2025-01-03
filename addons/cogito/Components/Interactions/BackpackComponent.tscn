@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://1qmp8w30u0jy"]
+
+[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/BackpackComponent.gd" id="1_pwtt8"]
+[ext_resource type="AudioStream" uid="uid://bhce82qflwaur" path="res://addons/cogito/Assets/Audio/Kenney/cardPlace1.ogg" id="2_7ni17"]
+
+[node name="BackpackComponent" type="Node3D"]
+script = ExtResource("1_pwtt8")
+sound_on_use = ExtResource("2_7ni17")
+input_map_action = "interact"
+interaction_text = "Extend inventory"
