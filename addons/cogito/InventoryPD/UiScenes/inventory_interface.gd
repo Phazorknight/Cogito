@@ -1,12 +1,14 @@
 extends Control
 
 signal drop_slot_data(slot_data : InventorySlotPD)
+signal inventory_open(is_true: bool)
 
 @onready var inventory_ui = $VBoxContainer/InventoryUI
 @onready var player_currencies_ui = $VBoxContainer/PlayerCurrencies
 @onready var grabbed_slot_node = $GrabbedSlot
 @onready var external_inventory_ui = $ExternalInventoryUI
 @onready var hot_bar_inventory = $HotBarInventory
+@onready var quick_slots = $QuickSlots
 @onready var info_panel = $InfoPanel
 @onready var item_name = $InfoPanel/MarginContainer/VBoxContainer/ItemName
 @onready var item_description = $InfoPanel/MarginContainer/VBoxContainer/ItemDescription
@@ -16,7 +18,12 @@ signal drop_slot_data(slot_data : InventorySlotPD)
 ## Sound that plays as a generic error.
 @export var sound_error : AudioStream
 
-var is_inventory_open : bool
+@export var is_using_hotbar: bool = true
+
+var is_inventory_open : bool:
+	set(value):
+		is_inventory_open = value
+		inventory_open.emit(is_inventory_open)
 var grabbed_slot_data: InventorySlotPD
 var external_inventory_owner : Node
 var control_in_focus
@@ -75,7 +82,8 @@ func close_inventory():
 		grabbed_slot_node.hide()
 		info_panel.hide()
 		external_inventory_ui.hide()
-		hot_bar_inventory.show()
+		if is_using_hotbar:
+			hot_bar_inventory.show()
 
 
 func _on_focus_changed(control: Control):
@@ -168,6 +176,12 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
 		inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	inventory_ui.set_inventory_data(inventory_data)
+	if !is_using_hotbar:
+		quick_slots.show()
+		quick_slots.set_inventory_data(inventory_data)
+	else:
+		quick_slots.hide()
+	inventory_open.connect(quick_slots.update_inventory_status)
 	grabbed_slot_node.using_grid(inventory_data.grid)
 
 
@@ -207,6 +221,7 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 			Audio.play_sound(sound_error)
 			print("Can't drop while moving an item.")
 
+
 	var amount_of_inventory_slots = inventory_ui.slot_array.size()
 	var element : int
 	if index < amount_of_inventory_slots:
@@ -231,6 +246,14 @@ func update_grabbed_slot():
 		grabbed_slot_node.hide()
 		inventory_ui.detach_grabbed_slot()
 		external_inventory_ui.detach_grabbed_slot()
+
+
+func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotContainer):
+	if grabbed_slot_data:
+		print("inventory_interface.gd: Binding to quickslot container: ", grabbed_slot_data, " -> ", quickslotcontainer)
+		quick_slots.bind_to_quickslot(grabbed_slot_data, quickslotcontainer)
+	else:
+		print("inventory_interface.gd: No grabbed slot data.")
 
 
 # Grabbed slot data handling for mouse buttons

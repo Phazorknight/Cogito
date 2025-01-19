@@ -88,7 +88,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_pobyb"]
+[sub_resource type="Resource" id="Resource_orfpu"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -901,7 +901,7 @@ environment = SubResource("Environment_obnk3")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_pobyb")
+inventory_data = SubResource("Resource_orfpu")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 

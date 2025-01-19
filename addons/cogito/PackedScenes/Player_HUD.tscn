@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=30 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://addons/cogito/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://addons/cogito/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
 [ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://addons/cogito/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CogitoQuickSlots.gd" id="20_xe82q"]
+[ext_resource type="PackedScene" uid="uid://cd3f50eloxr7h" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.tscn" id="21_q2hxa"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
 resource_local_to_scene = true
@@ -425,6 +427,49 @@ action_name = "inventory_drop_item"
 layout_mode = 2
 text = "Drop"
 
+[node name="QuickSlots" type="Control" parent="InventoryInterface" node_paths=PackedStringArray("quickslot_containers")]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -105.0
+offset_right = 55.0
+offset_bottom = -65.0
+grow_vertical = 0
+script = ExtResource("20_xe82q")
+quickslot_containers = [NodePath("CogitoQuickslotContainer1"), NodePath("CogitoQuickslotContainer2"), NodePath("CogitoQuickslotContainer3"), NodePath("CogitoQuickslotContainer4")]
+
+[node name="CogitoQuickslotContainer1" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
+layout_mode = 0
+offset_top = -32.0
+offset_bottom = 32.0
+
+[node name="CogitoQuickslotContainer2" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = -100.0
+offset_right = 114.0
+offset_bottom = -36.0
+input_action = "quickslot_2"
+
+[node name="CogitoQuickslotContainer3" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
+layout_mode = 0
+offset_left = 100.0
+offset_top = -32.0
+offset_right = 164.0
+offset_bottom = 32.0
+input_action = "quickslot_3"
+
+[node name="CogitoQuickslotContainer4" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 37.0
+offset_right = 114.0
+offset_bottom = 101.0
+input_action = "quickslot_4"
+
 [node name="DeathScreen" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -546,6 +591,10 @@ metadata/_tab_index = 2
 [connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
 [connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]
+[connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer1" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
+[connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer2" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
+[connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer3" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
+[connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer4" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
 [connection signal="pressed" from="DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 
 [editable path="FixedStaminaBar"]

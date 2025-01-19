@@ -1,4 +1,5 @@
 extends Sprite2D
+class_name DynamicInputIcon
 
 ## Name of action as called in the Input Map
 @export var action_name : String

@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqsod8j0c6qag"]
+[gd_scene load_steps=8 format=3 uid="uid://dqsod8j0c6qag"]
 
 [ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_r5c6a"]
-[ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://addons/cogito/Components/Interactions/ReadableComponent.tscn" id="2_cwsfv"]
+[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/ReadableComponent.gd" id="2_m1xf7"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://addons/cogito/Assets/Audio/Kenney/bookOpen.ogg" id="3_lxhi0"]
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="4_qtegg"]
+[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="5_lkhp4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_c635y"]
 size = Vector3(0.3, 0.02, 0.5)
@@ -30,7 +32,8 @@ mesh = SubResource("BoxMesh_c635y")
 transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, -0.00130868, -4.76837e-07)
 shape = SubResource("BoxShape3D_mqvc0")
 
-[node name="ReadableComponent" parent="." instance=ExtResource("2_cwsfv")]
+[node name="ReadableComponent" type="Node3D" parent="."]
+script = ExtResource("2_m1xf7")
 interact_sound = ExtResource("3_lxhi0")
 readable_title = "Welcome to the LOBBY"
 readable_content = "This scene is still under construction, but feel free to explore what's there.
@@ -40,3 +43,85 @@ COGITO is a first Person Immersive Sim Template Project for Godot Engine 4. In c
 This text is a placeholder, showing how a readable object would work. It is recommended to make a copy of the readable component and then modify the copy to your liking.
 
 This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
+input_map_action = "interact"
+interaction_text = "Read"
+
+[node name="ReadableUi" type="Control" parent="ReadableComponent"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -273.0
+offset_top = -250.0
+offset_right = 273.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_qtegg")
+
+[node name="BG" type="Panel" parent="ReadableComponent/ReadableUi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG2" type="Panel" parent="ReadableComponent/ReadableUi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bindings" type="MarginContainer" parent="ReadableComponent/ReadableUi"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 25
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ReadableComponent/ReadableUi/Bindings"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+follow_focus = true
+horizontal_scroll_mode = 0
+script = ExtResource("5_lkhp4")
+transition_time = 0.15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ReadableComponent/ReadableUi/Bindings/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ReadableTitle" type="Label" parent="ReadableComponent/ReadableUi/Bindings/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../ReadableContent")
+focus_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "This is a readable. Title can even be longer."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="ReadableComponent/ReadableUi/Bindings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ReadableContent" type="RichTextLabel" parent="ReadableComponent/ReadableUi/Bindings/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ReadableTitle")
+focus_mode = 2
+text = "This text is a placeholder, showing how a readable object would work. It is recommended to make a copy of the readable component and then modify the copy to your liking.
+
+This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
+fit_content = true

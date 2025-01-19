@@ -3,10 +3,17 @@ class_name InventorySlotPD
 
 const MAX_STACK_SIZE : int = 99
 
+signal stack_has_changed
+
 @export var inventory_item : InventoryItemPD
 #@export_range(1, MAX_STACK_SIZE) var quantity : int = 1: set = set_quantity
-@export var quantity : int = 1
+@export var quantity : int = 1:
+	set(value):
+		quantity = value
+		stack_has_changed.emit()
+	
 @export var origin_index = -1
+
 
 func is_origin(index):
 	return origin_index == index

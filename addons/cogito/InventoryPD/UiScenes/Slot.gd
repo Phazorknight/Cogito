@@ -6,6 +6,7 @@ class_name SlotPanel extends PanelContainer
 @onready var charge_label = $ChargeLabel
 @onready var selection_panel = $Selected
 
+
 @export var highlight_color : Color
 ## AudioStream that plays when slot gets highlighted.
 @export var sound_highlight : AudioStream
@@ -19,15 +20,19 @@ signal slot_clicked(index: int, mouse_button: int)
 signal slot_pressed(index: int, action: String)
 signal highlight_slot(index: int, highlight: bool)
 
+
 func using_grid(using_grid: bool):
 	grid = using_grid
+
 
 func set_icon_region(x, y):
 	var region = item_data.get_region(x, y)
 	texture_rect.texture = ImageTexture.create_from_image(region)
 
+
 func set_hotbar_icon():
 	texture_rect.texture = item_data.icon
+
 
 func set_slot_data(slot_data: InventorySlotPD, index: int, moving: bool, x_size: int):
 	item_data = slot_data.inventory_item
@@ -58,21 +63,25 @@ func set_slot_data(slot_data: InventorySlotPD, index: int, moving: bool, x_size:
 			item_data.charge_changed.disconnect(_on_charge_changed)
 		charge_label.hide()
 
+
 func check_if_top_right_slot(slot_data: InventorySlotPD, index: int):
 	if not item_data:
 		return
 	if index == slot_data.origin_index + item_data.item_size.x-1:
 		quantity_slot = true
-		
+
+
 func check_if_bottom_right_slot(slot_data: InventorySlotPD, index: int, x_size: int):
 	if not item_data:
 		return
 	if index == slot_data.origin_index + item_data.item_size.x-1 + ((item_data.item_size.y-1)*x_size):
 		ammo_slot = true
 
+
 func _on_charge_changed():
 	if item_data.has_signal("charge_changed"): #Making sure this is a wieldable.
 		charge_label.text = str(int(item_data.charge_current)) 
+
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton \
