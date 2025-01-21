@@ -8,11 +8,12 @@ signal inventory_open(is_true: bool)
 @onready var grabbed_slot_node = $GrabbedSlot
 @onready var external_inventory_ui = $ExternalInventoryUI
 @onready var hot_bar_inventory = $HotBarInventory
-@onready var quick_slots = $QuickSlots
+@onready var quick_slots : CogitoQuickslots = $QuickSlots
 @onready var info_panel = $InfoPanel
 @onready var item_name = $InfoPanel/MarginContainer/VBoxContainer/ItemName
 @onready var item_description = $InfoPanel/MarginContainer/VBoxContainer/ItemDescription
 @onready var drop_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxDrop
+@onready var assign_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxAssign
 
 
 ## Sound that plays as a generic error.
@@ -46,8 +47,10 @@ func _ready():
 func _on_input_device_change(_device, _device_index):
 	if _device == "keyboard":
 		drop_prompt.hide()
+		assign_prompt.hide()
 	else:
 		drop_prompt.show()
+		assign_prompt.show()
 
 
 func open_inventory():
@@ -75,6 +78,7 @@ func close_inventory():
 			grabbed_slot_data = null
 		is_inventory_open = false
 		get_viewport().gui_focus_changed.disconnect(_on_focus_changed)
+		control_in_focus.release_focus()
 		inventory_ui.hide()
 		player_currencies_ui.hide()
 		if external_inventory_owner:
@@ -93,7 +97,11 @@ func _on_focus_changed(control: Control):
 	
 	if control != null:
 		control_in_focus = control
-		
+	
+	# Quick check to see if this is a quickslot
+	if control_in_focus.has_method("update_quickslot_data"):
+		return
+	
 	if control_in_focus.item_data and !grabbed_slot_node.visible:
 		item_name.text = control_in_focus.item_data.name
 		item_description.text = control_in_focus.item_data.description
@@ -178,7 +186,10 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 	inventory_ui.set_inventory_data(inventory_data)
 	if !is_using_hotbar:
 		quick_slots.show()
-		quick_slots.set_inventory_data(inventory_data)
+		# Quickslots need reference to inventory when quickslot buttons are pressed
+		quick_slots.inventory_reference = inventory_data
+		# Connecting the inventory_updated signal (this is so quickslots update on item drop etc.)
+		inventory_data.inventory_updated.connect(quick_slots.on_inventory_updated)
 	else:
 		quick_slots.hide()
 	inventory_open.connect(quick_slots.update_inventory_status)
@@ -215,8 +226,17 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
 					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data_gamepad_drop(index))
 					grabbed_slot_data = null
-					
-					
+		
+		[null, "inventory_assign_item"]: # Pressing "Assign quickslot" on gamepad
+			print("Grabbing focus of quickslots.")
+			grabbed_slot_data = inventory_data.grab_slot_data(index)
+			quick_slots.quickslot_containers[0].grab_focus.call_deferred()
+			
+		[_, "inventory_assign_item"]: # When player cancels out assigning a quickslot on gamepad
+			get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data)
+			grabbed_slot_data = null
+			update_grabbed_slot()
+		
 		[_, "inventory_drop_item"]:
 			Audio.play_sound(sound_error)
 			print("Can't drop while moving an item.")
@@ -252,6 +272,9 @@ func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotConta
 	if grabbed_slot_data:
 		print("inventory_interface.gd: Binding to quickslot container: ", grabbed_slot_data, " -> ", quickslotcontainer)
 		quick_slots.bind_to_quickslot(grabbed_slot_data, quickslotcontainer)
+		get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data)
+		grabbed_slot_data = null
+		update_grabbed_slot()
 	else:
 		print("inventory_interface.gd: No grabbed slot data.")
 

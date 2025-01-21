@@ -1,4 +1,5 @@
 extends CogitoAttribute
+class_name CogitoVisibilityAttribute
 
 func _ready():
 	value_current = value_start

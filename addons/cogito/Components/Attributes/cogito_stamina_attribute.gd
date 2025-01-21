@@ -1,4 +1,5 @@
 extends CogitoAttribute
+class_name CogitoStaminaAttribute
 
 @export var stamina_regen_speed : float = 1
 @export var run_exhaustion_speed : float = 1

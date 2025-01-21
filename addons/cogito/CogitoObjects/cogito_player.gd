@@ -208,7 +208,6 @@ var slide_audio_player : AudioStreamPlayer3D
 #endregion
 
 func _ready():
-	
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast

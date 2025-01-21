@@ -246,6 +246,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_lyywb")
 sound_error = ExtResource("8_bxpra")
+is_using_hotbar = false
 metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface"]
@@ -311,6 +312,7 @@ offset_right = 64.0
 offset_bottom = 64.0
 
 [node name="HotBarInventory" parent="InventoryInterface" instance=ExtResource("6_8odro")]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -427,40 +429,82 @@ action_name = "inventory_drop_item"
 layout_mode = 2
 text = "Drop"
 
+[node name="HBoxAssign" type="HBoxContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxAssign"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="BtnDrop" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxAssign/MarginContainer" instance=ExtResource("12_jgxar")]
+position = Vector2(15, 15)
+scale = Vector2(0.5, 0.5)
+action_name = "inventory_assign_item"
+
+[node name="TextAssign" type="Label" parent="InventoryInterface/InfoPanel/MarginContainer/VBoxContainer/HBoxAssign"]
+layout_mode = 2
+text = "Assign Quickslot"
+
 [node name="QuickSlots" type="Control" parent="InventoryInterface" node_paths=PackedStringArray("quickslot_containers")]
-visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 15.0
-offset_top = -105.0
-offset_right = 55.0
-offset_bottom = -65.0
+offset_left = 10.0
+offset_top = -95.0
+offset_right = 50.0
+offset_bottom = -55.0
 grow_vertical = 0
 script = ExtResource("20_xe82q")
 quickslot_containers = [NodePath("CogitoQuickslotContainer1"), NodePath("CogitoQuickslotContainer2"), NodePath("CogitoQuickslotContainer3"), NodePath("CogitoQuickslotContainer4")]
 
 [node name="CogitoQuickslotContainer1" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
 layout_mode = 0
-offset_top = -32.0
-offset_bottom = 32.0
+offset_top = -16.0
+offset_bottom = 48.0
+scale = Vector2(0.75, 0.75)
+focus_neighbor_top = NodePath("../CogitoQuickslotContainer2")
+focus_neighbor_right = NodePath("../CogitoQuickslotContainer3")
+focus_neighbor_bottom = NodePath("../CogitoQuickslotContainer4")
+focus_mode = 2
+
+[node name="DynamicInputIcon" parent="InventoryInterface/QuickSlots/CogitoQuickslotContainer1/MarginContainerInputIcon" index="0"]
+position = Vector2(59, 32)
 
 [node name="CogitoQuickslotContainer2" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
 layout_mode = 0
 offset_left = 50.0
-offset_top = -100.0
+offset_top = -68.0
 offset_right = 114.0
-offset_bottom = -36.0
+offset_bottom = -4.0
+scale = Vector2(0.75, 0.75)
+focus_neighbor_left = NodePath("../CogitoQuickslotContainer1")
+focus_neighbor_right = NodePath("../CogitoQuickslotContainer3")
+focus_neighbor_bottom = NodePath("../CogitoQuickslotContainer4")
+focus_mode = 2
 input_action = "quickslot_2"
 
 [node name="CogitoQuickslotContainer3" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
 layout_mode = 0
 offset_left = 100.0
-offset_top = -32.0
+offset_top = -16.0
 offset_right = 164.0
-offset_bottom = 32.0
+offset_bottom = 48.0
+scale = Vector2(0.75, 0.75)
+focus_neighbor_left = NodePath("../CogitoQuickslotContainer1")
+focus_neighbor_top = NodePath("../CogitoQuickslotContainer2")
+focus_neighbor_bottom = NodePath("../CogitoQuickslotContainer4")
+focus_mode = 2
 input_action = "quickslot_3"
+
+[node name="DynamicInputIcon" parent="InventoryInterface/QuickSlots/CogitoQuickslotContainer3/MarginContainerInputIcon" index="0"]
+position = Vector2(0, 32)
 
 [node name="CogitoQuickslotContainer4" parent="InventoryInterface/QuickSlots" instance=ExtResource("21_q2hxa")]
 layout_mode = 0
@@ -468,7 +512,15 @@ offset_left = 50.0
 offset_top = 37.0
 offset_right = 114.0
 offset_bottom = 101.0
+scale = Vector2(0.75, 0.75)
+focus_neighbor_left = NodePath("../CogitoQuickslotContainer1")
+focus_neighbor_top = NodePath("../CogitoQuickslotContainer2")
+focus_neighbor_right = NodePath("../CogitoQuickslotContainer3")
+focus_mode = 2
 input_action = "quickslot_4"
+
+[node name="DynamicInputIcon" parent="InventoryInterface/QuickSlots/CogitoQuickslotContainer4/MarginContainerInputIcon" index="0"]
+position = Vector2(32, 0)
 
 [node name="DeathScreen" type="Control" parent="."]
 visible = false
@@ -598,3 +650,6 @@ metadata/_tab_index = 2
 [connection signal="pressed" from="DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 
 [editable path="FixedStaminaBar"]
+[editable path="InventoryInterface/QuickSlots/CogitoQuickslotContainer1"]
+[editable path="InventoryInterface/QuickSlots/CogitoQuickslotContainer3"]
+[editable path="InventoryInterface/QuickSlots/CogitoQuickslotContainer4"]

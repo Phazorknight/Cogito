@@ -70,7 +70,6 @@ func _ready():
 func setup_player(new_player : Node):
 	player = new_player
 	_setup_player()
-	
 
 
 func _setup_player():

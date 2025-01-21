@@ -99,6 +99,8 @@ func _on_gui_input(event):
 		slot_pressed.emit(get_index(), "inventory_use_item")
 	if event.is_action_pressed("inventory_drop_item"):
 		slot_pressed.emit(get_index(), "inventory_drop_item")
+	if event.is_action_pressed("inventory_assign_item"):
+		slot_pressed.emit(get_index(), "inventory_assign_item")
 
 
 func set_grabbed_dimensions():

@@ -1,13 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://cd3f50eloxr7h"]
+[gd_scene load_steps=7 format=3 uid="uid://cd3f50eloxr7h"]
 
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_locw3"]
 [ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.gd" id="1_txypm"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="2_e7trw"]
+[ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_f52r8"]
 [ext_resource type="Texture2D" uid="uid://bsf2bc116o1oi" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoKey.png" id="2_hcgid"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i4mvh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 
 [node name="CogitoQuickslotContainer" type="PanelContainer"]
 offset_right = 64.0
 offset_bottom = 64.0
+theme = ExtResource("1_locw3")
 script = ExtResource("1_txypm")
+sound_highlight = ExtResource("2_f52r8")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 custom_minimum_size = Vector2(32, 32)
@@ -21,11 +36,10 @@ expand_mode = 3
 [node name="LabelStackAmount" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 8
+size_flags_vertical = 0
 text = "15"
 
 [node name="MarginContainerInputIcon" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 10
@@ -33,8 +47,16 @@ theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 10
 
 [node name="DynamicInputIcon" parent="MarginContainerInputIcon" instance=ExtResource("2_e7trw")]
-position = Vector2(0, 0)
+position = Vector2(32, 59)
 scale = Vector2(0.5, 0.5)
 action_name = "quickslot_1"
 
+[node name="Selected" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_i4mvh")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

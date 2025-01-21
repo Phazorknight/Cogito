@@ -1,53 +1,48 @@
 extends Node
+class_name CogitoQuickslots
 
 @export var quickslot_containers : Array[CogitoQuickslotContainer]
+
+var assigned_quickslots : Array[InventorySlotPD]
 @export var inventory_reference : CogitoInventory
-
-@export var assigned_quickslot_1: InventorySlotPD
-@export var assigned_quickslot_2: InventorySlotPD
-@export var assigned_quickslot_3: InventorySlotPD
-@export var assigned_quickslot_4: InventorySlotPD
-
 var inventory_is_open : bool
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
+	# Resizing quickslots to match amount of containers
+	assigned_quickslots.resize(quickslot_containers.size())
+	
+	# Connecting to unbind signal to enabling clearing of inventory slot reference on unbind.
 	for quickslot in quickslot_containers:
 		quickslot.quickslot_cleared.connect(unbind_quickslot)
 
 
-func unbind_quickslot(quickslot_to_unbind: CogitoQuickslotContainer):
-	match quickslot_to_unbind.input_action:
-		"quickslot_1":
-			assigned_quickslot_1 = null
-		"quickslot_2":
-			assigned_quickslot_2 = null
-		"quickslot_3":
-			assigned_quickslot_3 = null
-		"quickslot_4":
-			assigned_quickslot_4 = null
-		_:
-			print("Can't unbind quickslot for input map action ", quickslot_to_unbind.input_action, " as no assigned inventory slot was defined.")
+func on_inventory_updated(passed_inv: CogitoInventory) -> void:
+	# Updating all quickslot containers using their assigned inventory slots.
+	for i in quickslot_containers.size():
+		quickslot_containers[i].update_quickslot_data(assigned_quickslots[i])
+
+
+func unbind_quickslot(quickslot_to_unbind: CogitoQuickslotContainer) -> void:
+	# Finding the passed quickslot in the containers and saving it's index.
+	var slot_index : int = quickslot_containers.find(quickslot_to_unbind, 0)
+	
+	if slot_index != -1:
+		# Nulling out the inventory slot of the same index.
+		assigned_quickslots[slot_index] = null
+	else:
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "quickslot wasn't found in the quickslot_container array.")
 
 
 func bind_to_quickslot(itemslot_to_bind: InventorySlotPD, quickslot_to_bind: CogitoQuickslotContainer):
-	match quickslot_to_bind.input_action:
-		"quickslot_1":
-			assigned_quickslot_1 = itemslot_to_bind
-			quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
-			print("CogitoQuickSlots.gd: Assigned quickslot_1 to ", itemslot_to_bind.inventory_item.name )
-		"quickslot_2":
-			assigned_quickslot_2 = itemslot_to_bind
-			quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
-			print("CogitoQuickSlots.gd: Assigned quickslot_2 to ", itemslot_to_bind.inventory_item.name )
-		"quickslot_3":
-			assigned_quickslot_3 = itemslot_to_bind
-			quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
-			print("CogitoQuickSlots.gd: Assigned quickslot_3 to ", itemslot_to_bind.inventory_item.name )
-		"quickslot_4":
-			assigned_quickslot_4 = itemslot_to_bind
-			quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
-			print("CogitoQuickSlots.gd: Assigned quickslot_4 to ", itemslot_to_bind.inventory_item.name )
+	var slot_index : int = quickslot_containers.find(quickslot_to_bind, 0)
+	
+	if slot_index != -1:
+		assigned_quickslots[slot_index] = itemslot_to_bind
+		quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Assigned quickslot " + str(slot_index) + " to " + itemslot_to_bind.inventory_item.name )
+	else:
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "quickslot wasn't found in the quickslot_container array.")
 
 
 func _unhandled_input(event):
@@ -55,46 +50,43 @@ func _unhandled_input(event):
 		return
 		
 	if inventory_is_open:
-		print("CogitoQuickSlots.gd: Inventory is open, no item used.")
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Inventory is open, no item used.")
 		return
 	
 	if event.is_action_released("quickslot_1"):
-		if assigned_quickslot_1:
-			print("CogitoQuickSlots.gd: Using quickslot 1...")
-			inventory_reference.use_slot_data(assigned_quickslot_1.origin_index)
+		if assigned_quickslots[0]:
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Using quickslot 1...")
+			inventory_reference.use_slot_data(assigned_quickslots[0].origin_index)
 		else:
-			print("CogitoQuickSlots.gd: Nothing assigned in quickslot 1...")
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 1...")
 			return
 	
 	if event.is_action_released("quickslot_2"):
-		if assigned_quickslot_2:
-			print("CogitoQuickSlots.gd: Using quickslot 2...")
-			inventory_reference.use_slot_data(assigned_quickslot_2.origin_index)
+		if assigned_quickslots[1]:
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Using quickslot 2...")
+			inventory_reference.use_slot_data(assigned_quickslots[1].origin_index)
 		else:
-			print("CogitoQuickSlots.gd: Nothing assigned in quickslot 2...")
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 2...")
 			return
 		
 	if event.is_action_released("quickslot_3"):
-		if assigned_quickslot_3:
-			print("CogitoQuickSlots.gd: Using quickslot 3...")
-			inventory_reference.use_slot_data(assigned_quickslot_3.origin_index)
+		if assigned_quickslots[2]:
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Using quickslot 3...")
+			inventory_reference.use_slot_data(assigned_quickslots[2].origin_index)
 		else:
-			print("CogitoQuickSlots.gd: Nothing assigned in quickslot 1...")
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 3...")
 			return
 
 	if event.is_action_released("quickslot_4"):
-		if assigned_quickslot_4:
-			print("CogitoQuickSlots.gd: Using quickslot 4...")
-			inventory_reference.use_slot_data(assigned_quickslot_4.origin_index)
+		if assigned_quickslots[3]:
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Using quickslot 4...")
+			inventory_reference.use_slot_data(assigned_quickslots[3].origin_index)
 		else:
-			print("CogitoQuickSlots.gd: Nothing assigned in quickslot 2...")
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 4...")
 			return
-
 
 
 func update_inventory_status(is_open: bool):
 	inventory_is_open = is_open
-
-
-func set_inventory_data(inventory_data: CogitoInventory):
-	inventory_reference = inventory_data
+	# Sets unhandled key input to the opposite of what is_open is.
+	set_process_unhandled_input(!is_open)

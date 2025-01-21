@@ -5,10 +5,14 @@ signal quickslot_pressed(quickslot_container: CogitoQuickslotContainer)
 signal quickslot_cleared(quickslot_container: CogitoQuickslotContainer)
 
 var item_reference : InventoryItemPD
-var iventory_slot_reference : InventorySlotPD
+var inventory_slot_reference : InventorySlotPD
 
 @export var input_action : String = "quickslot_1"
 
+## AudioStream that plays when slot gets highlighted.
+@export var sound_highlight : AudioStream
+
+@onready var selection_panel = $Selected
 @onready var item_texture: TextureRect = $MarginContainer/ItemTexture
 @onready var label_stack_amount: Label = $MarginContainer/LabelStackAmount
 @onready var dynamic_input_icon: DynamicInputIcon = $MarginContainerInputIcon/DynamicInputIcon
@@ -26,19 +30,25 @@ func _on_gui_input(event):
 	if event is InputEventMouseButton \
 			and event.button_index == MOUSE_BUTTON_LEFT \
 			and event.is_pressed():
-				print("Quickslot left clicked!")
 				quickslot_pressed.emit(self)
 	
 	# RIGHT CLICK ON QUICKSLOT CONTAINER
 	if event is InputEventMouseButton \
 			and event.button_index == MOUSE_BUTTON_RIGHT \
 			and event.is_pressed():
-				print("Quickslot right clicked!")
 				clear_this_quickslot()
+	
+	# GAMEPAD ASSIGN HANDLING
+	if event.is_action_pressed("inventory_use_item"):
+		quickslot_pressed.emit(self)
+	
+	# GAMEPAD ASSIGN HANDLING
+	if event.is_action_pressed("inventory_move_item"):
+		clear_this_quickslot()
 
 
 func clear_this_quickslot():
-	iventory_slot_reference = null
+	inventory_slot_reference = null
 	item_reference = null
 	item_texture.hide()
 	label_stack_amount.hide()
@@ -46,10 +56,13 @@ func clear_this_quickslot():
 
 
 func update_quickslot_stack():
-	if iventory_slot_reference.quantity > 1:
+	if !inventory_slot_reference:
+		return
+	
+	if inventory_slot_reference.quantity > 1:
 		label_stack_amount.show()
-		label_stack_amount.text = str(iventory_slot_reference.quantity)
-	elif iventory_slot_reference.quantity == 1:
+		label_stack_amount.text = str(inventory_slot_reference.quantity)
+	elif inventory_slot_reference.quantity == 1:
 		label_stack_amount.hide()
 	else:
 		clear_this_quickslot()
@@ -57,15 +70,29 @@ func update_quickslot_stack():
 
 func update_quickslot_data(slot_data: InventorySlotPD) -> void:
 	if slot_data == null:
-		iventory_slot_reference = null
+		inventory_slot_reference = null
 		item_reference = null
 		item_texture.hide()
 		label_stack_amount.hide()
 	else:
-		iventory_slot_reference = slot_data
-		item_reference = iventory_slot_reference.inventory_item
+		inventory_slot_reference = slot_data
+		item_reference = inventory_slot_reference.inventory_item
 		
 		item_texture.show()
 		item_texture.texture = item_reference.icon
-		iventory_slot_reference.stack_has_changed.connect(update_quickslot_stack)
+		if !inventory_slot_reference.stack_has_changed.is_connected(update_quickslot_stack):
+			inventory_slot_reference.stack_has_changed.connect(update_quickslot_stack)
 		update_quickslot_stack()
+
+
+func set_slot_data() -> void:
+	# Adding this method so the control node focus management of inventory_interface.gd
+	# will treat this like a regular inventory slot.
+	pass
+
+func _on_focus_entered() -> void:
+	Audio.play_sound(sound_highlight)
+	selection_panel.show()
+
+func _on_focus_exited() -> void:
+	selection_panel.hide()

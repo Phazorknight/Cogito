@@ -1,4 +1,5 @@
 extends CogitoAttribute
+class_name CogitoSanityAttribute
 
 ## The rate at which sanity decays when decaying.
 @export var decay_rate : float
