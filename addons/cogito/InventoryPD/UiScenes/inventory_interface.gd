@@ -78,7 +78,8 @@ func close_inventory():
 			grabbed_slot_data = null
 		is_inventory_open = false
 		get_viewport().gui_focus_changed.disconnect(_on_focus_changed)
-		control_in_focus.release_focus()
+		if control_in_focus:
+			control_in_focus.release_focus()
 		inventory_ui.hide()
 		player_currencies_ui.hide()
 		if external_inventory_owner:
