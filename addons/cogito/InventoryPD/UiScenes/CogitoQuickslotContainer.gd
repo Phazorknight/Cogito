@@ -39,11 +39,11 @@ func _on_gui_input(event):
 				clear_this_quickslot()
 	
 	# GAMEPAD ASSIGN HANDLING
-	if event.is_action_pressed("inventory_use_item"):
+	if event is InputEventJoypadButton and event.is_action_pressed("inventory_use_item"):
 		quickslot_pressed.emit(self)
 	
 	# GAMEPAD ASSIGN HANDLING
-	if event.is_action_pressed("inventory_move_item"):
+	if event is InputEventJoypadButton and event.is_action_pressed("inventory_move_item"):
 		clear_this_quickslot()
 
 
