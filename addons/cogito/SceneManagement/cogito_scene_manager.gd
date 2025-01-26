@@ -115,6 +115,7 @@ func load_player_state(player, passed_slot:String):
 		
 		# Applying the save state to player node.
 		player.inventory_data = _player_state.player_inventory #Loading inventory data from saved player state to current player inventory.
+		player.inventory_data.assigned_quickslots = _player_state.player_quickslots
 		
 		# Loading quests from player state:
 		CogitoQuestManager.active.clear_group()
@@ -199,6 +200,7 @@ func save_player_state(player, slot:String):
 	
 	# Writing the save state from current player node.
 	_player_state.player_inventory = player.inventory_data #Saving player inventory
+	_player_state.player_quickslots = player.inventory_data.assigned_quickslots # Saving assigned quickslots
 	
 	# Saving current quests to player state.
 	_player_state.player_active_quests.clear()

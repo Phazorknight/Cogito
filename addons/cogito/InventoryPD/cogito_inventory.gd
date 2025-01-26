@@ -11,6 +11,9 @@ signal inventory_updated(inventory_data: CogitoInventory)
 @export var starter_inventory : Array[InventorySlotPD]
 @export var inventory_size : Vector2i = Vector2i(4,1)
 @export var inventory_slots : Array[InventorySlotPD]
+
+var assigned_quickslots : Array[InventorySlotPD]
+
 @export var first_slot : InventorySlotPD
 
 
