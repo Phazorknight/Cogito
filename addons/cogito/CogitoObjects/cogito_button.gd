@@ -1,5 +1,6 @@
 @icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoButton.svg")
 extends Node3D
+class_name CogitoButton
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal pressed()
 signal damage_received(damage_value:float)
