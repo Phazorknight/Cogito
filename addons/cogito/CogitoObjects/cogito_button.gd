@@ -2,7 +2,7 @@
 extends Node3D
 class_name CogitoButton
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
-signal pressed()
+signal pressed(button: CogitoButton)
 signal damage_received(damage_value:float)
 
 
@@ -94,7 +94,7 @@ func press():
 			player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
 			return
 	
-	pressed.emit()
+	pressed.emit(self)
 	Audio.play_sound_3d(press_sound).global_position = global_position
 	
 	if !allows_repeated_interaction:
