@@ -1,7 +1,9 @@
 @icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoButton.svg")
 extends Node3D
+class_name CogitoButton
 signal object_state_updated(interaction_text: String) #used to display correct interaction prompts
 signal pressed()
+signal pressed_ref(button: CogitoButton) #same as pressed but passes pressed button instance
 signal damage_received(damage_value:float)
 
 
@@ -92,8 +94,9 @@ func press():
 		if not currency_check.check_for_currency(player_interaction_component.get_parent()):
 			player_interaction_component.send_hint(null, currency_check.not_enough_currency_hint)
 			return
-	
+
 	pressed.emit()
+	pressed_ref.emit(self)
 	Audio.play_sound_3d(press_sound).global_position = global_position
 	
 	if !allows_repeated_interaction:
