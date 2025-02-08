@@ -1,0 +1,344 @@
+[gd_scene load_steps=44 format=3 uid="uid://bmi6laapwt4xy"]
+
+[ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_obemb"]
+[ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="2_2pioy"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/Scripts/sdpc.gd" id="3_n0nws"]
+[ext_resource type="Resource" uid="uid://ll11y3yjbqt" path="res://addons/cogito/InventoryPD/Inventories/PlayerInventory_FIXED.tres" id="4_j1ne1"]
+[ext_resource type="PackedScene" uid="uid://n1doui0jpn1v" path="res://addons/cogito/InventoryPD/CustomResources/CogtoTestCurrency.tscn" id="7_2u13l"]
+[ext_resource type="PackedScene" uid="uid://dorp3auw3s65q" path="res://addons/cogito/Components/Attributes/LightMeterAttribute.tscn" id="8_box7q"]
+[ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://addons/cogito/Components/Attributes/SanityAttribute.tscn" id="9_eh5cm"]
+[ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://addons/cogito/Components/Attributes/StaminaAttribute.tscn" id="10_u70wv"]
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="11_b4mqr"]
+[ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://addons/cogito/Assets/Animations/player_eyes.tres" id="12_srxoh"]
+[ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://addons/cogito/Components/interaction_raycast.tscn" id="13_irda2"]
+[ext_resource type="Script" uid="uid://bycqgdk3kcccg" path="res://addons/cogito/Scripts/wieldables_sway.gd" id="14_e77hd"]
+[ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="15_y8b3w"]
+[ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="16_ss3x8"]
+[ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="17_kqtb8"]
+[ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="18_aa44e"]
+[ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="19_7qwmt"]
+[ext_resource type="Script" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="20_068e8"]
+[ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://addons/cogito/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="21_825rs"]
+[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://addons/cogito/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="22_4gc5i"]
+[ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://addons/cogito/Components/PlayerInteractionComponent.tscn" id="23_yqbp7"]
+[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://addons/cogito/PackedScenes/Player_HUD.tscn" id="24_h1dxr"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://addons/cogito/EasyMenus/Scenes/PauseMenu.tscn" id="25_bmygi"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/Scripts/sdpc_state_machine.gd" id="25_ltrao"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_jump.gd" id="26_ynt6e"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_idle.gd" id="27_plxgb"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_move.gd" id="28_hkk34"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_fall.gd" id="29_ueikp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk14v"]
+material = ExtResource("1_obemb")
+size = Vector3(30, 0.1, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_42ocu"]
+points = PackedVector3Array(-15, -0.05, -10, -15, 0.05, -10, 15, -0.05, -10, -15, -0.05, 10, -15, 0.05, 10, 15, 0.05, -10, 15, -0.05, 10, 15, 0.05, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s4kcw"]
+material = ExtResource("1_obemb")
+size = Vector3(0.2, 3, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kxaon"]
+points = PackedVector3Array(-0.1, -1.5, -5, 0.1, -1.5, -5, -0.1, -1.5, 5, -0.1, 1.5, -5, 0.1, 1.5, -5, 0.1, -1.5, 5, -0.1, 1.5, 5, 0.1, 1.5, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_38lnh"]
+material = ExtResource("1_obemb")
+size = Vector3(0.2, 3, 10.2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lyuec"]
+points = PackedVector3Array(-0.1, -1.5, -5.1, 0.1, -1.5, -5.1, -0.1, -1.5, 5.1, -0.1, 1.5, -5.1, 0.1, 1.5, -5.1, 0.1, -1.5, 5.1, -0.1, 1.5, 5.1, 0.1, 1.5, 5.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_87qgy"]
+material = ExtResource("2_2pioy")
+size = Vector3(0.2, 2, 3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vndpy"]
+points = PackedVector3Array(-0.1, -1, -1.5, 0.1, -1, -1.5, -0.1, -1, 1.5, -0.1, 1, -1.5, 0.1, 1, -1.5, 0.1, -1, 1.5, -0.1, 1, 1.5, 0.1, 1, 1.5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_ooehu"]
+material = ExtResource("2_2pioy")
+left_to_right = 1.0
+size = Vector3(5, 3.1, 2)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hwywq"]
+sky_top_color = Color(0.576471, 0.960784, 1, 1)
+sky_horizon_color = Color(0.745098, 0.779412, 0.785294, 1)
+ground_bottom_color = Color(0.168627, 0.156863, 0.141176, 1)
+ground_horizon_color = Color(0.745098, 0.779412, 0.785294, 1)
+
+[sub_resource type="Sky" id="Sky_bajs6"]
+sky_material = SubResource("ProceduralSkyMaterial_hwywq")
+
+[sub_resource type="Environment" id="Environment_mbwvf"]
+background_mode = 2
+sky = SubResource("Sky_bajs6")
+ambient_light_source = 3
+ambient_light_color = Color(0.588235, 0.588235, 0.588235, 1)
+ambient_light_sky_contribution = 0.1
+ambient_light_energy = 0.2
+tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
+size = Vector3(0.6, 1.7, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ut3wm"]
+size = Vector3(0.6, 0.7, 0.6)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_af0lu"]
+streams_count = 5
+stream_0/stream = ExtResource("15_y8b3w")
+stream_1/stream = ExtResource("16_ss3x8")
+stream_2/stream = ExtResource("17_kqtb8")
+stream_3/stream = ExtResource("18_aa44e")
+stream_4/stream = ExtResource("19_7qwmt")
+
+[node name="SdpcTestArea" type="Node3D"]
+
+[node name="LEVEL_GEOMETRY" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, -0.05, 0)
+collision_layer = 3
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LEVEL_GEOMETRY/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 4.8)
+mesh = SubResource("BoxMesh_sk14v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LEVEL_GEOMETRY/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 4.8)
+shape = SubResource("ConvexPolygonShape3D_42ocu")
+
+[node name="Wall12" type="StaticBody3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9, 0, 0)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LEVEL_GEOMETRY/Wall12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_s4kcw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LEVEL_GEOMETRY/Wall12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("ConvexPolygonShape3D_kxaon")
+
+[node name="Wall6" type="StaticBody3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9.8, 0, 5.1)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LEVEL_GEOMETRY/Wall6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.1)
+mesh = SubResource("BoxMesh_38lnh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LEVEL_GEOMETRY/Wall6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.1)
+shape = SubResource("ConvexPolygonShape3D_lyuec")
+
+[node name="WallCrouch" type="StaticBody3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -11.4105, 1, -2.89699)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LEVEL_GEOMETRY/WallCrouch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.6)
+mesh = SubResource("BoxMesh_87qgy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LEVEL_GEOMETRY/WallCrouch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.6)
+shape = SubResource("ConvexPolygonShape3D_vndpy")
+
+[node name="Txt_CrouchHint" type="Label3D" parent="LEVEL_GEOMETRY/WallCrouch"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.107498, 0.21944, -0.01352)
+text = "Crouch under this wall."
+
+[node name="SimpleBox" type="CSGBox3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0.5, 3.5)
+use_collision = true
+material = ExtResource("2_2pioy")
+
+[node name="SimpleBox2" type="CSGBox3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 1.5, 4.5)
+use_collision = true
+material = ExtResource("2_2pioy")
+
+[node name="Ramp" type="CSGMesh3D" parent="LEVEL_GEOMETRY"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.5, 1.55, 2.5)
+use_collision = true
+mesh = SubResource("PrismMesh_ooehu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(1, 0.988235, 0.988235, 1)
+shadow_enabled = true
+shadow_opacity = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mbwvf")
+
+[node name="CogitoSDPC" type="CharacterBody3D" parent="." groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+script = ExtResource("3_n0nws")
+pause_menu = NodePath("PauseMenu")
+player_hud = NodePath("Player_HUD")
+inventory_data = ExtResource("4_j1ne1")
+
+[node name="CogtoTestCurrency" parent="CogitoSDPC" instance=ExtResource("7_2u13l")]
+
+[node name="LightMeterAttribute" parent="CogitoSDPC" instance=ExtResource("8_box7q")]
+
+[node name="SanityAttribute" parent="CogitoSDPC" instance=ExtResource("9_eh5cm")]
+decay_in_darkness = false
+
+[node name="StaminaAttribute" parent="CogitoSDPC" instance=ExtResource("10_u70wv")]
+
+[node name="HealthAttribute" parent="CogitoSDPC" instance=ExtResource("11_b4mqr")]
+
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="CogitoSDPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_8vem4")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="CogitoSDPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+shape = SubResource("BoxShape3D_ut3wm")
+disabled = true
+
+[node name="StaircheckRayCast3D" type="RayCast3D" parent="CogitoSDPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, -0.5, 0)
+
+[node name="CrouchRayCast" type="RayCast3D" parent="CogitoSDPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, 1.6, 0)
+collision_mask = 3
+
+[node name="Body" type="Node3D" parent="CogitoSDPC"]
+
+[node name="Neck" type="Node3D" parent="CogitoSDPC/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Head" type="Node3D" parent="CogitoSDPC/Body/Neck"]
+
+[node name="Eyes" type="Node3D" parent="CogitoSDPC/Body/Neck/Head"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CogitoSDPC/Body/Neck/Head/Eyes"]
+reset_on_save = false
+root_node = NodePath("../..")
+libraries = {
+"": ExtResource("12_srxoh")
+}
+
+[node name="Camera" type="Camera3D" parent="CogitoSDPC/Body/Neck/Head/Eyes"]
+
+[node name="InteractionRaycast" parent="CogitoSDPC/Body/Neck/Head/Eyes/Camera" instance=ExtResource("13_irda2")]
+
+[node name="CarryablePosition" type="Marker3D" parent="CogitoSDPC/Body/Neck/Head/Eyes/Camera"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
+[node name="Wieldables" type="Node3D" parent="CogitoSDPC/Body/Neck/Head"]
+unique_name_in_owner = true
+script = ExtResource("14_e77hd")
+
+[node name="SlidingTimer" type="Timer" parent="CogitoSDPC"]
+wait_time = 1.5
+one_shot = true
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="CogitoSDPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488, 0)
+stream = SubResource("AudioStreamRandomizer_af0lu")
+volume_db = -38.0
+max_polyphony = 8
+bus = &"SFX"
+script = ExtResource("20_068e8")
+generic_fallback_footstep_profile = ExtResource("21_825rs")
+footstep_material_library = ExtResource("22_4gc5i")
+generic_fallback_landing_profile = ExtResource("21_825rs")
+landing_material_library = ExtResource("22_4gc5i")
+
+[node name="JumpCooldownTimer" type="Timer" parent="CogitoSDPC"]
+wait_time = 0.5
+one_shot = true
+
+[node name="PlayerInteractionComponent" parent="CogitoSDPC" node_paths=PackedStringArray("interaction_raycast", "carryable_position", "stamina_attribute", "wieldable_container") instance=ExtResource("23_yqbp7")]
+interaction_raycast = NodePath("../Body/Neck/Head/Eyes/Camera/InteractionRaycast")
+carryable_position = NodePath("../Body/Neck/Head/Eyes/Camera/CarryablePosition")
+stamina_attribute = NodePath("../StaminaAttribute")
+wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
+
+[node name="Player_HUD" parent="CogitoSDPC" node_paths=PackedStringArray("player") instance=ExtResource("24_h1dxr")]
+player = NodePath("..")
+
+[node name="PauseMenu" parent="CogitoSDPC" instance=ExtResource("25_bmygi")]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CogitoSDPC"]
+
+[node name="SDPCStateMachine" type="Node" parent="CogitoSDPC" node_paths=PackedStringArray("starting_state")]
+script = ExtResource("25_ltrao")
+starting_state = NodePath("Idle")
+print_state_changes = true
+
+[node name="Jump" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state")]
+script = ExtResource("26_ynt6e")
+fall_state = NodePath("../Fall")
+idle_state = NodePath("../Idle")
+move_state = NodePath("../Move")
+jump_exhaustion = 5.0
+
+[node name="Idle" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "jump_state", "move_state")]
+script = ExtResource("27_plxgb")
+fall_state = NodePath("../Fall")
+jump_state = NodePath("../Jump")
+move_state = NodePath("../Move")
+
+[node name="Move" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "jump_state")]
+script = ExtResource("28_hkk34")
+fall_state = NodePath("../Fall")
+idle_state = NodePath("../Idle")
+jump_state = NodePath("../Jump")
+
+[node name="Fall" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("idle_state", "move_state")]
+script = ExtResource("29_ueikp")
+idle_state = NodePath("../Idle")
+move_state = NodePath("../Move")
+
+[node name="RaycastClimbDetector" type="Node3D" parent="CogitoSDPC"]
+
+[node name="TopRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.897298, 0)
+target_position = Vector3(0, 0, -0.75)
+
+[node name="MiddleRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+target_position = Vector3(0, 0, -0.75)
+
+[node name="BottomRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65, 0)
+target_position = Vector3(0, 0, -0.75)
+
+[node name="ClimbableRaycasts" type="Node3D" parent="CogitoSDPC/RaycastClimbDetector"]
+
+[node name="LeftClimbableRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector/ClimbableRaycasts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.75)
+target_position = Vector3(-0.4, 0, 0)
+
+[node name="RightClimbableRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector/ClimbableRaycasts"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.75)
+target_position = Vector3(0.4, 0, 0)
+
+[node name="SurfaceRaycasts" type="Node3D" parent="CogitoSDPC/RaycastClimbDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.75)
+
+[node name="ProjectedHeightRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector/SurfaceRaycasts"]
+target_position = Vector3(0, 0.5, 0)
+
+[node name="SurfaceRaycast" type="RayCast3D" parent="CogitoSDPC/RaycastClimbDetector/SurfaceRaycasts"]
+target_position = Vector3(0, -2.7, 0)
+
+[connection signal="mouse_movement" from="CogitoSDPC" to="CogitoSDPC/Body/Neck/Head/Wieldables" method="sway"]
+[connection signal="player_state_loaded" from="CogitoSDPC" to="CogitoSDPC" method="_on_player_state_loaded"]
+[connection signal="animation_finished" from="CogitoSDPC/Body/Neck/Head/Eyes/AnimationPlayer" to="CogitoSDPC" method="_on_animation_player_animation_finished"]
+[connection signal="interactable_seen" from="CogitoSDPC/Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="CogitoSDPC/PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
+[connection signal="interactable_unseen" from="CogitoSDPC/Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="CogitoSDPC/PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
+[connection signal="timeout" from="CogitoSDPC/SlidingTimer" to="CogitoSDPC" method="_on_sliding_timer_timeout"]
