@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CogitoInventory" load_steps=3 format=3 uid="uid://ll11y3yjbqt"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="1_ps87y"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="1_sud3s"]
+[ext_resource type="Script" uid="uid://cmr3cdphwd138" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="1_ps87y"]
+[ext_resource type="Script" uid="uid://butm0oix65v62" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="1_sud3s"]
 
 [resource]
 script = ExtResource("1_sud3s")

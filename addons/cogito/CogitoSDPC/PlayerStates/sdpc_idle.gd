@@ -4,7 +4,6 @@ extends SDPCState
 @export var jump_state: SDPCState
 @export var move_state: SDPCState
 @export var crouch_state: SDPCState
-@export var sprint_state: SDPCState
 
 func enter() -> void:
 	super()
@@ -28,10 +27,7 @@ func process_physics(delta: float) -> SDPCState:
 	if !player.is_on_floor():
 		return fall_state
 	
-	if input_dir && player.can_sprint:
-		if Input.is_action_just_pressed(player.SPRINT) && player.allow_sprint:
-			return sprint_state
-		else:
-			return move_state
+	if input_dir:
+		return move_state
 	
 	return null

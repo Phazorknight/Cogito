@@ -1,10 +1,10 @@
 [gd_scene load_steps=127 format=4 uid="uid://6hh7o77unixk"]
 
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
+[ext_resource type="Script" uid="uid://iv8fpti8028y" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="2_7qwrr"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_6y43x"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
+[ext_resource type="Script" uid="uid://cmr3cdphwd138" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_6y43x"]
+[ext_resource type="Script" uid="uid://butm0oix65v62" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="5_ihscj"]
 [ext_resource type="PackedScene" uid="uid://b6yj5prtsl7hy" path="res://addons/cogito/DemoScenes/DemoPrefabs/floor_3x_3_00.tscn" id="6_bedlu"]
 [ext_resource type="PackedScene" uid="uid://bavlamv6h43uw" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_painted.tscn" id="6_yj0h7"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b6l1i2p0njbc1" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_scaffolding_detailed.tscn" id="7_ipjeq"]
 [ext_resource type="PackedScene" uid="uid://1p4vcn6myoet" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall.tscn" id="8_mnu4d"]
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="8_ppug2"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="8_psdfg"]
+[ext_resource type="Script" uid="uid://cald2h4xsp3jb" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="8_psdfg"]
 [ext_resource type="PackedScene" uid="uid://t2gxjp6of2et" path="res://addons/cogito/DemoScenes/DemoPrefabs/floor_dirt_3x_3_.tscn" id="9_btwfh"]
 [ext_resource type="PackedScene" uid="uid://3se2gpg0u3wx" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_ridges_half.tscn" id="9_gy8kl"]
 [ext_resource type="PackedScene" uid="uid://caex54qny4gvm" path="res://addons/cogito/DemoScenes/DemoPrefabs/glass_3x_3_98.tscn" id="10_8403t"]
@@ -88,7 +88,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_ekytl"]
+[sub_resource type="Resource" id="Resource_6xat5"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -901,7 +901,7 @@ environment = SubResource("Environment_obnk3")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_ekytl")
+inventory_data = SubResource("Resource_6xat5")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 

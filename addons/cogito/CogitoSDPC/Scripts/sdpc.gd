@@ -11,6 +11,9 @@ signal toggled_interface(is_showing_ui:bool)
 signal mouse_movement(relative_mouse_movement:Vector2)
 
 @export_group("Cogito Components")
+# Config file for saved options and controls
+var config = ConfigFile.new()
+
 ### PLAYER ATTRIBUTES:
 var player_attributes : Dictionary
 var stamina_attribute : CogitoAttribute = null
@@ -18,6 +21,7 @@ var visibility_attribute : CogitoAttribute
 
 ### PLAYER CURRENCIES
 var player_currencies: Dictionary
+
 
 ## Reference to Pause menu node
 @export var pause_menu : NodePath
@@ -70,6 +74,7 @@ var player_currencies: Dictionary
 @export_range(1.0, 10.0) var camera_sensitivity: float = 2.0
 @export_range(0.0, 0.5) var camera_start_deadzone: float = .2
 @export_range(0.0, 0.5) var camera_end_deadzone: float = .1
+@export var INVERT_Y_AXIS: bool
 
 @export_group("Feature toggles")
 @export var allow_jump: bool = true
@@ -164,15 +169,21 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse_motion = -event.relative * 0.001
 	
-	if can_pause:
-		if event.is_action_pressed(PAUSE):
-			if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
-				menu_pressed.emit(player_interaction_component)
-				if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
-					toggle_inventory_interface.emit()
-			else:
-				_on_pause_movement()
-				get_node(pause_menu).open_pause_menu()
+	if can_pause and event.is_action_pressed(PAUSE):
+		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
+			menu_pressed.emit(player_interaction_component)
+			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
+				toggle_inventory_interface.emit()
+		else:
+			_on_pause_movement()
+			get_node(pause_menu).open_pause_menu()
+	
+	# Open/closes Inventory if Inventory button is pressed
+	if can_open_inventory and event.is_action_pressed(INVENTORY):
+		if !is_showing_ui: #Making sure now external UI is open.
+			toggle_inventory_interface.emit()
+		elif is_showing_ui and get_node(player_hud).inventory_interface.is_inventory_open: #Making sure Inventory is open, and if yes, close it.
+			toggle_inventory_interface.emit()
 
 	if !is_showing_ui:
 		state_machine.process_input(event)
@@ -243,10 +254,12 @@ func check_climbable() -> bool:
 
 func _handle_camera_motion() -> void:
 	rotate_y(mouse_motion.x * camera_sensitivity)
-	head.rotate_x(mouse_motion.y  * camera_sensitivity)
+	if INVERT_Y_AXIS:
+		head.rotate_x(mouse_motion.y  * camera_sensitivity * -1)
+	else:
+		head.rotate_x(mouse_motion.y  * camera_sensitivity)
 	
 	head.rotation_degrees.x = clampf(head.rotation_degrees.x , -89.0, 89.0)
-	
 	mouse_motion = Vector2.ZERO
 
 
@@ -299,4 +312,19 @@ func _on_resume_movement():
 
 
 func _on_pause_menu_resume(): # Signal from Pause Menu
+	_reload_options()
 	_on_resume_movement()
+
+
+# reload options user may have changed while paused.
+func _reload_options():
+	var err = config.load(OptionsConstants.config_file_name)
+	if err == 0:
+		CogitoGlobals.debug_log(true, "sdpc.gd", "Options reloaded.")
+		
+		view_bobbing_amount = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
+		camera_sensitivity = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
+		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
+		#TOGGLE_CROUCH = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
+		#JOY_H_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
+		#JOY_V_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)

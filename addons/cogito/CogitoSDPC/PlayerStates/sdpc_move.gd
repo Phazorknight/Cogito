@@ -1,15 +1,15 @@
 extends SDPCState
 
+# Move state handles walking and sprinting
+
 @export var fall_state: SDPCState
 @export var idle_state: SDPCState
 @export var jump_state: SDPCState
-@export var sprint_state: SDPCState
 @export var crouch_state: SDPCState
-
-@export var walk_speed : float = 2
 
 var direction : Vector3 = Vector3.ZERO
 var input_dir : Vector2 = Vector2.ZERO
+var is_sprinting : bool = false
 
 
 func enter() -> void:
@@ -19,7 +19,9 @@ func enter() -> void:
 
 func process_input(event: InputEvent) -> SDPCState:
 	if Input.is_action_just_pressed(player.SPRINT) && player.allow_sprint:
-		return sprint_state
+		is_sprinting = true
+	if Input.is_action_just_released(player.SPRINT):
+		is_sprinting = false
 	
 	if event.is_action_pressed(player.JUMP) && player.is_on_floor() && player.allow_jump:
 		return jump_state
@@ -37,6 +39,11 @@ func process_physics(delta: float) -> SDPCState:
 	
 	if input_dir.y > 0:
 		move_speed = player.walk_back_speed
+	elif is_sprinting:
+		if player.movement_strength == 0:
+			move_speed = player.sprint_speed
+		else:
+			move_speed = player.sprint_speed * player.movement_strength
 	else:
 		if player.movement_strength == 0:
 			move_speed = player.walk_speed
@@ -50,10 +57,12 @@ func process_physics(delta: float) -> SDPCState:
 		player.velocity.x = move_toward(player.velocity.x, 0, move_speed)
 		player.velocity.z = move_toward(player.velocity.z, 0, move_speed)
 		
+		is_sprinting = false
 		return idle_state
 	
 	if player.velocity.y < 0:
 		get_parent().stored_state = self
+		is_sprinting = false
 		return fall_state
 	
 	return null

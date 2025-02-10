@@ -183,6 +183,7 @@ script = ExtResource("3_n0nws")
 pause_menu = NodePath("PauseMenu")
 player_hud = NodePath("Player_HUD")
 inventory_data = ExtResource("4_j1ne1")
+walk_back_speed = 2.5
 
 [node name="CogtoTestCurrency" parent="CogitoSDPC" instance=ExtResource("7_2u13l")]
 

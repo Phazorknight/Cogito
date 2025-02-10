@@ -1,20 +1,20 @@
 [gd_scene load_steps=368 format=4 uid="uid://e31n36p8i6an"]
 
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
+[ext_resource type="Script" uid="uid://iv8fpti8028y" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="3_mgle8"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_0kggm"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_g5h7u"]
+[ext_resource type="Script" uid="uid://butm0oix65v62" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_0kggm"]
+[ext_resource type="Script" uid="uid://cmr3cdphwd138" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_g5h7u"]
 [ext_resource type="Script" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="7_a40bd"]
 [ext_resource type="Resource" uid="uid://drmtc0tqmwquk" path="res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres" id="8_5xvfv"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="9_ec70c"]
 [ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="9_ljdo7"]
 [ext_resource type="PackedScene" uid="uid://ddjbxllw044a3" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorCornerRound.glb" id="10_4csde"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="10_wbxwm"]
+[ext_resource type="Script" uid="uid://cald2h4xsp3jb" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="10_wbxwm"]
 [ext_resource type="PackedScene" uid="uid://br3vumdotavq0" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorHalf.glb" id="11_7indd"]
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="11_je61h"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_72tca"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="13_5x4ip"]
+[ext_resource type="Script" uid="uid://bx73w3d037b85" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="13_5x4ip"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="14_qtguo"]
 [ext_resource type="PackedScene" uid="uid://x4wqam8k4bq3" path="res://addons/cogito/Assets/VFX/dust_particles.tscn" id="15_7saqh"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://addons/cogito/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="15_078vp"]
@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bdf8go8xjwqqb" path="res://addons/cogito/DemoScenes/DemoPrefabs/lounge_chair.tscn" id="20_rf47m"]
 [ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://addons/cogito/DemoScenes/DemoPrefabs/chair_desk.tscn" id="21_o6psl"]
 [ext_resource type="PackedScene" uid="uid://bbt5twbnrlcfj" path="res://addons/cogito/Components/Interactions/LockInteraction.tscn" id="22_2fd6x"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
+[ext_resource type="Script" uid="uid://c3ovv3lkaiyht" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
 [ext_resource type="PackedScene" uid="uid://bqp8nl7x2c37m" path="res://addons/cogito/Components/Interactions/DualInteraction.tscn" id="23_mluj1"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://addons/cogito/Assets/Audio/Kenney/stoneDrag4.ogg" id="23_q1spm"]
 [ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://addons/cogito/Components/Interactions/HoldInteraction.tscn" id="24_7t6yl"]
@@ -43,7 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://5iifh2dc07ai" path="res://addons/cogito/DemoScenes/DemoPrefabs/laptop_real.tscn" id="35_s7tgx"]
 [ext_resource type="PackedScene" uid="uid://sutia1bej2vw" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/ceilingFan.glb" id="36_ocqx6"]
 [ext_resource type="PackedScene" uid="uid://cjpwgjokey5cq" path="res://addons/cogito/DemoScenes/DemoPrefabs/side_table.tscn" id="37_ic45t"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_rotator_tool.gd" id="37_tg426"]
+[ext_resource type="Script" uid="uid://bbhb7ngls1sra" path="res://addons/cogito/Scripts/cogito_rotator_tool.gd" id="37_tg426"]
 [ext_resource type="PackedScene" uid="uid://dh4srvw372cf5" path="res://addons/cogito/DemoScenes/DemoPrefabs/stool_bar_square.tscn" id="38_byfc0"]
 [ext_resource type="PackedScene" uid="uid://bm6px536i18b3" path="res://addons/cogito/DemoScenes/DemoPrefabs/cabinet_television_doors.tscn" id="39_tdvyy"]
 [ext_resource type="PackedScene" uid="uid://crehxwgpwoblf" path="res://addons/cogito/DemoScenes/DemoPrefabs/television_modern.tscn" id="40_oaaxs"]
@@ -102,7 +102,7 @@
 [ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://addons/cogito/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="93_cmkbc"]
 [ext_resource type="PackedScene" uid="uid://tkwv6b5arrw2" path="res://addons/cogito/PackedScenes/Pickups/pickup_coins.tscn" id="93_phwoo"]
 [ext_resource type="PackedScene" uid="uid://dpuhybufkdmcf" path="res://addons/cogito/DemoScenes/DemoPrefabs/bear_trap.tscn" id="96_vec6d"]
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/world_property_setter.gd" id="103_1du1g"]
+[ext_resource type="Script" uid="uid://c24y8u5aow8j5" path="res://addons/cogito/SceneManagement/world_property_setter.gd" id="103_1du1g"]
 [ext_resource type="PackedScene" uid="uid://cuwptpgheq4l5" path="res://addons/cogito/PackedScenes/inventory_bag.tscn" id="104_mm36t"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
@@ -134,7 +134,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_1mfir"]
+[sub_resource type="Resource" id="Resource_uuisq"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -2428,7 +2428,7 @@ shadow_mesh = SubResource("ArrayMesh_3ecdw")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_upcaa"]
 data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, 0.0903, -0.88, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 1.3856, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -1.2, 0.6128, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.6128, 0.0903, -0.72, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.72, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 0, 0.0903, -1.2, 0, 0.0903, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 1.3856, 0.0903, -0.4, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -1.2, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -1.2, 0.6928, 0.1935, 0, 0, 0.1935, -0.4, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -1.2, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, -1.6, 0.6928, 0.0903, -1.6, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -0.4, 1.3856, 0.0903, -0.4, 0.6928, 0.0903, 0, 0.6928, 0.0903, 0, 0.6928, 0.1935, 0, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.0903, 0, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.1935, -0.4, 0.6928, 0.1935, 0, 0, 0.1935, -1.2, 0, 0.1935, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.8, 0, 0.1935, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -1.2, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.6928, 0.0903, -1.6, 0.6928, 0.1935, -1.6, 0, 0.1935, -1.2, 0.7728, 0.0903, -0.72, 0.7728, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.88, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.6128, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.8128, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.68, 0.6128, -0.4, -0.72, 0.7728, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.72, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.6128, -0.4, -0.88, 0.6128, -0.4, -0.72, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.4, -0.92, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.7728, -0.4, -0.88, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.88, 0.4928, -0.44, -1, 0.4928, -0.44, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -1, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.4928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.5, -1, 0.8928, -0.5, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -1, 0.8928, -0.5, -1, 0.4928, -0.44, -0.6, 0.4928, -0.44, -1, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.4928, -0.44, -0.6, 0.5728, -0.44, -0.68, 0.8128, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.68, 0.8128, -0.44, -0.92, 0.8928, -0.44, -0.6, 0.5728, -0.44, -0.92, 0.5728, -0.44, -0.68, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -1, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8128, -0.44, -0.92, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.92, 0.9128, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.9128, -0.54, -0.58, 0.9128, -0.54, -1.02, 0.4928, -0.5, -1, 0.4728, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.8928, -0.5, -1, 0.4928, -0.5, -1, 0.9128, -0.54, -1.02, 0.9128, -0.54, -0.58, 0.8928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.8928, -0.5, -1, 0.9128, -0.54, -1.02, 0.8928, -0.5, -0.6, 0.9128, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4728, -0.54, -0.58, 0.4728, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4928, -0.5, -1, 0.4928, -0.5, -0.6, 0.5728, -0.4, -0.92, 0.5728, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.4, -0.92, 0.5728, -0.4, -0.92)
 
-[sub_resource type="Resource" id="Resource_330nx"]
+[sub_resource type="Resource" id="Resource_17768"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -3170,7 +3170,7 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-inventory_data = SubResource("Resource_1mfir")
+inventory_data = SubResource("Resource_uuisq")
 step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
@@ -6994,7 +6994,7 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 
 [node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
-inventory_data = SubResource("Resource_330nx")
+inventory_data = SubResource("Resource_17768")
 
 [node name="kitchenMicrowave2" parent="BREAK_ROOM" instance=ExtResource("61_1x4um")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)
