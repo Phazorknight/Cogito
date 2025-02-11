@@ -7,7 +7,7 @@ signal menu_pressed(player_interaction_component: PlayerInteractionComponent)
 signal toggle_inventory_interface()
 signal player_state_loaded()
 ## Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
-signal toggled_interface(is_showing_ui:bool) 
+signal toggled_interface(is_showing_ui:bool)
 signal mouse_movement(relative_mouse_movement:Vector2)
 
 @export_group("Cogito Components")
@@ -77,10 +77,11 @@ var player_currencies: Dictionary
 @export var INVERT_Y_AXIS: bool
 
 @export_group("Feature toggles")
-@export var allow_jump: bool = true
-@export var allow_crouch: bool = true
-@export var allow_sprint: bool = true
-@export var allow_climb: bool = true
+@export var allow_jump: bool = true : set = set_jump_allowance
+@export var allow_crouch: bool = true : set = set_crouch_allowance
+@export var allow_sprint: bool = true : set = set_sprint_allowance
+@export var allow_climb: bool = true : set = set_climb_allowance
+@export var allow_slide: bool = true : set = set_slide_allowance
 
 # Dynamic values used for calculation
 var input_direction: Vector2
@@ -107,6 +108,7 @@ var is_moving: bool = false
 var is_sprinting: bool = false
 var is_showing_ui : bool
 var is_paused : bool
+var is_sliding : bool = false
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -118,9 +120,9 @@ func _ready() -> void:
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
 	player_interaction_component.exclude_player(get_rid())
-	
-	randomize() 
-	
+
+	randomize()
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
@@ -155,7 +157,7 @@ func _ready() -> void:
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
 		printerr("Player has no reference to pause menu.")
-	
+
 	#Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
 	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
@@ -168,7 +170,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse_motion = -event.relative * 0.001
-	
+
 	if can_pause and event.is_action_pressed(PAUSE):
 		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
 			menu_pressed.emit(player_interaction_component)
@@ -177,7 +179,7 @@ func _input(event: InputEvent) -> void:
 		else:
 			_on_pause_movement()
 			get_node(pause_menu).open_pause_menu()
-	
+
 	# Open/closes Inventory if Inventory button is pressed
 	if can_open_inventory and event.is_action_pressed(INVENTORY):
 		if !is_showing_ui: #Making sure now external UI is open.
@@ -200,17 +202,17 @@ func _physics_process(delta: float) -> void:
 			movement_strength = Vector2(x, y).length()
 		else:
 			input_direction = Vector2.ZERO
-	
+
 	# Add the gravity.
 	if not is_on_floor() and is_affected_by_gravity:
 		velocity.y -= gravity * delta
-	
+
 	# Resetting climb ability when on ground
 	if is_on_floor() and !can_climb:
 		if can_climb_timer != null:
 			can_climb_timer.queue_free()
 		can_climb = true
-	
+
 	state_machine.process_physics(delta)
 	move_and_slide()
 
@@ -219,34 +221,34 @@ func _process(delta: float) -> void:
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED and !is_paused:
 		# Handling camera in '_process' so that camera movement is framerate independent
 		_handle_camera_motion()
-	
+
 	if Input.get_connected_joypads().size() != 0 and !is_paused:
 		_handle_joy_camera_motion()
-	
+
 	state_machine.process_frame(delta)
 
 
 func check_climbable() -> bool:
 	if crouch_ray_cast.is_colliding():
 		return false
-	
+
 	if not bottom_raycast.is_colliding() && not middle_raycast.is_colliding() && not top_raycast.is_colliding():
 		return false
-	
+
 	var climb_point = surface_raycast.get_collision_point()
 	var climb_height = climb_point.y - global_position.y
-	
+
 	left_climbable_raycast.global_position.y = climb_point.y + 0.1
 	right_climbable_raycast.global_position.y = climb_point.y + 0.1
-	
+
 	if left_climbable_raycast.is_colliding() || right_climbable_raycast.is_colliding():
 		return false
-	
+
 	projected_height_raycast.target_position = Vector3(0, climb_height - 0.1, 0)
-	
+
 	if projected_height_raycast.is_colliding():
 		return false
-	
+
 	ledge_position = climb_point
 	return true
 
@@ -258,14 +260,14 @@ func _handle_camera_motion() -> void:
 		head.rotate_x(mouse_motion.y  * camera_sensitivity * -1)
 	else:
 		head.rotate_x(mouse_motion.y  * camera_sensitivity)
-	
+
 	head.rotation_degrees.x = clampf(head.rotation_degrees.x , -89.0, 89.0)
 	mouse_motion = Vector2.ZERO
 
 
 func _handle_joy_camera_motion() -> void:
 	var x_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
-	
+
 	if abs(x_axis) < camera_start_deadzone:
 		x_axis = 0
 	if abs(x_axis) > 1 - camera_end_deadzone:
@@ -273,9 +275,9 @@ func _handle_joy_camera_motion() -> void:
 			x_axis = camera_end_deadzone - 1
 		else:
 			x_axis = 1 - camera_end_deadzone
-	
+
 	var y_axis = Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
-	
+
 	if abs(y_axis) < camera_start_deadzone:
 		y_axis = 0
 	if abs(y_axis) > 1 - camera_end_deadzone:
@@ -283,14 +285,14 @@ func _handle_joy_camera_motion() -> void:
 			y_axis = camera_end_deadzone - 1
 		else:
 			y_axis = 1 - camera_end_deadzone
-	
+
 	var resulting_vector = Vector2(x_axis, y_axis)
 	var normalized_resulting_vector = resulting_vector.normalized()
 	var action_strength = resulting_vector.length()
 	print(camera_sensitivity)
 	rotate_y(-deg_to_rad(camera_sensitivity * normalized_resulting_vector.x * action_strength))
 	head.rotate_x(-deg_to_rad(camera_sensitivity * normalized_resulting_vector.y * action_strength))
-	
+
 	head.rotation_degrees.x = clampf(
 		head.rotation_degrees.x , -89.0, 89.0
 	)
@@ -303,7 +305,6 @@ func _on_pause_movement():
 		# Only show mouse cursor if input device is KBM
 		if InputHelper.device_index == -1:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
 
 func _on_resume_movement():
 	if is_paused:
@@ -321,10 +322,24 @@ func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err == 0:
 		CogitoGlobals.debug_log(true, "sdpc.gd", "Options reloaded.")
-		
+
 		view_bobbing_amount = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		camera_sensitivity = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 		#TOGGLE_CROUCH = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
 		#JOY_H_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 		#JOY_V_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
+
+
+#region Setters
+func set_jump_allowance(value: bool):
+	allow_jump = value
+func set_crouch_allowance(value: bool):
+	allow_crouch = value
+func set_sprint_allowance(value: bool):
+	allow_sprint = value
+func set_climb_allowance(value: bool):
+	allow_climb = value
+func set_slide_allowance(value: bool):
+	allow_slide = value
+#endregion

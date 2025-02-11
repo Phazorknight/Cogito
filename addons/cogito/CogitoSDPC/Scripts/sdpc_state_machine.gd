@@ -22,7 +22,7 @@ func init(player: CogitoSDPC) -> void:
 func change_state(new_state: SDPCState) -> void:
 	if !new_state:
 		return
-		
+
 	if current_state:
 		current_state.exit()
 
@@ -37,7 +37,7 @@ func change_state(new_state: SDPCState) -> void:
 func process_physics(delta: float) -> void:
 	if !current_state:
 		return
-	
+
 	var new_state = current_state.process_physics(delta)
 	if new_state:
 		change_state(new_state)
@@ -46,7 +46,7 @@ func process_physics(delta: float) -> void:
 func process_input(event: InputEvent) -> void:
 	if !current_state:
 		return
-	
+
 	var new_state = current_state.process_input(event)
 	if new_state:
 		change_state(new_state)
@@ -55,7 +55,7 @@ func process_input(event: InputEvent) -> void:
 func process_frame(delta: float) -> void:
 	if !current_state:
 		return
-	
+
 	var new_state = current_state.process_frame(delta)
 	if new_state:
 		change_state(new_state)

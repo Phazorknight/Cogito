@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bmi6laapwt4xy"]
+[gd_scene load_steps=54 format=3 uid="uid://bmi6laapwt4xy"]
 
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_obemb"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="2_2pioy"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="11_b4mqr"]
 [ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://addons/cogito/Assets/Animations/player_eyes.tres" id="12_srxoh"]
 [ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://addons/cogito/Components/interaction_raycast.tscn" id="13_irda2"]
-[ext_resource type="Script" uid="uid://bycqgdk3kcccg" path="res://addons/cogito/Scripts/wieldables_sway.gd" id="14_e77hd"]
+[ext_resource type="Script" path="res://addons/cogito/Scripts/wieldables_sway.gd" id="14_e77hd"]
 [ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="15_y8b3w"]
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="16_ss3x8"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="17_kqtb8"]
@@ -22,12 +22,22 @@
 [ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://addons/cogito/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="22_4gc5i"]
 [ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://addons/cogito/Components/PlayerInteractionComponent.tscn" id="23_yqbp7"]
 [ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://addons/cogito/PackedScenes/Player_HUD.tscn" id="24_h1dxr"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_grab.gd" id="25_02jrp"]
 [ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://addons/cogito/EasyMenus/Scenes/PauseMenu.tscn" id="25_bmygi"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/Scripts/sdpc_state_machine.gd" id="25_ltrao"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_jump.gd" id="26_ynt6e"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_idle.gd" id="27_plxgb"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_move.gd" id="28_hkk34"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_sprint.gd" id="29_1mt5o"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_fall.gd" id="29_ueikp"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_crouch.gd" id="30_u53nr"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_bunny.gd" id="31_3svll"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_slide.gd" id="31_ewk7d"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_crouch_move.gd" id="32_s63t5"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_ladder.gd" id="33_cri07"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_clamber.gd" id="35_rgy1q"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_sit.gd" id="37_8p3kb"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_interface_interaction.gd" id="38_k4h5b"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_sk14v"]
 material = ExtResource("1_obemb")
@@ -277,32 +287,97 @@ player = NodePath("..")
 
 [node name="SDPCStateMachine" type="Node" parent="CogitoSDPC" node_paths=PackedStringArray("starting_state")]
 script = ExtResource("25_ltrao")
-starting_state = NodePath("Idle")
+starting_state = NodePath("SDPCStateIdle")
 print_state_changes = true
 
-[node name="Jump" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state")]
-script = ExtResource("26_ynt6e")
-fall_state = NodePath("../Fall")
-idle_state = NodePath("../Idle")
-move_state = NodePath("../Move")
-jump_exhaustion = 5.0
+[node name="SDPCStateGrab" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("clamber_state", "fall_state", "jump_state")]
+script = ExtResource("25_02jrp")
+clamber_state = NodePath("../SDPCStateClamber")
+fall_state = NodePath("../SDPCStateFall")
+jump_state = NodePath("../SDPCStateJump")
 
-[node name="Idle" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "jump_state", "move_state")]
+[node name="SDPCStateIdle" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "jump_state", "move_state", "crouch_state")]
 script = ExtResource("27_plxgb")
-fall_state = NodePath("../Fall")
-jump_state = NodePath("../Jump")
-move_state = NodePath("../Move")
+fall_state = NodePath("../SDPCStateFall")
+jump_state = NodePath("../SDPCStateJump")
+move_state = NodePath("../SDPCStateMove")
+crouch_state = NodePath("../SDPCStateCrouch")
 
-[node name="Move" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "jump_state")]
+[node name="SDPCStateMove" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "jump_state", "crouch_state", "sprint_state")]
 script = ExtResource("28_hkk34")
-fall_state = NodePath("../Fall")
-idle_state = NodePath("../Idle")
-jump_state = NodePath("../Jump")
+fall_state = NodePath("../SDPCStateFall")
+idle_state = NodePath("../SDPCStateIdle")
+jump_state = NodePath("../SDPCStateJump")
+crouch_state = NodePath("../SDPCStateCrouch")
+sprint_state = NodePath("../SDPCStateSprint")
 
-[node name="Fall" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("idle_state", "move_state")]
+[node name="SDPCStateSprint" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "jump_state", "move_state", "slide_state")]
+script = ExtResource("29_1mt5o")
+fall_state = NodePath("../SDPCStateFall")
+jump_state = NodePath("../SDPCStateJump")
+move_state = NodePath("../SDPCStateMove")
+slide_state = NodePath("../SDPCStateSlide")
+
+[node name="SDPCStateCrouch" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("idle_state", "move_state", "crouch_move_state")]
+script = ExtResource("30_u53nr")
+idle_state = NodePath("../SDPCStateIdle")
+move_state = NodePath("../SDPCStateMove")
+crouch_move_state = NodePath("../SDPCStateCrouchMove")
+
+[node name="SDPCStateCrouchMove" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("crouch_state", "move_state", "fall_state", "sprint_state")]
+script = ExtResource("32_s63t5")
+crouch_state = NodePath("../SDPCStateCrouch")
+move_state = NodePath("../SDPCStateMove")
+fall_state = NodePath("../SDPCStateFall")
+sprint_state = NodePath("../SDPCStateSprint")
+
+[node name="SDPCStateBunnyHop" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("slide_state", "sprint_state", "move_state", "fall_state", "grab_state")]
+script = ExtResource("31_3svll")
+slide_state = NodePath("../SDPCStateSlide")
+sprint_state = NodePath("../SDPCStateSprint")
+move_state = NodePath("../SDPCStateMove")
+fall_state = NodePath("../SDPCStateFall")
+grab_state = NodePath("../SDPCStateGrab")
+
+[node name="SDPCStateFall" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("idle_state", "move_state", "grab_state")]
 script = ExtResource("29_ueikp")
-idle_state = NodePath("../Idle")
-move_state = NodePath("../Move")
+idle_state = NodePath("../SDPCStateIdle")
+move_state = NodePath("../SDPCStateMove")
+grab_state = NodePath("../SDPCStateGrab")
+
+[node name="SDPCStateLadder" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("clamber_state", "move_state", "jump_state", "fall_state", "idle_state")]
+script = ExtResource("33_cri07")
+clamber_state = NodePath("../SDPCStateClamber")
+move_state = NodePath("../SDPCStateMove")
+jump_state = NodePath("../SDPCStateJump")
+fall_state = NodePath("../SDPCStateFall")
+idle_state = NodePath("../SDPCStateIdle")
+
+[node name="SDPCStateSlide" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("move_state", "bunny_hop_state", "fall_state", "crouch_state")]
+script = ExtResource("31_ewk7d")
+move_state = NodePath("../SDPCStateMove")
+bunny_hop_state = NodePath("../SDPCStateBunnyHop")
+fall_state = NodePath("../SDPCStateFall")
+crouch_state = NodePath("../SDPCStateCrouch")
+
+[node name="SDPCStateClamber" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("idle_state", "fall_state", "crouch_state")]
+script = ExtResource("35_rgy1q")
+idle_state = NodePath("../SDPCStateIdle")
+fall_state = NodePath("../SDPCStateFall")
+crouch_state = NodePath("../SDPCStateCrouch")
+
+[node name="SDPCStateJump" type="Node" parent="CogitoSDPC/SDPCStateMachine" node_paths=PackedStringArray("fall_state", "grab_state", "idle_state", "move_state")]
+script = ExtResource("26_ynt6e")
+fall_state = NodePath("../SDPCStateFall")
+grab_state = NodePath("../SDPCStateGrab")
+idle_state = NodePath("../SDPCStateIdle")
+move_state = NodePath("../SDPCStateMove")
+
+[node name="SDPCStateSit" type="Node" parent="CogitoSDPC/SDPCStateMachine"]
+script = ExtResource("37_8p3kb")
+
+[node name="SDPCStateInterfacing" type="Node" parent="CogitoSDPC/SDPCStateMachine"]
+script = ExtResource("38_k4h5b")
 
 [node name="RaycastClimbDetector" type="Node3D" parent="CogitoSDPC"]
 
