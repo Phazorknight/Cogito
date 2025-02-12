@@ -7,7 +7,7 @@ extends SDPCState
 @export var fall_state: SDPCStateFall
 @export var idle_state: SDPCStateIdle
 @export var jump_state: SDPCStateJump
-@export var crouch_state: SDPCStateCrouch
+@export var crouch_move_state: SDPCStateCrouchMove
 @export var sprint_state: SDPCStateSprint
 
 
@@ -19,6 +19,8 @@ var input_dir : Vector2 = Vector2.ZERO
 func enter() -> void:
 	super()
 	player.view_bobbing_amount = player.default_view_bobbing_amount
+	player.is_moving = true
+
 
 
 func process_input(event: InputEvent) -> SDPCState:
@@ -32,7 +34,7 @@ func process_input(event: InputEvent) -> SDPCState:
 
 	if player.can_crouch && player.allow_crouch:
 		if event.is_action_pressed(player.CROUCH) && player.is_on_floor():
-			return crouch_state
+			return crouch_move_state
 
 	return null
 
@@ -56,12 +58,12 @@ func process_physics(delta: float) -> SDPCState:
 		player.velocity.x = move_toward(player.velocity.x, 0, move_speed)
 		player.velocity.z = move_toward(player.velocity.z, 0, move_speed)
 
-		#is_sprinting = false
+	# Only enter the idle state once we are basically at zero velocity
+	if is_zero_approx(player.velocity.x) or is_zero_approx(player.velocity.z):
 		return idle_state
 
+
 	if player.velocity.y < 0:
-		state_machine.stored_state = self
-		#is_sprinting = false
 		return fall_state
 
 	return null

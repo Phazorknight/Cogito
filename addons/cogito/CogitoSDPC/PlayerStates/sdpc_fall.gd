@@ -13,13 +13,18 @@ var direction : Vector3 = Vector3.ZERO
 func enter() -> void:
 	super()
 	player.view_bobbing_amount = player.default_view_bobbing_amount
-	player.is_affected_by_gravity = true
+	set_flags(true,
+		[player.is_affected_by_gravity,
+		player.is_moving,
+		player.is_falling])
 
+func exit() -> void:
+	player.is_falling = false
 
 func process_physics(delta: float) -> SDPCState:
 	# Land
 	if player.is_on_floor():
-		state_machine.change_state(state_machine.stored_state)
+		state_machine.revert_state()
 
 	# If no input, we'll cancel out any other stored_states (i.e. Sprinting)
 	if not player.input_direction:

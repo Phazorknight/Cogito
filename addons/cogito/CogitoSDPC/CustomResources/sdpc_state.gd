@@ -31,3 +31,13 @@ func process_frame(delta: float) -> SDPCState:
 
 func process_physics(delta: float) -> SDPCState:
 	return null
+
+# Alternate option for inverting bools
+func toggle_flags(flags: Array[bool]):
+	for flag in flags:
+		flag = !flag
+
+
+func set_flags(to_value: bool ,flags: Array[bool]):
+	for flag in flags:
+		flag = to_value

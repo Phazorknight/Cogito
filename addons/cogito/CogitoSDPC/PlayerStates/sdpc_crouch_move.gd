@@ -9,10 +9,8 @@ extends SDPCState
 
 
 func enter() -> void:
-	player.is_crouched = true
+	set_flags(true, [player.is_crouched, player.is_moving])
 
-func exit() -> void:
-	player.is_crouched = false
 
 func process_input(event: InputEvent) -> SDPCState:
 
@@ -23,11 +21,13 @@ func process_input(event: InputEvent) -> SDPCState:
 	# This assumes that we are wanting the player to only Stand from crouching
 	if Input.is_action_pressed(player.JUMP):
 		player.stand_up()
+		player.is_crouched = false
 		return move_state
 
 
 	if Input.is_action_pressed(player.SPRINT) && player.allow_sprint && player.can_sprint:
 		player.stand_up()
+		player.is_crouched = false
 		return sprint_state
 
 	else:
@@ -37,9 +37,11 @@ func process_input(event: InputEvent) -> SDPCState:
 func process_physics(delta: float) -> SDPCState:
 
 	if !player.input_direction:
+		player.is_moving = false
 		return crouch_state
 
 	if !player.is_on_floor():
+		player.is_crouched = false
 		return fall_state
 
 	else:

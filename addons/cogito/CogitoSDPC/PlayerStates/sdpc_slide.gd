@@ -26,6 +26,7 @@ func process_physics(delta):
 	if !player.is_on_floor():
 		return fall_state
 
+	# TODO Implement Slide Physics
 
 func process_input(event):
 	if event.is_action_just_pressed(player.JUMP):

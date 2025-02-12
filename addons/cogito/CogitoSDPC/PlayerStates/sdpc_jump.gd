@@ -15,7 +15,6 @@ var stamina_attribute_reference: CogitoStaminaAttribute
 func enter() -> void:
 	super()
 
-
 	# Set Stamina Attribute reference if it wasn't set before
 	if !stamina_attribute_reference:
 		stamina_attribute_reference = player.player_attributes.get("stamina")
@@ -27,16 +26,28 @@ func enter() -> void:
 
 			move_speed = player.walk_back_speed
 			player.velocity.y = sqrt(player.jump_height * 2 * player.gravity)
-
+			set_flags(true, [player.is_jumping, player.is_moving])
 			print("stamina= ", stamina_attribute_reference.value_current)
+
 		else:
 			move_speed = player.walk_back_speed
-			return
+			state_machine.revert_state()
 
 	else:
+		set_flags(true, [player.is_jumping, player.is_moving])
 		move_speed = player.walk_back_speed
 		player.velocity.y = sqrt(player.jump_height * 2 * player.gravity)
 
+
+func exit():
+	player.jumping = false
+
+func process_inputs():
+	# UNTESTED:
+	# In theory
+	# If the player isn't holding onto the Jump button, they'll let gravity kick in early
+	if Input.is_action_just_released(player.JUMP):
+		return fall_state
 
 func process_physics(delta: float) -> SDPCState:
 	if player.velocity.y < 0:

@@ -51,18 +51,18 @@ var interaction_texture : Texture2D
 func _ready():
 	# TESTING THIS
 	set_process_unhandled_input(false)
-	
+
 	# Connect to signal that detects change of input device
 	InputHelper.device_changed.connect(_on_input_device_change)
 	# Calling this function once to set proper input icons
 	_on_input_device_change(InputHelper.device,InputHelper.device_index)
-	
+
 	$DeathScreen.hide()
 	damage_overlay.modulate = Color.TRANSPARENT
-	
+
 	# Set up for HUD elements for wieldables
 	wieldable_hud.hide()
-	
+
 	_setup_player.call_deferred()
 	connect_to_external_inventories.call_deferred()
 
@@ -79,7 +79,7 @@ func _setup_player():
 	connect_to_player_signals()
 	instantiate_player_attribute_ui()
 	instantiate_player_currency_ui()
-	
+
 	# Fill inventory HUD with player inventory
 	inventory_interface.set_player_inventory_data(player.inventory_data)
 	inventory_interface.hot_bar_inventory.set_inventory_data(player.inventory_data)
@@ -100,7 +100,7 @@ func instantiate_player_attribute_ui():
 	for n in ui_attribute_area.get_children():
 		ui_attribute_area.remove_child(n)
 		n.queue_free()
-		
+
 	for attribute in player.player_attributes.values():
 		if fixed_stamina_bar and attribute.attribute_name == "stamina":
 			fixed_stamina_bar.initiate_attribute_ui(attribute)
@@ -110,7 +110,7 @@ func instantiate_player_attribute_ui():
 			if attribute.attribute_name == "health":
 				attribute.damage_taken.connect(_on_player_damage_taken)
 				attribute.death.connect(_on_player_death)
-			
+
 			spawned_attribute_ui.initiate_attribute_ui(attribute)
 
 
@@ -118,7 +118,7 @@ func instantiate_player_currency_ui():
 	for n in ui_currency_area.get_children():
 		ui_currency_area.remove_child(n)
 		n.queue_free()
-	
+
 	for currency in player.player_currencies.values():
 		var spawned_currency_ui = ui_currency_prefab.instantiate()
 		ui_currency_area.add_child(spawned_currency_ui)
@@ -165,7 +165,7 @@ func toggle_inventory_interface(external_inventory_owner = null):
 			external_inventory_owner.close()
 		_on_external_ui_toggle(false)
 		hide_inventory.emit()
-		
+
 	if external_inventory_owner and inventory_interface.is_inventory_open:
 		inventory_interface.set_external_inventory(external_inventory_owner)
 	else:
@@ -193,7 +193,7 @@ func set_drop_prompt(_carrying_node):
 	var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
 	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
-	
+
 	# Create the rotation input prompt
 	if _carrying_node.enable_manual_rotating:
 		var instanced_secondary_prompt: UiPromptComponent = prompt_component.instantiate()

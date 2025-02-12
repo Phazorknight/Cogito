@@ -98,21 +98,30 @@ var can_sprint: bool = true
 var can_pause: bool = true
 var can_open_inventory: bool = true
 
-# Player state values that are set by applying state
-var climb_speed: float = fast_climb_speed
-var is_crouched: bool = false
+#region Player States (Values that are set by applying state)
+# Climbing
 var can_climb: bool
 var can_climb_timer: Timer
-var is_affected_by_gravity: bool = true
+var climb_speed: float = fast_climb_speed
+
+var is_grabbing: bool = false
+# Horizontal Movement
 var is_moving: bool = false
 var is_sprinting: bool = false
+var is_crouched: bool = false
+# Vertical Movement
+var is_sliding : bool = false
+var is_affected_by_gravity: bool = true
+var is_jumping: bool = false
+var is_falling: bool = false
+# Pausing
 var is_showing_ui : bool
 var is_paused : bool
-var is_sliding : bool = false
 
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 @onready var state_machine : SDPCStateMachine = $SDPCStateMachine
+#endregion
 
 
 func _ready() -> void:
@@ -172,10 +181,12 @@ func _input(event: InputEvent) -> void:
 		mouse_motion = -event.relative * 0.001
 
 	if can_pause and event.is_action_pressed(PAUSE):
+		# Exit UI
 		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
 			menu_pressed.emit(player_interaction_component)
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
 				toggle_inventory_interface.emit()
+		# If no UI, we want to pause instead
 		else:
 			_on_pause_movement()
 			get_node(pause_menu).open_pause_menu()
@@ -187,12 +198,14 @@ func _input(event: InputEvent) -> void:
 		elif is_showing_ui and get_node(player_hud).inventory_interface.is_inventory_open: #Making sure Inventory is open, and if yes, close it.
 			toggle_inventory_interface.emit()
 
+	# If we are showing the UI, we don't want the SDPCStateMachine to process inputs
 	if !is_showing_ui:
 		state_machine.process_input(event)
 
 
 func _physics_process(delta: float) -> void:
 	if can_move:
+		# This portion gives values to [input_direction] and [movement_strength]
 		if Input.get_vector(MOVE_LEFT, MOVE_RIGHT, MOVE_FORWARD, MOVE_BACK):
 			input_direction = Input.get_vector(MOVE_LEFT, MOVE_RIGHT, MOVE_FORWARD, MOVE_BACK)
 		elif Input.get_connected_joypads().size() != 0:
@@ -208,6 +221,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= gravity * delta
 
 	# Resetting climb ability when on ground
+	#NOTE: Currently can_climb_timer is not being utilized within the codebase -V
 	if is_on_floor() and !can_climb:
 		if can_climb_timer != null:
 			can_climb_timer.queue_free()
@@ -229,26 +243,29 @@ func _process(delta: float) -> void:
 
 
 func check_climbable() -> bool:
-	if crouch_ray_cast.is_colliding():
+	# Crouch? No Climb
+	if crouch_ray_cast.is_colliding() or is_crouched:
 		return false
 
+	# No Wall? No Climb
 	if not bottom_raycast.is_colliding() && not middle_raycast.is_colliding() && not top_raycast.is_colliding():
 		return false
 
 	var climb_point = surface_raycast.get_collision_point()
 	var climb_height = climb_point.y - global_position.y
 
+	# If either 'arm' is too short, No Climb
 	left_climbable_raycast.global_position.y = climb_point.y + 0.1
 	right_climbable_raycast.global_position.y = climb_point.y + 0.1
-
-	if left_climbable_raycast.is_colliding() || right_climbable_raycast.is_colliding():
+	if left_climbable_raycast.is_colliding() or right_climbable_raycast.is_colliding():
 		return false
 
+	# If Wall Too Tall
 	projected_height_raycast.target_position = Vector3(0, climb_height - 0.1, 0)
-
 	if projected_height_raycast.is_colliding():
 		return false
 
+	# Otherwise, the Edge is Climbable
 	ledge_position = climb_point
 	return true
 
@@ -300,16 +317,12 @@ func _handle_joy_camera_motion() -> void:
 
 # Methods to pause input (for Menu or Dialogues etc)
 func _on_pause_movement():
-	if !is_paused:
-		is_paused = true
-		# Only show mouse cursor if input device is KBM
-		if InputHelper.device_index == -1:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if is_paused: return
+	state_machine.change_state(state_machine.pause_movement_state)
 
 func _on_resume_movement():
-	if is_paused:
-		is_paused = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if !is_paused: return
+	state_machine.revert_state()
 
 
 func _on_pause_menu_resume(): # Signal from Pause Menu
@@ -332,6 +345,10 @@ func _reload_options():
 
 
 #region Setters
+func set_flags(to_value: bool, flags: Array[bool]):
+	for flag in flags:
+		flag = to_value
+
 func set_jump_allowance(value: bool):
 	allow_jump = value
 func set_crouch_allowance(value: bool):

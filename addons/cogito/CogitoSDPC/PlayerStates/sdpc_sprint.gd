@@ -55,7 +55,6 @@ func process_physics(delta: float) -> SDPCState:
 		return move_state
 
 	if player.velocity.y < 0:
-		state_machine.stored_state = self
 		return fall_state
 
 	return null

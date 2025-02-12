@@ -9,6 +9,7 @@ extends SDPCState
 
 func enter():
 	player.is_grabbing = true
+	player.is_moving = false
 
 
 func exit():

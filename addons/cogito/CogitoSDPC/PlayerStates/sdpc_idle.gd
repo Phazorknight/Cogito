@@ -7,8 +7,10 @@ extends SDPCState
 @export var move_state: SDPCStateMove
 @export var crouch_state: SDPCStateCrouch
 
+
 func enter() -> void:
 	super()
+	reflag_movement_states()
 
 
 func process_input(event: InputEvent) -> SDPCState:
@@ -33,3 +35,16 @@ func process_physics(delta: float) -> SDPCState:
 		return move_state
 
 	return null
+
+# Reset all Movement based flags on Idle
+func reflag_movement_states():
+	player.velocity = Vector3.ZERO
+	set_flags(false,
+			[player.is_moving,
+			player.is_crouched,
+			player.is_falling,
+			player.is_jumping,
+			player.is_grabbing,
+			player.is_sprinting,
+			player.is_sliding,
+			])

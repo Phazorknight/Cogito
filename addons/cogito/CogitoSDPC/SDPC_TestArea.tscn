@@ -37,7 +37,7 @@
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_ladder.gd" id="33_cri07"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_clamber.gd" id="35_rgy1q"]
 [ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_sit.gd" id="37_8p3kb"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_interface_interaction.gd" id="38_k4h5b"]
+[ext_resource type="Script" path="res://addons/cogito/CogitoSDPC/PlayerStates/sdpc_pause_movement.gd" id="38_k4h5b"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_sk14v"]
 material = ExtResource("1_obemb")
