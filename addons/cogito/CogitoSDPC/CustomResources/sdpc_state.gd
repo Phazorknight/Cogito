@@ -4,8 +4,10 @@ extends Node
 class_name SDPCState
 
 @export var animation_name: String
-@export
-var move_speed: float = 300
+@export var move_speed: float = 300
+
+# Hold reference to parent state machine
+@onready var state_machine: SDPCStateMachine = get_parent()
 
 var gravity: int = ProjectSettings.get_setting("physics/3d/default_gravity")
 var player: CogitoSDPC # Hold a reference to the parent so that it can be controlled by the state
@@ -29,3 +31,13 @@ func process_frame(delta: float) -> SDPCState:
 
 func process_physics(delta: float) -> SDPCState:
 	return null
+
+# Alternate option for inverting bools
+func toggle_flags(flags: Array[bool]):
+	for flag in flags:
+		flag = !flag
+
+
+func set_flags(to_value: bool ,flags: Array[bool]):
+	for flag in flags:
+		flag = to_value

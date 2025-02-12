@@ -1,12 +1,16 @@
+class_name SDPCStateIdle
 extends SDPCState
 
-@export var fall_state: SDPCState
-@export var jump_state: SDPCState
-@export var move_state: SDPCState
-@export var crouch_state: SDPCState
+@export_group("State Connections")
+@export var fall_state: SDPCStateFall
+@export var jump_state: SDPCStateJump
+@export var move_state: SDPCStateMove
+@export var crouch_state: SDPCStateCrouch
+
 
 func enter() -> void:
 	super()
+	reflag_movement_states()
 
 
 func process_input(event: InputEvent) -> SDPCState:
@@ -17,17 +21,30 @@ func process_input(event: InputEvent) -> SDPCState:
 	if player.can_crouch && player.allow_crouch:
 		if event.is_action_pressed(player.CROUCH) && player.is_on_floor():
 			return crouch_state
-	
+
 	return null
 
 
 func process_physics(delta: float) -> SDPCState:
 	var input_dir := player.input_direction
-	
+
 	if !player.is_on_floor():
 		return fall_state
-	
+
 	if input_dir:
 		return move_state
-	
+
 	return null
+
+# Reset all Movement based flags on Idle
+func reflag_movement_states():
+	player.velocity = Vector3.ZERO
+	set_flags(false,
+			[player.is_moving,
+			player.is_crouched,
+			player.is_falling,
+			player.is_jumping,
+			player.is_grabbing,
+			player.is_sprinting,
+			player.is_sliding,
+			])

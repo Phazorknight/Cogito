@@ -3,6 +3,7 @@ extends Node
 class_name SDPCStateMachine
 
 @export var starting_state: SDPCState
+@export var pause_movement_state: SDPCStatePauseMovement
 @export var print_state_changes: bool = false
 
 var stored_state: SDPCState
@@ -11,6 +12,8 @@ var current_state: SDPCState
 
 # Initialize the state machine by giving each child state a reference to the parent object it belongs to and enter the default starting_state.
 func init(player: CogitoSDPC) -> void:
+
+	assert(pause_movement_state, "SDPCStateMachine initialized without SDPCStatePauseMovement")
 	for child in get_children():
 		child.player = player
 
@@ -22,13 +25,15 @@ func init(player: CogitoSDPC) -> void:
 func change_state(new_state: SDPCState) -> void:
 	if !new_state:
 		return
-		
+
 	if current_state:
 		current_state.exit()
 
 	if print_state_changes and current_state and new_state:
 		print("SDPC: Changing state FROM ", current_state.name, " >===> ", new_state.name)
 
+	# Store the state, update to new_state, then enter
+	stored_state = current_state
 	current_state = new_state
 	current_state.enter()
 
@@ -37,7 +42,7 @@ func change_state(new_state: SDPCState) -> void:
 func process_physics(delta: float) -> void:
 	if !current_state:
 		return
-	
+
 	var new_state = current_state.process_physics(delta)
 	if new_state:
 		change_state(new_state)
@@ -46,7 +51,7 @@ func process_physics(delta: float) -> void:
 func process_input(event: InputEvent) -> void:
 	if !current_state:
 		return
-	
+
 	var new_state = current_state.process_input(event)
 	if new_state:
 		change_state(new_state)
@@ -55,7 +60,17 @@ func process_input(event: InputEvent) -> void:
 func process_frame(delta: float) -> void:
 	if !current_state:
 		return
-	
+
 	var new_state = current_state.process_frame(delta)
 	if new_state:
 		change_state(new_state)
+
+func revert_state() -> void:
+	if !stored_state:
+		return
+	change_state(stored_state)
+
+func reset_state_machine() -> void:
+	if !starting_state:
+		return
+	change_state(starting_state)
