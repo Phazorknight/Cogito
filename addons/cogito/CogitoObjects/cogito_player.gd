@@ -1026,9 +1026,11 @@ func _physics_process(delta):
 				main_velocity += platform_velocity
 			
 			if is_sprinting and CAN_BUNNYHOP:
-				bunny_hop_speed += BUNNY_HOP_ACCELERATION
-			elif is_sprinting and !CAN_BUNNYHOP:
-				SPRINTING_SPEED += SPRINTING_SPEED
+				bunny_hop_speed += BUNNY_HOP_ACCELERATION # if CAN_BUNNYHOP, bunny_hop_speed should currently be equal to SPRINTING_SPEED. On landing, bunny_hop_speed gets reset.
+
+
+			#elif is_sprinting and !CAN_BUNNYHOP: # BUG: Since SPRINTING_SPEED is not altered if we can't bunnyhop, no need to adjust it back
+				#SPRINTING_SPEED += SPRINTING_SPEED # NOTE: If we want to set a JumpAccel, we can do so in a similar way as the bunny_hop_speed is being handled
 			
 			if is_crouching:
 				#temporarily switch colliders to process jump correctly
