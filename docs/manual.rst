@@ -235,40 +235,40 @@ Cogito Objects
 
 Here's a quick overview which object to use for what use-case:
 
-+---------------------------+-------------------------------------+
-| Cogito Object/Script	    | Common use case                     |
-+===========================+=====================================+
-| Cogito Object             | Item pick-ups, props, crates        |
-+---------------------------+-------------------------------------+
-| Cogito Door               | Doors, gates, bridges,              |
-|                           | manually controlled platforms,      |
-|                           | moveableobjects with two positions. |
-+---------------------------+-------------------------------------+
-| Cogito Button	          | Button to unlock a door (use once)  |
-|                           | Vending machine buttons (repeated)  |
-+---------------------------+-------------------------------------+
-| Cogito Switch             | Lamps, levers,                      |
-|                           | objects with two states (on/off),   |
-|                           | sockets for key objects             |
-+---------------------------+-------------------------------------+
-| Cogito Keypad             | Keypads to enter codes,             |
-|                           | UI minigames that send signals.     |
-+---------------------------+-------------------------------------+
-| Cogito Turnwheel	       | Valves, rotation-based levers,      |
-|                           | press-and-hold interactions.        |
-+---------------------------+-------------------------------------+
-| Cogito StaticInteractable | Static objects whose state won't be |
-|                           | saved that still can have           |
-|                           | interactions attached.              |
-+---------------------------+-------------------------------------+
-| Cogito Container          | Objects with their own inventory,   |
-|                           | containers, crates, NPCs.           |
-+---------------------------+-------------------------------------+
-| Cogito Projectile         | Objects spawned by wieldables.      |
-+---------------------------+-------------------------------------+
-| Cogito Security Camera    | Detection of other objects          |
-|                           | (usually the player).               |
-+---------------------------+-------------------------------------+
++------------------------+-------------------------------------+
+| Cogito Object/Script	 | Common use case                     |
++========================+=====================================+
+| Cogito Object          | Item pick-ups, props, crates        |
++------------------------+-------------------------------------+
+| Cogito Door            | Doors, gates, bridges,              |
+|                        | manually controlled platforms,      |
+|                        | moveableobjects with two positions. |
++------------------------+-------------------------------------+
+| Cogito Button	       | Button to unlock a door (use once)  |
+|                        | Vending machine buttons (repeated)  |
++------------------------+-------------------------------------+
+| Cogito Switch          | Lamps, levers,                      |
+|                        | objects with two states (on/off),   |
+|                        | sockets for key objects             |
++------------------------+-------------------------------------+
+| Cogito Keypad          | Keypads to enter codes,             |
+|                        | UI minigames that send signals.     |
++------------------------+-------------------------------------+
+| Cogito Turnwheel	    | Valves, rotation-based levers,      |
+|                        | press-and-hold interactions.        |
++------------------------+-------------------------------------+
+| Cogito                 | Static objects whose state won't be |
+| StaticInteractable     | saved that still can have           |
+|                        | interactions attached.              |
++------------------------+-------------------------------------+
+| Cogito Container       | Objects with their own inventory,   |
+|                        | containers, crates, NPCs.           |
++------------------------+-------------------------------------+
+| Cogito Projectile      | Objects spawned by wieldables.      |
++------------------------+-------------------------------------+
+| Cogito Security Camera | Detection of other objects          |
+|                        | (usually the player).               |
++------------------------+-------------------------------------+
 
 
 
