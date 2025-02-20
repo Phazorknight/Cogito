@@ -110,6 +110,7 @@ func apply_item_icons(item_data : InventoryItemPD, origin_index: int):
 	var icon_slot_size = item_data.item_size
 	for x in icon_slot_size.x:
 		for y in icon_slot_size.y:
+			CogitoGlobals.debug_log(true,"InventoryUI.gd","apply_item_icons: item_data=" + item_data.name + " set_icon_region(" + str(x) + "," + str(y) + ")")
 			slot_array[origin_index + x + (y*grid_container.columns)].set_icon_region(x, y)
 
 

@@ -250,7 +250,7 @@ Here's a quick overview which object to use for what use-case:
 +---------------------------+--------------------------------------------------------------------------------------------+
 | Cogito Turnwheel	       | Valves, rotation-based levers, press-and-hold interactions.                                |
 +---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito StaticInteractable | Static objects who's state won't get saved that still can have interactions attached.      |
+| Cogito StaticInteractable | Static objects whose state won't get saved that still can have interactions attached.      |
 +---------------------------+--------------------------------------------------------------------------------------------+
 | Cogito Container          | Objects that have their own inventory, like containers, crates, NPCs.                      |
 +---------------------------+--------------------------------------------------------------------------------------------+
@@ -258,6 +258,22 @@ Here's a quick overview which object to use for what use-case:
 +---------------------------+--------------------------------------------------------------------------------------------+
 | Cogito Security Camera    | *Name most likely to change*. For detection of other objects (most commonly the player).   |
 +---------------------------+--------------------------------------------------------------------------------------------+
+
++------------------------+----------------------------------+
+| Header row, column 1   | Header 2                         |
+| (header rows optional) |                                  |
++========================+==================================+
+| body row 1, column 1   | Testing table formatting.        |
++------------------------+----------------------------------+
+| body row 2             | Cells may span columns.          |
++------------------------+----------------------------------+
+| body row 3             |  - Table cells                   |
++------------------------+  - contain                       |
+| body row 4             |  - body elements.                |
++------------------------+------------- --------------------+
+| body row 5             | Cells may also be                |
+|                        | empty: ``-->``                   |
++------------------------+----------------------------------+
 
 
 Cogito Object
@@ -360,12 +376,12 @@ By doing this on a packed scene, you can make sure that all instances of that sc
 To make sure that these instances don't actually share the same inventory, make sure to check "Local to scene" (though this can be used to create "connected containers").
 Be sure to define if your inventory is grid based, and it's size.
 
-If you want to pre-add items into your external inventory, you have to add inventory slots and then load the item resource into them.
+If you want to pre-add items into your external inventory, please use the ``Starter Inventory`` property which can take a Inventory resource.
+You can also make a local one and add a few items. These items will then be added to the container on start.
+**DO NOT** add items to the inventory slots of the external inventory directly, as these can cause errors.
 
 .. important::
-   If you use the gird inventory, **you have to  set an origin index**. This sets the position of the item within the external inventory, starting at 0.
-   Keep each items size in mind when you set this. Failing to set working origin indexes will throw an error when the player tries to access the external inventory.
-
+   If you use the grid inventory and set a starter inventory, **make sure that the origin index of your items is set to 0.**
 
 
 Inventory Item Class
