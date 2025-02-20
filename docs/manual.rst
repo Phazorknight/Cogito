@@ -235,45 +235,41 @@ Cogito Objects
 
 Here's a quick overview which object to use for what use-case:
 
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Object/Script	    | Use case                                                                                   | 
-+===========================+============================================================================================+
-| Cogito Object	          | Item pick-ups, props, crates, "clutter objects"                                            |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Door	             | Doors, gates, manually controlled platforms, bridges, moveable objects with two positions. |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Button	          | Button that unlocks a door (single-use), vending machine buttons (repeated-use)            |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Switch	          | Lamps, levers, sockets for key objects, objects with two states (on/off)                   |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Keypad	          | Keypads, other UI based minigames that should send signals.                                |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Turnwheel	       | Valves, rotation-based levers, press-and-hold interactions.                                |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito StaticInteractable | Static objects whose state won't get saved that still can have interactions attached.      |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Container          | Objects that have their own inventory, like containers, crates, NPCs.                      |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Projectile         | Objects spawned by wieldables.                                                             |
-+---------------------------+--------------------------------------------------------------------------------------------+
-| Cogito Security Camera    | *Name most likely to change*. For detection of other objects (most commonly the player).   |
-+---------------------------+--------------------------------------------------------------------------------------------+
++---------------------------+-------------------------------------+
+| Cogito Object/Script	    | Common use case                     |
++===========================+=====================================+
+| Cogito Object             | Item pick-ups, props, crates        |
++---------------------------+-------------------------------------+
+| Cogito Door               | Doors, gates, bridges,              |
+|                           | manually controlled platforms,      |
+|                           | moveableobjects with two positions. |
++---------------------------+-------------------------------------+
+| Cogito Button	          | Button to unlock a door (use once)  |
+|                           | Vending machine buttons (repeated)  |
++---------------------------+-------------------------------------+
+| Cogito Switch             | Lamps, levers,                      |
+|                           | objects with two states (on/off),   |
+|                           | sockets for key objects             |
++---------------------------+-------------------------------------+
+| Cogito Keypad             | Keypads to enter codes,             |
+|                           | UI minigames that send signals.     |
++---------------------------+-------------------------------------+
+| Cogito Turnwheel	       | Valves, rotation-based levers,      |
+|                           | press-and-hold interactions.        |
++---------------------------+-------------------------------------+
+| Cogito StaticInteractable | Static objects whose state won't be |
+|                           | saved that still can have           |
+|                           | interactions attached.              |
++---------------------------+-------------------------------------+
+| Cogito Container          | Objects with their own inventory,   |
+|                           | containers, crates, NPCs.           |
++---------------------------+-------------------------------------+
+| Cogito Projectile         | Objects spawned by wieldables.      |
++---------------------------+-------------------------------------+
+| Cogito Security Camera    | Detection of other objects          |
+|                           | (usually the player).               |
++---------------------------+-------------------------------------+
 
-+------------------------+----------------------------------+
-| Header row, column 1   | Header 2                         |
-| (header rows optional) |                                  |
-+========================+==================================+
-| body row 1, column 1   | Testing table formatting.        |
-+------------------------+----------------------------------+
-| body row 2             | Cells may span columns.          |
-+------------------------+----------------------------------+
-| body row 3             |  - Table cells                   |
-+------------------------+  - contain                       |
-| body row 4             |  - body elements.                |
-+------------------------+------------- --------------------+
-| body row 5             | Cells may also be                |
-|                        | empty: ``-->``                   |
-+------------------------+----------------------------------+
 
 
 Cogito Object
