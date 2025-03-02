@@ -1,11 +1,11 @@
-[gd_scene load_steps=143 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=144 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="1_7d2n7"]
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_b15oo"]
+[ext_resource type="Script" uid="uid://iv8fpti8028y" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_b15oo"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://addons/cogito/PackedScenes/Pickups/pickup_flashlight.tscn" id="1_oweej"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="2_4ig6i"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_chxar"]
+[ext_resource type="Script" uid="uid://butm0oix65v62" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_chxar"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://addons/cogito/PackedScenes/carriable_box.tscn" id="6_cy1m6"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://addons/cogito/PackedScenes/ceiling_lamp.tscn" id="7_3y6g2"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://addons/cogito/PackedScenes/target_destructable.tscn" id="8_tk621"]
@@ -14,10 +14,11 @@
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://addons/cogito/InventoryPD/Items/Cogito_Key.tres" id="9_g1bqh"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://addons/cogito/PackedScenes/Pickups/pickup_key.tscn" id="9_qv8nx"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_potion.tscn" id="12_2vt2n"]
+[ext_resource type="Resource" uid="uid://b7myxblvr7lty" path="res://addons/cogito/InventoryPD/Items/Cogito_Laptop.tres" id="12_kepju"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://addons/cogito/PackedScenes/Pickups/pickup_battery.tscn" id="13_6m0er"]
 [ext_resource type="PackedScene" uid="uid://3okedyf5glns" path="res://addons/cogito/PackedScenes/container.tscn" id="14_d7sxi"]
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="15_86b07"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="16_fg1wi"]
+[ext_resource type="Script" uid="uid://cmr3cdphwd138" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="16_fg1wi"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres" id="17_nl6sa"]
 [ext_resource type="PackedScene" uid="uid://d1rq8gm20sjo1" path="res://addons/cogito/PackedScenes/lamp_standing.tscn" id="18_oxm1j"]
 [ext_resource type="PackedScene" uid="uid://sfypssn0rllo" path="res://addons/cogito/PackedScenes/Pickups/pickup_stamina_extension.tscn" id="18_pobhb"]
@@ -26,13 +27,13 @@
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://addons/cogito/PackedScenes/hazard_zone.tscn" id="20_dgnbq"]
 [ext_resource type="PackedScene" uid="uid://bqp8nl7x2c37m" path="res://addons/cogito/Components/Interactions/DualInteraction.tscn" id="20_muhi0"]
 [ext_resource type="PackedScene" uid="uid://bnygtkw3tvet6" path="res://addons/cogito/PackedScenes/press_and_hold_wheel.tscn" id="22_ni6um"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="23_rfav8"]
+[ext_resource type="Script" uid="uid://bx73w3d037b85" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="23_rfav8"]
 [ext_resource type="PackedScene" uid="uid://3gwo23kpr58f" path="res://addons/cogito/PackedScenes/lightzone_lamp.tscn" id="24_p17c7"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://addons/cogito/Assets/Audio/Kenney/stoneDrag4.ogg" id="25_3nnou"]
 [ext_resource type="PackedScene" uid="uid://bc52bohkbf1yp" path="res://addons/cogito/PackedScenes/Pickups/pickup_diamond_key_a.tscn" id="25_w5f1m"]
 [ext_resource type="PackedScene" uid="uid://djfg6ea5cbhyv" path="res://addons/cogito/PackedScenes/Pickups/pickup_diamond_key_b.tscn" id="26_1prk2"]
 [ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://addons/cogito/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="27_0a6c2"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_switch.gd" id="27_r5oie"]
+[ext_resource type="Script" uid="uid://dtxl3iw5ob5vd" path="res://addons/cogito/CogitoObjects/cogito_switch.gd" id="27_r5oie"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://addons/cogito/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="28_3r4lg"]
 [ext_resource type="AudioStream" uid="uid://bfmqga66x7l1k" path="res://addons/cogito/Assets/Audio/Kenney/rockHit2.ogg" id="30_42jtk"]
 [ext_resource type="PackedScene" uid="uid://o0xgl5obc551" path="res://addons/cogito/PackedScenes/Pickups/pickup_pistol.tscn" id="30_a7v26"]
@@ -42,7 +43,7 @@
 [ext_resource type="AudioStream" uid="uid://b6wdy2102jymr" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/switch2.ogg" id="36_42jeg"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="38_l5vpp"]
 [ext_resource type="PackedScene" uid="uid://i7fum2jx3ac3" path="res://addons/cogito/PackedScenes/ladder.tscn" id="41_q27ev"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="43_bchdf"]
+[ext_resource type="Script" uid="uid://cald2h4xsp3jb" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="43_bchdf"]
 [ext_resource type="PackedScene" uid="uid://bhj146kxvb3s5" path="res://addons/cogito/PackedScenes/document.tscn" id="44_im51b"]
 [ext_resource type="PackedScene" uid="uid://i4rqcx7lyrfd" path="res://addons/cogito/PackedScenes/keypad_prefab.tscn" id="48_150m3"]
 [ext_resource type="Script" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="49_obvm3"]
@@ -258,26 +259,27 @@ rings = 1
 [sub_resource type="BoxMesh" id="BoxMesh_woscm"]
 size = Vector3(0.3, 0.3, 0.1)
 
-[sub_resource type="Resource" id="Resource_hqpdg"]
+[sub_resource type="Resource" id="Resource_6uqv3"]
 resource_local_to_scene = true
 script = ExtResource("16_fg1wi")
-inventory_item = ExtResource("17_nl6sa")
-quantity = 2
+inventory_item = ExtResource("12_kepju")
+quantity = 1
 origin_index = 0
 
-[sub_resource type="Resource" id="Resource_mpik5"]
+[sub_resource type="Resource" id="Resource_vgrsc"]
+resource_local_to_scene = true
 script = ExtResource("16_fg1wi")
 inventory_item = ExtResource("15_86b07")
 quantity = 1
-origin_index = 1
+origin_index = 0
 
 [sub_resource type="Resource" id="Resource_kntv5"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 grid = true
-starter_inventory = Array[ExtResource("16_fg1wi")]([])
+starter_inventory = Array[ExtResource("16_fg1wi")]([SubResource("Resource_6uqv3"), SubResource("Resource_vgrsc")])
 inventory_size = Vector2i(4, 2)
-inventory_slots = Array[ExtResource("16_fg1wi")]([SubResource("Resource_hqpdg"), SubResource("Resource_mpik5")])
+inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_w1o4d"]
 material = ExtResource("2_4ig6i")
@@ -360,7 +362,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_ps6qn"]
+[sub_resource type="Resource" id="Resource_2qgro"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 grid = true
@@ -1637,7 +1639,7 @@ spawn_on_death = Array[PackedScene]([])
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -10.4148, 0.905039, -4.11386)
-inventory_data = SubResource("Resource_ps6qn")
+inventory_data = SubResource("Resource_2qgro")
 step_height_camera_lerp = 1.5
 
 [node name="Ladder" parent="." instance=ExtResource("41_q27ev")]

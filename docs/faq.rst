@@ -96,3 +96,35 @@ Where do I set Weapon Damage?
 Weapon Damage is set on the WieldableItem resource. This value is then either used in the Wieldable script itself or passed onto spawned projectiles.
 It is NOT set on the wieldable script and also not set on the projectile itself (if a projectile based weapon).
 
+
+
+I'm using POT generation in my localizations but strings aren't showing up!
+---------------------------------------------------------------------------
+
+ As POT generation works by resource, you need to make sure to add each individual packed scene object to it. Keep in mind that packed scenes within scenes don't seem to get properly detected by the POT generator.
+
+Another issue of using POT is that if you translate strings within reused packed scene components, those translation will be applied to all instances of them. This is probably fine for stuff like the interaction prompts like "Read this", but you don't want all your readable objects have the same content.
+
+In order for this to work you will have to make the readable component "local" to your object.
+
+As an example I've taken the ``Note_Welcome`` object from the Lobby demo scene. It contains a PackedScene of a ``ReadableComponent``.
+So for me to make the contents of that component show up in the POT generation and have these only apply to the ``Note_Welcome``, I'll have to turn the ``ReadableComponent`` local.
+
+.. image:: cog_pot_screencap_01.png
+    :alt: COGITO Node tree of a readable object with the component made local.
+
+Note how the names of the child nodes of the ``ReadableComponent`` are white as they are now all part of the ``Note_Welcome`` scene.
+
+Then I add the Note_Welcome scene to the POT Generator resources:
+
+.. image:: cog_pot_screencap_02.png
+    :alt: Project settings window with the Localization and POT Generation tab open. The `note_welcome.tscn` packed scene has been added.
+
+In the end, all these strings now show up in the POT file:
+
+.. image:: cog_pot_screencap_03.png
+    :alt: Screenshot of the generated POT file.
+
+
+So in summary: It's doable but needs some planning in how you structure your objects and their components.
+I'd also wait until the very end of your project before generating the POT file as making your PackedScenes local will make you lose them being instances to the same PackedScene, which could make editing tedious.
