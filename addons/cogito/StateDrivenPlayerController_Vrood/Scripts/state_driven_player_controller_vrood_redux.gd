@@ -30,75 +30,84 @@ signal mouse_movement(relative_mouse_movement:Vector2)
 
 #region Movement
 @export_group("Movement")
+
 @export_subgroup("Standing")
-@export var LERP_SPEED: float = 10.0
-@export var WALKING_SPEED : float = 5.0
-@export var SPRINTING_SPEED : float = 8.0
-@export var JUMP_VELOCITY: float = 4.5
+@export_enum("CAN_SPRINT", "WALK_ONLY", "AUTO_SPRINT") var MOVEMENT_TYPE : int
+@export_range(1.0, 25.0, 0.01) var WALKING_SPEED : float = 5.0
+@export_range(1.0, 25.0, 0.01) var SPRINTING_SPEED : float = 8.0
+@export_range(1.0, 25.0, 0.01) var JUMP_VELOCITY: float = 4.5
+@export_range(0.01, 50.0, 0.01) var LERP_SPEED: float = 10.0
 
 @export_subgroup("Crouching")
+@export var crouching_enabled: bool = true # Turn Crouching On/Off
+@export var CAN_CROUCH_JUMP = true # Turn Crouch Jump On/Off
 @export var TOGGLE_CROUCH: bool = false # Controlled by game config, if false Hold-To-Crouch is enabled
-@export var CAN_CROUCH_JUMP = true
-@export var CROUCHING_SPEED : float = 3.0
-@export var CROUCHING_DEPTH : float = -0.9
-@export var CROUCH_JUMP_VELOCITY: float = 3.0
+@export_range(1.0, 25.0, 0.01) var CROUCHING_SPEED : float = 3.0
+@export_range(-2.0, 0.0, 0.001) var CROUCHING_DEPTH : float = -0.9
+@export_range(1.0, 25.0, 0.01) var CROUCH_JUMP_VELOCITY: float = 3.0
 
 @export_subgroup("Airborne")
 @export var fall_damage: int = 0 ## dmg the player takes if falling from great height, leave at 0 if youd on't want to use
 @export var fall_damage_threshold: float = -5.0 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
-@export var AIR_LERP_SPEED: float = 6.0
+@export_range(0.01, 50.0, 0.01) var AIR_LERP_SPEED: float = 6.0
 
 @export_group("Advanced Movement")
 ## How much strength the player has to push RigidBody3D objects.
-@export var PLAYER_PUSH_FORCE : float = 1.3
+@export var push_force_enabled: bool = true # Turn Pushing Rigids On/Off
+@export_range(0.01, 100.0, 0.01) var PLAYER_PUSH_FORCE : float = 1.3
 
 @export_subgroup("Sliding")
+@export var slide_enabled: bool = true # Turn Sliding On/Off
 @export var CAN_BUNNYHOP: bool = true
-@export var SLIDING_SPEED: float = 5.0
-@export var SLIDE_JUMP_MOD: float = 1.5
-@export var BUNNY_HOP_ACCELERATION: float = 0.1
+@export_range(1.0, 25.0, 0.01) var SLIDING_SPEED: float = 5.0
+@export_range(1.0, 10.0, 0.01) var SLIDE_JUMP_MOD: float = 1.5
+@export_range(0.01, 2.0, 0.01) var BUNNY_HOP_ACCELERATION: float = 0.1
 
 @export_subgroup("Stairs")
-## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
-@export var step_height_camera_lerp : float = 2.5
 ## This sets the height of what is still considered a step (instead of a wall/edge)
 @export var STEP_HEIGHT_DEFAULT : Vector3 = Vector3(0, 0.5, 0)
 ## This sets the step slope degree check. When set to 0, tiny edges etc might stop the player in it's tracks. 1 seems to work fine.
-@export var STEP_MAX_SLOPE_DEGREE : float = 0.0
+@export_range(0.01, 1.0, 0.01) var STEP_MAX_SLOPE_DEGREE : float = 0.5
+## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
+@export_range(0.01, 10.0, 0.01) var step_height_camera_lerp : float = 2.5
 
+@export_subgroup("Sitting")
+## This allows the player to Subscribe to Sittable Signals
+@export var sitting_enabled: bool = true
 
 @export_subgroup("Ladders")
+@export var ladder_climbing_enabled: bool = true
 @export var CAN_SPRINT_ON_LADDER : bool = false
-@export var LADDER_SPEED : float = 2.0
-@export var LADDER_SPRINT_SPEED : float = 3.3
-@export var LADDER_COOLDOWN : float = 0.5
+@export_range(1.0, 25.0, 0.01) var LADDER_SPEED : float = 2.0
+@export_range(1.0, 25.0, 0.01) var LADDER_SPRINT_SPEED : float = 3.3
+@export_range(0.01, 1.0, 0.01) var LADDER_COOLDOWN : float = 0.5
 @export_range(0.25, 0.75, 0.5) var LADDER_JUMP_SCALE : float = 0.5
 var ladder_on_cooldown : bool = false
 
 
 @export_group("Camera Control")
 @export var INVERT_Y_AXIS: bool = false
-@export var FREE_LOOK_TILT_AMOUNT: float = 5.0
+@export_range(1.0, 25.0, 0.01) var FREE_LOOK_TILT_AMOUNT: float = 5.0
 
 @export_subgroup("Mouse")
-@export var MOUSE_SENS : float = 0.25
+@export_range(0.01, 20.0, 0.01) var MOUSE_SENS : float = 0.25
 
 @export_subgroup("Gamepad")
-@export var JOY_DEADZONE : float = 0.25
-@export var JOY_V_SENS : float = 2
-@export var JOY_H_SENS : float = 2
+@export_range(0.01, 20.0, 0.01) var JOY_DEADZONE : float = 0.25
+@export_range(0.01, 20.0, 0.01) var JOY_V_SENS : float = 2
+@export_range(0.01, 20.0, 0.01) var JOY_H_SENS : float = 2
 
 @export_subgroup("Headbob")
 @export var disable_roll_anim: bool = false
 ## Head bob strength. Currently controlled/overridden by the in-game options.
 @export_enum("Minimal:0.1", "Average:0.7", "Full:1") var HEADBOBBLE : int
-@export var WIGGLE_ON_WALKING_INTENSITY : float = 0.03
-@export var WIGGLE_ON_WALKING_SPEED : float = 12.0
-@export var WIGGLE_ON_SPRINTING_INTENSITY : float = 0.05
-@export var WIGGLE_ON_SPRINTING_SPEED : float = 16.0
-@export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.08
-@export var WIGGLE_ON_CROUCHING_SPEED : float = 8.0
-var WIGGLE_INTENSITY_MODIFIER = 1
+@export_range(0, 0.25, 0.01) var WIGGLE_ON_WALKING_INTENSITY : float = 0.03
+@export_range(0, 25, 0.01) var WIGGLE_ON_WALKING_SPEED : float = 12.0
+@export_range(0, 0.25, 0.01) var WIGGLE_ON_SPRINTING_INTENSITY : float = 0.05
+@export_range(0, 25, 0.01) var WIGGLE_ON_SPRINTING_SPEED : float = 16.0
+@export_range(0, 0.25, 0.01) var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.08
+@export_range(0, 25, 0.01) var WIGGLE_ON_CROUCHING_SPEED : float = 8.0
+var WIGGLE_INTENSITY_MODIFIER : float = 1
 
 
 #endregion
@@ -293,8 +302,9 @@ func _ready() -> void:
 	setup_attribute_system()
 	setup_interaction_component()
 	setup_currency_system()
-	state_machine.initialize(self)
 	subscribe_to_sittables()
+	call_deferred("slide_audio_init")
+	state_machine.initialize(self)
 
 
 func _process(delta: float) -> void:
@@ -1334,14 +1344,13 @@ func setup_pause_menu() -> void:
 
 
 func subscribe_to_sittables() -> void:
-	#Sittable Signals setup
+	if !sitting_enabled: return
+	# Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
 	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
 	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
-
+	# Debug
 	CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
-
-	call_deferred("slide_audio_init")
 
 
 func slide_audio_init():
