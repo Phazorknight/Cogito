@@ -8,7 +8,7 @@ signal menu_pressed(player_interaction_component: PlayerInteractionComponent)
 signal toggle_inventory_interface()
 signal player_state_loaded()
 ## Used to hide UI elements like the crosshair when another interface is active (like a container or readable)
-signal toggled_interface(is_showing_ui:bool) 
+signal toggled_interface(is_showing_ui:bool)
 
 signal mouse_movement(relative_mouse_movement:Vector2)
 
@@ -49,7 +49,7 @@ var is_showing_ui : bool
 
 @export_subgroup ("Landing Audio")
 ## Threshold for triggering landing sound
-@export var landing_threshold = -2.0  
+@export var landing_threshold = -2.0
 ## Defines Maximum velocity (in negative) for the hardest landing sound
 @export var max_landing_velocity = -8
 ## Defines Minimum velocity (in negative) for the softest landing sound
@@ -147,7 +147,7 @@ var is_in_air : bool = false
 
 var joystick_h_event
 var joystick_v_event
- 
+
 var initial_carryable_height #DEPRECATED Used to change carryable position based if player is standing or crouching
 
 var config = ConfigFile.new()
@@ -212,9 +212,9 @@ func _ready():
 	CogitoSceneManager._current_player_node = self
 	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
 	player_interaction_component.exclude_player(get_rid())
-	
-	randomize() 
-	
+
+	randomize()
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
@@ -251,12 +251,12 @@ func _ready():
 		pause_menu_node.close_pause_menu() # Making sure pause menu is closed on player scene load
 	else:
 		printerr("Player has no reference to pause menu.")
-	
+
 	#Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
 	CogitoSceneManager.connect("stand_requested", Callable(self, "_on_stand_requested"))
 	CogitoSceneManager.connect("seat_move_requested", Callable(self, "_on_seat_move_requested"))
-	
+
 	CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
 
 	call_deferred("slide_audio_init")
@@ -339,7 +339,7 @@ func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
 	if err == 0:
 		CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Options reloaded.")
-		
+
 		HEADBOBBLE = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 1)
 		MOUSE_SENS = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 		INVERT_Y_AXIS = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
@@ -357,7 +357,7 @@ func _on_pause_menu_resume():
 func _input(event):
 	if event is InputEventMouseMotion and !is_movement_paused:
 		var look_movement: Vector2 = Vector2(0.0,0.0)
-		
+
 		#If players sitting & look marker is present, use sittable look handling
 		if is_sitting and CogitoSceneManager._current_sittable_node.look_marker_node:
 			handle_sitting_look(event)
@@ -368,7 +368,7 @@ func _input(event):
 			else:
 				body.rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
 				look_movement.x = -event.relative.x
-			
+
 			if INVERT_Y_AXIS:
 				head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
 				look_movement.y = -event.relative.y
@@ -376,18 +376,18 @@ func _input(event):
 				head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
 				look_movement.y = event.relative.y
 			head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-			
+
 		mouse_movement.emit(look_movement)
 
-		
+
 	# Checking Analog stick input for mouse look
 	if event is InputEventJoypadMotion and !is_movement_paused:
 		if event.get_axis() == 2:
 			joystick_v_event = event
 		if event.get_axis() == 3:
 			joystick_h_event = event
-	
-	
+
+
 	# Opens Pause Menu if Menu button is proessed.
 	if event.is_action_pressed("menu"):
 		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
@@ -445,7 +445,7 @@ func _on_sit_requested(sittable: Node):
 
 func _on_stand_requested():
 	if is_sitting:
-		_stand_up()	
+		_stand_up()
 
 
 func _on_seat_move_requested(sittable: Node):
@@ -476,18 +476,18 @@ func handle_sitting_look(event):
 	# New angle after rotation
 	var new_angle_to_marker = rad_to_deg(neck_direction.angle_to(target_direction))
 	new_angle_to_marker = wrapf(new_angle_to_marker, 0, 360)
-	
+
 	# Check if the new angle is within the limits
 	if not (new_angle_to_marker > 180-sittable_look_angle and new_angle_to_marker < (180 + sittable_look_angle)):
 		neck.rotation.y -= deg_to_rad(-event.relative.x * MOUSE_SENS)
-	
+
 	if INVERT_Y_AXIS:
 		head.rotate_x(-deg_to_rad(-event.relative.y * MOUSE_SENS))
 	else:
 		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
-	
+
 	var sittable = CogitoSceneManager._current_sittable_node
-	
+
 	if sittable.physics_sittable == false:
 		#static sittables are fine to be clamped this way
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.vertical_look_angle), deg_to_rad(sittable.vertical_look_angle))
@@ -499,8 +499,8 @@ func handle_sitting_look(event):
 func _sit_down():
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = true
-	is_ejected = false 
-		
+	is_ejected = false
+
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
 		is_sitting = true
@@ -512,9 +512,9 @@ func _sit_down():
 			original_position = self.global_transform
 			original_neck_basis = neck.global_transform.basis
 			displacement_position = sittable.global_transform.origin - self.global_transform.origin
-		
+
 		#TODO: Implement crouch handling
-		
+
 		# Check if the sittable is physics-based
 		if sittable.physics_sittable:
 			currently_tweening = true
@@ -548,7 +548,7 @@ func _sit_down_finished():
 func _stand_up():
 	var sittable = CogitoSceneManager._current_sittable_node
 	if sittable:
-		
+
 		is_sitting = false
 		set_physics_process(false)
 		#TODO: Implement crouch handling
@@ -561,8 +561,8 @@ func _stand_up():
 			sittable.PlacementOnLeave.TRANSFORM:
 				_move_to_leave_node(sittable)
 			sittable.PlacementOnLeave.DISPLACEMENT:
-				_move_to_displacement_position(sittable) 
-					
+				_move_to_displacement_position(sittable)
+
 		moving_seat = false
 
 #Functions to handle Exit types
@@ -613,7 +613,7 @@ func _move_to_nearby_location(sittable):
 			randf_range(-0.1, 0.1),  # Degree of Y random actually makes this work better at finding candidates
 			randf_range(-0.1, 0.1)
 		).normalized()
-		
+
 		var candidate_pos = seat_position + (random_direction * exit_distance)
 		candidate_pos.y = navmesh_offset_y  # to check navmesh at navmesh height
 
@@ -656,13 +656,13 @@ func _stand_up_finished():
 	standing_collision_shape.disabled = false
 	#crouching_collision_shape.disabled = false
 	self.global_transform.basis = Basis()
-	neck.global_transform.basis = original_neck_basis  
+	neck.global_transform.basis = original_neck_basis
 	currently_tweening = false
 
 #endregion
 
 func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
-	return PhysicsServer3D.body_test_motion(self_rid, get_params(transform3d, motion), test_motion_result)	
+	return PhysicsServer3D.body_test_motion(self_rid, get_params(transform3d, motion), test_motion_result)
 
 
 func ladder_buffer_finished():
@@ -671,7 +671,7 @@ func ladder_buffer_finished():
 
 func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	# called by ladder_area.gd
-	
+
 	# try and capture player's intent based on where they're looking
 	var look_vector = camera.get_camera_transform().basis
 	var looking_away = look_vector.z.dot(ladderDir) < 0.33
@@ -685,7 +685,7 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 		ladder_on_cooldown = true
 		on_ladder = true
 		return
-	
+
 
 ### LADDER MOVEMENT
 func _process_on_ladder(_delta):
@@ -694,16 +694,16 @@ func _process_on_ladder(_delta):
 		input_dir = Input.get_vector("left", "right", "forward", "back")
 	else:
 		input_dir = Vector2.ZERO
-	
+
 	var ladder_speed = LADDER_SPEED
-	
+
 	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
 		is_sprinting = true
 		if stamina_attribute.value_current > 0:
 			ladder_speed = LADDER_SPRINT_SPEED
 	else:
 		is_sprinting = false
-		
+
 	var jump = Input.is_action_pressed("jump")
 
 	# Processing analog stick mouselook
@@ -714,7 +714,7 @@ func _process_on_ladder(_delta):
 				else:
 					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-				
+
 	if joystick_v_event:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
 			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
@@ -727,13 +727,13 @@ func _process_on_ladder(_delta):
 	var y_dir = 1 if looking_down else -1
 	direction = (body.global_transform.basis * Vector3(input_dir.x,input_dir.y * y_dir,0)).normalized()
 	main_velocity = direction * ladder_speed
-	
+
 	if jump:
 		main_velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
-	
+
 	velocity = main_velocity
 	move_and_slide()
-	
+
 	#Step off ladder when on ground
 	if is_on_floor() and not ladder_on_cooldown:
 		on_ladder = false
@@ -753,7 +753,7 @@ func _process_on_sittable(delta):
 				else:
 					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-sittable.horizontal_look_angle), deg_to_rad(sittable.horizontal_look_angle))
-				
+
 	if joystick_v_event:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
 			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
@@ -780,10 +780,10 @@ func _physics_process(delta):
 	if is_sitting:
 		_process_on_sittable(delta)
 		return
-		
+
 	# Store current velocity for the next frame
 	last_velocity = main_velocity
-  
+
   	# Check if the player is on the ground
 	if is_on_floor():
 		# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
@@ -798,18 +798,18 @@ func _physics_process(delta):
 		was_in_air = false  # Reset airborne state
 	else:
 		was_in_air = true  # Set airborne state
-	
+
 	if on_ladder:
 		_process_on_ladder(delta)
 		return
-	
+
 	# Getting input direction
 	var input_dir
 	if !is_movement_paused:
 		input_dir = Input.get_vector("left", "right", "forward", "back")
 	else:
 		input_dir = Vector2.ZERO
-	
+
 	# Processing analog stick mouselook
 	if joystick_h_event and !is_movement_paused:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
@@ -818,12 +818,12 @@ func _physics_process(delta):
 				else:
 					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-				
+
 	if joystick_v_event and !is_movement_paused:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
 			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
-	
+
 	if stand_after_roll:
 		if !is_movement_paused or !is_showing_ui:
 			CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "523: Standing after roll.")
@@ -831,7 +831,7 @@ func _physics_process(delta):
 			standing_collision_shape.disabled = true
 			crouching_collision_shape.disabled = false
 			stand_after_roll = false
-	
+
 	var crouched_jump = false
 	if is_on_floor():
 		# reset our slide-jump state
@@ -839,16 +839,16 @@ func _physics_process(delta):
 	else:
 		# if we're jumping from a pure crouch (no slide), then we want to lock our crouch state
 		crouched_jump = is_crouching and not jumped_from_slide
-	
-	
+
+
 	# CROUCH HANDLING dependant on toggle_crouch
 	if !is_movement_paused:
 		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
 			try_crouch = !try_crouch
 		elif !TOGGLE_CROUCH:
 			try_crouch = Input.is_action_pressed("crouch")
-	
-	
+
+
 	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch or crouch_raycast.is_colliding()):
 		# should we be sliding?
 		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
@@ -856,11 +856,11 @@ func _physics_process(delta):
 			slide_vector = input_dir
 		elif !Input.is_action_pressed("sprint"):
 			sliding_timer.stop()
-		
+
 		# are we sliding or slide-jumping? if so, don't adjust our speed
 		if not jumped_from_slide and sliding_timer.is_stopped():
 			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
-		
+
 		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false
@@ -896,7 +896,7 @@ func _physics_process(delta):
 			if is_crouching:
 				is_crouching = false
 				try_crouch = false
-		elif Input.is_action_pressed("sprint") and !stamina_attribute:	
+		elif Input.is_action_pressed("sprint") and !stamina_attribute:
 			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
 				bunny_hop_speed = SPRINTING_SPEED
 				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
@@ -931,7 +931,7 @@ func _physics_process(delta):
 		else:
 			eyes.rotation.z = lerp(
 				eyes.rotation.z,
-				deg_to_rad(4.0), 
+				deg_to_rad(4.0),
 				delta * LERP_SPEED
 			)
 	else:
@@ -943,8 +943,8 @@ func _physics_process(delta):
 			0.0,
 			delta*LERP_SPEED
 		)
-	
-	
+
+
 	### STAIR HANDLING, jumping and gravity
 	if is_on_floor():
 		is_jumping = false
@@ -955,8 +955,8 @@ func _physics_process(delta):
 		is_in_air = true
 		gravity_vec = Vector3.DOWN * gravity * delta
 	###
-	
-	
+
+
 	if not is_on_floor():
 		#velocity.y -= gravity * delta
 		pass
@@ -965,12 +965,12 @@ func _physics_process(delta):
 		wiggle_vector.x = sin(wiggle_index / 2) + 0.5
 		eyes.position.y = lerp(
 			eyes.position.y,
-			wiggle_vector.y * (wiggle_current_intensity / 2.0), 
+			wiggle_vector.y * (wiggle_current_intensity / 2.0),
 			delta * LERP_SPEED
 		)
 		eyes.position.x = lerp(
 			eyes.position.x,
-			wiggle_vector.x * wiggle_current_intensity, 
+			wiggle_vector.x * wiggle_current_intensity,
 			delta * LERP_SPEED
 		)
 	else:
@@ -986,26 +986,26 @@ func _physics_process(delta):
 					animationPlayer.play("roll")
 			elif last_velocity.y <= -5.0:
 				animationPlayer.play("landing")
-		
+
 		# Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
 			#health_component.subtract(fall_damage)
 			decrease_attribute("health",fall_damage)
-	
+
 	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
 		jump_timer.start() # prevent spam
 		is_jumping = true
 		is_in_air = false
 		var doesnt_need_stamina = not stamina_attribute or stamina_attribute.value_current >= stamina_attribute.jump_exhaustion
 		var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
-		
+
 		var jump_vel = CROUCH_JUMP_VELOCITY if is_crouching else JUMP_VELOCITY
-		
+
 		if doesnt_need_stamina and crouch_jump:
 			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
 			if stamina_attribute:
 				decrease_attribute("stamina",stamina_attribute.jump_exhaustion)
-			
+
 			animationPlayer.play("jump")
 			Audio.play_sound(jump_sound)
 			if !sliding_timer.is_stopped():
@@ -1015,23 +1015,23 @@ func _physics_process(delta):
 				sliding_timer.stop()
 			else:
 				main_velocity.y = jump_vel
-			
+
 			if platform_on_leave != PLATFORM_ON_LEAVE_DO_NOTHING:
 				var platform_velocity = get_platform_velocity()
-				# TODO: Make PLATFORM_ON_LEAVE_ADD_VELOCITY work... somehow. 
+				# TODO: Make PLATFORM_ON_LEAVE_ADD_VELOCITY work... somehow.
 				# Velocity X and Z gets overridden later, so you immediately lose the velocity
 				if PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY:
 					platform_velocity.x = 0
 					platform_velocity.z = 0
 				main_velocity += platform_velocity
-			
+
 			if is_sprinting and CAN_BUNNYHOP:
 				bunny_hop_speed += BUNNY_HOP_ACCELERATION # if CAN_BUNNYHOP, bunny_hop_speed should currently be equal to SPRINTING_SPEED. On landing, bunny_hop_speed gets reset.
 
 
 			#elif is_sprinting and !CAN_BUNNYHOP: # BUG: Since SPRINTING_SPEED is not altered if we can't bunnyhop, no need to adjust it back
 				#SPRINTING_SPEED += SPRINTING_SPEED # NOTE: If we want to set a JumpAccel, we can do so in a similar way as the bunny_hop_speed is being handled
-			
+
 			if is_crouching:
 				#temporarily switch colliders to process jump correctly
 				standing_collision_shape.disabled = false
@@ -1055,23 +1055,23 @@ func _physics_process(delta):
 	else:
 		direction = (body.global_transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
 		current_speed = (sliding_timer.time_left / sliding_timer.wait_time + 0.5) * SLIDING_SPEED
-	
+
 	current_speed = clamp(current_speed, 0.5, 12.0)
-	
+
 	if direction:
 		main_velocity.x = direction.x * current_speed
 		main_velocity.z = direction.z * current_speed
 	else:
 		main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
 		main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
-	
+
 	last_velocity = main_velocity
 
 	# STAIR HANDLING
 	var step_result : StepResult = StepResult.new()
-	
+
 	var is_step : bool = step_check(delta, is_jumping, step_result)
-	
+
 	if is_step:
 		var is_enabled_stair_stepping: bool = true
 		if step_result.is_step_up and is_in_air and not is_enabled_stair_stepping_in_air:
@@ -1085,7 +1085,7 @@ func _physics_process(delta):
 	else:
 		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
 		head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
-	
+
 	main_velocity += gravity_vec
 
 	velocity = main_velocity
@@ -1099,7 +1099,7 @@ func _physics_process(delta):
 	if is_jumping:
 		is_jumping = false
 		is_in_air = true
-			
+
 	# Pushing RigidBody3Ds
 	for col_idx in get_slide_collision_count():
 		var col := get_slide_collision(col_idx)
@@ -1115,7 +1115,7 @@ func _physics_process(delta):
 		else:
 			if slide_audio_player:
 				slide_audio_player.stop()
-			
+
 			if can_play_footstep && wiggle_vector.y > 0.9:
 				#dynamic volume for footsteps
 				if is_walking:
@@ -1125,37 +1125,37 @@ func _physics_process(delta):
 				elif is_sprinting:
 					footstep_player.volume_db = sprint_volume_db
 				footstep_player._play_interaction("footstep")
-					
+
 				can_play_footstep = false
-				
+
 			if !can_play_footstep && wiggle_vector.y < 0.9:
 				can_play_footstep = true
-				
+
 	elif slide_audio_player:
 		slide_audio_player.stop()
 
 
 func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 	var is_step: bool = false
-	
+
 	var step_height_main: Vector3 = STEP_HEIGHT_DEFAULT
 	var step_incremental_check_height: Vector3 = STEP_HEIGHT_DEFAULT / STEP_CHECK_COUNT
-	
+
 	if is_in_air and is_enabled_stair_stepping_in_air:
 		step_height_main = STEP_HEIGHT_IN_AIR_DEFAULT
 		step_incremental_check_height = STEP_HEIGHT_IN_AIR_DEFAULT / STEP_CHECK_COUNT
-		
+
 	if main_velocity.y >= 0:
 		for i in range(STEP_CHECK_COUNT):
 			var test_motion_result: PhysicsTestMotionResult3D = PhysicsTestMotionResult3D.new()
-			
+
 			var step_height: Vector3 = step_height_main - i * step_incremental_check_height
 			var transform3d: Transform3D = global_transform
 			var motion: Vector3 = step_height
 			var test_motion_params: PhysicsTestMotionParameters3D = PhysicsTestMotionParameters3D.new()
 			test_motion_params.from = transform3d
 			test_motion_params.motion = motion
-			
+
 			var is_player_collided: bool = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
 
 			if is_player_collided and test_motion_result.get_collision_normal().y < 0:
@@ -1165,17 +1165,17 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 			motion = main_velocity * delta
 			test_motion_params.from = transform3d
 			test_motion_params.motion = motion
-			
+
 			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-			
+
 			if not is_player_collided:
 				transform3d.origin += motion
 				motion = -step_height
 				test_motion_params.from = transform3d
 				test_motion_params.motion = motion
-				
+
 				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-				
+
 				if is_player_collided:
 					if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 						is_step = true
@@ -1189,17 +1189,17 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 				motion = (main_velocity * delta).slide(wall_collision_normal)
 				test_motion_params.from = transform3d
 				test_motion_params.motion = motion
-				
+
 				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-				
+
 				if not is_player_collided:
 					transform3d.origin += motion
 					motion = -step_height
 					test_motion_params.from = transform3d
 					test_motion_params.motion = motion
-					
+
 					is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-					
+
 					if is_player_collided:
 						if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 							is_step = true
@@ -1219,15 +1219,15 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 		test_motion_params.recovery_as_collision = true
 
 		var is_player_collided: bool = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-			
+
 		if not is_player_collided:
 			transform3d.origin += motion
 			motion = -step_height_main
 			test_motion_params.from = transform3d
 			test_motion_params.motion = motion
-			
+
 			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-			
+
 			if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
 				if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 					is_step = true
@@ -1239,17 +1239,17 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 			motion = (main_velocity * delta).slide(wall_collision_normal)
 			test_motion_params.from = transform3d
 			test_motion_params.motion = motion
-			
+
 			is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-			
+
 			if not is_player_collided:
 				transform3d.origin += motion
 				motion = -step_height_main
 				test_motion_params.from = transform3d
 				test_motion_params.motion = motion
-				
+
 				is_player_collided = PhysicsServer3D.body_test_motion(self.get_rid(), test_motion_params, test_motion_result)
-				
+
 				if is_player_collided and test_motion_result.get_travel().y < -STEP_DOWN_MARGIN:
 					if test_motion_result.get_collision_normal().angle_to(Vector3.UP) <= deg_to_rad(STEP_MAX_SLOPE_DEGREE):
 						is_step = true
@@ -1257,8 +1257,8 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 						step_result.normal = test_motion_result.get_collision_normal()
 
 	return is_step
-	
-	
+
+
 func _on_sliding_timer_timeout():
 	is_free_looking = false
 

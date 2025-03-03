@@ -1,0 +1,152 @@
+[gd_scene load_steps=29 format=3 uid="uid://dksvnthdsax8f"]
+
+[ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/state_driven_player_controller_vrood_redux.gd" id="1_vq0qk"]
+[ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/sdpc_state_machine.gd" id="2_86vdg"]
+[ext_resource type="PackedScene" uid="uid://n1doui0jpn1v" path="res://addons/cogito/InventoryPD/CustomResources/CogtoTestCurrency.tscn" id="3_4pss8"]
+[ext_resource type="PackedScene" uid="uid://dorp3auw3s65q" path="res://addons/cogito/Components/Attributes/LightMeterAttribute.tscn" id="4_mnxh2"]
+[ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://addons/cogito/Components/Attributes/SanityAttribute.tscn" id="5_0cwa2"]
+[ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://addons/cogito/Components/Attributes/StaminaAttribute.tscn" id="6_05clv"]
+[ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="7_eks4k"]
+[ext_resource type="AnimationLibrary" uid="uid://cdchpsv104er2" path="res://addons/cogito/Assets/Animations/player_eyes.tres" id="8_5leev"]
+[ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://addons/cogito/Components/interaction_raycast.tscn" id="9_5l5s7"]
+[ext_resource type="Script" path="res://addons/cogito/Scripts/wieldables_sway.gd" id="10_yc57i"]
+[ext_resource type="AudioStream" uid="uid://up2hfhgq1qx6" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep00.ogg" id="11_4kvll"]
+[ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="12_fpiy6"]
+[ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="13_hu672"]
+[ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="14_ykf52"]
+[ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="15_jlg1x"]
+[ext_resource type="Script" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="16_r5td5"]
+[ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://addons/cogito/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="17_8kfja"]
+[ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://addons/cogito/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="18_mxa2v"]
+[ext_resource type="PackedScene" uid="uid://dy3tudla5p2nc" path="res://addons/cogito/Components/PlayerInteractionComponent.tscn" id="19_k0pni"]
+[ext_resource type="PackedScene" uid="uid://0c32kepv0ahx" path="res://addons/cogito/PackedScenes/Player_HUD.tscn" id="20_aafej"]
+[ext_resource type="PackedScene" uid="uid://dkie3md1cmsip" path="res://addons/cogito/EasyMenus/Scenes/PauseMenu.tscn" id="21_i0p3g"]
+[ext_resource type="PackedScene" uid="uid://cga0lxak2u2oq" path="res://addons/cogito/Components/AutoPickUpZone.tscn" id="22_semb8"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventoryItemPD.gd" id="23_fid02"]
+[ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres" id="24_in80r"]
+[ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres" id="25_6pdhl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
+size = Vector3(0.6, 1.7, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ut3wm"]
+size = Vector3(0.6, 0.7, 0.6)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_af0lu"]
+streams_count = 5
+stream_0/stream = ExtResource("11_4kvll")
+stream_1/stream = ExtResource("12_fpiy6")
+stream_2/stream = ExtResource("13_hu672")
+stream_3/stream = ExtResource("14_ykf52")
+stream_4/stream = ExtResource("15_jlg1x")
+
+[node name="CogitoStateDrivenPlayer" type="CharacterBody3D" node_paths=PackedStringArray("state_machine") groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+script = ExtResource("1_vq0qk")
+pause_menu = NodePath("PauseMenu")
+player_hud = NodePath("Player_HUD")
+state_machine = NodePath("SDPCStateMachine")
+
+[node name="SDPCStateMachine" type="Node" parent="."]
+script = ExtResource("2_86vdg")
+
+[node name="CogtoTestCurrency" parent="." instance=ExtResource("3_4pss8")]
+
+[node name="LightMeterAttribute" parent="." instance=ExtResource("4_mnxh2")]
+
+[node name="SanityAttribute" parent="." instance=ExtResource("5_0cwa2")]
+decay_in_darkness = false
+
+[node name="StaminaAttribute" parent="." instance=ExtResource("6_05clv")]
+
+[node name="HealthAttribute" parent="." instance=ExtResource("7_eks4k")]
+
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_8vem4")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+shape = SubResource("BoxShape3D_ut3wm")
+disabled = true
+
+[node name="StaircheckRayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, -0.5, 0)
+
+[node name="CrouchRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, 1.6, 0)
+collision_mask = 3
+
+[node name="Body" type="Node3D" parent="."]
+
+[node name="Neck" type="Node3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Head" type="Node3D" parent="Body/Neck"]
+
+[node name="Eyes" type="Node3D" parent="Body/Neck/Head"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body/Neck/Head/Eyes"]
+reset_on_save = false
+root_node = NodePath("../..")
+libraries = {
+"": ExtResource("8_5leev")
+}
+
+[node name="Camera" type="Camera3D" parent="Body/Neck/Head/Eyes"]
+
+[node name="InteractionRaycast" parent="Body/Neck/Head/Eyes/Camera" instance=ExtResource("9_5l5s7")]
+
+[node name="CarryablePosition" type="Marker3D" parent="Body/Neck/Head/Eyes/Camera"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
+[node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
+unique_name_in_owner = true
+script = ExtResource("10_yc57i")
+
+[node name="SlidingTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="FootstepPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488, 0)
+stream = SubResource("AudioStreamRandomizer_af0lu")
+volume_db = -38.0
+max_polyphony = 8
+bus = &"SFX"
+script = ExtResource("16_r5td5")
+generic_fallback_footstep_profile = ExtResource("17_8kfja")
+footstep_material_library = ExtResource("18_mxa2v")
+generic_fallback_landing_profile = ExtResource("17_8kfja")
+landing_material_library = ExtResource("18_mxa2v")
+
+[node name="JumpCooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position", "stamina_attribute", "wieldable_container") instance=ExtResource("19_k0pni")]
+interaction_raycast = NodePath("../Body/Neck/Head/Eyes/Camera/InteractionRaycast")
+carryable_position = NodePath("../Body/Neck/Head/Eyes/Camera/CarryablePosition")
+stamina_attribute = NodePath("../StaminaAttribute")
+wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
+
+[node name="Player_HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("20_aafej")]
+player = NodePath("..")
+
+[node name="PauseMenu" parent="." instance=ExtResource("21_i0p3g")]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="AutoPickUpZone" parent="." node_paths=PackedStringArray("_player_interaction_component") instance=ExtResource("22_semb8")]
+auto_pick_up_items = Array[ExtResource("23_fid02")]([ExtResource("24_in80r"), ExtResource("25_6pdhl")])
+_player_interaction_component = NodePath("../PlayerInteractionComponent")
+
+[connection signal="mouse_movement" from="." to="Body/Neck/Head/Wieldables" method="sway"]
+[connection signal="player_state_loaded" from="." to="." method="_on_player_state_loaded"]
+[connection signal="animation_finished" from="Body/Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
+[connection signal="interactable_unseen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
+[connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]
