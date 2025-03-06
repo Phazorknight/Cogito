@@ -100,7 +100,7 @@ func _on_back_to_menu_button_pressed():
 
 func _on_load_button_pressed() -> void:
 	get_tree().paused = false
-
+	hide()
 	CogitoGlobals.debug_log(true,"DeathScreen","LOAD button pressed.")
 	CogitoSceneManager._current_scene_name = get_tree().get_current_scene().get_name()
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path

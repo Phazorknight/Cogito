@@ -2,8 +2,8 @@ extends Node
 
 ## List of connector nodes. These are used to place the Player in the correct position when they transition to this scene from a different scene. The Node name needs to match the passed string for this to work.
 @export var connectors : Array[Node3D]
-## DOESN'T DO ANYTHING YET!
-@export var auto_save_on_enter : bool
+## Saves scene and player temp states
+@export var save_temp_on_enter : bool = false
 
 @export_category("Music Settings")
 @onready var music_player: AudioStreamPlayer
@@ -28,6 +28,14 @@ func _enter_tree() -> void:
 	CogitoGlobals.debug_log(true, "CogitoScene.gd", "Current scene root node set to " + CogitoSceneManager._current_scene_root_node.name )
 	
 	setup_bgm.call_deferred()
+	if save_temp_on_enter:
+		save_temp.call_deferred()
+
+
+func save_temp() -> void:
+	var current_scene_statename = get_tree().get_current_scene().get_name()
+	CogitoSceneManager.save_scene_state(current_scene_statename,"temp")
+	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node, "temp")
 
 
 func setup_bgm() -> void:

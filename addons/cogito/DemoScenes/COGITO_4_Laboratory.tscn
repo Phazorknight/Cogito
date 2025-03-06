@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=129 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://6010ovanwkwo" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="8_psdfg"]
 [ext_resource type="PackedScene" uid="uid://t2gxjp6of2et" path="res://addons/cogito/DemoScenes/DemoPrefabs/floor_dirt_3x_3_.tscn" id="9_btwfh"]
 [ext_resource type="PackedScene" uid="uid://3se2gpg0u3wx" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_ridges_half.tscn" id="9_gy8kl"]
+[ext_resource type="PackedScene" uid="uid://e31n36p8i6an" path="res://addons/cogito/DemoScenes/COGITO_3_Lobby.tscn" id="9_t2hdn"]
 [ext_resource type="PackedScene" uid="uid://caex54qny4gvm" path="res://addons/cogito/DemoScenes/DemoPrefabs/glass_3x_3_98.tscn" id="10_8403t"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="11_vcl5j"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_mbvqw"]
@@ -88,7 +89,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_bftoa"]
+[sub_resource type="Resource" id="Resource_t2hdn"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -901,7 +902,7 @@ environment = SubResource("Environment_bftoa")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_bftoa")
+inventory_data = SubResource("Resource_t2hdn")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -1198,7 +1199,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.1, -3.8)
 [node name="TransitionZone_LOBBY" type="Area3D" parent="CONNECTOR_TO_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, -1.2)
 script = ExtResource("8_psdfg")
-path_to_new_scene = "res://addons/cogito/DemoScenes/COGITO_3_Lobby.tscn"
+target_scene = ExtResource("9_t2hdn")
 target_connector = "ConnectorFromLab"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CONNECTOR_TO_LOBBY/TransitionZone_LOBBY"]

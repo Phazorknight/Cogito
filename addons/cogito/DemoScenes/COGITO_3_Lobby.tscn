@@ -1,4 +1,4 @@
-[gd_scene load_steps=376 format=4 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=377 format=4 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="11_je61h"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_72tca"]
 [ext_resource type="Script" uid="uid://cismjpvxmsbf2" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="13_5x4ip"]
+[ext_resource type="PackedScene" uid="uid://6hh7o77unixk" path="res://addons/cogito/DemoScenes/COGITO_4_Laboratory.tscn" id="13_md63x"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="14_qtguo"]
 [ext_resource type="PackedScene" uid="uid://x4wqam8k4bq3" path="res://addons/cogito/Assets/VFX/dust_particles.tscn" id="15_7saqh"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://addons/cogito/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="15_078vp"]
@@ -136,7 +137,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_hd73s"]
+[sub_resource type="Resource" id="Resource_md63x"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -2523,7 +2524,7 @@ shadow_mesh = SubResource("ArrayMesh_3ecdw")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_upcaa"]
 data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, 0.0903, -0.88, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 1.3856, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -1.2, 0.6128, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.6128, 0.0903, -0.72, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.72, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 0, 0.0903, -1.2, 0, 0.0903, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 1.3856, 0.0903, -0.4, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -1.2, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -1.2, 0.6928, 0.1935, 0, 0, 0.1935, -0.4, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -1.2, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, -1.6, 0.6928, 0.0903, -1.6, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -0.4, 1.3856, 0.0903, -0.4, 0.6928, 0.0903, 0, 0.6928, 0.0903, 0, 0.6928, 0.1935, 0, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.0903, 0, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.1935, -0.4, 0.6928, 0.1935, 0, 0, 0.1935, -1.2, 0, 0.1935, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.8, 0, 0.1935, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -1.2, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.6928, 0.0903, -1.6, 0.6928, 0.1935, -1.6, 0, 0.1935, -1.2, 0.7728, 0.0903, -0.72, 0.7728, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.88, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.6128, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.8128, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.68, 0.6128, -0.4, -0.72, 0.7728, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.72, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.6128, -0.4, -0.88, 0.6128, -0.4, -0.72, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.4, -0.92, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.7728, -0.4, -0.88, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.88, 0.4928, -0.44, -1, 0.4928, -0.44, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -1, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.4928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.5, -1, 0.8928, -0.5, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -1, 0.8928, -0.5, -1, 0.4928, -0.44, -0.6, 0.4928, -0.44, -1, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.4928, -0.44, -0.6, 0.5728, -0.44, -0.68, 0.8128, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.68, 0.8128, -0.44, -0.92, 0.8928, -0.44, -0.6, 0.5728, -0.44, -0.92, 0.5728, -0.44, -0.68, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -1, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8128, -0.44, -0.92, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.92, 0.9128, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.9128, -0.54, -0.58, 0.9128, -0.54, -1.02, 0.4928, -0.5, -1, 0.4728, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.8928, -0.5, -1, 0.4928, -0.5, -1, 0.9128, -0.54, -1.02, 0.9128, -0.54, -0.58, 0.8928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.8928, -0.5, -1, 0.9128, -0.54, -1.02, 0.8928, -0.5, -0.6, 0.9128, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4728, -0.54, -0.58, 0.4728, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4928, -0.5, -1, 0.4928, -0.5, -0.6, 0.5728, -0.4, -0.92, 0.5728, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.4, -0.92, 0.5728, -0.4, -0.92)
 
-[sub_resource type="Resource" id="Resource_md63x"]
+[sub_resource type="Resource" id="Resource_aokhm"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -3243,6 +3244,7 @@ size = Vector3(5.08541, 3.48608, 16.0137)
 [node name="Cogito04NewDemo" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_dracg")
 connectors = [NodePath("MAIN_LOBBY/LAB_CONNECTOR/ConnectorFromLab")]
+save_temp_on_enter = true
 bgm_neutral = ExtResource("2_hd73s")
 bgm_combat = ExtResource("2_jeioi")
 music_max_volume_db = -8.0
@@ -3268,7 +3270,7 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-inventory_data = SubResource("Resource_hd73s")
+inventory_data = SubResource("Resource_md63x")
 step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
@@ -3665,7 +3667,7 @@ shape = SubResource("ConvexPolygonShape3D_6kwp2")
 [node name="TransitionZone_LAB" type="Area3D" parent="MAIN_LOBBY/LAB_CONNECTOR"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.043, 1.5, -2.85195)
 script = ExtResource("10_wbxwm")
-path_to_new_scene = "res://addons/cogito/DemoScenes/COGITO_4_Laboratory.tscn"
+target_scene = ExtResource("13_md63x")
 target_connector = "ConnectorFromLobby"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MAIN_LOBBY/LAB_CONNECTOR/TransitionZone_LAB"]
@@ -7113,7 +7115,7 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 [node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
 display_name = "Fridge"
-inventory_data = SubResource("Resource_md63x")
+inventory_data = SubResource("Resource_aokhm")
 
 [node name="kitchenMicrowave2" parent="BREAK_ROOM" instance=ExtResource("61_1x4um")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)

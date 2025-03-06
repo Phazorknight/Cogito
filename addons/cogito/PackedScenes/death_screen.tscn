@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dygtu0wos4337"]
+[gd_scene load_steps=10 format=3 uid="uid://dygtu0wos4337"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_t83el"]
 [ext_resource type="Script" uid="uid://qfrtfkga2jar" path="res://addons/cogito/EasyMenus/Scripts/cogito_death_screen.gd" id="2_iaru5"]
@@ -8,17 +8,20 @@
 [ext_resource type="Script" uid="uid://bg6tmerhavxb3" path="res://addons/cogito/Theme/CogitoUiButton.gd" id="6_wjvf8"]
 [ext_resource type="Script" uid="uid://dyiaeif1d4pmo" path="res://addons/cogito/Scripts/menu_scene_switcher.gd" id="7_rf8vv"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t83el"]
+bg_color = Color(0, 0, 0, 0.666667)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vmpwe"]
 
-[node name="DeathScreen" type="Control" node_paths=PackedStringArray("nodes_to_focus")]
+[node name="DeathScreen" type="Panel" node_paths=PackedStringArray("nodes_to_focus")]
 process_mode = 3
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_t83el")
+theme_override_styles/panel = SubResource("StyleBoxFlat_t83el")
 script = ExtResource("2_iaru5")
 nodes_to_focus = [NodePath("PanelContainer/Content/GameMenu/VBoxContainer/QuitButton")]
 sound_hover = ExtResource("3_un7fm")
@@ -62,7 +65,6 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 5
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -117,7 +119,6 @@ layout_mode = 2
 
 [node name="LoadButton" type="Button" parent="PanelContainer/Content/GameMenu/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -131,7 +132,6 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vmpwe")
 
 [node name="BackToMenuButton" type="Button" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 30
