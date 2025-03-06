@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WieldableItemPD" load_steps=6 format=3 uid="uid://ckvdkigvwowm5"]
 
 [ext_resource type="Texture2D" uid="uid://heih3rs4r4gt" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoFlashlight.png" id="1_f43pq"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_h6bnx"]
+[ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_h6bnx"]
 [ext_resource type="Texture2D" uid="uid://4xstvhrf4r2h" path="res://addons/cogito/Assets/Graphics/BatteryIcon.png" id="3_ea2qf"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_f88a5"]
 [ext_resource type="PackedScene" uid="uid://5r8icl42jumy" path="res://addons/cogito/Wieldables/flashlight.tscn" id="5_ty4ey"]

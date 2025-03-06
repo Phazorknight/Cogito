@@ -14,11 +14,13 @@ signal hide_inventory
 ## The hint icon that displays when no other icon is passed.
 @export var default_hint_icon : Texture2D
 
+## PackedScene/Prefab for Object Name as it'd pop up in the HUD
+@export var object_name_component : PackedScene
 ## PackedScene/Prefab for Interaction Prompts
 @export var prompt_component : PackedScene
-
 ## PackedScene/Prefab for Hints
 @export var hint_component : PackedScene
+## 
 
 ## This sets how far away from the player dropped items appear. 0 = items appear on the tip of the player interaction raycast. Negative values mean closer, positive values mean further away that this.
 @export var item_drop_distance_offset : float = -1
@@ -105,13 +107,14 @@ func instantiate_player_attribute_ui():
 		if fixed_stamina_bar and attribute.attribute_name == "stamina":
 			fixed_stamina_bar.initiate_attribute_ui(attribute)
 		else:
-			var spawned_attribute_ui = ui_attribute_prefab.instantiate()
-			ui_attribute_area.add_child(spawned_attribute_ui)
-			if attribute.attribute_name == "health":
-				attribute.damage_taken.connect(_on_player_damage_taken)
-				attribute.death.connect(_on_player_death)
-			
-			spawned_attribute_ui.initiate_attribute_ui(attribute)
+			if attribute.attribute_visibility == 0: # Only instantiates Attributes that have visibility set to HUD
+				var spawned_attribute_ui = ui_attribute_prefab.instantiate()
+				ui_attribute_area.add_child(spawned_attribute_ui)
+				if attribute.attribute_name == "health":
+					attribute.damage_taken.connect(_on_player_damage_taken)
+					attribute.death.connect(_on_player_death)
+				
+				spawned_attribute_ui.initiate_attribute_ui(attribute)
 
 
 func instantiate_player_currency_ui():
@@ -175,16 +178,30 @@ func toggle_inventory_interface(external_inventory_owner = null):
 ### Interaction Prompt UI:
 func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 	delete_interaction_prompts() # clear prompts whenever new ones are received
+	
+	if passed_interaction_nodes.size() < 1:
+		return
+	
+	var interactive_object = passed_interaction_nodes[0].get_parent()
+	var display_name : String = interactive_object.display_name
+	if display_name:
+		var instanced_object_name : UiObjectNameComponent = object_name_component.instantiate()
+		prompt_area.add_child(instanced_object_name)
+		instanced_object_name.set_object_name(display_name)
+	
 	for node in passed_interaction_nodes:
 		if node.is_disabled:
 			continue
+		if node.attribute_check == 2 and !node.check_attribute(player.player_interaction_component):  # Hide if attribute check is set to Hide Interaction and the check doesn't pass
+			continue
+		
 		var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 		prompt_area.add_child(instanced_prompt)
 		instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
 
 
 func delete_interaction_prompts() -> void:
-	for prompt: UiPromptComponent in prompt_area.get_children():
+	for prompt in prompt_area.get_children():
 		prompt.discard_prompt()
 
 
@@ -250,8 +267,7 @@ func _on_player_damage_taken():
 # Function called when player dies.
 func _on_player_death():
 	player._on_pause_movement()
-	$DeathScreen.show()
-	$DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton.grab_focus()
+	$DeathScreen.open_death_screen()
 
 
 # Button appears on player death. TODO change to load latest save?

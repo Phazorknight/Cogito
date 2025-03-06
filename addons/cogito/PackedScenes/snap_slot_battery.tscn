@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://cd2fwmwe8n1no"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_switch.gd" id="1_0xura"]
+[ext_resource type="Script" uid="uid://b4cfmnk8b7nru" path="res://addons/cogito/CogitoObjects/cogito_switch.gd" id="1_0xura"]
 [ext_resource type="AudioStream" uid="uid://dvbd46d7c28ee" path="res://addons/cogito/Assets/Audio/Kenney/bookPlace1.ogg" id="3_k5b51"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres" id="3_kncb8"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_ivwep"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_ivwep"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="5_sj4jl"]
 
 [sub_resource type="Resource" id="Resource_7jg67"]

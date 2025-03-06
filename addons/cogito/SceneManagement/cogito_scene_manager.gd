@@ -262,7 +262,7 @@ func save_player_state(player, slot:String):
 	var local_dict_copy : Dictionary = _current_world_dict.duplicate(true)
 	_player_state.clear_world_dictionary()
 	for entry in local_dict_copy:
-		print("CogitoSceneManager: World Dict: attemtping to save key: ", entry)
+		CogitoGlobals.debug_log(true,"CSM", "World Dict: attemtping to save key: " + str(entry) )
 		_player_state.add_to_world_dictionary(entry, local_dict_copy[entry])
 
 	## Adding a screenshot
@@ -271,7 +271,7 @@ func save_player_state(player, slot:String):
 		_screenshot_to_save.save_png(screenshot_path)
 		_player_state.player_state_screenshot_file = screenshot_path
 	else:
-		CogitoGlobals.debug_log(true,"CSM","CSM: No screenshot to save was passed.")
+		CogitoGlobals.debug_log(true,"CSM","No screenshot to save was passed.")
 	
 	## Getting time of saving
 	_player_state.player_state_savetime = int(Time.get_unix_time_from_system())
@@ -411,13 +411,13 @@ func save_scene_state(_scene_name_to_save, slot: String):
 # Function to transition to another scene via the loading screen.
 func load_next_scene(target : String, connector_name: String, passed_slot: String, load_mode: CogitoSceneLoadMode) -> void:
 	# fade_out()
-	
 	var loading_screen = preload("./LoadingScene.tscn").instantiate()
 	loading_screen.next_scene_path = target
 	loading_screen.connector_name = connector_name
 	loading_screen.passed_slot = passed_slot
 	#loading_screen.attempt_to_load_save = loading_a_save
 	loading_screen.load_mode = load_mode
+	CogitoGlobals.debug_log(true, "CSM", "Loading screen initiated with: next_scene_path=" + target + " | connector = " + connector_name + " | passed_slot = " + passed_slot + " | load_mode = " + str(load_mode) )
 	get_tree().current_scene.add_child(loading_screen)
 
 
@@ -510,11 +510,12 @@ func delete_temp_saves():
 					if dir2.remove(file_name) != OK:
 						CogitoGlobals.debug_log(true,"CSM","Deleting temp dir failed.")
 			file_name = dir2.get_next()
+			
+	CogitoGlobals.debug_log(true,"CSM","Ddelete temp saves complete!")
 
 
 func reset_scene_states():
 	# TODO: CREATE FUNCTION THAT DELETES SCENE STATE FILES.
-	
 	var scene_state_files : Dictionary
 
 	var dir = DirAccess.open(cogito_state_dir)
@@ -542,7 +543,15 @@ func reset_scene_states():
 
 func _exit_tree() -> void:
 	delete_temp_saves()
-	
+
+
+func _save_autosave_state() -> void:
+	_current_scene_name = get_tree().get_current_scene().get_name()
+	_current_scene_path = get_tree().current_scene.scene_file_path
+	var _screenshot_to_save : Image = get_viewport().get_texture().get_image()
+	save_player_state(_current_player_node,CogitoGlobals.cogito_settings.auto_save_name)
+	save_scene_state(_current_scene_name,CogitoGlobals.cogito_settings.auto_save_name)
+	copy_temp_saves_to_slot(CogitoGlobals.cogito_settings.auto_save_name) #Use this to include scene states from other scenes in the save.
 
 
 ### FUNCTIONS TO HANDLE SCREEN FADING

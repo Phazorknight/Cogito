@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AmmoItemPD" load_steps=6 format=3 uid="uid://cupby6uqaftvv"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/AmmoItemPD.gd" id="1_3ov2u"]
+[ext_resource type="Script" uid="uid://6vgnb68cqtwh" path="res://addons/cogito/InventoryPD/CustomResources/AmmoItemPD.gd" id="1_3ov2u"]
 [ext_resource type="Texture2D" uid="uid://cg5knuav7df4o" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_X.png" id="1_54cn8"]
 [ext_resource type="Texture2D" uid="uid://c0h1s1g4g1q56" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoBattery.png" id="1_fjosn"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_lxwux"]

@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ConsumableItemPD" load_steps=7 format=3 uid="uid://geac0jkegsqu"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_r6y86"]
+[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_r6y86"]
 [ext_resource type="Texture2D" uid="uid://ra2d8abru67o" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_StaminaExtension.png" id="2_cliso"]
 [ext_resource type="Texture2D" uid="uid://d0so3oo1yk4kh" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Heart.png" id="2_nd8qm"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="4_6v3ug"]
+[ext_resource type="Script" uid="uid://dr5kneob1wta8" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="4_6v3ug"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="5_j8yea"]
 [ext_resource type="AudioStream" uid="uid://bna1nc66vw053" path="res://addons/cogito/Assets/Audio/Kenney/phaserUp5.ogg" id="6_vslkv"]
 

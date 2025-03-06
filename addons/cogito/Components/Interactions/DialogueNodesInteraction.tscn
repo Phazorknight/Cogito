@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c33aod2r6mxf6"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/DialogueNodesInteraction.gd" id="1_66yfh"]
+[ext_resource type="Script" uid="uid://d0n3oybmdf3cw" path="res://addons/cogito/Components/Interactions/DialogueNodesInteraction.gd" id="1_66yfh"]
 
 [node name="DialogueNodesInteraction" type="Node3D"]
 script = ExtResource("1_66yfh")

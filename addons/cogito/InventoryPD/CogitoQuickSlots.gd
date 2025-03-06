@@ -8,7 +8,7 @@ class_name CogitoQuickslots
 @export var inventory_reference : CogitoInventory:
 	set(passed_inventory):
 		inventory_reference = passed_inventory
-		print("CogitoQuickSlots: Inventory reference (re)set!")
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Inventory reference (re)set!")
 		set_inventory_quickslots(inventory_reference)
 		
 var inventory_is_open : bool
@@ -23,10 +23,10 @@ func _ready() -> void:
 # Using this to either set up new inventory or load quickslot of existing inventory
 func set_inventory_quickslots(passed_inventory: CogitoInventory) -> void:
 	if passed_inventory.assigned_quickslots.is_empty():
-		print("CogitoQuickslots: set_inventory_quickslots: assigned_quickslots were empty.")
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "set_inventory_quickslots: assigned_quickslots were empty.")
 		passed_inventory.assigned_quickslots.resize(quickslot_containers.size())
 	else:
-		print("CogitoQuickslots: set_inventory_quickslots: assigned_quickslots were NOT empty, updating quickslot data...")
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "set_inventory_quickslots: assigned_quickslots were NOT empty, updating quickslot data...")
 		on_inventory_updated(passed_inventory)
 
 

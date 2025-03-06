@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bii8upk4fjr0d"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/SafezoneComponent.gd" id="1_pbi8l"]
+[ext_resource type="Script" uid="uid://bd2g2jssbhq5e" path="res://addons/cogito/Components/SafezoneComponent.gd" id="1_pbi8l"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_omvqv"]
 radius = 3.0

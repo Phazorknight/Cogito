@@ -4,6 +4,9 @@ class_name CogitoStaticInteractable
 
 signal damage_received(damage_value:float)
 
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
+
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var properties : int

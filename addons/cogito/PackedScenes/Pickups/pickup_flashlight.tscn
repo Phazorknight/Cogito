@@ -1,15 +1,16 @@
 [gd_scene load_steps=10 format=3 uid="uid://cwd3g16ep0idw"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_p4i4k"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_p4i4k"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_n5am4"]
 [ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres" id="2_sm7gp"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_0bl2i"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_0bl2i"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="5_fvuvi"]
 
 [sub_resource type="Resource" id="Resource_frpox"]
 script = ExtResource("3_0bl2i")
 inventory_item = ExtResource("2_sm7gp")
 quantity = 1
+origin_index = -1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbp4w"]
 albedo_color = Color(0.0392157, 0.0431373, 0.0745098, 1)

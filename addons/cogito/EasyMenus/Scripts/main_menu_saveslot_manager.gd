@@ -43,4 +43,4 @@ func start_new_game():
 	#if start_game_scene: 
 		#CogitoSceneManager.load_next_scene(start_game_scene, "", "temp", CogitoSceneManager.CogitoSceneLoadMode.RESET) #Load_mode 2 means there's no attempt to load a state.
 	else:
-		print("No start game scene set.")
+		print("ISSUE: No start game scene set.")

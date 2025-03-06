@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://c2t21qbkevaof"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_static_interactable.gd" id="1_vm8jf"]
+[ext_resource type="Script" uid="uid://d041v6palciio" path="res://addons/cogito/CogitoObjects/cogito_static_interactable.gd" id="1_vm8jf"]
 [ext_resource type="Texture2D" uid="uid://bsnnl3lj58bwg" path="res://addons/cogito/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_01.png" id="2_47x5t"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_rotator_tool.gd" id="3_04ruj"]
+[ext_resource type="Script" uid="uid://bxr2onwa06jra" path="res://addons/cogito/Scripts/cogito_rotator_tool.gd" id="3_04ruj"]
 [ext_resource type="Texture2D" uid="uid://c2t5w06mlog62" path="res://addons/cogito/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_02.png" id="4_j2t2d"]
 [ext_resource type="Texture2D" uid="uid://1oslnc23jviv" path="res://addons/cogito/Assets/Graphics/CogitoIconSeparated/COGITO_icon_layer_03.png" id="5_66ruk"]
 [ext_resource type="PackedScene" uid="uid://cct0itdltyppg" path="res://addons/cogito/Components/Interactions/ReadableComponent.tscn" id="6_1xwxr"]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://5r8icl42jumy"]
 
-[ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_flashlight.gd" id="1_pak3j"]
+[ext_resource type="Script" uid="uid://grn3cqd1mx86" path="res://addons/cogito/Wieldables/wieldable_flashlight.gd" id="1_pak3j"]
 [ext_resource type="AudioStream" uid="uid://dsp8iwkwq2rlu" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/switch1.ogg" id="2_dm0bj"]
 [ext_resource type="AnimationLibrary" uid="uid://dtnyvbl2d4lxg" path="res://addons/cogito/Wieldables/Animations/Wieldable_Flashlight.res" id="3_cahdi"]
-[ext_resource type="Script" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_kuso5"]
+[ext_resource type="Script" uid="uid://b361n7ae3ixmn" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_kuso5"]
 
 [sub_resource type="Animation" id="Animation_41nt0"]
 length = 0.001
@@ -34,7 +34,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1250e"]
 _data = {
-"RESET": SubResource("Animation_41nt0")
+&"RESET": SubResource("Animation_41nt0")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbp4w"]

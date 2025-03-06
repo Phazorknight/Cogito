@@ -1,8 +1,8 @@
 [gd_scene load_steps=20 format=4 uid="uid://3okedyf5glns"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_container.gd" id="1_ubt4v"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_2oue8"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_hwyxp"]
+[ext_resource type="Script" uid="uid://djpuxgkv8c6ux" path="res://addons/cogito/CogitoObjects/cogito_container.gd" id="1_ubt4v"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_2oue8"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_hwyxp"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="2_m2db3"]
 [ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres" id="3_x1s5a"]
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="4_hctmv"]
@@ -189,8 +189,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_38epp"]
 _data = {
-"RESET": SubResource("Animation_7euxp"),
-"open": SubResource("Animation_5p7bg")
+&"RESET": SubResource("Animation_7euxp"),
+&"open": SubResource("Animation_5p7bg")
 }
 
 [node name="container" type="StaticBody3D"]

@@ -6,6 +6,7 @@ signal pressed()
 signal pressed_ref(button: CogitoButton) #same as pressed but passes pressed button instance
 signal damage_received(damage_value:float)
 
+@export var display_name : String
 
 @export_group("Cogito Button Settings")
 ## Sound that plays when pressed.

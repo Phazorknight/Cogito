@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=4 uid="uid://dgtjml2t3hdvx"]
 
-[ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_toy_pistol.gd" id="1_o04qd"]
+[ext_resource type="Script" uid="uid://hif5sm107p01" path="res://addons/cogito/Wieldables/wieldable_toy_pistol.gd" id="1_o04qd"]
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://addons/cogito/PackedScenes/projectile_pistol.tscn" id="2_l6tt4"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://addons/cogito/Assets/Audio/Kenney/error_004.ogg" id="3_vdfq8"]
-[ext_resource type="Script" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_1h55s"]
+[ext_resource type="Script" uid="uid://b361n7ae3ixmn" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_1h55s"]
 [ext_resource type="AnimationLibrary" uid="uid://bbnpn3wqqoj7l" path="res://addons/cogito/Wieldables/Animations/Wieldable_ToyPistol.res" id="5_fkf6b"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_r6lnb"]

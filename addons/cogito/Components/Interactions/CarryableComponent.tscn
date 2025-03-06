@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cio4x05ipvslu"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/CarryableComponent.gd" id="1_08ccb"]
+[ext_resource type="Script" uid="uid://dn1stgdkrhlrv" path="res://addons/cogito/Components/Interactions/CarryableComponent.gd" id="1_08ccb"]
 
 [node name="CarryableComponent" type="Node3D"]
 script = ExtResource("1_08ccb")

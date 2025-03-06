@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnauxhdncgngx"]
 
-[ext_resource type="Script" path="res://addons/cogito/PackedScenes/laser_ray.gd" id="1_s4rtm"]
+[ext_resource type="Script" uid="uid://b37muoy83pw0d" path="res://addons/cogito/PackedScenes/laser_ray.gd" id="1_s4rtm"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_lgwhp"]
 transparency = 1

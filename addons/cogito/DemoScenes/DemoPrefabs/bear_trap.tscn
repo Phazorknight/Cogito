@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://dpuhybufkdmcf"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_sittable.gd" id="1_787ou"]
+[ext_resource type="Script" uid="uid://buphmm2nywggj" path="res://addons/cogito/CogitoObjects/cogito_sittable.gd" id="1_787ou"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="2_3gte2"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://addons/cogito/PackedScenes/hazard_zone.tscn" id="2_akbwk"]
 [ext_resource type="AudioStream" uid="uid://cpc4gy6hisxa8" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/chipsCollide4.ogg" id="2_cy8a5"]
@@ -41,8 +41,8 @@ size = Vector3(0.2, 0.2, 0.02)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ykivb"]
 height = 0.172379
 
-[sub_resource type="Animation" id="Animation_utvqt"]
-resource_name = "trap_open"
+[sub_resource type="Animation" id="Animation_eh08n"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -50,10 +50,10 @@ tracks/0/path = NodePath("TrapFrame/TeethLeft:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, -0.834739), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -62,10 +62,10 @@ tracks/1/path = NodePath("TrapFrame/TeethRight:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0.834267), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_hgmjh"]
@@ -95,8 +95,8 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 0, 0.834267)]
 }
 
-[sub_resource type="Animation" id="Animation_eh08n"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_utvqt"]
+resource_name = "trap_open"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -104,10 +104,10 @@ tracks/0/path = NodePath("TrapFrame/TeethLeft:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, -0.834739), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -116,17 +116,17 @@ tracks/1/path = NodePath("TrapFrame/TeethRight:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0.834267), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i0hjo"]
 _data = {
-"RESET": SubResource("Animation_eh08n"),
-"trap_close": SubResource("Animation_hgmjh"),
-"trap_open": SubResource("Animation_utvqt")
+&"RESET": SubResource("Animation_eh08n"),
+&"trap_close": SubResource("Animation_hgmjh"),
+&"trap_open": SubResource("Animation_utvqt")
 }
 
 [node name="BearTrap" type="Node3D"]

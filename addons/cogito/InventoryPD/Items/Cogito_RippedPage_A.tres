@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="CombinableItemPD" load_steps=7 format=3 uid="uid://bg07oo53esmbq"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="1_g52q8"]
+[ext_resource type="Script" uid="uid://cpeysdr8xn5a0" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="1_g52q8"]
 [ext_resource type="Texture2D" uid="uid://by62tsci0s2ei" path="res://addons/cogito/Assets/Graphics/ItemIcons/ripped_page_a.png" id="1_hcvti"]
 [ext_resource type="Resource" uid="uid://do16v80crng52" path="res://addons/cogito/InventoryPD/Items/Cogito_PageCombined.tres" id="2_mlc3l"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_awjgv"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_awjgv"]
 [ext_resource type="AudioStream" uid="uid://bhce82qflwaur" path="res://addons/cogito/Assets/Audio/Kenney/cardPlace1.ogg" id="3_q33gx"]
 
 [sub_resource type="Resource" id="Resource_njshw"]

@@ -24,6 +24,10 @@ signal attribute_reached_zero(attribute_name:String, value_current:float, value_
 ## Use this when you don't want an attribute's current value to not be saved.
 @export var dont_save_current_value : bool = false
 
+enum AttributeVisibility {HUD, Interface, Hidden}
+@export var attribute_visibility : AttributeVisibility = AttributeVisibility.HUD
+
+
 var value_current : float:
 	set(value):
 		var prev_value = value_current
@@ -42,6 +46,9 @@ var value_current : float:
 		if value_current > value_max:
 			value_current = value_max
 
+
+func _ready() -> void:
+	value_current = value_start
 
 # Used when loading/setting an attribute
 func set_attribute(_value_current:float, _value_max:float):

@@ -7,7 +7,8 @@ signal switched(is_on: bool)
 signal damage_received(damage_value:float)
 
 #region Variables
-
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
 ## Sets if object starts as on or off.
 @export var is_on : bool = false
 ## Toggle if switchable can be interacted with repeatedly or not.

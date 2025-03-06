@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://8ui13rrsahy8"]
+
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_hyej5"]
+[ext_resource type="Script" uid="uid://1vo662uhpel1" path="res://addons/cogito/Components/UI/UI_ObjectNameComponent.gd" id="2_hyej5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4wjer"]
+
+[node name="UiObjectNameComponent" type="PanelContainer"]
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_hyej5")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_4wjer")
+script = ExtResource("2_hyej5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme = ExtResource("1_hyej5")
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ObjectNameText" type="RichTextLabel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("1_hyej5")
+theme_type_variation = &"PromptLabel"
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Object Name"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3

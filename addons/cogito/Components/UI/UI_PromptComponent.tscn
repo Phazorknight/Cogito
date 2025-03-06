@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhlrhobg5d4dj"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/UI/UI_PromptComponent.gd" id="1_ij0tw"]
+[ext_resource type="Script" uid="uid://ca1uodkotx3wp" path="res://addons/cogito/Components/UI/UI_PromptComponent.gd" id="1_ij0tw"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="2_bet8p"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="3_k0tgw"]
 

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://s2y3u88qdau3"]
 
 [ext_resource type="Texture2D" uid="uid://h6c4g2wtkb48" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Pickaxe.png" id="1_a7clm"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="1_fay77"]
+[ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="1_fay77"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_5g3cg"]
 [ext_resource type="PackedScene" uid="uid://dxxemvynrimqw" path="res://addons/cogito/Wieldables/pickaxe.tscn" id="4_6fd7l"]
 

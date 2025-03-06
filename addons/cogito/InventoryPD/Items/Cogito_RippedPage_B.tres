@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="CombinableItemPD" load_steps=7 format=3 uid="uid://dyrad3e3t138m"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="1_u1rhg"]
+[ext_resource type="Script" uid="uid://cpeysdr8xn5a0" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="1_u1rhg"]
 [ext_resource type="Texture2D" uid="uid://cyniwf78v5lgs" path="res://addons/cogito/Assets/Graphics/ItemIcons/ripped_page_b.png" id="1_xupyp"]
 [ext_resource type="Resource" uid="uid://do16v80crng52" path="res://addons/cogito/InventoryPD/Items/Cogito_PageCombined.tres" id="2_ts5ml"]
 [ext_resource type="AudioStream" uid="uid://bhce82qflwaur" path="res://addons/cogito/Assets/Audio/Kenney/cardPlace1.ogg" id="3_q1m23"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_veaq2"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_veaq2"]
 
 [sub_resource type="Resource" id="Resource_34jct"]
 script = ExtResource("3_veaq2")

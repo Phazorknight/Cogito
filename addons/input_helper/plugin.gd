@@ -15,6 +15,9 @@ var next_version: String = ""
 func _enter_tree():
 	add_autoload_singleton("InputHelper", "res://addons/input_helper/input_helper.gd")
 
+	# Configure settings
+	InputHelperSettings.prepare()
+
 	# Check for updates on GitHub
 	get_editor_interface().get_base_control().add_child(http_request)
 	http_request.request_completed.connect(_on_http_request_request_completed)

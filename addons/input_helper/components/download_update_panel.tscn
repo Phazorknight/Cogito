@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b7mst0qu7vjk1"]
 
-[ext_resource type="Script" path="res://addons/input_helper/components/download_update_panel.gd" id="1_4tm1k"]
+[ext_resource type="Script" uid="uid://dcff0mowkn6km" path="res://addons/input_helper/components/download_update_panel.gd" id="1_4tm1k"]
 [ext_resource type="Texture2D" uid="uid://ddixs2ish5bi6" path="res://addons/input_helper/assets/update.svg" id="2_j7shv"]
 
 [node name="DownloadUpdatePanel" type="Control"]

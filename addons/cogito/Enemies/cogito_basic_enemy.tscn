@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://dn4e1k7u3suoo"]
 
-[ext_resource type="Script" path="res://addons/cogito/Enemies/cogito_basic_enemy.gd" id="1_0lcvu"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_security_camera.gd" id="2_6jysp"]
+[ext_resource type="Script" uid="uid://cveqmky0mbpl0" path="res://addons/cogito/Enemies/cogito_basic_enemy.gd" id="1_0lcvu"]
+[ext_resource type="Script" uid="uid://661d0lst55nw" path="res://addons/cogito/CogitoObjects/cogito_security_camera.gd" id="2_6jysp"]
 [ext_resource type="AudioStream" uid="uid://cn4rtt8qbtiti" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactPlank_medium_000.ogg" id="2_q5685"]
 [ext_resource type="AudioStream" uid="uid://bd7xfxmsaeu0o" path="res://addons/cogito/Assets/Audio/435666__mirkosukovic__alarm-siren.wav" id="3_7u8yw"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="4_y8n8v"]
@@ -14,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="10_ab7fy"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="11_jlhg4"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="12_3m7c4"]
-[ext_resource type="Script" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="13_mhpd1"]
+[ext_resource type="Script" uid="uid://b1qja1tbw5e1j" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="13_mhpd1"]
 [ext_resource type="AudioStream" uid="uid://dc03jiw2a6y3j" path="res://addons/cogito/DynamicFootstepSystem/FootstepProfiles/generic_footstep_profile.tres" id="14_kpkpk"]
 [ext_resource type="Resource" uid="uid://ca0q2t6w08ubh" path="res://addons/cogito/DynamicFootstepSystem/FootstepMaterialLibrary/sample_footstep_material_library.tres" id="15_vx81w"]
 [ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://addons/cogito/Components/interaction_raycast.tscn" id="17_0qkwj"]

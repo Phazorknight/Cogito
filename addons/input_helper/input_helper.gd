@@ -3,33 +3,62 @@ extends Node
 
 signal device_changed(device: String, device_index: int)
 signal keyboard_input_changed(action: String, input: InputEvent)
-signal joypad_input_changed(action: String, input: InputEventJoypadButton)
+signal joypad_input_changed(action: String, input: InputEvent)
 signal joypad_changed(device_index: int, is_connected: bool)
 
 
 const DEVICE_KEYBOARD = "keyboard"
 const DEVICE_XBOX_CONTROLLER = "xbox"
 const DEVICE_SWITCH_CONTROLLER = "switch"
-const DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER = "switch_left_joycon"
-const DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER = "switch_right_joycon"
 const DEVICE_PLAYSTATION_CONTROLLER = "playstation"
+const DEVICE_STEAMDECK_CONTROLLER = "steamdeck"
 const DEVICE_GENERIC = "generic"
 
-const XBOX_BUTTON_LABELS = ["A", "B", "X", "Y", "Back", "Home", "Menu", "Left Stick", "Right Stick", "Left Shoulder", "Right Shoulder", "Up", "Down", "Left", "Right", "Share"]
-const SWITCH_BUTTON_LABELS = ["B", "A", "Y", "X", "-", "", "+", "Left Stick", "Right Stick", "Left Shoulder", "Right Shoulder", "Up", "Down", "Left", "Right", "Capture"]
-const PLAYSTATION_BUTTON_LABELS = ["Cross", "Circle", "Square", "Triangle", "Select", "PS", "Options", "L3", "R3", "L1", "R1", "Up", "Down", "Left", "Right", "Microphone"]
+const SUB_DEVICE_XBOX_ONE_CONTROLLER = "xbox_one"
+const SUB_DEVICE_XBOX_SERIES_CONTROLLER = "xbox_series"
+const SUB_DEVICE_PLAYSTATION3_CONTROLLER = "playstation3"
+const SUB_DEVICE_PLAYSTATION4_CONTROLLER = "playstation4"
+const SUB_DEVICE_PLAYSTATION5_CONTROLLER = "playstation5"
+const SUB_DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER = "switch_left_joycon"
+const SUB_DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER = "switch_right_joycon"
 
+const XBOX_BUTTON_LABELS = ["A", "B", "X", "Y", "Back", "Guide", "Start", "Left Stick", "Right Stick", "LB", "RB", "Up", "Down", "Left", "Right"]
+const XBOX_ONE_BUTTON_LABELS = ["A", "B", "X", "Y", "View", "Guide", "Menu", "Left Stick", "Right Stick", "LB", "RB", "Up", "Down", "Left", "Right"]
+const XBOX_SERIES_BUTTON_LABELS = ["A", "B", "X", "Y", "View", "Guide", "Menu", "Left Stick", "Right Stick", "LB", "RB", "Up", "Down", "Left", "Right", "Share"]
+# Note: share and home buttons are not recognized
+const SWITCH_BUTTON_LABELS = ["A", "B", "X", "Y", "Minus", "", "Plus", "Left Stick", "Right Stick", "SL", "SR", "Up", "Down", "Left", "Right"]
+# Mapping for left and right joypad connected together (extended gamepad)
+# Left Stick is Axis 0 and 1
+# Right Stick is Axis 2 and 3
+# ZL and ZR are Axis 4 and 5
+const SWITCH_EXTENDED_GAMEPAD_BUTTON_LABELS = ["A", "B", "X", "Y", "Minus", "", "Plus", "Left Stick", "Right Stick", "L", "R", "Up", "Down", "Left", "Right"]
+const PLAYSTATION_3_4_BUTTON_LABELS = ["Cross", "Circle", "Square", "Triangle", "Share", "PS", "Options", "L3", "R3", "L1", "R1", "Up", "Down", "Left", "Right"]
+# Note: Microphone does not work on PC / touchpad is not recognized
+const PLAYSTATION_5_BUTTON_LABELS = ["Cross", "Circle", "Square", "Triangle", "Create", "PS", "Options", "L3", "R3", "L1", "R1", "Up", "Down", "Left", "Right", "Microphone"]
+const STEAMDECK_BUTTON_LABELS = ["A", "B", "X", "Y", "View", "?", "Options", "Left Stick", "Right Stick", "L1", "R1", "Up", "Down", "Left", "Right"]
+
+const SERIAL_VERSION = 1
+
+## The deadzone to ignore for joypad motion
+var deadzone: float = 0.5
+## The mouse distance to ignore before movement is assumed
+var mouse_motion_threshold: int = 100
+## The last known joypad device name (or "" if no joypad detected)
+var last_known_joypad_device: String = get_simplified_device_name(Input.get_joy_name(0))
+## The last known joypad index
+var last_known_joypad_index: int = 0 if Input.get_connected_joypads().size() > 0 else -1
+
+## Used internally
+var device_last_changed_at: int = 0
 
 @onready var device: String = guess_device_name()
 @onready var device_index: int = 0 if has_joypad() else -1
 
-var deadzone: float = 0.5
-var mouse_motion_threshold: int = 100
-var device_last_changed_at: int = 0
-
 
 func _ready() -> void:
-	Engine.register_singleton("InputHelper", self)
+	if not Engine.has_singleton("InputHelper"):
+		Engine.register_singleton("InputHelper", self)
+
 	Input.joy_connection_changed.connect(func(device_index, is_connected): joypad_changed.emit(device_index, is_connected))
 
 
@@ -48,7 +77,9 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventJoypadButton \
 		or (event is InputEventJoypadMotion and abs(event.axis_value) > deadzone):
 		next_device = get_simplified_device_name(Input.get_joy_name(event.device))
+		last_known_joypad_device = next_device
 		next_device_index = event.device
+		last_known_joypad_index = next_device_index
 
 	# Debounce changes for 1 second because some joypads register twice in Windows for some reason
 	var not_changed_in_last_second = Engine.get_frames_drawn() - device_last_changed_at > Engine.get_frames_per_second()
@@ -60,26 +91,50 @@ func _input(event: InputEvent) -> void:
 		device_changed.emit(device, device_index)
 
 
-# Convert a Godot device identifier to a simplified string
+## Get the device name for an event
+func get_device_from_event(event: InputEvent) -> String:
+	if event is InputEventKey or event is InputEventMouseButton or event is InputEventMouseMotion:
+		return DEVICE_KEYBOARD
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		return get_simplified_device_name(Input.get_joy_name(event.device))
+	else:
+		return DEVICE_GENERIC
+
+
+## Get the device name for an event
+func get_device_index_from_event(event: InputEvent) -> int:
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		return event.device
+	else:
+		return -1
+
+
+## Convert a Godot device identifier to a simplified string
 func get_simplified_device_name(raw_name: String) -> String:
-	match raw_name:
-		"XInput Gamepad", "Xbox Series Controller", "Xbox 360 Controller", \
-		"Xbox One Controller":
-			return DEVICE_XBOX_CONTROLLER
+	var keywords: Dictionary = {
+		SUB_DEVICE_XBOX_ONE_CONTROLLER: ["Xbox One Controller"],
+		SUB_DEVICE_XBOX_SERIES_CONTROLLER: ["Xbox Series Controller", "Xbox Wireless Controller"],
+		DEVICE_XBOX_CONTROLLER: ["XInput", "XBox"],
+		SUB_DEVICE_PLAYSTATION3_CONTROLLER: ["PS3"],
+		SUB_DEVICE_PLAYSTATION4_CONTROLLER:["Nacon Revolution Unlimited Pro Controller", "PS4", "DUALSHOCK 4"],
+		SUB_DEVICE_PLAYSTATION5_CONTROLLER:["Sony DualSense", "PS5", "DualSense Wireless Controller"],
+		DEVICE_STEAMDECK_CONTROLLER: ["Steam"],
+		DEVICE_SWITCH_CONTROLLER: ["Switch", "Joy-Con (L/R)", "PowerA Core Controller"],
+		SUB_DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER: ["Joy-Con (L)"],
+		SUB_DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER: ["joy-Con (R)"],
+	} if InputHelperSettings.get_setting(InputHelperSettings.USE_GRANULAR_DEVICE_IDENTIFIERS, false) else {
+		DEVICE_XBOX_CONTROLLER: ["XBox", "XInput"],
+		DEVICE_PLAYSTATION_CONTROLLER: ["Sony", "PS3", "PS5", "PS4", "DUALSHOCK 4", "DualSense", "Nacon Revolution Unlimited Pro Controller"],
+		DEVICE_STEAMDECK_CONTROLLER: ["Steam"],
+		DEVICE_SWITCH_CONTROLLER: ["Switch", "Joy-Con", "PowerA Core Controller"],
+	}
 
-		"Sony DualSense", "PS5 Controller", "PS4 Controller", \
-		"Nacon Revolution Unlimited Pro Controller":
-			return DEVICE_PLAYSTATION_CONTROLLER
+	for device_key in keywords:
+		for keyword in keywords[device_key]:
+			if keyword.to_lower() in raw_name.to_lower():
+				return device_key
 
-		"Switch":
-			return DEVICE_SWITCH_CONTROLLER
-		"Joy-Con (L)":
-			return DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER
-		"Joy-Con (R)":
-			return DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER
-
-		_:
-			return DEVICE_GENERIC
+	return DEVICE_GENERIC
 
 
 ## Check if there is a connected joypad
@@ -95,7 +150,7 @@ func guess_device_name() -> String:
 		return DEVICE_KEYBOARD
 
 
-### Mapping
+#region Mapping
 
 
 func reset_all_actions() -> void:
@@ -139,8 +194,8 @@ func get_label_for_input(input: InputEvent) -> String:
 	if input == null: return ""
 
 	if input is InputEventKey:
-		if input.physical_keycode > 0:
-			var keycode := DisplayServer.keyboard_get_keycode_from_physical(input.physical_keycode)
+		if input.physical_keycode > 0 :
+			var keycode: Key = DisplayServer.keyboard_get_keycode_from_physical(input.physical_keycode) if DisplayServer.keyboard_get_current_layout() > -1 else input.physical_keycode
 			return OS.get_keycode_string(keycode)
 		elif input.keycode > 0:
 			return OS.get_keycode_string(input.keycode)
@@ -158,13 +213,23 @@ func get_label_for_input(input: InputEvent) -> String:
 		return "Mouse Button %d" % input.button_index
 
 	elif input is InputEventJoypadButton:
-		match device:
+		match last_known_joypad_device:
 			DEVICE_XBOX_CONTROLLER, DEVICE_GENERIC:
 				return "%s Button" % XBOX_BUTTON_LABELS[input.button_index]
-			DEVICE_SWITCH_CONTROLLER, DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER, DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER:
+			SUB_DEVICE_XBOX_ONE_CONTROLLER:
+				return "%s Button" % XBOX_ONE_BUTTON_LABELS[input.button_index]
+			SUB_DEVICE_XBOX_SERIES_CONTROLLER:
+				return "%s Button" % XBOX_SERIES_BUTTON_LABELS[input.button_index]
+			SUB_DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER, SUB_DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER:
 				return "%s Button" % SWITCH_BUTTON_LABELS[input.button_index]
-			DEVICE_PLAYSTATION_CONTROLLER:
-				return "%s Button" % PLAYSTATION_BUTTON_LABELS[input.button_index]
+			DEVICE_SWITCH_CONTROLLER:
+				return "%s Button" % SWITCH_EXTENDED_GAMEPAD_BUTTON_LABELS[input.button_index]
+			SUB_DEVICE_PLAYSTATION3_CONTROLLER, SUB_DEVICE_PLAYSTATION4_CONTROLLER:
+				return "%s Button" % PLAYSTATION_3_4_BUTTON_LABELS[input.button_index]
+			SUB_DEVICE_PLAYSTATION5_CONTROLLER:
+				return "%s Button" % PLAYSTATION_5_BUTTON_LABELS[input.button_index]
+			DEVICE_STEAMDECK_CONTROLLER:
+				return "%s Button" % STEAMDECK_BUTTON_LABELS[input.button_index]
 
 	elif input is InputEventJoypadMotion:
 		var motion: InputEventJoypadMotion = input as InputEventJoypadMotion
@@ -193,12 +258,8 @@ func serialize_inputs_for_actions(actions: PackedStringArray = []) -> String:
 
 	var map: Dictionary = {}
 	for action in actions:
+		var action_inputs: PackedStringArray = []
 		var inputs: Array[InputEvent] = InputMap.action_get_events(action)
-		var action_map: Dictionary = {
-			"keyboard": [],
-			"mouse": [],
-			"joypad": []
-		}
 		for input in inputs:
 			if input is InputEventKey:
 				var s: String = get_label_for_input(input)
@@ -213,23 +274,87 @@ func serialize_inputs_for_actions(actions: PackedStringArray = []) -> String:
 					modifiers.append("meta")
 				if not modifiers.is_empty():
 					s += "|" + ",".join(modifiers)
-				action_map["keyboard"].append(s)
+				action_inputs.append("key:%s" % s)
 			elif input is InputEventMouseButton:
-				action_map["mouse"].append(input.button_index)
+				action_inputs.append("mouse:%d" % input.button_index)
 			elif input is InputEventJoypadButton:
-				action_map["joypad"].append(input.button_index)
+				action_inputs.append("joypad:%d" % input.button_index)
 			elif input is InputEventJoypadMotion:
-				action_map["joypad"].append("%d|%f" % [input.axis, input.axis_value])
+				action_inputs.append("joypad:%d|%f" % [input.axis, input.axis_value])
 
-		map[action] = action_map
+		map[action] = ";".join(action_inputs)
 
-	return JSON.stringify(map)
+	return JSON.stringify({
+		version = SERIAL_VERSION,
+		map = map
+	})
 
 
-## Load inputs from a serialized string.
 func deserialize_inputs_for_actions(string: String) -> void:
-	var map: Dictionary = JSON.parse_string(string)
+	var data: Dictionary = JSON.parse_string(string)
 
+	# Use legacy deserialization
+	if not data.has("version"):
+		_deprecated_deserialize_inputs_for_actions(string)
+		return
+
+	# Version 1
+	for action in data.map.keys():
+		InputMap.action_erase_events(action)
+		var action_inputs: PackedStringArray = data.map[action].split(";")
+		for action_input in action_inputs:
+			var bits: PackedStringArray = action_input.split(":")
+
+			# Ignore any empty actions
+			if bits.size() < 2: continue
+
+			var input_type: String = bits[0]
+			var input_details: String = bits[1]
+
+			match input_type:
+				"key":
+					var keyboard_input = InputEventKey.new()
+					if "|" in input_details:
+						var detail_bits = input_details.split("|")
+						keyboard_input.keycode = OS.find_keycode_from_string(detail_bits[0])
+						detail_bits = detail_bits[1].split(",")
+						if detail_bits.has("alt"):
+							keyboard_input.alt_pressed = true
+						if detail_bits.has("shift"):
+							keyboard_input.shift_pressed = true
+						if detail_bits.has("ctrl"):
+							keyboard_input.ctrl_pressed = true
+						if detail_bits.has("meta"):
+							keyboard_input.meta_pressed = true
+					else:
+						keyboard_input.keycode = OS.find_keycode_from_string(input_details)
+					InputMap.action_add_event(action, keyboard_input)
+					keyboard_input_changed.emit(action, keyboard_input)
+
+				"mouse":
+					var mouse_input = InputEventMouseButton.new()
+					mouse_input.button_index = int(input_details)
+					InputMap.action_add_event(action, mouse_input)
+					keyboard_input_changed.emit(action, mouse_input)
+
+				"joypad":
+					if "|" in str(input_details):
+						var joypad_motion_input = InputEventJoypadMotion.new()
+						var joypad_bits = input_details.split("|")
+						joypad_motion_input.axis = int(joypad_bits[0])
+						joypad_motion_input.axis_value = float(joypad_bits[1])
+						InputMap.action_add_event(action, joypad_motion_input)
+						joypad_input_changed.emit(action, joypad_motion_input)
+					else:
+						var joypad_input = InputEventJoypadButton.new()
+						joypad_input.button_index = int(input_details)
+						InputMap.action_add_event(action, joypad_input)
+						joypad_input_changed.emit(action, joypad_input)
+
+
+# Load inputs from a serialized string. [deprecated]
+func _deprecated_deserialize_inputs_for_actions(string: String) -> void:
+	var map: Dictionary = JSON.parse_string(string)
 	for action in map.keys():
 		InputMap.action_erase_events(action)
 
@@ -269,7 +394,9 @@ func deserialize_inputs_for_actions(string: String) -> void:
 				InputMap.action_add_event(action, joypad_input)
 
 
-### Keyboard/mouse input
+#endregion
+
+#region Keyboard/mouse input
 
 
 ## Get all of the keys/mouse buttons used for an action.
@@ -311,7 +438,9 @@ func _update_keyboard_input_for_action(action: String, input: InputEvent, swap_i
 	return _update_input_for_action(action, input, swap_if_taken, replacing_input, is_valid_keyboard_event, keyboard_input_changed)
 
 
-### Joypad input
+#endregion
+
+#region Joypad input
 
 
 ## Get all buttons used for an action
@@ -403,7 +532,9 @@ func _update_input_for_action(action: String, input: InputEvent, swap_if_taken: 
 	return OK
 
 
-### Rumbling
+#endregion
+
+#region Rumbling
 
 
 func rumble_small(target_device: int = 0) -> void:
@@ -432,3 +563,6 @@ func start_rumble_large(target_device: int = 0) -> void:
 
 func stop_rumble(target_device: int = 0) -> void:
 	Input.stop_joy_vibration(target_device)
+
+
+#endregion

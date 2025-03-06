@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dqlue11vwpc5y"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_security_camera.gd" id="1_c4ulv"]
+[ext_resource type="Script" uid="uid://661d0lst55nw" path="res://addons/cogito/CogitoObjects/cogito_security_camera.gd" id="1_c4ulv"]
 [ext_resource type="AudioStream" uid="uid://bd7xfxmsaeu0o" path="res://addons/cogito/Assets/Audio/435666__mirkosukovic__alarm-siren.wav" id="2_41o63"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ey5nf"]

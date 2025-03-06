@@ -1,28 +1,30 @@
-[gd_scene load_steps=30 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=31 format=3 uid="uid://0c32kepv0ahx"]
 
-[ext_resource type="Script" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
+[ext_resource type="Script" uid="uid://dc3bukoacyq60" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
+[ext_resource type="PackedScene" uid="uid://8ui13rrsahy8" path="res://addons/cogito/Components/UI/UI_ObjectNameComponent.tscn" id="3_6j0b3"]
 [ext_resource type="Texture2D" uid="uid://cqlqo6ga2f71s" path="res://addons/cogito/Assets/Graphics/Crosshair.png" id="3_ahile"]
 [ext_resource type="PackedScene" uid="uid://dtdjlu4dtm6wh" path="res://addons/cogito/InventoryPD/UiScenes/InventoryUI.tscn" id="3_krf2d"]
 [ext_resource type="Texture2D" uid="uid://b45endup5sujv" path="res://addons/cogito/Assets/Textures/CameraDamageVignette.png" id="3_lb6l4"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
+[ext_resource type="Script" uid="uid://y8g8ja6bydr0" path="res://addons/cogito/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
 [ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="3_o56n0"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://addons/cogito/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://addons/cogito/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
 [ext_resource type="PackedScene" uid="uid://c3ti1cb2o1a11" path="res://addons/cogito/Components/UI/UI_CurrencyComponent.tscn" id="6_kmqyf"]
-[ext_resource type="Script" path="res://addons/cogito/Components/UI/Ui_StaminaAttribute.gd" id="7_gti6b"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/ui_wieldable_hud.gd" id="8_2nbvg"]
+[ext_resource type="Script" uid="uid://bc82t4m5e83s5" path="res://addons/cogito/Components/UI/Ui_StaminaAttribute.gd" id="7_gti6b"]
+[ext_resource type="Script" uid="uid://bjvjod3kt0kyr" path="res://addons/cogito/Scripts/ui_wieldable_hud.gd" id="8_2nbvg"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
 [ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="10_bnneb"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="12_jgxar"]
-[ext_resource type="Script" path="res://addons/cogito/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
+[ext_resource type="Script" uid="uid://by3n6q1edxunf" path="res://addons/cogito/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://addons/cogito/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://addons/cogito/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
 [ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://addons/cogito/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CogitoQuickSlots.gd" id="20_xe82q"]
+[ext_resource type="Script" uid="uid://b7ro3ulh4hp5j" path="res://addons/cogito/InventoryPD/CogitoQuickSlots.gd" id="20_xe82q"]
 [ext_resource type="PackedScene" uid="uid://cd3f50eloxr7h" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.tscn" id="21_q2hxa"]
+[ext_resource type="PackedScene" uid="uid://dygtu0wos4337" path="res://addons/cogito/PackedScenes/death_screen.tscn" id="23_4avie"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
 resource_local_to_scene = true
@@ -44,9 +46,6 @@ content_margin_right = 0.0
 content_margin_bottom = 0.0
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.784314)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbke8"]
-bg_color = Color(0, 0, 0, 1)
-
 [node name="Player_HUD" type="Control" node_paths=PackedStringArray("fixed_stamina_bar")]
 layout_mode = 3
 anchors_preset = 15
@@ -56,6 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wdkf")
 default_hint_icon = ExtResource("3_o56n0")
+object_name_component = ExtResource("3_6j0b3")
 prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
 ui_attribute_prefab = ExtResource("20_lscav")
@@ -522,57 +522,8 @@ input_action = "quickslot_4"
 [node name="DynamicInputIcon" parent="InventoryInterface/QuickSlots/CogitoQuickslotContainer4/MarginContainerInputIcon" index="0"]
 position = Vector2(32, 0)
 
-[node name="DeathScreen" type="Control" parent="."]
-visible = false
+[node name="DeathScreen" parent="." instance=ExtResource("23_4avie")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="DeathScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_j6s1a")
-theme_override_styles/panel = SubResource("StyleBoxFlat_rbke8")
-
-[node name="BoxContainer" type="BoxContainer" parent="DeathScreen/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -49.5
-offset_right = 175.0
-offset_bottom = 49.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="DeathScreen/Panel/BoxContainer"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="DeathScreen/Panel/BoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="DeathScreen/Panel/BoxContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "You died."
-horizontal_alignment = 1
-
-[node name="RestartButton" type="Button" parent="DeathScreen/Panel/BoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(350, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 30
-text = "Restart"
 
 [node name="HintArea" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -647,7 +598,6 @@ metadata/_tab_index = 2
 [connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer2" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
 [connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer3" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
 [connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer4" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
-[connection signal="pressed" from="DeathScreen/Panel/BoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 
 [editable path="FixedStaminaBar"]
 [editable path="InventoryInterface/QuickSlots/CogitoQuickslotContainer1"]

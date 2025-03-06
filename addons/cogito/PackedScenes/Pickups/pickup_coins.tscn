@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://tkwv6b5arrw2"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_0tix8"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_0tix8"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_028c2"]
 [ext_resource type="Resource" uid="uid://d7r4y7pbhify" path="res://addons/cogito/InventoryPD/Items/Cogito_Coins.tres" id="3_q3la1"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_wdnhm"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_wdnhm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7vn6a"]
 albedo_color = Color(0.823529, 0.576471, 0.0862745, 1)
@@ -20,7 +20,7 @@ rings = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_k343l"]
 size = Vector3(0.205469, 0.0422119, 0.170801)
 
-[sub_resource type="Resource" id="Resource_iq4sy"]
+[sub_resource type="Resource" id="Resource_50ggn"]
 resource_local_to_scene = true
 script = ExtResource("4_wdnhm")
 inventory_item = ExtResource("3_q3la1")
@@ -59,4 +59,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0501884, 0.0155918, 0.0245
 shape = SubResource("BoxShape3D_k343l")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_028c2")]
-slot_data = SubResource("Resource_iq4sy")
+slot_data = SubResource("Resource_50ggn")
+display_item_name = true

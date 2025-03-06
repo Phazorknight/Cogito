@@ -6,6 +6,8 @@ signal damage_received(damage_value:float)
 signal object_exits_tree()
 
 @export var cogito_name : String = self.name
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
 
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null

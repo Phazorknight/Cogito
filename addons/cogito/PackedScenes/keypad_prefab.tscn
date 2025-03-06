@@ -1,13 +1,13 @@
 [gd_scene load_steps=51 format=3 uid="uid://i4rqcx7lyrfd"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_keypad.gd" id="1_iwk1o"]
+[ext_resource type="Script" uid="uid://bsaikupw14x0m" path="res://addons/cogito/CogitoObjects/cogito_keypad.gd" id="1_iwk1o"]
 [ext_resource type="AudioStream" uid="uid://cn3yrske0mwlf" path="res://addons/cogito/Assets/Audio/Kenney/jingles-pizzicato_14.ogg" id="2_5i70k"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="2_hg75d"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="3_aoa7n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="3_u3a7f"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="4_m3tkc"]
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="5_24u0e"]
-[ext_resource type="Script" path="res://addons/cogito/Theme/CogitoUiButton.gd" id="6_ebwkh"]
+[ext_resource type="Script" uid="uid://6na3wwq1xpex" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="5_24u0e"]
+[ext_resource type="Script" uid="uid://bg6tmerhavxb3" path="res://addons/cogito/Theme/CogitoUiButton.gd" id="6_ebwkh"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_14uds"]
 size = Vector3(0.2, 0.02, 0.3)

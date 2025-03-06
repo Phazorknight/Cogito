@@ -18,7 +18,7 @@ func _ready() -> void:
 		if !get_parent().damage_received.is_connected(damage):
 			get_parent().damage_received.connect(damage)
 	else:
-		print("HitboxComponent: Parent ", get_parent().name, " is missing a damage_received() signal.")
+		CogitoGlobals.debug_log(true, "HitboxComponent", "Parent " + get_parent().name + " is missing a damage_received() signal.")
 
 
 func damage(damage_amount: float, _hit_direction:= Vector3.ZERO, _hit_position:= Vector3.ZERO):
@@ -43,4 +43,3 @@ func damage(damage_amount: float, _hit_direction:= Vector3.ZERO, _hit_position:=
 			parent.apply_impulse(_hit_direction * damage_amount * applied_force_multipler, _hit_position)
 		if parent is CharacterBody3D:
 			parent.apply_knockback(_hit_direction *damage_amount * applied_force_multipler)
-

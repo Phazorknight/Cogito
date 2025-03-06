@@ -5,6 +5,8 @@ signal object_state_updated(interaction_text : String)
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
 
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
 ## Define the axis the object will rotate.
 @export var rotation_axis : Vector3 = Vector3(1,0,0)
 ## Rotation speed in radians per second.

@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://debhuwc8f5plk"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_kyr7l"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_kyr7l"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_iscjy"]
 [ext_resource type="Resource" uid="uid://do16v80crng52" path="res://addons/cogito/InventoryPD/Items/Cogito_PageCombined.tres" id="3_jbwjg"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_aufws"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_aufws"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ewyvw"]
 margin = 0.02
@@ -14,6 +14,7 @@ resource_local_to_scene = true
 script = ExtResource("4_aufws")
 inventory_item = ExtResource("3_jbwjg")
 quantity = 1
+origin_index = -1
 
 [node name="PageCombined" type="RigidBody3D"]
 collision_layer = 3

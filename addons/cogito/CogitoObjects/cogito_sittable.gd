@@ -7,6 +7,8 @@ signal player_sit_down()
 signal player_stand_up()
 
 #region Variables
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
 ##
 @export var is_sat_on_start: bool = false
 ##Is this Sittable static or a Physics object?
@@ -128,14 +130,14 @@ func _ready():
 	#find sit position node
 	sit_position_node = get_node_or_null(sit_position_node_path)
 	if not sit_position_node:
-		print("Sit position node not found. Ensure the path is correct.")
+		CogitoGlobals.debug_log(true, "CogitoSittable", "Sit position node not found. Ensure the path is correct.")
 	else:
 		displace_sit_marker()
 		
 	# find the look marker node
 	look_marker_node = get_node_or_null(look_marker_node_path)
 	if not look_marker_node:
-		CogitoGlobals.debug_log(true, "cogito_sittable", "Look marker node not found.")	
+		CogitoGlobals.debug_log(true, "CogitoSittable", "Look marker node not found.")	
 	
 	#find optional animation player node
 	animation_player = get_node_or_null(animation_player_node_path)

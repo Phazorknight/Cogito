@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://djfg6ea5cbhyv"]
 
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="1_qb6jw"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_rbcr3"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_rbcr3"]
 [ext_resource type="Resource" uid="uid://1sito351mi08" path="res://addons/cogito/InventoryPD/Items/Cogito_DiamondKey_B.tres" id="2_8nfob"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_cfmdv"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_cfmdv"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="3_mehd7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtyi5"]
@@ -21,6 +21,7 @@ resource_local_to_scene = true
 script = ExtResource("3_cfmdv")
 inventory_item = ExtResource("2_8nfob")
 quantity = 1
+origin_index = -1
 
 [node name="DiamondKeyB" type="RigidBody3D"]
 collision_layer = 3

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cct0itdltyppg"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/ReadableComponent.gd" id="1_6uwtb"]
+[ext_resource type="Script" uid="uid://dtfpkk0rmf4sn" path="res://addons/cogito/Components/Interactions/ReadableComponent.gd" id="1_6uwtb"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="2_kxsxn"]
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="3_aj2s3"]
+[ext_resource type="Script" uid="uid://6na3wwq1xpex" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="3_aj2s3"]
 
 [node name="ReadableComponent" type="Node3D"]
 script = ExtResource("1_6uwtb")

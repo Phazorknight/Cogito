@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://d1tj50tt4hw2j"]
 
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/loading_screen.gd" id="1_eqjm8"]
+[ext_resource type="Script" uid="uid://2vc4bp10nifi" path="res://addons/cogito/SceneManagement/loading_screen.gd" id="1_eqjm8"]
 
 [sub_resource type="Gradient" id="Gradient_mxr7g"]
 offsets = PackedFloat32Array(0, 0.995283)
@@ -31,7 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_lmuc0")
 
-[node name="Label" type="Label" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -39,9 +39,17 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -36.5
-offset_top = -11.5
+offset_top = -25.0
 offset_right = 36.5
-offset_bottom = 11.5
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
 text = "LOADING"
+
+[node name="LabelProgress" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "0%"
+horizontal_alignment = 1

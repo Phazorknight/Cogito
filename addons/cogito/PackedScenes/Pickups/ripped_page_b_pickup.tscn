@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://uoru03g0vtp"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_okgq0"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_okgq0"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_l1smi"]
 [ext_resource type="Resource" uid="uid://dyrad3e3t138m" path="res://addons/cogito/InventoryPD/Items/Cogito_RippedPage_B.tres" id="3_ics4n"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_md7ey"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_md7ey"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3ak5i"]
 margin = 0.01
@@ -13,6 +13,7 @@ size = Vector3(0.125, 0.25, 0.045)
 script = ExtResource("3_md7ey")
 inventory_item = ExtResource("3_ics4n")
 quantity = 1
+origin_index = -1
 
 [node name="RippedPageB_pickup" type="RigidBody3D"]
 collision_layer = 3

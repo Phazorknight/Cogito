@@ -101,6 +101,8 @@ func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
 	
 	var keyboard_input = InputHelper.get_keyboard_input_for_action(action_name)
 	if keyboard_input is InputEventKey:
+		if keycode_to_frame_index(OS.get_keycode_string(keyboard_input.keycode)) == -1:
+			return
 		frame = keycode_to_frame_index(OS.get_keycode_string(keyboard_input.keycode))
 	elif keyboard_input is InputEventMouseButton:
 		if keyboard_input.get_button_index() == MOUSE_BUTTON_RIGHT:
@@ -118,7 +120,7 @@ func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
 
 func _is_steam_deck() -> bool:
 	if RenderingServer.get_rendering_device() == null:
-		print("No rendering device detected.")
+		print("DynamicInputIcon: ISSUE: No rendering device detected.")
 		return false
 	if RenderingServer.get_rendering_device().get_device_name().contains("RADV VANGOGH") \
 	or OS.get_processor_name().contains("AMD CUSTOM APU 0405"):

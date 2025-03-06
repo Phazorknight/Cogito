@@ -29,7 +29,7 @@ func grab_player_stamina_attribute() -> CogitoAttribute:
 	if CogitoSceneManager._current_player_node.stamina_attribute:
 		return CogitoSceneManager._current_player_node.stamina_attribute
 	else:
-		print("Wieldable: No player stamina attribute found.")
+		CogitoGlobals.debug_log(true, "CogitoWieldable", "No player stamina attribute found.")
 		return null
 
 
@@ -45,7 +45,7 @@ func action_primary(_passed_item_reference:InventoryItemPD, _is_released: bool):
 	# Check for stamina consumption
 	if uses_stamina:
 		if player_stamina.value_current < stamina_cost:
-			print("Wieldable: Not enough stamina!")
+			CogitoGlobals.debug_log(true, "CogitoWieldable", "Not enough stamina!")
 			return
 		else:
 			player_stamina.subtract(stamina_cost)
@@ -78,4 +78,3 @@ func _on_body_entered(collider):
 				bullet_direction = (hit_position - hitbox_origin).normalized()
 		
 		collider.damage_received.emit(item_reference.wieldable_damage, bullet_direction, hit_position)
-

@@ -12,20 +12,20 @@ config_version=5
 
 config/name="Cogito"
 run/main_scene="res://addons/cogito/DemoScenes/COGITO_0_MainMenu.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 run/max_fps=120
-boot_splash/image="res://addons/cogito/COGITO_Card_2025.png"
 boot_splash/fullsize=false
+boot_splash/image="res://addons/cogito/COGITO_Card_2025.png"
 config/icon="res://addons/cogito/COGITO_icon.png"
 
 [autoload]
 
-InputHelper="*res://addons/input_helper/input_helper.gd"
 Audio="*res://addons/quick_audio/./Audio.gd"
 CogitoGlobals="*res://addons/cogito/cogito_globals.gd"
 CogitoSceneManager="*res://addons/cogito/SceneManagement/cogito_scene_manager.gd"
 CogitoQuestManager="*res://addons/cogito/QuestSystem/cogito_quest_manager.gd"
 MenuTemplateManager="*res://addons/cogito/EasyMenus/Nodes/menu_template_manager.tscn"
+InputHelper="*res://addons/input_helper/input_helper.gd"
 
 [display]
 
@@ -217,6 +217,10 @@ locale/translations_pot_files=PackedStringArray("res://addons/cogito/DemoScenes/
 
 3d_physics/layer_1="Environment"
 3d_physics/layer_2="Interactables"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
 
 [rendering]
 

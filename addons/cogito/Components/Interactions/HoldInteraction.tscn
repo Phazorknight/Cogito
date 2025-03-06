@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://poem1yjtmt3n"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/HoldInteraction.gd" id="1_lawwc"]
+[ext_resource type="Script" uid="uid://c5kir64dib2k1" path="res://addons/cogito/Components/Interactions/HoldInteraction.gd" id="1_lawwc"]
 [ext_resource type="PackedScene" uid="uid://c62m84iy6lkk5" path="res://addons/cogito/Components/UI/UI_ProgressWheel.tscn" id="2_win7c"]
 
 [node name="HoldInteraction" type="Node3D"]

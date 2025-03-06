@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://1qmp8w30u0jy"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/BackpackComponent.gd" id="1_pwtt8"]
+[ext_resource type="Script" uid="uid://by4sfndbqdqr3" path="res://addons/cogito/Components/Interactions/BackpackComponent.gd" id="1_pwtt8"]
 [ext_resource type="AudioStream" uid="uid://bhce82qflwaur" path="res://addons/cogito/Assets/Audio/Kenney/cardPlace1.ogg" id="2_7ni17"]
 
 [node name="BackpackComponent" type="Node3D"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dtdjlu4dtm6wh"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_1cfb6"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/InventoryUI.gd" id="1_qgor6"]
+[ext_resource type="Script" uid="uid://deuyihydowo2v" path="res://addons/cogito/InventoryPD/UiScenes/InventoryUI.gd" id="1_qgor6"]
 
 [node name="InventoryUI" type="PanelContainer"]
 offset_right = 40.0

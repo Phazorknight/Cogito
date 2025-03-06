@@ -1,11 +1,11 @@
 [gd_scene load_steps=26 format=4 uid="uid://bb8pm2nk8hwon"]
 
-[ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_laser_rifle.gd" id="1_2rut3"]
+[ext_resource type="Script" uid="uid://dvqmxegk58dhe" path="res://addons/cogito/Wieldables/wieldable_laser_rifle.gd" id="1_2rut3"]
 [ext_resource type="AudioStream" uid="uid://clsajk36s7luk" path="res://addons/cogito/Assets/Audio/Kenney/error_004.ogg" id="2_f7ale"]
 [ext_resource type="PackedScene" uid="uid://dnauxhdncgngx" path="res://addons/cogito/PackedScenes/laser_ray.tscn" id="2_ic084"]
 [ext_resource type="PackedScene" uid="uid://bc2hryr610vgo" path="res://addons/cogito/PackedScenes/simple_particle_puff.tscn" id="3_aueyu"]
 [ext_resource type="AnimationLibrary" uid="uid://c1du0rcgmr542" path="res://addons/cogito/Wieldables/Animations/Wieldable_LaserRifle.res" id="3_fjq23"]
-[ext_resource type="Script" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_fa3wp"]
+[ext_resource type="Script" uid="uid://b361n7ae3ixmn" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_fa3wp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk8qb"]
 emission_enabled = true
@@ -305,7 +305,7 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cc27k"]
 _data = {
-"RESET": SubResource("Animation_unao5")
+&"RESET": SubResource("Animation_unao5")
 }
 
 [node name="Laser Rifle" type="Node3D" node_paths=PackedStringArray("wieldable_mesh")]

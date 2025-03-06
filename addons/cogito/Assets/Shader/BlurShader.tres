@@ -30,7 +30,7 @@ default_input_values = [0, 1.0, 1, 0.8, 2, 0.5]
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
-uniform float BlurStrength = 0;
+uniform float BlurStrength = 0.0;
 uniform sampler2D Screen : source_color, filter_nearest_mipmap, repeat_disable, hint_screen_texture;
 
 

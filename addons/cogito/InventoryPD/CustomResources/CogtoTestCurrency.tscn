@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://n1doui0jpn1v"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/cogito_currency.gd" id="1_61vow"]
+[ext_resource type="Script" uid="uid://sf1jv3lkaxf8" path="res://addons/cogito/InventoryPD/CustomResources/cogito_currency.gd" id="1_61vow"]
 [ext_resource type="Texture2D" uid="uid://b1evxgj7t01ho" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Currency.png" id="2_vqb8i"]
 
 [node name="CogtoTestCurrency" type="Node"]

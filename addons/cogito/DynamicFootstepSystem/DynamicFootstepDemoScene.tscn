@@ -1,10 +1,11 @@
-[gd_scene load_steps=36 format=3 uid="uid://dsy656cbv0ceu"]
+[gd_scene load_steps=37 format=3 uid="uid://dsy656cbv0ceu"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="1_0sk3n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_ivcyr"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_dscd4"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_ivcyr"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="2_pwdxr"]
-[ext_resource type="Script" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
+[ext_resource type="Script" uid="uid://be6kbvjw1rm7x" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="3_m4tao"]
 [ext_resource type="Material" uid="uid://bncvwxye2x1uq" path="res://addons/cogito/DynamicFootstepSystem/Assets/Materials/Prototype_Brown.tres" id="4_s46n3"]
 [ext_resource type="AudioStream" uid="uid://btuqyu2y70emf" path="res://addons/cogito/DynamicFootstepSystem/FootstepProfiles/grass_footstep_profile.tres" id="4_su3si"]
@@ -16,7 +17,7 @@
 [ext_resource type="Material" uid="uid://c4rvflucftsrl" path="res://addons/cogito/DynamicFootstepSystem/Assets/Materials/Example_Wood.tres" id="12_2coni"]
 [ext_resource type="Material" uid="uid://bnepeulvkh40w" path="res://addons/cogito/DynamicFootstepSystem/Assets/Materials/Example_Dirt.tres" id="13_ndygr"]
 [ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://addons/cogito/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="18_kbomt"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="19_j6bha"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="19_j6bha"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="20_5hoci"]
 [ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="21_0438d"]
 [ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="22_stsjx"]
@@ -25,9 +26,9 @@
 resource_local_to_scene = true
 script = ExtResource("2_ivcyr")
 grid = true
-starter_inventory = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+starter_inventory = Array[ExtResource("2_dscd4")]([])
 inventory_size = Vector2i(5, 3)
-inventory_slots = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+inventory_slots = Array[ExtResource("2_dscd4")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_4k1rk"]
 material = ExtResource("1_xlgi6")

@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://dqsod8j0c6qag"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_r5c6a"]
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/ReadableComponent.gd" id="2_m1xf7"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_r5c6a"]
+[ext_resource type="Script" uid="uid://dtfpkk0rmf4sn" path="res://addons/cogito/Components/Interactions/ReadableComponent.gd" id="2_m1xf7"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://addons/cogito/Assets/Audio/Kenney/bookOpen.ogg" id="3_lxhi0"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="4_qtegg"]
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="5_lkhp4"]
+[ext_resource type="Script" uid="uid://6na3wwq1xpex" path="res://addons/cogito/EasyMenus/Scripts/follow_focus_center.gd" id="5_lkhp4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_c635y"]
 size = Vector3(0.3, 0.02, 0.5)

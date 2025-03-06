@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dyfwp0vhgfjd7"]
 
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/slider_w_labels.gd" id="1_fn6ep"]
+[ext_resource type="Script" uid="uid://dgb7mdnp5kigr" path="res://addons/cogito/EasyMenus/Scripts/slider_w_labels.gd" id="1_fn6ep"]
 
 [node name="SliderWLabels" type="VBoxContainer"]
 anchors_preset = 15

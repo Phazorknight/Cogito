@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://k0i6k7mcajfm"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="2_le1ck"]
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/SaveSlotButton.gd" id="2_rvlrs"]
+[ext_resource type="Script" uid="uid://bhfbpanps2m08" path="res://addons/cogito/EasyMenus/Components/SaveSlotButton.gd" id="2_rvlrs"]
 [ext_resource type="Texture2D" uid="uid://tjkesqff2f4g" path="res://addons/cogito/Assets/Graphics/EmptySaveSlot.png" id="4_ifjpb"]
 
 [node name="SaveSlotButton" type="Button"]

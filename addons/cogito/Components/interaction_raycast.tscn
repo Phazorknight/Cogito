@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cbd2ojah4nun6"]
 
-[ext_resource type="Script" path="res://addons/cogito/Scripts/interaction_raycast.gd" id="1_yf5t7"]
+[ext_resource type="Script" uid="uid://bcdmwsn7uc6dr" path="res://addons/cogito/Scripts/interaction_raycast.gd" id="1_yf5t7"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e2hxm"]
 margin = 0.075

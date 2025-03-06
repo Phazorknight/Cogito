@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bnygtkw3tvet6"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="1_lrgpg"]
+[ext_resource type="Script" uid="uid://b5o53nkpyxn58" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="1_lrgpg"]
 [ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://addons/cogito/Components/Interactions/HoldInteraction.tscn" id="2_3ajd8"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_yqbba"]

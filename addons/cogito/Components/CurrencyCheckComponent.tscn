@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://6d6is2x1egew"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/CurrencyCheckComponent.gd" id="1_5ilxc"]
+[ext_resource type="Script" uid="uid://dperx4wal3i3h" path="res://addons/cogito/Components/CurrencyCheckComponent.gd" id="1_5ilxc"]
 
 [node name="CurrencyCheck" type="Node"]
 script = ExtResource("1_5ilxc")

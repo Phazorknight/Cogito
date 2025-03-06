@@ -38,12 +38,3 @@ func get_region(x, y):
 	var y_chunk = icon.get_height() / item_size.y
 	var region = Rect2i(Vector2i(x * x_chunk, y * y_chunk), Vector2i(x_chunk, y_chunk))
 	return image.get_region(region)
-
-#func use(target) -> bool:
-	## Target should always be player? Null check to override using the CogitoSceneManager, which stores a reference to current player node
-	#if target == null or target.is_in_group("external_inventory"):
-		#print("Bad target pass. Setting target to", CogitoSceneManager._current_player_node)
-		#target = CogitoSceneManager._current_player_node
-		#
-	#prints(name, ": Inventory item is generic. No specific use defined.")
-	#return false

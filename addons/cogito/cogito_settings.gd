@@ -12,16 +12,14 @@ const settings_filename := "CogitoSettings"
 ## The prefix used in player state save files, followed by the save slot name. Be aware that changing this will impact if/how Cogito detects existing save files.
 @export var player_state_prefix : String = "COGITO_player_state_"
 
+@export var auto_save_name : String = "autosave"
+
 ## The default fade duration on scene changes.
 @export var default_transition_duration : float = .5
 
 @export_group("Danger Zone")
 ## WARNING: If you press this, your projects input map settings will be reset/overwritten! You need to manually restart your project for this to take effect.
-@export var reset_project_input_map : bool = false:
-	set(value):
-		if value == true:
-			_on_btn_reset_input_map_pressed()
-		reset_project_input_map = false
+@export_tool_button("Reset Project Input Map") var reset_input_map_action = _on_btn_reset_input_map_pressed
 
 
 #func save_settings(file_path: String) -> void:
@@ -166,10 +164,41 @@ func _on_btn_reset_input_map_pressed() -> void:
 	gamepad_button.button_index = JOY_BUTTON_X
 	save_input_action_to_settings("reload",keyboard_key,gamepad_button)
 	
-	# I've not found a way to update the project settings input map editor but to restart the whole editor.
-	#var editor_settings = EditorInterface.get_editor_settings()
-	#editor_settings.restart_editor(true)
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_1
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_DPAD_LEFT
+	save_input_action_to_settings("quickslot_1",keyboard_key,gamepad_button)
+
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_2
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_DPAD_UP
+	save_input_action_to_settings("quickslot_2",keyboard_key,gamepad_button)
+
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_3
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_DPAD_RIGHT
+	save_input_action_to_settings("quickslot_3",keyboard_key,gamepad_button)
 	
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_4
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_DPAD_DOWN
+	save_input_action_to_settings("quickslot_4",keyboard_key,gamepad_button)
+	
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_CAPSLOCK
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_RIGHT_SHOULDER
+	save_input_action_to_settings("free_look",keyboard_key,gamepad_button)
+
 	
 func save_input_action_to_settings(input_name: String, input_kbm:InputEventWithModifiers, input_gamepad:InputEvent):
 	var input = {

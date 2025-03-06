@@ -145,11 +145,11 @@ func clear_saved_currency_data():
 func add_to_world_dictionary(world_property_name: String, world_property_data):
 	if world_dictionary.has(world_property_name):
 		world_dictionary[world_property_name] = world_property_data
-		print("CogitoPlayerState: world dict key found and value saved: ", world_property_name, world_property_data)
+		CogitoGlobals.debug_log(true, "CogitoPlayerState", "world dict key found and value saved: " + str(world_property_name) + " " + str(world_property_data) )
 	else:
 		world_dictionary.get_or_add(world_property_name)
 		world_dictionary[world_property_name] = world_property_data
-		print("CogitoPlayerState: world dict key not found. Added and value saved: ", world_property_name, world_property_data)
+		CogitoGlobals.debug_log(true, "CogitoPlayerState", "world dict key not found. Added and value saved: " + str(world_property_name) + " " + str(world_property_data) )
 
 
 func clear_world_dictionary():
@@ -177,21 +177,18 @@ func write_state(state_slot : String) -> void:
 	var player_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".res")
 	#var player_state_file = str(player_state_dir + state_slot + ".res")
 	ResourceSaver.save(self, player_state_file, ResourceSaver.FLAG_CHANGE_PATH)
-	print("Player state saved as ", player_state_file)
-	
-	## For debug save as .tres
-	#var player_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".tres")
-	#ResourceSaver.save(self, player_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
-	#print("Scene state saved as .tres: ", player_state_file_tres)
+	CogitoGlobals.debug_log(true, "CogitoPlayerState", "Player state saved as " + str(player_state_file) )
 
 
 func state_exists(state_slot : String) -> bool:
 	#var player_state_file = str(player_state_dir + state_slot + ".res")
 	var player_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".res")
-	return ResourceLoader.exists(player_state_file)
+	#return ResourceLoader.exists(player_state_file)
+	return FileAccess.file_exists(player_state_file)
  
 
 func load_state(state_slot : String) -> Resource:
 	#var player_state_file = str(player_state_dir + state_slot + ".res")
 	var player_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_player_state_prefix + ".res")
 	return ResourceLoader.load(player_state_file, "", ResourceLoader.CACHE_MODE_IGNORE)
+	

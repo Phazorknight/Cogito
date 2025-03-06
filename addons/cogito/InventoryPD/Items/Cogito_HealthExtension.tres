@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WieldableItemPD" load_steps=4 format=3 uid="uid://cxkkn6xk1v6bm"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="1_0nf16"]
+[ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="1_0nf16"]
 [ext_resource type="Texture2D" uid="uid://bmg715kqyjb77" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoHealthPotion.png" id="1_gd43g"]
 [ext_resource type="PackedScene" uid="uid://bhbidfjqq4icg" path="res://addons/cogito/Wieldables/drinking_health_extension.tscn" id="3_pgc3g"]
 

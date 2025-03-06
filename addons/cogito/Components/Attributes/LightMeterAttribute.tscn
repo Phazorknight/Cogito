@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dorp3auw3s65q"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Attributes/cogito_light_meter_attribute.gd" id="1_1s8f4"]
+[ext_resource type="Script" uid="uid://cy3x7l016kwls" path="res://addons/cogito/Components/Attributes/cogito_light_meter_attribute.gd" id="1_1s8f4"]
 [ext_resource type="Texture2D" uid="uid://dvqhierikwfec" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Lightbulb.png" id="2_h0mts"]
 
 [node name="LightMeterAttribute" type="Node"]

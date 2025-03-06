@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://bhbidfjqq4icg"]
 
-[ext_resource type="Script" path="res://addons/cogito/Wieldables/wieldable_consumable.gd" id="1_0ugje"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="2_0hw38"]
+[ext_resource type="Script" uid="uid://cwnfrh5aqy6rd" path="res://addons/cogito/Wieldables/wieldable_consumable.gd" id="1_0ugje"]
+[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="2_0hw38"]
 [ext_resource type="AnimationLibrary" uid="uid://bptdf88r14s6t" path="res://addons/cogito/Wieldables/Animations/Drinking_Potion.res" id="3_ls8cp"]
-[ext_resource type="Script" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="4_djm27"]
+[ext_resource type="Script" uid="uid://b361n7ae3ixmn" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="4_djm27"]
 
 [sub_resource type="Resource" id="Resource_law4r"]
 script = ExtResource("2_0hw38")

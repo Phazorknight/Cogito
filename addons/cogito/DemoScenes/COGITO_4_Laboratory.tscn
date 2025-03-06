@@ -1,10 +1,10 @@
-[gd_scene load_steps=127 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=128 format=4 uid="uid://6hh7o77unixk"]
 
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
+[ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="2_7qwrr"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_6y43x"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_6y43x"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="5_ihscj"]
 [ext_resource type="PackedScene" uid="uid://b6yj5prtsl7hy" path="res://addons/cogito/DemoScenes/DemoPrefabs/floor_3x_3_00.tscn" id="6_bedlu"]
 [ext_resource type="PackedScene" uid="uid://bavlamv6h43uw" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_painted.tscn" id="6_yj0h7"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b6l1i2p0njbc1" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_scaffolding_detailed.tscn" id="7_ipjeq"]
 [ext_resource type="PackedScene" uid="uid://1p4vcn6myoet" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall.tscn" id="8_mnu4d"]
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="8_ppug2"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="8_psdfg"]
+[ext_resource type="Script" uid="uid://6010ovanwkwo" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="8_psdfg"]
 [ext_resource type="PackedScene" uid="uid://t2gxjp6of2et" path="res://addons/cogito/DemoScenes/DemoPrefabs/floor_dirt_3x_3_.tscn" id="9_btwfh"]
 [ext_resource type="PackedScene" uid="uid://3se2gpg0u3wx" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_ridges_half.tscn" id="9_gy8kl"]
 [ext_resource type="PackedScene" uid="uid://caex54qny4gvm" path="res://addons/cogito/DemoScenes/DemoPrefabs/glass_3x_3_98.tscn" id="10_8403t"]
@@ -32,7 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://ciil8mli32kuk" path="res://addons/cogito/PackedScenes/Pickups/pickup_laser_rifle.tscn" id="23_ex3ej"]
 [ext_resource type="PackedScene" uid="uid://7osjlj17ntxb" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_window_painted.tscn" id="23_qd03d"]
 [ext_resource type="PackedScene" uid="uid://i7fum2jx3ac3" path="res://addons/cogito/PackedScenes/ladder.tscn" id="27_1lvv6"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_spawnzone.gd" id="28_5k0xi"]
+[ext_resource type="Script" uid="uid://bbq3bdpyu0d4y" path="res://addons/cogito/Scripts/cogito_spawnzone.gd" id="28_5k0xi"]
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://addons/cogito/PackedScenes/projectile_pistol.tscn" id="28_fsk2l"]
 [ext_resource type="PackedScene" uid="uid://cgce75ts2twkp" path="res://addons/cogito/PackedScenes/Pickups/pickup_pickaxe.tscn" id="29_ai41f"]
 [ext_resource type="PackedScene" uid="uid://co1opmwyvl27" path="res://addons/cogito/DemoScenes/DemoPrefabs/barrel.tscn" id="31_c4s3c"]
@@ -49,38 +49,38 @@
 [ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://addons/cogito/PackedScenes/cogito_pressure_plate.tscn" id="41_0755m"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://addons/cogito/PackedScenes/ceiling_lamp.tscn" id="42_3rq3h"]
 [ext_resource type="PackedScene" uid="uid://x23tip44172h" path="res://addons/cogito/PackedScenes/metal_bar.tscn" id="42_8g4m7"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_static_interactable.gd" id="43_ynyfa"]
+[ext_resource type="Script" uid="uid://d041v6palciio" path="res://addons/cogito/CogitoObjects/cogito_static_interactable.gd" id="43_ynyfa"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="44_f6cgn"]
 [ext_resource type="PackedScene" uid="uid://cd2fwmwe8n1no" path="res://addons/cogito/PackedScenes/snap_slot_battery.tscn" id="47_71h2t"]
 [ext_resource type="PackedScene" uid="uid://dlm5kc3g1g18h" path="res://addons/cogito/PackedScenes/Pickups/pickup_dart_water.tscn" id="47_gb8en"]
 [ext_resource type="PackedScene" uid="uid://dyngdr0rnqwlb" path="res://addons/cogito/PackedScenes/Pickups/pickup_dart_fire.tscn" id="48_sg5rf"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://addons/cogito/PackedScenes/Pickups/pickup_battery.tscn" id="48_y72lj"]
 [ext_resource type="PackedScene" uid="uid://dn4e1k7u3suoo" path="res://addons/cogito/Enemies/cogito_basic_enemy.tscn" id="52_mlseg"]
-[ext_resource type="Script" path="res://addons/cogito/Enemies/cogito_patrol_path.gd" id="53_xiupp"]
+[ext_resource type="Script" uid="uid://cabgyitb3d8cj" path="res://addons/cogito/Enemies/cogito_patrol_path.gd" id="53_xiupp"]
 [ext_resource type="PackedScene" uid="uid://bdab2cuy8hue6" path="res://addons/cogito/DemoScenes/DemoPrefabs/Swing.tscn" id="57_sjmpt"]
 [ext_resource type="PackedScene" uid="uid://b60auyyy0apwb" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_extension.tscn" id="59_aok6v"]
 [ext_resource type="PackedScene" uid="uid://d2vpt8d74j5u" path="res://addons/cogito/PackedScenes/sanity_drain_attribute_zone.tscn" id="60_lxppk"]
 [ext_resource type="PackedScene" uid="uid://ks0xcampuu3h" path="res://addons/cogito/PackedScenes/stamina_drain_attribute_zone.tscn" id="61_grgat"]
+[ext_resource type="PackedScene" uid="uid://d2lnk6ecthmvd" path="res://addons/cogito/PackedScenes/Pickups/pickup_strength_potion.tscn" id="62_bftoa"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
 
-[sub_resource type="Sky" id="Sky_l7ydc"]
+[sub_resource type="Sky" id="Sky_cqwop"]
 sky_material = SubResource("PanoramaSkyMaterial_wjbty")
 
-[sub_resource type="Environment" id="Environment_obnk3"]
+[sub_resource type="Environment" id="Environment_bftoa"]
 background_mode = 2
-sky = SubResource("Sky_l7ydc")
+sky = SubResource("Sky_cqwop")
 sky_rotation = Vector3(0, 1.74533, 0.174533)
-ambient_light_sky_contribution = 0.1
+ambient_light_sky_contribution = 0.2
 ambient_light_energy = 0.2
-tonemap_mode = 1
+tonemap_mode = 3
 ssao_enabled = true
-ssil_enabled = true
 glow_enabled = true
-glow_intensity = 2.5
+glow_intensity = 1.0
 glow_strength = 0.37
-glow_bloom = 0.2
+glow_bloom = 0.4
 glow_blend_mode = 0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
@@ -88,7 +88,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_ekytl"]
+[sub_resource type="Resource" id="Resource_bftoa"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -897,11 +897,11 @@ shadow_enabled = true
 shadow_opacity = 0.8
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_obnk3")
+environment = SubResource("Environment_bftoa")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_ekytl")
+inventory_data = SubResource("Resource_bftoa")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -3446,6 +3446,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3874, 0.0438593, 0.461824)
 
 [node name="StaminaDrainAttributeZone" parent="." instance=ExtResource("61_grgat")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54745, 0.0438593, -2.19753)
+
+[node name="StrengthPotion" parent="." instance=ExtResource("62_bftoa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99269, 0.532, 6.01611)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]

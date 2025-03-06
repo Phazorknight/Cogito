@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="CogitoSettings" load_steps=2 format=3 uid="uid://ds73ojp51jrk0"]
 
-[ext_resource type="Script" path="res://addons/cogito/cogito_settings.gd" id="1_usejk"]
+[ext_resource type="Script" uid="uid://o06hnwjtbmie" path="res://addons/cogito/cogito_settings.gd" id="1_usejk"]
 
 [resource]
 script = ExtResource("1_usejk")
-is_logging = false
+is_logging = true
 scene_state_prefix = "COGITO_scene_state_"
 player_state_prefix = "COGITO_player_state_"
+auto_save_name = "autosave"
 default_transition_duration = 0.4
-reset_project_input_map = false

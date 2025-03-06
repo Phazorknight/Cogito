@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cal6wr17d7pb4"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_si0pu"]
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/gamepad_bind_button.gd" id="2_q5n4a"]
+[ext_resource type="Script" uid="uid://djxurty0jqs3k" path="res://addons/cogito/EasyMenus/Components/gamepad_bind_button.gd" id="2_q5n4a"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="3_hd6a1"]
 
 [node name="GamepadBindButton" type="Button"]

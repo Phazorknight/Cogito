@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh4yhqd73trwx"]
 
-[ext_resource type="Script" path="res://addons/cogito/QuestSystem/Components/quest_entry.gd" id="1_lav6n"]
+[ext_resource type="Script" uid="uid://5t2w02gacnk" path="res://addons/cogito/QuestSystem/Components/quest_entry.gd" id="1_lav6n"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="2_kkklj"]
 [ext_resource type="FontFile" uid="uid://3dfnao4d0lph" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-Italic.ttf" id="3_ygsya"]
 

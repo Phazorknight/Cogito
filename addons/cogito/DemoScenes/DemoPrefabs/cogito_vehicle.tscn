@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dt2nhg1tln7y1"]
 
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="2_7ecob"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_vehicle.gd" id="2_am12o"]
+[ext_resource type="Script" uid="uid://dxascatu8nd2x" path="res://addons/cogito/CogitoObjects/cogito_vehicle.gd" id="2_am12o"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://addons/cogito/Assets/Audio/Kenney/cloth2.ogg" id="3_wbi0e"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0ifaw"]

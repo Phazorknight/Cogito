@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=4 uid="uid://dxuon2cll702s"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="1_ncels"]
+[ext_resource type="Script" uid="uid://cismjpvxmsbf2" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="1_ncels"]
 [ext_resource type="AudioStream" uid="uid://d32mt2lrtuogk" path="res://addons/cogito/Assets/Audio/Kenney/bookOpen.ogg" id="2_0ao51"]
 [ext_resource type="AudioStream" uid="uid://dvbd46d7c28ee" path="res://addons/cogito/Assets/Audio/Kenney/bookPlace1.ogg" id="3_lt4en"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="4_lbhvj"]
@@ -225,6 +225,9 @@ script = ExtResource("1_ncels")
 open_sound = ExtResource("2_0ao51")
 close_sound = ExtResource("3_lt4en")
 open_rotation_deg = -90.0
+open_rotation = Vector3(0, -90, 0)
+door_speed = 3.0
+angle_tolerance = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="kitchenMicrowave(Clone)/AnimatableBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.196551, 0.138989, 0.000824869)

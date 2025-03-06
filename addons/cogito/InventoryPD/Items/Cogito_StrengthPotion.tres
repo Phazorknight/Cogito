@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="ConsumableItemPD" load_steps=8 format=3 uid="uid://58pyqr1djkcy"]
+
+[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_mykto"]
+[ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="2_e0lpy"]
+[ext_resource type="Texture2D" uid="uid://ctscq0pmi5llf" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoStrengthPotion.png" id="3_1qvso"]
+[ext_resource type="Script" uid="uid://dr5kneob1wta8" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="4_bw44k"]
+[ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://addons/cogito/Assets/Audio/Kenney/beltHandle2.ogg" id="5_qps83"]
+[ext_resource type="AudioStream" uid="uid://bna1nc66vw053" path="res://addons/cogito/Assets/Audio/Kenney/phaserUp5.ogg" id="6_up6x6"]
+
+[sub_resource type="Resource" id="Resource_mykto"]
+script = ExtResource("1_mykto")
+attribute_name = ""
+attribute_change_amount = 0.0
+value_to_change = 0
+metadata/_custom_type_script = "uid://dd216g7cnupju"
+
+[resource]
+script = ExtResource("4_bw44k")
+attribute_name = "strength"
+attribute_change_amount = 2.0
+value_to_change = 0
+consumable_effects = Array[ExtResource("1_mykto")]([SubResource("Resource_mykto")])
+name = "Strength Potion"
+description = "Raw eggs, protein powder, spinach and eleven herbs and spices."
+icon = ExtResource("3_1qvso")
+is_stackable = false
+is_droppable = true
+stack_size = 0
+drop_scene = "uid://d2lnk6ecthmvd"
+hint_icon_on_use = ExtResource("2_e0lpy")
+hint_text_on_use = "Your strength improved!"
+item_size = Vector2(1, 1)
+sound_use = ExtResource("6_up6x6")
+sound_pickup = ExtResource("5_qps83")
+metadata/_custom_type_script = "uid://dr5kneob1wta8"

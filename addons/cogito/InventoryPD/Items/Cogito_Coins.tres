@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CurrencyItemPD" load_steps=5 format=3 uid="uid://d7r4y7pbhify"]
 
 [ext_resource type="Texture2D" uid="uid://b1evxgj7t01ho" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Currency.png" id="1_63q7b"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/CurrencyItemPD.gd" id="1_suegl"]
+[ext_resource type="Script" uid="uid://bgdo6s01q2k1h" path="res://addons/cogito/InventoryPD/CustomResources/CurrencyItemPD.gd" id="1_suegl"]
 [ext_resource type="Texture2D" uid="uid://bb54agmaoi7w5" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Coins.png" id="2_210ct"]
 [ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://addons/cogito/Assets/Audio/Kenney/beltHandle2.ogg" id="3_ju2k8"]
 

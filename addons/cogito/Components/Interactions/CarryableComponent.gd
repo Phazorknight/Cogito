@@ -42,7 +42,13 @@ func _ready():
 
 func interact(_player_interaction_component:PlayerInteractionComponent):
 	if !is_disabled:
-		carry(_player_interaction_component)
+		if attribute_check == AttributeCheck.NONE:
+			carry(_player_interaction_component)
+			was_interacted_with.emit(interaction_text,input_map_action)
+		else:
+			if check_attribute(_player_interaction_component):
+				carry(_player_interaction_component)
+				was_interacted_with.emit(interaction_text,input_map_action)
 
 
 func carry(_player_interaction_component:PlayerInteractionComponent):

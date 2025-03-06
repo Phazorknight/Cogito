@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://vlqfhilpj650"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_vendor.gd" id="1_lj27e"]
+[ext_resource type="Script" uid="uid://ovgqo00k1cpr" path="res://addons/cogito/CogitoObjects/cogito_vendor.gd" id="1_lj27e"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_potion.tscn" id="2_1u2dl"]
 [ext_resource type="PackedScene" uid="uid://cs6raqlyejqul" path="res://addons/cogito/DemoScenes/DemoPrefabs/generic_button.tscn" id="2_wxk3g"]
 [ext_resource type="AudioStream" uid="uid://6thelsn58odx" path="res://addons/cogito/Assets/Audio/vending_machine_sfx.ogg" id="3_7lknv"]

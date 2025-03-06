@@ -588,13 +588,13 @@ func _move_to_leave_node(sittable):
 			tween.tween_property(neck, "global_transform:basis", original_neck_basis, sittable.rotation_tween_duration)
 			tween.tween_callback(Callable(self, "_stand_up_finished"))
 		else:
-			print("No leave node found. Returning to Original position")
+			CogitoGlobals.debug_log(true, "CogitoProjectile", "No leave node found. Returning to Original position")
 			_move_to_original_position(sittable)
 
 
 #Find location using navmesh to place player
 func _move_to_nearby_location(sittable):
-	print("Attempting to find available locations to move player to")
+	CogitoGlobals.debug_log(true, "CogitoPlayer", "Attempting to find available locations to move player to")
 	var seat_position = sittable.global_transform.origin
 	var exit_distance: float = 1.0
 	var max_distance: float = 10.0 # Max distance from Sittable to try, multiplies the random direction
@@ -636,7 +636,7 @@ func _move_to_nearby_location(sittable):
 			exit_distance = 1
 
 	# If no valid location found, try leave node
-	print("No available location found after ",attempts, " tries. Testing for leave node.")
+	CogitoGlobals.debug_log(true, "CogitoPlayer", "No available location found after " + str(attempts) + " tries. Testing for leave node.")
 	_move_to_leave_node(sittable)
 
 

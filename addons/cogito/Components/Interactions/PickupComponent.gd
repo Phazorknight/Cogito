@@ -2,8 +2,16 @@ extends InteractionComponent
 class_name PickupComponent
 
 @export var slot_data : InventorySlotPD
+@export var display_item_name : bool = false
 
 var player_interaction_component
+
+
+func _enter_tree() -> void:
+	if display_item_name:
+		var owner_object : CogitoObject = get_parent()
+		owner_object.display_name = slot_data.inventory_item.name
+
 
 func interact(_player_interaction_component: PlayerInteractionComponent):
 	if !is_disabled:

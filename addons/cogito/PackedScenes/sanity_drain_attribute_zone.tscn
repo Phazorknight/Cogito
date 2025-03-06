@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://d2vpt8d74j5u"]
 
-[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_attribute_zone.gd" id="1_qemex"]
+[ext_resource type="Script" uid="uid://biey5ww8obeoc" path="res://addons/cogito/Scripts/cogito_attribute_zone.gd" id="1_qemex"]
 [ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_cjlfs"]
 [ext_resource type="FontFile" uid="uid://b2jt4ktfqmihq" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-Black.ttf" id="3_832ve"]
 

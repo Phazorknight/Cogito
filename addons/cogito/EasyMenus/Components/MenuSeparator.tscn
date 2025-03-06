@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cbv85ok0isnb3"]
 
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Components/menu_separator.gd" id="1_6oy01"]
+[ext_resource type="Script" uid="uid://rkcciuky8go5" path="res://addons/cogito/EasyMenus/Components/menu_separator.gd" id="1_6oy01"]
 
 [node name="MenuSeparator" type="HBoxContainer"]
 alignment = 1

@@ -12,7 +12,7 @@ func is_ammo_item():
 func use(target) -> bool:
 	# Target should always be player? Null check to override using the CogitoSceneManager, which stores a reference to current player node
 	if target == null or target.is_in_group("external_inventory"):
-		print("Bad target pass. Setting target to", CogitoSceneManager._current_player_node)
+		CogitoGlobals.debug_log(true, "AmmoItemPD", "Bad target pass. Setting target to" + str(CogitoSceneManager._current_player_node) )
 		target = CogitoSceneManager._current_player_node
 		
 	if hint_text_on_use != "":

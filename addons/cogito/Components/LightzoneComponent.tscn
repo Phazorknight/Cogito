@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctr7n0w3hgys7"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/LightzoneComponent.gd" id="1_ga3m3"]
-[ext_resource type="Script" path="res://addons/cogito/Components/LightzoneSwitchComponent.gd" id="2_5rlei"]
+[ext_resource type="Script" uid="uid://cko7ubdrqsfgi" path="res://addons/cogito/Components/LightzoneComponent.gd" id="1_ga3m3"]
+[ext_resource type="Script" uid="uid://dgniyghxxx2sy" path="res://addons/cogito/Components/LightzoneSwitchComponent.gd" id="2_5rlei"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_t8ref"]
 radius = 1.5

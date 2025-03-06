@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="1_06m72"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_e7j04"]
-[ext_resource type="Script" path="res://addons/cogito/Components/UI/UI_HintComponent.gd" id="2_3getp"]
+[ext_resource type="Script" uid="uid://c1alk1bi6j4vg" path="res://addons/cogito/Components/UI/UI_HintComponent.gd" id="2_3getp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqjgf"]
 draw_center = false

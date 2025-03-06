@@ -5,13 +5,31 @@ namespace NathanHoad
 {
   public partial class InputHelper : Node
   {
+    public delegate void DeviceChangedEventHandler(string device, int deviceIndex);
+    public delegate void KeyboardInputChangedEventHandler(string action, InputEvent input);
+    public delegate void JoypadInputChangedEventHandler(string action, InputEvent input);
+    public delegate void JoypadChangedEventHandler(int deviceIndex, bool isConnected);
+
+    public static DeviceChangedEventHandler? DeviceChanged;
+    public static KeyboardInputChangedEventHandler? KeyboardInputChanged;
+    public static JoypadInputChangedEventHandler? JoypadInputChanged;
+    public static JoypadChangedEventHandler? JoypadChanged;
+
+
     public const string DEVICE_KEYBOARD = "keyboard";
     public const string DEVICE_XBOX_CONTROLLER = "xbox";
     public const string DEVICE_SWITCH_CONTROLLER = "switch";
-    public const string DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER = "switch_left_joycon";
-    public const string DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER = "switch_right_joycon";
     public const string DEVICE_PLAYSTATION_CONTROLLER = "playstation";
+    public const string DEVICE_STEAMDECK_CONTROLLER = "steamdeck";
     public const string DEVICE_GENERIC = "generic";
+
+    public const string SUB_DEVICE_XBOX_ONE_CONTROLLER = "xbox_one";
+    public const string SUB_DEVICE_XBOX_SERIES_CONTROLLER = "xbox_series";
+    public const string SUB_DEVICE_PLAYSTATION3_CONTROLLER = "playstation3";
+    public const string SUB_DEVICE_PLAYSTATION4_CONTROLLER = "playstation4";
+    public const string SUB_DEVICE_PLAYSTATION5_CONTROLLER = "playstation5";
+    public const string SUB_DEVICE_SWITCH_JOYCON_LEFT_CONTROLLER = "switch_left_joycon";
+    public const string SUB_DEVICE_SWITCH_JOYCON_RIGHT_CONTROLLER = "switch_right_joycon";
 
 
     private static Node instance;
@@ -22,35 +40,69 @@ namespace NathanHoad
         if (instance == null)
         {
           instance = (Node)Engine.GetSingleton("InputHelper");
+          instance.Connect("device_changed", Callable.From((string device, int deviceIndex) => DeviceChanged?.Invoke(device, deviceIndex)));
+          instance.Connect("keyboard_input_changed", Callable.From((string action, InputEvent input) => KeyboardInputChanged?.Invoke(action, input)));
+          instance.Connect("joypad_input_changed", Callable.From((string action, InputEvent input) => JoypadInputChanged?.Invoke(action, input)));
+          instance.Connect("joypad_changed", Callable.From((int deviceIndex, bool isConnected) => JoypadChanged?.Invoke(deviceIndex, isConnected)));
         }
         return instance;
       }
     }
 
 
-    public string Device
+    public static string Device
     {
       get => (string)Instance.Get("device");
     }
 
 
-    public float Deadzone
+    public static int DeviceIndex
+    {
+      get => (int)Instance.Get("device_index");
+    }
+
+
+    public static string LastKnownJoypadDevice
+    {
+      get => (string)Instance.Get("last_known_joypad_device");
+    }
+
+
+    public static string LastKnownJoypadIndex
+    {
+      get => (string)Instance.Get("last_known_joypad_index");
+    }
+
+
+    public static float Deadzone
     {
       get => (float)Instance.Get("deadzone");
       set => Instance.Set("deadzone", value);
     }
 
 
-    public int MouseMotionThreshold
+    public static int MouseMotionThreshold
     {
       get => (int)Instance.Get("mouse_motion_threshold");
       set => Instance.Set("mouse_motion_threshold", value);
     }
 
 
-    public static string GetSimplifiedDeviceName()
+    public static string GetSimplifiedDeviceName(string rawName)
     {
-      return (string)Instance.Call("get_simplified_device_name");
+      return (string)Instance.Call("get_simplified_device_name", rawName);
+    }
+
+
+    public static string GetDeviceFromEvent(InputEvent @event)
+    {
+      return (string)Instance.Call("get_device_from_event", @event);
+    }
+
+
+    public static int GetDeviceIndexFromEvent(InputEvent @event)
+    {
+      return (int)Instance.Call("get_device_index_from_event", @event);
     }
 
 

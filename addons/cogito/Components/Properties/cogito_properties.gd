@@ -84,13 +84,13 @@ func _ready():
 	await get_parent().is_node_ready()
 	
 	if ignite_on_ready:
-		set_on_fire()
+		set_on_fire.call_deferred()
 		
 	if electric_on_ready:
-		make_electric()
+		make_electric.call_deferred()
 		
 	if elemental_properties == ElementalProperties.WET:
-		make_wet()
+		make_wet.call_deferred()
 
 
 func start_reaction_threshold_timer(passed_collider: Node3D):

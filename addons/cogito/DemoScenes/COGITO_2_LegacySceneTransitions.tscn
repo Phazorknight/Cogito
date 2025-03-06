@@ -1,11 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://dty7vjg3hp68b"]
+[gd_scene load_steps=17 format=3 uid="uid://dty7vjg3hp68b"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="1_8f7tt"]
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_8th5t"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_w4txe"]
+[ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_8th5t"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_w4txe"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_bwit1"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="5_5tohn"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="6_jn18d"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="7_34j8q"]
+[ext_resource type="Script" uid="uid://6010ovanwkwo" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="7_34j8q"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://addons/cogito/PackedScenes/carriable_box.tscn" id="8_4hlpp"]
 [ext_resource type="PackedScene" uid="uid://0fj068bj0csc" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_potion.tscn" id="8_vj2ak"]
 
@@ -33,9 +34,9 @@ glow_enabled = true
 resource_local_to_scene = true
 script = ExtResource("2_w4txe")
 grid = false
-starter_inventory = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([])
+starter_inventory = Array[ExtResource("3_bwit1")]([])
 inventory_size = Vector2i(4, 1)
-inventory_slots = Array[Resource("res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd")]([null, null, null, null, null, null, null, null])
+inventory_slots = Array[ExtResource("3_bwit1")]([null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_ntr4m"]
 size = Vector3(3, 3, 2)

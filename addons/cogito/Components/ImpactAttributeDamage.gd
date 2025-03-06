@@ -19,7 +19,7 @@ var is_delaying : bool
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if !parent_node.is_class("RigidBody3D"):
-		print("ImpactDamage: ", parent_node, " needs to be RigidBody3D.")
+		CogitoGlobals.debug_log(true, "ImpactDamage", "Error: " + str(parent_node) + " needs to be RigidBody3D.")
 	else:
 		parent_node.body_entered.connect(_on_parent_node_collision)
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://4pr4qkdw2ru6"]
 
-[ext_resource type="Script" path="res://addons/cogito/Scripts/particle_controller.gd" id="1_1ovtt"]
+[ext_resource type="Script" uid="uid://bu7cvtr2dwuki" path="res://addons/cogito/Scripts/particle_controller.gd" id="1_1ovtt"]
 [ext_resource type="Texture2D" uid="uid://dyjjiic3lw3os" path="res://addons/cogito/Assets/VFX/Impacts/Textures/Flare00.PNG" id="1_56i3l"]
 [ext_resource type="Material" uid="uid://c71aysyxsuq0t" path="res://addons/cogito/Assets/VFX/Impacts/Materials/Mat_flare00.tres" id="2_d3gjm"]
 [ext_resource type="Material" uid="uid://c4ovus3d4l7oi" path="res://addons/cogito/Assets/VFX/Impacts/Materials/ProcMat_flare00.tres" id="3_w4wb0"]
@@ -46,7 +46,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_myb3g"]
-max_value = 5.0
+_limits = [0.0, 5.0, 0.0, 1.0]
 _data = [Vector2(0, 5), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 

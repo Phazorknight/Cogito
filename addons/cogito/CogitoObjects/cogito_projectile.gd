@@ -7,6 +7,7 @@ class_name CogitoProjectile
 @onready var lifespan = $Lifespan
 # Damage is being set by the wieldable.
 var damage_amount : int = 0
+
 ## Determine what happens if the projectile hits something. Keep this false for stuff like Arrows. True for stuff like bullets or rockets.
 @export var destroy_on_impact : bool = false
 ## Sound that gets played when projectile dies.
@@ -57,19 +58,19 @@ func _on_body_entered(collider: Node):
 		
 	if collider.has_signal("damage_received"):
 		if( !collider.cogito_properties && !cogito_properties): # Case where neither projectile nor the object hit have properties defined.
-			print("Projectile: Collider nor projectile have CogitoProperties, damaging as usual.")
+			CogitoGlobals.debug_log(true, "CogitoProjectile", "Collider nor projectile have CogitoProperties, damaging as usual.")
 			deal_damage(collider,bullet_direction, collision_point)
 			return
 		
 		if( collider.cogito_properties && !cogito_properties): # Case were only collider has properties.
-			print("Projectile: Collider has CogitoProperties, currently ignoring these and damaging as usual.")
+			CogitoGlobals.debug_log(true, "CogitoProjectile", "Collider has CogitoProperties, currently ignoring these and damaging as usual.")
 			deal_damage(collider,bullet_direction, collision_point)
 
 		if( !collider.cogito_properties && cogito_properties): # Case where only the projectile has properties defined.
 			match cogito_properties.material_properties:
 				CogitoProperties.MaterialProperties.SOFT:
 					# Defining what happens if a soft projectile hits an object with no properties.
-					print("Projectile: Soft projectile does no damage per default.")
+					CogitoGlobals.debug_log(true, "CogitoProjectile", "Soft projectile does no damage per default.")
 					if destroy_on_impact:
 						die()
 					return
@@ -77,7 +78,7 @@ func _on_body_entered(collider: Node):
 		if( collider.cogito_properties && cogito_properties): # Case where both projectile and the object hit have properties defined.
 			if( cogito_properties.material_properties == CogitoProperties.MaterialProperties.SOFT && collider.cogito_properties.material_properties == CogitoProperties.MaterialProperties.SOFT):
 				# When both objects are soft, damage the hit object.
-				print("Projectile: Soft object hit, dealing damage.")
+				CogitoGlobals.debug_log(true, "CogitoProjectile", "Soft object hit, dealing damage.")
 				deal_damage(collider,bullet_direction, collision_point)
 			
 			# Manually setting the reaction collider and calling reactions on object hit, skipping the reaction threshold time.

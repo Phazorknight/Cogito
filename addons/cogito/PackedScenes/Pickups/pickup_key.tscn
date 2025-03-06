@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://8wkt5k4dl40u"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_ocu5l"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_ocu5l"]
 [ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://addons/cogito/InventoryPD/Items/Cogito_Key.tres" id="2_06n2f"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_6unox"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_62irs"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_62irs"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_mrywu"]
 size = Vector3(0.1, 0.03, 0.25)
@@ -33,6 +33,7 @@ size = Vector3(0.148755, 0.0302637, 0.301671)
 script = ExtResource("3_62irs")
 inventory_item = ExtResource("2_06n2f")
 quantity = 1
+origin_index = -1
 
 [node name="Pickup_Key" type="RigidBody3D"]
 collision_layer = 3

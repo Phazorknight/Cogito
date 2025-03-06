@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=4 uid="uid://i7fum2jx3ac3"]
 
-[ext_resource type="Script" path="res://addons/cogito/Scripts/ladder_area.gd" id="1_odht7"]
+[ext_resource type="Script" uid="uid://bp06mso73qjs8" path="res://addons/cogito/Scripts/ladder_area.gd" id="1_odht7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rj7xk"]
 size = Vector3(0.139, 3.148, 0.8)

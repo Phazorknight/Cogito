@@ -1,20 +1,22 @@
-[gd_scene load_steps=368 format=4 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=376 format=4 uid="uid://e31n36p8i6an"]
 
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
+[ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
+[ext_resource type="AudioStream" uid="uid://lr1efmq0q16k" path="res://addons/cogito/Assets/Audio/Phazorknight/CogitoAmbience_v02.ogg" id="2_hd73s"]
+[ext_resource type="AudioStream" uid="uid://08bonhm3y2ju" path="res://addons/cogito/Assets/Audio/Phazorknight/CogitoAmbience_v01.ogg" id="2_jeioi"]
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="3_mgle8"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_0kggm"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_g5h7u"]
-[ext_resource type="Script" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="7_a40bd"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_0kggm"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_g5h7u"]
+[ext_resource type="Script" uid="uid://d2jjqadlnhp6x" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="7_a40bd"]
 [ext_resource type="Resource" uid="uid://drmtc0tqmwquk" path="res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres" id="8_5xvfv"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="9_ec70c"]
 [ext_resource type="Resource" uid="uid://b7wrhr74mptlf" path="res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres" id="9_ljdo7"]
 [ext_resource type="PackedScene" uid="uid://ddjbxllw044a3" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorCornerRound.glb" id="10_4csde"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="10_wbxwm"]
+[ext_resource type="Script" uid="uid://6010ovanwkwo" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="10_wbxwm"]
 [ext_resource type="PackedScene" uid="uid://br3vumdotavq0" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorHalf.glb" id="11_7indd"]
 [ext_resource type="PackedScene" uid="uid://cqmqm6b13w6g" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_doorway_painted.tscn" id="11_je61h"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_72tca"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="13_5x4ip"]
+[ext_resource type="Script" uid="uid://cismjpvxmsbf2" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="13_5x4ip"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="14_qtguo"]
 [ext_resource type="PackedScene" uid="uid://x4wqam8k4bq3" path="res://addons/cogito/Assets/VFX/dust_particles.tscn" id="15_7saqh"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://addons/cogito/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="15_078vp"]
@@ -25,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://bdf8go8xjwqqb" path="res://addons/cogito/DemoScenes/DemoPrefabs/lounge_chair.tscn" id="20_rf47m"]
 [ext_resource type="PackedScene" uid="uid://b8nhffak4g0c6" path="res://addons/cogito/DemoScenes/DemoPrefabs/chair_desk.tscn" id="21_o6psl"]
 [ext_resource type="PackedScene" uid="uid://bbt5twbnrlcfj" path="res://addons/cogito/Components/Interactions/LockInteraction.tscn" id="22_2fd6x"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
+[ext_resource type="Script" uid="uid://b5o53nkpyxn58" path="res://addons/cogito/CogitoObjects/cogito_turnwheel.gd" id="22_fgo21"]
 [ext_resource type="PackedScene" uid="uid://bqp8nl7x2c37m" path="res://addons/cogito/Components/Interactions/DualInteraction.tscn" id="23_mluj1"]
 [ext_resource type="AudioStream" uid="uid://ftl7je6blfwq" path="res://addons/cogito/Assets/Audio/Kenney/stoneDrag4.ogg" id="23_q1spm"]
 [ext_resource type="PackedScene" uid="uid://poem1yjtmt3n" path="res://addons/cogito/Components/Interactions/HoldInteraction.tscn" id="24_7t6yl"]
@@ -43,7 +45,7 @@
 [ext_resource type="PackedScene" uid="uid://5iifh2dc07ai" path="res://addons/cogito/DemoScenes/DemoPrefabs/laptop_real.tscn" id="35_s7tgx"]
 [ext_resource type="PackedScene" uid="uid://sutia1bej2vw" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/ceilingFan.glb" id="36_ocqx6"]
 [ext_resource type="PackedScene" uid="uid://cjpwgjokey5cq" path="res://addons/cogito/DemoScenes/DemoPrefabs/side_table.tscn" id="37_ic45t"]
-[ext_resource type="Script" path="res://addons/cogito/Scripts/cogito_rotator_tool.gd" id="37_tg426"]
+[ext_resource type="Script" uid="uid://bxr2onwa06jra" path="res://addons/cogito/Scripts/cogito_rotator_tool.gd" id="37_tg426"]
 [ext_resource type="PackedScene" uid="uid://dh4srvw372cf5" path="res://addons/cogito/DemoScenes/DemoPrefabs/stool_bar_square.tscn" id="38_byfc0"]
 [ext_resource type="PackedScene" uid="uid://bm6px536i18b3" path="res://addons/cogito/DemoScenes/DemoPrefabs/cabinet_television_doors.tscn" id="39_tdvyy"]
 [ext_resource type="PackedScene" uid="uid://crehxwgpwoblf" path="res://addons/cogito/DemoScenes/DemoPrefabs/television_modern.tscn" id="40_oaaxs"]
@@ -66,7 +68,7 @@
 [ext_resource type="PackedScene" uid="uid://duxk3xlhddnvt" path="res://addons/cogito/DemoScenes/DemoPrefabs/potted_plant.tscn" id="56_hferh"]
 [ext_resource type="PackedScene" uid="uid://efrg1qdo4o5g" path="res://addons/cogito/DemoScenes/DemoPrefabs/kitchen_fridge_container.tscn" id="57_fdyfl"]
 [ext_resource type="PackedScene" uid="uid://3rlbofuf3x5s" path="res://addons/cogito/DemoScenes/DemoPrefabs/trashcan.tscn" id="58_no7q4"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="59_7mr36"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="59_7mr36"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="60_oc6pu"]
 [ext_resource type="PackedScene" uid="uid://dxuon2cll702s" path="res://addons/cogito/DemoScenes/DemoPrefabs/kitchen_microwave.tscn" id="61_1x4um"]
 [ext_resource type="PackedScene" uid="uid://dlhn1jwgx0wjr" path="res://addons/cogito/DemoScenes/DemoPrefabs/table_coffee_glass.tscn" id="61_jhsd0"]
@@ -88,7 +90,7 @@
 [ext_resource type="PackedScene" uid="uid://ccm32rl5d67al" path="res://addons/cogito/DemoScenes/DemoPrefabs/lounge_design_chair.tscn" id="81_yj30c"]
 [ext_resource type="PackedScene" uid="uid://bbw0r2f1pv2vw" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_ledge_painted_corner_double.tscn" id="83_igxpg"]
 [ext_resource type="PackedScene" uid="uid://dkfmxo0mgghcc" path="res://addons/cogito/DemoScenes/DemoPrefabs/water_plane.tscn" id="83_j65tm"]
-[ext_resource type="Shader" path="res://addons/cogito/Assets/Shader/water.gdshader" id="84_b4yjg"]
+[ext_resource type="Shader" uid="uid://ce3y1mja7h4b" path="res://addons/cogito/Assets/Shader/water.gdshader" id="84_b4yjg"]
 [ext_resource type="PackedScene" uid="uid://cn0bpqb4otng3" path="res://addons/cogito/Assets/VFX/Impacts/WaterSplashing.tscn" id="86_70b6h"]
 [ext_resource type="AudioStream" uid="uid://bd2ni82t6ht8t" path="res://addons/cogito/Assets/Audio/241842_poyekhali_running-water.ogg" id="87_ibv1p"]
 [ext_resource type="PackedScene" uid="uid://bqwcopwwk2x6s" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_steps_single.tscn" id="88_u6glq"]
@@ -102,7 +104,7 @@
 [ext_resource type="PackedScene" uid="uid://bn04jtk86pe0w" path="res://addons/cogito/DemoScenes/DemoPrefabs/cogito_sittable.tscn" id="93_cmkbc"]
 [ext_resource type="PackedScene" uid="uid://tkwv6b5arrw2" path="res://addons/cogito/PackedScenes/Pickups/pickup_coins.tscn" id="93_phwoo"]
 [ext_resource type="PackedScene" uid="uid://dpuhybufkdmcf" path="res://addons/cogito/DemoScenes/DemoPrefabs/bear_trap.tscn" id="96_vec6d"]
-[ext_resource type="Script" path="res://addons/cogito/SceneManagement/world_property_setter.gd" id="103_1du1g"]
+[ext_resource type="Script" uid="uid://bwlxff3xp451k" path="res://addons/cogito/SceneManagement/world_property_setter.gd" id="103_1du1g"]
 [ext_resource type="PackedScene" uid="uid://cuwptpgheq4l5" path="res://addons/cogito/PackedScenes/inventory_bag.tscn" id="104_mm36t"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
@@ -115,14 +117,14 @@ sky_material = SubResource("PanoramaSkyMaterial_wjbty")
 background_mode = 2
 sky = SubResource("Sky_cqwop")
 sky_rotation = Vector3(0, 1.74533, 0.174533)
-ambient_light_sky_contribution = 0.1
+ambient_light_sky_contribution = 0.2
 ambient_light_energy = 0.2
-tonemap_mode = 1
+tonemap_mode = 3
 ssao_enabled = true
 glow_enabled = true
-glow_intensity = 2.5
+glow_intensity = 1.0
 glow_strength = 0.37
-glow_bloom = 0.2
+glow_bloom = 0.4
 glow_blend_mode = 0
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
@@ -134,7 +136,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_1mfir"]
+[sub_resource type="Resource" id="Resource_hd73s"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -623,6 +625,99 @@ points = PackedVector3Array(0.98344, 2.54954, 6.93889e-18, -0.0204691, -0.020469
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s2v3r"]
 size = Vector3(2.1, 3, 1.78258)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bckdv"]
+resource_name = "metalLight"
+albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
+emission_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_elk7f"]
+resource_name = "metal"
+albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
+emission_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6u8e"]
+resource_name = "_defaultMat"
+emission_enabled = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xr775"]
+_surfaces = [{
+"aabb": AABB(0, 0, -1.5, 0.1875, 2.25, 1.5),
+"format": 34896613377,
+"index_count": 126,
+"index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYABAABAAgACAAFAAQACAAJAAUACQAKAAUACwAIAAEAAQAAAAsAAAAKAAsAAAAFAAoABQAAAAIAAgAHAAUAAwAGAAwADAACAAMADAANAAIADQAOAAIADwAMAAYABgAHAA8ABwAOAA8ABwACAA4ABgADAAEAAQAEAAYADgAJAAgACAAPAA4ACAALABAAEAARAAgAEQASAAgADwAIABIADwASABMAEwAMAA8ADAATABQAFAANAAwADgANABQAFAAVAA4AFQAWAA4ACQAOABYACQAWABcAFwAKAAkAEAALAAoACgAXABAA"),
+"name": "metalLight",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAA//8AAP//AAAAAAAA//8AAP//AAAAAP////8AAAAA//8AAAAA////////AAD/////AAAAAAAAVNX/vwAAAABU1f8/AAAAAKoq/z8AAAAAqir/vwAA//+qKv+/AAD//6oq/z8AAP//VNX/PwAA//9U1f+/AAD/X6oq/78AAP9f/3//vwAA/7//f/+/AAD/v6oq/78AAP+/qir/PwAA/7//f/8/AAD/X/9//z8AAP9fqir/PwAA")
+}, {
+"aabb": AABB(0, 0, -1.5, 0.1875, 2.25, 1.5),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("EgARABYAFgAVABIAFAATABIAEgAVABQAFAAXABAAEAATABQAFgARABAAEAAXABYA"),
+"name": "metal",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAA//8AAP//AAAAAAAA//8AAP//AAAAAP////8AAAAA//8AAAAA////////AAD/////AAAAAAAAVNX/vwAAAABU1f8/AAAAAKoq/z8AAAAAqir/vwAA//+qKv+/AAD//6oq/z8AAP//VNX/PwAA//9U1f+/AAD/X6oq/78AAP9f/3//vwAA/7//f/+/AAD/v6oq/78AAP+/qir/PwAA/7//f/8/AAD/X/9//z8AAP9fqir/PwAA")
+}, {
+"aabb": AABB(0, 0, -1.5, 0.1875, 2.25, 1.5),
+"format": 34896613377,
+"index_count": 12,
+"index_data": PackedByteArray("FQAUABcAFwAWABUAEAATABIAEgARABAA"),
+"name": "_defaultMat",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("AAAAAAAAAAAAAAAA//8AAP//AAAAAAAA//8AAP//AAAAAP////8AAAAA//8AAAAA////////AAD/////AAAAAAAAVNX/vwAAAABU1f8/AAAAAKoq/z8AAAAAqir/vwAA//+qKv+/AAD//6oq/z8AAP//VNX/PwAA//9U1f+/AAD/X6oq/78AAP9f/3//vwAA/7//f/+/AAD/v6oq/78AAP+/qir/PwAA/7//f/8/AAD/X/9//z8AAP9fqir/PwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_d0li4"]
+resource_name = "KSI_door_half_Mesh object"
+_surfaces = [{
+"aabb": AABB(0, 0, -1.5, 0.1875, 2.25, 1.5),
+"attribute_data": PackedByteArray("/38pLP9/fIT/byks/298hP9/fIT/fyks/498hP+PKSz/f3yE/18UFv9/AAAAAAAA/x8UFv8fZ27/X2duAAB8hP9/fIT/b3yE/38AAP9vAAD/fwAA/59nbv9/fIT//3yE/99nbv/fFBb/nxQW//8AAP+PfIT/f3yE/48AAP9/AAD/fz5C/39nbv9vPkL/b2du/39nbv95Z27/fxQW/3k+Qv9zPkL/bxQW/3Nnbv9vZ27/i2du/4s+Qv+PZ27/jz5C/49nbv+LZ27/jxQW/4s+Qv+FPkL/fxQW/4Vnbv9/Z27/f2du/38+Qv+FZ27/hT5C/4Vnbv+FPkL/i2du/4s+Qv+fZ27/nz5C/99nbv/fPkL/eT5C/3lnbv9zPkL/c2du/18+Qv9fZ27/Hz5C/x9nbv9zZ27/cz5C/3lnbv9zZ27/cz5C/3lnbv9zZ27/cz5C/3lnbg=="),
+"format": 34896613399,
+"index_count": 126,
+"index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYACgAIAAkACQALAAoACQAMAAsADAANAAsADgAJAAgACAAPAA4ADwANAA4ADwALAA0AEgAQABEAEQATABIAFgAUABUAFQAXABYAFQAYABcAGAAZABcAGgAVABQAFAAbABoAGwAZABoAGwAXABkAHgAcAB0AHQAfAB4AIgAgACEAIQAjACIAJgAkACUAJQAnACYAJwAoACYAKQAmACgAKQAoACoAKgArACkALgAsAC0ALQAvAC4AMgAwADEAMQAzADIAMwA0ADIANQAyADQANQA0ADYANgA3ADUAOgA4ADkAOQA7ADoA"),
+"material": SubResource("StandardMaterial3D_bckdv"),
+"name": "metalLight",
+"primitive": 3,
+"uv_scale": Vector4(39.3701, 57.0551, 0, 0),
+"vertex_count": 85,
+"vertex_data": PackedByteArray("AAAAAAAA//8AAAAA////////AAAAAP////8AAP////8AAP//////vwAA//8AAP+//////////7//////AAD/vwAAAAD///+/AABU1f+//78AAP//////vwAA//8AAP+/AABU1f8//78AAKoq/z//vwAAqir/v/+/AAAAAAAA/78AAAAAAAD/////AAAAAP//AAD//wAA////////AAD///////////+///+qKv+//7///wAA////v///AAAAAP+///+qKv8//7///1TV/z//v///VNX/v/+//////wAA/7///wAA////fwAAAAD///9//////////38AAP//////fwAAVNX/P///AABU1f+//////1TV/z//////VNX/v///AACqKv+/////X6oq/7///wAAVNX/v////1//f/+/////v/9//7//////VNX/v////7+qKv+//////6oq/7////+/qir/v/+//7+qKv8//7///6oq/7//v///qir/P/+///+qKv8//3//v6oq/z//f///VNX/P/9//7//f/8//3//X/9//z//fwAAVNX/P/9//1+qKv8//38AAKoq/z//fwAAqir/v/+/AACqKv8//7//X6oq/7//v/9fqir/P/+//1//f/+/VNX/X/9//z9U1f+//3//v1TV/7//f/8/VNX/v6oq/79U1f+//3//v1TV/7+qKv8/VNX/v/9//z9U1f9fqir/P1TV/1+qKv+/VNX/v6oq/z9U1f+/qir/v1TV/1//f/+/VNX/X6oq/79U1f9f/3//P1TV/1+qKv8/VNX/v6oq/z////9fqir/P////7//f/8/////X/9//z////+//3//P////1+qKv8/////X/9//7////9fqir/v////7//f/+/////f/8//3//P/9//z//f/8/////f////3////9/////f/9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/3////9/////f////3////9//z//f/8//3//P/9//z//f////3////9/////f////3/+//9/////f////3///////3////9/////f////3//f////3////9/////f////3////9/////f////3///////3////9/////f////3////9/////f////3////9//38AAP9/AAD/fwAA/38AAAAA/38AAP9/AAD/fwAA/3//f////3////9/////f////3//f/9//3//f/9//3//f/9//3//f/9//3////9/////f///")
+}, {
+"aabb": AABB(0, 0, -1.5, 0.1875, 2.25, 1.5),
+"attribute_data": PackedByteArray("/38pLP9/fIT/byks/298hP9/fIT/fyks/498hP+PKSz/f3yE/18UFv9/AAAAAAAA/x8UFv8fZ27/X2duAAB8hP9/fIT/b3yE/38AAP9vAAD/fwAA/59nbv9/fIT//3yE/99nbv/fFBb/nxQW//8AAP+PfIT/f3yE/48AAP9/AAD/fz5C/39nbv9vPkL/b2du/39nbv95Z27/fxQW/3k+Qv9zPkL/bxQW/3Nnbv9vZ27/i2du/4s+Qv+PZ27/jz5C/49nbv+LZ27/jxQW/4s+Qv+FPkL/fxQW/4Vnbv9/Z27/f2du/38+Qv+FZ27/hT5C/4Vnbv+FPkL/i2du/4s+Qv+fZ27/nz5C/99nbv/fPkL/eT5C/3lnbv9zPkL/c2du/18+Qv9fZ27/Hz5C/x9nbv9zZ27/cz5C/3lnbv9zZ27/cz5C/3lnbv9zZ27/cz5C/3lnbg=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("PgA8AD0APQA/AD4AQgBAAEEAQQBDAEIARgBEAEUARQBHAEYASgBIAEkASQBLAEoA"),
+"material": SubResource("StandardMaterial3D_elk7f"),
+"name": "metal",
+"primitive": 3,
+"uv_scale": Vector4(39.3701, 57.0551, 0, 0),
+"vertex_count": 85,
+"vertex_data": PackedByteArray("AAAAAAAAVNUAAAAA//9U1f//AAAAAFTV//8AAP//VNUAAP////9U1QAA//8AAFTV////////VNX/////AABU1QAAAAD//1TVAABU1f+/VNUAAP////9U1QAA//8AAFTVAABU1f8/VNUAAKoq/z9U1QAAqir/v1TVAAAAAAAAVNUAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//////////1TV//+qKv+/VNX//wAA//9U1f//AAAAAFTV//+qKv8/VNX//1TV/z9U1f//VNX/v1TV/////wAAVNX//wAA/////wAAAAD///////////////8AAP///////wAAVNX/P1TVAABU1f+/VNX//1TV/z9U1f//VNX/v1TVAACqKv+/////X6oq/7///wAAVNX/v////1//f/+/////v/9//7//////VNX/v////7+qKv+//////6oq/7////+/qir/v1TV/7+qKv8/VNX//6oq/79U1f//qir/P1TV//+qKv8/////v6oq/z//////VNX/P////7//f/8/////X/9//z///wAAVNX/P////1+qKv8///8AAKoq/z///wAAqir/v1TVAACqKv8/VNX/X6oq/79U1f9fqir/P1TV/1//f/+//7//X/9//z//v/+//3//v/+//7//f/8//7//v6oq/7//v/+//3//v/+//7+qKv8//7//v/9//z//v/9fqir/P////1+qKv+/////v6oq/z////+/qir/v////1//f/+//7//X6oq/7//v/9f/3//P/+//1+qKv8//7//v6oq/z////9fqir/P////7//f/8/////X/9//z////+//3//P////1+qKv8/////X/9//7////9fqir/v////7//f/+///8AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/3//f/9//3//f/9//3//fwAA/38AAP9/AAD/fwAA/3//f////3////9/////f////3////9/////f////3///////3////9/////f////3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f////3////9/////f////3////9/////f////3////9//38AAP9/AAD/fwAA/38AAP9//z//f/8//3//P/9//z//f////3////9/////f////3//f/9//3//f/9//3//f/9//3//f/9//3////9/////f///")
+}, {
+"aabb": AABB(0, 0, -1.5, 0.1875, 2.25, 1.5),
+"attribute_data": PackedByteArray("/38pLP9/fIT/byks/298hP9/fIT/fyks/498hP+PKSz/f3yE/18UFv9/AAAAAAAA/x8UFv8fZ27/X2duAAB8hP9/fIT/b3yE/38AAP9vAAD/fwAA/59nbv9/fIT//3yE/99nbv/fFBb/nxQW//8AAP+PfIT/f3yE/48AAP9/AAD/fz5C/39nbv9vPkL/b2du/39nbv95Z27/fxQW/3k+Qv9zPkL/bxQW/3Nnbv9vZ27/i2du/4s+Qv+PZ27/jz5C/49nbv+LZ27/jxQW/4s+Qv+FPkL/fxQW/4Vnbv9/Z27/f2du/38+Qv+FZ27/hT5C/4Vnbv+FPkL/i2du/4s+Qv+fZ27/nz5C/99nbv/fPkL/eT5C/3lnbv9zPkL/c2du/18+Qv9fZ27/Hz5C/x9nbv9zZ27/cz5C/3lnbv9zZ27/cz5C/3lnbv9zZ27/cz5C/3lnbg=="),
+"format": 34896613399,
+"index_count": 12,
+"index_data": PackedByteArray("TgBMAE0AUQBPAFAAJQAqACgAVABSAFMA"),
+"material": SubResource("StandardMaterial3D_y6u8e"),
+"name": "_defaultMat",
+"primitive": 3,
+"uv_scale": Vector4(39.3701, 57.0551, 0, 0),
+"vertex_count": 85,
+"vertex_data": PackedByteArray("AAAAAAAAVNUAAAAA//9U1f//AAAAAFTV//8AAP//VNUAAP////9U1QAA//8AAFTV////////VNX/////AABU1QAAAAD//1TVAABU1f+/VNUAAP////9U1QAA//8AAFTVAABU1f8/VNUAAKoq/z9U1QAAqir/v1TVAAAAAAAAVNUAAAAAAAD/////AAAAAP//AAD//wAA////////AAD//////////1TV//+qKv+/VNX//wAA//9U1f//AAAAAFTV//+qKv8/VNX//1TV/z9U1f//VNX/v1TV/////wAAVNX//wAA/////wAAAAD///////////////8AAP///////wAAVNX/P1TVAABU1f+/VNX//1TV/z9U1f//VNX/v1TVAACqKv+/////X6oq/7///wAAVNX/v////1//f/+/////v/9//7//////VNX/v////7+qKv+//////6oq/7////+/qir/v1TV/7+qKv8/VNX//6oq/79U1f//qir/P1TV//+qKv8/////v6oq/z//////VNX/P////7//f/8/////X/9//z///wAAVNX/P////1+qKv8///8AAKoq/z///wAAqir/v1TVAACqKv8/VNX/X6oq/79U1f9fqir/P1TV/1//f/+/VNX/X/9//z9U1f+//3//v1TV/7//f/8/VNX/v6oq/79U1f+//3//v1TV/7+qKv8/VNX/v/9//z9U1f9fqir/P1TV/1+qKv+/VNX/v6oq/z9U1f+/qir/v1TV/1//f/+/VNX/X6oq/79U1f9f/3//P1TV/1+qKv8/VNX/v6oq/z//v/9fqir/P/+//7//f/8//7//X/9//z//v/+//3//P/+//1+qKv8//7//X/9//7////9fqir/v////7//f/+///8AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/9/////f////3////9/////f////3////9/////f////3////9/////f////3////9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/3//f/9//3//f/9//3//fwAA/38AAP9/AAD/fwAA/3//f////3////9/////f////3////9/////f////3///////3////9/////f////3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f////3////9/////f////3////9/////f////3////9//38AAP9/AAD/fwAA/38AAAAA/38AAP9/AAD/fwAA/3//f////3////9/////f////////////////////3//f/9//3//f/9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_xr775")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w6tyf"]
+size = Vector3(0.2, 2.25, 1.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tng1d"]
 resource_name = "metal"
@@ -2428,7 +2523,7 @@ shadow_mesh = SubResource("ArrayMesh_3ecdw")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_upcaa"]
 data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, 0.0903, -0.88, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 1.3856, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -1.2, 0.6128, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.6128, 0.0903, -0.72, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.72, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 0, 0.0903, -1.2, 0, 0.0903, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 1.3856, 0.0903, -0.4, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -1.2, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -1.2, 0.6928, 0.1935, 0, 0, 0.1935, -0.4, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -1.2, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, -1.6, 0.6928, 0.0903, -1.6, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -0.4, 1.3856, 0.0903, -0.4, 0.6928, 0.0903, 0, 0.6928, 0.0903, 0, 0.6928, 0.1935, 0, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.0903, 0, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.1935, -0.4, 0.6928, 0.1935, 0, 0, 0.1935, -1.2, 0, 0.1935, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.8, 0, 0.1935, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -1.2, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.6928, 0.0903, -1.6, 0.6928, 0.1935, -1.6, 0, 0.1935, -1.2, 0.7728, 0.0903, -0.72, 0.7728, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.88, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.6128, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.8128, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.68, 0.6128, -0.4, -0.72, 0.7728, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.72, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.6128, -0.4, -0.88, 0.6128, -0.4, -0.72, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.4, -0.92, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.7728, -0.4, -0.88, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.88, 0.4928, -0.44, -1, 0.4928, -0.44, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -1, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.4928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.5, -1, 0.8928, -0.5, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -1, 0.8928, -0.5, -1, 0.4928, -0.44, -0.6, 0.4928, -0.44, -1, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.4928, -0.44, -0.6, 0.5728, -0.44, -0.68, 0.8128, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.68, 0.8128, -0.44, -0.92, 0.8928, -0.44, -0.6, 0.5728, -0.44, -0.92, 0.5728, -0.44, -0.68, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -1, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8128, -0.44, -0.92, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.92, 0.9128, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.9128, -0.54, -0.58, 0.9128, -0.54, -1.02, 0.4928, -0.5, -1, 0.4728, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.8928, -0.5, -1, 0.4928, -0.5, -1, 0.9128, -0.54, -1.02, 0.9128, -0.54, -0.58, 0.8928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.8928, -0.5, -1, 0.9128, -0.54, -1.02, 0.8928, -0.5, -0.6, 0.9128, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4728, -0.54, -0.58, 0.4728, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4928, -0.5, -1, 0.4928, -0.5, -0.6, 0.5728, -0.4, -0.92, 0.5728, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.4, -0.92, 0.5728, -0.4, -0.92)
 
-[sub_resource type="Resource" id="Resource_330nx"]
+[sub_resource type="Resource" id="Resource_md63x"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -2661,11 +2756,11 @@ shader_parameter/albedo_fresnel = Color(0.407843, 0.772549, 0.898039, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.02
 shader_parameter/transparency = 0.99
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_xty2f")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_acxul")
 shader_parameter/wave_direction = Vector2(5, 0)
 shader_parameter/wave_direction2 = Vector2(1, 3)
 shader_parameter/time_scale = 0.025
-shader_parameter/texture_normal = SubResource("NoiseTexture2D_xty2f")
-shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_acxul")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lqpxh"]
 data = PackedVector3Array(0.6507, 1.2298, -0.0446, 0.6507, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 1.2298, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.0691, 0.6507, 1.2298, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 0.0984, -0.0691, 0.6507, 1.2298, -0.0691, 0.6507, 1.2298, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 1.2298, -0.02, 0.0984, 1.2298, -0.02, 0.6507, 1.2298, -0.02, 0.6507, 1.2298, -0.0446, 0.0984, 1.2298, -0.0446, 0.6507, 1.2298, -0.0446, 0.6507, 1.2298, -0.0691, 0.6507, 1.2298, -0.0691, 0.0984, 1.2298, -0.0691, 0.0984, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.02, 0.0984, 1.2298, -0.02, 0.0984, 1.2298, -0.02, 0.0984, 1.2298, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0691, 0.0984, 0.0984, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 1.2298, -0.0446, 0.0984, 1.2298, -0.0691, 0.0984, 0.0984, -0.0691, 0.6507, 0.0984, -0.02, 0.0984, 0.0984, -0.02, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.6507, 0.0984, -0.0446, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.0446, 0.0984, 0.0984, -0.0446, 0.0984, 0.0984, -0.0691, 0.0984, 0.0984, -0.0691, 0.6507, 0.0984, -0.0691, 0.6507, 0.0984, -0.0446, 0.7492, 0, -0.0691, 0.7492, 0, -0.02, 0.7492, 1.3282, -0.02, 0.7492, 1.3282, -0.02, 0.7492, 1.3282, -0.0691, 0.7492, 0, -0.0691, 0.7492, 1.3282, -0.02, 0, 1.3282, -0.02, 0, 1.3282, -0.0691, 0, 1.3282, -0.0691, 0.7492, 1.3282, -0.0691, 0.7492, 1.3282, -0.02, 0, 0, -0.0691, 0.7492, 0, -0.0691, 0.0984, 0.0984, -0.0691, 0.0984, 0.0984, -0.0691, 0, 1.3282, -0.0691, 0, 0, -0.0691, 0.0984, 0.0984, -0.0691, 0.0984, 1.2298, -0.0691, 0, 1.3282, -0.0691, 0.0984, 1.2298, -0.0691, 0.6507, 1.2298, -0.0691, 0, 1.3282, -0.0691, 0.6507, 0.0984, -0.0691, 0.0984, 0.0984, -0.0691, 0.7492, 0, -0.0691, 0.7492, 0, -0.0691, 0.7492, 1.3282, -0.0691, 0.6507, 0.0984, -0.0691, 0.7492, 1.3282, -0.0691, 0.6507, 1.2298, -0.0691, 0.6507, 0.0984, -0.0691, 0.7492, 1.3282, -0.0691, 0, 1.3282, -0.0691, 0.6507, 1.2298, -0.0691, 0.7492, 0, -0.02, 0, 0, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 0.0984, -0.02, 0.7492, 1.3282, -0.02, 0.7492, 0, -0.02, 0.6507, 0.0984, -0.02, 0.6507, 1.2298, -0.02, 0.7492, 1.3282, -0.02, 0.6507, 1.2298, -0.02, 0.0984, 1.2298, -0.02, 0.7492, 1.3282, -0.02, 0.0984, 0.0984, -0.02, 0.6507, 0.0984, -0.02, 0, 0, -0.02, 0, 0, -0.02, 0, 1.3282, -0.02, 0.0984, 0.0984, -0.02, 0, 1.3282, -0.02, 0.0984, 1.2298, -0.02, 0.0984, 0.0984, -0.02, 0, 1.3282, -0.02, 0.7492, 1.3282, -0.02, 0.0984, 1.2298, -0.02, 0.7492, 0, -0.0691, 0, 0, -0.0691, 0, 0, -0.02, 0, 0, -0.02, 0.7492, 0, -0.02, 0.7492, 0, -0.0691, 0, 1.3282, -0.0691, 0, 1.3282, -0.02, 0, 0, -0.02, 0, 0, -0.02, 0, 0, -0.0691, 0, 1.3282, -0.0691)
@@ -3148,6 +3243,9 @@ size = Vector3(5.08541, 3.48608, 16.0137)
 [node name="Cogito04NewDemo" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_dracg")
 connectors = [NodePath("MAIN_LOBBY/LAB_CONNECTOR/ConnectorFromLab")]
+bgm_neutral = ExtResource("2_hd73s")
+bgm_combat = ExtResource("2_jeioi")
+music_max_volume_db = -8.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.5, -0.224144, 0.836516, -1.13133e-08, 0.965926, 0.258819, -0.866025, -0.12941, 0.482963, 0, 2, 0)
@@ -3170,7 +3268,7 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-inventory_data = SubResource("Resource_1mfir")
+inventory_data = SubResource("Resource_hd73s")
 step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
@@ -3579,6 +3677,17 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -12.97
 
 [node name="KSI_wall_doorway_painted" parent="MAIN_LOBBY/LAB_CONNECTOR" instance=ExtResource("11_je61h")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -16, 0, -7)
+
+[node name="SlidingDoorMeshOnly" type="Node3D" parent="MAIN_LOBBY/LAB_CONNECTOR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.1795, 0, -4.75)
+
+[node name="object_029" type="MeshInstance3D" parent="MAIN_LOBBY/LAB_CONNECTOR/SlidingDoorMeshOnly"]
+mesh = SubResource("ArrayMesh_d0li4")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MAIN_LOBBY/LAB_CONNECTOR/SlidingDoorMeshOnly"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 1.125, -0.75)
+shape = SubResource("BoxShape3D_w6tyf")
 
 [node name="stairsOpenSingle" type="StaticBody3D" parent="MAIN_LOBBY"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.4, 0, -4.34634)
@@ -6067,6 +6176,7 @@ open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
 door_type = 1
 open_position = Vector3(0, 0, 0.28)
+door_speed = 0.1
 
 [node name="drawer" type="MeshInstance3D" parent="UPPER_OFFICE_CEO/deskCorner/Drawer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.548034, -1.51695)
@@ -6113,6 +6223,7 @@ close_sound = ExtResource("16_py2k0")
 door_type = 1
 closed_position = Vector3(0.625, 0.785, -0.03)
 open_position = Vector3(0.625, 1.285, -0.03)
+door_speed = 0.1
 
 [node name="windowBottom" type="MeshInstance3D" parent="UPPER_OFFICE_CEO/wallWindowSlide/Window_Openable"]
 mesh = SubResource("ArrayMesh_npydk")
@@ -6184,6 +6295,7 @@ lock_sound = ExtResource("18_sk7n4")
 is_locked = true
 key = ExtResource("19_vxibd")
 key_hint = "Key not found!"
+angle_tolerance = 1.0
 
 [node name="BasicInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="2"]
 is_disabled = true
@@ -6196,23 +6308,27 @@ hold_time = 1.0
 hold_node = NodePath("../LockInteraction")
 input_map_action = "interact"
 
-[node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0289998, -4.15)
+[node name="SecretAreaDoor" type="Node3D" parent="UPPER_OFFICE_CEO"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.029, -4.15)
+
+[node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO/SecretAreaDoor"]
 script = ExtResource("13_5x4ip")
 open_rotation_deg = 275.0
 closed_rotation_deg = 180.0
-door_speed = 0.2
+open_rotation = Vector3(0, 120, 0)
+door_speed = 3.0
+angle_tolerance = 4.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="UPPER_OFFICE_CEO/HiddenDoor"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="UPPER_OFFICE_CEO/SecretAreaDoor/HiddenDoor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.72, 0)
 mesh = SubResource("BoxMesh_ridra")
 surface_material_override/0 = SubResource("StandardMaterial3D_f8x52")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="UPPER_OFFICE_CEO/HiddenDoor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UPPER_OFFICE_CEO/SecretAreaDoor/HiddenDoor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.72, 0)
 shape = SubResource("BoxShape3D_o4xws")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="UPPER_OFFICE_CEO/HiddenDoor"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="UPPER_OFFICE_CEO/SecretAreaDoor/HiddenDoor"]
 volume_db = -26.0
 bus = &"SFX"
 
@@ -6264,7 +6380,7 @@ collision_layer = 3
 script = ExtResource("22_fgo21")
 rotation_axis = Vector3(0, 0, 1)
 rotation_speed = 0.01
-nodes_to_trigger = [NodePath("../HiddenDoor")]
+nodes_to_trigger = [NodePath("../SecretAreaDoor/HiddenDoor")]
 hold_audio_stream = ExtResource("23_q1spm")
 
 [node name="bear(Clone)" type="MeshInstance3D" parent="UPPER_OFFICE_CEO/bear"]
@@ -6373,6 +6489,7 @@ transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332
 [node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
 interaction_text_when_locked = "Locked."
 is_locked = true
+angle_tolerance = 1.0
 
 [node name="Wall81" type="StaticBody3D" parent="ARCHIVE"]
 metadata/_edit_group_ = true
@@ -6759,6 +6876,7 @@ transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048
 
 [node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
 interaction_text_when_locked = "Locked."
+angle_tolerance = 1.0
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="MEETING_ROOM"]
 transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, -7.26615, 0, -20.9217)
@@ -6994,7 +7112,8 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 
 [node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
-inventory_data = SubResource("Resource_330nx")
+display_name = "Fridge"
+inventory_data = SubResource("Resource_md63x")
 
 [node name="kitchenMicrowave2" parent="BREAK_ROOM" instance=ExtResource("61_1x4um")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)
@@ -7144,6 +7263,8 @@ script = ExtResource("13_5x4ip")
 open_sound = ExtResource("49_uekwd")
 close_sound = ExtResource("50_air2v")
 open_rotation_deg = 95.0
+open_rotation = Vector3(0, 95, 0)
+door_speed = 4.0
 
 [node name="door" type="MeshInstance3D" parent="BATHROOM_STALL2/wallDoorway2/DoorBasic/Door"]
 mesh = SubResource("ArrayMesh_67fgn")
@@ -7211,6 +7332,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4688, -2.57192, -1.98452)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_rotation_deg = 92.0
+open_rotation = Vector3(0, 92, 0)
+door_speed = 2.0
 
 [node name="paneling" type="MeshInstance3D" parent="BATHROOM_STALL2/DuctDoor"]
 transform = Transform3D(-4.37114e-08, 0.9, -7.86805e-08, -1, -3.93403e-08, -7.86805e-08, -8.74228e-08, 7.86805e-08, 0.9, -1.06911, 1.00577, -0.000542641)
@@ -7452,6 +7575,7 @@ transform = Transform3D(0.374526, 0, -0.927217, 0, 1, 0, 0.927217, 0, 0.374526, 
 [node name="lampRoundFloor" parent="ENTRANCE_AREA" instance=ExtResource("25_ohpwf")]
 
 [node name="trashcan" parent="ENTRANCE_AREA" instance=ExtResource("58_no7q4")]
+transform = Transform3D(0.771402, 0, 0.636348, 0, 1, 0, -0.636348, 0, 0.771402, 0.403079, 0.4, -15.5926)
 
 [node name="trashcan2" parent="ENTRANCE_AREA" instance=ExtResource("58_no7q4")]
 transform = Transform3D(0.999709, 0, -0.0240999, 0, 1, 0, 0.0240999, 0, 0.999709, -7.02733, -1.67638e-07, -7.60032)
@@ -7689,6 +7813,7 @@ rattle_sound = ExtResource("65_cw5kp")
 is_locked = true
 key_hint = "I should look around more."
 open_rotation_deg = 95.0
+door_speed = 0.1
 
 [node name="door" type="MeshInstance3D" parent="FrontDoor"]
 mesh = SubResource("ArrayMesh_lwlr7")

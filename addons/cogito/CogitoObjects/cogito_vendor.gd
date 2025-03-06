@@ -1,6 +1,7 @@
 extends Node3D
 
 ##How much stock the vendor starts with
+
 @export var starting_amount : int = 3
 @export var object_to_spawn : PackedScene
 @export var spawn_delay : float = 1.5

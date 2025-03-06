@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://bnuhj8svbmuls"]
 
 [ext_resource type="Texture2D" uid="uid://da7w1loulonl7" path="res://addons/cogito/Assets/Graphics/ItemIcons/Dart_Water.png" id="1_413bt"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_3j8c3"]
+[ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_3j8c3"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_5f8dt"]
 [ext_resource type="PackedScene" uid="uid://ojfyqud74i47" path="res://addons/cogito/Wieldables/throw_dart_water.tscn" id="4_kqie7"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=4 uid="uid://b8nhffak4g0c6"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_vehicle.gd" id="1_14400"]
+[ext_resource type="Script" uid="uid://dxascatu8nd2x" path="res://addons/cogito/CogitoObjects/cogito_vehicle.gd" id="1_14400"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="2_hg52m"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://addons/cogito/Assets/Audio/Kenney/cloth2.ogg" id="2_tkltg"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="3_ag03y"]

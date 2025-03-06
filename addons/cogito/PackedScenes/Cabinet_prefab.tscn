@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://dbtarejfetahc"]
 
 [ext_resource type="PackedScene" uid="uid://cxwwd4mjnn34w" path="res://addons/cogito/PackedScenes/Shelf.tscn" id="1_g3pr0"]
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="2_xux4j"]
+[ext_resource type="Script" uid="uid://cismjpvxmsbf2" path="res://addons/cogito/CogitoObjects/cogito_door.gd" id="2_xux4j"]
 [ext_resource type="AudioStream" uid="uid://dmk55e0pfdovt" path="res://addons/cogito/Assets/Audio/Kenney/cardTakeOutPackage1.ogg" id="3_jxcxt"]
 [ext_resource type="AudioStream" uid="uid://ckxotbwm6qtui" path="res://addons/cogito/Assets/Audio/Kenney/cardTakeOutPackage2.ogg" id="4_4064u"]
 [ext_resource type="PackedScene" uid="uid://cyy2kpk7e36if" path="res://addons/cogito/PackedScenes/Shelf_Drawer.tscn" id="5_61f6l"]
@@ -45,6 +45,7 @@ close_sound = ExtResource("4_4064u")
 door_type = 1
 closed_position = Vector3(0, 0.04, 0.3)
 open_position = Vector3(0, 0.04, -0.04)
+door_speed = 0.3
 
 [node name="shelf_drawer" parent="Drawer" instance=ExtResource("5_61f6l")]
 transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, 0.55, 0, -0.5, -2.40413e-08, 0, -0.0124792, -0.102205)
@@ -77,6 +78,7 @@ close_sound = ExtResource("4_4064u")
 door_type = 1
 closed_position = Vector3(0, 0.34, 0.3)
 open_position = Vector3(0, 0.34, -0.04)
+door_speed = 0.3
 
 [node name="shelf_drawer" parent="Drawer2" instance=ExtResource("5_61f6l")]
 transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, 0.55, 0, -0.5, -2.40413e-08, 0, -0.0124792, -0.102205)
@@ -107,6 +109,8 @@ script = ExtResource("2_xux4j")
 open_sound = ExtResource("6_q1lg4")
 close_sound = ExtResource("7_takda")
 open_rotation_deg = -100.0
+open_rotation = Vector3(0, -100, 0)
+door_speed = 3.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CabinetDoorA"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.273755, 0.249783, 0.0143263)
@@ -133,6 +137,8 @@ script = ExtResource("2_xux4j")
 open_sound = ExtResource("6_q1lg4")
 close_sound = ExtResource("7_takda")
 open_rotation_deg = 100.0
+open_rotation = Vector3(0, 100, 0)
+door_speed = 3.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CabinetDoorB"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.276946, 0.249783, 0.0143263)

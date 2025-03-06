@@ -25,7 +25,7 @@ To re-iterate, the following plugins should be installed and activated:
 
 * Cogito
 * Quick Audio (currently v1.0)
-* Input Helper (currently v4.4.0)
+* Input Helper (currently v4.6.0)
 
 
 Make sure that the Main Scene is set to ``res://addons/cogito/DemoScenes/COGITO_0_MainMenu.tscn``. This is not strictly necessary, but will make sure the Demo project runs as expected.
@@ -34,12 +34,11 @@ Make sure that the Main Scene is set to ``res://addons/cogito/DemoScenes/COGITO_
 
 If you have NOT made a copy of the whole project, but instead grabbed the addon from the AssetLib, your project might be missing the required input map settings.
 To easily get those, Cogito has a function that will reset/overwrite your input map settings to get you started.
-PLEASE NOTE: This will restart the editor without any prompts! 
 
 1. Find ``CogitoSettings.tres`` under ``addons/cogito/``.
 2. If you select this resource, in the inspector, you find a group called **Danger Zone**
-3. There's a bool switch called ``Reset Project Input Map``
-4. If you're ready,Click the ``on`` checkbox, to reset the input map for your project.
+3. There you will find a button ``Reset Project Input Map``
+4. If you're ready, click it to reset the input map for your project.
 5. You need to manually restart your Godot project for the changes to take effect.
 
 

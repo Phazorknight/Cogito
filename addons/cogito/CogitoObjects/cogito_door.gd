@@ -16,6 +16,8 @@ enum DoorType {
 }
 
 #region Variables
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
 
 @export_group("Audio")
 @export var open_sound : AudioStream
@@ -60,7 +62,7 @@ enum DoorType {
 		notify_property_list_changed()
 
 func _validate_property(property: Dictionary):
-	if property.name in ["use_z_axis", "bidirectional_swing", "open_rotation_deg", "closed_rotation_deg"] and door_type != DoorType.ROTATING:
+	if property.name in ["use_z_axis", "bidirectional_swing", "open_rotation_deg", "closed_rotation_deg", "open_rotation", "closed_rotation", "angle_tolerance"] and door_type != DoorType.ROTATING:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 	elif property.name in ["open_position", "closed_position"] and door_type != DoorType.SLIDING:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
@@ -78,12 +80,18 @@ func _validate_property(property: Dictionary):
 @export var open_rotation_deg : float = 0.0
 ## Rotation Y when the door is closed. In degrees.
 @export var closed_rotation_deg : float = 0.0
+## Rotation Y when the door is open. In degrees.
+@export var open_rotation : Vector3 = Vector3.ZERO
+## Rotation Y when the door is closed. In degrees.
+@export var closed_rotation : Vector3 = Vector3.ZERO
 ## Local position of transform when closed
 @export var closed_position : Vector3
 ## Local position of transform when open
 @export var open_position : Vector3
-## Speed in which the door moves between open and closed position. Usually around 0.1.
-@export var door_speed : float = .1
+## Speed in which the door moves between open and closed position.
+@export var door_speed : float = 1
+## The stop tolerance if the door rotation reaches the target angle. If your door keeps "oversteering", increase this value.
+@export var angle_tolerance : float = 1
 
 # Aimation Parameters
 @export var animation_player : NodePath
@@ -98,6 +106,7 @@ func _validate_property(property: Dictionary):
 var anim_player : AnimationPlayer
 var is_moving : bool = false
 var target_rotation_rad : float 
+var target_rotation_vector : Vector3 = Vector3.ZERO
 var interaction_text
 var lock_interaction_text
 var close_timer : Timer #Used for auto-close
@@ -138,6 +147,7 @@ func _ready():
 	object_state_updated.emit(interaction_text)
 	lock_state_updated.emit(lock_interaction_text)
 
+
 func interact(interactor: Node3D):
 	player_interaction_component = interactor
 	if !is_locked:
@@ -158,24 +168,26 @@ func interact(interactor: Node3D):
 	else:
 		door_rattle(interactor)
 
+
 func door_rattle(interactor):
 	audio_stream_player_3d.stream = rattle_sound
 	audio_stream_player_3d.play()
 	interactor.send_hint(null,"I can't open it")
 
+
 func _physics_process(_delta):
 	if door_type == DoorType.ROTATING:
 		if is_moving:
-			if use_z_axis:
-				rotation.z = lerp_angle(rotation.z, target_rotation_rad, door_speed)
-			else:
-				rotation.y = lerp_angle(rotation.y, target_rotation_rad, door_speed)
+			rotation = rotation.move_toward(target_rotation_vector, _delta * door_speed)
 	
-		if use_z_axis and abs(rotation.z - target_rotation_rad) <= 0.01: 
-			is_moving = false
-		if !use_z_axis and abs(rotation.y - target_rotation_rad) <= 0.01: 
-			is_moving = false
+			if vectors_approx_equal(target_rotation_vector, rotation_degrees, angle_tolerance):
+				is_moving = false
 
+
+func vectors_approx_equal( v1 : Vector3, v2 : Vector3, epsilon : float ) -> bool:
+	var diff = v1 - v2
+	#print("Vector3 diff: ", diff.length() )
+	return abs( diff.x ) < epsilon and abs( diff.y ) < epsilon and abs( diff.z ) < epsilon
 
 
 func lock_unlock_switch():
@@ -189,18 +201,18 @@ func lock_unlock_switch():
 		if nodepath != null:
 			var object = get_node(nodepath)
 			object.lock_unlock_switch()
-			
+
+
 func unlock_door():
-	
 	audio_stream_player_3d.stream = unlock_sound
 	audio_stream_player_3d.play()
 	is_locked = false
 	lock_interaction_text = interaction_text_when_unlocked	
 	lock_state_updated.emit(lock_interaction_text)
 	lock_state_changed.emit(is_locked)
-	
+
+
 func lock_door():
-	
 	audio_stream_player_3d.stream = lock_sound
 	audio_stream_player_3d.play()
 	is_locked = true
@@ -217,6 +229,7 @@ func open_door(interactor: Node3D):
 		anim_player.play(opening_animation)
 	elif door_type == DoorType.ROTATING:
 		target_rotation_rad = deg_to_rad(open_rotation_deg)
+		target_rotation_vector = open_rotation
 		var swing_direction: int = 1
 
 		if bidirectional_swing:
@@ -225,6 +238,7 @@ func open_door(interactor: Node3D):
 			swing_direction = -1 if offset_dot_product < 0 else 1
 
 		target_rotation_rad = deg_to_rad(open_rotation_deg * swing_direction)
+		target_rotation_vector = open_rotation * swing_direction
 		is_moving = true
 	else:
 		var tween_door = get_tree().create_tween()
@@ -262,6 +276,7 @@ func close_door(_interactor: Node3D):
 			anim_player.play(closing_animation)
 	elif door_type == DoorType.ROTATING:
 		target_rotation_rad = deg_to_rad(closed_rotation_deg)
+		target_rotation_vector = closed_rotation
 		is_moving = true
 	else:
 		# Sliding door close
@@ -297,20 +312,22 @@ func set_to_open_position():
 	if door_type == DoorType.SLIDING:
 		position = open_position
 	else:
-		if use_z_axis:
-			rotation.z = deg_to_rad(open_rotation_deg)
-		else:
-			rotation.y = deg_to_rad(open_rotation_deg)
+		rotation_degrees = open_rotation
+		#if use_z_axis:
+			#rotation.z = deg_to_rad(open_rotation_deg)
+		#else:
+			#rotation.y = deg_to_rad(open_rotation_deg)
 
 
 func set_to_closed_position():
 	if door_type == DoorType.SLIDING:
 		position = closed_position
 	else:
-		if use_z_axis:
-			rotation.z = deg_to_rad(closed_rotation_deg)
-		else:
-			rotation.y = deg_to_rad(closed_rotation_deg)
+		rotation_degrees = closed_rotation
+		#if use_z_axis:
+			#rotation.z = deg_to_rad(closed_rotation_deg)
+		#else:
+			#rotation.y = deg_to_rad(closed_rotation_deg)
 
 #alternate interaction for locking/unlocking
 func interact2(interactor: Node3D):

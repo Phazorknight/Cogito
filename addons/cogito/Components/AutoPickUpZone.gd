@@ -51,7 +51,6 @@ func _attempt_pick_up(body: Node3D) -> void:
 		var pick_up_component = body.get_child(i) as PickupComponent
 		# This prevents cogito projectiles
 		if body is CogitoProjectile and !(body as CogitoProjectile).can_pick_up:
-			#print("can't pick up projectile as it has just been fired")
 			continue
 		
 		if auto_pick_up_items.has(pick_up_component.slot_data.inventory_item):

@@ -10,14 +10,9 @@ enum UpdateType {Start, Complete, Fail, ChangeCounter}
 var has_been_triggered : bool = false #Used to avoid double-triggering.
 
 
-func _ready():
-	#add_to_group("save_object_state")
-	pass
-
-
 # Called when the node enters the scene tree for the first time.
 func update_quest():
-	print("Quest updater: Attempting to update quest ", quest_to_update.quest_name)
+	CogitoGlobals.debug_log(true, "cogito_quest_updater.gd", "Attempting to update quest " + quest_to_update.quest_name)
 	match update_type:
 		UpdateType.Start:
 			CogitoQuestManager.start_quest(quest_to_update)
@@ -25,7 +20,7 @@ func update_quest():
 			quest_to_update.update()
 			CogitoQuestManager.complete_quest(quest_to_update)
 		UpdateType.Fail:
-			print("Failing quest ", quest_to_update)
+			CogitoGlobals.debug_log(true, "cogito_quest_updater.gd", "Failing quest " + quest_to_update.quest_name)
 			CogitoQuestManager.fail_quest(quest_to_update)
 		UpdateType.ChangeCounter:
 			if has_been_triggered:

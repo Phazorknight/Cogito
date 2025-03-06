@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://clxom1rnn3dew" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_DiamondKey_A.png" id="1_xkbwk"]
 [ext_resource type="Texture2D" uid="uid://bttj6m78b6odm" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Cog.png" id="1_xojlq"]
 [ext_resource type="Resource" uid="uid://gu1buq254o4l" path="res://addons/cogito/InventoryPD/Items/Cogito_DiamondKey_Combine.tres" id="3_apbvy"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_docv3"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="5_k8w13"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_docv3"]
+[ext_resource type="Script" uid="uid://cpeysdr8xn5a0" path="res://addons/cogito/InventoryPD/CustomResources/CombinableItemPD.gd" id="5_k8w13"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="6_bxgel"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="7_wumxo"]
 

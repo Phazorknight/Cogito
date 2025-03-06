@@ -12,6 +12,9 @@ signal object_state_updated(interaction_text:String)
 @onready var grab_focus_button : Control = $"KeypadUi/Bindings/ScrollContainer/VBoxContainer/GridContainer/5"
 @onready var lock_color: Panel = $KeypadUi/Bindings/ScrollContainer/VBoxContainer/HBoxContainer/LockColor
 
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String
+
 @export_group("Keypad Settings")
 ## The code that needs to be entered to unlock. Needs to be just numbers.
 @export var passcode : String

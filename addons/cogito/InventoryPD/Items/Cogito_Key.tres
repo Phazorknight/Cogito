@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bttj6m78b6odm" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Cog.png" id="1_17jgp"]
 [ext_resource type="Texture2D" uid="uid://bsf2bc116o1oi" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoKey.png" id="1_n8yj5"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/KeyItemPD.gd" id="3_2pl2b"]
+[ext_resource type="Script" uid="uid://bs12ghpa142vt" path="res://addons/cogito/InventoryPD/CustomResources/KeyItemPD.gd" id="3_2pl2b"]
 [ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://addons/cogito/Assets/Audio/Kenney/beltHandle2.ogg" id="4_7b7vh"]
 
 [resource]

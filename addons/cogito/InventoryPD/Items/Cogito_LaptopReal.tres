@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="KeyItemPD" load_steps=4 format=3 uid="uid://ca0wjra4aq00v"]
 
 [ext_resource type="Texture2D" uid="uid://b4hu864fg0bv4" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Laptop_Logo.png" id="1_bw20e"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/KeyItemPD.gd" id="1_h5ph8"]
+[ext_resource type="Script" uid="uid://bs12ghpa142vt" path="res://addons/cogito/InventoryPD/CustomResources/KeyItemPD.gd" id="1_h5ph8"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="2_d64qt"]
 
 [resource]

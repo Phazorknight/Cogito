@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="KeyItemPD" load_steps=3 format=3 uid="uid://do16v80crng52"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/KeyItemPD.gd" id="1_5cvs2"]
+[ext_resource type="Script" uid="uid://bs12ghpa142vt" path="res://addons/cogito/InventoryPD/CustomResources/KeyItemPD.gd" id="1_5cvs2"]
 [ext_resource type="Texture2D" uid="uid://c01ygfjdiujr6" path="res://addons/cogito/Assets/Graphics/ItemIcons/page_combined.png" id="1_g83kf"]
 
 [resource]

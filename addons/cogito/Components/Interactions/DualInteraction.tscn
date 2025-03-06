@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bqp8nl7x2c37m"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/DualInteraction.gd" id="1_onadr"]
+[ext_resource type="Script" uid="uid://d1kfc1qtxt8cp" path="res://addons/cogito/Components/Interactions/DualInteraction.gd" id="1_onadr"]
 [ext_resource type="PackedScene" uid="uid://c62m84iy6lkk5" path="res://addons/cogito/Components/UI/UI_ProgressWheel.tscn" id="2_cfkt0"]
 
 [node name="DualInteraction" type="Node3D"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dkfmxo0mgghcc"]
 
-[ext_resource type="Shader" path="res://addons/cogito/Assets/Shader/water.gdshader" id="1_rv278"]
+[ext_resource type="Shader" uid="uid://ce3y1mja7h4b" path="res://addons/cogito/Assets/Shader/water.gdshader" id="1_rv278"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_a6yhw"]
 subdivide_width = 200
@@ -36,11 +36,11 @@ shader_parameter/albedo_fresnel = Color(0.407843, 0.772549, 0.898039, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.02
 shader_parameter/transparency = 0.9
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_xty2f")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_acxul")
 shader_parameter/wave_direction = Vector2(2, 0)
 shader_parameter/wave_direction2 = Vector2(0, 1)
 shader_parameter/time_scale = 0.025
-shader_parameter/texture_normal = SubResource("NoiseTexture2D_xty2f")
-shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_acxul")
 
 [node name="WaterPlane" type="MeshInstance3D"]
 mesh = SubResource("QuadMesh_a6yhw")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://bdab2cuy8hue6"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_sittable.gd" id="1_ljpjm"]
+[ext_resource type="Script" uid="uid://buphmm2nywggj" path="res://addons/cogito/CogitoObjects/cogito_sittable.gd" id="1_ljpjm"]
 [ext_resource type="Material" uid="uid://btcifedtf2mc4" path="res://addons/cogito/DynamicFootstepSystem/Assets/Materials/Example_Stone.tres" id="2_g611i"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://addons/cogito/Components/ImpactSounds.tscn" id="3_4okg1"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="4_oxytt"]

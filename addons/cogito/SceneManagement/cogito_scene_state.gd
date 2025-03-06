@@ -28,17 +28,14 @@ func write_state(state_slot : String, scene_name : String) -> void:
 	dir.make_dir(str(state_slot))
 	var scene_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_scene_state_prefix + scene_name + ".res")
 	ResourceSaver.save(self, scene_state_file, ResourceSaver.FLAG_CHANGE_PATH)
-	print("Scene state saved as ", scene_state_file)
-	# For debug save as .tres
-	#var scene_state_file_tres = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_scene_state_prefix + scene_name + ".tres")
-	#ResourceSaver.save(self, scene_state_file_tres, ResourceSaver.FLAG_CHANGE_PATH | ResourceSaver.FLAG_RELATIVE_PATHS)
-	#print("Scene state saved as .tres: ", scene_state_file_tres)
+	CogitoGlobals.debug_log(true, "cogito_scene_state.gd", "Scene state saved as " + scene_state_file)
 
 
 func state_exists(state_slot : String, scene_name : String) -> bool:
 	var scene_state_file = str(CogitoSceneManager.cogito_state_dir + state_slot + "/" + CogitoSceneManager.cogito_scene_state_prefix + scene_name + ".res")
-	print("Cogito_scene_state.gd: Looking if stat exists: ", scene_state_file)
-	return ResourceLoader.exists(scene_state_file)
+	CogitoGlobals.debug_log(true, "cogito_scene_state.gd","Looking if stat exists: " + scene_state_file)
+	#return ResourceLoader.exists(scene_state_file)
+	return FileAccess.file_exists(scene_state_file)
  
 
 func load_state(state_slot : String, scene_name : String) -> Resource:

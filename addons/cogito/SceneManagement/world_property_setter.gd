@@ -22,4 +22,4 @@ func set_properties(properties_to_set: Dictionary) -> void:
 	
 	for property in properties_to_set:
 		world_dict[property] = properties_to_set[property]
-		print("World Property Setter: ", property, " set to ", properties_to_set[property] )
+		CogitoGlobals.debug_log(true, "world_property_setter.gd", str(property) + " set to " + str(properties_to_set[property]) )

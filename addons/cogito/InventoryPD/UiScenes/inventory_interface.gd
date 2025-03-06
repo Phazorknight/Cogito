@@ -155,7 +155,7 @@ func set_external_inventory(_external_inventory_owner):
 	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
-	external_inventory_ui.inventory_name = external_inventory_owner.inventory_name
+	external_inventory_ui.inventory_name = external_inventory_owner.display_name
 	external_inventory_ui.set_inventory_data(inventory_data)
 	
 	external_inventory_ui.show()
@@ -213,23 +213,23 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 			grabbed_slot_data = inventory_data.get_slot_data(index)
 			if grabbed_slot_data:
 				if !grabbed_slot_data.inventory_item.is_droppable:
-					print("Item is not droppable.")
+					CogitoGlobals.debug_log(true, "inventory_interface.gd", "Item is not droppable.")
 					Audio.play_sound(sound_error)
 					grabbed_slot_data = null
 					return
 				if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
 				#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 					Audio.play_sound(sound_error)
-					print("Can't drop while wielding this item.")
+					CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop while wielding this item.")
 					grabbed_slot_data = null
 				else:
-					print("Dropping slot data via gamepad ")
+					CogitoGlobals.debug_log(true, "inventory_interface.gd", "Dropping slot data via gamepad ")
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
 					drop_slot_data.emit(grabbed_slot_data.create_single_slot_data_gamepad_drop(index))
 					grabbed_slot_data = null
 		
 		[null, "inventory_assign_item"]: # Pressing "Assign quickslot" on gamepad
-			print("Grabbing focus of quickslots.")
+			CogitoGlobals.debug_log(true, "inventory_interface.gd", "Grabbing focus of quickslots.")
 			grabbed_slot_data = inventory_data.grab_slot_data(index)
 			quick_slots.quickslot_containers[0].grab_focus.call_deferred()
 			
@@ -240,7 +240,7 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 		
 		[_, "inventory_drop_item"]:
 			Audio.play_sound(sound_error)
-			print("Can't drop while moving an item.")
+			CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop while moving an item.")
 
 
 	var amount_of_inventory_slots = inventory_ui.slot_array.size()
@@ -277,7 +277,7 @@ func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotConta
 		grabbed_slot_data = null
 		update_grabbed_slot()
 	else:
-		print("inventory_interface.gd: No grabbed slot data.")
+		CogitoGlobals.debug_log(true, "inventory_interface.gd", "No grabbed slot data.")
 
 
 # Grabbed slot data handling for mouse buttons
@@ -290,12 +290,12 @@ func _on_gui_input(event):
 				MOUSE_BUTTON_LEFT:
 					if !grabbed_slot_data.inventory_item.is_droppable:
 						Audio.play_sound(sound_error)
-						print("This item isn't droppable.")
+						CogitoGlobals.debug_log(true, "inventory_interface.gd", "This item isn't droppable.")
 						return
 					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
 					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
-						print("Can't drop while wielding this item.")
+						CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index))
 						if grabbed_slot_data.quantity < 1:
@@ -303,12 +303,12 @@ func _on_gui_input(event):
 					
 				MOUSE_BUTTON_RIGHT:
 					if !grabbed_slot_data.inventory_item.is_droppable:
-						print("This item isn't droppable.")
+						CogitoGlobals.debug_log(true, "inventory_interface.gd", "This item isn't droppable.")
 						return
 					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
 					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
-						print("Can't drop while wielding this item.")
+						CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop while wielding this item.")
 					else:
 						drop_slot_data.emit(grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index))
 						if grabbed_slot_data.quantity < 1:

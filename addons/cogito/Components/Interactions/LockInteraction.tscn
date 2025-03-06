@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bbt5twbnrlcfj"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/LockInteraction.gd" id="3_3fqsx"]
+[ext_resource type="Script" uid="uid://cf1yle7hmvwqe" path="res://addons/cogito/Components/Interactions/LockInteraction.gd" id="3_3fqsx"]
 
 [node name="LockInteraction" type="Node3D"]
 script = ExtResource("3_3fqsx")

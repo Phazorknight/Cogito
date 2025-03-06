@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cuwptpgheq4l5"]
 
-[ext_resource type="Script" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_avnnw"]
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_avnnw"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="2_da5wv"]
 [ext_resource type="PackedScene" uid="uid://1qmp8w30u0jy" path="res://addons/cogito/Components/Interactions/BackpackComponent.tscn" id="3_fg43q"]
 [ext_resource type="PackedScene" uid="uid://debjsdl174kkw" path="res://addons/cogito/Assets/Models/Kenney/bag.glb" id="4_skhg5"]
@@ -12,6 +12,7 @@ size = Vector3(0.213806, 0.597458, 0.408279)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 3
 script = ExtResource("1_avnnw")
+display_name = "Bag of Holding"
 
 [node name="CarryableComponent" parent="." instance=ExtResource("2_da5wv")]
 

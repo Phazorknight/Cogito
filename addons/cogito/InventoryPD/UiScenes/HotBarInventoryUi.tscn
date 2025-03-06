@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bf2qmquc7ys81"]
 
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/hot_bar_inventory.gd" id="1_0qfsu"]
+[ext_resource type="Script" uid="uid://mtx3cfvehcs2" path="res://addons/cogito/InventoryPD/UiScenes/hot_bar_inventory.gd" id="1_0qfsu"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="10_ipb46"]
 
 [node name="HotBarInventory" type="PanelContainer"]

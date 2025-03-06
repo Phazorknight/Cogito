@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cd3f50eloxr7h"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_locw3"]
-[ext_resource type="Script" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.gd" id="1_txypm"]
+[ext_resource type="Script" uid="uid://c3vt6l2s6ccqk" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.gd" id="1_txypm"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="2_e7trw"]
 [ext_resource type="AudioStream" uid="uid://cr3bcp0u6w1pl" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/mouseclick1.ogg" id="2_f52r8"]
 [ext_resource type="Texture2D" uid="uid://bsf2bc116o1oi" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoKey.png" id="2_hcgid"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://btf6bmlgtfk1b"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/DynamicInputIcon.gd" id="1_7t81w"]
+[ext_resource type="Script" uid="uid://d0mrtlrl51dps" path="res://addons/cogito/Components/DynamicInputIcon.gd" id="1_7t81w"]
 [ext_resource type="Texture2D" uid="uid://cb3ul86n4etxx" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Kenney_KeyboardMouse.png" id="1_b735f"]
 [ext_resource type="Texture2D" uid="uid://bsf8v4qjtudck" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Kenney_Xbox.png" id="1_n4wi0"]
 [ext_resource type="Texture2D" uid="uid://5evydcsc3qjg" path="res://addons/cogito/Assets/Graphics/InputIcons/InputIconSheet_Gamepad.png" id="3_hxvpc"]

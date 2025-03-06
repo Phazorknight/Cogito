@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://1xq4y42qkcur"]
 
-[ext_resource type="Script" path="res://addons/cogito/Components/Interactions/PickupComponent.gd" id="1_kq08i"]
+[ext_resource type="Script" uid="uid://b0a3vpjf8hylo" path="res://addons/cogito/Components/Interactions/PickupComponent.gd" id="1_kq08i"]
 
 [node name="PickupComponent" type="Node3D"]
 script = ExtResource("1_kq08i")

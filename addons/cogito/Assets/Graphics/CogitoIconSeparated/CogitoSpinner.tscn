@@ -33,7 +33,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_svbim"]
 _data = {
-"single_spin": SubResource("Animation_p680k")
+&"single_spin": SubResource("Animation_p680k")
 }
 
 [node name="CogitoSpinner" type="Control"]

@@ -3,7 +3,8 @@ extends Node3D
 class_name CogitoContainer
 
 @export_group("Container Settings")
-@export var inventory_name : String = "Container"
+## Name that will displayed when interacting. Leave blank to hide
+@export var display_name : String = "Container"
 @export var inventory_data : CogitoInventory
 @export var text_when_closed : String = "Open"
 @export var text_when_open : String = "Close"
@@ -68,7 +69,7 @@ func save():
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
 		"node_path" : self.get_path(),
-		"inventory_name" : inventory_name,
+		"display_name" : display_name,
 		"inventory_data" : inventory_data,
 		"interaction_nodes" : interaction_nodes,
 		"animation_player" : animation_player,

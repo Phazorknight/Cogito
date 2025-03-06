@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bg6gj8kohejmb"]
 
-[ext_resource type="Script" path="res://addons/cogito/EasyMenus/Scripts/controller_echo_input_generator.gd" id="1_8rdph"]
+[ext_resource type="Script" uid="uid://ds80kjjc67s6y" path="res://addons/cogito/EasyMenus/Scripts/controller_echo_input_generator.gd" id="1_8rdph"]
 
 [node name="ControllerEchoInputGenerator" type="Node"]
 process_mode = 3

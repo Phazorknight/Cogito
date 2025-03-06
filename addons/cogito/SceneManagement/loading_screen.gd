@@ -2,18 +2,20 @@ extends CanvasLayer
 # Loading screen script is heavily dependent on Cogito Scene Manager and scene states.
 # MODIFY AT YOUR OWN RISK. Besides the forced_delay, there aren't really any tweakable parameters here.
 
-
 ## Adds a forced wait time to the loading screen. Used to avoid loading screen flickering if load time is too short.
 @export var forced_delay : float = 0.5
+@onready var label_progress: Label = $Control/VBoxContainer/LabelProgress
 
 var next_scene_path : String
 var connector_name : String
 var next_scene_state_filename : String
 var passed_slot : String
 var load_mode
+var progress_array : Array[float]
 
 func _ready():
-	ResourceLoader.load_threaded_request(next_scene_path) # Start loading the next scene
+	progress_array.clear()
+	ResourceLoader.load_threaded_request(next_scene_path, "", false, ResourceLoader.CACHE_MODE_IGNORE) # Start loading the next scene
 
 
 func _process(_delta):
@@ -49,3 +51,10 @@ func _process(_delta):
 			new_scene_node.move_player_to_connector(connector_name)
 			
 		current_scene.queue_free() # Removing previous scene.
+		
+	else:
+		# Getting progress value and displaying it
+		ResourceLoader.load_threaded_get_status(next_scene_path, progress_array) 
+		var progress_percentage := remap(progress_array[0], 0.4, 1.0, 0, 100)
+		progress_percentage = snapped(progress_percentage, 0.1)
+		label_progress.text = str(progress_percentage) + "%"
