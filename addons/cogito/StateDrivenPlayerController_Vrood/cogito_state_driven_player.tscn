@@ -1,7 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://dksvnthdsax8f"]
 
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/state_driven_player_controller_vrood_redux.gd" id="1_vq0qk"]
-[ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/sdpc_state_machine.gd" id="2_86vdg"]
+[ext_resource type="PackedScene" uid="uid://bnc8b8p05q7mq" path="res://addons/cogito/StateDrivenPlayerController_Vrood/sdpc_state_machine.tscn" id="2_yiwi3"]
 [ext_resource type="PackedScene" uid="uid://n1doui0jpn1v" path="res://addons/cogito/InventoryPD/CustomResources/CogtoTestCurrency.tscn" id="3_4pss8"]
 [ext_resource type="PackedScene" uid="uid://dorp3auw3s65q" path="res://addons/cogito/Components/Attributes/LightMeterAttribute.tscn" id="4_mnxh2"]
 [ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://addons/cogito/Components/Attributes/SanityAttribute.tscn" id="5_0cwa2"]
@@ -45,10 +45,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 script = ExtResource("1_vq0qk")
 pause_menu = NodePath("PauseMenu")
 player_hud = NodePath("Player_HUD")
-state_machine = NodePath("SDPCStateMachine")
+state_machine = NodePath("")
 
-[node name="SDPCStateMachine" type="Node" parent="."]
-script = ExtResource("2_86vdg")
+[node name="SDPCStateMachine" parent="." instance=ExtResource("2_yiwi3")]
 
 [node name="CogtoTestCurrency" parent="." instance=ExtResource("3_4pss8")]
 

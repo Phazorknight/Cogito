@@ -1,12 +1,14 @@
+@icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoProperties.svg")
 extends Node
 class_name SDPCStateMachine
 
-
+## To Do, Setup as Onready
 @export var initial_state: SDPCState
-
+@export var ladder_climb_state: LadderClimbingSDPCState
+@export var sitting_state: SittingSDPCState
+@export var paused_state: PausedSDPCState
 var current_state: SDPCState
 var prior_state: SDPCState
-var state_stack: Array[SDPCState] = [] # Currently unused TODO # Possible implementation of pushdown automaton as seen [here](https://gameprogrammingpatterns.com/state.html)
 
 
 func initialize(parent: CharacterBody3D):
@@ -17,6 +19,7 @@ func initialize(parent: CharacterBody3D):
 			push_error("Only SDPC States may be Children of the SDPCStateMachine")
 		else:
 			child.parent = parent
+
 
 	change_state(initial_state)
 
@@ -54,8 +57,3 @@ func process_frames(delta: float) -> void:
 	var new_state = current_state.process_frames(delta)
 	if new_state:
 		change_state(new_state)
-
-
-func flush_stack() -> void:
-	if !state_stack: return
-	state_stack = []

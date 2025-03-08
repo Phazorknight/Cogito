@@ -219,6 +219,9 @@ var currently_tweening: bool = false
 var is_jumping: bool = false
 var is_falling: bool = false
 var is_in_air: bool = false
+var is_landing: bool = false
+var is_standing: bool = false
+var is_idle: bool = false
 
 var is_walking: bool = false
 var is_sprinting: bool = false
@@ -753,15 +756,19 @@ func jump(delta: float) -> void:
 
 #region Menu Controls
 func handle_menu_controls(event):
+
 	# Opens Pause Menu if Menu button is pressed.
 		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
 			menu_pressed.emit(player_interaction_component)
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
 				toggle_inventory_interface.emit()
+
 		elif !is_movement_paused and !is_dead:
 			if !currently_tweening:
 				_on_pause_movement()
 				get_node(pause_menu).open_pause_menu()
+
+			# This line is to prevent interacting when transitioning from sitting to standing
 			else:
 				player_interaction_component.send_hint(null, "Wait until I’m seated or standing")
 
@@ -1506,3 +1513,20 @@ func get_params(transform3d, motion):
 	params.recovery_as_collision = true
 	return params
 #endregion
+
+func reset_state_flags_to_idle() -> void:
+	is_idle = true
+	is_standing = true
+
+	# Just in case  bug happens elsewhere we reset all the bools
+	is_showing_ui = false
+	is_movement_paused = false
+
+	is_free_looking = false
+	is_in_air = false
+	is_jumping = false
+	is_falling = false
+	is_landing = false
+	is_walking = false
+	is_sprinting = false
+	is_crouching = false

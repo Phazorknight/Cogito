@@ -6,6 +6,7 @@ var parent: CogitoSDPC
 var prior_state: SDPCState
 
 
+
 func enter() -> SDPCState:
 	return null
 
