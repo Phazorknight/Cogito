@@ -35,7 +35,7 @@ func _ready():
 		printerr("spawn_delay exceeded button press cooldown time. It has been set to " + str(spawn_delay))
 	currency_check.connect("transaction_success", Callable(self, "_on_transaction_success"))
 	var player_node = CogitoSceneManager._current_player_node
-	player_interaction_component = (player_node as CogitoPlayer).player_interaction_component
+	player_interaction_component = player_node.player_interaction_component
 	for attribute in player_node.find_children("", "CogitoCurrency", false):
 		if attribute is CogitoCurrency and attribute.currency_name == currency_check.currency_name:
 			currency_attribute = attribute
@@ -45,11 +45,11 @@ func _ready():
 func _on_transaction_success() -> void:
 	# communicate the event
 	player_interaction_component.send_hint(currency_attribute.currency_icon, purchased_hint_text)
-	
+
 	# update vendor
 	amount_remaining -= 1
 	_update_vendor_state()
-	
+
 	# dispense object
 	is_dispensing = true
 	_delayed_object_spawn()
@@ -58,10 +58,10 @@ func _on_transaction_success() -> void:
 func _delayed_object_spawn() -> void:
 	if dispensing_sound:
 		Audio.play_sound_3d(dispensing_sound).global_position = spawn_point.global_position
-	
+
 	await get_tree().create_timer(spawn_delay).timeout
 	is_dispensing = false
-	
+
 	var spawned_object = object_to_spawn.instantiate()
 	spawned_object.position = spawn_point.global_position
 	spawned_object.rotation = spawn_rotation
@@ -75,14 +75,14 @@ func _update_vendor_state() -> void:
 		stock_label.text = stock_empty_text
 	elif stock_label.text != have_stock_text:
 		stock_label.text = have_stock_text
-	
+
 	stock_counter.text = str(amount_remaining)
 
 
 func set_state():
 	starting_amount = amount_remaining
 	_update_vendor_state()
-	
+
 	if is_dispensing:
 		_delayed_object_spawn()
 
@@ -98,6 +98,6 @@ func save():
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
-		
+
 	}
 	return state_dict

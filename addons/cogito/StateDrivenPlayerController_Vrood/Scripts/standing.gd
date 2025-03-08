@@ -3,31 +3,27 @@ extends SDPCState
 
 ## Player's default idle state
 
-
 ## Transition States
-
-@export var jump_state: JumpingSDPCState
-@export var fall_state: FallingSDPCState
-@export var walk_state: WalkingSDPCState
-@export var crouch_state: CrouchingSDPCState
-@export var free_look_state: FreeLookingSDPCState
-
+@onready var jump_state: JumpingSDPCState = $"../Jumping"
+@onready var walk_state: WalkingSDPCState = $"../Walking"
+@onready var fall_state: FallingSDPCState = $"../Falling"
+@onready var free_look_state: FreeLookingSDPCState = $"../FreeLooking"
+@onready var crouch_state: CrouchingSDPCState = $"../Crouching"
 
 
 func enter() -> SDPCState:
+	parent.reset_state_flags_to_idle()
+	parent.is_idle = true
+	parent.is_standing = true
+	parent.is_crouching = false
 	parent.set_standing_collision()
-	parent.reset_state_flags()
 	parent.main_velocity = Vector3.ZERO
-	return null
-
-
-func exit() -> SDPCState:
-	parent.is_standing = false
+	parent.current_speed = 0.0
 	return null
 
 
 func process_physics(delta: float) -> SDPCState:
-	if parent.direction != Vector3.ZERO:
+	if !parent.direction.is_equal_approx(Vector3.ZERO):
 		parent.is_idle = false
 		return walk_state
 
@@ -35,8 +31,10 @@ func process_physics(delta: float) -> SDPCState:
 		parent.is_idle = false
 		return fall_state
 
-	return null
+	if parent.crouch_input() or parent.crouch_raycast.is_colliding():
+		return crouch_state
 
+	return null
 
 
 func process_handled_inputs(event: InputEvent) -> SDPCState:
@@ -47,13 +45,11 @@ func process_handled_inputs(event: InputEvent) -> SDPCState:
 		parent.is_idle = false
 		return jump_state
 
-	if parent.try_crouch:
-		return crouch_state
-
 	return null
 
-
+# Here are the other built in functions for States.
 #func process_frames(delta: float) -> SDPCState:
 	#return null
-#func process_unhanled_inputs(event: InputEvent) -> SDPCState:
+
+#func process_unhandled_inputs(event: InputEvent) -> SDPCState:
 	#return null

@@ -4,14 +4,22 @@ class_name SDPCStateMachine
 
 ## To Do, Setup as Onready
 @export var initial_state: SDPCState
-@export var ladder_climb_state: LadderClimbingSDPCState
-@export var sitting_state: SittingSDPCState
-@export var paused_state: PausedSDPCState
+@onready var ladder_climb_state: LadderClimbingSDPCState = $LadderClimbing
+@onready var sit_state: SittingSDPCState = $Sitting
+@onready var ledge_climbing: LedgeClimbSDPCState = $LedgeClimbing
+
+
+
+@onready var paused_state: PausedSDPCState = %Paused
+@onready var dead: DeadSDPCState = $Dead
+
+
 var current_state: SDPCState
 var prior_state: SDPCState
 
 
 func initialize(parent: CharacterBody3D):
+	print("initializing ", parent)
 	if parent is not CogitoSDPC:
 		push_warning("SDPCStateMachine initialized without CogitoSDPC. Some features may not work as expected.")
 	for child in get_children():
@@ -26,12 +34,13 @@ func initialize(parent: CharacterBody3D):
 
 
 func change_state(new_state: SDPCState) -> void:
+	print(current_state, new_state)
+	print("Paused ", get_parent().is_movement_paused)
 	if current_state:
 		# Remember the last State we passed through
 		prior_state = current_state
 		current_state.exit()
 	current_state = new_state
-	current_state.prior_state = prior_state # give the individual states Reference to past States
 	current_state.enter()
 
 

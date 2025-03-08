@@ -22,7 +22,7 @@ var interactable: # Updated via signals from InteractionRayCast
 
 var carried_object = null:  # Used for carryable handling.
 	set = _set_carried_object
-	
+
 var is_carrying: bool:
 	get: return carried_object != null
 
@@ -40,7 +40,7 @@ var is_carrying: bool:
 @export var drop_when_cant_throw: bool = true
 ## Leave empty to ignore stamina cost evaluation when throwing
 @export var stamina_attribute: CogitoAttribute
-var player: CogitoPlayer
+var player: CogitoSDPC
 
 @export_group("Drop Settings")
 ## The maximum power you can use when dropping objects
@@ -59,11 +59,11 @@ var equipped_wieldable_node = null
 var wieldable_was_on: bool = false
 var is_wielding: bool:
 	get: return equipped_wieldable_item != null
-	
+
 var player_rid
 
 func _ready():
-	player = get_parent() as CogitoPlayer
+	player = get_parent() as CogitoSDPC
 	#pass
 
 
@@ -81,12 +81,12 @@ func _input(event: InputEvent) -> void:
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
 		# if carrying an object, drop it.
 		_handle_interaction(action)
-		
+
 	if is_carrying and !get_parent().is_movement_paused and is_instance_valid(carried_object):
 		if Input.is_action_just_pressed("action_primary"):
 			_attempt_throw()
 			#carried_object.throw(throw_power)
-		
+
 
 	# Wieldable primary Action Input
 	if is_wielding and !get_parent().is_movement_paused:
@@ -94,12 +94,12 @@ func _input(event: InputEvent) -> void:
 			attempt_action_primary(false)
 		if Input.is_action_just_released("action_primary"):
 			attempt_action_primary(true)
-		
+
 		if Input.is_action_just_pressed("action_secondary"):
 			attempt_action_secondary(false)
 		if Input.is_action_just_released("action_secondary"):
 			attempt_action_secondary(true)
-		
+
 		if event.is_action_pressed("reload"):
 			attempt_reload()
 			return
@@ -114,7 +114,7 @@ func _handle_interaction(action: String) -> void:
 			return
 		elif !is_instance_valid(carried_object):
 			stop_carrying()
-			return	
+			return
 
 	# Check if we have an interactable in view and are pressing the correct button
 	if interactable != null and not is_carrying:
@@ -123,7 +123,7 @@ func _handle_interaction(action: String) -> void:
 				if !node.ignore_open_gui and get_parent().is_showing_ui:
 					return
 				node.interact(self)
-				
+
 				#Dual interaction components need to await signal to update correctly
 				if node is DualInteraction:
 					await node.interaction_complete  # Wait until the interaction_complete signal is recieved
@@ -155,17 +155,17 @@ func get_carryable_destination_point(distance_offset: float) -> Vector3:
 	if !carryable_position:
 		print("PIC: Error, no carryable position reference set!")
 		return self.global_position
-	
+
 	var destination_point = carryable_position.global_position - distance_offset * get_viewport().get_camera_3d().get_global_transform().basis.z
-	
+
 	if interaction_raycast.is_colliding():
 		var collision_point = interaction_raycast.get_collision_point()
-		
+
 		if interaction_raycast.global_position.distance_squared_to(destination_point) < interaction_raycast.global_position.distance_squared_to(collision_point):
 			return destination_point
 		else:
 			return collision_point
-	
+
 	return destination_point
 
 
@@ -204,7 +204,7 @@ func change_wieldable_to(next_wieldable: InventoryItemPD):
 		if equipped_wieldable_node != null:
 			equipped_wieldable_node.unequip()
 			if equipped_wieldable_node.animation_player.is_playing(): # Wait until unequip animation finishes.
-				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout 
+				await get_tree().create_timer(equipped_wieldable_node.animation_player.current_animation_length).timeout
 	equipped_wieldable_item = null
 	if equipped_wieldable_node != null:
 		equipped_wieldable_node.queue_free()
@@ -290,7 +290,7 @@ func attempt_reload():
 func on_death():
 	if equipped_wieldable_item:
 		equipped_wieldable_item.is_being_wielded = false
-	
+
 	if carried_object:
 		carried_object = null
 
@@ -305,20 +305,20 @@ func Get_Look_Direction() -> Vector3:
 	var viewport = get_viewport().get_visible_rect().size
 	var camera = get_viewport().get_camera_3d()
 	return camera.project_ray_normal(viewport/2)
-	
+
 
 # This gets a world space collision point of whatever the camera is pointed at, depending on the equipped wieldable range.
 func Get_Camera_Collision() -> Vector3:
 	var viewport = get_viewport().get_visible_rect().size
 	var camera = get_viewport().get_camera_3d()
-	
+
 	var Ray_Origin = camera.project_ray_origin(viewport/2)
 	var Ray_End = Ray_Origin + camera.project_ray_normal(viewport/2)*equipped_wieldable_item.wieldable_range
-	
+
 	var New_Intersection = PhysicsRayQueryParameters3D.create(Ray_Origin, Ray_End)
 	New_Intersection.exclude = [player_rid]
 	var Intersection = get_world_3d().direct_space_state.intersect_ray(New_Intersection)
-	
+
 	if not Intersection.is_empty():
 		var Col_Point = Intersection.position
 		return Col_Point
@@ -329,8 +329,8 @@ func Get_Camera_Collision() -> Vector3:
 func save():
 	if equipped_wieldable_node and equipped_wieldable_node.has_method("toggle_on_off"):
 		wieldable_was_on = equipped_wieldable_node.is_on
-	
-	
+
+
 	var interaction_component_data = {
 	"equipped_wieldable_item": equipped_wieldable_item,
 	#"equipped_wieldable_node": equipped_wieldable_node,
@@ -343,7 +343,7 @@ func save():
 func set_state():
 	### Clearing out data from previous player state
 	updated_wieldable_data.emit(null, 0, null) # Clearing out wieldable HUD Data
-	
+
 	# Clearing out any instantiated wielable nodes
 	var leftover_wieldable_nodes : Array[Node] = wieldable_container.get_children()
 	for leftover_wieldable_node in leftover_wieldable_nodes:
@@ -353,15 +353,15 @@ func set_state():
 	if equipped_wieldable_node != null:
 		equipped_wieldable_node.queue_free()
 	equipped_wieldable_node = null
-	
+
 	# Now equip saved wieldable item "from scratch"
 	if is_wielding and equipped_wieldable_item:
 		var temp_wieldable : WieldableItemPD = equipped_wieldable_item
 		equipped_wieldable_item = null
-		
+
 		temp_wieldable.is_being_wielded = false
 		temp_wieldable.use(get_parent())
-		
+
 		if equipped_wieldable_node and equipped_wieldable_node.has_method("toggle_on_off") and wieldable_was_on:
 			equipped_wieldable_node.toggle_flashlight(wieldable_was_on)
 
@@ -406,7 +406,7 @@ func _attempt_throw() -> void:
 	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
 	var throw_force: float = carried_object_mass * throw_power_mass_multiplier
 	throw_force = clamp(throw_force, 0, max_throw_power)
-	
+
 	if stamina_attribute and throw_force >= throw_stamina_threshold:
 		if stamina_attribute.value_current < throw_stamina_drain:
 			if drop_when_cant_throw:

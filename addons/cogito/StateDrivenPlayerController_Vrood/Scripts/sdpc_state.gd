@@ -25,5 +25,5 @@ func process_frames(delta: float) -> SDPCState:
 func process_handled_inputs(event: InputEvent) -> SDPCState:
 	return null
 
-func process_unhanled_inputs(event: InputEvent) -> SDPCState:
+func process_unhandled_inputs(event: InputEvent) -> SDPCState:
 	return null

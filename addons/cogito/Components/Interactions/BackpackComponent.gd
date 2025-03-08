@@ -10,14 +10,15 @@ class_name BackpackComponent
 
 func interact(_player_interaction_component:PlayerInteractionComponent):
 	update_player_inventory(_player_interaction_component.player)
-	
+
 	if sound_on_use:
 		Audio.play_sound(sound_on_use)
-		
+
 	get_parent().queue_free()
 
 
-func update_player_inventory(player: CogitoPlayer):
+func update_player_inventory(player: CharacterBody3D):
+	if player is not CogitoPlayer or player is not CogitoSDPC: return
 	var player_inventory = player.inventory_data
 	player_inventory.inventory_size = new_inventory_size
 	player_inventory.inventory_slots.resize(player_inventory.inventory_size.x * player_inventory.inventory_size.y)

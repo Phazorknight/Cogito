@@ -47,9 +47,12 @@ signal mouse_movement(relative_mouse_movement:Vector2)
 @export_range(1.0, 25.0, 0.01) var CROUCH_JUMP_VELOCITY: float = 3.0
 
 @export_subgroup("Airborne")
+@export var multijump_enabled: bool = false
+@export var max_jumps: int = 2
 @export var fall_damage: int = 0 ## dmg the player takes if falling from great height, leave at 0 if youd on't want to use
 @export var fall_damage_threshold: float = -5.0 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
 @export_range(0.01, 50.0, 0.01) var AIR_LERP_SPEED: float = 6.0
+var current_jumps: int
 
 @export_group("Advanced Movement")
 ## How much strength the player has to push RigidBody3D objects.
@@ -220,7 +223,7 @@ var is_jumping: bool = false
 var is_falling: bool = false
 var is_in_air: bool = false
 var is_landing: bool = false
-var is_standing: bool = false
+var is_standing: bool = true
 var is_idle: bool = false
 
 var is_walking: bool = false
@@ -311,25 +314,68 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	state_machine.process_frames(delta)
 
+
 func _physics_process(delta: float) -> void:
-	if is_movement_paused:
-		input_dir = Vector2.ZERO
-	else:
+	state_machine.process_physics(delta)
+	if !is_movement_paused:
+		# Handle Timing based Inputs
 		input_dir = Input.get_vector("left", "right", "forward", "back")
+		if input_dir:
+			print(input_dir)
+		crouch_input()
+		process_analog_stick_mouselook(delta)
+		lerp_head_position(delta)
 
 
-	#TODO Replace with Sit State
 	if is_sitting:
 		_process_on_sittable(delta)
 		return
-	if on_ladder:
-		_process_on_ladder(delta)
-		return
-	# # # # # # #
-	state_machine.process_physics(delta)
+	#if on_ladder:
+		#_process_on_ladder(delta)
+		#return
+
+	was_on_floor = is_on_floor()
+	was_in_air = is_in_air
+	was_sprinting = is_sprinting
+
+	if is_on_floor():
+		if !ladder_on_cooldown:
+			on_ladder = false
+		is_jumping = false
+		is_in_air = false
+		main_velocity.y = 0
+		current_jumps = 0
+		gravity_vec = Vector3.ZERO
+
+
+	elif !is_on_floor():
+		is_in_air = true
+		gravity_vec = Vector3.DOWN * gravity * delta
+
+
+	# For the most part, the current speed is being handled by the state machine.
+	current_speed = clamp(current_speed, 0.5, 12.0)
+	if direction and !is_movement_paused and !is_dead:
+		main_velocity.x = direction.x * current_speed
+		main_velocity.y = direction.y * current_speed
+	elif !is_movement_paused and !is_dead:
+		main_velocity.x = move_toward(main_velocity.x, 0.0, current_speed)
+		main_velocity.z = move_toward(main_velocity.y, 0.0, current_speed)
+
+	apply_external_force()
+	handle_stairs(delta)
+	main_velocity += gravity_vec
+	last_velocity = main_velocity
+	velocity = main_velocity
+	process_footstep_system(delta)
+	move_and_slide()
+	push_rigids()
 
 
 func _input(event: InputEvent) -> void:
+	pass
+# Currently Unused by any State Machines
+func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_handled_inputs(event)
 
 	if !is_movement_paused:
@@ -339,295 +385,27 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
 		handle_inventory_controls(event)
 
-
-
-func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_unhandled_inputs(event)
 
 
-func apply_external_force(force_vector: Vector3) -> void:
-	if force_vector and force_vector.length() > 0:
-		CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
-		velocity += force_vector
-		move_and_slide()
 
-
-
-func deprecated_physics_process(delta):
-	## Save Last Frame Data ##
-	# Store current velocity for the next frame
-	var crouched_jump = false
-	last_velocity = main_velocity #NOTE - This is called again later on. I'm commenting it out
-	process_analog_stick_mouselook(delta)
-
-	# Check if the player is on the ground
-	if is_on_floor():
-		jumped_from_slide = false
-		if was_in_air:
-			land()
-	else:
-		# this gets set once we enter fall/jump/etc #is_in_air = true
-		was_in_air = true # Set airborne state
-		crouched_jump = is_crouching and not jumped_from_slide
-## ## ## ## ## ##
-	#NOTE This seems to handle falling
-	if stand_after_roll:
-			standup_after_roll(delta)
-	process_crouch_input()
-
-
-
-# Returns False if we are in the air from a crouch jump
-# OR We didn't jump from a slide, while on the floor and crouching
-	if crouched_jump or (not jumped_from_slide and is_on_floor() and try_crouch or crouch_raycast.is_colliding()):
-		# should we be sliding?
-		# This initiates the slide
-		if is_sprinting and input_dir != Vector2.ZERO and is_on_floor():
-			sliding_timer.start()
-			slide_vector = input_dir
-
-		# Stop sliding
-		elif !Input.is_action_pressed("sprint"):
-			sliding_timer.stop()
-
-		# are we sliding or slide-jumping? if so, don't adjust our speed
-		if not jumped_from_slide and sliding_timer.is_stopped():
-			current_speed = lerp(current_speed, CROUCHING_SPEED, delta * LERP_SPEED)
-
-		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-		set_crouching_collision()
-		standing_collision_shape.disable()
-
-
-
-		wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
-		wiggle_index += WIGGLE_ON_CROUCHING_SPEED * delta
-		is_walking = false
-		is_sprinting = false
-		is_crouching = true
-
-
-	else:
-		if !is_showing_ui or !is_movement_paused:
-			#CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "567: Standing up...")
-			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-
-
-
-			# While transitioning positons, keep the crouch collision on
-			if head.position.y < CROUCHING_DEPTH/4:
-				set_crouching_collision()
-			else:
-				set_standing_collision()
-
-			sliding_timer.stop()
-
-
-	if is_on_floor():
-		is_jumping = false
-		is_in_air = false
-		main_velocity.y = 0
-		gravity_vec = Vector3.ZERO
-	else:
-		gravity_vec = Vector3.DOWN * gravity * delta
-		# Prevent sprinting if player is out of stamina.
-		if Input.is_action_pressed("sprint"):
-			if !stamina_attribute or stamina_attribute and stamina_attribute.value_current > 0:
-
-				## Setup Bunny Hop speed while sprinting ## but not jumping
-				## Bunny HOP
-				if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
-					bunny_hop_speed = SPRINTING_SPEED
-					current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
-
-
-				## Regular Jump
-				## Ignore Bunny Hop Speed, Just use base sprinting Speed
-				elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
-					current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
-
-				wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
-				wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
-
-				# State Flip, kill it
-				is_walking = false
-				is_sprinting = true
-
-
-				# Sprinting knocks you out of the Crouch State
-				if is_crouching:
-					is_crouching = false
-					try_crouch = false
-
-		elif !is_showing_ui or !is_movement_paused:
-
-			# STANDING UP HANDLING
-			CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "606 standing up...")
-			current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
-			wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
-			wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
-			is_walking = true
-			is_sprinting = false
-			if is_crouching:
-				is_crouching = false
-				try_crouch = false
-
-
-## Commented out likely redundant check? Not fully erasing, just in case V
-		#elif Input.is_action_pressed("sprint") and !stamina_attribute:
-			#if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
-				#bunny_hop_speed = SPRINTING_SPEED
-				#current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
-			#elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
-				#current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
-			#wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
-			#wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
-			#is_walking = false
-			#is_sprinting = true
-			#if is_crouching:
-				#is_crouching = false
-				#try_crouch = false
-
-## FREE LOOKING
-	process_free_look_camera(delta)
-
-
-
-	### STAIR HANDLING, jumping and gravity
-	if is_on_floor():
-		is_jumping = false
-		is_in_air = false
-		main_velocity.y = 0
-		gravity_vec = Vector3.ZERO
-	else:
-		gravity_vec = Vector3.DOWN * gravity * delta
-	###
-
-	if is_on_floor() and sliding_timer.is_stopped() and input_dir != Vector2.ZERO:
-		wiggle_vector.y = sin(wiggle_index)
-		wiggle_vector.x = sin(wiggle_index / 2) + 0.5
-		eyes.position.y = lerp(
-			eyes.position.y,
-			wiggle_vector.y * (wiggle_current_intensity / 2.0),
-			delta * LERP_SPEED
-		)
-		eyes.position.x = lerp(
-			eyes.position.x,
-			wiggle_vector.x * wiggle_current_intensity,
-			delta * LERP_SPEED
-		)
-
-
-
-
-############################ Handling Airborne Stuff
-	else:
-		if !is_movement_paused or !is_showing_ui:
-			#CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "668 Standing up...")
-			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
-			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
-			if last_velocity.y <= -7.5:
-				head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-				set_standing_collision()
-				if !disable_roll_anim:
-					animationPlayer.play("roll")
-			elif last_velocity.y <= -5.0:
-				animationPlayer.play("landing")
-
-		# Taking fall damage
-		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
-			#health_component.subtract(fall_damage)
-			decrease_attribute("health",fall_damage)
-#############################
-
-
-#### JUMP ####
-	if Input.is_action_pressed("jump") and !is_movement_paused and is_on_floor() and jump_timer.is_stopped():
-		jump(delta)
-
-
-
- #### If We ARE NOT SLIDING
-	if sliding_timer.is_stopped():
-		if is_on_floor():
-			direction = lerp(
-				direction,
-				(body.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(),
-				delta * LERP_SPEED
-			)
-		elif input_dir != Vector2.ZERO:
-			direction = lerp(
-				direction,
-				(body.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(),
-				delta * AIR_LERP_SPEED
-			)
-#######################
-
-### SLIDE #### #
-	else:
-		direction = (body.global_transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
-		current_speed = (sliding_timer.time_left / sliding_timer.wait_time + 0.5) * SLIDING_SPEED
-###########
-
-	# Set Speed Limit
-	current_speed = clamp(current_speed, 0.5, 12.0)
-
-
-
-### handles Current Velocity
-	if direction:
-		main_velocity.x = direction.x * current_speed
-		main_velocity.z = direction.z * current_speed
-	else:
-		main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
-		main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
-	last_velocity = main_velocity
-
-	#NOTE resets the value despite it being set up top
-
-
-
-
-
-	# STAIR HANDLING
-	var step_result : StepResult = StepResult.new()
-
-	var is_step : bool = step_check(delta, is_jumping, step_result)
-
-	if is_step:
-		var is_enabled_stair_stepping: bool = true
-		if step_result.is_step_up and is_in_air and not is_enabled_stair_stepping_in_air:
-			is_enabled_stair_stepping = false
-
-		if is_enabled_stair_stepping:
-			global_transform.origin += step_result.diff_position
-			head_offset = step_result.diff_position
-			head.position -= head_offset
-			head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
-	else:
-		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
-		head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
-
-	main_velocity += gravity_vec # Add gravity
-	velocity = main_velocity # apply velocity
-
-	move_and_slide()
-
-
-
-	if is_step and step_result.is_step_up and is_enabled_stair_stepping_in_air:
-		if is_in_air or direction.dot(step_result.normal) > 0:
-			main_velocity *= SPEED_CLAMP_AFTER_JUMP_COEFFICIENT
-			gravity_vec *= SPEED_CLAMP_AFTER_JUMP_COEFFICIENT
-
-
-	# Pushing RigidBody3Ds
+func push_rigids() -> void:
+	if !push_force_enabled: return
 	for col_idx in get_slide_collision_count():
 		var col := get_slide_collision(col_idx)
 		if col.get_collider() is RigidBody3D:
 			col.get_collider().apply_central_impulse(-col.get_normal() * PLAYER_PUSH_FORCE)
 
 
+func apply_external_force(force_vector: Vector3 = Vector3.ZERO) -> void:
+	if force_vector.length() > 0:
+		CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
+		velocity += force_vector
+		move_and_slide()
+
+
+
+func process_footstep_system(_delta: float) -> void:
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if is_on_floor() and main_velocity.length() >= 0.2:
 		if not sliding_timer.is_stopped():
@@ -657,10 +435,47 @@ func deprecated_physics_process(delta):
 		slide_audio_player.stop()
 
 
+func lerp_head_position(delta: float):
+	if is_showing_ui or is_movement_paused: return
+
+	if is_crouching:
+			head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+			#CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "567: Standing up...")
+	if is_standing:
+		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
+	# While transitioning positons, keep the crouch collision on
+	if head.position.y < CROUCHING_DEPTH/4:
+		set_crouching_collision()
+	else:
+		set_standing_collision()
+
+
+func handle_stairs(delta) -> void:
+	var step_result : StepResult = StepResult.new()
+	var is_step : bool = step_check(delta, is_jumping, step_result)
+
+	if is_step:
+		var is_enabled_stair_stepping: bool = true
+		if step_result.is_step_up and is_in_air and not is_enabled_stair_stepping_in_air:
+			is_enabled_stair_stepping = false
+
+		if is_enabled_stair_stepping:
+			global_transform.origin += step_result.diff_position
+			head_offset = step_result.diff_position
+			head.position -= head_offset
+			head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
+	else:
+		head_offset = head_offset.lerp(Vector3.ZERO, delta * LERP_SPEED)
+		head.position.y = lerp(head.position.y, 0.0, delta * step_height_camera_lerp)
+
+	if is_step and step_result.is_step_up and is_enabled_stair_stepping_in_air:
+		if is_in_air or direction.dot(step_result.normal) > 0:
+			main_velocity *= SPEED_CLAMP_AFTER_JUMP_COEFFICIENT
+			gravity_vec *= SPEED_CLAMP_AFTER_JUMP_COEFFICIENT
 
 
 #region Actions
-func process_crouch_input() -> bool:
+func crouch_input() -> bool:
 	# CROUCH HANDLING dependant on toggle_crouch
 	if !is_movement_paused:
 		match TOGGLE_CROUCH:
@@ -672,85 +487,6 @@ func process_crouch_input() -> bool:
 	return try_crouch
 
 
-func standup_after_roll(delta: float) -> void:
-	if is_movement_paused or is_showing_ui: return
-
-	CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "523: Standing after roll.")
-	head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-	standing_collision_shape.disabled = true
-	crouching_collision_shape.disabled = false
-	stand_after_roll = false
-
-
-func land() -> void:
-	# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
-	if last_velocity.y < landing_threshold:
-		# Calculate the volume and pitch based on the landing velocity
-		var velocity_ratio = clamp((last_velocity.y - min_landing_velocity) / (max_landing_velocity - min_landing_velocity), 0.0, 1.0)
-		# Set the volume and pitch of the landing sound
-		LandingVolume = lerp(min_volume_db, max_volume_db, velocity_ratio)
-		LandingPitch = lerp(max_pitch, min_pitch, velocity_ratio)
-		# Play the landing sound
-		footstep_player._play_interaction("landing")
-
-	was_in_air = false  # Reset airborne state
-
-
-func jump(delta: float) -> void:
-
-		jump_timer.start() # prevent spam
-		is_jumping = true
-		is_in_air = false
-		## These two consolidate various checks for if we can jump or not, don't consider these two in grand scope
-		var doesnt_need_stamina: bool = not stamina_attribute or stamina_attribute.value_current >= stamina_attribute.jump_exhaustion # `if we don't care about stamina, or have enough to use
-		var crouch_jump: bool = not is_crouching or CAN_CROUCH_JUMP # if we are standing or can crouch jump, `crouch_jump`
-
-		var jump_vel = CROUCH_JUMP_VELOCITY if is_crouching else JUMP_VELOCITY
-
-		if doesnt_need_stamina and crouch_jump:
-			# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
-			if stamina_attribute:
-				decrease_attribute("stamina",stamina_attribute.jump_exhaustion)
-
-			animationPlayer.play("jump")
-			Audio.play_sound(jump_sound)
-
-			## SLIDE JUMP VELOCITY // BUNNY HOP //
-			if !sliding_timer.is_stopped():
-				# if we're doing a slide jump, use our modified JUMP_VELOCITY
-				main_velocity.y = JUMP_VELOCITY * SLIDE_JUMP_MOD
-				jumped_from_slide = true
-				sliding_timer.stop()
-			else:
-				main_velocity.y = jump_vel
-
-
-			### Handle Platforms TODO FIX TODO FIX TODO FIX ON JUMPING
-			if platform_on_leave != PLATFORM_ON_LEAVE_DO_NOTHING:
-				var platform_velocity = get_platform_velocity()
-				# TODO: Make PLATFORM_ON_LEAVE_ADD_VELOCITY work... somehow.
-				# Velocity X and Z gets overridden later, so you immediately lose the velocity
-				if PLATFORM_ON_LEAVE_ADD_UPWARD_VELOCITY:
-					platform_velocity.x = 0
-					platform_velocity.z = 0
-				main_velocity += platform_velocity
-			### ### ### ### ### ### ###
-
-
-			#if is_sprinting and CAN_BUNNYHOP:
-				#bunny_hop_speed += BUNNY_HOP_ACCELERATION # if CAN_BUNNYHOP, bunny_hop_speed should currently be equal to SPRINTING_SPEED. On landing, bunny_hop_speed gets reset.
-
-
-			#elif is_sprinting and !CAN_BUNNYHOP: # BUG: Since SPRINTING_SPEED is not altered if we can't bunnyhop, no need to adjust it back
-				#SPRINTING_SPEED += SPRINTING_SPEED # NOTE: If we want to set a JumpAccel, we can do so in a similar way as the bunny_hop_speed is being handled
-
-
-			if is_crouching:
-				#temporarily switch colliders to process jump correctly
-				set_crouching_collision()
-
-		elif not doesnt_need_stamina:
-			CogitoGlobals.debug_log(is_logging, "cogito_player.gd","Not enough stamina to jump.")
 
 
 
@@ -825,10 +561,15 @@ func handle_camera_joypad(event):
 	if event.get_axis() == 3:
 		joystick_h_event = event
 
+
 func process_analog_stick_mouselook(_delta: float) -> void:
 	if is_movement_paused: return
 
-	elif joystick_h_event:
+	if on_ladder:
+		process_analog_stick_mouselook_on_ladder(_delta)
+
+	else:
+		if joystick_h_event:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
 					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
@@ -836,44 +577,13 @@ func process_analog_stick_mouselook(_delta: float) -> void:
 					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-	elif joystick_v_event:
-		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
-			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
-			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
-
-
-func process_free_look_camera(delta:float) -> void:
-	## FREE LOOKING
-	# If we are pressing free_look, or we currently have the slide timer ongoing we'll enter Free-look mode
-	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() and !is_movement_paused:
-		is_free_looking = true
-
-		# Basic Behavior of Pressing Free Look button
-		if sliding_timer.is_stopped():
-			eyes.rotation.z = -deg_to_rad(
-				neck.rotation.y * FREE_LOOK_TILT_AMOUNT
-			)
-		# This is the free-look behavior that occurs during sliding, allowing more visibility
-		else:
-			eyes.rotation.z = lerp(
-				eyes.rotation.z,
-				deg_to_rad(4.0),
-				delta * LERP_SPEED
-			)
-
-
-	# If we aren't free-looking, we'll want to set everything back
-	else:
-		is_free_looking = false
-		body.rotation.y += neck.rotation.y
-		neck.rotation.y = 0
-		eyes.rotation.z = lerp(
-			eyes.rotation.z,
-			0.0,
-			delta*LERP_SPEED
-		)
+		if joystick_v_event:
+			if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
+				neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
+				neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 
 #endregion
+
 
 #region Attribute System Functions
 # Use these functions to manipulate player attributes.
@@ -1184,6 +894,7 @@ func _sit_down_finished():
 	var sittable = CogitoSceneManager._current_sittable_node
 	disable_collision()
 	currently_tweening = false
+	state_machine.change_state(state_machine.sit_state)
 	if sittable_look_marker:
 		var tween = create_tween()
 		var target_transform = neck.global_transform.looking_at(sittable_look_marker, Vector3.UP)
@@ -1218,6 +929,7 @@ func _stand_up_finished():
 	self.global_transform.basis = Basis()
 	neck.global_transform.basis = original_neck_basis
 	currently_tweening = false
+	state_machine.change_state(state_machine.initial_state)
 
 ## Handles Various Methods of Standing Up
 #Return player to Original position
@@ -1313,28 +1025,13 @@ func _on_set_move_requested(sittable: Node) -> void:
 #endregion
 
 
+
 #region Ladder Functions
-	#called by ladder_area.gd
 
-func _process_on_ladder(_delta: float) -> void:
-	var input_dir
-	if !is_movement_paused:
-		input_dir = Input.get_vector("left", "right", "forward", "back")
-	else:
-		input_dir = Vector2.ZERO
 
-	var ladder_speed = LADDER_SPEED
 
-	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
-		is_sprinting = true
-		if stamina_attribute.value_current > 0:
-			ladder_speed = LADDER_SPRINT_SPEED
-	else:
-		is_sprinting = false
 
-	var jump = Input.is_action_pressed("jump")
-
-	# Processing analog stick mouselook
+func process_analog_stick_mouselook_on_ladder(_delta: float) -> void:
 	if joystick_h_event:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
@@ -1348,23 +1045,6 @@ func _process_on_ladder(_delta: float) -> void:
 			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
 
-	var look_vector = camera.get_camera_transform().basis
-	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
-
-	# Applying ladder input_dir to direction
-	var y_dir = 1 if looking_down else -1
-	direction = (body.global_transform.basis * Vector3(input_dir.x,input_dir.y * y_dir,0)).normalized()
-	main_velocity = direction * ladder_speed
-
-	if jump:
-		main_velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
-
-	velocity = main_velocity
-	move_and_slide()
-
-	#Step off ladder when on ground
-	if is_on_floor() and not ladder_on_cooldown:
-		on_ladder = false
 
 
 func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3) -> void:
@@ -1380,6 +1060,7 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3) -> void:
 		ladder_timer.timeout.connect(ladder_buffer_finished)
 		ladder_on_cooldown = true
 		on_ladder = true
+		state_machine.change_state(state_machine.ladder_climb_state)
 		return
 
 
@@ -1391,26 +1072,23 @@ func ladder_buffer_finished():
 #region Subscribed Functions
 # Signal from Pause Menu
 func _on_pause_menu_resume() -> void:
-	_reload_options()
-	_on_resume_movement()
+
+	state_machine.change_state(state_machine.initial_state)
 
 
 func _on_death()-> void:
-	player_interaction_component.on_death()
-	is_dead = true
+	state_machine.change_state(state_machine.death_state)
 
 # Methods to pause input (for Menu or Dialogues etc)
 func _on_pause_movement()-> void:
-	if !is_movement_paused:
-		is_movement_paused = true
-		# Only show mouse cursor if input device is KBM
-		if InputHelper.device_index == -1:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	state_machine.change_state(state_machine.paused_state)
 
+# Likely DEPRECATED. Currently being called from state_machine.paused_state in case others are subscribed to this signal -V
 func _on_resume_movement()-> void:
 	if is_movement_paused:
 		is_movement_paused = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
 
 # reload options user may have changed while paused.
 func _reload_options()-> void:
@@ -1521,7 +1199,7 @@ func reset_state_flags_to_idle() -> void:
 	# Just in case  bug happens elsewhere we reset all the bools
 	is_showing_ui = false
 	is_movement_paused = false
-
+	on_ladder = false
 	is_free_looking = false
 	is_in_air = false
 	is_jumping = false

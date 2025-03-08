@@ -1,8 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://dksvnthdsax8f"]
+[gd_scene load_steps=32 format=3 uid="uid://dksvnthdsax8f"]
 
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/state_driven_player_controller_vrood_redux.gd" id="1_vq0qk"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_02gtf"]
 [ext_resource type="PackedScene" uid="uid://bnc8b8p05q7mq" path="res://addons/cogito/StateDrivenPlayerController_Vrood/sdpc_state_machine.tscn" id="2_yiwi3"]
 [ext_resource type="PackedScene" uid="uid://n1doui0jpn1v" path="res://addons/cogito/InventoryPD/CustomResources/CogtoTestCurrency.tscn" id="3_4pss8"]
+[ext_resource type="Script" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="3_lfn1r"]
 [ext_resource type="PackedScene" uid="uid://dorp3auw3s65q" path="res://addons/cogito/Components/Attributes/LightMeterAttribute.tscn" id="4_mnxh2"]
 [ext_resource type="PackedScene" uid="uid://cetc123v5gnff" path="res://addons/cogito/Components/Attributes/SanityAttribute.tscn" id="5_0cwa2"]
 [ext_resource type="PackedScene" uid="uid://ce7bjv28uakxl" path="res://addons/cogito/Components/Attributes/StaminaAttribute.tscn" id="6_05clv"]
@@ -26,6 +28,13 @@
 [ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres" id="24_in80r"]
 [ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres" id="25_6pdhl"]
 
+[sub_resource type="Resource" id="Resource_vi6dm"]
+script = ExtResource("3_lfn1r")
+grid = false
+starter_inventory = Array[ExtResource("2_02gtf")]([])
+inventory_size = Vector2i(4, 1)
+inventory_slots = Array[ExtResource("2_02gtf")]([])
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
 size = Vector3(0.6, 1.7, 0.6)
 
@@ -41,11 +50,13 @@ stream_3/stream = ExtResource("14_ykf52")
 stream_4/stream = ExtResource("15_jlg1x")
 
 [node name="CogitoStateDrivenPlayer" type="CharacterBody3D" node_paths=PackedStringArray("state_machine") groups=["Player"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00659, 0)
 script = ExtResource("1_vq0qk")
 pause_menu = NodePath("PauseMenu")
 player_hud = NodePath("Player_HUD")
-state_machine = NodePath("")
+state_machine = NodePath("SDPCStateMachine")
+inventory_data = SubResource("Resource_vi6dm")
 
 [node name="SDPCStateMachine" parent="." instance=ExtResource("2_yiwi3")]
 
@@ -136,6 +147,7 @@ wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
 player = NodePath("..")
 
 [node name="PauseMenu" parent="." instance=ExtResource("21_i0p3g")]
+visible = false
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 

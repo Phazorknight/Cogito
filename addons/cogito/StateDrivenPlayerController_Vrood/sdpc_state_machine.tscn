@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnc8b8p05q7mq"]
+[gd_scene load_steps=18 format=3 uid="uid://bnc8b8p05q7mq"]
 
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/sdpc_state_machine.gd" id="1_pohsf"]
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/standing.gd" id="2_qxaj8"]
@@ -15,24 +15,19 @@
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/sitting.gd" id="11_0h6ui"]
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/interfacing.gd" id="11_ns8s7"]
 [ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/ladder_climbing.gd" id="12_sgfy5"]
+[ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/ledge_climbing.gd" id="13_5ra0y"]
+[ext_resource type="Script" path="res://addons/cogito/StateDrivenPlayerController_Vrood/Scripts/dead.gd" id="16_l2len"]
 
-[node name="SDPCStateMachine" type="Node" node_paths=PackedStringArray("initial_state", "ladder_climb_state", "sitting_state", "paused_state")]
+[node name="SDPCStateMachine" type="Node" node_paths=PackedStringArray("initial_state")]
+process_mode = 3
 script = ExtResource("1_pohsf")
 initial_state = NodePath("Standing")
-ladder_climb_state = NodePath("LadderClimbing")
-sitting_state = NodePath("Sitting")
-paused_state = NodePath("Paused")
 
-[node name="Standing" type="Node" parent="." node_paths=PackedStringArray("jump_state", "fall_state", "walk_state", "crouch_state", "free_look_state")]
+[node name="Standing" type="Node" parent="."]
 script = ExtResource("2_qxaj8")
-jump_state = NodePath("../Jumping")
-fall_state = NodePath("../Falling")
-walk_state = NodePath("../Walking")
-crouch_state = NodePath("../Crouching")
-free_look_state = NodePath("../FreeLooking")
 
-[node name="FreeLooking" type="Node" parent="."]
-script = ExtResource("3_q2its")
+[node name="Crouching" type="Node" parent="."]
+script = ExtResource("7_nsjuj")
 
 [node name="Walking" type="Node" parent="."]
 script = ExtResource("3_07efk")
@@ -43,19 +38,11 @@ script = ExtResource("4_0813l")
 [node name="Jumping" type="Node" parent="."]
 script = ExtResource("5_4owgq")
 
-[node name="Falling" type="Node" parent="." node_paths=PackedStringArray("land_state", "jump_state")]
+[node name="Falling" type="Node" parent="."]
 script = ExtResource("6_pfe2x")
-land_state = NodePath("../Landing")
-jump_state = NodePath("../Jumping")
 
 [node name="Landing" type="Node" parent="."]
 script = ExtResource("7_rrm40")
-
-[node name="Crouching" type="Node" parent="." node_paths=PackedStringArray("sneak_state", "stand_state", "fall_state")]
-script = ExtResource("7_nsjuj")
-sneak_state = NodePath("../Sneaking")
-stand_state = NodePath("../Standing")
-fall_state = NodePath("../Falling")
 
 [node name="Sneaking" type="Node" parent="."]
 script = ExtResource("8_viyeo")
@@ -69,9 +56,18 @@ script = ExtResource("10_xjsnp")
 [node name="Sitting" type="Node" parent="."]
 script = ExtResource("11_0h6ui")
 
+[node name="LedgeClimbing" type="Node" parent="."]
+script = ExtResource("13_5ra0y")
+
 [node name="LadderClimbing" type="Node" parent="."]
 script = ExtResource("12_sgfy5")
 
 [node name="Paused" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("11_ns8s7")
+
+[node name="FreeLooking" type="Node" parent="."]
+script = ExtResource("3_q2its")
+
+[node name="Dead" type="Node" parent="."]
+script = ExtResource("16_l2len")

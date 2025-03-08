@@ -93,7 +93,7 @@ func load_current_slot_data():
 	else:
 		%Screenshot_Spot.texture = empty_slot_texture
 		print("No screenshot for slot ", CogitoSceneManager._active_slot, " found.")
-		
+
 	# Load save state time
 	var savetime : int
 	if CogitoSceneManager._player_state:
@@ -103,7 +103,7 @@ func load_current_slot_data():
 	else:
 		var timeoffset = Time.get_time_zone_from_system().bias*60
 		var save_time_string = Time.get_datetime_string_from_unix_time(savetime+timeoffset,true)
-		
+
 		%Label_SaveTime.text = save_time_string
 
 
@@ -135,7 +135,7 @@ func _input(event):
 		game_menu.show()
 		resume_game_button.grab_focus.call_deferred()
 		return
-		
+
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and visible:
 		accept_event()
 		close_pause_menu()
@@ -149,7 +149,7 @@ func _on_save_button_pressed() -> void:
 	#CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
 	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,"temp")
 	CogitoSceneManager.copy_temp_saves_to_slot(CogitoSceneManager._active_slot)
-	
+
 	_on_resume_game_button_pressed()
 
 
@@ -160,5 +160,5 @@ func _on_load_button_pressed() -> void:
 	CogitoSceneManager.delete_temp_saves()
 	CogitoSceneManager.copy_slot_saves_to_temp(CogitoSceneManager._active_slot)
 	#CogitoSceneManager.loading_saved_game(CogitoSceneManager._active_slot)
-	
+
 	_on_resume_game_button_pressed()

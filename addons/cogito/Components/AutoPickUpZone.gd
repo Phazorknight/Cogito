@@ -10,13 +10,14 @@ signal auto_picked_up_item()
 ## Items listed here will be picked up automatically when they enter the area
 @export var auto_pick_up_items: Array[InventoryItemPD] = []
 @export var _player_interaction_component: PlayerInteractionComponent
-var player: CogitoPlayer
+var player: CharacterBody3D
 @onready var standing_collider: CollisionShape3D = $StandingZone
 @onready var crouching_collider: CollisionShape3D = $CrouchingZone
 
 
 func _ready() -> void:
 	player = get_parent()
+	assert(player is CogitoPlayer or player is CogitoSDPC, "Invalid Player class. Please use CogitoPlayer or CogitoSDPC")
 
 
 func _on_body_entered(body: Node3D) -> void:
@@ -47,13 +48,13 @@ func _attempt_pick_up(body: Node3D) -> void:
 	for i in range(child_count-1, -1, -1):
 		if body.get_child(i) is not PickupComponent:
 			continue
-		
+
 		var pick_up_component = body.get_child(i) as PickupComponent
 		# This prevents cogito projectiles
 		if body is CogitoProjectile and !(body as CogitoProjectile).can_pick_up:
 			#print("can't pick up projectile as it has just been fired")
 			continue
-		
+
 		if auto_pick_up_items.has(pick_up_component.slot_data.inventory_item):
 			pick_up_component.interact(_player_interaction_component)
 			auto_picked_up_item.emit()

@@ -1,25 +1,20 @@
 class_name PausedSDPCState
 extends SDPCState
 
-
+var before_pause_velocity: Vector3
 
 func enter() -> SDPCState:
+	parent.is_movement_paused = true
+	if InputHelper.device_index == -1:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	return null
 
 
 func exit() -> SDPCState:
-	return prior_state
+	parent.is_movement_paused = false
 
-
-func process_physics(delta: float) -> SDPCState:
-	return null
-
-
-func process_frames(delta: float) -> SDPCState:
-	return null
-
-func process_handled_inputs(event: InputEvent) -> SDPCState:
-	return null
-
-func process_unhanled_inputs(event: InputEvent) -> SDPCState:
+	parent._reload_options()
+	parent._on_resume_movement()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	print("exit pause state")
 	return null
