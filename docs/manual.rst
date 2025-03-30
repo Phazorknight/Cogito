@@ -244,7 +244,7 @@ Here's a quick overview which object to use for what use-case:
 |                        | manually controlled platforms,      |
 |                        | moveableobjects with two positions. |
 +------------------------+-------------------------------------+
-| Cogito Button	       | Button to unlock a door (use once)  |
+| Cogito Button          | Button to unlock a door (use once)  |
 |                        | Vending machine buttons (repeated)  |
 +------------------------+-------------------------------------+
 | Cogito Switch          | Lamps, levers,                      |
@@ -254,7 +254,7 @@ Here's a quick overview which object to use for what use-case:
 | Cogito Keypad          | Keypads to enter codes,             |
 |                        | UI minigames that send signals.     |
 +------------------------+-------------------------------------+
-| Cogito Turnwheel	    | Valves, rotation-based levers,      |
+| Cogito Turnwheel       | Valves, rotation-based levers,      |
 |                        | press-and-hold interactions.        |
 +------------------------+-------------------------------------+
 | Cogito                 | Static objects whose state won't be |
