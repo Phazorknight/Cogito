@@ -1,4 +1,4 @@
-[gd_scene load_steps=143 format=3 uid="uid://cud7jwvomj24d"]
+[gd_scene load_steps=142 format=3 uid="uid://cud7jwvomj24d"]
 
 [ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="1_7d2n7"]
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_b15oo"]
@@ -43,7 +43,6 @@
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="38_l5vpp"]
 [ext_resource type="PackedScene" uid="uid://i7fum2jx3ac3" path="res://addons/cogito/PackedScenes/ladder.tscn" id="41_q27ev"]
 [ext_resource type="Script" uid="uid://6010ovanwkwo" path="res://addons/cogito/Scripts/scene_transition_zone.gd" id="43_bchdf"]
-[ext_resource type="PackedScene" uid="uid://dty7vjg3hp68b" path="res://addons/cogito/DemoScenes/COGITO_2_LegacySceneTransitions.tscn" id="44_a5gxu"]
 [ext_resource type="PackedScene" uid="uid://bhj146kxvb3s5" path="res://addons/cogito/PackedScenes/document.tscn" id="44_im51b"]
 [ext_resource type="PackedScene" uid="uid://i4rqcx7lyrfd" path="res://addons/cogito/PackedScenes/keypad_prefab.tscn" id="48_150m3"]
 [ext_resource type="Script" uid="uid://d2jjqadlnhp6x" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="49_obvm3"]
@@ -355,7 +354,7 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_a5gxu"]
+[sub_resource type="Resource" id="Resource_72kvm"]
 resource_local_to_scene = true
 script = ExtResource("2_chxar")
 grid = true
@@ -1648,7 +1647,7 @@ spawn_on_death = Array[PackedScene]([])
 
 [node name="Player" parent="." instance=ExtResource("1_7d2n7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -10.4148, 0.905039, -4.11386)
-inventory_data = SubResource("Resource_a5gxu")
+inventory_data = SubResource("Resource_72kvm")
 step_height_camera_lerp = 1.5
 
 [node name="Ladder" parent="." instance=ExtResource("41_q27ev")]
@@ -1719,7 +1718,7 @@ material = ExtResource("38_l5vpp")
 [node name="TransitionZone" type="Area3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10.4, 1.25, -11.6)
 script = ExtResource("43_bchdf")
-target_scene = ExtResource("44_a5gxu")
+target_scene_path = "uid://dty7vjg3hp68b"
 target_connector = "ConnectorA"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TransitionZone"]

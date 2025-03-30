@@ -167,16 +167,23 @@ func clear_entered_code():
 
 
 func set_state():
+	clear_entered_code()
+	code_display.text = entered_code
+
 	if is_locked:
 		interaction_text = interaction_text_when_locked
+		lock_color.modulate = Color.WHITE
 	else:
 		interaction_text = interaction_text_when_unlocked
-	
+		lock_color.modulate = correct_code_color
 	object_state_updated.emit(interaction_text)
+
+
 
 func _unhandled_input(_event):
 	if in_focus:
 		get_viewport().set_input_as_handled()
+
 
 func save():
 	var state_dict = {
@@ -188,6 +195,7 @@ func save():
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
+		"entered_code" : entered_code
 		
 	}
 	return state_dict

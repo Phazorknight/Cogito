@@ -50,14 +50,13 @@ func interact(_player_interaction_component):
 
 #Runs check before allowing hold to start, currently used to stop lock/unlock hold interaction if key not present.
 func check_before_hold_start(_player_interaction_component):
-
 	if hold_node and hold_node.has_method("start_hold_check"):
 		if hold_node.start_hold_check(_player_interaction_component):
 			if not is_holding:
 				is_holding = true
 				hold_timer.start()
 		else:
-			parent_node.door_rattle(_player_interaction_component) 
+			parent_node.interact(_player_interaction_component) 
 	else:
 		if not is_holding:  # Node/Method doesn't exist, proceed with holding
 			is_holding = true

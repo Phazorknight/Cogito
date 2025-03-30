@@ -196,7 +196,9 @@ func lock_unlock_switch():
 		
 	else: 
 		lock_door()
-		
+	
+	print("Door: is_locked=", is_locked)
+	
 	for nodepath in doors_to_sync_with:
 		if nodepath != null:
 			var object = get_node(nodepath)
