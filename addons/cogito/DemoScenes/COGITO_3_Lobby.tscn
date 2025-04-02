@@ -6314,8 +6314,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO/SecretAreaDoor"]
 script = ExtResource("13_5x4ip")
-open_rotation_deg = 275.0
-closed_rotation_deg = 180.0
 open_rotation = Vector3(0, 120, 0)
 door_speed = 3.0
 angle_tolerance = 4.0
@@ -7263,7 +7261,6 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("49_uekwd")
 close_sound = ExtResource("50_air2v")
-open_rotation_deg = 95.0
 open_rotation = Vector3(0, 95, 0)
 door_speed = 4.0
 
@@ -7332,7 +7329,6 @@ shape = SubResource("ConvexPolygonShape3D_3vij5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4688, -2.57192, -1.98452)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
-open_rotation_deg = 92.0
 open_rotation = Vector3(0, 92, 0)
 door_speed = 2.0
 
@@ -7813,7 +7809,6 @@ script = ExtResource("13_5x4ip")
 rattle_sound = ExtResource("65_cw5kp")
 is_locked = true
 key_hint = "I should look around more."
-open_rotation_deg = 95.0
 door_speed = 0.1
 
 [node name="door" type="MeshInstance3D" parent="FrontDoor"]

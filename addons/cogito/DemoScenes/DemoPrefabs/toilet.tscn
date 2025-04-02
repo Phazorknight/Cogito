@@ -152,19 +152,21 @@ transform = Transform3D(2.83122e-08, 0, -0.475, 0, 0.475, 0, 0.475, 0, 2.83122e-
 shape = SubResource("ConcavePolygonShape3D_2tu6n")
 
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
-transform = Transform3D(-4.37113e-08, 0, -0.999998, 0, 0.999998, 0, 0.999998, 0, -4.37113e-08, 0.31255, 0.45543, 0.241883)
+transform = Transform3D(0.999998, 0, 0, 0, 0.999998, 0, 0, 0, 0.999998, 0.31255, 0.45543, 0.241883)
 collision_layer = 3
 script = ExtResource("1_52xoq")
-use_z_axis = true
-open_rotation_deg = 91.0
+open_rotation = Vector3(-91, 0, 0)
+forced_rotation_axis = 1
+door_speed = 3.6
+angle_tolerance = 1.2
 
 [node name="cover" type="MeshInstance3D" parent="AnimatableBody3D"]
-transform = Transform3D(0.999998, 0, 0, 0, 0.999998, 0, 0, 0, 0.999998, 0, 0, 0)
+transform = Transform3D(-4.37113e-08, 0, -0.999998, 0, 0.999998, 0, 0.999998, 0, -4.37113e-08, 0, 0, 0)
 mesh = SubResource("ArrayMesh_0i4uh")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AnimatableBody3D"]
-transform = Transform3D(0.999998, 0, 0, 0, 0.999998, 0, 0, 0, 0.999998, 0, 0, 0)
+transform = Transform3D(-4.37113e-08, 0, -0.999998, 0, 0.999998, 0, 0.999998, 0, -4.37113e-08, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_ehlqw")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="AnimatableBody3D"]

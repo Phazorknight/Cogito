@@ -62,7 +62,7 @@ enum DoorType {
 		notify_property_list_changed()
 
 func _validate_property(property: Dictionary):
-	if property.name in ["use_z_axis", "bidirectional_swing", "open_rotation_deg", "closed_rotation_deg", "open_rotation", "closed_rotation", "angle_tolerance"] and door_type != DoorType.ROTATING:
+	if property.name in ["bidirectional_swing", "open_rotation", "closed_rotation", "forced_rotation_axis","angle_tolerance"] and door_type != DoorType.ROTATING:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 	elif property.name in ["open_position", "closed_position"] and door_type != DoorType.SLIDING:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
@@ -72,14 +72,8 @@ func _validate_property(property: Dictionary):
 		property.usage = PROPERTY_USAGE_NO_EDITOR
 
 
-## Rotation axis to use. True = use Z axis. False = use Y axis:
-@export var use_z_axis : bool = false
 ## Set this to true if the door should swing opposite the direction of the interactor
 @export var bidirectional_swing : bool = false
-## Rotation Y when the door is open. In degrees.
-@export var open_rotation_deg : float = 0.0
-## Rotation Y when the door is closed. In degrees.
-@export var closed_rotation_deg : float = 0.0
 ## Rotation Y when the door is open. In degrees.
 @export var open_rotation : Vector3 = Vector3.ZERO
 ## Rotation Y when the door is closed. In degrees.
@@ -88,6 +82,15 @@ func _validate_property(property: Dictionary):
 @export var closed_position : Vector3
 ## Local position of transform when open
 @export var open_position : Vector3
+## Force single rotation axis. Use this if your objects rotation seems to tilt.
+enum ForcedRotationAxis {
+  None,
+  AxisX,
+  AxisY,
+  AxisZ,
+}
+@export var forced_rotation_axis : ForcedRotationAxis = ForcedRotationAxis.None
+
 ## Speed in which the door moves between open and closed position.
 @export var door_speed : float = 1
 ## The stop tolerance if the door rotation reaches the target angle. If your door keeps "oversteering", increase this value.
@@ -105,7 +108,6 @@ func _validate_property(property: Dictionary):
 
 var anim_player : AnimationPlayer
 var is_moving : bool = false
-var target_rotation_rad : float 
 var target_rotation_vector : Vector3 = Vector3.ZERO
 var interaction_text
 var lock_interaction_text
@@ -128,11 +130,6 @@ func _ready():
 	
 	if door_type == DoorType.ANIMATED:
 		anim_player = get_node(animation_player)
-	
-	if use_z_axis:
-		target_rotation_rad = rotation.z
-	else:
-		target_rotation_rad = rotation.y
 		
 	if is_open:
 		interaction_text = interaction_text_when_open
@@ -178,10 +175,25 @@ func door_rattle(interactor):
 func _physics_process(_delta):
 	if door_type == DoorType.ROTATING:
 		if is_moving:
-			rotation = rotation.move_toward(target_rotation_vector, _delta * door_speed)
-	
-			if vectors_approx_equal(target_rotation_vector, rotation_degrees, angle_tolerance):
-				is_moving = false
+			match forced_rotation_axis:
+				ForcedRotationAxis.None:
+					rotation = rotation.move_toward(target_rotation_vector, _delta * door_speed)
+					if vectors_approx_equal(target_rotation_vector, rotation_degrees, angle_tolerance):
+						is_moving = false
+					
+				ForcedRotationAxis.AxisX:
+					rotation.x = lerp_angle( deg_to_rad(rotation_degrees.x), deg_to_rad(target_rotation_vector.x), clampf(_delta * door_speed,0.0,1.0) )
+					if rotation_degrees.x == target_rotation_vector.x:
+						is_moving = false
+						
+				ForcedRotationAxis.AxisY:
+					rotation.y = lerp_angle( deg_to_rad(rotation_degrees.y), deg_to_rad(target_rotation_vector.y), clampf(_delta * door_speed,0.0,1.0) )
+					if rotation_degrees.y == target_rotation_vector.y:
+						is_moving = false
+				ForcedRotationAxis.AxisZ:
+					rotation.x = lerp_angle( deg_to_rad(rotation_degrees.z), deg_to_rad(target_rotation_vector.z), clampf(_delta * door_speed,0.0,1.0) )
+					if rotation_degrees.z == target_rotation_vector.z:
+						is_moving = false
 
 
 func vectors_approx_equal( v1 : Vector3, v2 : Vector3, epsilon : float ) -> bool:
@@ -230,7 +242,6 @@ func open_door(interactor: Node3D):
 	if door_type == DoorType.ANIMATED:
 		anim_player.play(opening_animation)
 	elif door_type == DoorType.ROTATING:
-		target_rotation_rad = deg_to_rad(open_rotation_deg)
 		target_rotation_vector = open_rotation
 		var swing_direction: int = 1
 
@@ -239,7 +250,6 @@ func open_door(interactor: Node3D):
 			var offset_dot_product: float = offset.dot(global_transform.basis.x)
 			swing_direction = -1 if offset_dot_product < 0 else 1
 
-		target_rotation_rad = deg_to_rad(open_rotation_deg * swing_direction)
 		target_rotation_vector = open_rotation * swing_direction
 		is_moving = true
 	else:
@@ -277,7 +287,6 @@ func close_door(_interactor: Node3D):
 		else:
 			anim_player.play(closing_animation)
 	elif door_type == DoorType.ROTATING:
-		target_rotation_rad = deg_to_rad(closed_rotation_deg)
 		target_rotation_vector = closed_rotation
 		is_moving = true
 	else:
@@ -315,10 +324,6 @@ func set_to_open_position():
 		position = open_position
 	else:
 		rotation_degrees = open_rotation
-		#if use_z_axis:
-			#rotation.z = deg_to_rad(open_rotation_deg)
-		#else:
-			#rotation.y = deg_to_rad(open_rotation_deg)
 
 
 func set_to_closed_position():
@@ -326,10 +331,6 @@ func set_to_closed_position():
 		position = closed_position
 	else:
 		rotation_degrees = closed_rotation
-		#if use_z_axis:
-			#rotation.z = deg_to_rad(closed_rotation_deg)
-		#else:
-			#rotation.y = deg_to_rad(closed_rotation_deg)
 
 #alternate interaction for locking/unlocking
 func interact2(interactor: Node3D):
