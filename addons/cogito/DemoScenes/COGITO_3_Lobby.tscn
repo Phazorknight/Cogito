@@ -3240,7 +3240,7 @@ size = Vector3(3.37023, 3.70407, 8.35876)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4k13h"]
 size = Vector3(5.08541, 3.48608, 16.0137)
 
-[node name="Cogito04NewDemo" type="Node3D" node_paths=PackedStringArray("connectors")]
+[node name="Cogito04Lobby" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_dracg")
 connectors = [NodePath("MAIN_LOBBY/LAB_CONNECTOR/ConnectorFromLab")]
 save_temp_on_enter = true

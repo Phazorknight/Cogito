@@ -4,6 +4,7 @@ class_name CogitoSecurityCamera
 
 signal started_detecting
 signal object_detected
+signal send_detected_object(object: Node3D)
 signal object_no_longer_detected
 signal turned_off
 
@@ -19,7 +20,7 @@ signal turned_off
 
 @export_category("Detection Settings")
 @export var only_detect_player : bool = true
-##Threshold at which Player is detected
+## Threshold at which Player is detected
 @export var detection_threshold : float = 4.0
 
 
@@ -111,9 +112,11 @@ func detecting(delta: float):
 		start_alarm_light()
 		if !audio_stream_player_3d.playing:
 			audio_stream_player_3d.play()
+			
+		send_detected_object.emit(detected_objects[0])
 		object_detected.emit()
-		update_indicator_mesh()
 
+		update_indicator_mesh()
  
 
 func stop_detecting():
@@ -121,12 +124,19 @@ func stop_detecting():
 	detection_time = 0
 	current_state = DetectorState.SEARCHING
 	object_no_longer_detected.emit()
+	
+	if self.get_parent() == CogitoNPC:
+		self.get_parent().attention_target = null
+	
 	update_indicator_mesh()
 
 
 func switch_to_searching():
 	detection_time = 0
 	current_state = DetectorState.SEARCHING
+	if audio_stream_player_3d.playing:
+		audio_stream_player_3d.stop()
+	stop_alarm_light()
 	update_indicator_mesh()
 
 

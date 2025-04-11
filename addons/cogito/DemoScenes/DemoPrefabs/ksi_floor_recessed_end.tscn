@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=4 uid="uid://dvc8ghayvuasy"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e3gt1"]
+resource_name = "metalLight"
+albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
+emission_enabled = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yu20o"]
 resource_name = "metal"
 albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
-emission_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jpanh"]
-resource_name = "metalLight"
-albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
 emission_enabled = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_i3lmy"]
@@ -42,7 +42,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 78,
 "index_data": PackedByteArray("AgAAAAEAAQADAAIABgAEAAUABQAHAAYABQAIAAcACAAJAAcACAAKAAkACAALAAoADgAMAA0ADQAPAA4AEgAQABEAEQATABIAFgAUABUAFQAXABYAGgAYABkAGQAbABoAHgAcAB0AHQAfAB4AIAAeAB8AIAAfACEAIgAgACEAIQAjACIAJgAkACUAJQAnACYAKgAoACkAKQArACoA"),
-"material": SubResource("StandardMaterial3D_yu20o"),
+"material": SubResource("StandardMaterial3D_e3gt1"),
 "name": "metal",
 "primitive": 3,
 "uv_scale": Vector4(78.7402, 76.7402, 0, 0),
@@ -54,7 +54,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 6,
 "index_data": PackedByteArray("LgAsAC0ALQAvAC4A"),
-"material": SubResource("StandardMaterial3D_jpanh"),
+"material": SubResource("StandardMaterial3D_yu20o"),
 "name": "metalLight",
 "primitive": 3,
 "uv_scale": Vector4(78.7402, 76.7402, 0, 0),

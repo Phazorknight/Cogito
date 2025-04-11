@@ -84,6 +84,7 @@ Credits
 
 * About the game assets under the COGITO/assets folder:
    * 3D models are by `Kenney <https://www.kenney.nl/>`_ or `Philip Drobar <https://www.philipdrobar.com/>`_.
+   * NPC animations are by `Quarternius <https://quaternius.itch.io/universal-animation-library/>`_ under CC0
    * Audio is either by `Kenney <https://www.kenney.nl/>`_ or from `freesound.org <https://freesound.org/>`_ used under CC0 or MIT license
    * `Alarm Siren.wav by mirkosukovic <https://freesound.org/s/435666/>`_ -- License: Attribution 4.0
    * `Match strike by Bertsz <https://freesound.org/s/524306/>`_ -- License: Creative Commons 0

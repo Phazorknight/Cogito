@@ -6,13 +6,13 @@
 margin = 0.075
 radius = 0.075
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iac3b"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgavc"]
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.333333, 1, 0, 0.501961)
 
 [sub_resource type="SphereMesh" id="SphereMesh_1juxf"]
-material = SubResource("StandardMaterial3D_iac3b")
+material = SubResource("StandardMaterial3D_lgavc")
 radius = 0.05
 height = 0.1
 radial_segments = 8

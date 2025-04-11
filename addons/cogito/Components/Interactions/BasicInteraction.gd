@@ -1,5 +1,7 @@
 extends InteractionComponent
 
+signal basic_signal
+
 @onready var parent_node = get_parent() #Grabbing reference to parent
 
 # Called when the node enters the scene tree for the first time.
@@ -13,6 +15,8 @@ func interact(_player_interaction_component: PlayerInteractionComponent):
 			parent_node.interact(_player_interaction_component)
 
 		was_interacted_with.emit(interaction_text,input_map_action)
+		basic_signal.emit()
+		
 	else:
 		if check_attribute(_player_interaction_component):
 			if parent_node.has_method("interact"):

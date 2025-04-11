@@ -1,6 +1,8 @@
 extends Node
 class_name HitboxComponent
 
+signal got_hit
+
 @export var health_attribute : CogitoHealthAttribute
 ## PackedScene that will get spawned on global hit position
 @export var spawn_at_global_collision: PackedScene
@@ -22,7 +24,6 @@ func _ready() -> void:
 
 
 func damage(damage_amount: float, _hit_direction:= Vector3.ZERO, _hit_position:= Vector3.ZERO):
-	
 	if health_attribute:
 		health_attribute.subtract(damage_amount)
 	
@@ -42,4 +43,6 @@ func damage(damage_amount: float, _hit_direction:= Vector3.ZERO, _hit_position:=
 		if parent is RigidBody3D:
 			parent.apply_impulse(_hit_direction * damage_amount * applied_force_multipler, _hit_position)
 		if parent is CharacterBody3D:
-			parent.apply_knockback(_hit_direction *damage_amount * applied_force_multipler)
+			parent.apply_knockback(_hit_direction * damage_amount * applied_force_multipler)
+			
+	got_hit.emit()

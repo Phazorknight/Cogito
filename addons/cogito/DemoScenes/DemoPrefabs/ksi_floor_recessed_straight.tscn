@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://bpuio1pidh8fa"]
+[gd_scene load_steps=8 format=4 uid="uid://bpuio1pidh8fa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x2y8a"]
 resource_name = "metal"
@@ -64,6 +64,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_wom2r")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubesa"]
+resource_name = "metalLight"
+albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
+emission_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fj51m"]
+resource_name = "metal"
+albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
+emission_enabled = true
+
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cbkwa"]
 data = PackedVector3Array(0, 0, -3, 0, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, -3, 0, 0, -3, 0, 0.1875, -0.3759, 0, 0.1875, 0, 0, 0, 0, 0, 0, 0, 0, 0.1275, -0.4883, 0, 0.1875, -0.3759, 0, 0, 0, 0, 0, -3, 0, 0.1275, -0.4883, 0, 0, -3, 0, 0.1275, -2.5117, 0, 0.1275, -0.4883, 0, 0, -3, 0, 0.1875, -2.6242, 0, 0.1275, -2.5117, 0, 0, -3, 0, 0.1875, -3, 0, 0.1875, -2.6242, 0, 0.1875, -3, 0, 0, -3, 3, 0, -3, 3, 0, -3, 3, 0.1875, -3, 0, 0.1875, -3, 3, 0.1875, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1875, 0, 3, 0.1875, 0, 3, 0.1875, 0, 0, 0.1875, 0, 0, 0.1875, -0.3759, 0, 0.1875, -0.3759, 3, 0.1875, -0.3759, 3, 0.1875, 0, 3, 0.1875, -2.6242, 0, 0.1875, -2.6242, 0, 0.1875, -3, 0, 0.1875, -3, 3, 0.1875, -3, 3, 0.1875, -2.6242, 3, 0, 0, 3, 0.1875, 0, 3, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0, -3, 3, 0, 0, 3, 0.1875, 0, 3, 0.1875, -0.3759, 3, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0.1275, -2.5117, 3, 0, -3, 3, 0.1275, -2.5117, 3, 0.1875, -2.6242, 3, 0, -3, 3, 0.1875, -2.6242, 3, 0.1875, -3, 3, 0, -3, 0, 0.1875, -0.3759, 0, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0.1875, -0.3759, 0, 0.1875, -0.3759, 0, 0.1275, -2.5117, 0, 0.1875, -2.6242, 3, 0.1875, -2.6242, 3, 0.1875, -2.6242, 3, 0.1275, -2.5117, 0, 0.1275, -2.5117, 3, 0.1275, -0.4883, 0, 0.1275, -0.4883, 0, 0.1275, -2.5117, 0, 0.1275, -2.5117, 3, 0.1275, -2.5117, 3, 0.1275, -0.4883)
 
@@ -74,6 +84,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 
 transform = Transform3D(5.96046e-08, 0, -1, 0, 1, 0, 1, 0, 5.96046e-08, 0, -0.187, 0)
 mesh = SubResource("ArrayMesh_3mpmr")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_ubesa")
+surface_material_override/1 = SubResource("StandardMaterial3D_fj51m")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(5.96046e-08, 0, -1, 0, 1, 0, 1, 0, 5.96046e-08, 0, -0.187, 0)
