@@ -3,11 +3,17 @@ extends TabContainer
 ## This class can be extended to create a tab menu with controller support.
 
 ## Helper for controller input. Sets the node  to focus on for each tab.
+
+
+@export var enable_focus_on_tabs : bool = true
 ## The array index corresponds to the tabs.
 @export var nodes_to_focus: Array[Control]
 
 func _input(event):
 	if !is_visible_in_tree():
+		return
+	
+	if !enable_focus_on_tabs:
 		return
 	
 	#Tab navigation

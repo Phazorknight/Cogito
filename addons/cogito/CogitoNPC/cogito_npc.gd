@@ -20,7 +20,8 @@ var properties : int
 var attention_target : Node3D
 
 @export_group("Movement")
-@export var move_speed : float = 2
+var move_speed : float = 2
+@export var walk_speed : float = 2
 @export var sprint_speed : float = 4
 @export var acceleration : float = 10.0
 @export var rotation_speed : float = 0.2
@@ -149,14 +150,12 @@ func npc_footsteps(delta):
 	# Sprinting Case, so using defined number from Chase speed.
 	# rounded velocity.length used due to tiny speed fluctuations
 	
-	print("npc_footsteps: velocity.length=", velocity.length())
 	if round(velocity.length()) >= sprint_speed:
 		wiggle_vector.y = sin(wiggle_index)
 		wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
 		
 		if can_play_footstep and wiggle_vector.y > 0.9:
 			footstep_player.volume_db = sprint_volume_db
-			print("npc_footsteps: PLAYING FOOTSTEP SPRINT!")
 			footstep_player._play_interaction("footstep")
 			can_play_footstep = false
 		
@@ -170,7 +169,6 @@ func npc_footsteps(delta):
 		
 		if can_play_footstep and wiggle_vector.y > 0.9:
 			footstep_player.volume_db = walk_volume_db
-			print("npc_footsteps: PLAYING FOOTSTEP WALK!")
 			footstep_player._play_interaction("footstep")
 			can_play_footstep = false
 		

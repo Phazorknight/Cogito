@@ -3,8 +3,7 @@ extends Control
 signal drop_slot_data(slot_data : InventorySlotPD)
 signal inventory_open(is_true: bool)
 
-@onready var inventory_ui = $VBoxContainer/InventoryUI
-@onready var player_currencies_ui = $VBoxContainer/PlayerCurrencies
+@export var inventory_ui : Control
 @onready var grabbed_slot_node = $GrabbedSlot
 @onready var external_inventory_ui = $ExternalInventoryUI
 @onready var hot_bar_inventory = $HotBarInventory
@@ -18,8 +17,11 @@ signal inventory_open(is_true: bool)
 
 ## Sound that plays as a generic error.
 @export var sound_error : AudioStream
-
 @export var is_using_hotbar: bool = true
+
+@export_group("Inventory Screen")
+@export var nodes_to_show : Array[Node]
+@export var nodes_to_hide : Array[Node]
 
 var is_inventory_open : bool:
 	set(value):
@@ -58,8 +60,12 @@ func open_inventory():
 		is_inventory_open = true
 		info_panel.hide()
 		get_viewport().gui_focus_changed.connect(_on_focus_changed)
-		inventory_ui.show()
-		player_currencies_ui.show()
+		#inventory_ui.show()
+		#player_currencies_ui.show()
+		
+		for node in nodes_to_show:
+			node.show()
+		
 		if InputHelper.device_index != -1: # Check if gamepad is used
 			inventory_ui.slot_array[0].grab_focus() # Grab focus of inventory slot for gamepad users.
 #		inventory_interface.grabbed_slot_node.show()
@@ -80,8 +86,12 @@ func close_inventory():
 		get_viewport().gui_focus_changed.disconnect(_on_focus_changed)
 		if control_in_focus:
 			control_in_focus.release_focus()
-		inventory_ui.hide()
-		player_currencies_ui.hide()
+		
+		for node in nodes_to_show:
+			node.hide()
+		#inventory_ui.hide()
+		#player_currencies_ui.hide()
+		
 		if external_inventory_owner:
 			external_inventory_owner.close()
 		grabbed_slot_node.hide()
@@ -322,3 +332,8 @@ func _on_visibility_changed():
 		drop_slot_data.emit(grabbed_slot_data)
 		grabbed_slot_data = null
 		update_grabbed_slot()
+
+
+func _on_inventory_ui_hidden() -> void:
+	# Hides item info panel if the inventory UI screen gets hidden.
+	info_panel.hide()

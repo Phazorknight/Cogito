@@ -50,6 +50,7 @@ func update_device(_device, _device_index):
 	
 	
 func update_input_icon():
+	CogitoGlobals.debug_log(true,"DynamicInputIcon.gd","update_input_icon() called. current device = " + str(device))
 	match input_icon_type:
 		InputIconType.DYNAMIC:
 			update_input_icon_dynamic()
@@ -82,6 +83,8 @@ func update_input_icon_dynamic():
 			update_gamepad_icon(playstation_icons)
 		InputHelper.DEVICE_SWITCH_CONTROLLER:
 			update_gamepad_icon(switch_icons)
+		"generic":
+			update_gamepad_icon(xbox_icons)
 
 
 func update_gamepad_icon(icon_textures:Texture2D = gamepad_icons):
@@ -94,7 +97,10 @@ func update_gamepad_icon(icon_textures:Texture2D = gamepad_icons):
 		frame = joypad_input.button_index
 	elif joypad_input is InputEventJoypadMotion:
 		frame = gamepad_motion_to_frame_index(joypad_input)
-
+	else:
+		CogitoGlobals.debug_log(true, "DynamicInputIcon.gd", "Action " + action_name + ": No gamepad input map assigned.")
+		frame = 0
+		return
 
 func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
 	set_texture(keyboard_icons)
@@ -127,7 +133,6 @@ func _is_steam_deck() -> bool:
 		return true
 	else:
 		return false
-
 
 
 func gamepad_motion_to_frame_index(joypad_input_motion: InputEventJoypadMotion):

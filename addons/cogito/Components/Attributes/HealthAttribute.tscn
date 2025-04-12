@@ -11,3 +11,4 @@ attribute_color = Color(0.729412, 0, 0, 1)
 attribute_icon = ExtResource("2_smx1r")
 value_max = 100.0
 value_start = 80.0
+attribute_visibility = 1

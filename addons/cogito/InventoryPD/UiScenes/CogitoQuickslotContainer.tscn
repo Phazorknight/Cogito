@@ -12,6 +12,7 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+border_color = Color(0.974511, 0.772854, 1.92523e-06, 1)
 expand_margin_left = 1.0
 expand_margin_top = 1.0
 expand_margin_right = 1.0
@@ -39,6 +40,12 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "15"
 
+[node name="Selected" type="Panel" parent="."]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_i4mvh")
+
 [node name="MarginContainerInputIcon" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 32
@@ -50,12 +57,6 @@ theme_override_constants/margin_bottom = 10
 position = Vector2(32, 59)
 scale = Vector2(0.5, 0.5)
 action_name = "quickslot_1"
-
-[node name="Selected" type="Panel" parent="."]
-visible = false
-layout_mode = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_i4mvh")
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]

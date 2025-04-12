@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://c6rpnmo1y1cw5"]
 
-[ext_resource type="Texture2D" uid="uid://bubcgr2q03ert" path="res://addons/cogito/Assets/Graphics/ItemIcons/Dart.png" id="1_m1vko"]
+[ext_resource type="Texture2D" uid="uid://b8f4t8knur6qj" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Dart.png" id="1_bql52"]
 [ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="1_ub1do"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_sof2n"]
 [ext_resource type="PackedScene" uid="uid://1vnxo4ya6yjr" path="res://addons/cogito/Wieldables/throw_dart.tscn" id="4_53fc7"]
@@ -17,7 +17,7 @@ wieldable_range = 10.0
 wieldable_damage = 1.0
 name = "Dart"
 description = "A simple foam dart. Squishy."
-icon = ExtResource("1_m1vko")
+icon = ExtResource("1_bql52")
 is_stackable = true
 is_droppable = true
 stack_size = 5

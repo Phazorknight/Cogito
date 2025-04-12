@@ -14,3 +14,4 @@ attribute_color = Color(0, 0.670588, 0, 1)
 attribute_icon = ExtResource("2_g45ru")
 value_max = 100.0
 value_start = 50.0
+attribute_visibility = 1

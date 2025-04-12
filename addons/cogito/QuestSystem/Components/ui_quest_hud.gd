@@ -12,15 +12,15 @@ extends Node
 @onready var completed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Completed
 @onready var failed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Failed
 
-
-var player_hud #Reference of main Player HUD.
+#Reference of main Player HUD.
+@export var player_hud  : CogitoPlayerHudManager
 
 func _ready():
 	CogitoQuestManager.quest_activated.connect(_on_quest_activated)
 	CogitoQuestManager.quest_completed.connect(_on_quest_completed)
 	CogitoQuestManager.quest_failed.connect(_on_quest_failed)
 	CogitoQuestManager.quest_updated.connect(_on_quest_updated)
-	player_hud = get_parent()
+	#player_hud = get_parent()
 	
 	#Hooking up quest display to player inventory toggle.
 	player_hud.show_inventory.connect(_show_quest_display)

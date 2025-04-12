@@ -42,6 +42,7 @@ func _state_enter():
 		States.load_previous_state()
 	else:
 		host_animation_statemachine.travel(chase_stance)
+		Host.move_speed = Host.sprint_speed
 		current_chase_status = ChaseStatus.CHASING
 
 
@@ -101,6 +102,8 @@ func _running(delta: float):
 
 ## Call this to abort the chase. Switches status to lost target and goes to previous state.
 func stop_chasing() -> void:
+	#Switch back to walk_speed
+	Host.move_speed = Host.walk_speed
 	current_chase_status = ChaseStatus.LOST
 
 

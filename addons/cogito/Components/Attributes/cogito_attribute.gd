@@ -24,8 +24,8 @@ signal attribute_reached_zero(attribute_name:String, value_current:float, value_
 ## Use this when you don't want an attribute's current value to not be saved.
 @export var dont_save_current_value : bool = false
 
-enum AttributeVisibility {HUD, Interface, Hidden}
-@export var attribute_visibility : AttributeVisibility = AttributeVisibility.HUD
+enum AttributeVisibility {Hud, Hud_and_Interface, Interface_Only, Hidden}
+@export var attribute_visibility : AttributeVisibility = AttributeVisibility.Hud
 
 
 var value_current : float:

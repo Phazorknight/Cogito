@@ -12,13 +12,13 @@ class_name CogitoLightmeter
 ##Interpolation used for get_average_color function. Default for Lightmeter is Lanczos, change for better performance
 @export var interpolation_method: Image.Interpolation = Image.INTERPOLATE_LANCZOS
 
-
 @onready var sub_viewport := $SubViewport
 @onready var light_detection := $SubViewport/LightDetection
 @onready var texture_rect := $SubViewport/LightDetection/TextureRect
 @onready var color_rect := $SubViewport/LightDetection/ColorRect
 @onready var timer: Timer = $Timer
 @onready var previous_position : Vector3 = get_parent().global_position
+
 
 func _ready() -> void:
 	if update_frequency > 0:
@@ -33,6 +33,7 @@ func get_average_color(texture: ViewportTexture) -> Color:
 	var image = texture.get_image() # Get the Image of the input texture
 	image.resize(1, 1,interpolation_method) # Resize the image to one pixel
 	return image.get_pixel(0, 0) # Read the color of that pixel
+
 
 func on_timeout():
 	update_lightmeter_attribute()

@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1lnep4d7uqq3"]
+
+[ext_resource type="Script" uid="uid://dh88160h8i0rb" path="res://addons/cogito/Components/UI/UI_AttributeDisplay.gd" id="1_v70f5"]
+[ext_resource type="Texture2D" uid="uid://ltw74nlvopb" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Sanity.png" id="2_x18t1"]
+[ext_resource type="PackedScene" uid="uid://wagr1slqn2fn" path="res://addons/cogito/Components/UI/dynamic_bar.tscn" id="3_xipd1"]
+[ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="4_537di"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v70f5"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[node name="UiAttributeDisplay" type="Control"]
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_v70f5")
+bar_stylebox = SubResource("StyleBoxFlat_v70f5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AttributeIcon" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_x18t1")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HBox_Top" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="AttributeName" type="Label" parent="HBoxContainer/VBoxContainer/HBox_Top"]
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("4_537di")
+theme_type_variation = &"HUDLabel"
+text = "Health"
+vertical_alignment = 1
+
+[node name="HBoxValues" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/HBox_Top"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AttributeLabelCurrent" type="Label" parent="HBoxContainer/VBoxContainer/HBox_Top/HBoxValues"]
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("4_537di")
+theme_type_variation = &"HUDLabel"
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttributeSeparator" type="Label" parent="HBoxContainer/VBoxContainer/HBox_Top/HBoxValues"]
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("4_537di")
+theme_type_variation = &"HUDLabel"
+text = "|"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttributeLabelMax" type="Label" parent="HBoxContainer/VBoxContainer/HBox_Top/HBoxValues"]
+custom_minimum_size = Vector2(30, 20)
+layout_mode = 2
+size_flags_horizontal = 6
+theme = ExtResource("4_537di")
+theme_type_variation = &"HUDLabel"
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBox_Bottom" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="AttributeBar" parent="HBoxContainer/VBoxContainer/HBox_Bottom" instance=ExtResource("3_xipd1")]
+layout_mode = 2

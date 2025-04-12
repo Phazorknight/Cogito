@@ -14,3 +14,4 @@ attribute_color = Color(1, 0.733333, 0.160784, 1)
 attribute_icon = ExtResource("2_yabdn")
 value_max = 30.0
 value_start = 30.0
+attribute_visibility = 1

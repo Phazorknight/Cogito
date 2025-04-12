@@ -6,25 +6,29 @@ signal hide_inventory
 
 #region Variables
 
+@export_group("Setup")
+
 ## Reference to the Node that has the player.gd script.
 @export var player : Node
 
 ## Used to reset icons etc, useful to have.
 @export var empty_texture : Texture2D
-## The hint icon that displays when no other icon is passed.
-@export var default_hint_icon : Texture2D
 
+
+@export_group("Interaction Prompts and Hints")
 ## PackedScene/Prefab for Object Name as it'd pop up in the HUD
 @export var object_name_component : PackedScene
 ## PackedScene/Prefab for Interaction Prompts
 @export var prompt_component : PackedScene
 ## PackedScene/Prefab for Hints
 @export var hint_component : PackedScene
-## 
+## The hint icon that displays when no other icon is passed.
+@export var default_hint_icon : Texture2D
 
 ## This sets how far away from the player dropped items appear. 0 = items appear on the tip of the player interaction raycast. Negative values mean closer, positive values mean further away that this.
 @export var item_drop_distance_offset : float = -1
 
+@export_group("HUD")
 ## Reference to PackedScene that gets instantiated for each player attribute.
 @export var ui_attribute_prefab : PackedScene
 ## Reference to PackedScene that gets instantiated for each player currency.
@@ -32,6 +36,13 @@ signal hide_inventory
 ## If you want to have the stamina bar outside of the other attributes, you can set a reference here. This will remove it from the main attribute container
 @export var fixed_stamina_bar : CogitoAttributeUi
 
+@export_group("Interface Screen")
+@export var ui_currency_area: Control
+## If you want to display the playeres attributes (like a Stats menu), put a reference here. If not, leave blank.
+@export var attribute_display_node : Control
+@export var ui_attribute_display_prefab : PackedScene
+## If checked, only attributes that have their visibility set to "Interface" will be shown.
+@export var only_show_interface_attributes : bool
 
 var hurt_tween : Tween
 var is_inventory_open : bool = false
@@ -44,7 +55,6 @@ var interaction_texture : Texture2D
 @onready var prompt_area: Control = $PromptArea
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : BoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
-@onready var ui_currency_area: VBoxContainer = $InventoryInterface/VBoxContainer/PlayerCurrencies/MarginContainer/VBoxContainer
 @onready var crosshair: Control = $Crosshair
 
 #endregion
@@ -80,6 +90,7 @@ func _setup_player():
 
 	connect_to_player_signals()
 	instantiate_player_attribute_ui()
+	instantiate_interface_attributes()
 	instantiate_player_currency_ui()
 	
 	# Fill inventory HUD with player inventory
@@ -107,7 +118,7 @@ func instantiate_player_attribute_ui():
 		if fixed_stamina_bar and attribute.attribute_name == "stamina":
 			fixed_stamina_bar.initiate_attribute_ui(attribute)
 		else:
-			if attribute.attribute_visibility == 0: # Only instantiates Attributes that have visibility set to HUD
+			if attribute.attribute_visibility == 0 or attribute.attribute_visibility == 1: # Only instantiates Attributes that have visibility set to HUD
 				var spawned_attribute_ui = ui_attribute_prefab.instantiate()
 				ui_attribute_area.add_child(spawned_attribute_ui)
 				if attribute.attribute_name == "health":
@@ -115,6 +126,20 @@ func instantiate_player_attribute_ui():
 					attribute.death.connect(_on_player_death)
 				
 				spawned_attribute_ui.initiate_attribute_ui(attribute)
+
+
+func instantiate_interface_attributes():
+	# Clearing out child nodes
+	for n in attribute_display_node.get_children():
+		attribute_display_node.remove_child(n)
+		n.queue_free()
+	
+	# Only spawn attributes set to visibility "Interface"
+	for attribute in player.player_attributes.values():
+		if attribute.attribute_visibility == 1 or attribute.attribute_visibility == 2  : # Only instantiates Attributes that have visibility set to HUD
+			var spawned_interface_attribute = ui_attribute_display_prefab.instantiate()
+			attribute_display_node.add_child(spawned_interface_attribute)
+			spawned_interface_attribute.initiate_interface_ui(attribute)
 
 
 func instantiate_player_currency_ui():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=35 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" uid="uid://dc3bukoacyq60" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dtdjlu4dtm6wh" path="res://addons/cogito/InventoryPD/UiScenes/InventoryUI.tscn" id="3_krf2d"]
 [ext_resource type="Texture2D" uid="uid://b45endup5sujv" path="res://addons/cogito/Assets/Textures/CameraDamageVignette.png" id="3_lb6l4"]
 [ext_resource type="Script" uid="uid://y8g8ja6bydr0" path="res://addons/cogito/InventoryPD/UiScenes/inventory_interface.gd" id="3_lyywb"]
-[ext_resource type="Texture2D" uid="uid://dgvti6embqgw3" path="res://addons/cogito/Assets/Graphics/HintIcons/Hint_Exclamation.png" id="3_o56n0"]
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="5_j6s1a"]
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://addons/cogito/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://addons/cogito/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
@@ -21,10 +20,12 @@
 [ext_resource type="Script" uid="uid://by3n6q1edxunf" path="res://addons/cogito/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://addons/cogito/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://addons/cogito/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
+[ext_resource type="PackedScene" uid="uid://b1lnep4d7uqq3" path="res://addons/cogito/Components/UI/UI_AttributeDisplay.tscn" id="20_3jei3"]
 [ext_resource type="PackedScene" uid="uid://d2dt6mcv83j64" path="res://addons/cogito/Components/UI/UI_AttributeComponent.tscn" id="20_lscav"]
 [ext_resource type="Script" uid="uid://b7ro3ulh4hp5j" path="res://addons/cogito/InventoryPD/CogitoQuickSlots.gd" id="20_xe82q"]
 [ext_resource type="PackedScene" uid="uid://cd3f50eloxr7h" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.tscn" id="21_q2hxa"]
 [ext_resource type="PackedScene" uid="uid://dygtu0wos4337" path="res://addons/cogito/PackedScenes/death_screen.tscn" id="23_4avie"]
+[ext_resource type="Script" uid="uid://c656a651xkd0c" path="res://addons/cogito/EasyMenus/Scripts/tab_menu.gd" id="24_3jei3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
 resource_local_to_scene = true
@@ -39,6 +40,18 @@ font_size = 36
 [sub_resource type="LabelSettings" id="LabelSettings_ossw8"]
 font_size = 24
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jei3"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eu3l5"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmpwe"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eka6m"]
 content_margin_left = 0.0
 content_margin_top = 0.0
@@ -46,7 +59,7 @@ content_margin_right = 0.0
 content_margin_bottom = 0.0
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.784314)
 
-[node name="Player_HUD" type="Control" node_paths=PackedStringArray("fixed_stamina_bar")]
+[node name="Player_HUD" type="Control" node_paths=PackedStringArray("fixed_stamina_bar", "ui_currency_area", "attribute_display_node")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,13 +67,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wdkf")
-default_hint_icon = ExtResource("3_o56n0")
 object_name_component = ExtResource("3_6j0b3")
 prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
 ui_attribute_prefab = ExtResource("20_lscav")
 ui_currency_prefab = ExtResource("6_kmqyf")
 fixed_stamina_bar = NodePath("FixedStaminaBar")
+ui_currency_area = NodePath("InventoryInterface/CogitoTabMenu/Inventory/PlayerCurrencies/MarginContainer/VBoxContainer")
+attribute_display_node = NodePath("InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes")
+ui_attribute_display_prefab = ExtResource("20_3jei3")
 
 [node name="FixedStaminaBar" parent="." instance=ExtResource("20_lscav")]
 layout_mode = 1
@@ -237,7 +252,7 @@ layout_mode = 2
 size_flags_vertical = 8
 alignment = 1
 
-[node name="InventoryInterface" type="Control" parent="."]
+[node name="InventoryInterface" type="Control" parent="." node_paths=PackedStringArray("inventory_ui", "nodes_to_show")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -245,23 +260,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_lyywb")
+inventory_ui = NodePath("CogitoTabMenu/Inventory/InventoryUI")
 sound_error = ExtResource("8_bxpra")
 is_using_hotbar = false
+nodes_to_show = [NodePath("CogitoTabMenu/Inventory/PlayerCurrencies"), NodePath("CogitoTabMenu")]
 metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 5.0
-offset_top = -31.0
-offset_right = 66.0
-offset_bottom = 31.0
-grow_vertical = 2
-
-[node name="PlayerCurrencies" type="PanelContainer" parent="InventoryInterface/VBoxContainer"]
+[node name="CogitoTabMenu" type="TabContainer" parent="InventoryInterface" node_paths=PackedStringArray("nodes_to_focus")]
 visible = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+offset_left = 25.0
+offset_top = 150.0
+offset_right = 425.0
+offset_bottom = 219.0
+theme = ExtResource("5_j6s1a")
+current_tab = 0
+script = ExtResource("24_3jei3")
+nodes_to_focus = [NodePath("Inventory/InventoryUI"), NodePath("Quests/QuestDisplay/VBoxContainer/TabContainer/Active"), NodePath("Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes")]
+metadata/_custom_type_script = "uid://c656a651xkd0c"
+
+[node name="Inventory" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="InventoryUI" parent="InventoryInterface/CogitoTabMenu/Inventory" instance=ExtResource("3_krf2d")]
+layout_mode = 2
+inventory_name = "Player Inventory"
+
+[node name="PlayerCurrencies" type="PanelContainer" parent="InventoryInterface/CogitoTabMenu/Inventory"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
@@ -271,7 +298,7 @@ mouse_filter = 2
 theme = ExtResource("5_j6s1a")
 theme_type_variation = &"HUDPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/VBoxContainer/PlayerCurrencies"]
+[node name="MarginContainer" type="MarginContainer" parent="InventoryInterface/CogitoTabMenu/Inventory/PlayerCurrencies"]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/margin_left = 4
@@ -279,14 +306,117 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/VBoxContainer/PlayerCurrencies/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Inventory/PlayerCurrencies/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="InventoryUI" parent="InventoryInterface/VBoxContainer" instance=ExtResource("3_krf2d")]
+[node name="Quests" type="Control" parent="InventoryInterface/CogitoTabMenu" node_paths=PackedStringArray("player_hud")]
 visible = false
 layout_mode = 2
-inventory_name = "Player Inventory"
+theme = ExtResource("5_j6s1a")
+script = ExtResource("15_kn51k")
+send_quest_notifications = true
+quest_entry = ExtResource("16_qsjbq")
+player_hud = NodePath("../../..")
+metadata/_edit_use_anchors_ = true
+metadata/_tab_index = 1
+
+[node name="QuestDisplay" type="PanelContainer" parent="InventoryInterface/CogitoTabMenu/Quests"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 166.0
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"PromptLabel"
+theme_override_font_sizes/font_size = 24
+text = "Quests"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+current_tab = 0
+
+[node name="Active" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_override_constants/separation = 4
+metadata/_tab_index = 0
+
+[node name="QuestEntry" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
+layout_mode = 2
+
+[node name="QuestEntry2" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
+layout_mode = 2
+
+[node name="Completed" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Failed" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Quests/QuestDisplay/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Stats" type="Control" parent="InventoryInterface/CogitoTabMenu"]
+visible = false
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+metadata/_edit_use_anchors_ = true
+metadata/_tab_index = 2
+
+[node name="QuestDisplay" type="PanelContainer" parent="InventoryInterface/CogitoTabMenu/Stats"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 166.0
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"HUDPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_type_variation = &"PromptLabel"
+theme_override_font_sizes/font_size = 24
+text = "Stats"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+current_tab = 0
+
+[node name="Attributes" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme = ExtResource("5_j6s1a")
+theme_override_constants/separation = 4
+metadata/_tab_index = 0
+
+[node name="UiAttributeDisplay" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" instance=ExtResource("20_3jei3")]
+layout_mode = 2
+bar_stylebox = SubResource("StyleBoxFlat_3jei3")
+
+[node name="UiAttributeDisplay2" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" instance=ExtResource("20_3jei3")]
+layout_mode = 2
+bar_stylebox = SubResource("StyleBoxFlat_eu3l5")
+
+[node name="UiAttributeDisplay3" parent="InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" instance=ExtResource("20_3jei3")]
+layout_mode = 2
+bar_stylebox = SubResource("StyleBoxFlat_vmpwe")
 
 [node name="ExternalInventoryUI" parent="InventoryInterface" instance=ExtResource("3_krf2d")]
 visible = false
@@ -523,6 +653,7 @@ input_action = "quickslot_4"
 position = Vector2(32, 0)
 
 [node name="DeathScreen" parent="." instance=ExtResource("23_4avie")]
+visible = false
 layout_mode = 1
 
 [node name="HintArea" type="VBoxContainer" parent="."]
@@ -530,70 +661,11 @@ layout_mode = 1
 offset_bottom = 5.0
 theme = ExtResource("5_j6s1a")
 
-[node name="QuestHUD" type="Control" parent="."]
-anchors_preset = 0
-anchor_left = 0.683594
-anchor_top = 0.0138889
-anchor_right = 0.683594
-anchor_bottom = 0.0138889
-pivot_offset = Vector2(400, 0)
-theme = ExtResource("5_j6s1a")
-script = ExtResource("15_kn51k")
-send_quest_notifications = true
-quest_entry = ExtResource("16_qsjbq")
-metadata/_edit_use_anchors_ = true
-
-[node name="QuestDisplay" type="PanelContainer" parent="QuestHUD"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 0
-offset_right = 400.0
-offset_bottom = 166.0
-theme = ExtResource("5_j6s1a")
-theme_type_variation = &"HUDPanel"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="QuestHUD/QuestDisplay"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="QuestHUD/QuestDisplay/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("5_j6s1a")
-theme_type_variation = &"PromptLabel"
-theme_override_font_sizes/font_size = 24
-text = "Quests"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TabContainer" type="TabContainer" parent="QuestHUD/QuestDisplay/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("5_j6s1a")
-current_tab = 0
-
-[node name="Active" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
-layout_mode = 2
-theme = ExtResource("5_j6s1a")
-theme_override_constants/separation = 4
-metadata/_tab_index = 0
-
-[node name="QuestEntry" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
-layout_mode = 2
-
-[node name="QuestEntry2" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer/Active" instance=ExtResource("16_qsjbq")]
-layout_mode = 2
-
-[node name="Completed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Failed" type="VBoxContainer" parent="QuestHUD/QuestDisplay/VBoxContainer/TabContainer"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
 [connection signal="timeout" from="HintTimer" to="." method="_on_hint_timer_timeout"]
 [connection signal="drop_slot_data" from="InventoryInterface" to="." method="_on_inventory_interface_drop_slot_data"]
 [connection signal="gui_input" from="InventoryInterface" to="InventoryInterface" method="_on_gui_input"]
 [connection signal="visibility_changed" from="InventoryInterface" to="InventoryInterface" method="_on_visibility_changed"]
+[connection signal="hidden" from="InventoryInterface/CogitoTabMenu/Inventory/InventoryUI" to="InventoryInterface" method="_on_inventory_ui_hidden"]
 [connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer1" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
 [connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer2" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
 [connection signal="quickslot_pressed" from="InventoryInterface/QuickSlots/CogitoQuickslotContainer3" to="InventoryInterface" method="_on_bind_grabbed_slot_to_quickslot"]
