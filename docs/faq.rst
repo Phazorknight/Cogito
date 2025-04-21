@@ -69,6 +69,7 @@ My own objects aren't working!
 ------------------------------
 There are a few reasons for them to not be working, so here's a checklist:
 
+* Make sure whatever cogito object script you're using is attached to a Node of the right type. It'll need to be a node that inherits CollisionObject3D.
 * Make sure your interactive object has a ``CollisionShape3D`` and is set to the right layers.
 * Make sure your interactive object is a ``Cogito_Object`` or similar (``Cogito Door``). This is necessary for Cogito's interaction system to pick it up.
 * Make sure you have interaciton components attached to the root node of your object. Use a default included component to make sure it works (``CarryableComponent`` is the quickest)

@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvkkotlj71pqa"]
+
+[ext_resource type="Script" uid="uid://b0cad7dyjyqlb" path="res://addons/cogito/Assets/VFX/Explosion_01/explosion.gd" id="1_45qx7"]
+[ext_resource type="Shader" uid="uid://bspjwxt1hotc" path="res://addons/cogito/Assets/VFX/Explosion_01/explosion01_particle.tres" id="2_2f3gd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2w3i7"]
+render_priority = 0
+shader = ExtResource("2_2f3gd")
+shader_parameter/base_color = Color(0.152941, 0.152941, 0.152941, 1)
+shader_parameter/alpha = 0.75
+shader_parameter/emission_color = Color(1, 0.333333, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_a4utb"]
+material = SubResource("ShaderMaterial_2w3i7")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_utnhs"]
+
+[node name="Explosion" type="Area3D"]
+script = ExtResource("1_45qx7")
+target_scale = Vector3(7, 7, 7)
+duration = 0.6
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_a4utb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_utnhs")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

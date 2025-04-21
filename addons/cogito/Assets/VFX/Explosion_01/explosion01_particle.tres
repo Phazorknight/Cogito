@@ -34,7 +34,7 @@ render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specul
 
 uniform vec4 base_color : source_color;
 uniform sampler2D tex_frg_2;
-uniform float alpha = 0;
+uniform float alpha = 0.0;
 uniform vec4 emission_color : source_color;
 
 
