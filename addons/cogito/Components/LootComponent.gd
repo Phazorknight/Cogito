@@ -188,7 +188,7 @@ func _roll_for_randomized_items(_items: Array[Dictionary]) -> Array[Dictionary]:
 	_inventory_items = _items.map(func (k): return k)
 	_item_weights = _items.map(func (k): return k.get("weight", 0.0))
 	
-	while _result.size() != amount_of_items_to_drop - 1:
+	while _result.size() != amount_of_items_to_drop:
 		
 		## Winning loot table entry which will be added to a separate array.
 		var _winner = _inventory_items[_rng.rand_weighted(_item_weights)]
