@@ -26,6 +26,9 @@ var carried_object = null:  # Used for carryable handling.
 var is_carrying: bool:
 	get: return carried_object != null
 
+## Loot Component - stores a temporary value to last interacted node.
+var last_interacted_node: Node
+
 # Power with which object are thrown (opposed to being dropped)
 #@export var throw_power: float = 10
 @export_group("Throw Settings")
@@ -123,6 +126,8 @@ func _handle_interaction(action: String) -> void:
 				if !node.ignore_open_gui and get_parent().is_showing_ui:
 					return
 				node.interact(self)
+				print("Player interacted with:" + str(node)) # loot component added
+				last_interacted_node = node
 				
 				#Dual interaction components need to await signal to update correctly
 				if node is DualInteraction:

@@ -719,7 +719,48 @@ Ladder Area
 -----------
 Script used to define ladders that the player can climb. Needs a reference to a CollisionObject3D and uses it's signals to determine if the player is on the ladder.
 
+Loot Component
+-----------
+Script used for generating loot upon death.
 
+Functionality:
+
+* Loot Component
+   Can be enabled and disabled based on other functionality.
+   Loot table is a custom resource based on the BaseLootTable class which has an example dictionary. A generic loot table may also be found within Loot Tables folder.
+   Customizable amount of items to drop during loot generation.
+   Can use custom scenes of loot bags, useful for creating different remain types.
+   Monitors the health component assigned manually in the editor to start.
+   Includes despawning logic to handle containers after items have been taken out of them or on a timer.
+
+   Script monitors an unique item's existence to create a copy based on the loot table definitions of said items. If there can only be one, there can only be one within player inventory and other loot bags in the scene.
+   Script also handles quest item generation. In an example scenario, if a quest item is set to drop X times, you need to define those in the loot table to facilitate generation, otherwise only a single copy may drop. Quest item and random chance items share the same item amount pool. Meaning a quest item will prevent another chance item from spawning.
+   Simple debug functionality for loot table validation is included. 
+
+* Lootable Container Component
+   container_to_monitor: Expects a ``CogitoContainer`` assigned in the editor while creating the scene of a lootable container.
+   Spawning functionality is nearly identical to loot component itself.
+   Loot tables are identical and can be used accordingly.
+   Contents can be set to respawn or not to respawn. Respawning clears the contents and reinitializes new items within the container.
+   Respawn timer is calculated additively. 
+   If player is viewing the inventory of the lootable container, ui of the external inventory is refreshed to avoid crashes.
+
+* EmptiedDespawner
+   container_to_monitor: Expects a ``CogitoContainer`` passed by the loot component script. Can be used indepedently in scenes.
+   Monitors the inventory data of the given container, disconnects signals and despawns the parent. 
+
+* TimedDespawner
+   container_to_monitor: Expects a ``CogitoContainer`` passed by the loot component script. Can be used indepedently in scenes.
+   When the provided container has its inventory open, timer pauses. Timer continues upon inventory closure by the interact button.  
+   When timer expires, disconnects and despawns the parent container. 
+   despawn_timer: Expects a float value for seconds until timer expiration.
+   if the player is viewing the inventory while container despawns, external inventory part of the inventory ui is cleared to avoid crashes. 
+
+* Known issues
+   Script cannot handle grid inventories.
+   Timer does not continue if the inventory is exited by escape key. 
+   If you have multiple stackable items in loot table, and when generated these items do not go over the maximum stack size, script does not stack these items during generation and will consume a slot instead.
+    
 Cogito Rotator Tool
 -------------------
 A basic script to rotate Node3Ds. Used for the ceiling fans.

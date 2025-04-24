@@ -37,8 +37,8 @@ func _on_inventory_updated(inventory_data : CogitoInventory):
 					
 		if items_in_slots.is_empty():
 			if _player_hud.inventory_interface.is_inventory_open:
-				print("yay morty yay")
-				_player_hud.inventory_interface.clear_external_inventory()
+				if _player_hud.inventory_interface.get_external_inventory() == container_to_monitor:
+					_player_hud.inventory_interface.clear_external_inventory()
 				
 			if container_inventory.inventory_updated.is_connected(_on_inventory_updated):
 				container_inventory.inventory_updated.disconnect(_on_inventory_updated)

@@ -1,9 +1,11 @@
-## Generates a bag of loot after death. This inventory is not a grid inventory, each dropped item will have its own slot.
-class_name LootComponent extends Node3D 
+## Handles loot generation within a CogitoContainer. Can be customizable with additional parameters.
+class_name LootableContainer extends Node
 
 @export_category("Master Control")
-## Enables or disables the loot components functionality.
+## Enables or disables the lootable container's functionality.
 @export var enabled = true
+## Container this component belongs to and will handle its inventory.
+@export var container: CogitoContainer
 
 @export_category("Loot Table Configuration")
 ## Specifies which loot table should be used to spawn items from.
@@ -11,34 +13,34 @@ class_name LootComponent extends Node3D
 ## Variable that determines how many items will be dropped from the chance and quest items specified in the loot table. Chance and quest drop items will be joined and rolled this many times. Guaranteed items do not count towards this limit and will always drop regardless. Note that you can run out of screen space in containers if you add more than 64 items total.
 @export var amount_of_items_to_drop: int = 1
 
-@export_category("Scene Object Configuration")
-## Scene of the loot bag the items should be spawned inside.
-@export var loot_bag_scene: PackedScene
-
 @export_category("Execution Configuration")
-## Reference to the health component to monitor for on death signal.
-@export var health_component_to_monitor: CogitoHealthAttribute
-## Handles the despawning logic for the loot bag.
-@export var despawning_logic := DespawningLogic.NONE:
+## Handles the respawning logic for inventory of CogitoContainer.
+@export var inventory_respawning_logic := InventoryRespawningLogic.NONE:
 	set(value):
-		despawning_logic = value
+		inventory_respawning_logic = value
 		notify_property_list_changed()
-## Despawn timer used by the timed despawning function.
-@export_range(0, 600, 10, "suffix:seconds") var despawn_timer :float = 60.0
+## Respawn timer is calculated based on the values below. With all values converted to seconds and added together to generate a final timer.
+@export_group("Respawn Timer")
+## Respawn timer days component. Will be added as days 86400 seconds to final timer calculation.
+@export_range(0, 30, 1, "suffix:days") var respawn_timer_days :float = 0.0
+## Respawn timer used by the timed respawning function.
+@export_range(0, 24, 1, "suffix:hours") var respawn_timer_hours :float = 0.0
+## Respawn timer used by the timed respawning function.
+@export_range(0, 60, 1, "suffix:minutes") var respawn_timer_minutes :float = 1.0
+## Respawn timer used by the timed respawning function.
+@export_range(0, 60, 1, "suffix:seconds") var respawn_timer_seconds :float = 0.0
 
-enum DespawningLogic {
-NONE, ## Container will not despawn and will become part of the scene. 
-ONLY_EMPTY, ## Container will despawn only after player takes out the last item in it.
-ONLY_TIMED, ## Container will despawn after a preset time interval started upon container creation. Note: Items present will be lost with timed despawning logic.
-EMPTY_AND_TIMED ## Container will despawn after a time period as well as upon a timer expiration. Note: Items present will be lost with timed despawning logic.
+enum InventoryRespawningLogic {
+NONE, ## Contents of the container will not respawn. It will be safe for player to put his items in and out after the initialization.
+TIMED_RESPAWN, ## Contents of the container will respawn upon the expiration of the timer. This will reset the inventory and reroll new items from the loot table provided.
 }
 
 # Internal variables to player
 var _player: CogitoPlayer
 var _player_hud: CogitoPlayerHudManager
 var _player_inventory: CogitoInventory
+var _player_interaction_component: PlayerInteractionComponent
 
-# Arrays to sort items into
 ## Array for loot table items that do not have any drop type selected. These items are not to be dropped.
 var none: Array[Dictionary] = []
 ## Array for loot table items that are always guaranteed to be dropped and do not count towards maximum item drops.
@@ -47,23 +49,28 @@ var guaranteed_drops_table: Array[Dictionary] = []
 var chance_drops_table: Array[Dictionary] = []
 ## Array for loot table items that are dropped only when the player is on the specific quest these items belong.
 var quest_drops_table: Array[Dictionary] = []
+## Respawn timer calculated value.
+var calculated_respawn_timer: float
+## CogitoContainer's inventory component.
+var inventory_to_populate:CogitoInventory
+## Contains the finalized array which will be sent to roll items.
+var finalized_items: Array[Dictionary]
+## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
+var merged_array: Array[Dictionary]
 
 
-func _get_configuration_warnings():
-	if !loot_table:
-		return ["Loot table is not set. It is required for the loot component to function."]
-		
 func _ready() -> void:
-	
-	if not _validate_loot_table():
-		return
-	
-	health_component_to_monitor.death.connect(_spawn_loot_container) ## Connect to Health Component's Death signal and trigger the function.
+
+	# Let's add the container we are a child of to a group called lootable_container
+	if container:
+		container.add_to_group("lootable_container")
+		inventory_to_populate = container.inventory_data
 	
 	# Set up player references during the initialization because I don't want to globalize these.	
 	_player = get_tree().get_first_node_in_group("Player")
 	_player_hud = _player.find_child("Player_HUD", true, true)
 	_player_inventory = _player.inventory_data
+	_player_interaction_component = _player.player_interaction_component
 	
 	# Sort items by drop types
 	## Array that stores the actual contents of the whole loot table resource.
@@ -89,45 +96,25 @@ func _ready() -> void:
 		" Chance Size: " + str(chance_drops_table.size()) + str(chance_drops_table) +
 		" Quest Size: " + str(quest_drops_table.size()) + str(quest_drops_table) 
 		)
+		
+	_handle_inventory() # initial spawning
+	_handle_respawning() # respawning
 
 
-## Spawns the loot container defined in the loot_bag_scene variable.
-func _spawn_loot_container():
-	## Parent node's global position
-	var parent_position = get_parent().global_position
-	## Loot bag scene that is instantiated during runtime.
-	var spawned_loot_bag
-	## Spawned loot bag's inventory component.
-	var inventory_to_populate:CogitoInventory
-	## Contains the finalized array which will be sent to roll items.
-	var finalized_items: Array[Dictionary]
-	## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
-	var merged_array: Array[Dictionary]
+## Handle Inventory
+func _handle_inventory():
 	
-	if enabled and amount_of_items_to_drop > 0:
-		spawned_loot_bag = loot_bag_scene.instantiate()
-		spawned_loot_bag.position = parent_position
-		get_tree().current_scene.call_deferred("add_child", spawned_loot_bag)
+	if chance_drops_table.size() > 0:
+		merged_array.append_array(chance_drops_table)
+	if quest_drops_table.size() > 0:
+		merged_array.append_array(quest_drops_table)
+	
+	finalized_items = _roll_for_randomized_items(merged_array)
+	
+	if guaranteed_drops_table.size() > 0:
+		finalized_items.append_array(guaranteed_drops_table)
 		
-		if !spawned_loot_bag.toggle_inventory.is_connected(_player_hud.toggle_inventory_interface):
-			spawned_loot_bag.toggle_inventory.connect(_player_hud.toggle_inventory_interface)
-
-		inventory_to_populate = spawned_loot_bag.inventory_data
-		spawned_loot_bag.add_to_group("loot_bag")
-		print("Spawned Loot Bag: " + str(spawned_loot_bag) + "at these coordinates: " + str(spawned_loot_bag.position))
-		handle_despawning(spawned_loot_bag)
-		
-		if chance_drops_table.size() > 0:
-			merged_array.append_array(chance_drops_table)
-		if quest_drops_table.size() > 0:
-			merged_array.append_array(quest_drops_table)
-		
-		finalized_items = _roll_for_randomized_items(merged_array)
-		
-		if guaranteed_drops_table.size() > 0:
-			finalized_items.append_array(guaranteed_drops_table)
-			
-		_populate_the_container(inventory_to_populate, finalized_items)
+	_populate_the_container(inventory_to_populate, finalized_items)
 
 
 ## Checks for given InventoryPD item against player inventory, returns true if there is a copy of a unique item, false if there isn't.
@@ -136,6 +123,8 @@ func _is_unique_found(item: InventoryItemPD):
 	var _loot_bags_slots: Array[InventoryItemPD]
 	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
 	var _lookup_merge: Array[InventoryItemPD]
+	
+	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
 	
 	if _loot_bags.size() > 0:
 		for i in _loot_bags:
@@ -150,12 +139,20 @@ func _is_unique_found(item: InventoryItemPD):
 	return false
 
 
+# Calculate the proper value for the timer component
+func _calculate_timer_value() -> float:
+	var calculated_respawn_timer: float
+	calculated_respawn_timer = (respawn_timer_days * 86400.0) + (respawn_timer_hours * 3600.0) + (respawn_timer_minutes * 60.0) + respawn_timer_seconds
+	return calculated_respawn_timer
+
 ## Counts given quest items within player's inventory. Returns an integer.
 func _count_quest_items(item: InventoryItemPD) -> int:
 	var _loot_bags: Array[Node] = get_tree().get_nodes_in_group("loot_bag")
 	var _loot_bags_slots: Array[InventoryItemPD]
 	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
 	var _lookup_merge: Array[InventoryItemPD]
+	
+	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
 	
 	if _loot_bags.size() > 0:
 		for i in _loot_bags:
@@ -245,10 +242,23 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	var _item_count: int = _items.size()
 	## InventorySlotPD count of the inventory that is passed during function call.
 	var slots: Array[InventorySlotPD] = _inventory.inventory_slots
+	var inventory_x: int
+	var inventory_y: int
+	
+	# if we are respawning, better clear out the contents.
+	if slots.size() > 0:
+		if _player_hud.inventory_interface.is_inventory_open:
+			if _player_hud.inventory_interface.get_external_inventory() == container:
+				_player_hud.inventory_interface.clear_external_inventory()
+				
+		for slot in slots:
+			_inventory.null_out_slots(slot)
 
-	slots.resize(_item_count)
 	_inventory.inventory_size.x = 8
 	_inventory.inventory_size.y = _item_count / 8 + 1
+	inventory_x = 8
+	inventory_y = _item_count / 8 + 1
+	slots.resize(inventory_x * inventory_y)
 	_inventory.first_slot = slots[0]
 	print("Inventory size set to: " + str(slots.size()))
 	for i in _item_count:
@@ -266,84 +276,22 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	for i in slots:
 		print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
 		_index += 1
-
-
-## Handles the despawning logic for the despawning_logic enum.
-func handle_despawning(spawned_loot_bag: CogitoContainer):
-	match despawning_logic:
-		DespawningLogic.NONE:
-			return
-		DespawningLogic.ONLY_EMPTY:
-			var despawner = EmptiedDespawner.new()
-			despawner.container_to_monitor = spawned_loot_bag
-			spawned_loot_bag.call_deferred("add_child", despawner)
-		DespawningLogic.ONLY_TIMED:
-			var despawner = TimedDespawner.new()
-			despawner.container_to_monitor = spawned_loot_bag
-			despawner.despawn_timer = despawn_timer
-			spawned_loot_bag.call_deferred("add_child", despawner)
-		DespawningLogic.EMPTY_AND_TIMED:
-			var emptied_despawner = EmptiedDespawner.new()
-			var timed_despawner = TimedDespawner.new()
-			emptied_despawner.container_to_monitor = spawned_loot_bag
-			timed_despawner.container_to_monitor = spawned_loot_bag
-			timed_despawner.despawn_timer = despawn_timer
-			spawned_loot_bag.call_deferred("add_child", emptied_despawner)
-			spawned_loot_bag.call_deferred("add_child", timed_despawner)
-
-
-## Validates the loot table setup for debugging purposes.
-func _validate_loot_table() -> bool:
-	var errors: int = 0
-	var warnings: int = 0
-	for i in loot_table.contents:
-		
-		if i.has("inventory_item") and i.get("inventory_item") != null:
-			continue
-		else:
-			push_error("Loot table has entries with invalid InventoryItemPD references. This will lead to a crash.")
-			errors += 1
-			
-		if i.has("DropType") and i.get("DropType"):
-			if i.has("quest_id") and i.get("quest_id") != null:
-				continue
-			else:
-				push_warning("Loot Table has entries with their drop types set to quest drops without quest id's set up properly. These items will not drop.")	
-				warnings += 1
-			if i.has("quest_item_total_count") and i.get("quest_item_total_count") != null:
-				continue
-			else:
-				push_warning("Loot Table has quest entries without quest item total count set properly. This value will be set to 1.")
-				warnings += 1
-				
-		if i.has("DropType") and i.get("DropType") != null:
-			continue
-		else:
-			push_warning("Loot Table has entries without drop type's assigned. These entries will not drop.")	
-			warnings += 1
-			
-		if i.has("weight") and i.get("weight") != null:
-			continue
-		else:
-			push_warning("Loot Table has entries without weights assigned. These entries will not drop.")
-			warnings += 1
-				
-		if i.has("quantity_min") and i.get("quantity_min") != null:
-			continue
-		else:
-			push_warning("Loot Table has chance drop entries without minimum quantities set properly. These values will be set to 1.")	
-			warnings += 1
-			
-		if i.has("quantity_max") and i.get("quantity_max") != null:
-			continue
-		else:
-			push_warning("Loot Table has chance drop entries without maximum quantities set properly. These values will be set to 1.")
-			warnings += 1
 	
-	if errors > 0:
-		print("Loot Component has encountered " + str(errors) + " errors. Please fix those before initialization.")
-		return false
-	else:
-		if warnings > 0:
-			print("Loot Component has raised " + str(warnings) + " warnings. While these will not affect functionality, fixing is recommended.")
-		return true
+	if _player_hud.inventory_interface.is_inventory_open:
+		if _player_interaction_component.last_interacted_node.get_parent() == container:
+			_player_hud.inventory_interface.set_external_inventory(container)
+
+
+## Handles the respawning logic for the inventory_respawning_logic enum.
+func _handle_respawning():
+	match inventory_respawning_logic:
+		InventoryRespawningLogic.NONE:
+			return
+		InventoryRespawningLogic.TIMED_RESPAWN:
+			var _timer: Timer = Timer.new()
+			add_child(_timer)
+			_timer.wait_time = _calculate_timer_value()
+			_timer.one_shot = false
+			_timer.timeout.connect(_handle_inventory)
+			_timer.start()
+			print("Timer created for: " + str(_timer.wait_time) + " seconds.")

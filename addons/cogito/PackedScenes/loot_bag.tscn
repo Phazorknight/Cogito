@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=4 uid="uid://ddtpoxce1k8rw"]
+[gd_scene load_steps=16 format=4 uid="uid://ddtpoxce1k8rw"]
 
 [ext_resource type="Script" uid="uid://djpuxgkv8c6ux" path="res://addons/cogito/CogitoObjects/cogito_container.gd" id="1_i6au8"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_ys1pa"]
-[ext_resource type="Script" uid="uid://b0yp6ye7xl5i" path="res://addons/cogito/Components/Despawners/EmptiedDespawn.gd" id="5_4fvjd"]
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="5_4yqt8"]
 [ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="6_pe5px"]
 
@@ -209,8 +208,3 @@ shape = SubResource("BoxShape3D_503ep")
 libraries = {
 &"": SubResource("AnimationLibrary_38epp")
 }
-
-[node name="EmptiedDespawner" type="Node" parent="." node_paths=PackedStringArray("container_to_monitor")]
-script = ExtResource("5_4fvjd")
-container_to_monitor = NodePath("..")
-metadata/_custom_type_script = "uid://b0yp6ye7xl5i"
