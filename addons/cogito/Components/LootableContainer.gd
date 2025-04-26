@@ -57,6 +57,10 @@ var inventory_to_populate:CogitoInventory
 var finalized_items: Array[Dictionary]
 ## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
 var merged_array: Array[Dictionary]
+## Timer node reference to handle despawning.
+var timer: Timer
+## Boolean to improve the container refresh logic.
+var viewing_this_container: bool = false
 
 
 func _ready() -> void:
@@ -75,6 +79,8 @@ func _set_up_references():
 	if container:
 		container.add_to_group("lootable_container")
 		inventory_to_populate = container.inventory_data
+		
+	container.toggle_inventory.connect(_on_inventory_toggled)
 
 
 ## Sort the loot table into neat little arrays.
@@ -251,7 +257,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	# if we are respawning, better clear out the contents.
 	if slots.size() > 0:
 		# Close the container before clearing the slots
-		if _player_hud != null:
+		if _player_hud != null and viewing_this_container:
+			print("Player Hud found and is viewing this container:" + str(container))
 			if _player_hud.inventory_interface.is_inventory_open:
 				if _player_hud.inventory_interface.get_external_inventory() == container:
 					_player_hud.inventory_interface.clear_external_inventory()
@@ -281,9 +288,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	for i in slots:
 		print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
 		_index += 1
-	
-	# reopen the container to refresh the inventory if inventory is still open. From player's point of view only the inventory slots should be refreshed. However there are edge cases to be aware of such as if player did not interact with anything else but opens the inventory and inventory respawns, technically inventory should show up on player's hud.
-	if _player_hud != null:
+	# reopen the container to refresh inventory
+	if _player_hud != null and viewing_this_container:
 		if _player_hud.inventory_interface.is_inventory_open:
 			if _player_interaction_component.last_interacted_node.get_parent() == container:
 				_player_hud.inventory_interface.set_external_inventory(container)
@@ -295,10 +301,23 @@ func _handle_respawning():
 		InventoryRespawningLogic.NONE:
 			return
 		InventoryRespawningLogic.TIMED_RESPAWN:
-			var _timer: Timer = Timer.new()
-			add_child(_timer)
-			_timer.wait_time = _calculate_timer_value()
-			_timer.one_shot = false
-			_timer.timeout.connect(_handle_inventory)
-			_timer.start()
-			print("Timer created for: " + str(_timer.wait_time) + " seconds.")
+			timer = Timer.new()
+			add_child(timer)
+			timer.wait_time = _calculate_timer_value()
+			timer.one_shot = false
+			timer.timeout.connect(_handle_inventory)
+			timer.start()
+			print("Timer created for: " + str(timer.wait_time) + " seconds.")
+
+
+## Connected to inventory signal to increase container refresh logic accuracy
+func _on_inventory_toggled(external_inventory_owner: Node):
+	if container == external_inventory_owner:
+		if _player_hud != null and _player_hud.inventory_interface.is_inventory_open:
+			viewing_this_container = true
+		else: 
+			viewing_this_container = false
+
+func _exit_tree() -> void:
+	if container.toggle_inventory.is_connected(_on_inventory_toggled):
+		container.toggle_inventory.disconnect(_on_inventory_toggled)
