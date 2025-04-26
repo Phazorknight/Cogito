@@ -1,5 +1,5 @@
 ## Handles loot generation within a CogitoContainer. Can be customizable with additional parameters.
-class_name LootableContainer extends Node
+class_name LootableContainer extends Node3D
 
 @export_category("Master Control")
 ## Enables or disables the lootable container's functionality.
@@ -60,19 +60,25 @@ var merged_array: Array[Dictionary]
 
 
 func _ready() -> void:
-
-	# Let's add the container we are a child of to a group called lootable_container
-	if container:
-		container.add_to_group("lootable_container")
-		inventory_to_populate = container.inventory_data
+	call_deferred("_set_up_references")
+	call_deferred("_sort_loot_table")
+	call_deferred("_handle_inventory")
+	call_deferred("_handle_respawning")
 	
-	# Set up player references during the initialization because I don't want to globalize these.	
+
+func _set_up_references():
 	_player = get_tree().get_first_node_in_group("Player")
 	_player_hud = _player.find_child("Player_HUD", true, true)
 	_player_inventory = _player.inventory_data
 	_player_interaction_component = _player.player_interaction_component
 	
-	# Sort items by drop types
+	if container:
+		container.add_to_group("lootable_container")
+		inventory_to_populate = container.inventory_data
+
+
+## Sort the loot table into neat little arrays.
+func _sort_loot_table():
 	## Array that stores the actual contents of the whole loot table resource.
 	var loot_to_generate = loot_table.contents
 	if loot_to_generate:
@@ -96,9 +102,6 @@ func _ready() -> void:
 		" Chance Size: " + str(chance_drops_table.size()) + str(chance_drops_table) +
 		" Quest Size: " + str(quest_drops_table.size()) + str(quest_drops_table) 
 		)
-		
-	_handle_inventory() # initial spawning
-	_handle_respawning() # respawning
 
 
 ## Handle Inventory
@@ -185,7 +188,7 @@ func _roll_for_randomized_items(_items: Array[Dictionary]) -> Array[Dictionary]:
 	_inventory_items = _items.map(func (k): return k)
 	_item_weights = _items.map(func (k): return k.get("weight", 0.0))
 	
-	while _result.size() < amount_of_items_to_drop - 1:
+	while _result.size() < amount_of_items_to_drop:
 		
 		## Winning loot table entry which will be added to a separate array.
 		var _winner = _inventory_items[_rng.rand_weighted(_item_weights)]
@@ -247,9 +250,11 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	
 	# if we are respawning, better clear out the contents.
 	if slots.size() > 0:
-		if _player_hud.inventory_interface.is_inventory_open:
-			if _player_hud.inventory_interface.get_external_inventory() == container:
-				_player_hud.inventory_interface.clear_external_inventory()
+		# Close the container before clearing the slots
+		if _player_hud != null:
+			if _player_hud.inventory_interface.is_inventory_open:
+				if _player_hud.inventory_interface.get_external_inventory() == container:
+					_player_hud.inventory_interface.clear_external_inventory()
 				
 		for slot in slots:
 			_inventory.null_out_slots(slot)
@@ -277,9 +282,11 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 		print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
 		_index += 1
 	
-	if _player_hud.inventory_interface.is_inventory_open:
-		if _player_interaction_component.last_interacted_node.get_parent() == container:
-			_player_hud.inventory_interface.set_external_inventory(container)
+	# reopen the container to refresh the inventory if inventory is still open. From player's point of view only the inventory slots should be refreshed. However there are edge cases to be aware of such as if player did not interact with anything else but opens the inventory and inventory respawns, technically inventory should show up on player's hud.
+	if _player_hud != null:
+		if _player_hud.inventory_interface.is_inventory_open:
+			if _player_interaction_component.last_interacted_node.get_parent() == container:
+				_player_hud.inventory_interface.set_external_inventory(container)
 
 
 ## Handles the respawning logic for the inventory_respawning_logic enum.

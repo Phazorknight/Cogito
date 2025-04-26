@@ -52,20 +52,27 @@ var quest_drops_table: Array[Dictionary] = []
 func _get_configuration_warnings():
 	if !loot_table:
 		return ["Loot table is not set. It is required for the loot component to function."]
-		
+
+
 func _ready() -> void:
 	
 	if not _validate_loot_table():
 		return
-	
-	health_component_to_monitor.death.connect(_spawn_loot_container) ## Connect to Health Component's Death signal and trigger the function.
-	
-	# Set up player references during the initialization because I don't want to globalize these.	
+
+	call_deferred("_set_up_references")
+	call_deferred("_sort_loot_table")
+
+
+## Set up references to player in a deferred manner to avoid nulling during tree operation
+func _set_up_references():
 	_player = get_tree().get_first_node_in_group("Player")
 	_player_hud = _player.find_child("Player_HUD", true, true)
 	_player_inventory = _player.inventory_data
-	
-	# Sort items by drop types
+	health_component_to_monitor.death.connect(_spawn_loot_container)
+
+
+## Sort the loot table into neat little arrays.
+func _sort_loot_table():
 	## Array that stores the actual contents of the whole loot table resource.
 	var loot_to_generate = loot_table.contents
 	if loot_to_generate:
@@ -188,7 +195,7 @@ func _roll_for_randomized_items(_items: Array[Dictionary]) -> Array[Dictionary]:
 	_inventory_items = _items.map(func (k): return k)
 	_item_weights = _items.map(func (k): return k.get("weight", 0.0))
 	
-	while _result.size() < amount_of_items_to_drop - 1:
+	while _result.size() < amount_of_items_to_drop:
 		
 		## Winning loot table entry which will be added to a separate array.
 		var _winner = _inventory_items[_rng.rand_weighted(_item_weights)]
