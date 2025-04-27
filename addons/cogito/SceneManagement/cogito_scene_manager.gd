@@ -3,6 +3,9 @@ extends Node
 ## Emitted when a fade finishes
 signal fade_finished
 
+## Emitted when GUI options changed
+signal update_gui
+
 # Used to set active save slot. This could be set/modified, when selecting a save slot from the MainMenu.
 @export var _active_slot : String = "A"
 

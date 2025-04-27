@@ -61,11 +61,13 @@ const WINDOW_MODE_ARRAY : Array[String] = [
 ]
 
 const RESOLUTION_DICTIONARY : Dictionary = {
+	"1152x648 (16:9)" : Vector2(1152, 648),
 	"1280x720 (16:9)" : Vector2i(1280,720),
 	"1280x800 (16:10)" : Vector2i(1280,800),
 	"1366x768 (16:9)" : Vector2i(1366,768),
 	"1440x900 (16:10)" : Vector2i(1440,900),
 	"1600x900 (16:9)" : Vector2i(1600,900),
+	"1680x720 (21:9)" : Vector2(1680, 720),
 	"1920x1080 (16:9)" : Vector2i(1920,1080),
 	"2560x1440 (16:9)" : Vector2i(2560,1440),
 	"3840x2160 (16:9)" : Vector2i(3840,2160),
@@ -298,7 +300,7 @@ func load_options(skip_applying:bool = false):
 	render_scale_val = render_scale
 	
 	gui_scale_slider.value = gui_scale
-	gui_scale_current_value_label.text = str(gui_scale)
+	gui_scale_current_value_label.text = "%d%%" % (gui_scale * 100)
 	if !skip_applying:
 		apply_gui_scale_value()
 	
@@ -337,7 +339,7 @@ func _on_gui_scale_slider_drag_ended(_value_changed):
 
 func apply_gui_scale_value():
 	get_viewport().content_scale_factor = gui_scale_slider.value
-	gui_scale_current_value_label.text = str(gui_scale_slider.value)
+	gui_scale_current_value_label.text = "%d%%" % (gui_scale_slider.value * 100)
 	have_options_changed = true
 
 
