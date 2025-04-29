@@ -1,5 +1,5 @@
 ## A despawner helper to despawn a spawned Cogito container after all items has been taken out of it. 
-class_name EmptiedDespawner extends Node
+class_name EmptiedDespawner extends Node3D
 
 ## Container to monitor, if this container is empty, will despawn this container.
 @export var container_to_monitor: CogitoContainer

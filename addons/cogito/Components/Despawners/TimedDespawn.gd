@@ -1,5 +1,5 @@
 ## A timed despawner class that despawns the parent node after a specified period of time.
-class_name TimedDespawner extends Node
+class_name TimedDespawner extends Node3D
 
 ## Time in seconds that the parent should despawn and be removed from world.
 @export var despawn_timer: float = 5.0
@@ -20,7 +20,8 @@ func _ready() -> void:
 	call_deferred("_set_up_references")
 	call_deferred("_create_timer")
 	call_deferred("_clear_for_despawning")
-
+	
+	print("Time Remaining: " + str(_timer.time_left))
 
 ## Set up references to player and container in a deferred manner to avoid nulling
 func _set_up_references():
@@ -58,6 +59,9 @@ func _on_despawn_timer_timeout():
 
 		if container_to_monitor.toggle_inventory.is_connected(_player_hud.toggle_inventory_interface):
 			container_to_monitor.toggle_inventory.disconnect(_player_hud.toggle_inventory_interface)
+			
+		if container_to_monitor.toggle_inventory.is_connected(_on_inventory_toggled):
+			container_to_monitor.toggle_inventory.disconnect(_on_inventory_toggled)
 
 		get_parent().call_deferred("queue_free")
 	else:

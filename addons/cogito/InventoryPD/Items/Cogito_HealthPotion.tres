@@ -24,6 +24,7 @@ description = "Tastes better than it looks."
 icon = ExtResource("1_net5f")
 is_stackable = true
 is_droppable = true
+is_unique = false
 stack_size = 5
 drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_health_potion.tscn"
 hint_icon_on_use = ExtResource("1_5eqwj")

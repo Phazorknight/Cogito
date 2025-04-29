@@ -6,6 +6,8 @@ class_name LootableContainer extends Node3D
 @export var enabled = true
 ## Container this component belongs to and will handle its inventory.
 @export var container: CogitoContainer
+##
+@export var debug_prints: bool = false
 
 @export_category("Loot Table Configuration")
 ## Specifies which loot table should be used to spawn items from.
@@ -57,7 +59,7 @@ var inventory_to_populate:CogitoInventory
 var finalized_items: Array[Dictionary]
 ## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
 var merged_array: Array[Dictionary]
-## Timer node reference to handle despawning.
+## Timer node reference to handle respawning.
 var timer: Timer
 ## Boolean to improve the container refresh logic.
 var viewing_this_container: bool = false
@@ -83,69 +85,15 @@ func _set_up_references():
 	container.toggle_inventory.connect(_on_inventory_toggled)
 
 
-## Sort the loot table into neat little arrays.
-func _sort_loot_table():
-	## Array that stores the actual contents of the whole loot table resource.
-	var loot_to_generate = loot_table.contents
-	if loot_to_generate:
-		for index in loot_to_generate:
-			match index.DropType:
-				0:
-					none.append(index)
-					push_warning("Loot table contains items with drop type set to none, these items will not be dropped.")
-				1:
-					guaranteed_drops_table.append(index)
-				2:
-					chance_drops_table.append(index)
-				4:
-					quest_drops_table.append(index)
-	else:
-		push_warning("Loot table is not set up. Loot Component will not function.")
-		
-	print(
-		"None Size: " + str(none.size()) + str(none) + 
-		" Always Size: " + str(guaranteed_drops_table.size()) + str(guaranteed_drops_table) +
-		" Chance Size: " + str(chance_drops_table.size()) + str(chance_drops_table) +
-		" Quest Size: " + str(quest_drops_table.size()) + str(quest_drops_table) 
-		)
-
-
 ## Handle Inventory
 func _handle_inventory():
 	
-	if chance_drops_table.size() > 0:
-		merged_array.append_array(chance_drops_table)
-	if quest_drops_table.size() > 0:
-		merged_array.append_array(quest_drops_table)
+	var lootgen = LootGenerator.new()
+	get_tree().current_scene.add_child(lootgen)
+	finalized_items = lootgen.generate(loot_table, amount_of_items_to_drop, true)
+	get_tree().current_scene.call_deferred("queue_free", lootgen)
 	
-	finalized_items = _roll_for_randomized_items(merged_array)
-	
-	if guaranteed_drops_table.size() > 0:
-		finalized_items.append_array(guaranteed_drops_table)
-		
 	_populate_the_container(inventory_to_populate, finalized_items)
-
-
-## Checks for given InventoryPD item against player inventory, returns true if there is a copy of a unique item, false if there isn't.
-func _is_unique_found(item: InventoryItemPD):
-	var _loot_bags: Array[Node] = get_tree().get_nodes_in_group("loot_bag")
-	var _loot_bags_slots: Array[InventoryItemPD]
-	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
-	var _lookup_merge: Array[InventoryItemPD]
-	
-	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
-	
-	if _loot_bags.size() > 0:
-		for i in _loot_bags:
-			_loot_bags_slots.append_array(i.inventory_data.get_all_items())
-	
-	_lookup_merge.append_array(_player_inventory_slots)
-	_lookup_merge.append_array(_loot_bags_slots)
-	
-	for _slot in _lookup_merge:
-		if _slot.is_unique:
-			return true
-	return false
 
 
 # Calculate the proper value for the timer component
@@ -153,94 +101,6 @@ func _calculate_timer_value() -> float:
 	var calculated_respawn_timer: float
 	calculated_respawn_timer = (respawn_timer_days * 86400.0) + (respawn_timer_hours * 3600.0) + (respawn_timer_minutes * 60.0) + respawn_timer_seconds
 	return calculated_respawn_timer
-
-## Counts given quest items within player's inventory. Returns an integer.
-func _count_quest_items(item: InventoryItemPD) -> int:
-	var _loot_bags: Array[Node] = get_tree().get_nodes_in_group("loot_bag")
-	var _loot_bags_slots: Array[InventoryItemPD]
-	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
-	var _lookup_merge: Array[InventoryItemPD]
-	
-	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
-	
-	if _loot_bags.size() > 0:
-		for i in _loot_bags:
-			_loot_bags_slots.append_array(i.inventory_data.get_all_items())
-	
-	_lookup_merge.append_array(_player_inventory_slots)
-	_lookup_merge.append_array(_loot_bags_slots)
-	
-	var _count: int
-	for _slot in _lookup_merge:
-		if _slot == item:
-			_count += 1 
-	print(_count)
-	return _count
-
-
-## Rolls for a dictionary entry from loot table entry. Returns an array of dictionary.
-func _roll_for_randomized_items(_items: Array[Dictionary]) -> Array[Dictionary]:
-	## Using engine's own rng component which is requires 4.3+.
-	var _rng = RandomNumberGenerator.new()
-	## Array of dictionary that stores the results.
-	var _result: Array[Dictionary] = []
-	## InventoryItemPD's of the passed loot table.
-	var _inventory_items = []
-	## Mapped float array for the weights of the loot table.
-	var _item_weights: PackedFloat32Array = []
-	## Failsafe counter, will break the while loop when it hits 1000 iterations.
-	var _failsafe: int = 0
-		
-	_inventory_items = _items.map(func (k): return k)
-	_item_weights = _items.map(func (k): return k.get("weight", 0.0))
-	
-	while _result.size() < amount_of_items_to_drop:
-		
-		## Winning loot table entry which will be added to a separate array.
-		var _winner = _inventory_items[_rng.rand_weighted(_item_weights)]
-		
-		# Handle Unique Items
-		if _winner["inventory_item"].is_unique: # A unique item means there can be only one, highlander style. So it will not drop as long as player holds it in his inventory. We could scour all inventories to find a copy but I think that falls beyond the intended scope of the property.
-			if not _is_unique_found(_winner["inventory_item"]): # Check player's inventory and other loot bags for a copy.
-				if not _result.has(_winner): # Check if we've already have a copy of this unique item waiting to be dropped.
-					_result.append(_winner) 
-		
-		# Handle Quest Items			
-		elif _winner.has("quest_id"): # If winner is a quest item
-			print("Quest ID: " + str(_winner.get("quest_id")) + " Quest Item Total Count: " + str(_winner.get("quest_item_total_count")))
-			if _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Check inventory and already spawned loot bags for a count and compare to maximum allowed count
-				print("Maximum amount of quest items reached. Moving on.")
-				continue
-			else: # If quest item count did not reach the maximum amount
-				if CogitoQuestManager.active.get_ids_from_quests().has(_winner["quest_id"]):
-					if _result.has(_winner): # Check if the final array has already this quest item waiting for drop
-						if _result.count(_winner) + _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Check if new copy would go over the maximum limit
-							continue
-						else: # If it wouldn't go over the limit, create a new copy
-							_result.append(_winner)
-						print("You've got a quest item.")
-					else: # Final array does not have a copy of this quest item awating drop
-						if not _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Final check for the maximum limit
-							_result.append(_winner)
-		
-		# Handle everything else				
-		else:
-			_result.append(_winner) # Ordinary drops get added without scrunity.
-		
-		_failsafe += 1
-		
-		if _failsafe > 1000: # Just in case there is a problem with the variables, we don't fall into infinite loop.
-			break
-			
-			
-	print("Amount of items in results array: " + str(_result.size()))
-	print("Array contains these items:")
-	for i in _result:
-		print(i.get("name"))
-		
-	print("Array took " + str(_failsafe) + " tries to complete.")
-	
-	return _result
 
 
 ## Populates the spawned container with the rolled items.
@@ -258,7 +118,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	if slots.size() > 0:
 		# Close the container before clearing the slots
 		if _player_hud != null and viewing_this_container:
-			print("Player Hud found and is viewing this container:" + str(container))
+			if debug_prints:
+				print("Player Hud found and is viewing this container:" + str(container))
 			if _player_hud.inventory_interface.is_inventory_open:
 				if _player_hud.inventory_interface.get_external_inventory() == container:
 					_player_hud.inventory_interface.clear_external_inventory()
@@ -272,7 +133,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	inventory_y = _item_count / 8 + 1
 	slots.resize(inventory_x * inventory_y)
 	_inventory.first_slot = slots[0]
-	print("Inventory size set to: " + str(slots.size()))
+	if debug_prints:
+		print("Inventory size set to: " + str(slots.size()))
 	for i in _item_count:
 		slots[i] = InventorySlotPD.new()
 		
@@ -286,7 +148,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	
 	_index = 0
 	for i in slots:
-		print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
+		if debug_prints:
+			print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
 		_index += 1
 	# reopen the container to refresh inventory
 	if _player_hud != null and viewing_this_container:
@@ -307,7 +170,8 @@ func _handle_respawning():
 			timer.one_shot = false
 			timer.timeout.connect(_handle_inventory)
 			timer.start()
-			print("Timer created for: " + str(timer.wait_time) + " seconds.")
+			if debug_prints:
+				print("Timer created for: " + str(timer.wait_time) + " seconds.")
 
 
 ## Connected to inventory signal to increase container refresh logic accuracy

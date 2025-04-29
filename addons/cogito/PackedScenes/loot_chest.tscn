@@ -1,17 +1,18 @@
-[gd_scene load_steps=16 format=4 uid="uid://ddtpoxce1k8rw"]
+[gd_scene load_steps=16 format=4 uid="uid://eq5tc21gdk8"]
 
-[ext_resource type="Script" uid="uid://djpuxgkv8c6ux" path="res://addons/cogito/CogitoObjects/cogito_container.gd" id="1_i6au8"]
-[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_ys1pa"]
-[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="5_4yqt8"]
-[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="6_pe5px"]
+[ext_resource type="Script" uid="uid://lvewq3tcrilg" path="res://addons/cogito/CogitoObjects/cogito_loot_drop_container.gd" id="1_w0ufc"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_yj6ad"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="3_ms2ge"]
+[ext_resource type="PackedScene" uid="uid://l61jtpfxu5x5" path="res://addons/cogito/Components/Interactions/BasicInteraction.tscn" id="4_fc3d2"]
 
-[sub_resource type="Resource" id="Resource_sjupa"]
+[sub_resource type="Resource" id="Resource_vcqu0"]
 resource_local_to_scene = true
-script = ExtResource("5_4yqt8")
+script = ExtResource("3_ms2ge")
 grid = false
-starter_inventory = Array[ExtResource("2_ys1pa")]([])
-inventory_size = Vector2i(4, 2)
-inventory_slots = Array[ExtResource("2_ys1pa")]([])
+starter_inventory = Array[ExtResource("2_yj6ad")]([])
+inventory_size = Vector2i(4, 1)
+inventory_slots = Array[ExtResource("2_yj6ad")]([])
+metadata/_custom_type_script = "uid://btnha2whsheir"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qa0bx"]
 resource_name = "wood"
@@ -178,16 +179,17 @@ _data = {
 &"open": SubResource("Animation_5p7bg")
 }
 
-[node name="LootBag" type="RigidBody3D"]
+[node name="loot_chest" type="RigidBody3D"]
 collision_layer = 3
-script = ExtResource("1_i6au8")
-display_name = "Loot Bag"
-inventory_data = SubResource("Resource_sjupa")
+script = ExtResource("1_w0ufc")
+despawning_logic = 3
+display_name = "Loot Chest"
+inventory_data = SubResource("Resource_vcqu0")
 uses_animation = true
 open_animation = "open"
 use_reverse_open_as_close_anim = true
 
-[node name="BasicInteraction" parent="." instance=ExtResource("6_pe5px")]
+[node name="BasicInteraction" parent="." instance=ExtResource("4_fc3d2")]
 
 [node name="chest2" type="Node3D" parent="."]
 
@@ -208,3 +210,5 @@ shape = SubResource("BoxShape3D_503ep")
 libraries = {
 &"": SubResource("AnimationLibrary_38epp")
 }
+
+[node name="Timer" type="Timer" parent="."]

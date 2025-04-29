@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://6lxvhywf2352"]
+[gd_scene load_steps=17 format=4 uid="uid://dck7sc7wmyc6n"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_ojemn"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="2_dy21p"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="9_cvu7u"]
 [ext_resource type="Script" uid="uid://d2dr6c2kvr57f" path="res://addons/cogito/Components/LootComponent.gd" id="10_nwjuh"]
 [ext_resource type="Resource" uid="uid://cng2vry7x3qg4" path="res://addons/cogito/Components/LootTables/LootTableGeneric.tres" id="11_f35u1"]
-[ext_resource type="PackedScene" uid="uid://ddtpoxce1k8rw" path="res://addons/cogito/PackedScenes/loot_bag.tscn" id="12_53wsa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1tv7"]
 resource_name = "cloth"
@@ -121,9 +120,7 @@ elemental_properties = 2
 script = ExtResource("10_nwjuh")
 loot_table = ExtResource("11_f35u1")
 amount_of_items_to_drop = 5
-loot_bag_scene = ExtResource("12_53wsa")
 health_component_to_monitor = NodePath("../HealthAttribute")
-despawning_logic = 3
 metadata/_custom_type_script = "uid://d2dr6c2kvr57f"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
