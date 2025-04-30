@@ -11,13 +11,17 @@ class_name LootDropContainer extends CogitoContainer
 @export_range(0, 600, 10, "suffix:seconds") var despawn_timer :float = 60.0
 ## Should this container's despawn logic account for the time passed while calculating the despawn timer.
 @export var time_passes_when_unloaded: bool = true
-## Internal reference to the despawning timer.
-@onready var timer: Timer = $Timer
 
 ## Internal reference to time left variable that is saved and loaded.
 var time_left: float = 0.0
 ## Loaded time_left
 var loaded_time_left: float = 0.0
+## Initial spawn bool. This only true during first spawn. On loading this value is set to false and remains false.
+var initial_spawn = true
+## Internal reference to the despawning timer.
+var timer: Timer
+## unique ID
+var id: String
 
 ## Internal reference to start time that is saved and loaded.
 var start_time: float
@@ -38,24 +42,19 @@ EMPTY_AND_TIMED ## Container will despawn after a time period as well as upon a 
 }
 
 func _ready() -> void:
-	#super._ready() # call the parent class' _ready function before doing our own thing.
 
-	call_deferred("_set_up_timer")
 	call_deferred("_set_up_references")
 	call_deferred("_handle_despawning")
 	
 	add_to_group("external_inventory")
 	add_to_group("interactable")
+	add_to_group("Persist")
 
 	interaction_nodes = find_children("","InteractionComponent",true)
 	interaction_text = text_when_closed
 	object_state_updated.emit(interaction_text)
 	inventory_data.apply_initial_inventory()
-	
-#func set_up():
-	#_set_up_references()
-	#_set_up_timer()
-	#_handle_despawning()
+
 
 ## Set up references to player and container in a deferred manner to avoid nulling
 func _set_up_references():
@@ -81,9 +80,8 @@ func _handle_despawning():
 			if !self.toggle_inventory.is_connected(_on_inventory_toggled):
 				self.toggle_inventory.connect(_on_inventory_toggled)
 
-			if timer != null:
-				timer.timeout.connect(_on_despawn_timer_timeout)
-				_start_timer()
+			if timer == null:
+				_set_up_timer()
 			
 		DespawningLogic.EMPTY_AND_TIMED:
 			if !self.inventory_data.inventory_updated.is_connected(_on_inventory_updated):
@@ -91,64 +89,96 @@ func _handle_despawning():
 		
 			if !self.toggle_inventory.is_connected(_on_inventory_toggled):
 				self.toggle_inventory.connect(_on_inventory_toggled)
+			
+			if timer == null:
+				_set_up_timer()
 
-			timer.timeout.connect(_on_despawn_timer_timeout)
-			_start_timer()
 
 ## Set up a timer in deferred manner
 func _set_up_timer():
 	if timer == null:
 		timer = Timer.new()
-		print("timer NOT found and time left set is: " + str(timer.wait_time))
-	add_child(timer)
-	timer.one_shot = true
-	if time_left > 0:
-		timer.wait_time = loaded_time_left
-	else:
-		timer.wait_time = despawn_timer
-		print("timer found and time left set is: " + str(timer.wait_time))
-	
-	if debug_prints:
-		print("Timer initialized as: " + str(timer.wait_time))
-
-func _start_timer():
-	if timer != null:
-		timer.one_shot = true
 		
-		if time_left > 0: # this variable is only 0 during initial spawn.
-			timer.wait_time = time_left
-			
-		else: # what to do during initial spawn
-			
+		if initial_spawn:
 			start_time = Time.get_unix_time_from_system()
-			end_time = start_time + despawn_timer
-			timer.wait_time = despawn_timer
-			time_left = timer.wait_time
-			
-			if debug_prints:
-				print("Start time is : " + str(start_time))
-				print("End Time is: " + str(end_time))
-				
+			end_time = Time.get_unix_time_from_system() + despawn_timer
+		
+		add_child(timer)
+		timer.one_shot = true
+		timer.wait_time = _calculate_wait_time()
+		timer.timeout.connect(_on_despawn_timer_timeout)
+		
+		print("Initial Spawn: " + str(initial_spawn) + "Timer State: " + str(timer.is_stopped()))
+		
 		timer.start()
 		
-		if debug_prints:
-			print("Starting timer. Time Remaining on timer.time_left: " + str(timer.time_left) + " Time Remaining on time_left: " + str(time_left) + " timer.wait_time: " + str(timer.wait_time))
+		initial_spawn = false
 
+		if debug_prints:
+			print("timer NOT found and time left set is: " + str(timer.wait_time) + " | Timer state: " + str(timer.is_stopped()))
+
+	else:
+		if debug_prints:
+			print("set_up_timer was ran but timer already existed during call with these settings: ")
+			print("Timer ID: " + str(timer))
+			print("Timer One Shot?: " + str(timer.one_shot))
+			print("Timer Wait Time: " + str(timer.wait_time))
+			print("Timer Start Time: " + str(start_time) )
+			print("Timer End Time: " + str(end_time))
+
+
+## Calculate the wait time of the timer
+func _calculate_wait_time() -> float:
+	var _time: float
+	if timer != null:
+		if !initial_spawn :
+			if time_passes_when_unloaded:
+				#start_time = end_time - despawn_timer
+				current_time = Time.get_unix_time_from_system()
+				if debug_prints:
+					print("timer is: " + str(timer))
+					print("Start Time is: " + str(start_time))
+					
+				if current_time < end_time:
+					_time = end_time - current_time
+					print("Current time is smaller than end time. _time is set to: " + str(_time))
+					
+				elif current_time > end_time:
+					_time = 3.0
+					if debug_prints:
+						print("Allotted time for existence has passed. Setting _time to 3.0 to initiate despawn.")
+			else:
+				if time_left > 0.0:
+					_time = time_left
+		elif initial_spawn: # default wait time script does not set wait time to 1.0 explicity so magic numbering this should work in theory.
+			_time = despawn_timer
+	return _time
+
+
+## Simply pauses the timer.
 func _pause_timer():
 	if timer != null:
 		timer.paused = true
 
+
+## Unpauses the timer and adjusts the end_time to reflect the paused time.
 func _unpause_timer():
 	if timer != null:
 		timer.paused = false
+		end_time = Time.get_unix_time_from_system() + timer.time_left
 		
+
+#region debug prints
 var time_accumulator = 0.0
 func _process(delta):
 	time_accumulator += delta
-	if time_accumulator >= 1.0:
-		print("Timer.time_left: " + str(timer.time_left) + " Time_left: " + str(time_left) + " Timer.wait_time: " + str(timer.wait_time))
+	if time_accumulator >= 1.0 and debug_prints:
+		print("Timer.time_left: " + str(timer.time_left) + " Time_left: " + str(time_left) + " Timer.wait_time: " + str(timer.wait_time) + " end_time: " + str(end_time))
 		time_accumulator = 0.0
+#endregion
 
+
+## Timer calls this function to despawn the container and all within it.
 func _on_despawn_timer_timeout():
 	if _clear_for_despawning():
 		if _player_hud != null:
@@ -172,6 +202,7 @@ func _on_despawn_timer_timeout():
 		if debug_prints:
 			print("unable to despawn")
 		return
+
 
 ## On inventory updated signal emitted, do the slot checks and if all slots are empty, remove the container from world.
 func _on_inventory_updated(inventory_data : CogitoInventory):
@@ -231,71 +262,28 @@ func set_state():
 
 	interaction_text = text_when_closed
 	animation_player = $AnimationPlayer
-	timer = $Timer
+	initial_spawn = false
 	
-	if time_left > 0:
-		
-		
-		if timer != null:
-			start_time = end_time - despawn_timer
-			
-			if debug_prints:
-				print("timer is: " + str(timer))
-				print("Restored Start Time is: " + str(start_time))
-				
-			if !time_passes_when_unloaded:
-				timer.wait_time = time_left # time does NOT progress when unloaded
-				
-				if timer.is_stopped():
-					timer.start()
-				
-				if debug_prints:
-					print("Loaded time_left variable: " + str(time_left))
-					
-			else:
-				current_time = Time.get_unix_time_from_system()
-				var final_wait_time: float = end_time - current_time
-				loaded_time_left = final_wait_time
-				if timer.paused:
-					timer.paused = false
-					
-				if timer.is_stopped():
-					print("timer was stopped")
-					timer.start()
-				
-				if final_wait_time > 0:
-					timer.wait_time = final_wait_time # time does progress when unloaded
-					
-					if debug_prints:
-						print("Final timer.wait_time variable: " + str(timer.wait_time))
-				else:
-					_on_despawn_timer_timeout()
-					if debug_prints:
-						print("Allotted time for existence has passed. Proceeding to despawning.")
-	else:
-		_on_despawn_timer_timeout()
+	if despawning_logic == DespawningLogic.ONLY_TIMED or despawning_logic == DespawningLogic.EMPTY_AND_TIMED:
 	
+		if timer == null:
+			_set_up_timer()
+		
 	object_state_updated.emit(interaction_text)
 
 
 # Custom save function to keep a few more properties.
 func save():
-	
-	current_time = Time.get_unix_time_from_system()
-	var remaining_time = end_time - current_time
-	
-	if remaining_time > 0:
-		time_left = remaining_time
-		timer.stop()
 		
+	if timer.time_left > 0:
+		time_left = timer.time_left
 		if debug_prints:
-			print("Time left before despawning: " + str(remaining_time))
-	else:
-		time_left = 0.0
+			print("Time left before despawning: " + str(time_left))
 
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
+		"id" : self.id,
 		"node_path" : self.get_path(),
 		"display_name" : display_name,
 		"inventory_data" : inventory_data,
@@ -310,8 +298,7 @@ func save():
 		"start_time" : start_time,
 		"end_time" : end_time,
 		"time_left" : time_left,
-		"timer" : timer,
-		
+		"initial_spawn" : initial_spawn,
 	}
 	return node_data
 	

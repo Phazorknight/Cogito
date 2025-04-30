@@ -210,5 +210,3 @@ shape = SubResource("BoxShape3D_503ep")
 libraries = {
 &"": SubResource("AnimationLibrary_38epp")
 }
-
-[node name="Timer" type="Timer" parent="."]

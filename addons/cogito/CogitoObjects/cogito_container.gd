@@ -65,7 +65,6 @@ func set_state():
 
 # Function to handle persistency and saving
 func save():
-	print("called from container")
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
