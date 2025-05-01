@@ -9,6 +9,7 @@ class_name LootDropContainer extends CogitoContainer
 		notify_property_list_changed()
 ## Despawn timer used by the timed despawning function.
 @export_range(0, 600, 10, "suffix:seconds") var despawn_timer :float = 60.0
+@export var random_despawn_test: bool = false
 ## Should this container's despawn logic account for the time passed while calculating the despawn timer.
 @export var time_passes_when_unloaded: bool = true
 
@@ -20,8 +21,6 @@ var loaded_time_left: float = 0.0
 var initial_spawn = true
 ## Internal reference to the despawning timer.
 var timer: Timer
-## unique ID
-var id: String
 
 ## Internal reference to start time that is saved and loaded.
 var start_time: float
@@ -41,12 +40,20 @@ ONLY_TIMED, ## Container will despawn after a preset time interval started upon 
 EMPTY_AND_TIMED ## Container will despawn after a time period as well as upon a timer expiration. Note: Items present will be lost with timed despawning logic.
 }
 
-func _ready() -> void:
+const DespawningLogicTypes: Array = [DespawningLogic.NONE, DespawningLogic.ONLY_EMPTY, DespawningLogic.ONLY_TIMED, DespawningLogic.EMPTY_AND_TIMED]
 
+func _ready() -> void:
+	
+	
+	if debug_prints:
+		despawning_logic = DespawningLogicTypes[randi() % DespawningLogicTypes.size()]
+		print("Despawning Logic is set to: " + str(despawning_logic))
+	
 	call_deferred("_set_up_references")
 	call_deferred("_handle_despawning")
 	
 	add_to_group("external_inventory")
+	add_to_group("loot_bag")
 	add_to_group("interactable")
 	add_to_group("Persist")
 
@@ -172,7 +179,7 @@ func _unpause_timer():
 var time_accumulator = 0.0
 func _process(delta):
 	time_accumulator += delta
-	if time_accumulator >= 1.0 and debug_prints:
+	if time_accumulator >= 1.0 and debug_prints and timer != null:
 		print("Timer.time_left: " + str(timer.time_left) + " Time_left: " + str(time_left) + " Timer.wait_time: " + str(timer.wait_time) + " end_time: " + str(end_time))
 		time_accumulator = 0.0
 #endregion
@@ -274,16 +281,15 @@ func set_state():
 
 # Custom save function to keep a few more properties.
 func save():
-		
-	if timer.time_left > 0:
-		time_left = timer.time_left
-		if debug_prints:
-			print("Time left before despawning: " + str(time_left))
+	if timer != null:
+		if timer.time_left > 0:
+			time_left = timer.time_left
+			if debug_prints:
+				print("Time left before despawning: " + str(time_left))
 
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
-		"id" : self.id,
 		"node_path" : self.get_path(),
 		"display_name" : display_name,
 		"inventory_data" : inventory_data,

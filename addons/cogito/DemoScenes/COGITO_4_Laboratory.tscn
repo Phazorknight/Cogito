@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=133 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://t2gxjp6of2et" path="res://addons/cogito/DemoScenes/DemoPrefabs/floor_dirt_3x_3_.tscn" id="9_btwfh"]
 [ext_resource type="PackedScene" uid="uid://3se2gpg0u3wx" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_ridges_half.tscn" id="9_gy8kl"]
 [ext_resource type="PackedScene" uid="uid://caex54qny4gvm" path="res://addons/cogito/DemoScenes/DemoPrefabs/glass_3x_3_98.tscn" id="10_8403t"]
+[ext_resource type="PackedScene" uid="uid://ctrisi3giijcs" path="res://addons/cogito/DemoScenes/DemoPrefabs/respawning_fridge.tscn" id="11_srp2h"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="11_vcl5j"]
 [ext_resource type="FontFile" uid="uid://0n6rmlh8d60u" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-ExtraBold.ttf" id="12_mbvqw"]
 [ext_resource type="PackedScene" uid="uid://diaf8d3vpbiku" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_wall_painted_alt.tscn" id="12_y6rt8"]
@@ -64,6 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://d2vpt8d74j5u" path="res://addons/cogito/PackedScenes/sanity_drain_attribute_zone.tscn" id="60_lxppk"]
 [ext_resource type="PackedScene" uid="uid://ks0xcampuu3h" path="res://addons/cogito/PackedScenes/stamina_drain_attribute_zone.tscn" id="61_grgat"]
 [ext_resource type="PackedScene" uid="uid://d2lnk6ecthmvd" path="res://addons/cogito/PackedScenes/Pickups/pickup_strength_potion.tscn" id="62_bftoa"]
+[ext_resource type="PackedScene" uid="uid://b2cccsfb5tikx" path="res://addons/cogito/CogitoNPC/cogito_npc.tscn" id="63_t2hdn"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -90,7 +92,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_y7p3r"]
+[sub_resource type="Resource" id="Resource_ovhpt"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
@@ -908,7 +910,7 @@ environment = SubResource("Environment_bftoa")
 
 [node name="Player" parent="." instance=ExtResource("2_7qwrr")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_y7p3r")
+inventory_data = SubResource("Resource_ovhpt")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -1876,6 +1878,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 21)
 
 [node name="FloorDirt_3x3_24" parent="NavigationRegion3D/BASE_FLOOR/Movement_Trench_Floor" instance=ExtResource("9_btwfh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 15)
+
+[node name="kitchenFridgeContainer" parent="NavigationRegion3D/BASE_FLOOR" instance=ExtResource("11_srp2h")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.13229, 2.09151e-18, -13.2764)
+inventory_respawning_logic = 0
+display_name = "Non Respawning Lootable Container"
+
+[node name="kitchenFridgeContainer2" parent="NavigationRegion3D/BASE_FLOOR" instance=ExtResource("11_srp2h")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.08228, 4.76837e-07, -13.2787)
+display_name = "Respawning Lootable Container"
 
 [node name="CEILING" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 2)
@@ -4511,6 +4522,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54745, 0.0438593, -2.19753)
 
 [node name="StrengthPotion" parent="." instance=ExtResource("62_bftoa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99269, 0.532, 6.01611)
+
+[node name="CogitoNPC" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("63_t2hdn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)
+patrol_path = NodePath("../EnemyPatrolpath2")
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]

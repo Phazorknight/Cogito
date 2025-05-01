@@ -1,4 +1,4 @@
-class_name LootableContainerX extends CogitoContainer
+class_name LootableContainer extends CogitoContainer
 
 ## Enable debug information being dumped straight into the output window.
 @export var debug_prints: bool = true
@@ -38,6 +38,8 @@ var finalized_items: Array[Dictionary]
 var inventory_to_populate:CogitoInventory
 ## Respawn timer calculated value.
 var calculated_respawn_timer: float
+## Initial spawn bool. This only true during first spawn. On loading this value is set to false and remains false.
+var initial_spawn = true
 
 ## Internal reference to the despawning timer.
 var timer: Timer
@@ -63,13 +65,20 @@ TIMED_RESPAWN, ## Contents of the container will respawn upon the expiration of 
 }
 
 func _ready() -> void:
-	super._ready() # call the parent class' _ready function before doing our own thing.
-	add_to_group("Persist")
+
+	add_to_group("save_object_state")
 	add_to_group("lootable_container")
+	add_to_group("external_inventory")
+	add_to_group("interactable")
 	
 	call_deferred("_set_up_references")
 	call_deferred("_handle_inventory")
 	call_deferred("_handle_respawning")
+	
+	interaction_nodes = find_children("","InteractionComponent",true)
+	interaction_text = text_when_closed
+	object_state_updated.emit(interaction_text)
+	inventory_data.apply_initial_inventory()
 
 
 ## Set up references to player and container in a deferred manner to avoid nulling
@@ -98,12 +107,24 @@ func _handle_inventory():
 	
 	var lootgen = LootGenerator.new()
 	get_tree().current_scene.add_child(lootgen)
-	finalized_items = lootgen.generate(loot_table, amount_of_items_to_drop, true)
+	finalized_items = lootgen.generate(loot_table, amount_of_items_to_drop)
 	lootgen.call_deferred("queue_free")
 	
 	_populate_the_container(inventory_to_populate, finalized_items)
+
+
+## Respawn
+func _respawn():
+	if !timer.is_stopped():
+		timer.stop()
 	
-	
+	_calculate_timer_value()
+	end_time = Time.get_unix_time_from_system() + calculated_respawn_timer	
+	timer.wait_time = calculated_respawn_timer
+	_handle_inventory()
+	timer.start()
+
+
 ## Handles the respawning logic.
 func _handle_respawning():
 	match inventory_respawning_logic:
@@ -115,12 +136,9 @@ func _handle_respawning():
 			
 			if timer == null:
 				_calculate_timer_value()
-				_create_timer()
-				
-			timer.timeout.connect(_handle_inventory)
-			_start_timer()
-		
-			
+				_set_up_timer()
+
+
 ## Populates the spawned container with the rolled items.
 func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictionary]):
 	## Index value that is iterated independently of the for loops it is used inside.
@@ -175,53 +193,86 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 			if _player_interaction_component.last_interacted_node.get_parent() == self:
 				_player_hud.inventory_interface.set_external_inventory(self)
 
-## Set up a timer in deferred manner
-func _create_timer():
-	timer = Timer.new()
-	add_child(timer)
-	timer.one_shot = false
-	timer.wait_time = calculated_respawn_timer
+
+## Set up timer
+func _set_up_timer():
+	if timer == null:
+		timer = Timer.new()
 	
-	if debug_prints:
-		print("Timer initialized as: " + str(timer.wait_time))
-
-
-func _start_timer():
-	if timer != null:
-		timer.one_shot = true
-		
-		if time_left > 0: # this variable is only 0 during initial spawn.
-			timer.wait_time = time_left
-			
-		else: # what to do during initial spawn
-			
+		if initial_spawn:
 			start_time = Time.get_unix_time_from_system()
-			end_time = start_time + calculated_respawn_timer
-			timer.wait_time = calculated_respawn_timer
-			time_left = timer.wait_time
-			
-			if debug_prints:
-				print("Start time is : " + str(start_time))
-				print("End Time is: " + str(end_time))
-				
-		timer.start()
+			end_time = Time.get_unix_time_from_system() + calculated_respawn_timer
 		
+		add_child(timer)
+		timer.one_shot = false
+		timer.wait_time = _calculate_wait_time()
+		timer.timeout.connect(_respawn)
+		
+		timer.start()
+		initial_spawn = false
+	
+	else:
 		if debug_prints:
-			print("Starting timer. Time Remaining on timer.time_left: " + str(timer.time_left) + " Time Remaining on time_left: " + str(time_left) + " timer.wait_time: " + str(timer.wait_time))
+			print("set_up_timer was ran but timer already existed during call with these settings: ")
+			print("Timer ID: " + str(timer))
+			print("Timer One Shot?: " + str(timer.one_shot))
+			print("Timer Wait Time: " + str(timer.wait_time))
+			print("Timer Start Time: " + str(start_time) )
+			print("Timer End Time: " + str(end_time))
+
+func _calculate_wait_time() -> float:
+	var _time: float
+	if timer != null:
+		if !initial_spawn :
+			if time_passes_when_unloaded:
+				#start_time = end_time - despawn_timer
+				current_time = Time.get_unix_time_from_system()
+				if debug_prints:
+					print("timer is: " + str(timer))
+					print("Start Time is: " + str(start_time))
+					
+				if current_time < end_time:
+					_time = end_time - current_time
+					print("Current time is smaller than end time. _time is set to: " + str(_time))
+					
+				elif current_time > end_time:
+					_time = 3.0
+					if debug_prints:
+						print("Allotted time for existence has passed. Setting _time to 3.0 to initiate respawn.")
+			else:
+				if time_left > 0.0:
+					_time = time_left
+		elif initial_spawn: # default wait time script does not set wait time to 1.0 explicity so magic numbering this should work in theory.
+			_time = calculated_respawn_timer
+	return _time
 
 
+## Simply pauses the timer.
 func _pause_timer():
 	if timer != null:
 		timer.paused = true
 
+
+## Unpauses the timer and adjusts the end_time to reflect the paused time.
 func _unpause_timer():
 	if timer != null:
 		timer.paused = false
+		end_time = Time.get_unix_time_from_system() + timer.time_left
+
+
+#region debug prints
+var time_accumulator = 0.0
+func _process(delta):
+	time_accumulator += delta
+	if time_accumulator >= 1.0 and debug_prints and inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
+		print("Timer.time_left: " + str(timer.time_left) + " Time_left: " + str(time_left) + " Timer.wait_time: " + str(timer.wait_time) + " end_time: " + str(end_time))
+		time_accumulator = 0.0
+#endregion
 
 
 ## Pause the timer on inventory access
 func _on_inventory_toggled(external_inventory_owner: Node):
-	if self == external_inventory_owner:
+	if self == external_inventory_owner and inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
 		if _player_hud.inventory_interface.is_inventory_open:
 			_pause_timer()
 			viewing_this_container = true
@@ -239,93 +290,49 @@ func _on_inventory_toggled(external_inventory_owner: Node):
 func set_state():
 	interaction_text = text_when_closed
 	animation_player = $AnimationPlayer
+	initial_spawn = false
 	
 	if inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
-		print("top kek")
-		if time_left > 0:
-			if timer != null:
-				start_time = end_time - calculated_respawn_timer
-				
-				if debug_prints:
-					print("timer is: " + str(timer))
-					print("Restored Start Time is: " + str(start_time))
-					
-				if !time_passes_when_unloaded:
-					timer.wait_time = time_left # time does NOT progress when unloaded
-					
-					if debug_prints:
-						print("Loaded time_left variable: " + str(time_left))
-						
-				else:
-					current_time = Time.get_unix_time_from_system()
-					var final_wait_time: float = end_time - current_time
-					
-					if final_wait_time > 0:
-						timer.wait_time = end_time - current_time # time does progress when unloaded
-						if debug_prints:
-							print("Final timer.wait_time variable: " + str(timer.wait_time))
-					else:
-						_handle_inventory()
-						if debug_prints:
-							print("Allotted time for existence has passed. Proceeding to inventory respawning.")
-		else:
-			_handle_inventory()
-	elif inventory_respawning_logic == InventoryRespawningLogic.NONE:
-		print("top lol")
-	
+		if timer == null:
+			_set_up_timer()
+			
 	object_state_updated.emit(interaction_text)
 
 
 # Custom save function to keep a few more properties.
 func save():
-	if inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
-		current_time = Time.get_unix_time_from_system()
-		var remaining_time = end_time - current_time
-		
-		if remaining_time > 0:
-			time_left = remaining_time
-			
+	print("save ran by: " + str(self))
+	if timer != null:
+		if timer.time_left > 0:
+			time_left = timer.time_left
 			if debug_prints:
-				print("Time left before despawning: " + str(remaining_time))
-		else:
-			time_left = 0.0
+				print("Time left before despawning: " + str(time_left))
 		
-		var node_data = {
-			"filename" : get_scene_file_path(),
-			"parent" : get_parent().get_path(),
-			"node_path" : self.get_path(),
-			"display_name" : display_name,
-			"inventory_data" : inventory_data,
-			"interaction_nodes" : interaction_nodes,
-			"animation_player" : animation_player,
-			"pos_x" : position.x,
-			"pos_y" : position.y,
-			"pos_z" : position.z,
-			"rot_x" : rotation.x,
-			"rot_y" : rotation.y,
-			"rot_z" : rotation.z,
-			"start_time" : start_time,
-			"end_time" : end_time,
-			"time_left" : time_left,
+	var node_data = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_path(),
+		"node_path" : self.get_path(),
+		"display_name" : display_name,
+		"inventory_data" : inventory_data,
+		"interaction_nodes" : interaction_nodes,
+		"animation_player" : animation_player,
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"pos_z" : position.z,
+		"rot_x" : rotation.x,
+		"rot_y" : rotation.y,
+		"rot_z" : rotation.z,
+		"start_time" : start_time,
+		"end_time" : end_time,
+		"time_left" : time_left,
+		"initial_spawn" : initial_spawn
 			
 		}
-		return node_data
-	elif inventory_respawning_logic == InventoryRespawningLogic.NONE:
-		print("Just an ordinary save node_data")
-		var node_data = {
-			"filename" : get_scene_file_path(),
-			"parent" : get_parent().get_path(),
-			"node_path" : self.get_path(),
-			"display_name" : display_name,
-			"inventory_data" : inventory_data,
-			"interaction_nodes" : interaction_nodes,
-			"animation_player" : animation_player,
-			"pos_x" : position.x,
-			"pos_y" : position.y,
-			"pos_z" : position.z,
-			"rot_x" : rotation.x,
-			"rot_y" : rotation.y,
-			"rot_z" : rotation.z,
-			
-		}
-		return node_data
+	return node_data
+
+func _exit_tree() -> void:
+	if self.toggle_inventory.is_connected(_player_hud.toggle_inventory_interface):
+		self.toggle_inventory.disconnect(_player_hud.toggle_inventory_interface)
+		
+	if self.toggle_inventory.is_connected(_on_inventory_toggled):
+		self.toggle_inventory.disconnect(_on_inventory_toggled)
