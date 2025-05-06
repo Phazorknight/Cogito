@@ -133,6 +133,9 @@ func _handle_respawning():
 		InventoryRespawningLogic.TIMED_RESPAWN:
 			if !self.toggle_inventory.is_connected(_on_inventory_toggled):
 				self.toggle_inventory.connect(_on_inventory_toggled)
+				
+			if !self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+				self._player_hud.hide_inventory.connect(_on_inventory_hidden)
 			
 			if timer == null:
 				_calculate_timer_value()
@@ -270,6 +273,17 @@ func _process(delta):
 #endregion
 
 
+## If inventory was hidden clear the variable so we don't pop up again unintentionally. Also unpause the timer because TAB and ESC keys won't be handled otherwise.
+func _on_inventory_hidden():
+	if viewing_this_container:
+		if debug_prints:
+			print("Inventory Hidden signal receieved. Clearing viewing_this_container variable.")
+		if viewing_this_container:
+			viewing_this_container = false
+		if inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN and timer != null:
+			_unpause_timer()
+
+
 ## Pause the timer on inventory access
 func _on_inventory_toggled(external_inventory_owner: Node):
 	if self == external_inventory_owner and inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
@@ -336,3 +350,6 @@ func _exit_tree() -> void:
 		
 	if self.toggle_inventory.is_connected(_on_inventory_toggled):
 		self.toggle_inventory.disconnect(_on_inventory_toggled)
+		
+	if self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+		self._player_hud.hide_inventory.disconnect(_on_inventory_hidden)

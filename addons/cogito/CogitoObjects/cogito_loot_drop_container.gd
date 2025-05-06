@@ -29,24 +29,28 @@ var current_time: float
 ## Internal reference to end time that is saved and loaded.
 var end_time: float
 
+## Mark for deletion
+var marked_for_deletion: bool = false
+
 # Internal variables to player
 var _player: CogitoPlayer
 var _player_hud: CogitoPlayerHudManager
 
 enum DespawningLogic {
-NONE, ## Container will not despawn and will become part of the scene. 
-ONLY_EMPTY, ## Container will despawn only after player takes out the last item in it.
-ONLY_TIMED, ## Container will despawn after a preset time interval started upon container creation. Note: Items present will be lost with timed despawning logic.
-EMPTY_AND_TIMED ## Container will despawn after a time period as well as upon a timer expiration. Note: Items present will be lost with timed despawning logic.
+NONE = 0, ## Container will not despawn and will become part of the scene. 
+ONLY_EMPTY = 1, ## Container will despawn only after player takes out the last item in it.
+ONLY_EMPTY_POST_INTERACTION = 2, ## Container will despawn only after player takes out the last item in it. This option will delay container deletion until player stops interacting with the container. Even if player puts an item in the container, container is deleted upon closing of the external_inventory.
+ONLY_TIMED = 4, ## Container will despawn after a preset time interval started upon container creation. Note: Items present will be lost with timed despawning logic.
+EMPTY_AND_TIMED = 8 ## Container will despawn after a time period as well as upon a timer expiration. Note: Items present will be lost with timed despawning logic.
 }
 
-const DespawningLogicTypes: Array = [DespawningLogic.NONE, DespawningLogic.ONLY_EMPTY, DespawningLogic.ONLY_TIMED, DespawningLogic.EMPTY_AND_TIMED]
+const DESPAWNINGLOGICTYPES: Array = [DespawningLogic.NONE, DespawningLogic.ONLY_EMPTY, DespawningLogic.ONLY_EMPTY_POST_INTERACTION, DespawningLogic.ONLY_TIMED, DespawningLogic.EMPTY_AND_TIMED]
 
 func _ready() -> void:
 	
 	
 	if debug_prints:
-		despawning_logic = DespawningLogicTypes[randi() % DespawningLogicTypes.size()]
+		despawning_logic = DESPAWNINGLOGICTYPES[randi() % DESPAWNINGLOGICTYPES.size()]
 		print("Despawning Logic is set to: " + str(despawning_logic))
 	
 	call_deferred("_set_up_references")
@@ -83,9 +87,25 @@ func _handle_despawning():
 			if !self.inventory_data.inventory_updated.is_connected(_on_inventory_updated):
 				self.inventory_data.inventory_updated.connect(_on_inventory_updated)
 			
+			if !self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+				self._player_hud.hide_inventory.connect(_on_inventory_hidden)
+				
+		DespawningLogic.ONLY_EMPTY_POST_INTERACTION:
+			if !self.inventory_data.inventory_updated.is_connected(_on_inventory_updated):
+				self.inventory_data.inventory_updated.connect(_on_inventory_updated)
+				
+			if !self.toggle_inventory.is_connected(_on_inventory_toggled):
+				self.toggle_inventory.connect(_on_inventory_toggled)
+				
+			if !self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+				self._player_hud.hide_inventory.connect(_on_inventory_hidden)
+			
 		DespawningLogic.ONLY_TIMED:
 			if !self.toggle_inventory.is_connected(_on_inventory_toggled):
 				self.toggle_inventory.connect(_on_inventory_toggled)
+				
+			if !self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+				self._player_hud.hide_inventory.connect(_on_inventory_hidden)
 
 			if timer == null:
 				_set_up_timer()
@@ -96,6 +116,9 @@ func _handle_despawning():
 		
 			if !self.toggle_inventory.is_connected(_on_inventory_toggled):
 				self.toggle_inventory.connect(_on_inventory_toggled)
+				
+			if !self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+				self._player_hud.hide_inventory.connect(_on_inventory_hidden)
 			
 			if timer == null:
 				_set_up_timer()
@@ -192,22 +215,13 @@ func _on_despawn_timer_timeout():
 			if _player_hud.inventory_interface.is_inventory_open:
 				if _player_hud.inventory_interface.get_external_inventory() == self:
 					_player_hud.inventory_interface.clear_external_inventory()
-
-		if self.toggle_inventory.is_connected(_player_hud.toggle_inventory_interface):
-			self.toggle_inventory.disconnect(_player_hud.toggle_inventory_interface)
-			
-		if self.toggle_inventory.is_connected(_on_inventory_toggled):
-			self.toggle_inventory.disconnect(_on_inventory_toggled)
-
-		if self.inventory_data.inventory_updated.is_connected(_on_inventory_updated):
-			self.inventory_data.inventory_updated.disconnect(_on_inventory_updated)
 		
 		if debug_prints:
-			print("despawning")
-		call_deferred("queue_free")
+			print("Despawning Container: " + str(self))
+		_remove_container()
 	else:
 		if debug_prints:
-			print("unable to despawn")
+			print("Container: " + str(self) + " is unable to despawn.")
 		return
 
 
@@ -223,35 +237,67 @@ func _on_inventory_updated(inventory_data : CogitoInventory):
 					items_in_slots.append(_slots.inventory_item)
 					
 		if items_in_slots.is_empty():
-			if _player_hud != null:
-				if _player_hud.inventory_interface.is_inventory_open:
-					if _player_hud.inventory_interface.get_external_inventory() == self:
-						_player_hud.inventory_interface.clear_external_inventory()
+			if despawning_logic == DespawningLogic.ONLY_EMPTY:
+				if _player_hud != null:
+					if _player_hud.inventory_interface.is_inventory_open:
+						if _player_hud.inventory_interface.get_external_inventory() == self:
+							_player_hud.toggle_inventory_interface(self)
+							
+				_remove_container()
 				
-			if self.toggle_inventory.is_connected(_player_hud.toggle_inventory_interface):
-				self.toggle_inventory.disconnect(_player_hud.toggle_inventory_interface)
-			
-			if self.toggle_inventory.is_connected(_on_inventory_toggled):
-				self.toggle_inventory.disconnect(_on_inventory_toggled)
+			elif despawning_logic == DespawningLogic.ONLY_EMPTY_POST_INTERACTION or despawning_logic == DespawningLogic.EMPTY_AND_TIMED:
+				marked_for_deletion = true
+				if debug_prints:
+					print("Container is now marked for deletion. Will process after inventory closed.")
+				
 
-			if self.inventory_data.inventory_updated.is_connected(_on_inventory_updated):
-				self.inventory_data.inventory_updated.disconnect(_on_inventory_updated)
+
+## Removal of the container
+func _remove_container():
+	if self.toggle_inventory.is_connected(_player_hud.toggle_inventory_interface):
+		self.toggle_inventory.disconnect(_player_hud.toggle_inventory_interface)
+				
+	if self.toggle_inventory.is_connected(_on_inventory_toggled):
+		self.toggle_inventory.disconnect(_on_inventory_toggled)
+
+	if self.inventory_data.inventory_updated.is_connected(_on_inventory_updated):
+		self.inventory_data.inventory_updated.disconnect(_on_inventory_updated)
+		
+	if self._player_hud.hide_inventory.is_connected(_on_inventory_hidden):
+		self._player_hud.hide_inventory.disconnect(_on_inventory_hidden)
+		
+	call_deferred("queue_free")
+
+
+## Handle the ESC and TAB keys.
+func _on_inventory_hidden():
+	if !despawning_logic == DespawningLogic.NONE:
+		if marked_for_deletion:
+			if debug_prints:
+				print("Despawning marked container: " + str(self))
+			_remove_container()
 			
-			call_deferred("queue_free")
+		if despawning_logic == DespawningLogic.ONLY_TIMED or despawning_logic == DespawningLogic.EMPTY_AND_TIMED:
+			if timer != null and timer.paused:
+				_unpause_timer()
+				if debug_prints:
+					print("Paused timer of: " + str(self) + " was unpaused.")
 
 
 ## Pause the timer on inventory access
 func _on_inventory_toggled(external_inventory_owner: Node):
 	if self == external_inventory_owner:
 		if _player_hud.inventory_interface.is_inventory_open:
-			_pause_timer()
-			if debug_prints:
-				print("Pausing timer. Time Remaining: " + str(timer.time_left) + " " + str(time_left)+ " " + str(timer.wait_time))
+			if timer != null:
+				_pause_timer()
+				if debug_prints:
+					print("Pausing timer. Time Remaining: " + str(timer.time_left) + " " + str(time_left)+ " " + str(timer.wait_time))
 				
 		else:
-			_unpause_timer()
-			if debug_prints:
-				print("Unpausing timer. Time Remaining: " + str(timer.time_left) + " " + str(time_left)+ " " + str(timer.wait_time))
+			if timer != null:
+				_unpause_timer()
+				if debug_prints:
+					print("Unpausing timer. Time Remaining: " + str(timer.time_left) + " " + str(time_left)+ " " + str(timer.wait_time))
 
 
 ## Check that we aren't actually the scene root. That would be bad.
