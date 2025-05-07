@@ -65,16 +65,19 @@ func update_quickslot_stack():
 	elif inventory_slot_reference.quantity == 1:
 		label_stack_amount.hide()
 	else:
+		CogitoGlobals.debug_log(true,"COgitoQuickslotContainer", "quickslot stack cleared." )
 		clear_this_quickslot()
 	
 
 func update_quickslot_data(slot_data: InventorySlotPD) -> void:
 	if slot_data == null:
+		CogitoGlobals.debug_log(true,"COgitoQuickslotContainer", "update_quickslot_data(): passed slot_data was null!" )
 		inventory_slot_reference = null
 		item_reference = null
 		item_texture.hide()
 		label_stack_amount.hide()
 	else:
+		CogitoGlobals.debug_log(true,"COgitoQuickslotContainer", "update_quickslot_data(): passed slot_data was " + str(slot_data) )
 		inventory_slot_reference = slot_data
 		item_reference = inventory_slot_reference.inventory_item
 		
@@ -82,7 +85,6 @@ func update_quickslot_data(slot_data: InventorySlotPD) -> void:
 		item_texture.texture = item_reference.icon
 		if !inventory_slot_reference.stack_has_changed.is_connected(update_quickslot_stack):
 			inventory_slot_reference.stack_has_changed.connect(update_quickslot_stack)
-		update_quickslot_stack()
 
 
 func set_slot_data() -> void:
