@@ -83,6 +83,11 @@ func update_quickslot_data(slot_data: InventorySlotPD) -> void:
 		
 		item_texture.show()
 		item_texture.texture = item_reference.icon
+		
+		#Setting stack once here.
+		if inventory_slot_reference.quantity > 1:
+			label_stack_amount.show()
+			label_stack_amount.text = str(inventory_slot_reference.quantity)
 		if !inventory_slot_reference.stack_has_changed.is_connected(update_quickslot_stack):
 			inventory_slot_reference.stack_has_changed.connect(update_quickslot_stack)
 

@@ -123,14 +123,16 @@ func remove_item_from_stack(slot_data: InventorySlotPD):
 	else:
 		print("Removing ", slot_data, " at index ", index)
 		inventory_slots[index].quantity -= 1
+		# What happens if last item of stack is removed.
 		if inventory_slots[index].quantity <= 0:
 			null_out_slots(slot_data)
+			
+			# If inventory slot was bind to a quick slot, unbind it.
+			var quickslot_index = assigned_quickslots.find(inventory_slots[index],0)
+			if quickslot_index > -1:
+				unbind_quickslot_by_index.emit(quickslot_index)
+				
 		inventory_updated.emit(self)
-		
-		# If inventory slot was bind to a quick slot, unbind it.
-		var quickslot_index = assigned_quickslots.find(inventory_slots[index],0)
-		if quickslot_index > -1:
-			unbind_quickslot_by_index.emit(quickslot_index)
 
 
 func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> InventorySlotPD:
