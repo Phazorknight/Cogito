@@ -15,7 +15,7 @@ var assigned_player_attribute : CogitoAttribute
 func initiate_interface_ui(_player_attribute: CogitoAttribute):
 	assigned_player_attribute = _player_attribute
 	
-	print("AttributeDisplay. Initiating attribute ", assigned_player_attribute.attribute_display_name)
+	CogitoGlobals.debug_log(true, "CogitoAttributeDisplay", "Initiating attribute " + assigned_player_attribute.attribute_display_name)
 	
 	#Setting up icon, bar and label
 	attribute_icon.texture = assigned_player_attribute.attribute_icon

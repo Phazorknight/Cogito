@@ -34,6 +34,8 @@ func on_inventory_updated(passed_inv: CogitoInventory) -> void:
 	# Updating all quickslot containers using their assigned inventory slots.
 	for i in quickslot_containers.size():
 		quickslot_containers[i].update_quickslot_data(inventory_reference.assigned_quickslots[i])
+		if inventory_reference.assigned_quickslots[i] == null:
+			unbind_quickslot(quickslot_containers[i])
 
 
 func unbind_quickslot(quickslot_to_unbind: CogitoQuickslotContainer) -> void:

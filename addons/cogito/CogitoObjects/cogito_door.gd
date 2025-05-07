@@ -198,7 +198,6 @@ func _physics_process(_delta):
 
 func vectors_approx_equal( v1 : Vector3, v2 : Vector3, epsilon : float ) -> bool:
 	var diff = v1 - v2
-	#print("Vector3 diff: ", diff.length() )
 	return abs( diff.x ) < epsilon and abs( diff.y ) < epsilon and abs( diff.z ) < epsilon
 
 
@@ -208,8 +207,6 @@ func lock_unlock_switch():
 		
 	else: 
 		lock_door()
-	
-	print("Door: is_locked=", is_locked)
 	
 	for nodepath in doors_to_sync_with:
 		if nodepath != null:

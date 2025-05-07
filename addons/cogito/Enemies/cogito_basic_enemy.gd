@@ -288,6 +288,7 @@ func interact_with_door(door: CogitoDoor):
 		else:
 			door.open_door(self)
 
+
 func load_patrol_points():
 	if patrol_path_nodepath:
 		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Loading patrol path: " + str(patrol_path_nodepath))

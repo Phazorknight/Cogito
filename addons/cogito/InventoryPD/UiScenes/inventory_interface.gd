@@ -203,7 +203,8 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 		inventory_data.inventory_updated.connect(quick_slots.on_inventory_updated)
 	else:
 		quick_slots.hide()
-	inventory_open.connect(quick_slots.update_inventory_status)
+	if !inventory_open.is_connected(quick_slots.update_inventory_status):
+		inventory_open.connect(quick_slots.update_inventory_status)
 	grabbed_slot_node.using_grid(inventory_data.grid)
 
 
