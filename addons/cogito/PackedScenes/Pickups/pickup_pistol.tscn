@@ -1,10 +1,13 @@
-[gd_scene load_steps=13 format=4 uid="uid://o0xgl5obc551"]
+[gd_scene load_steps=17 format=4 uid="uid://o0xgl5obc551"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_jxpu1"]
-[ext_resource type="Resource" uid="uid://lc5uq2e6ldah" path="res://addons/cogito/InventoryPD/Items/Cogito_Pistol.tres" id="2_7v1hn"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_okim2"]
+[ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="3_e081w"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_xoy07"]
+[ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="4_lv830"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="5_cx8or"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="5_lqbsn"]
+[ext_resource type="PackedScene" uid="uid://dgtjml2t3hdvx" path="res://addons/cogito/Wieldables/toy_pistol.tscn" id="6_xgnuo"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_r6lnb"]
 _data = PackedByteArray("AgAAAAUAAAAEAAAACAAAAAgAAAACAAAAc0ITAE0ASHPMAAAA0eIEAAABAAABFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNAAAAAAAAAAAAAAAAAAAAAQgACAACAAIAqQAAAEAAAAA4tQAAAAEBBAAEAAEAAQDpAAAAEAAAAMjWAAAAAgECAAIAAQABAPkAAAAQAAAArG4AAAADAQEAAQABAAEACQEAABAAAAAGiLe5ubkZXWsBAAAAAAAAAAC3ubm5GV1rAQAAAAAAAAAACF2B4AQdnVVIREREN94W9whskWOUnJ5VAAAAABoPjauwFKFRHJ6eXgAAAAAAAPPmUMGIQd7eX98AAH93f3d/d3f3tlY7trUCAAAAAAAAAAA=")
@@ -56,10 +59,32 @@ size = Vector3(0.439306, 0.0828058, 0.0807639)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5prt8"]
 size = Vector3(0.0942247, 0.2, 0.0599624)
 
-[sub_resource type="Resource" id="Resource_vcolb"]
+[sub_resource type="Resource" id="Resource_fbfr7"]
+resource_local_to_scene = true
+script = ExtResource("4_lv830")
+wieldable_scene = ExtResource("6_xgnuo")
+no_reload = false
+hint_on_empty = "Out of bullets."
+charge_max = 10.0
+ammo_item_name = "Foam Bullets"
+charge_current = 10.0
+wieldable_range = 10.0
+wieldable_damage = 1.0
+name = "Foam Pistol"
+description = "There's a reason it looks like a toy. Shoots foam bullets."
+icon = ExtResource("3_e081w")
+is_stackable = false
+is_droppable = true
+stack_size = 0
+drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_pistol.tscn"
+hint_text_on_use = ""
+item_size = Vector2(1, 1)
+sound_pickup = ExtResource("5_lqbsn")
+
+[sub_resource type="Resource" id="Resource_onqv8"]
 resource_local_to_scene = true
 script = ExtResource("3_xoy07")
-inventory_item = ExtResource("2_7v1hn")
+inventory_item = SubResource("Resource_fbfr7")
 quantity = 1
 origin_index = -1
 
@@ -84,6 +109,6 @@ shape = SubResource("BoxShape3D_5prt8")
 transform = Transform3D(1, 0, -1.81899e-12, 0, 1, 0, 0, 0, 1, 0.277335, 0.0601448, 0.00182778)
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_okim2")]
-slot_data = SubResource("Resource_vcolb")
+slot_data = SubResource("Resource_onqv8")
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_cx8or")]

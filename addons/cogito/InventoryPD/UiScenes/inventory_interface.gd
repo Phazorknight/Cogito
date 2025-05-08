@@ -163,6 +163,7 @@ func set_external_inventory(_external_inventory_owner):
 	external_inventory_owner = _external_inventory_owner
 	var inventory_data = external_inventory_owner.inventory_data
 	
+	inventory_data.owner = external_inventory_owner # Setting reference to external inventory owner node
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	external_inventory_ui.inventory_name = external_inventory_owner.display_name
@@ -191,6 +192,9 @@ func clear_external_inventory():
 
 
 func set_player_inventory_data(inventory_data : CogitoInventory):
+	
+	inventory_data.owner = CogitoSceneManager._current_player_node  # Setting player inventory owner reference to player node
+	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
 		inventory_data.inventory_button_press.connect(on_inventory_button_press)
@@ -212,7 +216,13 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 func on_inventory_button_press(inventory_data: CogitoInventory, index: int, action: String):
 	match [grabbed_slot_data, action]:
 		[null, "inventory_move_item"]:
-			grabbed_slot_data = inventory_data.grab_slot_data(index)
+			# Check if item is being wielded before grabbing it.
+			var temp_slot_data = inventory_data.get_slot_data(index)
+			if temp_slot_data.inventory_item and temp_slot_data.inventory_item.is_being_wielded:
+					Audio.play_sound(sound_error)
+					CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't move item while its being wielded.")
+			else:
+				grabbed_slot_data = inventory_data.grab_slot_data(index)
 		[_, "inventory_move_item"]:
 			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
 		[null, "inventory_use_item"]:
@@ -282,10 +292,10 @@ func update_grabbed_slot():
 func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotContainer):
 	if grabbed_slot_data:
 		CogitoGlobals.debug_log(true, "inventory_interface.gd", "Binding to quickslot container: " + str(grabbed_slot_data) + " -> " + str(quickslotcontainer) )
-		get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data) #Swapped with line below
+		#get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data) #Swapped with line below
 		quick_slots.bind_to_quickslot(grabbed_slot_data, quickslotcontainer)
-		grabbed_slot_data = null
-		update_grabbed_slot()
+		#grabbed_slot_data = null
+		#update_grabbed_slot()
 	else:
 		CogitoGlobals.debug_log(true, "inventory_interface.gd", "No grabbed slot data.")
 

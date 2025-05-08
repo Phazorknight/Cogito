@@ -14,6 +14,7 @@ signal unbind_quickslot_by_index(quickslot_index: int)
 @export var inventory_slots : Array[InventorySlotPD]
 
 var assigned_quickslots : Array[InventorySlotPD]
+var owner : Node
 
 @export var first_slot : InventorySlotPD
 
@@ -91,9 +92,7 @@ func use_slot_data(index: int):
 	if not slot_data:
 		return
 
-	# THIS USES RESOURCE LOCAL TO SCENE DATA. Local scene in this case is player. If player is persistent, this should work, but might break if not!?
-	# This also throws an error when an item is used out of a container.
-	var use_successful : bool = slot_data.inventory_item.use(get_local_scene())
+	var use_successful : bool = slot_data.inventory_item.use(owner)
 	if slot_data.inventory_item.has_method("is_consumable") and use_successful:
 		slot_data.quantity -= 1
 		if slot_data.quantity < 1:

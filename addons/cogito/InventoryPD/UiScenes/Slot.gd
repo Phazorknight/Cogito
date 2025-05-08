@@ -10,6 +10,7 @@ class_name SlotPanel extends PanelContainer
 @export var highlight_color : Color
 ## AudioStream that plays when slot gets highlighted.
 @export var sound_highlight : AudioStream
+
 var item_data = null
 var origin_index : int = -1
 var grid : bool
