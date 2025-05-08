@@ -29,9 +29,9 @@ func set_inventory_quickslots(passed_inventory: CogitoInventory) -> void:
 	if passed_inventory.assigned_quickslots.is_empty():
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "set_inventory_quickslots: assigned_quickslots were empty.")
 		passed_inventory.assigned_quickslots.resize(quickslot_containers.size())
-	#else:
-		#CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "set_inventory_quickslots: assigned_quickslots were NOT empty, updating quickslot data...")
-		#on_inventory_updated(passed_inventory)
+	else:
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "set_inventory_quickslots: assigned_quickslots were NOT empty, updating quickslot data...")
+		on_inventory_updated(passed_inventory)
 
 
 func on_inventory_updated(passed_inv: CogitoInventory) -> void:

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://addons/cogito/Wieldables/laser_rifle.tscn" id="4_eksg8"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_o1rdd")
 wieldable_scene = ExtResource("4_eksg8")
 no_reload = false
