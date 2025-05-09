@@ -232,6 +232,15 @@ func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 	return false
 
 
+## LootComponent - Gets all items in inventory
+func get_all_items() -> Array[InventoryItemPD]:
+	var result: Array[InventoryItemPD] = []
+	for slot in inventory_slots:
+		if slot != null:
+			result.append(slot.inventory_item)
+	return result
+
+
 # Function to attempt to take all the items in a given inventory.
 func take_all_items(target_inventory: CogitoInventory):
 	for slot in inventory_slots:

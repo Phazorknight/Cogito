@@ -25,6 +25,7 @@ description = "Raw eggs, protein powder, spinach and eleven herbs and spices."
 icon = ExtResource("3_1qvso")
 is_stackable = false
 is_droppable = true
+is_unique = false
 stack_size = 0
 drop_scene = "uid://d2lnk6ecthmvd"
 hint_icon_on_use = ExtResource("2_e0lpy")

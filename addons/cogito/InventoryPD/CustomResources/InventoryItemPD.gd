@@ -11,6 +11,8 @@ class_name InventoryItemPD
 @export var is_stackable : bool = false
 ## Sets if an item can be dropped or not. Used for important items so they can't get lost. Items can still be moved to external inventories.
 @export var is_droppable : bool = true
+## LootComponent - Sets the item as a unique. Meaning there can be only one copy in player inventory and all the loot bags.
+@export var is_unique : bool = false
 @export_range(1, 99) var stack_size : int
 ## Path to Scene that will be spawned when item is removed from inventory to be dropped into the world.
 @export_file("*.tscn") var drop_scene

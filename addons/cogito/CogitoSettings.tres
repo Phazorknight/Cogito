@@ -9,3 +9,7 @@ scene_state_prefix = "COGITO_scene_state_"
 player_state_prefix = "COGITO_player_state_"
 auto_save_name = "autosave"
 default_transition_duration = 0.4
+loot_component_debug = false
+loot_generator_debug = false
+loot_drop_container_debug = false
+lootable_container_debug = false

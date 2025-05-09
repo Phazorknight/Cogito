@@ -17,6 +17,17 @@ const settings_filename := "CogitoSettings"
 ## The default fade duration on scene changes.
 @export var default_transition_duration : float = .5
 
+## Debug functions of loot component are toggled here.
+@export_group("Loot Component Debug")
+## This variable toggles the LootComponent.gd's debug functions.
+@export var loot_component_debug: bool = false
+## This variable toggles the cogito_loot_generator.gd's debug functions.
+@export var loot_generator_debug: bool = false
+## This variable toggles the cogito_loot_drop_container.gd's debug functions.
+@export var loot_drop_container_debug: bool = false
+## This variable toggles the cogito_lootable_container.gd's debug functions.
+@export var lootable_container_debug: bool = false
+
 @export_group("Danger Zone")
 ## WARNING: If you press this, your projects input map settings will be reset/overwritten! You need to manually restart your project for this to take effect.
 @export_tool_button("Reset Project Input Map") var reset_input_map_action = _on_btn_reset_input_map_pressed
