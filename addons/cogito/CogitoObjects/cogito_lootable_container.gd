@@ -1,7 +1,7 @@
 class_name LootableContainer extends CogitoContainer
 
 ## Enable debug information being dumped straight into the output window.
-@export var debug_prints: bool = true
+@export var debug_prints: bool = CogitoGlobals.cogito_settings.lootable_container_debug
 ## Determine the despawning logic for this container.
 @export_category("Execution Configuration")
 
@@ -98,8 +98,7 @@ func _set_up_references():
 func _calculate_timer_value():
 	calculated_respawn_timer = ((respawn_timer_days * 86400.0) + (respawn_timer_hours * 3600.0) + (respawn_timer_minutes * 60.0) + respawn_timer_seconds)
 	
-	if debug_prints:
-		print("Calculated respawn timer is: " + str(calculated_respawn_timer))
+	CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Calculated respawn timer is: " + str(calculated_respawn_timer))
 	
 	
 ## Handle Inventory
@@ -157,8 +156,7 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	if slots.size() > 0:
 		# Close the container before clearing the slots
 		if _player_hud != null and viewing_this_container:
-			if debug_prints:
-				print("Player Hud found and is viewing this container:" + str(self))
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Player Hud found and is viewing this container:" + str(self))
 			if _player_hud.inventory_interface.is_inventory_open:
 				if _player_hud.inventory_interface.get_external_inventory() == self:
 					_player_hud.inventory_interface.clear_external_inventory()
@@ -172,8 +170,7 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	inventory_y = _item_count / 8 + 1
 	slots.resize(inventory_x * inventory_y)
 	_inventory.first_slot = slots[0]
-	if debug_prints:
-		print("Inventory size set to: " + str(slots.size()))
+	CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Inventory size set to: " + str(slots.size()))
 	for i in _item_count:
 		slots[i] = InventorySlotPD.new()
 		
@@ -187,14 +184,12 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	
 	_index = 0
 	for i in slots:
-		if debug_prints:
-			print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
 		_index += 1
-	# reopen the container to refresh inventory
+	# Reopen the container to refresh inventory displayed in the external_inventory. However currently interacting with the lootable container pauses respawn timer, this is kept as a further option but the way it is set up, cannot actually refresh.
 	if _player_hud != null and viewing_this_container:
 		if _player_hud.inventory_interface.is_inventory_open:
-			if _player_interaction_component.last_interacted_node.get_parent() == self:
-				_player_hud.inventory_interface.set_external_inventory(self)
+			_player_hud.inventory_interface.set_external_inventory(self)
 
 
 ## Set up timer
@@ -215,33 +210,30 @@ func _set_up_timer():
 		initial_spawn = false
 	
 	else:
-		if debug_prints:
-			print("set_up_timer was ran but timer already existed during call with these settings: ")
-			print("Timer ID: " + str(timer))
-			print("Timer One Shot?: " + str(timer.one_shot))
-			print("Timer Wait Time: " + str(timer.wait_time))
-			print("Timer Start Time: " + str(start_time) )
-			print("Timer End Time: " + str(end_time))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "set_up_timer was ran but timer already existed during call with these settings: ")
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Timer ID: " + str(timer))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Timer One Shot?: " + str(timer.one_shot))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Timer Wait Time: " + str(timer.wait_time))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Timer Start Time: " + str(start_time) )
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Timer End Time: " + str(end_time))
 
 func _calculate_wait_time() -> float:
 	var _time: float
 	if timer != null:
 		if !initial_spawn :
 			if time_passes_when_unloaded:
-				#start_time = end_time - despawn_timer
 				current_time = Time.get_unix_time_from_system()
-				if debug_prints:
-					print("timer is: " + str(timer))
-					print("Start Time is: " + str(start_time))
+				
+				CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "timer is: " + str(timer))
+				CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Start Time is: " + str(start_time))
 					
 				if current_time < end_time:
 					_time = end_time - current_time
-					print("Current time is smaller than end time. _time is set to: " + str(_time))
+					CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Current time is smaller than end time. _time is set to: " + str(_time))
 					
 				elif current_time > end_time:
 					_time = 3.0
-					if debug_prints:
-						print("Allotted time for existence has passed. Setting _time to 3.0 to initiate respawn.")
+					CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Allotted time for existence has passed. Setting _time to 3.0 to initiate respawn.")
 			else:
 				if time_left > 0.0:
 					_time = time_left
@@ -263,21 +255,20 @@ func _unpause_timer():
 		end_time = Time.get_unix_time_from_system() + timer.time_left
 
 
-#region debug prints
-var time_accumulator = 0.0
-func _process(delta):
-	time_accumulator += delta
-	if time_accumulator >= 1.0 and debug_prints and inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
-		print("Timer.time_left: " + str(timer.time_left) + " Time_left: " + str(time_left) + " Timer.wait_time: " + str(timer.wait_time) + " end_time: " + str(end_time))
-		time_accumulator = 0.0
+#region timer debugging, uncomment if you are unsure if the timers' times are correctly counting down - will spam the log every second.
+#var time_accumulator = 0.0
+#func _process(delta):
+	#time_accumulator += delta
+	#if time_accumulator >= 1.0 and debug_prints and inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN:
+		#CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Timer.time_left: " + str(timer.time_left) + " Time_left: " + str(time_left) + " Timer.wait_time: " + str(timer.wait_time) + " end_time: " + str(end_time))
+		#time_accumulator = 0.0
 #endregion
 
 
 ## If inventory was hidden clear the variable so we don't pop up again unintentionally. Also unpause the timer because TAB and ESC keys won't be handled otherwise.
 func _on_inventory_hidden():
 	if viewing_this_container:
-		if debug_prints:
-			print("Inventory Hidden signal receieved. Clearing viewing_this_container variable.")
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Inventory Hidden signal receieved. Clearing viewing_this_container variable.")
 		if viewing_this_container:
 			viewing_this_container = false
 		if inventory_respawning_logic == InventoryRespawningLogic.TIMED_RESPAWN and timer != null:
@@ -290,14 +281,12 @@ func _on_inventory_toggled(external_inventory_owner: Node):
 		if _player_hud.inventory_interface.is_inventory_open:
 			_pause_timer()
 			viewing_this_container = true
-			if debug_prints:
-				print("Pausing timer. Time Remaining: " + str(timer.time_left))
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Pausing timer. Time Remaining: " + str(timer.time_left))
 				
 		else:
 			_unpause_timer()
 			viewing_this_container = false
-			if debug_prints:
-				print("Unpausing timer. Time Remaining: " + str(timer.time_left))
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Unpausing timer. Time Remaining: " + str(timer.time_left))
 
 
 # Load the saved properties.
@@ -315,12 +304,10 @@ func set_state():
 
 # Custom save function to keep a few more properties.
 func save():
-	print("save ran by: " + str(self))
 	if timer != null:
 		if timer.time_left > 0:
 			time_left = timer.time_left
-			if debug_prints:
-				print("Time left before despawning: " + str(time_left))
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Lootable Container", "Time left before despawning: " + str(time_left))
 		
 	var node_data = {
 		"filename" : get_scene_file_path(),

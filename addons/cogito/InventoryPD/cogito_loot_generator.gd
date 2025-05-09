@@ -3,7 +3,7 @@ class_name LootGenerator extends Node
 
 
 ## Enables the debug prints. There are quite a few so output may be crowded.
-var debug_prints: bool = true
+var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
 
 # Internal variables to player
 var _player: CogitoPlayer
@@ -73,13 +73,13 @@ func _sort_loot_table(loot_table: LootTable):
 	else:
 		push_warning("Loot table is not set up. Loot Component will not function.")
 	
-	if debug_prints:
-		print(
-			"None Size: " + str(none.size()) + str(none) + 
-			" Always Size: " + str(guaranteed_drops_table.size()) + str(guaranteed_drops_table) +
-			" Chance Size: " + str(chance_drops_table.size()) + str(chance_drops_table) +
-			" Quest Size: " + str(quest_drops_table.size()) + str(quest_drops_table) 
-			)
+
+	CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", 
+		"None Size: " + str(none.size()) + str(none) + 
+		" Always Size: " + str(guaranteed_drops_table.size()) + str(guaranteed_drops_table) +
+		" Chance Size: " + str(chance_drops_table.size()) + str(chance_drops_table) +
+		" Quest Size: " + str(quest_drops_table.size()) + str(quest_drops_table) 
+		)
 
 
 ## Checks for given InventoryPD item against player inventory, loot bags, and lootable containers, returns true if there is a copy of a unique item, false if there isn't.
@@ -123,8 +123,7 @@ func _count_quest_items(item: InventoryItemPD) -> int:
 	for _slot in _lookup_merge:
 		if _slot == item:
 			_count += 1 
-	if debug_prints:
-		print("Quest items count is: " + str(_count))
+	CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Quest items count is: " + str(_count))
 	return _count
 
 
@@ -157,10 +156,9 @@ func _roll_for_randomized_items(_items: Array[Dictionary], _amount: int) -> Arra
 		
 		# Handle Quest Items			
 		elif _winner.has("quest_id"): # If winner is a quest item
-			if debug_prints:
-				print("Quest ID: " + str(_winner.get("quest_id")) + " Quest Item Total Count: " + str(_winner.get("quest_item_total_count")))
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Quest ID: " + str(_winner.get("quest_id")) + " Quest Item Total Count: " + str(_winner.get("quest_item_total_count")))
 			if _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Check inventory and already spawned loot bags for a count and compare to maximum allowed count
-				print("Maximum amount of quest items reached. Moving on.")
+				CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Maximum amount of quest items reached. Moving on.")
 				continue
 			else: # If quest item count did not reach the maximum amount
 				if CogitoQuestManager.active.get_ids_from_quests().has(_winner["quest_id"]):
@@ -169,7 +167,7 @@ func _roll_for_randomized_items(_items: Array[Dictionary], _amount: int) -> Arra
 							continue
 						else: # If it wouldn't go over the limit, create a new copy
 							_result.append(_winner)
-						print("You've got a quest item.")
+						CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "You've got a quest item in loot generator.")
 					else: # Final array does not have a copy of this quest item awating drop
 						if not _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Final check for the maximum limit
 							_result.append(_winner)
@@ -184,11 +182,11 @@ func _roll_for_randomized_items(_items: Array[Dictionary], _amount: int) -> Arra
 			break
 			
 	if debug_prints:		
-		print("Amount of items in results array: " + str(_result.size()))
-		print("Array contains these items:")
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Amount of items in results array: " + str(_result.size()))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Array contains these items:")
 		for i in _result:
-			print(i.get("name"))
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", i.get("name"))
 		
-		print("Array took " + str(_failsafe) + " tries to complete.")
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Array took " + str(_failsafe) + " tries to complete.")
 	
 	return _result

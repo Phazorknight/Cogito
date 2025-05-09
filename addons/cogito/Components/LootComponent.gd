@@ -5,7 +5,7 @@ class_name LootComponent extends Node3D
 ## Enables or disables the loot components functionality.
 @export var enabled = true
 ## Enables the debug prints. There are quite a few so output may be crowded.
-@export var debug_prints: bool = false
+@export var debug_prints: bool = CogitoGlobals.cogito_settings.loot_component_debug
 
 @export_category("Loot Table Configuration")
 ## Specifies which loot table should be used to spawn items from.
@@ -69,8 +69,7 @@ func _spawn_loot_container():
 
 		spawned_loot_bag.add_to_group("loot_bag")
 		spawned_loot_bag.add_to_group("Persist")
-		if debug_prints:
-			print("Spawned Loot Bag: " + str(spawned_loot_bag) + "at these coordinates: " + str(spawned_loot_bag.position))
+		CogitoGlobals.debug_log(debug_prints, "Loot Component", "Spawned Loot Bag: " + str(spawned_loot_bag) + "at these coordinates: " + str(spawned_loot_bag.position))
 		
 		var lootgen = LootGenerator.new()
 		get_tree().current_scene.add_child(lootgen)
@@ -93,8 +92,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 	_inventory.inventory_size.x = 8
 	_inventory.inventory_size.y = _item_count / 8 + 1
 	_inventory.first_slot = slots[0]
-	if debug_prints:
-		print("Inventory size set to: " + str(slots.size()))
+	CogitoGlobals.debug_log(debug_prints, "Loot Component", "Inventory size set to: " + str(slots.size()))
+	
 	for i in _item_count:
 		slots[i] = InventorySlotPD.new()
 		
@@ -107,7 +106,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 		_index += 1
 	
 	_index = 0
-	for i in slots:
-		if debug_prints:
-			print("Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
-		_index += 1
+	
+	if debug_prints:
+		for i in slots:
+			CogitoGlobals.debug_log(debug_prints, "Loot Component", "Slot number: " + str(_index) + " holds item: " + str(slots[_index]))
+			_index += 1

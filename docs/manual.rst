@@ -725,41 +725,44 @@ Script used for generating loot upon death.
 
 Functionality:
 
-* Loot Component
+* LootComponent.gd
    Can be enabled and disabled based on other functionality.
-   Loot table is a custom resource based on the BaseLootTable class which has an example dictionary. A generic loot table may also be found within Loot Tables folder.
+   Loot table is a custom resource based on the BaseLootTable class which has an example dictionary. A generic loot table may also be found within Loot Tables folder. BaseLootTable has the definitions explained within it.
    Customizable amount of items to drop during loot generation.
-   Can use custom scenes of loot bags, useful for creating different remain types.
+   Can use custom scenes of loot bags, useful for creating different remain types. Should only use containers made from cogito_loot_drop_container.gd. 
    Monitors the health component assigned manually in the editor to start.
-   Includes despawning logic to handle containers after items have been taken out of them or on a timer.
 
-   Script monitors an unique item's existence to create a copy based on the loot table definitions of said items. If there can only be one, there can only be one within player inventory and other loot bags in the scene.
-   Script also handles quest item generation. In an example scenario, if a quest item is set to drop X times, you need to define those in the loot table to facilitate generation, otherwise only a single copy may drop. Quest item and random chance items share the same item amount pool. Meaning a quest item will prevent another chance item from spawning.
-   Simple debug functionality for loot table validation is included. 
-
-* Lootable Container Component
-   container_to_monitor: Expects a ``CogitoContainer`` assigned in the editor while creating the scene of a lootable container.
-   Spawning functionality is nearly identical to loot component itself.
-   Loot tables are identical and can be used accordingly.
+* cogito_lootable_container.gd
+   Is a child class of cogito_object. 
+   Respawning logic is included in the script itself.
+   Loot tables are shared and can be used accordingly.
    Contents can be set to respawn or not to respawn. Respawning clears the contents and reinitializes new items within the container.
-   Respawn timer is calculated additively. 
-   If player is viewing the inventory of the lootable container, ui of the external inventory is refreshed to avoid crashes.
+   Non respawning can be useful for creating safe containers that saves it inventory during run time after initially rewarding player with some items.
+   
+* cogito_loot_drop_container.gd
+   Created by the Loot Component during run time after a health component has depleted.
+   Has built in despawn options. 
+   - Does not despawn
+   - Despawns after all items are taken out of the container (Instantly, closes the inventory to create a fast looting experience)
+   - Despawns after all items are taken out of the container (Only after player closes the inventory window)
+   - Container will continue to exist while the timer is still counting down, when it reaches zero, container and it's contents are deleted.
+   - Container will either despawn after all items are taken out of it, or when the timer hits zero. Whichever comes first.
+   
+* cogito_loot_generator.gd
+   Handles loot selection. Does not actually populate the containers, only passes the refined and rolled loot table to loot drop and lootable containers to facilitate item creation. Does not create items on its own. Sorts the loot table passed to it, randomly selects the items based on weights and amounts. Handles quest items, guaranteed drops and chance drops and unique items. 
+   
+   Script queries an unique item's existence from all containers currently in the scene and player's inventory to create a copy based on the loot table definitions of said items. If there can only be one, there can only be one. 
+   Script also handles quest item generation. In an example scenario, if a quest item is set to drop X times, you need to define those in the loot table to facilitate generation, otherwise only a single copy may drop. Quest item and random chance items share the same item amount pool. Meaning a quest item will prevent another chance item from spawning.
+   
+   Guaranteed items will be added regardless of amount of items requested in the editor. 
 
-* EmptiedDespawner
-   container_to_monitor: Expects a ``CogitoContainer`` passed by the loot component script. Can be used indepedently in scenes.
-   Monitors the inventory data of the given container, disconnects signals and despawns the parent. 
-
-* TimedDespawner
-   container_to_monitor: Expects a ``CogitoContainer`` passed by the loot component script. Can be used indepedently in scenes.
-   When the provided container has its inventory open, timer pauses. Timer continues upon inventory closure by the interact button.  
-   When timer expires, disconnects and despawns the parent container. 
-   despawn_timer: Expects a float value for seconds until timer expiration.
-   if the player is viewing the inventory while container despawns, external inventory part of the inventory ui is cleared to avoid crashes. 
+* Timers
+   Timers can be configured to pass during unloaded time or while player is in the scene with the lootable container or loot drop containers. You can use the respawning containers throughout your game to seed items in containers like in other RPG games.
+   If player is viewing the inventory of the lootable container or loot drop container, timer of that container is paused to give player time to make decisions. 
 
 * Known issues
    Script cannot handle grid inventories.
-   Timer does not continue if the inventory is exited by escape key. 
-   If you have multiple stackable items in loot table, and when generated these items do not go over the maximum stack size, script does not stack these items during generation and will consume a slot instead.
+   If you have multiple stackable items in loot table, and when generated these items do not go over the maximum stack size, script does not stack these items during generation and will consume a slot instead. So it is advised you choose a single stackable item per entry and increase the stack size to adjust for it. 
     
 Cogito Rotator Tool
 -------------------
