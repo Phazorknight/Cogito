@@ -143,6 +143,12 @@ func drop_slot_data(grabbed_slot_data: InventorySlotPD, index: int) -> Inventory
 	elif is_enough_space(grabbed_slot_data, index, false):
 		# Swap out item
 		var item_to_swap = get_item_to_swap(grabbed_slot_data, index)
+		
+		# If item to swap is being wielded, cancel the swap
+		if item_to_swap and item_to_swap.inventory_item and item_to_swap.inventory_item.is_being_wielded:
+			print("cogito_inventory.gd: ERROR - cants swap out item thats being wielded.")
+			return grabbed_slot_data
+		
 		null_out_slots(item_to_swap)
 		grabbed_slot_data.origin_index = index
 		inventory_slots[index] = grabbed_slot_data

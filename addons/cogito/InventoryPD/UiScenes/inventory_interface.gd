@@ -218,7 +218,7 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 		[null, "inventory_move_item"]:
 			# Check if item is being wielded before grabbing it.
 			var temp_slot_data = inventory_data.get_slot_data(index)
-			if temp_slot_data.inventory_item and temp_slot_data.inventory_item.is_being_wielded:
+			if temp_slot_data and temp_slot_data.inventory_item and temp_slot_data.inventory_item.is_being_wielded:
 					Audio.play_sound(sound_error)
 					CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't move item while its being wielded.")
 			else:

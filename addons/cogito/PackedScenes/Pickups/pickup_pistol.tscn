@@ -59,7 +59,7 @@ size = Vector3(0.439306, 0.0828058, 0.0807639)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5prt8"]
 size = Vector3(0.0942247, 0.2, 0.0599624)
 
-[sub_resource type="Resource" id="Resource_fbfr7"]
+[sub_resource type="Resource" id="Resource_e081w"]
 resource_local_to_scene = true
 script = ExtResource("4_lv830")
 wieldable_scene = ExtResource("6_xgnuo")
@@ -81,10 +81,10 @@ hint_text_on_use = ""
 item_size = Vector2(1, 1)
 sound_pickup = ExtResource("5_lqbsn")
 
-[sub_resource type="Resource" id="Resource_onqv8"]
+[sub_resource type="Resource" id="Resource_lv830"]
 resource_local_to_scene = true
 script = ExtResource("3_xoy07")
-inventory_item = SubResource("Resource_fbfr7")
+inventory_item = SubResource("Resource_e081w")
 quantity = 1
 origin_index = -1
 
@@ -109,6 +109,6 @@ shape = SubResource("BoxShape3D_5prt8")
 transform = Transform3D(1, 0, -1.81899e-12, 0, 1, 0, 0, 0, 1, 0.277335, 0.0601448, 0.00182778)
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_okim2")]
-slot_data = SubResource("Resource_onqv8")
+slot_data = SubResource("Resource_lv830")
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_cx8or")]
