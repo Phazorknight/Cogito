@@ -1,6 +1,6 @@
 [gd_scene load_steps=151 format=3 uid="uid://cud7jwvomj24d"]
 
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="1_7d2n7"]
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player_default.tscn" id="1_7d2n7"]
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_b15oo"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://addons/cogito/PackedScenes/Pickups/pickup_flashlight.tscn" id="1_oweej"]

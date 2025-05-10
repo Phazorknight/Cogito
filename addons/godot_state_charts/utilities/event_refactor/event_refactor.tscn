@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvlabg8e2qbk3"]
+
+[ext_resource type="Script" path="res://addons/godot_state_charts/utilities/event_refactor/event_refactor.gd" id="1_hh1x6"]
+
+[node name="event_refactor" type="ConfirmationDialog"]
+initial_position = 1
+title = "Rename Event"
+size = Vector2i(586, 562)
+visible = true
+ok_button_text = "Rename"
+dialog_autowrap = true
+script = ExtResource("1_hh1x6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 578.0
+offset_bottom = 513.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Event"
+
+[node name="EventList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(560, 330)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "New name"
+
+[node name="EventNameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+caret_blink = true
+caret_blink_interval = 0.5
+
+[connection signal="canceled" from="." to="." method="_close"]
+[connection signal="confirmed" from="." to="." method="_on_confirmed"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/EventList" to="." method="_on_event_list_item_selected"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/EventNameEdit" to="." method="_on_event_name_edit_text_changed"]

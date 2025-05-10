@@ -27,5 +27,7 @@ func _on_body_exited(body):
 	if body.is_in_group("Player"):
 		#print("Exited ladder")
 		body.on_ladder = false
+		if body.has_method("exit_ladder"):
+			body.exit_ladder()
 		if ladder_collision:
 			ladder_collision.process_mode = original_process_mode
