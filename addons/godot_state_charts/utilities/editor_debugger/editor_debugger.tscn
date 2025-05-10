@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3 uid="uid://donfbhh5giyfy"]
+
+[ext_resource type="Script" path="res://addons/godot_state_charts/utilities/editor_debugger/editor_debugger.gd" id="1_ia1de"]
+
+[node name="State Charts" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ia1de")
+
+[node name="SplitContainer" type="HSplitContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 300
+
+[node name="AllStateChartsTree" type="Tree" parent="SplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabContainer" type="TabContainer" parent="SplitContainer"]
+layout_mode = 2
+
+[node name="State Chart" type="MarginContainer" parent="SplitContainer/TabContainer"]
+layout_mode = 2
+
+[node name="CurrentStateChartTree" type="Tree" parent="SplitContainer/TabContainer/State Chart"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="History" type="MarginContainer" parent="SplitContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/TabContainer/History"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HistoryEdit" type="TextEdit" parent="SplitContainer/TabContainer/History/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SplitContainer/TabContainer/History/VBoxContainer"]
+layout_mode = 2
+
+[node name="ClearButton" type="Button" parent="SplitContainer/TabContainer/History/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Clear"
+
+[node name="CopyToClipboardButton" type="Button" parent="SplitContainer/TabContainer/History/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Copy to Clipboard"
+
+[node name="Settings" type="MarginContainer" parent="SplitContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SplitContainer/TabContainer/Settings"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="IgnoreEventsCheckbox" type="CheckBox" parent="SplitContainer/TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Do not show events in the history."
+text = "Ignore events"
+
+[node name="IgnoreStateChangesCheckbox" type="CheckBox" parent="SplitContainer/TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Do not show state changes in the history."
+text = "Ignore state changes"
+
+[node name="IgnoreTransitionsCheckbox" type="CheckBox" parent="SplitContainer/TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Do not show transitions in the history."
+text = "Ignore transitions"
+
+[node name="Label" type="Label" parent="SplitContainer/TabContainer/Settings/VBoxContainer"]
+layout_mode = 2
+text = "Maximum lines in history"
+
+[node name="MaximumLinesSpinBox" type="SpinBox" parent="SplitContainer/TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 50.0
+max_value = 1000.0
+value = 300.0
+rounded = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="dragged" from="SplitContainer" to="." method="_on_split_container_dragged"]
+[connection signal="item_selected" from="SplitContainer/AllStateChartsTree" to="." method="_on_all_state_charts_tree_item_selected"]
+[connection signal="pressed" from="SplitContainer/TabContainer/History/VBoxContainer/HBoxContainer/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="pressed" from="SplitContainer/TabContainer/History/VBoxContainer/HBoxContainer/CopyToClipboardButton" to="." method="_on_copy_to_clipboard_button_pressed"]
+[connection signal="toggled" from="SplitContainer/TabContainer/Settings/VBoxContainer/IgnoreEventsCheckbox" to="." method="_on_ignore_events_checkbox_toggled"]
+[connection signal="toggled" from="SplitContainer/TabContainer/Settings/VBoxContainer/IgnoreStateChangesCheckbox" to="." method="_on_ignore_state_changes_checkbox_toggled"]
+[connection signal="toggled" from="SplitContainer/TabContainer/Settings/VBoxContainer/IgnoreTransitionsCheckbox" to="." method="_on_ignore_transitions_checkbox_toggled"]
+[connection signal="value_changed" from="SplitContainer/TabContainer/Settings/VBoxContainer/MaximumLinesSpinBox" to="." method="_on_maximum_lines_spin_box_value_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
