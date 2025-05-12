@@ -14,17 +14,48 @@ var player: CogitoPlayer
 @onready var standing_collider: CollisionShape3D = $StandingZone
 @onready var crouching_collider: CollisionShape3D = $CrouchingZone
 
+# Variables used for pooling the pickup processing to smooth out processing large amounts of pickup items.
+@export var defer_queue_processing : bool = false
+var _last_index := -1
+var pickup_item_pool : Array[CogitoObject] = []
+var is_processing_queue : bool = false
 
 func _ready() -> void:
 	player = get_parent()
 
 
 func _on_body_entered(body: Node3D) -> void:
-	_attempt_pick_up(body)
+	pickup_item_pool.append(body)
+	is_processing_queue = true
+	#_attempt_pick_up(body)
 
 
 func _physics_process(_delta) -> void:
 	_update_shape()
+	if is_processing_queue:
+		if defer_queue_processing:
+			process_pickup_queue.call_deferred()
+		else: 
+			process_pickup_queue()
+		
+
+
+func process_pickup_queue() -> void:
+	if pickup_item_pool.size() > 0:
+		print("Autopickup: Processing queue...")
+		var pickup = get_pickup_from_queue()
+		if is_instance_valid(pickup):
+			_attempt_pick_up(pickup)
+			pickup_item_pool.remove_at(_last_index)
+	else:
+		print("Autopickup: Pickup Queue was empty!")
+		is_processing_queue = false
+	pass
+
+func get_pickup_from_queue() -> CogitoObject:
+	_last_index = wrapi(_last_index + 1, 0, pickup_item_pool.size())
+	#print("get_pickup_from_queue results: _last_index=", _last_index, ". item found: ", pickup_item_pool[_last_index].name)
+	return pickup_item_pool[_last_index]
 
 
 func _update_shape() -> void:
