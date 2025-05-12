@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dgtjml2t3hdvx" path="res://addons/cogito/Wieldables/toy_pistol.tscn" id="4_0vdxq"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_dk2he")
 wieldable_scene = ExtResource("4_0vdxq")
 no_reload = false

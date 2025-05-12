@@ -1,15 +1,15 @@
-![COGITO_banner](docs/Cogito_capsule_202402_jpg.jpg)
+![COGITO_banner](addons/cogito/COGITO_banner.jpg)
 # COGITO
 [![GodotEngine](https://img.shields.io/badge/Godot_4.4_stable-blue?logo=godotengine&logoColor=white)](https://godotengine.org/) [![COGITO](https://img.shields.io/badge/version_1.1.0-35A1D7?label=COGITO&labelColor=0E887A)](https://github.com/Phazorknight/Cogito)
 
 ## What is it?
-COGITO is a first Person Immersive Sim Template Project for Godot Engine 4.
-In comparison to other first person assets out there, which focus mostly on shooter mechanics, COGITO focuses on
-providing a framework for creating interactable objects and items.
+Cogito is a First Person Immersive Sim Template Project for Godot 4, providing a framework for creating interactable objects, various items to use and mechanics to influence the player and game environment.
+In short, with COGITO you get a quick start for a fully-featured first person game with a great variety of mechanics and a solid base to create your own.
 
-## [Full documentation here!](https://cogito.readthedocs.io/en/latest/index.html)
+### [Online documentation](https://cogito.readthedocs.io/en/latest/index.html)
+### [Video tutorial series](https://cogito.readthedocs.io/en/latest/index.html)
 
-## Current Features
+### Current Features
 - First person player controller with:
   - Sprinting, jumping, crouching, sliding, stairs handling, ladder handling, sitting
   - Lots of exposed properties to tweak to your liking (speeds, headbob, fall damage, bunnyhop, etc.)
@@ -21,23 +21,31 @@ providing a framework for creating interactable objects and items.
   - Interactions can check attributes (eg. you can only lift a box if you're strong enough)
 - Interaction System
   - Component-based interactions makes it easy to turn your own objects interactive quickly and customize existing ones
-  - Examples for interactive objects like doors, drawers, carryables, turn-wheels, elevators, readable objects, keypads
+  - Examples for interactive objects like doors, drawers, boxes to carry, turn-wheels, elevators, notes, keypads
 - Inventory System
   - Flexible resource-based inventories
+  - Grid-based (think Resident Evil 4)
   - Inventory UI separate from inventory logic
   - Examples for multiple item types (consumables, keys, ammo, weapons, combinable Items)
   - Base class to easily add your custom item types
-- Basic Enemy
-  - NavigationAgent based enemy with a simple state machine
+  - Containers with their own inventories
+- Basic NPC
+  - NavigationAgent based enemy with component-based state machine + animation states
   - Simple player detection system that uses detection areas + basic line-of-sight checks
-- Full gamepad support!
-- Systemic Properties (wet/dry, flammable/on fire, soft, etc) (very WIP)
-- Basic Quest System
+- Main menu, pause menu and Options menu
+- Rebindable controls
+- Full game pad support!
 - Save and Load System as well as scene persistency
+- Support for other plugins:
+  - Works with Dialogic
+  - Works with Dialgue Manager
+- Work in progress:
+  - Systemic Properties (wet/dry, flammable/on fire, soft, etc) (very WIP)
+  - Basic Quest System
 
-- Fully featured Demo Scene
-  - Set up like a game level including a variety of objects, weapons and quests
-  - Demo scenes contains hints that explain how objects in the scene were set up
+### Comes with fully featured Demo Scenes
+- Set up like a game level including a variety of objects, weapons and quests
+- Demo scenes contains hints that explain how objects in the scene were set up
 
 COGITO is made by [Philip Drobar](https://www.philipdrobar.com) with help from [these contributors](https://github.com/Phazorknight/Cogito/graphs/contributors).
 

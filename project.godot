@@ -29,8 +29,8 @@ InputHelper="*res://addons/input_helper/input_helper.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/initial_position_type=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
@@ -51,6 +51,13 @@ folder_colors={
 "res://addons/cogito/PackedScenes/": "blue",
 "res://addons/cogito/Scripts/": "gray"
 }
+
+[gui]
+
+theme/default_theme_scale=2.0
+theme/custom="uid://by44nnjeu6u4n"
+theme/default_font_multichannel_signed_distance_field=true
+theme/default_font_generate_mipmaps=true
 
 [importer_defaults]
 

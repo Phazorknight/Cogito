@@ -61,11 +61,14 @@ var wiggle_index : float = 0.0
 
 @onready var footstep_player = $FootstepPlayer
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
-
-
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var velocity_debug_shape: MeshInstance3D = $VelocityDebugShape
+
+# NPC State related vars
+@onready var npc_state_machine: Node = $NPC_State_Machine
+var patrol_path_nodepath : NodePath
+var saved_enemy_state : String
 
 
 func _ready():
@@ -176,34 +179,47 @@ func npc_footsteps(delta):
 			can_play_footstep = true
 
 
-
 func apply_knockback(direction: Vector3):
 	knockback_force = direction.normalized() * knockback_strength
 	knockback_timer = knockback_duration
 
 
-# Future method to set object state when a scene state file is loaded.
+# Method to set object state when a scene state file is loaded.
 func set_state():	
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
-	pass
+	load_patrol_points()
+	npc_state_machine.goto(saved_enemy_state)
+
 	
 # Function to handle persistence and saving
 func save():
+	if patrol_path:
+		patrol_path_nodepath = patrol_path.get_path()
+		
+	saved_enemy_state = npc_state_machine.current
+	
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
-		#"slot_data" : slot_data,
-		#"item_charge" : slot_data.inventory_item.charge_current,
-		"interaction_nodes" : interaction_nodes,
 		"pos_x" : position.x,
 		"pos_y" : position.y,
 		"pos_z" : position.z,
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
-		
+		"patrol_path_nodepath" : patrol_path_nodepath,
+		"saved_enemy_state" : saved_enemy_state,
+  		
 	}
+	return node_data
+
+
+func load_patrol_points():
+	if patrol_path_nodepath:
+		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Loading patrol path: " + str(patrol_path_nodepath))
+		patrol_path = get_node(patrol_path_nodepath)
+
 
 
 func _on_hitbox_component_got_hit() -> void:
@@ -212,4 +228,3 @@ func _on_hitbox_component_got_hit() -> void:
 
 func _on_security_camera_object_detected(object: Node3D) -> void:
 	attention_target = object
-	pass # Replace with function body.

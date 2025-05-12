@@ -30,7 +30,7 @@ func _process(delta):
 		add(recovery_rate * delta)
 		
 	if value_current <= 0:
-		print("Taking damage due to 0 sanity.")
+		CogitoGlobals.debug_log(true, "CogitoSanityAttribute", "Taking damage due to 0 sanity.")
 		player.decrease_attribute("health",damage_when_zero * delta)
 
 

@@ -9,6 +9,10 @@ class_name CogitoQuickslots
 	set(passed_inventory):
 		inventory_reference = passed_inventory
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Inventory reference (re)set!")
+		
+		# Connecting unbind signal from inventory
+		inventory_reference.unbind_quickslot_by_index.connect(on_unbind_quickslot_by_index)
+		
 		set_inventory_quickslots(inventory_reference)
 		
 var inventory_is_open : bool
@@ -31,9 +35,11 @@ func set_inventory_quickslots(passed_inventory: CogitoInventory) -> void:
 
 
 func on_inventory_updated(passed_inv: CogitoInventory) -> void:
+	CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "on_inventory_updated called.")
 	# Updating all quickslot containers using their assigned inventory slots.
 	for i in quickslot_containers.size():
 		quickslot_containers[i].update_quickslot_data(inventory_reference.assigned_quickslots[i])
+
 
 
 func unbind_quickslot(quickslot_to_unbind: CogitoQuickslotContainer) -> void:
@@ -47,10 +53,16 @@ func unbind_quickslot(quickslot_to_unbind: CogitoQuickslotContainer) -> void:
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "quickslot wasn't found in the quickslot_container array.")
 
 
+func on_unbind_quickslot_by_index(passed_index: int) -> void:
+	if passed_index != -1:
+		quickslot_containers[passed_index].clear_this_quickslot()
+		unbind_quickslot(quickslot_containers[passed_index])
+
+
 func bind_to_quickslot(itemslot_to_bind: InventorySlotPD, quickslot_to_bind: CogitoQuickslotContainer):
 	var slot_index : int = quickslot_containers.find(quickslot_to_bind, 0)
 	
-	if slot_index != -1:
+	if slot_index > -1:
 		inventory_reference.assigned_quickslots[slot_index] = itemslot_to_bind
 		quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Assigned quickslot " + str(slot_index) + " to " + itemslot_to_bind.inventory_item.name )

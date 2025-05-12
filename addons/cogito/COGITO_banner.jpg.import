@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnao7s0oojbxy"
-path="res://.godot/imported/COGITO_banner.png-85832620b57634701f397373ec72d13b.ctex"
+uid="uid://bkd6dxhrldu8b"
+path="res://.godot/imported/COGITO_banner.jpg-b1176992aa05eddc6ea6f2fb10ca708a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/cogito/COGITO_banner.png"
-dest_files=["res://.godot/imported/COGITO_banner.png-85832620b57634701f397373ec72d13b.ctex"]
+source_file="res://addons/cogito/COGITO_banner.jpg"
+dest_files=["res://.godot/imported/COGITO_banner.jpg-b1176992aa05eddc6ea6f2fb10ca708a.ctex"]
 
 [params]
 

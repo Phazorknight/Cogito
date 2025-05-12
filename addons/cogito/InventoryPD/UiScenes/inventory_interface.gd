@@ -163,6 +163,7 @@ func set_external_inventory(_external_inventory_owner):
 	external_inventory_owner = _external_inventory_owner
 	var inventory_data = external_inventory_owner.inventory_data
 	
+	inventory_data.owner = external_inventory_owner # Setting reference to external inventory owner node
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	inventory_data.inventory_button_press.connect(on_inventory_button_press)
 	external_inventory_ui.inventory_name = external_inventory_owner.display_name
@@ -195,6 +196,9 @@ func clear_external_inventory():
 
 
 func set_player_inventory_data(inventory_data : CogitoInventory):
+	
+	inventory_data.owner = CogitoSceneManager._current_player_node  # Setting player inventory owner reference to player node
+	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
 		inventory_data.inventory_button_press.connect(on_inventory_button_press)
@@ -204,10 +208,11 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 		# Quickslots need reference to inventory when quickslot buttons are pressed
 		quick_slots.inventory_reference = inventory_data
 		# Connecting the inventory_updated signal (this is so quickslots update on item drop etc.)
-		inventory_data.inventory_updated.connect(quick_slots.on_inventory_updated)
+		# inventory_data.inventory_updated.connect(quick_slots.on_inventory_updated)
 	else:
 		quick_slots.hide()
-	inventory_open.connect(quick_slots.update_inventory_status)
+	if !inventory_open.is_connected(quick_slots.update_inventory_status):
+		inventory_open.connect(quick_slots.update_inventory_status)
 	grabbed_slot_node.using_grid(inventory_data.grid)
 
 
@@ -215,7 +220,13 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 func on_inventory_button_press(inventory_data: CogitoInventory, index: int, action: String):
 	match [grabbed_slot_data, action]:
 		[null, "inventory_move_item"]:
-			grabbed_slot_data = inventory_data.grab_slot_data(index)
+			# Check if item is being wielded before grabbing it.
+			var temp_slot_data = inventory_data.get_slot_data(index)
+			if temp_slot_data and temp_slot_data.inventory_item and temp_slot_data.inventory_item.is_being_wielded:
+					Audio.play_sound(sound_error)
+					CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't move item while its being wielded.")
+			else:
+				grabbed_slot_data = inventory_data.grab_slot_data(index)
 		[_, "inventory_move_item"]:
 			grabbed_slot_data = inventory_data.drop_slot_data(grabbed_slot_data, index)
 		[null, "inventory_use_item"]:
@@ -264,7 +275,6 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 	else:
 		element = amount_of_inventory_slots-1
 	# Should fix issues where an external inventory is bigger than the players
-	#print("Inventory_interface: grabbing focus for slot_array index = ", element)
 	inventory_ui.slot_array[element].grab_focus()
 	update_grabbed_slot()
 
@@ -285,11 +295,11 @@ func update_grabbed_slot():
 
 func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotContainer):
 	if grabbed_slot_data:
-		print("inventory_interface.gd: Binding to quickslot container: ", grabbed_slot_data, " -> ", quickslotcontainer)
+		CogitoGlobals.debug_log(true, "inventory_interface.gd", "Binding to quickslot container: " + str(grabbed_slot_data) + " -> " + str(quickslotcontainer) )
+		#get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data) #Swapped with line below
 		quick_slots.bind_to_quickslot(grabbed_slot_data, quickslotcontainer)
-		get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data)
-		grabbed_slot_data = null
-		update_grabbed_slot()
+		#grabbed_slot_data = null
+		#update_grabbed_slot()
 	else:
 		CogitoGlobals.debug_log(true, "inventory_interface.gd", "No grabbed slot data.")
 

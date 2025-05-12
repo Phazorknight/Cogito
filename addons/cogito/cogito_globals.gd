@@ -48,15 +48,3 @@ func _on_lineedit_fade_duration_text_changed(new_text: String) -> void:
 	else:
 		push_error("Must enter valid float value.")
 		default_transition_duration = .5
-
-
-func _on_btn_git_hub_pressed() -> void:
-	OS.shell_open("https://github.com/Phazorknight/Cogito")
-
-
-func _on_btn_documentation_pressed() -> void:
-	OS.shell_open("https://cogito.readthedocs.io/en/latest/index.html")
-
-
-func _on_btn_video_tutorials_pressed() -> void:
-	OS.shell_open("https://cogito.readthedocs.io/en/latest/tutorials.html")

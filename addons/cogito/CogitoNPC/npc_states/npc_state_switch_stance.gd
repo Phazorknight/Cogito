@@ -12,11 +12,11 @@ var stance_active : bool = false
 func _state_enter():
 	var upper_body_state = Host.animation_tree.get("parameters/UpperBodyState/playback")
 	if !stance_active:
-		print("Switching stance to ", stance_raised_fists)
+		CogitoGlobals.debug_log(true, "NPC State Switch Stance", "Switching stance to " + stance_raised_fists)
 		upper_body_state.travel(stance_raised_fists)
 		stance_active = true
 	else:
-		print("Switching stance to ", stance_raised_fists)
+		CogitoGlobals.debug_log(true, "NPC State Switch Stance", "Switching stance to " + stance_neutral)
 		upper_body_state.travel(stance_neutral)
 		stance_active = false
 	
