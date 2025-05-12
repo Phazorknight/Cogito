@@ -160,7 +160,7 @@ func check_for_systemic_reactions():
 				print(get_parent().name, ": Touched by electrified collider ", reaction_collider.name, ". Getting electric.")
 				make_electric()
 
-		print("Collider ", reaction_collider.name, " elemental properties: ", reaction_collider.cogito_properties.elemental_properties)
+		#print("Collider ", reaction_collider.name, " elemental properties: ", reaction_collider.cogito_properties.elemental_properties)
 		match reaction_collider.cogito_properties.elemental_properties:
 			ElementalProperties.WET: ### WATER REACTIONS
 				if is_on_fire:
