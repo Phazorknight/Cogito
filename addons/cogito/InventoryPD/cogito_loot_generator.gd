@@ -3,7 +3,7 @@ class_name LootGenerator extends Node
 
 
 ## Enables the debug prints. There are quite a few so output may be crowded.
-var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
+@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
 
 # Internal variables to player
 var _player: CogitoPlayer

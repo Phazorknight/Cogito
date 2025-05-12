@@ -1,7 +1,9 @@
 class_name LootDropContainer extends CogitoContainer
 
-## Enable debug information being dumped straight into the output window.
-@export var debug_prints: bool = CogitoGlobals.cogito_settings.loot_drop_container_debug
+
+## Enables the debug prints. There are quite a few so output may be crowded.
+@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
+
 ## Determine the despawning logic for this container.
 @export var despawning_logic := DespawningLogic.NONE:
 	set(value):
@@ -48,6 +50,7 @@ const DESPAWNINGLOGICTYPES: Array = [DespawningLogic.NONE, DespawningLogic.ONLY_
 
 
 func _ready() -> void:
+	
 	if debug_prints:
 		despawning_logic = DESPAWNINGLOGICTYPES[randi() % DESPAWNINGLOGICTYPES.size()]
 		CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Drop Container", "Debug prints bool is true. Randomizing container despawn types. Despawning Logic is set to: " + str(despawning_logic))

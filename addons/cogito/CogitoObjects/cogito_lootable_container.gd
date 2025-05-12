@@ -1,7 +1,8 @@
 class_name LootableContainer extends CogitoContainer
 
-## Enable debug information being dumped straight into the output window.
-@export var debug_prints: bool = CogitoGlobals.cogito_settings.lootable_container_debug
+## Enables the debug prints. There are quite a few so output may be crowded.
+@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
+
 ## Determine the despawning logic for this container.
 @export_category("Execution Configuration")
 
@@ -28,7 +29,6 @@ class_name LootableContainer extends CogitoContainer
 @export_range(0, 60, 1, "suffix:minutes") var respawn_timer_minutes :float = 1.0
 ## Respawn timer used by the timed respawning function.
 @export_range(0, 60, 1, "suffix:seconds") var respawn_timer_seconds :float = 0.0
-
 
 ## Boolean to improve the container refresh logic.
 var viewing_this_container: bool = false
@@ -65,7 +65,7 @@ TIMED_RESPAWN, ## Contents of the container will respawn upon the expiration of 
 }
 
 func _ready() -> void:
-
+	
 	add_to_group("save_object_state")
 	add_to_group("lootable_container")
 	add_to_group("external_inventory")

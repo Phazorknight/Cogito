@@ -1,11 +1,13 @@
 ## Generates a bag of loot after death. This inventory is not a grid inventory, each dropped item will have its own slot.
 class_name LootComponent extends Node3D 
 
+
+## Enables the debug prints. There are quite a few so output may be crowded.
+@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
+
 @export_category("Master Control")
 ## Enables or disables the loot components functionality.
 @export var enabled = true
-## Enables the debug prints. There are quite a few so output may be crowded.
-@export var debug_prints: bool = CogitoGlobals.cogito_settings.loot_component_debug
 
 @export_category("Loot Table Configuration")
 ## Specifies which loot table should be used to spawn items from.
