@@ -1,48 +1,34 @@
-[gd_resource type="Resource" script_class="LootTable" load_steps=6 format=3 uid="uid://h6ystnqxae1m"]
+[gd_resource type="Resource" script_class="LootTable" load_steps=7 format=3 uid="uid://h6ystnqxae1m"]
 
 [ext_resource type="Resource" uid="uid://58pyqr1djkcy" path="res://addons/cogito/InventoryPD/Items/Cogito_StrengthPotion.tres" id="2_gt25c"]
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="3_lbovo"]
-[ext_resource type="Resource" uid="uid://c6rpnmo1y1cw5" path="res://addons/cogito/InventoryPD/Items/Cogito_Dart.tres" id="4_av2kb"]
-[ext_resource type="Resource" uid="uid://geac0jkegsqu" path="res://addons/cogito/InventoryPD/Items/Cogito_StaminaExtPotion.tres" id="5_ri6t2"]
+[ext_resource type="Script" uid="uid://bw38ep6ean3wy" path="res://addons/cogito/Components/LootTables/LootDropEntry.gd" id="5_rapha"]
 [ext_resource type="Script" uid="uid://dj1uuvia16dhm" path="res://addons/cogito/Components/LootTables/BaseLootTable.gd" id="6_r4vfx"]
+
+[sub_resource type="Resource" id="Resource_gt25c"]
+script = ExtResource("5_rapha")
+name = "Health Potion"
+droptype = 2
+weight = 100.0
+inventory_item = ExtResource("3_lbovo")
+quantity_min = 1
+quantity_max = 15
+quest_id = -1
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"
+
+[sub_resource type="Resource" id="Resource_av2kb"]
+script = ExtResource("5_rapha")
+name = "Strength Potion"
+droptype = 2
+weight = 10.0
+inventory_item = ExtResource("2_gt25c")
+quantity_min = 1
+quantity_max = 2
+quest_id = -1
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"
 
 [resource]
 script = ExtResource("6_r4vfx")
-contents = Array[Dictionary]([{
-"DropType": 2,
-"inventory_item": ExtResource("3_lbovo"),
-"name": "Health Potion",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 50.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("2_gt25c"),
-"name": "Strength Potion",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 50.0
-}, {
-"DropType": 4,
-"inventory_item": ExtResource("5_ri6t2"),
-"name": "Stamina Extension",
-"quantity_max": 1,
-"quantity_min": 1,
-"quest_id": 771,
-"quest_item_total_count": 2,
-"weight": 25.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("3_lbovo"),
-"name": "Health Extender Potion",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 25.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("4_av2kb"),
-"name": "Watery Dart",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 25.0
-}])
+drops = Array[ExtResource("5_rapha")]([SubResource("Resource_gt25c"), SubResource("Resource_av2kb")])

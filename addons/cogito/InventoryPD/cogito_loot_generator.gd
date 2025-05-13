@@ -12,21 +12,21 @@ var _player_inventory: CogitoInventory
 
 # Arrays to sort items into
 ## Array for loot table items that do not have any drop type selected. These items are not to be dropped.
-var none: Array[LootDrop] = []
+var none: Array[LootDropEntry] = []
 ## Array for loot table items that are always guaranteed to be dropped and do not count towards maximum item drops.
-var guaranteed_drops_table: Array[LootDrop] = []
+var guaranteed_drops_table: Array[LootDropEntry] = []
 ## Array for loot table items that are chance based drops. These are limited by the amount_of_items_to_drop_variable.
-var chance_drops_table: Array[LootDrop] = []
+var chance_drops_table: Array[LootDropEntry] = []
 ## Array for loot table items that are dropped only when the player is on the specific quest these items belong.
-var quest_drops_table: Array[LootDrop] = []
+var quest_drops_table: Array[LootDropEntry] = []
 
 
 ## Generate loot by passing a loot table and amount of items to generate.
-func generate(loot_table: LootTable, amount: int, debug: bool = false) -> Array[LootDrop]:
+func generate(loot_table: LootTable, amount: int, debug: bool = false) -> Array[LootDropEntry]:
 	debug_prints = debug
 	
-	var input_array: Array[LootDrop] = []
-	var output_array: Array[LootDrop] = []
+	var input_array: Array[LootDropEntry] = []
+	var output_array: Array[LootDropEntry] = []
 	
 	if loot_table != null and amount > 0:
 		_set_up_references()
@@ -44,7 +44,6 @@ func generate(loot_table: LootTable, amount: int, debug: bool = false) -> Array[
 			output_array.append_array(guaranteed_drops_table)
 			
 	return output_array
-		
 
 
 ## Set up references to player in order to query loot bags and player inventory so we can check for unique and quest drops.
@@ -65,10 +64,8 @@ func _sort_loot_table(loot_table: LootTable):
 					none.append(index)
 					push_warning("Loot table contains items with drop type set to none, these items will not be dropped.")
 				1:
-					print("Lootable Container: Appending ", index.name, "to guaranteed_drops_table.")
 					guaranteed_drops_table.append(index)
 				2:
-					print("Lootable Container: Appending ", index.name, "to chance_drops_table.")
 					chance_drops_table.append(index)
 				4:
 					quest_drops_table.append(index)
@@ -130,11 +127,11 @@ func _count_quest_items(item: InventoryItemPD) -> int:
 
 
 ## Rolls for a dictionary entry from loot table entry. Returns an array of dictionary.
-func _roll_for_randomized_items(_items: Array[LootDrop], _amount: int) -> Array[LootDrop]:
+func _roll_for_randomized_items(_items: Array[LootDropEntry], _amount: int) -> Array[LootDropEntry]:
 	## Using engine's own rng component which is requires 4.3+.
 	var _rng = RandomNumberGenerator.new()
 	## Array of dictionary that stores the results.
-	var _result: Array[LootDrop] = []
+	var _result: Array[LootDropEntry] = []
 	## InventoryItemPD's of the passed loot table.
 	var _inventory_items = []
 	## Mapped float array for the weights of the loot table.
@@ -143,8 +140,8 @@ func _roll_for_randomized_items(_items: Array[LootDrop], _amount: int) -> Array[
 	var _failsafe: int = 0
 	
 	if _items.is_empty():
-		print("cogito_lootable_container.gd: ", self, " : _roll_for_randomized_items(): Passed item array was empty!")
-		var empty_lootdrop_array : Array[LootDrop] = []
+		CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "_roll_for_randomized_items(): Passed item array was empty! Returning empty lootdrop array...")
+		var empty_lootdrop_array : Array[LootDropEntry] = []
 		return empty_lootdrop_array
 	
 	_inventory_items = _items.map(func (k): return k)

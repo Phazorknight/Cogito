@@ -54,7 +54,7 @@ func _spawn_loot_container():
 	## Spawned loot bag's inventory component.
 	var inventory_to_populate:CogitoInventory
 	## Contains the finalized array which will be sent to roll items.
-	var finalized_items: Array[LootDrop]
+	var finalized_items: Array[LootDropEntry]
 	## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
 	var merged_array: Array[Dictionary]
 	
@@ -82,7 +82,7 @@ func _spawn_loot_container():
 
 
 ## Populates the spawned container with the rolled items.
-func _populate_the_container(_inventory: CogitoInventory, _items: Array[LootDrop]):
+func _populate_the_container(_inventory: CogitoInventory, _items: Array[LootDropEntry]):
 	## Index value that is iterated independently of the for loops it is used inside.
 	var _index :int =  0
 	## Dictionary array's size which is passed to the function during call.

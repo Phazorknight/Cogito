@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="LootTable" load_steps=6 format=3 uid="uid://cng2vry7x3qg4"]
 
+[ext_resource type="Script" uid="uid://bw38ep6ean3wy" path="res://addons/cogito/Components/LootTables/LootDropEntry.gd" id="1_1jvdx"]
 [ext_resource type="Script" uid="uid://dj1uuvia16dhm" path="res://addons/cogito/Components/LootTables/BaseLootTable.gd" id="1_m6nwo"]
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="3_5ef8b"]
-[ext_resource type="Script" uid="uid://bw38ep6ean3wy" path="res://addons/cogito/Components/LootTables/LootDrop.gd" id="6_5edbb"]
 [ext_resource type="Resource" uid="uid://dbyaddb6mpg2l" path="res://addons/cogito/Components/LootTables/LootDrop_Coins.tres" id="7_hpdqb"]
 
 [sub_resource type="Resource" id="Resource_1jvdx"]
-script = ExtResource("6_5edbb")
+script = ExtResource("1_1jvdx")
 name = "Potion"
 droptype = 1
 weight = 100.0
@@ -20,4 +20,4 @@ metadata/_custom_type_script = "uid://bw38ep6ean3wy"
 [resource]
 script = ExtResource("1_m6nwo")
 contents = Array[Dictionary]([])
-drops = Array[ExtResource("6_5edbb")]([ExtResource("7_hpdqb"), SubResource("Resource_1jvdx")])
+drops = Array[ExtResource("1_1jvdx")]([ExtResource("7_hpdqb"), SubResource("Resource_1jvdx")])
