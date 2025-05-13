@@ -33,7 +33,7 @@ class_name LootableContainer extends CogitoContainer
 ## Boolean to improve the container refresh logic.
 var viewing_this_container: bool = false
 ## Contains the finalized array which will be sent to roll items.
-var finalized_items: Array[Dictionary]
+var finalized_items: Array[LootDrop]
 ## CogitoContainer's inventory component.
 var inventory_to_populate:CogitoInventory
 ## Respawn timer calculated value.
@@ -142,7 +142,7 @@ func _handle_respawning():
 
 
 ## Populates the spawned container with the rolled items.
-func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictionary]):
+func _populate_the_container(_inventory: CogitoInventory, _items: Array[LootDrop]):
 	## Index value that is iterated independently of the for loops it is used inside.
 	var _index :int =  0
 	## Dictionary array's size which is passed to the function during call.
@@ -175,8 +175,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[Dictiona
 		slots[i] = InventorySlotPD.new()
 		
 	for item in _items:
-		slots[_index].inventory_item = item.get("inventory_item")
-		slots[_index].set_quantity(randi_range(item.get("quantity_min", 1), item.get("quantity_max", 1)))
+		slots[_index].inventory_item = item.inventory_item
+		slots[_index].set_quantity(randi_range(item.quantity_min, item.quantity_max) )
 		slots[_index].origin_index = _index
 		slots[_index].resource_local_to_scene = true
 		slots[_index].inventory_item.resource_local_to_scene = true

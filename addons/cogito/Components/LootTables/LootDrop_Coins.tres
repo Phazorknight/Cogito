@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LootDrop" load_steps=3 format=3 uid="uid://dbyaddb6mpg2l"]
+
+[ext_resource type="Script" uid="uid://bw38ep6ean3wy" path="res://addons/cogito/Components/LootTables/LootDrop.gd" id="1_mdvlw"]
+[ext_resource type="Resource" uid="uid://d7r4y7pbhify" path="res://addons/cogito/InventoryPD/Items/Cogito_Coins.tres" id="1_woh64"]
+
+[resource]
+script = ExtResource("1_mdvlw")
+name = "Currency"
+droptype = 2
+weight = 100.0
+inventory_item = ExtResource("1_woh64")
+quantity_min = 1
+quantity_max = 15
+quest_id = 0
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"

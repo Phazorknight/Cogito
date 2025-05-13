@@ -12,21 +12,21 @@ var _player_inventory: CogitoInventory
 
 # Arrays to sort items into
 ## Array for loot table items that do not have any drop type selected. These items are not to be dropped.
-var none: Array[Dictionary] = []
+var none: Array[LootDrop] = []
 ## Array for loot table items that are always guaranteed to be dropped and do not count towards maximum item drops.
-var guaranteed_drops_table: Array[Dictionary] = []
+var guaranteed_drops_table: Array[LootDrop] = []
 ## Array for loot table items that are chance based drops. These are limited by the amount_of_items_to_drop_variable.
-var chance_drops_table: Array[Dictionary] = []
+var chance_drops_table: Array[LootDrop] = []
 ## Array for loot table items that are dropped only when the player is on the specific quest these items belong.
-var quest_drops_table: Array[Dictionary] = []
+var quest_drops_table: Array[LootDrop] = []
 
 
 ## Generate loot by passing a loot table and amount of items to generate.
-func generate(loot_table: LootTable, amount: int, debug: bool = false) -> Array[Dictionary]:
+func generate(loot_table: LootTable, amount: int, debug: bool = false) -> Array[LootDrop]:
 	debug_prints = debug
 	
-	var input_array: Array[Dictionary] = []
-	var output_array: Array[Dictionary] = []
+	var input_array: Array[LootDrop] = []
+	var output_array: Array[LootDrop] = []
 	
 	if loot_table != null and amount > 0:
 		_set_up_references()
@@ -57,16 +57,18 @@ func _set_up_references():
 ## Sort the loot table into neat little arrays.
 func _sort_loot_table(loot_table: LootTable):
 	## Array that stores the actual contents of the whole loot table resource.
-	var loot_to_generate = loot_table.contents
+	var loot_to_generate = loot_table.drops
 	if loot_to_generate:
 		for index in loot_to_generate:
-			match index.DropType:
+			match index.droptype:
 				0:
 					none.append(index)
 					push_warning("Loot table contains items with drop type set to none, these items will not be dropped.")
 				1:
+					print("Lootable Container: Appending ", index.name, "to guaranteed_drops_table.")
 					guaranteed_drops_table.append(index)
 				2:
+					print("Lootable Container: Appending ", index.name, "to chance_drops_table.")
 					chance_drops_table.append(index)
 				4:
 					quest_drops_table.append(index)
@@ -128,20 +130,25 @@ func _count_quest_items(item: InventoryItemPD) -> int:
 
 
 ## Rolls for a dictionary entry from loot table entry. Returns an array of dictionary.
-func _roll_for_randomized_items(_items: Array[Dictionary], _amount: int) -> Array[Dictionary]:
+func _roll_for_randomized_items(_items: Array[LootDrop], _amount: int) -> Array[LootDrop]:
 	## Using engine's own rng component which is requires 4.3+.
 	var _rng = RandomNumberGenerator.new()
 	## Array of dictionary that stores the results.
-	var _result: Array[Dictionary] = []
+	var _result: Array[LootDrop] = []
 	## InventoryItemPD's of the passed loot table.
 	var _inventory_items = []
 	## Mapped float array for the weights of the loot table.
 	var _item_weights: PackedFloat32Array = []
 	## Failsafe counter, will break the while loop when it hits 1000 iterations.
 	var _failsafe: int = 0
-		
+	
+	if _items.is_empty():
+		print("cogito_lootable_container.gd: ", self, " : _roll_for_randomized_items(): Passed item array was empty!")
+		var empty_lootdrop_array : Array[LootDrop] = []
+		return empty_lootdrop_array
+	
 	_inventory_items = _items.map(func (k): return k)
-	_item_weights = _items.map(func (k): return k.get("weight", 0.0))
+	_item_weights = _items.map(func (k): return k.weight)
 	
 	while _result.size() < _amount:
 		
@@ -149,27 +156,27 @@ func _roll_for_randomized_items(_items: Array[Dictionary], _amount: int) -> Arra
 		var _winner = _inventory_items[_rng.rand_weighted(_item_weights)]
 		
 		# Handle Unique Items
-		if _winner["inventory_item"].is_unique: # A unique item means there can be only one, highlander style. So it will not drop as long as player holds it in his inventory. We could scour all inventories to find a copy but I think that falls beyond the intended scope of the property.
-			if not _is_unique_found(_winner["inventory_item"]): # Check player's inventory and other loot bags for a copy.
+		if _winner.inventory_item.is_unique: # A unique item means there can be only one, highlander style. So it will not drop as long as player holds it in his inventory. We could scour all inventories to find a copy but I think that falls beyond the intended scope of the property.
+			if not _is_unique_found(_winner.inventory_item): # Check player's inventory and other loot bags for a copy.
 				if not _result.has(_winner): # Check if we've already have a copy of this unique item waiting to be dropped.
 					_result.append(_winner) 
 		
 		# Handle Quest Items			
-		elif _winner.has("quest_id"): # If winner is a quest item
-			CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Quest ID: " + str(_winner.get("quest_id")) + " Quest Item Total Count: " + str(_winner.get("quest_item_total_count")))
-			if _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Check inventory and already spawned loot bags for a count and compare to maximum allowed count
+		elif _winner.quest_id > -1: # If winner is a quest item
+			CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Quest ID: " + str(_winner.quest_id) + " Quest Item Total Count: " + str(_winner.quest_item_total_count) )
+			if _count_quest_items(_winner.inventory_item) >= _winner.quest_item_total_count: # Check inventory and already spawned loot bags for a count and compare to maximum allowed count
 				CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Maximum amount of quest items reached. Moving on.")
 				continue
 			else: # If quest item count did not reach the maximum amount
-				if CogitoQuestManager.active.get_ids_from_quests().has(_winner["quest_id"]):
+				if CogitoQuestManager.active.get_ids_from_quests().has(_winner.quest_id):
 					if _result.has(_winner): # Check if the final array has already this quest item waiting for drop
-						if _result.count(_winner) + _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Check if new copy would go over the maximum limit
+						if _result.count(_winner) + _count_quest_items(_winner.inventory_item) >= _winner.quest_item_total_count: # Check if new copy would go over the maximum limit
 							continue
 						else: # If it wouldn't go over the limit, create a new copy
 							_result.append(_winner)
 						CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "You've got a quest item in loot generator.")
 					else: # Final array does not have a copy of this quest item awating drop
-						if not _count_quest_items(_winner["inventory_item"]) >= _winner.get("quest_item_total_count", 1): # Final check for the maximum limit
+						if not _count_quest_items(_winner.inventory_item) >= _winner.quest_item_total_count: # Final check for the maximum limit
 							_result.append(_winner)
 		
 		# Handle everything else				

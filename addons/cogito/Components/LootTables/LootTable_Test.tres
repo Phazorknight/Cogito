@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=2 format=3 uid="uid://dfhnxn4e87003"]
+
+[ext_resource type="Script" uid="uid://dj1uuvia16dhm" path="res://addons/cogito/Components/LootTables/BaseLootTable.gd" id="1_mbp3h"]
+
+[resource]
+script = ExtResource("1_mbp3h")
+contents = Array[Dictionary]([])
+metadata/_custom_type_script = "uid://dj1uuvia16dhm"
