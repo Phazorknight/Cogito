@@ -18,6 +18,7 @@ description = "Tastes better than it looks."
 icon = ExtResource("2_cliso")
 is_stackable = true
 is_droppable = true
+is_unique = false
 stack_size = 5
 drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_stamina_extension.tscn"
 hint_icon_on_use = ExtResource("2_nd8qm")

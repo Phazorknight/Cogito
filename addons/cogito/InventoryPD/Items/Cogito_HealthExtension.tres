@@ -19,6 +19,7 @@ description = "Better than red bull."
 icon = ExtResource("1_gd43g")
 is_stackable = true
 is_droppable = true
+is_unique = false
 stack_size = 10
 drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_health_extension.tscn"
 hint_text_on_use = ""
