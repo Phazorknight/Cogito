@@ -13,6 +13,7 @@ class_name LootComponent extends Node3D
 	set(value):
 		spawning_logic = value
 		notify_property_list_changed()
+@export var percentage_of_chance_to_spawn: float = 100.0
 
 @export_category("Loot Table Configuration")
 ## Specifies which loot table should be used to spawn items from.
@@ -67,7 +68,9 @@ func _spawn_loot():
 	## Parent node's global position
 	var parent_position = get_parent().global_position
 	## The array of rolled items from which we will get the drop_scene variables from.
-	var items_to_spawn: Array[Dictionary]
+	var items_to_spawn: Array[Dictionary] = []
+	## CogitoObject references of spawned items to rename the display name.
+	var spawned_items: Array[CogitoObject] = []
 	
 	if enabled and amount_of_items_to_drop > 0:
 		var lootgen = LootGenerator.new()
@@ -78,12 +81,37 @@ func _spawn_loot():
 		for item in items_to_spawn:
 			if item.inventory_item.drop_scene != null:
 				var item_to_spawn = load(item.inventory_item.drop_scene)
-				var spawned_item = item_to_spawn.instantiate()
+				var spawned_item = item_to_spawn.instantiate() as CogitoObject
 				spawned_item.position = parent_position
-				get_tree().current_scene.call_deferred("add_child", spawned_item)
+				get_tree().current_scene.add_child(spawned_item)
+				
+				var children: Array = []
+				children = spawned_item.get_children()
+				
+				# Sort through children to find the pickup components.
+				if children.size() > 0:
+					for child in children:
+						if child is PickupComponent:
+							child.slot_data.quantity = randi_range(item.get("quantity_min", 1), item.get("quantity_max", 1)) # adjust quantity based on the loot table data.
+				
 				var impulse = Vector3(randf_range(0,3),5,randf_range(0,3))
 				spawned_item.call_deferred("apply_central_impulse", impulse)
+				spawned_items.append(spawned_item)
+				spawned_item.add_to_group("spawned_loot_items")
+		
+		for item in spawned_items:
+			var children: Array = []
+			children = item.get_children()
 			
+			if children.size() > 0:
+				for child in children:
+					# adjust name to reflect quantity in the dropped item.
+					if child is PickupComponent:
+						if child.slot_data.inventory_item.name != null and child.slot_data.quantity > 1:
+							item.display_name = str(child.slot_data.inventory_item.name + " x" + str(child.slot_data.quantity))
+						elif child.slot_data.quantity == 1:
+							item.display_name = str(child.slot_data.inventory_item.name) # This really should be set in the resource itself but for testing purposes this is fine.
+
 
 ## Spawns the loot container defined in the loot_bag_scene variable.
 func _spawn_loot_container():
@@ -95,7 +123,7 @@ func _spawn_loot_container():
 	var inventory_to_populate:CogitoInventory
 	## Contains the finalized array which will be sent to roll items.
 	var finalized_items: Array[Dictionary]
-	## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
+	## Array to merge chance and quest drops in.
 	var merged_array: Array[Dictionary]
 	
 	if enabled and amount_of_items_to_drop > 0:
