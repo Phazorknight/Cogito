@@ -120,7 +120,7 @@ func _count_quest_items(item: InventoryItemPD) -> int:
 	var _loot_bags: Array[Node] = get_tree().get_nodes_in_group("loot_bag")
 	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
 	var _spawned_items: Array[Node] = get_tree().get_nodes_in_group("spawned_loot_items")
-	print(_spawned_items)
+
 	var _loot_bags_slots: Array[InventoryItemPD]
 	var _spawned_items_in_scene: Array[InventoryItemPD] = []
 	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
