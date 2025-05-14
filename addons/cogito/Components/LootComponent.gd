@@ -93,7 +93,8 @@ func _populate_the_container(_inventory: CogitoInventory, _items: Array[LootDrop
 	slots.resize(_item_count)
 	_inventory.inventory_size.x = 8
 	_inventory.inventory_size.y = _item_count / 8 + 1
-	_inventory.first_slot = slots[0]
+	if _item_count:
+		_inventory.first_slot = slots[0]
 	CogitoGlobals.debug_log(debug_prints, "Loot Component", "Inventory size set to: " + str(slots.size()))
 	
 	for i in _item_count:

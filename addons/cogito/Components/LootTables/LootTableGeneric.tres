@@ -19,5 +19,4 @@ metadata/_custom_type_script = "uid://bw38ep6ean3wy"
 
 [resource]
 script = ExtResource("1_m6nwo")
-contents = Array[Dictionary]([])
 drops = Array[ExtResource("1_1jvdx")]([ExtResource("7_hpdqb"), SubResource("Resource_1jvdx")])
