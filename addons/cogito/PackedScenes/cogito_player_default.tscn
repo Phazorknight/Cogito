@@ -1,8 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=37 format=3 uid="uid://kicjwmh02uwf"]
 
-[ext_resource type="Script" uid="uid://dyitnpyhwiqx7" path="res://addons/cogito/CogitoObjects/cogito_player.gd" id="1_87we8"]
-[ext_resource type="Resource" uid="uid://ll11y3yjbqt" path="res://addons/cogito/InventoryPD/Inventories/PlayerInventory_FIXED.tres" id="2_iyhv4"]
+[ext_resource type="Script" uid="uid://dyitnpyhwiqx7" path="res://addons/cogito/CogitoObjects/cogito_player_default.gd" id="1_87we8"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_uumuu"]
 [ext_resource type="AudioStream" uid="uid://ba8gpptnnapyh" path="res://addons/cogito/Assets/Audio/Kenney/cloth2.ogg" id="3_7ds3n"]
+[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="3_hctrk"]
 [ext_resource type="AudioStream" uid="uid://b7wmxwvtbpfu1" path="res://addons/cogito/Assets/Audio/537275__laughingfish78__dirt-sliding.ogg" id="4_1i2kv"]
 [ext_resource type="PackedScene" uid="uid://n1doui0jpn1v" path="res://addons/cogito/InventoryPD/CustomResources/CogtoTestCurrency.tscn" id="5_opu5d"]
 [ext_resource type="PackedScene" uid="uid://dorp3auw3s65q" path="res://addons/cogito/Components/Attributes/LightMeterAttribute.tscn" id="5_v3qv3"]
@@ -31,6 +32,14 @@
 [ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres" id="26_tndpm"]
 [ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres" id="27_8coi0"]
 
+[sub_resource type="Resource" id="Resource_6vbmj"]
+resource_local_to_scene = true
+script = ExtResource("3_hctrk")
+grid = true
+starter_inventory = Array[ExtResource("2_uumuu")]([])
+inventory_size = Vector2i(5, 3)
+inventory_slots = Array[ExtResource("2_uumuu")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
 size = Vector3(0.6, 1.7, 0.6)
 
@@ -53,7 +62,7 @@ script = ExtResource("1_87we8")
 pause_menu = NodePath("GUI/Panel/AspectRatioContainer/PauseMenu")
 player_hud = NodePath("GUI/Panel/AspectRatioContainer/Player_HUD")
 fall_damage = 10
-inventory_data = ExtResource("2_iyhv4")
+inventory_data = SubResource("Resource_6vbmj")
 jump_sound = ExtResource("3_7ds3n")
 slide_sound = ExtResource("4_1i2kv")
 JUMP_VELOCITY = 4.0
