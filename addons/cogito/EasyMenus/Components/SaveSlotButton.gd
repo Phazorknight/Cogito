@@ -75,6 +75,7 @@ func _on_save_slot_button_pressed() -> void:
 		CogitoGlobals.debug_log(true,"SaveSlotButton.gd","No player state. Should start a new game.")
 		if save_slot_manager_node:
 			CogitoSceneManager.switch_active_slot_to(manual_save_slot_name)
+			CogitoSceneManager.delete_temp_saves()
 			save_slot_manager_node.start_new_game()
 	else:
 		CogitoGlobals.debug_log(true,"SaveSlotButton.gd","Attempting to load player_state " + player_state.player_state_slot_name)
