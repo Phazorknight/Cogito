@@ -3,11 +3,17 @@ class_name LootComponent extends Node3D
 
 
 ## Enables the debug prints. There are quite a few so output may be crowded.
-@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
+@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_component_debug
 
 @export_category("Master Control")
 ## Enables or disables the loot components functionality.
 @export var enabled = true
+## Determine the spawning logic for this container.
+@export var spawning_logic := SpawningLogic.NONE:
+	set(value):
+		spawning_logic = value
+		notify_property_list_changed()
+@export var percentage_of_chance_to_spawn: float = 100.0
 
 @export_category("Loot Table Configuration")
 ## Specifies which loot table should be used to spawn items from.
@@ -28,6 +34,12 @@ var _player: CogitoPlayer
 var _player_hud: CogitoPlayerHudManager
 var _player_inventory: CogitoInventory
 
+enum SpawningLogic {
+NONE = 0, ## Default spawning logic, will not actually spawn anything even if component is enabled.
+SPAWN_ITEM = 1, ## Spawns an item defined in the InventoryItemPD's drop_scene variable instead of a container. 
+SPAWN_CONTAINER = 2, ## Spawns a loot drop container to fill up with rolled items. 
+}
+
 func _get_configuration_warnings():
 	if !loot_table:
 		return ["Loot table is not set. It is required for the loot component to function."]
@@ -42,7 +54,63 @@ func _set_up_references():
 	_player = get_tree().get_first_node_in_group("Player")
 	_player_hud = _player.find_child("Player_HUD", true, true)
 	_player_inventory = _player.inventory_data
-	health_component_to_monitor.death.connect(_spawn_loot_container)
+	
+	if spawning_logic == SpawningLogic.SPAWN_ITEM:
+		health_component_to_monitor.death.connect(_spawn_loot)
+	elif spawning_logic == SpawningLogic.SPAWN_CONTAINER:
+		health_component_to_monitor.death.connect(_spawn_loot_container)
+	else:
+		CogitoGlobals.debug_log(debug_prints, "Loot Component", "Spawning Logic for this loot component is set to None. Component will not function. Parent: " + str(get_parent()))
+
+
+## Spawns the loot rolled by the loot generator. 
+func _spawn_loot():
+	## Parent node's global position
+	var parent_position = get_parent().global_position
+	## The array of rolled items from which we will get the drop_scene variables from.
+	var items_to_spawn: Array[Dictionary] = []
+	## CogitoObject references of spawned items to rename the display name.
+	var spawned_items: Array[CogitoObject] = []
+	
+	if enabled and amount_of_items_to_drop > 0:
+		var lootgen = LootGenerator.new()
+		get_tree().current_scene.add_child(lootgen)
+		items_to_spawn = lootgen.generate(loot_table, amount_of_items_to_drop)
+		lootgen.call_deferred("queue_free")
+		
+		for item in items_to_spawn:
+			if item.inventory_item.drop_scene != null:
+				var item_to_spawn = load(item.inventory_item.drop_scene)
+				var spawned_item = item_to_spawn.instantiate() as CogitoObject
+				spawned_item.position = parent_position
+				get_tree().current_scene.add_child(spawned_item)
+				
+				var children: Array = []
+				children = spawned_item.get_children()
+				
+				# Sort through children to find the pickup components.
+				if children.size() > 0:
+					for child in children:
+						if child is PickupComponent:
+							child.slot_data.quantity = randi_range(item.get("quantity_min", 1), item.get("quantity_max", 1)) # adjust quantity based on the loot table data.
+				
+				var impulse = Vector3(randf_range(0,3),5,randf_range(0,3))
+				spawned_item.call_deferred("apply_central_impulse", impulse)
+				spawned_items.append(spawned_item)
+				spawned_item.add_to_group("spawned_loot_items")
+		
+		for item in spawned_items:
+			var children: Array = []
+			children = item.get_children()
+			
+			if children.size() > 0:
+				for child in children:
+					# adjust name to reflect quantity in the dropped item.
+					if child is PickupComponent:
+						if child.slot_data.inventory_item.name != null and child.slot_data.quantity > 1:
+							item.display_name = str(child.slot_data.inventory_item.name + " x" + str(child.slot_data.quantity))
+						elif child.slot_data.quantity == 1:
+							item.display_name = str(child.slot_data.inventory_item.name) # This really should be set in the resource itself but for testing purposes this is fine.
 
 
 ## Spawns the loot container defined in the loot_bag_scene variable.
@@ -55,7 +123,7 @@ func _spawn_loot_container():
 	var inventory_to_populate:CogitoInventory
 	## Contains the finalized array which will be sent to roll items.
 	var finalized_items: Array[Dictionary]
-	## Array to merge chance and quest drops in. TODO check the feasibility of a separate quest item drop thread.
+	## Array to merge chance and quest drops in.
 	var merged_array: Array[Dictionary]
 	
 	if enabled and amount_of_items_to_drop > 0:

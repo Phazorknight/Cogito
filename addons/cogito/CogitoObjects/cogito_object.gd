@@ -12,7 +12,7 @@ signal object_exits_tree()
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var properties : int
-
+var spawned_loot_item: bool = false
 
 func _ready():
 	self.add_to_group("interactable")
@@ -25,6 +25,10 @@ func _ready():
 func set_state():	
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
+	
+	if spawned_loot_item:
+		add_to_group("spawned_loot_items")
+		
 	pass
 
 
@@ -40,6 +44,9 @@ func find_cogito_properties():
 
 # Function to handle persistence and saving
 func save():
+	if self.is_in_group("spawned_loot_items"):
+		spawned_loot_item = true
+		
 	var node_data = {
 		"filename" : get_scene_file_path(),
 		"parent" : get_parent().get_path(),
@@ -52,7 +59,7 @@ func save():
 		"rot_x" : rotation.x,
 		"rot_y" : rotation.y,
 		"rot_z" : rotation.z,
-		
+		"spawned_loot_item" : spawned_loot_item,
 	}
 
 	# If the node is a RigidBody3D, then save the physics properties of it
