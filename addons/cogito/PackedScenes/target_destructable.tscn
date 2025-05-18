@@ -85,6 +85,7 @@ material_properties = 1
 
 [node name="LootComponent" type="Node3D" parent="." node_paths=PackedStringArray("health_component_to_monitor")]
 script = ExtResource("7_s82pn")
+spawning_logic = 1
 loot_table = ExtResource("8_ywkh5")
 amount_of_items_to_drop = 5
 loot_bag_scene = ExtResource("9_dtbx4")

@@ -1,7 +1,7 @@
 class_name LootableContainer extends CogitoContainer
 
 ## Enables the debug prints. There are quite a few so output may be crowded.
-@onready var debug_prints: bool = CogitoGlobals.cogito_settings.loot_generator_debug
+@onready var debug_prints: bool = CogitoGlobals.cogito_settings.lootable_container_debug
 
 ## Determine the despawning logic for this container.
 @export_category("Execution Configuration")

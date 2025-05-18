@@ -84,18 +84,29 @@ func _sort_loot_table(loot_table: LootTable):
 ## Checks for given InventoryPD item against player inventory, loot bags, and lootable containers, returns true if there is a copy of a unique item, false if there isn't.
 func _is_unique_found(item: InventoryItemPD):
 	var _loot_bags: Array[Node] = get_tree().get_nodes_in_group("loot_bag")
+	var _spawned_items: Array[Node] = get_tree().get_nodes_in_group("spawned_loot_items")
 	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
 	
-	var _loot_bags_slots: Array[InventoryItemPD]
+	var _loot_bags_slots: Array[InventoryItemPD] = []
+	var _spawned_items_in_scene: Array[InventoryItemPD] = []
 	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
-	var _lookup_merge: Array[InventoryItemPD]
+	var _lookup_merge: Array[InventoryItemPD] = []
 	
 	if _loot_bags.size() > 0:
 		for i in _loot_bags:
 			_loot_bags_slots.append_array(i.inventory_data.get_all_items())
 	
+	if _spawned_items.size() > 0:
+		for i in _spawned_items:
+			var children = []
+			children = i.get_children()
+			for child in children:
+				if child is PickupComponent:
+					_spawned_items_in_scene.append(child.slot_data.inventory_item)
+	
 	_lookup_merge.append_array(_player_inventory_slots)
 	_lookup_merge.append_array(_loot_bags_slots)
+	_lookup_merge.append_array(_spawned_items_in_scene)
 	
 	for _slot in _lookup_merge:
 		if _slot.is_unique:
@@ -107,16 +118,28 @@ func _is_unique_found(item: InventoryItemPD):
 func _count_quest_items(item: InventoryItemPD) -> int:
 	var _loot_bags: Array[Node] = get_tree().get_nodes_in_group("loot_bag")
 	_loot_bags.append_array(get_tree().get_nodes_in_group("lootable_containers"))
+	var _spawned_items: Array[Node] = get_tree().get_nodes_in_group("spawned_loot_items")
+
 	var _loot_bags_slots: Array[InventoryItemPD]
+	var _spawned_items_in_scene: Array[InventoryItemPD] = []
 	var _player_inventory_slots: Array[InventoryItemPD] = _player_inventory.get_all_items()
 	var _lookup_merge: Array[InventoryItemPD]
 	
 	if _loot_bags.size() > 0:
 		for i in _loot_bags:
 			_loot_bags_slots.append_array(i.inventory_data.get_all_items())
+			
+	if _spawned_items.size() > 0:
+		for i in _spawned_items:
+			var children = []
+			children = i.get_children()
+			for child in children:
+				if child is PickupComponent:
+					_spawned_items_in_scene.append(child.slot_data.inventory_item)
 	
 	_lookup_merge.append_array(_player_inventory_slots)
 	_lookup_merge.append_array(_loot_bags_slots)
+	_lookup_merge.append_array(_spawned_items_in_scene)
 	
 	var _count: int
 	for _slot in _lookup_merge:
