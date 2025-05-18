@@ -68,7 +68,7 @@ func _spawn_loot():
 	## Parent node's global position
 	var parent_position = get_parent().global_position
 	## The array of rolled items from which we will get the drop_scene variables from.
-	var items_to_spawn: Array[Dictionary] = []
+	var items_to_spawn: Array[LootDropEntry] = []
 	## CogitoObject references of spawned items to rename the display name.
 	var spawned_items: Array[CogitoObject] = []
 	
@@ -92,7 +92,7 @@ func _spawn_loot():
 				if children.size() > 0:
 					for child in children:
 						if child is PickupComponent:
-							child.slot_data.quantity = randi_range(item.get("quantity_min", 1), item.get("quantity_max", 1)) # adjust quantity based on the loot table data.
+							child.slot_data.quantity = randi_range(item.quantity_min, item.quantity_max) # adjust quantity based on the loot table data.
 				
 				var impulse = Vector3(randf_range(0,3),5,randf_range(0,3))
 				spawned_item.call_deferred("apply_central_impulse", impulse)
