@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=9 format=3 uid="uid://dfhnxn4e87003"]
+
+[ext_resource type="Script" uid="uid://dj1uuvia16dhm" path="res://addons/cogito/Components/LootTables/BaseLootTable.gd" id="1_mbp3h"]
+[ext_resource type="Script" uid="uid://bw38ep6ean3wy" path="res://addons/cogito/Components/LootTables/LootDropEntry.gd" id="1_rso8h"]
+[ext_resource type="Resource" uid="uid://d7r4y7pbhify" path="res://addons/cogito/InventoryPD/Items/Cogito_Coins.tres" id="2_kbdxw"]
+[ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="3_jutca"]
+[ext_resource type="Resource" uid="uid://c6rpnmo1y1cw5" path="res://addons/cogito/InventoryPD/Items/Cogito_Dart.tres" id="4_4kscn"]
+
+[sub_resource type="Resource" id="Resource_w7j6f"]
+script = ExtResource("1_rso8h")
+name = "Currency"
+droptype = 2
+weight = 100.0
+inventory_item = ExtResource("2_kbdxw")
+quantity_min = 1
+quantity_max = 15
+quest_id = -1
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"
+
+[sub_resource type="Resource" id="Resource_31sd7"]
+script = ExtResource("1_rso8h")
+name = "Potion"
+droptype = 2
+weight = 100.0
+inventory_item = ExtResource("3_jutca")
+quantity_min = 1
+quantity_max = 15
+quest_id = -1
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"
+
+[sub_resource type="Resource" id="Resource_y4u75"]
+script = ExtResource("1_rso8h")
+name = "Dart"
+droptype = 2
+weight = 100.0
+inventory_item = ExtResource("4_4kscn")
+quantity_min = 1
+quantity_max = 15
+quest_id = -1
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"
+
+[resource]
+script = ExtResource("1_mbp3h")
+drops = Array[ExtResource("1_rso8h")]([SubResource("Resource_w7j6f"), SubResource("Resource_31sd7"), SubResource("Resource_y4u75")])
+metadata/_custom_type_script = "uid://dj1uuvia16dhm"

@@ -1,65 +1,22 @@
-[gd_resource type="Resource" script_class="LootTable" load_steps=7 format=3 uid="uid://cng2vry7x3qg4"]
+[gd_resource type="Resource" script_class="LootTable" load_steps=6 format=3 uid="uid://cng2vry7x3qg4"]
 
-[ext_resource type="Resource" uid="uid://d7r4y7pbhify" path="res://addons/cogito/InventoryPD/Items/Cogito_Coins.tres" id="1_0jg4b"]
+[ext_resource type="Script" uid="uid://bw38ep6ean3wy" path="res://addons/cogito/Components/LootTables/LootDropEntry.gd" id="1_1jvdx"]
 [ext_resource type="Script" uid="uid://dj1uuvia16dhm" path="res://addons/cogito/Components/LootTables/BaseLootTable.gd" id="1_m6nwo"]
-[ext_resource type="Resource" uid="uid://cupby6uqaftvv" path="res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres" id="2_uhsdj"]
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="3_5ef8b"]
-[ext_resource type="Resource" uid="uid://d4gdqvqsiiqs5" path="res://addons/cogito/InventoryPD/Items/Cogito_Key.tres" id="4_uhsdj"]
-[ext_resource type="Resource" uid="uid://geac0jkegsqu" path="res://addons/cogito/InventoryPD/Items/Cogito_StaminaExtPotion.tres" id="5_5ef8b"]
+[ext_resource type="Resource" uid="uid://dbyaddb6mpg2l" path="res://addons/cogito/Components/LootTables/LootDrop_Coins.tres" id="7_hpdqb"]
+
+[sub_resource type="Resource" id="Resource_1jvdx"]
+script = ExtResource("1_1jvdx")
+name = "Potion"
+droptype = 1
+weight = 100.0
+inventory_item = ExtResource("3_5ef8b")
+quantity_min = 1
+quantity_max = 2
+quest_id = -1
+quest_item_total_count = 1
+metadata/_custom_type_script = "uid://bw38ep6ean3wy"
 
 [resource]
 script = ExtResource("1_m6nwo")
-contents = Array[Dictionary]([{
-"DropType": 1,
-"inventory_item": ExtResource("1_0jg4b"),
-"name": "Currency",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 100.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("2_uhsdj"),
-"name": "Battery",
-"quantity_max": 4,
-"quantity_min": 1,
-"weight": 25.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("3_5ef8b"),
-"name": "Health Potion",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 50.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("3_5ef8b"),
-"name": "Health Potion",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 50.0
-}, {
-"DropType": 2,
-"inventory_item": ExtResource("1_0jg4b"),
-"name": "Currency",
-"quantity_max": 1,
-"quantity_min": 1,
-"weight": 100.0
-}, {
-"DropType": 4,
-"inventory_item": ExtResource("4_uhsdj"),
-"name": "Key",
-"quantity_max": 1,
-"quantity_min": 1,
-"quest_id": 771,
-"quest_item_total_count": 2,
-"weight": 25.0
-}, {
-"DropType": 4,
-"inventory_item": ExtResource("5_5ef8b"),
-"name": "Stamina Extension",
-"quantity_max": 1,
-"quantity_min": 1,
-"quest_id": 773,
-"quest_item_total_count": 2,
-"weight": 25.0
-}])
+drops = Array[ExtResource("1_1jvdx")]([ExtResource("7_hpdqb"), SubResource("Resource_1jvdx")])
