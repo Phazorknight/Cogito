@@ -42,13 +42,11 @@ func _physics_process(_delta) -> void:
 
 func process_pickup_queue() -> void:
 	if pickup_item_pool.size() > 0:
-		print("Autopickup: Processing queue...")
 		var pickup = get_pickup_from_queue()
 		if is_instance_valid(pickup):
 			_attempt_pick_up(pickup)
 			pickup_item_pool.remove_at(_last_index)
 	else:
-		print("Autopickup: Pickup Queue was empty!")
 		is_processing_queue = false
 	pass
 
