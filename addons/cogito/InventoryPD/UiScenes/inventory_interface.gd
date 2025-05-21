@@ -87,6 +87,10 @@ func close_inventory():
 		if control_in_focus:
 			control_in_focus.release_focus()
 		
+		# Clearing out UI grabbed slot
+		if inventory_ui.grabbed_slot:
+			inventory_ui.detach_grabbed_slot()
+		
 		for node in nodes_to_show:
 			node.hide()
 		#inventory_ui.hide()
@@ -94,9 +98,11 @@ func close_inventory():
 		
 		if external_inventory_owner:
 			external_inventory_owner.close()
+
 		grabbed_slot_node.hide()
 		info_panel.hide()
 		external_inventory_ui.hide()
+
 		if is_using_hotbar:
 			hot_bar_inventory.show()
 
@@ -196,7 +202,6 @@ func clear_external_inventory():
 
 
 func set_player_inventory_data(inventory_data : CogitoInventory):
-	
 	inventory_data.owner = CogitoSceneManager._current_player_node  # Setting player inventory owner reference to player node
 	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
@@ -207,8 +212,6 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 		quick_slots.show()
 		# Quickslots need reference to inventory when quickslot buttons are pressed
 		quick_slots.inventory_reference = inventory_data
-		# Connecting the inventory_updated signal (this is so quickslots update on item drop etc.)
-		# inventory_data.inventory_updated.connect(quick_slots.on_inventory_updated)
 	else:
 		quick_slots.hide()
 	if !inventory_open.is_connected(quick_slots.update_inventory_status):
@@ -298,6 +301,8 @@ func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotConta
 		CogitoGlobals.debug_log(true, "inventory_interface.gd", "Binding to quickslot container: " + str(grabbed_slot_data) + " -> " + str(quickslotcontainer) )
 		#get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data) #Swapped with line below
 		quick_slots.bind_to_quickslot(grabbed_slot_data, quickslotcontainer)
+		
+		#inventory_ui.detach_grabbed_slot()
 		#grabbed_slot_data = null
 		#update_grabbed_slot()
 	else:

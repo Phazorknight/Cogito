@@ -209,6 +209,21 @@ func _on_btn_reset_input_map_pressed() -> void:
 	gamepad_button.device = -1
 	gamepad_button.button_index = JOY_BUTTON_RIGHT_SHOULDER
 	save_input_action_to_settings("free_look",keyboard_key,gamepad_button)
+	
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_E
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_RIGHT_SHOULDER
+	save_input_action_to_settings("ui_next_tab",keyboard_key,gamepad_button)
+	
+	keyboard_key = InputEventKey.new()
+	keyboard_key.physical_keycode = KEY_Q
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_LEFT_SHOULDER
+	save_input_action_to_settings("ui_prev_tab",keyboard_key,gamepad_button)
+
 
 	
 func save_input_action_to_settings(input_name: String, input_kbm:InputEventWithModifiers, input_gamepad:InputEvent):
