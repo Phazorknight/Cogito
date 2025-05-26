@@ -159,7 +159,7 @@ var main_velocity : Vector3 = Vector3.ZERO
 var last_velocity : Vector3= Vector3.ZERO
 var direction : Vector3 = Vector3.ZERO
 var is_free_looking : bool  = false
-var stand_after_roll : bool = false
+var is_roll_animation_finished : bool = false
 var is_movement_paused : bool = false
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
@@ -433,21 +433,11 @@ func _process_analog_stick_mouselook():
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))	
 
 
-func _stand_after_roll(delta):
-	pass
-	#if stand_after_roll:
-		#if !is_movement_paused or !is_showing_ui:
-			#head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-			#standing_collision_shape.disabled = true
-			#crouching_collision_shape.disabled = false
-			#stand_after_roll = false
-
-
 func _free_look(delta):
 	if is_movement_paused:
 		return
 		
-	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped():
+	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() or is_rolling:
 		is_free_looking = true
 		if sliding_timer.is_stopped():
 			eyes.rotation.z = -deg_to_rad(
@@ -634,7 +624,7 @@ func _on_sliding_timer_timeout():
 
 
 func _on_animation_player_animation_finished(anim_name):
-	stand_after_roll = anim_name == 'roll' and !is_crouching
+	is_roll_animation_finished = anim_name == 'roll'
 
 
 func apply_external_force(force_vector: Vector3):
@@ -666,8 +656,6 @@ func _physics_process(delta):
 		input_direction = Input.get_vector("left", "right", "forward", "back")
 	
 	_process_analog_stick_mouselook()
-	
-	_stand_after_roll(delta)
 	
 	_free_look(delta)
 	
@@ -703,9 +691,11 @@ var is_sprinting : bool = false
 var is_sliding : bool = false
 var is_crouching : bool = false
 var is_standing : bool = false
+var is_rolling : bool = false
 var was_sprinting : bool = false
 var is_sprinting_in_airborne : bool = false
 var was_sliding : bool = false
+var was_standing : bool = false
 var jumped_from_slide : bool = false
 var jumped_from_crouch : bool = false
 var was_in_air : bool = false
@@ -826,6 +816,9 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 		state_chart.send_event("airborne")
 		return
 
+	if is_rolling:
+		return
+		
 	if not is_jumping_started:
 		main_velocity.y = 0
 		gravity_vec = Vector3.ZERO
@@ -851,22 +844,24 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 		if !is_movement_paused or !is_showing_ui:
 			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
 			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
-			if last_velocity.y <= -7.5:
-				#head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
-				#standing_collision_shape.disabled = false
-				#crouching_collision_shape.disabled = true
-				try_crouch = false
-				state_chart.send_event("stand_up")#TODO
-				if !disable_roll_anim:
-					animationPlayer.play("roll")
-			elif last_velocity.y <= -5.0:
-				animationPlayer.play("landing")
-
+	
+	if not on_ladder:
 		## Taking fall damage
 		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
-			#health_component.subtract(fall_damage)
-			decrease_attribute("health",fall_damage)
-				
+			var damage_ratio : float = last_velocity.y / fall_damage_threshold
+			decrease_attribute("health", fall_damage * damage_ratio)
+	else:
+		last_velocity = Vector3.ZERO
+		
+	if last_velocity.y <= -7.5:
+		if !disable_roll_anim:
+			was_standing = is_standing
+			is_sprinting_in_airborne = false
+			state_chart.send_event("roll")
+			return
+	elif last_velocity.y <= -5.0:
+		animationPlayer.play("landing")
+		
 	direction = lerp(
 		direction,
 		(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
@@ -1452,8 +1447,7 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 		on_ladder = true
 		state_chart.send_event("climb_ladder")
 		state_chart.set_expression_property("on_ladder", on_ladder)
-		return
-	
+
 
 func exit_ladder():
 	on_ladder = false
@@ -1461,6 +1455,28 @@ func exit_ladder():
 	state_chart.send_event("airborne")
 #endregion
 
+#region Rolling state
+func _on_rolling_state_entered() -> void:
+	is_rolling = true
+	animationPlayer.play("roll")
+	try_crouch = true
+	state_chart.send_event("crouch")
+
+
+func _on_rolling_state_exited() -> void:
+	is_rolling = false
+
+
+func _on_rolling_state_physics_processing(delta: float) -> void:
+	if !is_movement_paused or !is_showing_ui:
+		if is_roll_animation_finished:
+			is_roll_animation_finished = false
+			if was_standing:
+				try_crouch = false
+				state_chart.send_event("stand_up")
+			else:
+				state_chart.send_event("grounded")
+#endregion
 
 #region Airborne State
 func _on_airborne_state_entered() -> void:
