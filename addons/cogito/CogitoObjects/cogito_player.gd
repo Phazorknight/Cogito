@@ -23,6 +23,9 @@ var is_showing_ui : bool
 ## Toggle printing debug messages or not. Works with the CogitoSceneManager
 @export var is_logging : bool
 
+## Item Drop Shapecast
+@export var item_drop_shapecast : ShapeCast3D
+
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.

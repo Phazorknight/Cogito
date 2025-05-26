@@ -14,3 +14,5 @@ export_presets.cfg
 data_*/
 
 /addons/fp_controller
+/assets
+/ref
