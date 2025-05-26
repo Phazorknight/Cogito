@@ -17935,6 +17935,13 @@ to = NodePath("../Sneaking")
 event = &"sneak"
 delay_in_seconds = "0.0"
 
+
+[node name="On Roll" type="Node" parent="StateChart/Root/Moving/Grounded"]
+script = ExtResource("32_cqpng")
+to = NodePath("../Rolling")
+event = &"roll"
+delay_in_seconds = "0.0"
+
 [node name="Idle" type="Node" parent="StateChart/Root/Moving/Grounded"]
 script = ExtResource("31_74178")
 
@@ -18035,6 +18042,27 @@ delay_in_seconds = "1.5"
 script = ExtResource("31_74178")
 
 [node name="On Grounded" type="Node" parent="StateChart/Root/Moving/Grounded/LadderClimbing"]
+script = ExtResource("32_cqpng")
+to = NodePath("../..")
+event = &"grounded"
+delay_in_seconds = "0.0"
+
+[node name="On Fall" type="Node" parent="StateChart/Root/Moving/Grounded/LadderClimbing"]
+script = ExtResource("32_cqpng")
+to = NodePath("../../../Airborne/Falling")
+event = &"fall"
+delay_in_seconds = "0.0"
+
+[node name="Rolling" type="Node" parent="StateChart/Root/Moving/Grounded"]
+script = ExtResource("31_74178")
+
+[node name="On Stand_Up" type="Node" parent="StateChart/Root/Moving/Grounded/Rolling"]
+script = ExtResource("32_cqpng")
+to = NodePath("../..")
+event = &"stand_up"
+delay_in_seconds = "0.0"
+
+[node name="On Grounded" type="Node" parent="StateChart/Root/Moving/Grounded/Rolling"]
 script = ExtResource("32_cqpng")
 to = NodePath("../..")
 event = &"grounded"
@@ -18535,6 +18563,9 @@ skin = SubResource("Skin_m7ccf")
 [connection signal="state_physics_processing" from="StateChart/Root/Moving/Grounded/Sitting" to="." method="_on_sitting_state_physics_processing"]
 [connection signal="state_exited" from="StateChart/Root/Moving/Grounded/LadderClimbing" to="." method="_on_ladder_climbing_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/Moving/Grounded/LadderClimbing" to="." method="_on_ladder_climbing_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Moving/Grounded/Rolling" to="." method="_on_rolling_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Moving/Grounded/Rolling" to="." method="_on_rolling_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Moving/Grounded/Rolling" to="." method="_on_rolling_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Moving/Airborne" to="." method="_on_airborne_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/Moving/Airborne" to="PlayerAnimationTree" method="go_airborne"]
 [connection signal="state_exited" from="StateChart/Root/Moving/Airborne" to="PlayerAnimationTree" method="standing_up"]
