@@ -1,0 +1,97 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcwkugn6v3oy7"]
+
+[ext_resource type="Script" path="res://addons/godot_state_charts/utilities/state_chart_debugger.gd" id="1_i74os"]
+
+[node name="StateChartDebugger" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i74os")
+maximum_lines = 50
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+
+[node name="StateChart" type="MarginContainer" parent="TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Tree" type="Tree" parent="TabContainer/StateChart"]
+unique_name_in_owner = true
+layout_mode = 2
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+
+[node name="History" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/History"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HistoryEdit" type="TextEdit" parent="TabContainer/History/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/History/VBoxContainer"]
+layout_mode = 2
+
+[node name="ClearButton" type="Button" parent="TabContainer/History/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Clear"
+
+[node name="CopyToClipboardButton" type="Button" parent="TabContainer/History/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Copy to Clipboard"
+
+[node name="Settings" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Settings"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="IgnoreEventsCheckbox" type="CheckBox" parent="TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Do not show events in the history."
+text = "Ignore events"
+
+[node name="IgnoreStateChangesCheckbox" type="CheckBox" parent="TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Do not show state changes in the history."
+text = "Ignore state changes"
+
+[node name="IgnoreTransitionsCheckbox" type="CheckBox" parent="TabContainer/Settings/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Do not show transitions in the history."
+text = "Ignore transitions"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="toggled" from="TabContainer/Settings/VBoxContainer/IgnoreEventsCheckbox" to="." method="_on_ignore_events_checkbox_toggled"]
+[connection signal="toggled" from="TabContainer/Settings/VBoxContainer/IgnoreStateChangesCheckbox" to="." method="_on_ignore_state_changes_checkbox_toggled"]
+[connection signal="toggled" from="TabContainer/Settings/VBoxContainer/IgnoreTransitionsCheckbox" to="." method="_on_ignore_transitions_checkbox_toggled"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
