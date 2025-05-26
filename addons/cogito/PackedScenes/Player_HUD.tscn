@@ -266,7 +266,7 @@ is_using_hotbar = false
 nodes_to_show = [NodePath("CogitoTabMenu/Inventory/PlayerCurrencies"), NodePath("CogitoTabMenu")]
 metadata/_edit_lock_ = true
 
-[node name="CogitoTabMenu" type="TabContainer" parent="InventoryInterface" node_paths=PackedStringArray("nodes_to_focus")]
+[node name="CogitoTabMenu" type="TabContainer" parent="InventoryInterface" node_paths=PackedStringArray("nodes_to_focus", "inventory_interface_reference")]
 visible = false
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -278,6 +278,7 @@ theme = ExtResource("5_j6s1a")
 current_tab = 0
 script = ExtResource("24_3jei3")
 nodes_to_focus = [NodePath("Inventory/InventoryUI"), NodePath("Quests/QuestDisplay/VBoxContainer/TabContainer/Active"), NodePath("Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes")]
+inventory_interface_reference = NodePath("..")
 metadata/_custom_type_script = "uid://c656a651xkd0c"
 
 [node name="Inventory" type="VBoxContainer" parent="InventoryInterface/CogitoTabMenu"]

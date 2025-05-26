@@ -109,7 +109,7 @@ func close_inventory():
 
 func _on_focus_changed(control: Control):
 	if !control.has_method("set_slot_data"):
-		print("Not a slot. returning.")
+		CogitoGlobals.debug_log(true,"inventory_interface.gd", "_on_focus_changed: Not a slot. returning.")
 		return
 	
 	if control != null:
