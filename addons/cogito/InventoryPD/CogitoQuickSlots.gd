@@ -3,6 +3,9 @@ class_name CogitoQuickslots
 
 ### This script directly references the player inventory a lot, so make sure that reference is set correctly before using.
 
+## If true, the player can assign the same item to multiple quickslots.
+@export var allow_multiple_quickslot_binds : bool = true
+
 @export var quickslot_containers : Array[CogitoQuickslotContainer]
 # var assigned_quickslots : Array[InventorySlotPD]
 @export var inventory_reference : CogitoInventory:
@@ -63,11 +66,20 @@ func bind_to_quickslot(itemslot_to_bind: InventorySlotPD, quickslot_to_bind: Cog
 	var slot_index : int = quickslot_containers.find(quickslot_to_bind, 0)
 	
 	if slot_index > -1:
+		if !allow_multiple_quickslot_binds:
+			unbind_itemslot_from_quickslots(itemslot_to_bind)
 		inventory_reference.assigned_quickslots[slot_index] = itemslot_to_bind
 		quickslot_to_bind.update_quickslot_data(itemslot_to_bind)
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Assigned quickslot " + str(slot_index) + " to " + itemslot_to_bind.inventory_item.name )
 	else:
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "quickslot wasn't found in the quickslot_container array.")
+
+
+func unbind_itemslot_from_quickslots(itemslot_to_unbind: InventorySlotPD):
+	for quickslot in quickslot_containers:
+		if quickslot.inventory_slot_reference == itemslot_to_unbind:
+			unbind_quickslot(quickslot)
+			quickslot.clear_this_quickslot()
 
 
 func _unhandled_input(event):
