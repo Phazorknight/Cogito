@@ -16,18 +16,12 @@ class_name CogitoQuickslots
 		
 		# Connecting unbind signal from inventory
 		inventory_reference.unbind_quickslot_by_index.connect(on_unbind_quickslot_by_index)
-		inventory_reference.picked_up_new_inventory_item.connect(_on_picked_up_new_inventory_item)
+		inventory_reference.picked_up_new_inventory_item.connect(on_auto_quickslot_new_item)
 
 		set_inventory_quickslots(inventory_reference)
 		
 var inventory_is_open : bool
 
-@export_category("Auto Quickslot Settings")
-@export var can_auto_slot_ammo: bool = false
-@export var can_auto_slot_consumables: bool = true
-@export var can_auto_slot_wieldables: bool = true
-@export var can_auto_slot_keys: bool = false
-@export var can_auto_slot_combinables: bool = false
 
 func _ready() -> void:
 	# Connecting to unbind signal to enabling clearing of inventory slot reference on unbind.
@@ -137,39 +131,23 @@ func update_inventory_status(is_open: bool):
 	set_process_unhandled_input(!is_open)
 
 
-func _on_picked_up_new_inventory_item(slot_data: InventorySlotPD) -> void:
-	# Attempt to bind a new inventory item to the first available quick slot
-	
-	# Don't allow quickslotting currencies (currently a non-issue)
-	#if slot_data.inventory_item is CurrencyItemPD:
-		#print("picked up new currency")
-		#CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Cannot quickslot currencies")
-		#return
-	
-	if !can_auto_slot_ammo and slot_data.inventory_item is AmmoItemPD:
-		return
-	if !can_auto_slot_consumables and slot_data.inventory_item is ConsumableItemPD:
-		return
-	if !can_auto_slot_wieldables and slot_data.inventory_item is WieldableItemPD:
-		return
-	if !can_auto_slot_keys and slot_data.inventory_item is KeyItemPD:
-		return
-	if !can_auto_slot_combinables and slot_data.inventory_item is CombinableItemPD:
+func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
+	if !slot_data.inventory_item.can_auto_slot:
 		return
 	
-	# If the new item type is already slotted, ignore it
-	for quickslot_container in quickslot_containers:
-		if !quickslot_container.item_reference:
+	for i in range(quickslot_containers.size()):
+		if !quickslot_containers[i].item_reference:
 			continue
-		if quickslot_container.item_reference.name == slot_data.inventory_item.name:
-			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", slot_data.inventory_item.name + " already in quick slot " + str(quickslot_container.get_index()))
+		if quickslot_containers[i].item_reference.name == slot_data.inventory_item.name:
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", slot_data.inventory_item.name +
+			" already in quickslot " + str(quickslot_containers[i].get_index()))
 			return
 	
-	# Find the first empty quick slot and assign the slot_data to it
-	for quickslot_container in quickslot_containers:
-		if !quickslot_container.inventory_slot_reference and !quickslot_container.item_reference:
-			# Ensure quickslot is empty before binding, may not be necessary
-			quickslot_container.clear_this_quickslot()
-			bind_to_quickslot(slot_data, quickslot_container)
-			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Auto-quickslotted " + slot_data.inventory_item.name)
-			return
+	for i in range(quickslot_containers.size()):
+		# Ensure the quickslot is empty before binding the new item
+		if !quickslot_containers[i].inventory_slot_reference and !quickslot_containers[i].item_reference:
+			if slot_data.inventory_item.slot_number == -1 or slot_data.inventory_item.slot_number == i+1:
+				quickslot_containers[i].clear_this_quickslot()
+				bind_to_quickslot(slot_data, quickslot_containers[i])
+				CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Auto-quickslotted " + slot_data.inventory_item.name)
+				return
