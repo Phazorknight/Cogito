@@ -28,6 +28,7 @@ is_droppable = true
 is_unique = false
 stack_size = 0
 drop_scene = "uid://d2lnk6ecthmvd"
+item_drop_size = 0.1
 hint_icon_on_use = ExtResource("2_e0lpy")
 hint_text_on_use = "Your strength improved!"
 item_size = Vector2(1, 1)

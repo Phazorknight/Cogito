@@ -1,12 +1,9 @@
-[gd_scene load_steps=20 format=4 uid="uid://ciil8mli32kuk"]
+[gd_scene load_steps=16 format=4 uid="uid://ciil8mli32kuk"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_u4ubh"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_3uch0"]
-[ext_resource type="Texture2D" uid="uid://bdh5i4gqsyn72" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_LaserRifle_new.png" id="3_hccjd"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_iw0du"]
-[ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="4_vkcuy"]
-[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="5_jmc02"]
-[ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://addons/cogito/Wieldables/laser_rifle.tscn" id="6_t66im"]
+[ext_resource type="Resource" uid="uid://txiu5yxexevm" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserRifle.tres" id="3_oy4ah"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g84md"]
 resource_name = "metal"
@@ -138,33 +135,10 @@ size = Vector3(0.0973389, 0.0952759, 0.815624)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5bhcv"]
 size = Vector3(0.0973389, 0.0457916, 0.443713)
 
-[sub_resource type="Resource" id="Resource_hccjd"]
-resource_local_to_scene = true
-script = ExtResource("4_vkcuy")
-wieldable_scene = ExtResource("6_t66im")
-no_reload = false
-hint_on_empty = "Out of ammo."
-charge_max = 100.0
-ammo_item_name = "Laser Ammo"
-charge_current = 100.0
-wieldable_range = 100.0
-wieldable_damage = 1.0
-name = "Laser Rifle"
-description = "Goes pew pew pew. Needs Laser Ammo to reload."
-icon = ExtResource("3_hccjd")
-is_stackable = false
-is_droppable = true
-is_unique = false
-stack_size = 0
-drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_laser_rifle.tscn"
-hint_text_on_use = ""
-item_size = Vector2(3, 2)
-sound_pickup = ExtResource("5_jmc02")
-
-[sub_resource type="Resource" id="Resource_vkcuy"]
+[sub_resource type="Resource" id="Resource_pv16d"]
 resource_local_to_scene = true
 script = ExtResource("3_iw0du")
-inventory_item = SubResource("Resource_hccjd")
+inventory_item = ExtResource("3_oy4ah")
 quantity = 1
 origin_index = -1
 
@@ -193,4 +167,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00152874, 0.187482, 0.03864
 shape = SubResource("BoxShape3D_5bhcv")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_3uch0")]
-slot_data = SubResource("Resource_vkcuy")
+slot_data = SubResource("Resource_pv16d")

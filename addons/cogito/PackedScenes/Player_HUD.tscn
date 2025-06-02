@@ -70,12 +70,14 @@ script = ExtResource("1_0wdkf")
 object_name_component = ExtResource("3_6j0b3")
 prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
+item_drop_distance_offset = null
 ui_attribute_prefab = ExtResource("20_lscav")
 ui_currency_prefab = ExtResource("6_kmqyf")
 fixed_stamina_bar = NodePath("FixedStaminaBar")
 ui_currency_area = NodePath("InventoryInterface/CogitoTabMenu/Inventory/PlayerCurrencies/MarginContainer/VBoxContainer")
 attribute_display_node = NodePath("InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes")
 ui_attribute_display_prefab = ExtResource("20_3jei3")
+only_show_interface_attributes = null
 
 [node name="FixedStaminaBar" parent="." instance=ExtResource("20_lscav")]
 layout_mode = 1

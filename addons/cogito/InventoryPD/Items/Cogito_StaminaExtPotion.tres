@@ -21,6 +21,7 @@ is_droppable = true
 is_unique = false
 stack_size = 5
 drop_scene = "res://addons/cogito/PackedScenes/Pickups/pickup_stamina_extension.tscn"
+item_drop_size = 0.1
 hint_icon_on_use = ExtResource("2_nd8qm")
 hint_text_on_use = "Your max stamina has increased by 15."
 item_size = Vector2(1, 1)

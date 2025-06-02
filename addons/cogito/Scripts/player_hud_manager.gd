@@ -307,7 +307,7 @@ func _on_inventory_interface_drop_slot_data(slot_data: InventorySlotPD):
 	var dropped_item = scene_to_drop.instantiate()
 	
 	#dropped_item.position = player.player_interaction_component.get_interaction_raycast_tip(item_drop_distance_offset)
-	dropped_item.position = player.item_drop_shapecast.get_shapecast_item_drop_position(item_drop_distance_offset)
+	dropped_item.position = player.item_drop_shapecast.get_shapecast_item_drop_position(item_drop_distance_offset, slot_data.inventory_item.item_drop_size)
 	
 	dropped_item.find_interaction_nodes()
 	for node in dropped_item.interaction_nodes:

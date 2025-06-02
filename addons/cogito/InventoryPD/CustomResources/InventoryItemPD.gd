@@ -16,6 +16,8 @@ class_name InventoryItemPD
 @export_range(1, 99) var stack_size : int
 ## Path to Scene that will be spawned when item is removed from inventory to be dropped into the world.
 @export_file("*.tscn") var drop_scene
+## Physical size as a spherical radius - used to account for the space an item takes up when being dropped in the world. (e.g. an item thats 1m long should have a drop size of .5 as that checks for a sphere with 1m diameter.
+@export var item_drop_size : float = 0.5
 ## Icon that is displayed with the hint that pops up when used. If left blank, the default hint icon is shown.
 @export var hint_icon_on_use : Texture2D
 ## Hint that is displayed when used. For example "Potion replenished 10 HP!"
