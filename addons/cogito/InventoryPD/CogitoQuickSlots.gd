@@ -7,6 +7,7 @@ class_name CogitoQuickslots
 @export var allow_multiple_quickslot_binds : bool = true
 
 @export var quickslot_containers : Array[CogitoQuickslotContainer]
+
 # var assigned_quickslots : Array[InventorySlotPD]
 @export var inventory_reference : CogitoInventory:
 	set(passed_inventory):
@@ -15,7 +16,8 @@ class_name CogitoQuickslots
 		
 		# Connecting unbind signal from inventory
 		inventory_reference.unbind_quickslot_by_index.connect(on_unbind_quickslot_by_index)
-		
+		inventory_reference.picked_up_new_inventory_item.connect(on_auto_quickslot_new_item)
+
 		set_inventory_quickslots(inventory_reference)
 		
 var inventory_is_open : bool
@@ -127,3 +129,25 @@ func update_inventory_status(is_open: bool):
 	inventory_is_open = is_open
 	# Sets unhandled key input to the opposite of what is_open is.
 	set_process_unhandled_input(!is_open)
+
+
+func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
+	if !slot_data.inventory_item.can_auto_slot:
+		return
+	
+	for i in range(quickslot_containers.size()):
+		if !quickslot_containers[i].item_reference:
+			continue
+		if quickslot_containers[i].item_reference.name == slot_data.inventory_item.name:
+			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", slot_data.inventory_item.name +
+			" already in quickslot " + str(quickslot_containers[i].get_index()))
+			return
+	
+	for i in range(quickslot_containers.size()):
+		# Ensure the quickslot is empty before binding the new item
+		if !quickslot_containers[i].inventory_slot_reference and !quickslot_containers[i].item_reference:
+			if slot_data.inventory_item.slot_number == -1 or slot_data.inventory_item.slot_number == i+1:
+				quickslot_containers[i].clear_this_quickslot()
+				bind_to_quickslot(slot_data, quickslot_containers[i])
+				CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Auto-quickslotted " + slot_data.inventory_item.name)
+				return

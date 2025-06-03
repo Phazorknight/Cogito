@@ -28,3 +28,5 @@ item_drop_size = 0.5
 hint_text_on_use = ""
 item_size = Vector2(3, 2)
 sound_pickup = ExtResource("3_yhudh")
+can_auto_slot = true
+slot_number = 1

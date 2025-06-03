@@ -5,6 +5,7 @@ signal inventory_interact(inventory_data: CogitoInventory, index: int, mouse_but
 signal inventory_button_press(inventory_data: CogitoInventory, index: int, action: String)
 signal inventory_updated(inventory_data: CogitoInventory)
 signal unbind_quickslot_by_index(quickslot_index: int)
+signal picked_up_new_inventory_item(slot_data: InventorySlotPD)
 
 ## Enables grid inventory. If using, make sure player and ALL interactables have this set to true.
 @export var grid: bool
@@ -226,6 +227,7 @@ func pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
 			inventory_slots[index] = slot_data
 			add_adjacent_slots(index)
 			inventory_updated.emit(self)
+			picked_up_new_inventory_item.emit(slot_data)
 			return true
 	
 	CogitoSceneManager._current_player_node.player_interaction_component.send_hint(null, "Unable to pick up item.")	
