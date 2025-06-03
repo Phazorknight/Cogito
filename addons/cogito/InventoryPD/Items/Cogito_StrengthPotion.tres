@@ -34,4 +34,6 @@ hint_text_on_use = "Your strength improved!"
 item_size = Vector2(1, 1)
 sound_use = ExtResource("6_up6x6")
 sound_pickup = ExtResource("5_qps83")
+can_auto_slot = false
+slot_number = -1
 metadata/_custom_type_script = "uid://dr5kneob1wta8"

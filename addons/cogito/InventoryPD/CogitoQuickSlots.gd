@@ -132,7 +132,7 @@ func update_inventory_status(is_open: bool):
 
 
 func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
-	if !slot_data.inventory_item.can_auto_slot:
+	if !slot_data.inventory_item.can_auto_slot: # Checking if this item can auto slot.
 		return
 	
 	for i in range(quickslot_containers.size()):

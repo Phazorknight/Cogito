@@ -31,22 +31,10 @@ class_name InventoryItemPD
 @export var sound_drop : AudioStream
 
 @export_category("Auto Quickslot Settings")
+## When set to true, this item will be automatically bound to an empty quickslot on pickup.
 @export var can_auto_slot: bool = false
+## Quickslot number this item will be  bound to on pickup.
 @export var slot_number: int = -1
-# An alternative approach, assuming an exact count of 4 quickslots
-#enum AutoSlot {
-## Cannot auto bind to any quickslot
-#NONE = -1, 
-#SLOT_1 = 0, 
-#SLOT_2 = 1, 
-#SLOT_3 = 2, 
-#SLOT_4 = 3,
-## Auto bind to the first available quickslot if the item isn't already quickslotted
-#ANY_UNIQUE = 4, 
-## Auto bind to the first available quickslot
-#ALWAYS = 5
-#}
-#@export var auto_slot: AutoSlot = AutoSlot.NONE
 
 # Variables for Wielded Items
 var player_interaction_component

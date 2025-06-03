@@ -24,6 +24,7 @@ is_droppable = false
 is_unique = false
 stack_size = 0
 drop_scene = "res://addons/cogito/PackedScenes/Pickups/ripped_page_a_pickup.tscn"
+item_drop_size = 0.5
 hint_text_on_use = "I need the other half."
 item_size = Vector2(1, 1)
 sound_pickup = ExtResource("3_q33gx")

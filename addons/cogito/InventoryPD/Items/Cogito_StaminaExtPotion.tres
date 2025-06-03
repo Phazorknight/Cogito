@@ -27,3 +27,5 @@ hint_text_on_use = "Your max stamina has increased by 15."
 item_size = Vector2(1, 1)
 sound_use = ExtResource("6_vslkv")
 sound_pickup = ExtResource("5_j8yea")
+can_auto_slot = false
+slot_number = -1
