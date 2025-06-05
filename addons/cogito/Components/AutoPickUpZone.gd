@@ -25,9 +25,10 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	pickup_item_pool.append(body)
-	is_processing_queue = true
-	#_attempt_pick_up(body)
+	if body is CogitoObject:
+		pickup_item_pool.append(body)
+		is_processing_queue = true
+		#_attempt_pick_up(body)
 
 
 func _physics_process(_delta) -> void:
