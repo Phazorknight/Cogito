@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://d580wtspsjkw"]
+
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_7bqcr"]
+[ext_resource type="Texture2D" uid="uid://cgcrwmu2bs4se" path="res://addons/cogito/Assets/Textures/Prototype Textures/PNG/Green/texture_01.png" id="2_s86do"]
+[ext_resource type="Script" uid="uid://b0a3vpjf8hylo" path="res://addons/cogito/Components/Interactions/PickupComponent.gd" id="3_5d1o6"]
+[ext_resource type="Resource" uid="uid://dk1nq2ptfp2op" path="res://addons/cogito/InventoryPD/Items/Cogito_UselessItem.tres" id="4_5d1o6"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="5_q65id"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q65id"]
+albedo_color = Color(0.987815, 0.528083, 0, 1)
+albedo_texture = ExtResource("2_s86do")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="Resource" id="Resource_yw4ox"]
+resource_local_to_scene = true
+script = ExtResource("5_q65id")
+inventory_item = ExtResource("4_5d1o6")
+quantity = 1
+origin_index = -1
+metadata/_custom_type_script = "uid://di15gqemrkk0x"
+
+[node name="pickup_useless_item" type="RigidBody3D"]
+collision_layer = 3
+script = ExtResource("1_7bqcr")
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152508, -0.124055, 0.00963968)
+material_override = SubResource("StandardMaterial3D_q65id")
+polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
+depth = 0.02
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152508, -0.124055, -0.000360319)
+visible = false
+depth = 0.02
+polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.3, 0.125, 0.15, 0)
+margin = 0.02
+
+[node name="PickupComponent" type="Node3D" parent="."]
+script = ExtResource("3_5d1o6")
+slot_data = SubResource("Resource_yw4ox")
+display_item_name = true
+input_map_action = "interact"
+interaction_text = "Pick up"
+metadata/_custom_type_script = "uid://b0a3vpjf8hylo"

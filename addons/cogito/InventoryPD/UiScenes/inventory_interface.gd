@@ -10,9 +10,10 @@ signal inventory_open(is_true: bool)
 @onready var quick_slots : CogitoQuickslots = $QuickSlots
 @onready var info_panel = $InfoPanel
 @onready var item_name = $InfoPanel/MarginContainer/VBoxContainer/ItemName
-@onready var item_description = $InfoPanel/MarginContainer/VBoxContainer/ItemDescription
+@onready var item_description: Control = $InfoPanel/MarginContainer/VBoxContainer/ItemDescription
 @onready var drop_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxDrop
 @onready var assign_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxAssign
+@onready var use_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxUse
 
 
 ## Sound that plays as a generic error.
@@ -127,6 +128,11 @@ func _on_focus_changed(control: Control):
 		if control_in_focus.item_data.is_droppable:
 			drop_prompt.show()
 		else: drop_prompt.hide()
+		
+		if !control_in_focus.item_data.has_method("use"):
+			use_prompt.hide()
+		else:
+			use_prompt.show()
 
 		info_panel.show()
 		if !control.mouse_exited.is_connected(_slot_on_mouse_exit):

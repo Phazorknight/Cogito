@@ -92,6 +92,9 @@ func use_slot_data(index: int):
 	
 	if not slot_data:
 		return
+	
+	if !slot_data.inventory_item.has_method("use"):
+		return
 
 	var use_successful : bool = slot_data.inventory_item.use(owner)
 	if slot_data.inventory_item.has_method("is_consumable") and use_successful:

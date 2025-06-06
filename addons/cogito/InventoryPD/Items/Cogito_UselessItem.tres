@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="InventoryItemPD" load_steps=4 format=3 uid="uid://dk1nq2ptfp2op"]
+
+[ext_resource type="Script" uid="uid://dog0pawpwd55d" path="res://addons/cogito/InventoryPD/CustomResources/InventoryItemPD.gd" id="1_3lxkm"]
+[ext_resource type="Texture2D" uid="uid://b026nu4btecpx" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_DiamondKey_Complete.png" id="1_faqdq"]
+[ext_resource type="AudioStream" uid="uid://btoufmp0rtgi" path="res://addons/cogito/Assets/Audio/Kenney/beltHandle2.ogg" id="3_cbaon"]
+
+[resource]
+script = ExtResource("1_3lxkm")
+name = "Useless"
+description = "This item has no use function."
+icon = ExtResource("1_faqdq")
+is_stackable = false
+is_droppable = true
+is_unique = false
+stack_size = 0
+drop_scene = "uid://d580wtspsjkw"
+item_drop_size = 0.5
+hint_text_on_use = ""
+item_size = Vector2(1, 1)
+sound_use = ExtResource("3_cbaon")
+can_auto_slot = false
+slot_number = -1
+metadata/_custom_type_script = "uid://dog0pawpwd55d"
