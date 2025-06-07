@@ -14,13 +14,13 @@ collision_layer = 3
 script = ExtResource("1_avnnw")
 display_name = "Bag of Holding"
 
-[node name="CarryableComponent" parent="." instance=ExtResource("2_da5wv")]
-
-[node name="BackpackComponent" parent="." instance=ExtResource("3_fg43q")]
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00131226, -0.200554, -0.000480652)
 shape = SubResource("BoxShape3D_rd5pj")
 
 [node name="bag2" parent="." instance=ExtResource("4_skhg5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="BackpackComponent" parent="." instance=ExtResource("3_fg43q")]
+
+[node name="CarryableComponent" parent="." instance=ExtResource("2_da5wv")]

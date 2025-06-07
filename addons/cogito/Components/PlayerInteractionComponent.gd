@@ -108,13 +108,23 @@ func _input(event: InputEvent) -> void:
 func _handle_interaction(action: String) -> void:
 	# if carrying an object, drop it.
 	if is_carrying:
-		if is_instance_valid(carried_object) and carried_object.input_map_action == action:
-			_drop_carried_object()
-			#carried_object.throw(1)
-			return
-		elif !is_instance_valid(carried_object):
+		if is_instance_valid(carried_object):
+			if carried_object.input_map_action == action:
+				_drop_carried_object()
+				#carried_object.throw(1)
+				return
+			else:
+				# Allow 'take' input actions for the carried object
+				var carry_parent: CogitoObject = carried_object.get_parent() as CogitoObject
+				if carry_parent:
+					for node: InteractionComponent in carry_parent.interaction_nodes:
+						if node is PickupComponent or node is BackpackComponent:
+							if node.input_map_action == action:
+								node.interact(self)
+								return
+		else:
 			stop_carrying()
-			return	
+			return
 
 	# Check if we have an interactable in view and are pressing the correct button
 	if interactable != null and not is_carrying:

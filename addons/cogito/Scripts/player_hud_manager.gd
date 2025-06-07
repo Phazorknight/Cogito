@@ -232,6 +232,19 @@ func delete_interaction_prompts() -> void:
 
 func set_drop_prompt(_carrying_node):
 	delete_interaction_prompts()
+	
+	# Create an input prompt if a PickupComponent or BackpackComponent exists
+	# This approach isn't great, but doesn't affect the passed argument or connected signals
+	# Build this input prompt first to maintain the same prompt layout
+	var carry_parent: CogitoObject = _carrying_node.get_parent() as CogitoObject
+	if carry_parent:
+		for node: InteractionComponent in carry_parent.interaction_nodes:
+			if node is PickupComponent or node is BackpackComponent:
+				var instanced_take_prompt: UiPromptComponent = prompt_component.instantiate()
+				prompt_area.add_child(instanced_take_prompt)
+				instanced_take_prompt.set_prompt(node.interaction_text, node.input_map_action)
+				break # Break out of the loop as no object should have both
+	
 	var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
 	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
