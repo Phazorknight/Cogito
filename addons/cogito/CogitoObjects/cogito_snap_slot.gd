@@ -29,9 +29,10 @@ signal object_state_updated(interaction_text:String)
 @export var interaction_text_to_place : String = "Place"
 ## Text that appears on the interaction prompt when an object is placed that can be removed.
 @export var interaction_text_to_remove : String = "Remove"
-
 ## Hint that is displayed if the player interacts while the snapslot is empty.
 @export var expected_object_hint : String = "Looks like an object could fit here."
+## Delay in seconds after slotting or removing an object. This is there to prevent immediate re-slotting of an object that can be removed.
+@export var setter_delay : float = 0.8
 
 var instanced_expected_object
 var preloaded_expected_item
@@ -40,6 +41,7 @@ var interaction_text = null
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var player_interaction_component : PlayerInteractionComponent
+
 
 var is_holding_object : bool:
 	set(value):
@@ -51,11 +53,29 @@ var is_holding_object : bool:
 		if is_holding_object:
 			object_placed.emit()
 			interaction_text = interaction_text_to_remove
+			
+			await get_tree().create_timer(setter_delay).timeout
+			
+			# Connect to body_exited signal, disconnect the body_entered signal.
+			if !snap_area_3d.body_exited.is_connected(_on_body_exited_snap_area):
+				snap_area_3d.body_exited.connect(_on_body_exited_snap_area)
+			if snap_area_3d.body_entered.is_connected(_on_body_entered_snap_area):
+				snap_area_3d.body_entered.disconnect(_on_body_entered_snap_area)
+			
 		else:
 			object_removed.emit()
 			interaction_text = interaction_text_to_place
+			
+			await get_tree().create_timer(setter_delay).timeout
+			
+			# Connect to body_entered signal, disconnect the body_exited signal.
+			if snap_area_3d.body_exited.is_connected(_on_body_exited_snap_area):
+				snap_area_3d.body_exited.disconnect(_on_body_exited_snap_area)
+			if !snap_area_3d.body_entered.is_connected(_on_body_entered_snap_area):
+				snap_area_3d.body_entered.connect(_on_body_entered_snap_area)
 		
 		object_state_updated.emit(interaction_text)
+
 
 
 func _ready() -> void:
@@ -135,10 +155,13 @@ func set_state():
 	add_to_group("interactable")
 	add_to_group("save_object_state")
 	
-	if !snap_area_3d.body_entered.is_connected(_on_body_entered_snap_area):
-		snap_area_3d.body_entered.connect(_on_body_entered_snap_area)
-	if !snap_area_3d.body_exited.is_connected(_on_body_exited_snap_area):
-		snap_area_3d.body_exited.connect(_on_body_exited_snap_area)
+	if is_holding_object:
+		if !snap_area_3d.body_exited.is_connected(_on_body_exited_snap_area):
+			snap_area_3d.body_exited.connect(_on_body_exited_snap_area)
+	else:
+		if !snap_area_3d.body_entered.is_connected(_on_body_entered_snap_area):
+			snap_area_3d.body_entered.connect(_on_body_entered_snap_area)
+
 	
 	interaction_text = interaction_text_to_place
 	object_state_updated.emit(interaction_text)
