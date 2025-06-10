@@ -9,7 +9,7 @@
 margin = 0.02
 size = Vector3(0.2, 0.25, 0.04)
 
-[sub_resource type="Resource" id="Resource_eus1x"]
+[sub_resource type="Resource" id="Resource_a2ulr"]
 resource_local_to_scene = true
 script = ExtResource("4_aufws")
 inventory_item = ExtResource("3_jbwjg")
@@ -19,6 +19,7 @@ origin_index = -1
 [node name="PageCombined" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_kyr7l")
+custom_aabb = AABB(0, 0, 0, 0.2, 0.25, 0.04)
 
 [node name="RippedPageB_Mesh" type="CSGPolygon3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.00261419, -0.125, 0)
@@ -35,4 +36,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.00281158)
 shape = SubResource("BoxShape3D_ewyvw")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_iscjy")]
-slot_data = SubResource("Resource_eus1x")
+slot_data = SubResource("Resource_a2ulr")

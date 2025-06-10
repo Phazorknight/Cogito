@@ -16,7 +16,7 @@ vertex_color_is_srgb = true
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pddov"]
 
-[sub_resource type="Resource" id="Resource_b2hxk"]
+[sub_resource type="Resource" id="Resource_ivp4e"]
 resource_local_to_scene = true
 script = ExtResource("3_cfmdv")
 inventory_item = ExtResource("2_8nfob")
@@ -26,6 +26,7 @@ origin_index = -1
 [node name="DiamondKeyB" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_rbcr3")
+custom_aabb = AABB(0, 0, 0, 0.2, 0.25, 0.02)
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
 material_override = ExtResource("1_qb6jw")
@@ -49,4 +50,4 @@ polygon = PackedVector2Array(0.05, 0, 0.05, 0.25, 0.2, 0.125)
 margin = 0.02
 
 [node name="PickupComponent" parent="." instance=ExtResource("3_mehd7")]
-slot_data = SubResource("Resource_b2hxk")
+slot_data = SubResource("Resource_ivp4e")

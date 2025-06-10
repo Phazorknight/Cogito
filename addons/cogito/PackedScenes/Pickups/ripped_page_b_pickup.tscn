@@ -18,6 +18,7 @@ origin_index = -1
 [node name="RippedPageB_pickup" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_okgq0")
+custom_aabb = AABB(0, 0, 0, 0.125, 0.25, 0.045)
 
 [node name="RippedPageB_Mesh" type="CSGPolygon3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.04, -0.125, 0)

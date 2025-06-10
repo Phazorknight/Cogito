@@ -93,6 +93,7 @@ continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_4jdmy")
+custom_aabb = AABB(0, 0, 0, 0.2, 0.3, 0.2)
 
 [node name="foamBulletB" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 4.8, 0, 0, 0, 2, 0, 0.140953, 0)

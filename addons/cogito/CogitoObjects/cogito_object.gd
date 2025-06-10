@@ -8,17 +8,32 @@ signal object_exits_tree()
 @export var cogito_name : String = self.name
 ## Name that will displayed when interacting. Leave blank to hide
 @export var display_name : String
+@export var custom_aabb : AABB = AABB()
 
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var properties : int
 var spawned_loot_item: bool = false
 
+
 func _ready():
 	self.add_to_group("interactable")
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_interaction_nodes()
 	find_cogito_properties()
+
+
+func get_aabb():
+	if custom_aabb:
+		return custom_aabb
+		
+	var aabb : AABB = AABB()
+
+	for child in find_children("*", "GeometryInstance3D", true, false):
+		if child.visible:
+			aabb = aabb.merge(child.transform * child.get_aabb())
+	
+	return aabb
 
 
 # Future method to set object state when a scene state file is loaded.
