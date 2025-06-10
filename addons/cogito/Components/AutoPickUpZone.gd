@@ -19,9 +19,14 @@ var player: CogitoPlayer
 var _last_index := -1
 var pickup_item_pool : Array[CogitoObject] = []
 var is_processing_queue : bool = false
+# Added as a workaround for items that use Local To Scene.
+var auto_pick_up_items_by_name : Array[String] = []
+
 
 func _ready() -> void:
 	player = get_parent()
+	for item in auto_pick_up_items:
+		auto_pick_up_items_by_name.append(item.name)
 
 
 func _on_body_entered(body: Node3D) -> void:
@@ -83,7 +88,8 @@ func _attempt_pick_up(body: Node3D) -> void:
 		if body is CogitoProjectile and !(body as CogitoProjectile).can_pick_up:
 			continue
 		
-		if auto_pick_up_items.has(pick_up_component.slot_data.inventory_item):
+		var inventory_item: InventoryItemPD = pick_up_component.slot_data.inventory_item
+		if auto_pick_up_items.has(inventory_item) or auto_pick_up_items_by_name.has(inventory_item.name):
 			pick_up_component.interact(_player_interaction_component)
 			auto_picked_up_item.emit()
 		# Exit loop after detecting a pick up component (should only be one)
