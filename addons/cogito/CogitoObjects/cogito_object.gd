@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends Node3D
 class_name CogitoObject
@@ -8,12 +9,24 @@ signal object_exits_tree()
 @export var cogito_name : String = self.name
 ## Name that will displayed when interacting. Leave blank to hide
 @export var display_name : String
-@export var custom_aabb : AABB = AABB()
+
+@export_group("Object Size and Shape")
+## Set a custom shape used for calculating object size when dropping.
+@export var custom_aabb : AABB = AABB():
+	set(new_aabb):
+		custom_aabb = new_aabb
+		CogitoGlobals.draw_box_aabb(get_aabb(), Color.AQUA)
+
 
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var properties : int
 var spawned_loot_item: bool = false
+
+@export_tool_button("Clear AABB Debug shape","GeometryInstance3D")
+var clear_aabb_debug_shape_action = _on_clear_aabb_debug_shape_btn_pressed
+@export_tool_button("Preview AABB Debug shape","GeometryInstance3D")
+var preview_aabb_debug_shape_action = _on_preview_aabb_debug_shape_btn_pressed
 
 
 func _ready():
@@ -34,6 +47,13 @@ func get_aabb():
 			aabb = aabb.merge(child.transform * child.get_aabb())
 	
 	return aabb
+
+
+func _on_preview_aabb_debug_shape_btn_pressed():
+	CogitoGlobals.draw_box_aabb(get_aabb(), Color.AQUA)
+
+func _on_clear_aabb_debug_shape_btn_pressed():
+	CogitoGlobals.clear_debug_shape()
 
 
 # Future method to set object state when a scene state file is loaded.
