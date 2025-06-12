@@ -261,6 +261,7 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 					grabbed_slot_data = inventory_data.grab_single_slot_data(index)
 					if not _drop_item(grabbed_slot_data):
 						Audio.play_sound(sound_error)
+						get_parent().player.player_interaction_component.send_hint(null, "Not enough space to drop item.")
 						CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop because there isn't enough space.")
 					else:
 						grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index)
@@ -338,6 +339,7 @@ func _on_gui_input(event):
 					else:
 						if not _drop_item(grabbed_slot_data):
 							Audio.play_sound(sound_error)
+							get_parent().player.player_interaction_component.send_hint(null, "Not enough space to drop item.")
 							CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop because there isn't enough space.")
 						else:
 							grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index)
@@ -355,6 +357,7 @@ func _on_gui_input(event):
 					else:
 						if not _drop_item(grabbed_slot_data):
 							Audio.play_sound(sound_error)
+							get_parent().player.player_interaction_component.send_hint(null, "Not enough space to drop item.")
 							CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop because there isn't enough space.")
 						else:
 							grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index)
