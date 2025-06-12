@@ -23,6 +23,8 @@ metadata/_custom_type_script = "uid://di15gqemrkk0x"
 [node name="pickup_useless_item" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_7bqcr")
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152508, -0.124055, 0.00963968)

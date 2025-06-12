@@ -138,7 +138,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_jpxt7"]
+[sub_resource type="Resource" id="Resource_aokhm"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -2525,7 +2525,7 @@ shadow_mesh = SubResource("ArrayMesh_3ecdw")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_upcaa"]
 data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, 0.0903, -0.88, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 1.3856, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -1.2, 0.6128, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.6128, 0.0903, -0.72, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.72, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 0, 0.0903, -1.2, 0, 0.0903, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 1.3856, 0.0903, -0.4, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -1.2, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -1.2, 0.6928, 0.1935, 0, 0, 0.1935, -0.4, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -1.2, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, -1.6, 0.6928, 0.0903, -1.6, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -0.4, 1.3856, 0.0903, -0.4, 0.6928, 0.0903, 0, 0.6928, 0.0903, 0, 0.6928, 0.1935, 0, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.0903, 0, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.1935, -0.4, 0.6928, 0.1935, 0, 0, 0.1935, -1.2, 0, 0.1935, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.8, 0, 0.1935, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -1.2, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.6928, 0.0903, -1.6, 0.6928, 0.1935, -1.6, 0, 0.1935, -1.2, 0.7728, 0.0903, -0.72, 0.7728, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.88, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.6128, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.8128, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.68, 0.6128, -0.4, -0.72, 0.7728, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.72, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.6128, -0.4, -0.88, 0.6128, -0.4, -0.72, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.4, -0.92, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.7728, -0.4, -0.88, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.88, 0.4928, -0.44, -1, 0.4928, -0.44, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -1, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.4928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.5, -1, 0.8928, -0.5, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -1, 0.8928, -0.5, -1, 0.4928, -0.44, -0.6, 0.4928, -0.44, -1, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.4928, -0.44, -0.6, 0.5728, -0.44, -0.68, 0.8128, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.68, 0.8128, -0.44, -0.92, 0.8928, -0.44, -0.6, 0.5728, -0.44, -0.92, 0.5728, -0.44, -0.68, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -1, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8128, -0.44, -0.92, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.92, 0.9128, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.9128, -0.54, -0.58, 0.9128, -0.54, -1.02, 0.4928, -0.5, -1, 0.4728, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.8928, -0.5, -1, 0.4928, -0.5, -1, 0.9128, -0.54, -1.02, 0.9128, -0.54, -0.58, 0.8928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.8928, -0.5, -1, 0.9128, -0.54, -1.02, 0.8928, -0.5, -0.6, 0.9128, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4728, -0.54, -0.58, 0.4728, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4928, -0.5, -1, 0.4928, -0.5, -0.6, 0.5728, -0.4, -0.92, 0.5728, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.4, -0.92, 0.5728, -0.4, -0.92)
 
-[sub_resource type="Resource" id="Resource_8mfm7"]
+[sub_resource type="Resource" id="Resource_jpxt7"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -3271,7 +3271,7 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-inventory_data = SubResource("Resource_jpxt7")
+inventory_data = SubResource("Resource_aokhm")
 step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
@@ -6414,12 +6414,18 @@ horizontal_alignment = 0
 
 [node name="laptop" parent="UPPER_OFFICE_CEO" instance=ExtResource("72_fpgjy")]
 transform = Transform3D(0.0543052, 0, -0.998524, 0, 1, 0, 0.998524, 0, 0.0543052, 2.96413, 0.794343, -1.87712)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="laptop_real" parent="UPPER_OFFICE_CEO" instance=ExtResource("35_s7tgx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12195, 0.80538, -5.77168)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="Pickup_Key" parent="UPPER_OFFICE_CEO" instance=ExtResource("68_8mqrf")]
 transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 3.02288, 0.84246, -0.4164)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="sideTable" parent="UPPER_OFFICE_CEO" instance=ExtResource("37_ic45t")]
 
@@ -6749,15 +6755,19 @@ transform = Transform3D(0.0213438, 0, -0.999772, 0, 1, 0, 0.999772, 0, 0.0213438
 
 [node name="Pickup_Battery" parent="ARCHIVE" instance=ExtResource("45_628oc")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.666521, 0.734926, -3.89347)
+show_debug_shape = null
 
 [node name="Pickup_Battery2" parent="ARCHIVE" instance=ExtResource("45_628oc")]
 transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634, 0.418519, 0.734926, -3.85862)
+show_debug_shape = null
 
 [node name="Pickup_Battery3" parent="ARCHIVE" instance=ExtResource("45_628oc")]
 transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634, 0.15419, 0.734926, -3.88472)
+show_debug_shape = null
 
 [node name="Pickup_Battery4" parent="ARCHIVE" instance=ExtResource("45_628oc")]
 transform = Transform3D(-0.876634, 0, -0.481157, 0, 1, 0, 0.481157, 0, -0.876634, -0.383062, 0.734926, -3.84369)
+show_debug_shape = null
 
 [node name="SecurityCamera" parent="ARCHIVE" instance=ExtResource("92_nldkd")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4.41835, 2.13406, -7.60744)
@@ -6874,6 +6884,8 @@ shape = SubResource("BoxShape3D_r8h0l")
 
 [node name="pickup_useless_item" parent="MEETING_ROOM" instance=ExtResource("54_aokhm")]
 transform = Transform3D(-0.607514, 0, 0.794309, 0, 1, 0, -0.794309, 0, -0.607514, -3.43871, 0.864331, -23.1195)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="ConferenceDoor" parent="MEETING_ROOM" instance=ExtResource("17_2lcsn")]
 transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048, 0, -20.9787)
@@ -7117,7 +7129,7 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 [node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
 display_name = "Fridge"
-inventory_data = SubResource("Resource_8mfm7")
+inventory_data = SubResource("Resource_jpxt7")
 
 [node name="kitchenMicrowave2" parent="BREAK_ROOM" instance=ExtResource("61_1x4um")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)
@@ -7133,18 +7145,28 @@ skeleton = NodePath("")
 shape = SubResource("ConcavePolygonShape3D_si7uc")
 
 [node name="CoffeeMug" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CoffeeMug2" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(0.969501, 0, 0.245088, 0, 1, 0, -0.245088, 0, 0.969501, 1.1868, 0.493418, -0.279196)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CoffeeMug3" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.27463, 0, -0.96155, 0, 1, 0, 0.96155, 0, -0.27463, 1.37229, 0.493418, -0.350858)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CoffeeMug4" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.787774, 0, -0.615964, 0, 1, 0, 0.615964, 0, -0.787774, 1.49399, 0.493418, -0.207627)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CoffeeMug5" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.927595, 0, -0.373587, 0, 1, 0, 0.373587, 0, -0.927595, 1.29253, 0.493418, -0.176573)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="rugRound" parent="BREAK_ROOM" instance=ExtResource("62_m13s3")]
 
@@ -7414,6 +7436,8 @@ transform = Transform3D(-0.661482, 0, -0.749961, 0, 1, 0, 0.749961, 0, -0.661482
 transform = Transform3D(-0.945904, 0, -0.324446, 0, 1, 0, 0.324446, 0, -0.945904, 7.15862, -1.67638e-07, 0.929278)
 
 [node name="plantSmall2" parent="CUBICLE_AREA" instance=ExtResource("55_s7anr")]
+cogito_name = ""
+show_debug_shape = null
 
 [node name="KSI_steps_single" parent="CUBICLE_AREA" instance=ExtResource("88_u6glq")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.03513, -0.5, -3.98671)
@@ -7482,6 +7506,8 @@ surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
 
 [node name="WetZone" type="Area3D" parent="CUBICLE_AREA/WaterFeature"]
 script = ExtResource("59_7mr36")
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CUBICLE_AREA/WaterFeature/WetZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55772, 0.0251465, 0.168274)
@@ -7540,6 +7566,8 @@ surface_material_override/1 = SubResource("StandardMaterial3D_30jej")
 [node name="WetZone2" type="Area3D" parent="CUBICLE_AREA/WaterFeature2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0208797, 0, 0)
 script = ExtResource("59_7mr36")
+cogito_name = ""
+show_debug_shape = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CUBICLE_AREA/WaterFeature2/WetZone2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55772, 0.0251465, 0.168274)
@@ -7552,6 +7580,8 @@ elemental_properties = 4
 
 [node name="pottedPlant" parent="ENTRANCE_AREA" instance=ExtResource("56_hferh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.02877, 0.475497, -13.8082)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="rugRectangle" parent="ENTRANCE_AREA" instance=ExtResource("75_26fkw")]
 
@@ -7573,22 +7603,32 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 6.394, 0
 
 [node name="pottedPlant2" parent="ENTRANCE_AREA" instance=ExtResource("56_hferh")]
 transform = Transform3D(0.374526, 0, -0.927217, 0, 1, 0, 0.927217, 0, 0.374526, 7.02877, 0.408329, 11.3186)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="lampRoundFloor" parent="ENTRANCE_AREA" instance=ExtResource("25_ohpwf")]
 
 [node name="trashcan" parent="ENTRANCE_AREA" instance=ExtResource("58_no7q4")]
 transform = Transform3D(0.771402, 0, 0.636348, 0, 1, 0, -0.636348, 0, 0.771402, 0.403079, 0.4, -15.5926)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="trashcan2" parent="ENTRANCE_AREA" instance=ExtResource("58_no7q4")]
 transform = Transform3D(0.999709, 0, -0.0240999, 0, 1, 0, 0.0240999, 0, 0.999709, -7.02733, -1.67638e-07, -7.60032)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="trashcan3" parent="ENTRANCE_AREA" instance=ExtResource("58_no7q4")]
 transform = Transform3D(-0.999709, 0, 0.0240998, 0, 1, 0, -0.0240998, 0, -0.999709, -7.0371, 0.00383551, 7.38105)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="coatRackStanding" type="RigidBody3D" parent="ENTRANCE_AREA"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5281, -4.84288e-08, -19.158)
 mass = 20.0
 script = ExtResource("59_7mr36")
+cogito_name = ""
+show_debug_shape = null
 
 [node name="coatRackStanding(Clone)" type="MeshInstance3D" parent="ENTRANCE_AREA/coatRackStanding"]
 mesh = SubResource("ArrayMesh_fjv67")
@@ -7806,6 +7846,8 @@ rich_text = true
 shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Note_Welcome" parent="." instance=ExtResource("80_g3r0x")]
+cogito_name = ""
+show_debug_shape = null
 
 [node name="FrontDoor" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
@@ -7910,13 +7952,19 @@ shape = SubResource("ConvexPolygonShape3D_n4app")
 
 [node name="Pickup_Flashlight" parent="." instance=ExtResource("91_fk2yu")]
 transform = Transform3D(-0.379472, 0, -0.925203, 0, 1, 0, 0.925203, 0, -0.379472, 4.70889, 1.33737, -0.00629956)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="RippedPageA_pickup" parent="." instance=ExtResource("91_qq2p0")]
 transform = Transform3D(-2.63806e-09, 0.998177, -0.0603517, 4.36317e-08, 0.0603517, 0.998177, 1, 0, -4.37114e-08, 5.13684, 0.51698, -11.7774)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="RippedPageB_pickup" parent="." instance=ExtResource("92_11u5w")]
 transform = Transform3D(-0.999185, 0.0287171, 0.0283608, 0.0286762, 0.0106298, 0.999532, 0.0284021, 0.999531, -0.0114446, 0.584339, 0.607864, 14.3816)
 mass = 0.5
+cogito_name = ""
+show_debug_shape = null
 
 [node name="LIGHTZONES" type="Node3D" parent="."]
 
@@ -7973,9 +8021,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58288, 0.921004, 12.0337)
 
 [node name="Coins" parent="." instance=ExtResource("93_phwoo")]
 transform = Transform3D(0.225393, 0, -0.974268, 0, 1, 0, 0.974268, 0, 0.225393, -1.03416, 0.88054, -11.2766)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="Coins2" parent="." instance=ExtResource("93_phwoo")]
 transform = Transform3D(-0.821508, 0, -0.570197, 0, 1, 0, 0.570197, 0, -0.821508, -1.33015, 0.86935, -11.3396)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="LabPowerSwitch" parent="." instance=ExtResource("66_4pwwj")]
 transform = Transform3D(-1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, -4.43584, 3.70623, 9.74427)
@@ -7994,9 +8046,13 @@ properties_to_set_OFF = {
 
 [node name="InventoryBag" parent="." instance=ExtResource("104_mm36t")]
 transform = Transform3D(0.845402, 0, -0.534131, 0, 1, 0, 0.534131, 0, 0.845402, -6.42311, 1.24142, -13.9382)
+cogito_name = ""
+show_debug_shape = null
 
 [node name="Pickup_LaserRifle" parent="." instance=ExtResource("107_md63x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.653115, -10.2482)
+cogito_name = ""
+show_debug_shape = null
 
 [connection signal="body_entered" from="QUESTS/Archive_QuestStarter" to="QUESTS/Archive_QuestStarter" method="_on_body_entered"]
 [connection signal="body_entered" from="QUESTS/Laptop_QuestStarter" to="QUESTS/Laptop_QuestStarter" method="_on_body_entered"]
