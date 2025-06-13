@@ -18,11 +18,11 @@ signal object_exits_tree()
 		if show_aabb_debug_shape:
 			CogitoGlobals.draw_box_aabb(get_aabb(), Color.AQUA)
 
-## Shows the objects AABB debug shape in Editor. Make sure to turn this off before running/exporting your project.
+## Shows the objects AABB debug shape in Editor.
 @export var show_aabb_debug_shape : bool = false:
 	set(new_show_debug_shape):
 		show_aabb_debug_shape = new_show_debug_shape
-		if show_aabb_debug_shape:
+		if Engine.is_editor_hint() and show_aabb_debug_shape:
 			CogitoGlobals.draw_box_aabb(get_aabb(), Color.AQUA)
 		else:
 			CogitoGlobals.clear_debug_shape()
@@ -45,8 +45,8 @@ func get_aabb():
 		return custom_aabb
 		
 	var aabb : AABB = AABB()
-
-	for child in find_children("*", "GeometryInstance3D", true, false):
+	
+	for child in find_children("*", "MeshInstance3D", true, false):
 		if child.visible:
 			aabb = aabb.merge(child.transform * child.get_aabb())
 	
