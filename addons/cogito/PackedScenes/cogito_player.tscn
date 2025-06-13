@@ -38,7 +38,8 @@ size = Vector3(0.6, 1.7, 0.6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ut3wm"]
 size = Vector3(0.6, 0.7, 0.6)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_ekjhh"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_bpb0d"]
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_af0lu"]
 streams_count = 5
@@ -133,7 +134,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
 
 [node name="ItemDropShapeCast" type="ShapeCast3D" parent="Body/Neck/Head/Eyes/Camera"]
-shape = SubResource("SphereShape3D_ekjhh")
+shape = SubResource("BoxShape3D_bpb0d")
 target_position = Vector3(0, 0, -2)
 collision_mask = 3
 debug_shape_custom_color = Color(1, 0.368977, 0.687569, 1)
@@ -198,6 +199,7 @@ grow_vertical = 2
 [node name="Player_HUD" parent="GUI/Panel/AspectRatioContainer" node_paths=PackedStringArray("player") instance=ExtResource("21_j3p88")]
 layout_mode = 2
 player = NodePath("../../../..")
+item_drop_distance_offset = 0.0
 
 [node name="PauseMenu" parent="GUI/Panel/AspectRatioContainer" instance=ExtResource("22_haksr")]
 layout_mode = 2

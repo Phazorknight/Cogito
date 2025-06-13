@@ -71,6 +71,7 @@ collision_layer = 3
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_kghua")
+custom_aabb = AABB(0, 0, 0, 0.3, 0.5, 0.3)
 
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
 transform = Transform3D(0.685, 0, 0, 0, 0.685, 0, 0, 0, 0.685, 0, -0.1043, 0)

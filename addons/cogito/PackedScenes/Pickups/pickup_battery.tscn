@@ -43,7 +43,7 @@ metallic_specular = 0.2
 height = 0.3
 radius = 0.1
 
-[sub_resource type="Resource" id="Resource_c0wls"]
+[sub_resource type="Resource" id="Resource_ytnlk"]
 resource_local_to_scene = true
 script = ExtResource("3_12bow")
 inventory_item = ExtResource("2_hmjxw")
@@ -77,6 +77,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0504714, 0)
 shape = SubResource("CylinderShape3D_emdw8")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_5yg6i")]
-slot_data = SubResource("Resource_c0wls")
+slot_data = SubResource("Resource_ytnlk")
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_q7tof")]

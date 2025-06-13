@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="3_3mis5"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="3_v5e5e"]
 
-[sub_resource type="Resource" id="Resource_w022u"]
+[sub_resource type="Resource" id="Resource_xm6ue"]
 resource_local_to_scene = true
 script = ExtResource("2_rpoee")
 inventory_item = ExtResource("2_j4by2")
@@ -16,6 +16,7 @@ origin_index = -1
 [node name="DiamondKeyA" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_07h5b")
+custom_aabb = AABB(0, 0, 0, 0.15, 0.25, 0.02)
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
 material_override = ExtResource("3_3mis5")
@@ -29,4 +30,4 @@ polygon = PackedVector2Array(0, 0.125, 0.15, 0.25, 0.15, 0)
 margin = 0.02
 
 [node name="PickupComponent" parent="." instance=ExtResource("3_v5e5e")]
-slot_data = SubResource("Resource_w022u")
+slot_data = SubResource("Resource_xm6ue")

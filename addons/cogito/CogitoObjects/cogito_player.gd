@@ -175,6 +175,7 @@ var stand_after_roll : bool = false
 var is_movement_paused : bool = false
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
+var radius : float
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -217,6 +218,8 @@ func _ready():
 	player_interaction_component.exclude_player(get_rid())
 	
 	randomize() 
+	
+	radius = _calculate_player_radius()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -1276,6 +1279,19 @@ func apply_external_force(force_vector: Vector3):
 		velocity += force_vector
 		move_and_slide()
 
+
+func _calculate_player_radius():
+	var radius : float = 0.0
+	for child in find_children("*", "CollisionShape3D", false, false):
+		if child.shape is BoxShape3D:
+			var edge = max(child.shape.size.x, child.shape.size.z)
+			var r = sqrt(2 * pow(edge / 2, 2))
+			radius = max(r, radius)
+		elif child.shape is CylinderShape3D or child.shape is CapsuleShape3D:
+			radius = max(child.shape.radius, radius)
+	
+	return radius
+	
 
 class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO

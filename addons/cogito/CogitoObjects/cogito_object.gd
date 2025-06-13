@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends Node3D
 class_name CogitoObject
@@ -9,16 +10,47 @@ signal object_exits_tree()
 ## Name that will displayed when interacting. Leave blank to hide
 @export var display_name : String
 
+@export_group("Object Size and Shape")
+## Set a custom shape used for calculating object size when dropping.
+@export var custom_aabb : AABB = AABB():
+	set(new_aabb):
+		custom_aabb = new_aabb
+		if show_aabb_debug_shape:
+			CogitoGlobals.draw_box_aabb(get_aabb(), Color.AQUA)
+
+## Shows the objects AABB debug shape in Editor.
+@export var show_aabb_debug_shape : bool = false:
+	set(new_show_debug_shape):
+		show_aabb_debug_shape = new_show_debug_shape
+		if Engine.is_editor_hint() and show_aabb_debug_shape:
+			CogitoGlobals.draw_box_aabb(get_aabb(), Color.AQUA)
+		else:
+			CogitoGlobals.clear_debug_shape()
+
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var properties : int
 var spawned_loot_item: bool = false
+
 
 func _ready():
 	self.add_to_group("interactable")
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_interaction_nodes()
 	find_cogito_properties()
+
+
+func get_aabb():
+	if custom_aabb:
+		return custom_aabb
+		
+	var aabb : AABB = AABB()
+	
+	for child in find_children("*", "MeshInstance3D", true, false):
+		if child.visible:
+			aabb = aabb.merge(child.transform * child.get_aabb())
+	
+	return aabb
 
 
 # Future method to set object state when a scene state file is loaded.

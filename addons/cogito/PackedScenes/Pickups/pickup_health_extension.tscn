@@ -44,7 +44,7 @@ albedo_color = Color(0.815686, 1, 1, 0.196078)
 height = 0.4
 radius = 0.15
 
-[sub_resource type="Resource" id="Resource_m243c"]
+[sub_resource type="Resource" id="Resource_wefnc"]
 resource_local_to_scene = true
 script = ExtResource("4_idj1w")
 inventory_item = ExtResource("3_lmeso")
@@ -71,6 +71,7 @@ collision_layer = 3
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_jslki")
+custom_aabb = AABB(0, 0, 0, 0.3, 0.5, 0.3)
 
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
 transform = Transform3D(0.685, 0, 0, 0, 0.685, 0, 0, 0, 0.685, 0, -0.1043, 0)
@@ -87,7 +88,7 @@ visible = false
 shape = SubResource("CylinderShape3D_tvmxx")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_ys4lp")]
-slot_data = SubResource("Resource_m243c")
+slot_data = SubResource("Resource_wefnc")
 
 [node name="ImpactSounds" parent="." instance=ExtResource("5_k52x1")]
 impact_sounds = SubResource("AudioStreamRandomizer_qu2a1")

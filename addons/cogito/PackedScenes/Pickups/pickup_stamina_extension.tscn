@@ -159,6 +159,7 @@ stream_9/stream = ExtResource("16_tqhen")
 [node name="Pickup_StaminaExtension" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_kx4rj")
+custom_aabb = AABB(0, 0, 0, 0.5, 0.7, 0.5)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.354032, 0)

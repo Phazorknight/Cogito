@@ -89,7 +89,7 @@ metallic = 1.0
 height = 0.28
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_dnyhi"]
+[sub_resource type="Resource" id="Resource_bjf8k"]
 resource_local_to_scene = true
 script = ExtResource("4_axham")
 inventory_item = ExtResource("3_gx5o5")
@@ -100,9 +100,10 @@ origin_index = -1
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 collision_layer = 3
 continuous_cd = true
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_bxu6r")
+custom_aabb = AABB(0, 0, 0, 0.2, 0.3, 0.2)
 
 [node name="foamBulletB" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 4.8, 0, 0, 0, 2, 0, 0.140953, 0)
@@ -127,7 +128,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
 shape = SubResource("CylinderShape3D_xbicr")
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_31l8w")]
-slot_data = SubResource("Resource_dnyhi")
+slot_data = SubResource("Resource_bjf8k")
 
 [node name="Lifespan" type="Timer" parent="."]
 

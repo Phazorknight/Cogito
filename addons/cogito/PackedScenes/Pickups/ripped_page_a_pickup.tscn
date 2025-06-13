@@ -19,6 +19,7 @@ origin_index = -1
 collision_layer = 3
 mass = 0.5
 script = ExtResource("1_5d7wv")
+custom_aabb = AABB(0, 0, 0, 0.11, 0.26, 0.04)
 
 [node name="RippedPageA_Mesh" type="CSGPolygon3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.1, -0.125, 0)
