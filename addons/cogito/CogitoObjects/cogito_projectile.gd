@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/cogito/Assets/Graphics/Editor/Icon_CogitoObject.svg")
 extends CogitoObject
 ## Derived from CogitoObject, this class handles additional information for projectiles like lifespan, damage, destroy_on_impact. Some of these are inherited from the Wieldable that spawns this projectile.
@@ -10,7 +11,7 @@ var damage_amount : int = 0
 
 ## Determine what happens if the projectile hits something. Keep this false for stuff like Arrows. True for stuff like bullets or rockets.
 @export var destroy_on_impact : bool = false
-## Sound that gets played when projectile dies.
+## Sound that gets played when the projectile dies.
 @export var sound_on_death : AudioStream
 ## Should the projectile stick to what it hits?
 @export var stick_on_impact : bool = false
