@@ -93,11 +93,11 @@ offset_bottom = -150.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("7_gti6b")
+start_fade_at_value_max = true
+fade_on_attribute_increase = true
+blink_fade_at_value_max = true
 time_before_fadeout = 1.5
 bar_stylebox = SubResource("StyleBoxFlat_8x37p")
-
-[node name="AttributeBar" parent="FixedStaminaBar/HBoxContainer" index="1"]
-custom_minimum_size = Vector2(130, 5)
 
 [node name="AttributeLabel" parent="FixedStaminaBar/HBoxContainer" index="2"]
 visible = false
