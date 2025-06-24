@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://lc5uq2e6ldah"]
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=6 format=3 uid="uid://lc5uq2e6ldah"]
 
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="1_dj2ew"]
 [ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_dk2he"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_weko3"]
 [ext_resource type="PackedScene" uid="uid://dgtjml2t3hdvx" path="res://addons/cogito/Wieldables/toy_pistol.tscn" id="4_0vdxq"]
+[ext_resource type="Texture2D" uid="uid://bumuahv4keox4" path="res://addons/cogito/Assets/Graphics/Crosshair_Kenney/crosshair037.png" id="4_rkdsg"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_dk2he")
 wieldable_scene = ExtResource("4_0vdxq")
+wieldable_crosshair = ExtResource("4_rkdsg")
 no_reload = false
 hint_on_empty = "Out of bullets."
 charge_max = 10.0

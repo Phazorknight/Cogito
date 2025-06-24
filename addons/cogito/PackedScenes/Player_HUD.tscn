@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=36 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" uid="uid://dc3bukoacyq60" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cg41w2fijcp4q" path="res://addons/cogito/InventoryPD/UiScenes/Slot.tscn" id="5_juyvt"]
 [ext_resource type="PackedScene" uid="uid://bf2qmquc7ys81" path="res://addons/cogito/InventoryPD/UiScenes/HotBarInventoryUi.tscn" id="6_8odro"]
 [ext_resource type="PackedScene" uid="uid://c3ti1cb2o1a11" path="res://addons/cogito/Components/UI/UI_CurrencyComponent.tscn" id="6_kmqyf"]
+[ext_resource type="Texture2D" uid="uid://b66g1sdiunpqk" path="res://addons/cogito/Assets/Graphics/Crosshair_Kenney/crosshair001.png" id="7_eu3l5"]
 [ext_resource type="Script" uid="uid://bc82t4m5e83s5" path="res://addons/cogito/Components/UI/Ui_StaminaAttribute.gd" id="7_gti6b"]
 [ext_resource type="Script" uid="uid://bjvjod3kt0kyr" path="res://addons/cogito/Scripts/ui_wieldable_hud.gd" id="8_2nbvg"]
 [ext_resource type="AudioStream" uid="uid://bnqnuewmntcyp" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/error_008.ogg" id="8_bxpra"]
@@ -70,14 +71,13 @@ script = ExtResource("1_0wdkf")
 object_name_component = ExtResource("3_6j0b3")
 prompt_component = ExtResource("3_06ipe")
 hint_component = ExtResource("17_bidre")
-item_drop_distance_offset = null
 ui_attribute_prefab = ExtResource("20_lscav")
 ui_currency_prefab = ExtResource("6_kmqyf")
 fixed_stamina_bar = NodePath("FixedStaminaBar")
+default_crosshair = ExtResource("7_eu3l5")
 ui_currency_area = NodePath("InventoryInterface/CogitoTabMenu/Inventory/PlayerCurrencies/MarginContainer/VBoxContainer")
 attribute_display_node = NodePath("InventoryInterface/CogitoTabMenu/Stats/QuestDisplay/VBoxContainer/TabContainer/Attributes")
 ui_attribute_display_prefab = ExtResource("20_3jei3")
-only_show_interface_attributes = null
 
 [node name="FixedStaminaBar" parent="." instance=ExtResource("20_lscav")]
 layout_mode = 1

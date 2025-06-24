@@ -8,6 +8,7 @@ signal charge_changed()
 @export var wieldable_scene : PackedScene
 ## Icon that is displayed on the HUD when item is wielded. If NULL, the item icon will be used instead.
 @export var wieldable_data_icon : Texture2D
+@export var wieldable_crosshair : Texture2D
 ## Check this if your wieldable doesn't use reload (for example melee weapons)
 @export var no_reload : bool = false
 ## Message to display when wieldable is empty (no ammo in clip/no charge). Leave empty if you don't want to show any message.

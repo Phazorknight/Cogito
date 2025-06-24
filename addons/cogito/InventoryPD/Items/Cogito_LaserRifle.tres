@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=5 format=3 uid="uid://txiu5yxexevm"]
+[gd_resource type="Resource" script_class="WieldableItemPD" load_steps=6 format=3 uid="uid://txiu5yxexevm"]
 
 [ext_resource type="Texture2D" uid="uid://bdh5i4gqsyn72" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_LaserRifle_new.png" id="1_jjb1o"]
 [ext_resource type="Script" uid="uid://bkxgkf3pj8kb8" path="res://addons/cogito/InventoryPD/CustomResources/WieldableItemPD.gd" id="2_o1rdd"]
 [ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_yhudh"]
 [ext_resource type="PackedScene" uid="uid://bb8pm2nk8hwon" path="res://addons/cogito/Wieldables/laser_rifle.tscn" id="4_eksg8"]
+[ext_resource type="Texture2D" uid="uid://bidi8n5kbwi00" path="res://addons/cogito/Assets/Graphics/Crosshair_Kenney/crosshair188.png" id="4_ls4ol"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_o1rdd")
 wieldable_scene = ExtResource("4_eksg8")
+wieldable_crosshair = ExtResource("4_ls4ol")
 no_reload = false
 hint_on_empty = "Out of ammo."
 charge_max = 100.0

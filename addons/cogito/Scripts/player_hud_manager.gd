@@ -35,6 +35,7 @@ signal hide_inventory
 @export var ui_currency_prefab : PackedScene
 ## If you want to have the stamina bar outside of the other attributes, you can set a reference here. This will remove it from the main attribute container
 @export var fixed_stamina_bar : CogitoAttributeUi
+@export var default_crosshair : Texture2D
 
 @export_group("Interface Screen")
 @export var ui_currency_area: Control
@@ -56,6 +57,7 @@ var interaction_texture : Texture2D
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : BoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
 @onready var crosshair: Control = $Crosshair
+@onready var crosshair_texture: TextureRect = crosshair.get_child(0)
 
 #endregion
 
@@ -74,6 +76,7 @@ func _ready():
 	
 	# Set up for HUD elements for wieldables
 	wieldable_hud.hide()
+	crosshair_texture.texture = default_crosshair
 	
 	_setup_player.call_deferred()
 	connect_to_external_inventories.call_deferred()
@@ -282,7 +285,12 @@ func _on_update_wieldable_data(passed_wieldable_item: WieldableItemPD, passed_am
 	if passed_wieldable_item:
 		wieldable_hud.show()
 		wieldable_hud.update_wieldable_data(passed_wieldable_item, passed_ammo_in_inventory, passed_ammo_item)
+		if passed_wieldable_item.wieldable_crosshair:
+			crosshair_texture.texture = passed_wieldable_item.wieldable_crosshair
+		else:
+			crosshair_texture.texture = default_crosshair
 	else:
+		crosshair_texture.texture = default_crosshair
 		wieldable_hud.hide()
 
 
