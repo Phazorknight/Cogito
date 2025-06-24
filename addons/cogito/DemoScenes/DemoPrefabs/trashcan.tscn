@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://3rlbofuf3x5s"]
+[gd_scene load_steps=11 format=4 uid="uid://3rlbofuf3x5s"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_vhspn"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="2_ylwww"]
+[ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://addons/cogito/Components/ImpactSounds.tscn" id="3_6ab6a"]
+[ext_resource type="AudioStream" uid="uid://qwigatb2jruc" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactPlate_medium_000.ogg" id="4_gmdvt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60ui2"]
 resource_name = "metal"
@@ -71,11 +73,19 @@ shadow_mesh = SubResource("ArrayMesh_dmq84")
 height = 0.8
 radius = 0.2
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l8dhs"]
+resource_local_to_scene = true
+random_pitch = 1.1
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("4_gmdvt")
+
 [node name="trashcan" type="RigidBody3D"]
-transform = Transform3D(0.771402, 0, 0.636348, 0, 1, 0, -0.636348, 0, 0.771402, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 mass = 5.0
 script = ExtResource("1_vhspn")
+cogito_name = ""
 
 [node name="trashcan(Clone)" type="MeshInstance3D" parent="."]
 transform = Transform3D(2.98023e-08, 0, 0.472031, 0, 0.472031, 0, -0.472031, 0, 2.98023e-08, 0, -0.4, 0)
@@ -89,3 +99,6 @@ shape = SubResource("CylinderShape3D_k8338")
 [node name="CarryableComponent" parent="." instance=ExtResource("2_ylwww")]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, -0.4, 0)
 carry_distance_offset = -1.0
+
+[node name="ImpactSounds" parent="." instance=ExtResource("3_6ab6a")]
+impact_sounds = SubResource("AudioStreamRandomizer_l8dhs")

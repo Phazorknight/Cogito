@@ -341,6 +341,7 @@ process_material = SubResource("ParticleProcessMaterial_d1eos")
 draw_pass_1 = SubResource("BoxMesh_rxstj")
 
 [node name="LaserRifleMesh" type="Node3D" parent="." node_paths=PackedStringArray("tracked_nodes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0180441, 0)
 script = ExtResource("5_fa3wp")
 tracked_nodes = [NodePath("blasterA"), NodePath("clipA")]
 
@@ -361,6 +362,6 @@ surface_material_override/2 = SubResource("StandardMaterial3D_lb5c8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_cc27k"),
-"LaserRifle": ExtResource("3_fjq23")
+&"": SubResource("AnimationLibrary_cc27k"),
+&"LaserRifle": ExtResource("3_fjq23")
 }

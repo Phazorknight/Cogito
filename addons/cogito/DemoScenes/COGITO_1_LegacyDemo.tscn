@@ -1216,7 +1216,6 @@ bidirectional_swing = true
 open_rotation = Vector3(0, -95, 0)
 closed_position = Vector3(-14.9, 0, 9.2)
 open_position = Vector3(-14.9, 0, 8.309)
-forced_rotation_axis = null
 door_speed = 3.0
 reverse_opening_anim_for_close = false
 
@@ -1269,7 +1268,6 @@ transform = Transform3D(-0.0871558, -0.996195, 0, 0.996195, -0.0871558, 0, 0, 0,
 [node name="RampA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS/RampA_Parent"]
 script = ExtResource("23_rfav8")
 open_rotation = Vector3(0, 0, 85)
-forced_rotation_axis = null
 door_speed = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/RampA_Parent/RampA"]
@@ -1288,7 +1286,6 @@ transform = Transform3D(0.0871558, 0.996195, -8.74228e-08, 0.996195, -0.0871558,
 [node name="RampB" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS/RambB_Parent"]
 script = ExtResource("23_rfav8")
 open_rotation = Vector3(0, 0, 85)
-forced_rotation_axis = null
 door_speed = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/RambB_Parent/RampB"]
@@ -1307,7 +1304,6 @@ is_locked = true
 key = ExtResource("9_g1bqh")
 key_hint = "Locked. Is there a key nearby?"
 open_rotation = Vector3(0, -95, 0)
-forced_rotation_axis = null
 door_speed = 3.0
 
 [node name="BasicInteraction" parent="INTERACTIVE_OBJECTS/DoorLocked" index="7"]
@@ -1369,6 +1365,7 @@ slot_data = SubResource("Resource_u8yjv")
 
 [node name="CarriableBox" parent="INTERACTIVE_OBJECTS" instance=ExtResource("6_cy1m6")]
 transform = Transform3D(0.90323, 0, 0.429156, 0, 1, 0, -0.429156, 0, 0.90323, -14.0048, 0.748613, 6.50097)
+cogito_name = ""
 
 [node name="GateParent" type="Node3D" parent="INTERACTIVE_OBJECTS"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -45, 0, 14.6)
@@ -1376,7 +1373,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -45, 0
 [node name="GateA" type="AnimatableBody3D" parent="INTERACTIVE_OBJECTS/GateParent"]
 script = ExtResource("23_rfav8")
 open_rotation = Vector3(0, 100, 0)
-forced_rotation_axis = null
 door_speed = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/GateParent/GateA"]
@@ -1393,7 +1389,6 @@ shape = SubResource("ConvexPolygonShape3D_qb88g")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 14.6)
 script = ExtResource("23_rfav8")
 open_rotation = Vector3(0, -100, 0)
-forced_rotation_axis = null
 door_speed = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/GateB"]
@@ -1478,7 +1473,6 @@ script = ExtResource("23_rfav8")
 door_type = 1
 closed_position = Vector3(-42, -0.05, 17.5)
 open_position = Vector3(-7.8, -0.05, 15.8)
-forced_rotation_axis = null
 door_speed = 15.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="INTERACTIVE_OBJECTS/MovingPlattform"]
@@ -1494,6 +1488,7 @@ shape = SubResource("BoxShape3D_xr44e")
 
 [node name="Pickup_Key" parent="ITEM_PICKUPS" instance=ExtResource("9_qv8nx")]
 transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -20.3141, 1.15447, 14.2689)
+cogito_name = ""
 
 [node name="Pickup_Battery" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 2.84064)
@@ -1515,9 +1510,11 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.581
 
 [node name="Pickup_StaminaExtension" parent="ITEM_PICKUPS" instance=ExtResource("18_pobhb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23053, 1.03198, 0.820036)
+cogito_name = ""
 
 [node name="Pickup_Flashlight" parent="ITEM_PICKUPS" instance=ExtResource("1_oweej")]
 transform = Transform3D(0.707107, 0.603448, 0.368578, 0, 0.521248, -0.853405, -0.707107, 0.603448, 0.368578, -4.73354, 1.21477, 0.740502)
+cogito_name = ""
 
 [node name="HealthPotion" parent="ITEM_PICKUPS" instance=ExtResource("12_2vt2n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.04485, 1.30439, -2.94002)
@@ -1530,6 +1527,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.11495, 1.30439, -2.43652)
 
 [node name="pickup_pistol" parent="ITEM_PICKUPS" instance=ExtResource("30_a7v26")]
 transform = Transform3D(-0.476652, -0.798393, -0.367929, 0, 0.418533, -0.908202, 0.879092, -0.432897, -0.199495, 0.0763087, 1.13928, 7.81337)
+cogito_name = ""
 
 [node name="RotatingLift" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24.6928, 3.8552, 8.98188)
@@ -1619,24 +1617,29 @@ shape = SubResource("BoxShape3D_ht4uj")
 
 [node name="DiamondKeyA" parent="." instance=ExtResource("25_w5f1m")]
 transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, -48.826, 1.15805, 11.5805)
+cogito_name = ""
 
 [node name="DiamondKeyB" parent="." instance=ExtResource("26_1prk2")]
 transform = Transform3D(1.91069e-15, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -1, 0, -4.37114e-08, -48.8403, 1.07184, 8.62943)
+cogito_name = ""
 
 [node name="TargetDestructable" parent="." instance=ExtResource("8_tk621")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.359148, 1.47946, 12.0464)
+cogito_name = ""
 
 [node name="HealthAttribute" parent="TargetDestructable" index="0"]
 spawn_on_death = Array[PackedScene]([])
 
 [node name="TargetDestructable2" parent="." instance=ExtResource("8_tk621")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.38405, 2.27151, 14.1442)
+cogito_name = ""
 
 [node name="HealthAttribute" parent="TargetDestructable2" index="0"]
 spawn_on_death = Array[PackedScene]([])
 
 [node name="TargetDestructable3" parent="." instance=ExtResource("8_tk621")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.14804, 1.65236, 13.3596)
+cogito_name = ""
 
 [node name="HealthAttribute" parent="TargetDestructable3" index="0"]
 spawn_on_death = Array[PackedScene]([])
@@ -1731,6 +1734,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -10.5,
 target_position = Vector3(0, 0, -1)
 
 [node name="Document" parent="." instance=ExtResource("44_im51b")]
+cogito_name = ""
 
 [node name="Door_for_Keypad" type="AnimatableBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.8, 0, 2.91)
@@ -1740,7 +1744,6 @@ key_hint = "Key needed."
 door_type = 1
 closed_position = Vector3(-10.8, 0, 2.91)
 open_position = Vector3(-10.8, -2.1, 2.91)
-forced_rotation_axis = null
 door_speed = 0.9
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Door_for_Keypad"]

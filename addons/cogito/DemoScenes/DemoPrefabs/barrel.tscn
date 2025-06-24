@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://co1opmwyvl27"]
+[gd_scene load_steps=19 format=4 uid="uid://co1opmwyvl27"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_p1u1m"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="2_lxpj6"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="6_wc6qr"]
 [ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="7_efwiw"]
 [ext_resource type="PackedScene" uid="uid://cj0yaeh3yg7tu" path="res://addons/cogito/Components/Properties/CogitoProperties.tscn" id="8_x2mti"]
+[ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://addons/cogito/Components/ImpactSounds.tscn" id="11_q2obl"]
+[ext_resource type="AudioStream" uid="uid://ct431lxvh2cyy" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactSoft_heavy_000.ogg" id="12_lny03"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1tv7"]
 resource_name = "cloth"
@@ -79,6 +81,12 @@ shadow_mesh = SubResource("ArrayMesh_pgj6m")
 height = 1.0
 radius = 0.38
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lpphm"]
+random_pitch = 1.1
+random_volume_offset_db = 3.0
+streams_count = 1
+stream_0/stream = ExtResource("12_lny03")
+
 [node name="barrel" type="RigidBody3D"]
 collision_layer = 3
 mass = 10.0
@@ -114,6 +122,9 @@ drop_sound = ExtResource("7_efwiw")
 [node name="CogitoProperties" parent="." instance=ExtResource("8_x2mti")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512641, 0)
 elemental_properties = 2
+
+[node name="ImpactSounds" parent="." instance=ExtResource("11_q2obl")]
+impact_sounds = SubResource("AudioStreamRandomizer_lpphm")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

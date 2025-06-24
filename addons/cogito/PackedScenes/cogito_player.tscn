@@ -200,7 +200,6 @@ grow_vertical = 2
 layout_mode = 2
 player = NodePath("../../../..")
 item_drop_distance_offset = 0.0
-only_show_interface_attributes = false
 
 [node name="PauseMenu" parent="GUI/Panel/AspectRatioContainer" instance=ExtResource("22_haksr")]
 layout_mode = 2
