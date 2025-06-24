@@ -13,6 +13,10 @@ extends TabContainer
 ## If one of the tabs is a Cogito Inventory, set the tab index here. This makes sure that gamepad focus is set on an inventory slot. Leave empty if no inventory is present.
 @export var tab_index_of_inventory : int
 @export var inventory_interface_reference : Control
+@export_group("Input Bindings Settings")
+## If one of the tabs is a Cogito Inventory, set the tab index here. This makes sure that gamepad focus is set on an inventory slot. Leave empty if no inventory is present.
+@export var tab_index_of_bindings : int
+@export var bindings_container_node : Control
 
 var focus_currently_on_external_inventory : bool = false
 
@@ -35,8 +39,14 @@ func _input(event):
 		else:
 			current_tab += 1
 		
+		# When navigating to an inventory tab, this makes sure that the inventory slots grab focus.
 		if InputHelper.device_index != -1 and inventory_interface_reference != null and current_tab == tab_index_of_inventory:
 			inventory_interface_reference.inventory_ui.slot_array[0].grab_focus.call_deferred()
+			return
+		
+		# When navigating to an input bindings tab, this makes sure that the first remap entry grabs focus.
+		if InputHelper.device_index != -1 and bindings_container_node != null and current_tab == tab_index_of_bindings:
+			bindings_container_node.get_child(1).kbm_bind_button.grab_focus.call_deferred()
 			return
 
 		if nodes_to_focus[current_tab]:
@@ -47,9 +57,15 @@ func _input(event):
 			current_tab = get_tab_count()-1
 		else:
 			current_tab -= 1
-
+		
+		# When navigating to an inventory tab, this makes sure that the inventory slots grab focus.
 		if InputHelper.device_index != -1 and inventory_interface_reference != null and current_tab == tab_index_of_inventory:
 			inventory_interface_reference.inventory_ui.slot_array[0].grab_focus.call_deferred()
+			return
+			
+		# When navigating to an input bindings tab, this makes sure that the first remap entry grabs focus.
+		if InputHelper.device_index != -1 and bindings_container_node != null and current_tab == tab_index_of_bindings:
+			bindings_container_node.get_child(1).kbm_bind_button.grab_focus.call_deferred()
 			return
 
 		if nodes_to_focus[current_tab]:

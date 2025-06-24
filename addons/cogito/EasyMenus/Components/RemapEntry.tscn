@@ -24,7 +24,7 @@ offset_bottom = 40.0
 theme_override_constants/separation = 5
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Button"

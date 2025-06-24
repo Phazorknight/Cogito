@@ -23,7 +23,7 @@ func set_quantity(value: int):
 	
 	if quantity > 1 and not inventory_item.is_stackable:
 		quantity = 1
-		push_error("%s is not stackable, setting quantity to 1" % inventory_item.name )
+		CogitoGlobals.debug_log(true, "InventorySlot.gd", "%s is not stackable, setting quantity to 1" % inventory_item.name )
 
 
 func can_merge_with(other_slot_data: InventorySlotPD) -> bool:

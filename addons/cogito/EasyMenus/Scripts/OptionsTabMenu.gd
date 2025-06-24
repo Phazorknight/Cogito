@@ -97,6 +97,8 @@ var input_actions = {
 	"quickslot_2": "Quickslot 2",
 	"quickslot_3": "Quickslot 3",
 	"quickslot_4": "Quickslot 4",
+	"quickslot_prev_wieldable": "Prev Quickslot",
+	"quickslot_next_wieldable": "Next Quickslot",
 	"separator_inventory": "MENUS",
 	"menu": "Pause",
 	"inventory": "Inventory",

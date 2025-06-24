@@ -99,7 +99,7 @@ func update_gamepad_icon(icon_textures:Texture2D = gamepad_icons):
 		frame = gamepad_motion_to_frame_index(joypad_input)
 	else:
 		CogitoGlobals.debug_log(true, "DynamicInputIcon.gd", "Action " + action_name + ": No gamepad input map assigned.")
-		frame = 0
+		frame = 140
 		return
 
 func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
@@ -117,6 +117,11 @@ func update_icon_kbm(): # Sets the bound action to keyboard and mouse icon
 			frame = keycode_to_frame_index("Mouse Left")
 		if keyboard_input.get_button_index() == MOUSE_BUTTON_MIDDLE:
 			frame = keycode_to_frame_index("Mouse Middle")
+		if keyboard_input.get_button_index() == MOUSE_BUTTON_WHEEL_UP:
+			frame = keycode_to_frame_index("Mouse Wheel Up")
+		if keyboard_input.get_button_index() == MOUSE_BUTTON_WHEEL_DOWN:
+			frame = keycode_to_frame_index("Mouse Wheel Down")
+		
 		
 	else:
 		CogitoGlobals.debug_log(true, "DynamicInputIcon.gd", "Action " + action_name + ": No primary keyboard/mouse input map assigned.")
@@ -177,6 +182,10 @@ func keycode_to_frame_index(key_code_string: String) -> int:
 			return 109
 		"Mouse Middle":
 			return 110
+		"Mouse Wheel Up":
+			return 113
+		"Mouse Wheel Down":
+			return 114
 		"0":
 			return 1
 		"1":

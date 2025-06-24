@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=4 uid="uid://co1opmwyvl27"]
+[gd_scene load_steps=16 format=4 uid="uid://co1opmwyvl27"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_p1u1m"]
 [ext_resource type="PackedScene" uid="uid://k28yrbg3k3pw" path="res://addons/cogito/Components/HitboxComponent.tscn" id="2_lxpj6"]
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="3_kqaad"]
+[ext_resource type="AudioStream" uid="uid://bornfrngbuorq" path="res://addons/cogito/Assets/Audio/Kenney/explosion2.ogg" id="4_6i7eu"]
 [ext_resource type="PackedScene" uid="uid://4pr4qkdw2ru6" path="res://addons/cogito/Assets/VFX/Impacts/Impact_01.tscn" id="4_y2b0x"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="5_vqdq1"]
 [ext_resource type="PackedScene" uid="uid://bvkkotlj71pqa" path="res://addons/cogito/Assets/VFX/Explosion_01/Explosion.tscn" id="5_w4syf"]
@@ -85,6 +86,7 @@ continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_p1u1m")
+cogito_name = ""
 
 [node name="barrel" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.43, 0, 0, 0, 0.43, 0, 0, 0, 0.43, 0, -0.5, 0)
@@ -98,6 +100,7 @@ shape = SubResource("CylinderShape3D_d5f8h")
 health_attribute = NodePath("../HealthAttribute")
 
 [node name="HealthAttribute" parent="." instance=ExtResource("3_kqaad")]
+sound_on_death = ExtResource("4_6i7eu")
 destroy_on_death = Array[NodePath]([NodePath("..")])
 spawn_on_death = Array[PackedScene]([ExtResource("4_y2b0x"), ExtResource("5_w4syf")])
 value_max = 3.0

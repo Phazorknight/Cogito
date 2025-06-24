@@ -20,4 +20,5 @@ offset_bottom = 40.0
 [node name="DynamicInputIcon" parent="MarginContainer" instance=ExtResource("3_0rc8b")]
 position = Vector2(20, 20)
 scale = Vector2(0.5, 0.5)
+frame = 113
 input_icon_type = 2
