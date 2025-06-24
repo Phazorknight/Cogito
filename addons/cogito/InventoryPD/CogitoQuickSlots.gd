@@ -5,8 +5,10 @@ class_name CogitoQuickslots
 
 ## If true, the player can assign the same item to multiple quickslots.
 @export var allow_multiple_quickslot_binds : bool = true
-
+## When multiple wieldables are quickslotted, cycling will unequip the last wieldable found before cycling back to the first wieldable found
+@export var allow_unequip_when_cycling_wieldables: bool = true
 @export var quickslot_containers : Array[CogitoQuickslotContainer]
+var player_interaction_component: PlayerInteractionComponent
 
 # var assigned_quickslots : Array[InventorySlotPD]
 @export var inventory_reference : CogitoInventory:
@@ -123,6 +125,11 @@ func _unhandled_input(event):
 		else:
 			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 4...")
 			return
+	
+	if event.is_action_released("quickslot_prev_wieldable"):
+		_cycle_through_quickslotted_wieldables(false)
+	elif event.is_action_released("quickslot_next_wieldable"):
+		_cycle_through_quickslotted_wieldables(true)
 
 
 func update_inventory_status(is_open: bool):
@@ -151,3 +158,78 @@ func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
 				bind_to_quickslot(slot_data, quickslot_containers[i])
 				CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Auto-quickslotted " + slot_data.inventory_item.name)
 				return
+
+
+func _cycle_through_quickslotted_wieldables(cycle_up: bool) -> void:
+	if !player_interaction_component:
+		player_interaction_component = (CogitoSceneManager._current_player_node as CogitoPlayer).player_interaction_component
+
+	if player_interaction_component.is_changing_wieldables:
+		return
+
+	if player_interaction_component.interactable:
+		if player_interaction_component.is_carrying:
+			return
+		
+		for node: InteractionComponent in player_interaction_component.interactable.interaction_nodes:
+			if node.input_map_action == "interact2" and not node.is_disabled:
+				CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Looking at an interactable that" +
+				" uses this input action eventdon't attempt to cycle wieldables")
+				return
+
+	var quickslotted_wieldable_indexes: Array[int] = []
+	var current_wieldable_quickslot_index: int = -1
+	var current_equipped_wieldable: WieldableItemPD = player_interaction_component.equipped_wieldable_item
+	for i in range(quickslot_containers.size()):
+		if !quickslot_containers[i].item_reference:
+			continue
+		# Find all quickslotted wieldable quickslot indexes, possibly for the current wieldable too, if quickslotted
+		if quickslot_containers[i].item_reference == current_equipped_wieldable:
+			current_wieldable_quickslot_index = i
+			quickslotted_wieldable_indexes.append(i)
+		elif quickslot_containers[i].item_reference is WieldableItemPD:
+			quickslotted_wieldable_indexes.append(i)
+
+	var quickslotted_wieldable_count: int = quickslotted_wieldable_indexes.size()
+	if quickslotted_wieldable_count == 0: # No quickslotted wieldables, do nothing
+		return
+	
+	if current_wieldable_quickslot_index == -1: # Not wielding
+		if cycle_up:
+			inventory_reference.use_slot_data(inventory_reference.assigned_quickslots[quickslotted_wieldable_indexes[0]].origin_index)
+		else:
+			inventory_reference.use_slot_data(inventory_reference.assigned_quickslots[quickslotted_wieldable_indexes[-1]].origin_index)
+		return
+
+	if quickslotted_wieldable_indexes.size() == 1: # Wielding the only quickslotted wieldable, unequip it
+		current_equipped_wieldable.put_away()
+		return
+
+	# Cycle to the prev/next available quickslotted wieldable
+	var cycle_to_index: int = -1
+	if cycle_up:
+		for i in range(quickslotted_wieldable_count):
+			if quickslotted_wieldable_indexes[i] == current_wieldable_quickslot_index:
+				if i == quickslotted_wieldable_count-1:
+					if allow_unequip_when_cycling_wieldables:
+						current_equipped_wieldable.put_away()
+					else:
+						cycle_to_index = 0
+				else:
+					cycle_to_index = quickslotted_wieldable_indexes[i+1]
+				break
+	else:
+		for i in range(quickslotted_wieldable_count-1, -1, -1):
+			if quickslotted_wieldable_indexes[i] == current_wieldable_quickslot_index:
+				if i == 0:
+					if allow_unequip_when_cycling_wieldables:
+						current_equipped_wieldable.put_away()
+					else:
+						cycle_to_index = quickslotted_wieldable_count-1
+				else:
+					cycle_to_index = quickslotted_wieldable_indexes[i-1]
+				break
+
+	# Equip the cycled to wieldable
+	if cycle_to_index != -1:
+		inventory_reference.use_slot_data(inventory_reference.assigned_quickslots[cycle_to_index].origin_index)
