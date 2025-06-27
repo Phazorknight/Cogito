@@ -88,6 +88,10 @@ var LandingVolume: float = 0.8
 @export var TOGGLE_CROUCH : bool = false
 ## How much strength the player has to push RigidBody3D objects.
 @export var PLAYER_PUSH_FORCE : float = 1.3
+@export var LANDING_MIN_VELOCITY : float = -5.0
+@export var LANDING_MIN_ROLL_VELOCITY : float = -7.5
+@export var FREE_FALL_MIN_VELOCITY : float = -15
+@export var FREE_FALL_MIN_DIE_VELOCITY : float = -40
 
 @export_group("Headbob Properties")
 ## Head bob strength. Currently controlled/overridden by the in-game options.
@@ -853,13 +857,13 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	else:
 		last_velocity = Vector3.ZERO
 		
-	if last_velocity.y <= -7.5:
+	if last_velocity.y <= LANDING_MIN_ROLL_VELOCITY:
 		if !disable_roll_anim:
 			was_standing = is_standing
 			is_sprinting_in_airborne = false
 			state_chart.send_event("roll")
 			return
-	elif last_velocity.y <= -5.0:
+	elif last_velocity.y <= LANDING_MIN_VELOCITY:
 		animationPlayer.play("landing")
 		
 	direction = lerp(
@@ -1486,13 +1490,6 @@ func _on_airborne_state_entered() -> void:
 func _on_airborne_state_physics_processing(delta: float) -> void:
 	gravity_vec = Vector3.DOWN * gravity * delta
 
-	if input_direction != Vector2.ZERO:
-		direction = lerp(
-			direction,
-			(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
-			delta * AIR_LERP_SPEED
-		)
-		
 	if was_sprinting and Input.is_action_pressed("sprint"):
 		is_sprinting_in_airborne = true
 	else:
@@ -1507,12 +1504,40 @@ func _on_airborne_state_physics_processing(delta: float) -> void:
 		state_chart.send_event("grounded")
 #endregion
 
+#region AirControl State
+func _on_air_control_state_physics_processing(delta: float) -> void:
+	if input_direction != Vector2.ZERO:
+		direction = lerp(
+			direction,
+			(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
+			delta * AIR_LERP_SPEED
+		)
+		
+	if main_velocity.y <= FREE_FALL_MIN_VELOCITY:
+		state_chart.send_event("fall")
+#endregion
+
 
 #region Jumping State
 func _on_jumping_state_physics_processing(delta: float) -> void:
+	if input_direction != Vector2.ZERO:
+		direction = lerp(
+			direction,
+			(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
+			delta * AIR_LERP_SPEED
+		)
+		
 	current_speed = lerp(current_speed, jump_target_speed, delta * LERP_SPEED)
-	if main_velocity.y < -7.5:
+	
+	if main_velocity.y <= FREE_FALL_MIN_VELOCITY:
 		state_chart.send_event("fall")
+#endregion
+
+
+#region FreeFall State
+func _on_free_fall_state_physics_processing(delta: float) -> void:
+	if main_velocity.y <= FREE_FALL_MIN_DIE_VELOCITY:
+		decrease_attribute("health", $HealthAttribute.value_max)
 #endregion
 
 

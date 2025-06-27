@@ -18047,12 +18047,6 @@ to = NodePath("../..")
 event = &"grounded"
 delay_in_seconds = "0.0"
 
-[node name="On Fall" type="Node" parent="StateChart/Root/Moving/Grounded/LadderClimbing"]
-script = ExtResource("32_cqpng")
-to = NodePath("../../../Airborne/Falling")
-event = &"fall"
-delay_in_seconds = "0.0"
-
 [node name="Rolling" type="Node" parent="StateChart/Root/Moving/Grounded"]
 script = ExtResource("31_74178")
 
@@ -18070,7 +18064,7 @@ delay_in_seconds = "0.0"
 
 [node name="Airborne" type="Node" parent="StateChart/Root/Moving"]
 script = ExtResource("30_brxtl")
-initial_state = NodePath("Falling")
+initial_state = NodePath("AirControl")
 
 [node name="On Grounded" type="Node" parent="StateChart/Root/Moving/Airborne"]
 script = ExtResource("32_cqpng")
@@ -18086,14 +18080,17 @@ delay_in_seconds = "0.0"
 
 [node name="On Fall" type="Node" parent="StateChart/Root/Moving/Airborne"]
 script = ExtResource("32_cqpng")
-to = NodePath("../Falling")
+to = NodePath("../FreeFall")
 event = &"fall"
 delay_in_seconds = "0.0"
 
-[node name="Falling" type="Node" parent="StateChart/Root/Moving/Airborne"]
+[node name="AirControl" type="Node" parent="StateChart/Root/Moving/Airborne"]
 script = ExtResource("31_74178")
 
 [node name="Jumping" type="Node" parent="StateChart/Root/Moving/Airborne"]
+script = ExtResource("31_74178")
+
+[node name="FreeFall" type="Node" parent="StateChart/Root/Moving/Airborne"]
 script = ExtResource("31_74178")
 
 [node name="BodyPosture" type="Node" parent="StateChart/Root"]
@@ -18570,7 +18567,9 @@ skin = SubResource("Skin_m7ccf")
 [connection signal="state_entered" from="StateChart/Root/Moving/Airborne" to="PlayerAnimationTree" method="go_airborne"]
 [connection signal="state_exited" from="StateChart/Root/Moving/Airborne" to="PlayerAnimationTree" method="standing_up"]
 [connection signal="state_physics_processing" from="StateChart/Root/Moving/Airborne" to="." method="_on_airborne_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/Moving/Airborne/AirControl" to="." method="_on_air_control_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/Root/Moving/Airborne/Jumping" to="." method="_on_jumping_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/Root/Moving/Airborne/FreeFall" to="." method="_on_free_fall_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/BodyPosture/Crouching" to="." method="_on_crouching_state_entered"]
 [connection signal="state_entered" from="StateChart/Root/BodyPosture/Crouching" to="PlayerAnimationTree" method="crouch_down"]
 [connection signal="state_exited" from="StateChart/Root/BodyPosture/Crouching" to="." method="_on_crouching_state_exited"]
