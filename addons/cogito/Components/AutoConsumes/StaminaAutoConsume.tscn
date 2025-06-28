@@ -1,0 +1,11 @@
+[gd_scene load_steps=5 format=3 uid="uid://txkg0abvpsj7"]
+
+[ext_resource type="Script" uid="uid://btf6qstj2uvk0" path="res://addons/cogito/Components/AutoConsumes/stamina_auto_consume.gd" id="1_qqsek"]
+[ext_resource type="Script" uid="uid://dr5kneob1wta8" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="2_vxhhi"]
+[ext_resource type="Resource" uid="uid://geac0jkegsqu" path="res://addons/cogito/InventoryPD/Items/Cogito_StaminaExtPotion.tres" id="3_vxhhi"]
+[ext_resource type="Resource" uid="uid://cqaa81bvtre17" path="res://addons/cogito/InventoryPD/Items/Cogito_EnergyDrink.tres" id="4_vxhhi"]
+
+[node name="StaminaAutoConsume" type="Node"]
+script = ExtResource("1_qqsek")
+consume_if_increases_max = true
+consumables = Array[ExtResource("2_vxhhi")]([ExtResource("3_vxhhi"), ExtResource("4_vxhhi")])

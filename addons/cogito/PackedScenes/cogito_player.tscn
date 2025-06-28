@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=39 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" uid="uid://dyitnpyhwiqx7" path="res://addons/cogito/CogitoObjects/cogito_player.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ll11y3yjbqt" path="res://addons/cogito/InventoryPD/Inventories/PlayerInventory_FIXED.tres" id="2_iyhv4"]
@@ -31,6 +31,8 @@
 [ext_resource type="Script" uid="uid://dog0pawpwd55d" path="res://addons/cogito/InventoryPD/CustomResources/InventoryItemPD.gd" id="25_syofm"]
 [ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres" id="26_tndpm"]
 [ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres" id="27_8coi0"]
+[ext_resource type="PackedScene" uid="uid://bnlt0es031dsf" path="res://addons/cogito/Components/AutoConsumes/HealthAutoConsume.tscn" id="32_s725a"]
+[ext_resource type="PackedScene" uid="uid://txkg0abvpsj7" path="res://addons/cogito/Components/AutoConsumes/StaminaAutoConsume.tscn" id="35_wx2rv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
 size = Vector3(0.6, 1.7, 0.6)
@@ -209,6 +211,10 @@ layout_mode = 2
 [node name="AutoPickUpZone" parent="." node_paths=PackedStringArray("_player_interaction_component") instance=ExtResource("24_810bw")]
 auto_pick_up_items = Array[ExtResource("25_syofm")]([ExtResource("26_tndpm"), ExtResource("27_8coi0")])
 _player_interaction_component = NodePath("../PlayerInteractionComponent")
+
+[node name="HealthAutoConsume" parent="." instance=ExtResource("32_s725a")]
+
+[node name="StaminaAutoConsume" parent="." instance=ExtResource("35_wx2rv")]
 
 [connection signal="mouse_movement" from="." to="Body/Neck/Head/Wieldables" method="sway"]
 [connection signal="player_state_loaded" from="." to="." method="_on_player_state_loaded"]

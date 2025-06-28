@@ -106,3 +106,11 @@ func _on_load_button_pressed() -> void:
 	CogitoSceneManager._current_scene_path = get_tree().current_scene.scene_file_path
 	CogitoSceneManager.delete_temp_saves()
 	CogitoSceneManager.copy_slot_saves_to_temp(CogitoSceneManager._active_slot)
+	
+	# Ensure the game resumes properly when loading after death
+	var player = CogitoSceneManager._current_player_node as CogitoPlayer
+	player.is_dead = false
+	player._on_pause_menu_resume()
+	player.get_node(player.pause_menu).close_pause_menu()
+	player.is_showing_ui = false
+	player.animationPlayer.stop()
