@@ -1,4 +1,4 @@
-[gd_scene load_steps=377 format=4 uid="uid://e31n36p8i6an"]
+[gd_scene load_steps=379 format=4 uid="uid://e31n36p8i6an"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_dracg"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
@@ -80,9 +80,11 @@
 [ext_resource type="PackedScene" uid="uid://6k5rvlwcpys1" path="res://addons/cogito/DemoScenes/DemoPrefabs/generic_switch.tscn" id="66_4pwwj"]
 [ext_resource type="PackedScene" uid="uid://qxbx5yllijej" path="res://addons/cogito/DemoScenes/DemoPrefabs/chair_modern_frame_cushion.tscn" id="67_qkgep"]
 [ext_resource type="PackedScene" uid="uid://8wkt5k4dl40u" path="res://addons/cogito/PackedScenes/Pickups/pickup_key.tscn" id="68_8mqrf"]
+[ext_resource type="PackedScene" uid="uid://gybj5d0rgtew" path="res://addons/cogito/PackedScenes/Pickups/pickup_energy_drink.tscn" id="68_aokhm"]
 [ext_resource type="PackedScene" uid="uid://cik703x8nr8uj" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/rugSquare.glb" id="70_rt25y"]
 [ext_resource type="PackedScene" uid="uid://csmk1jgnppq7b" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/pillowBlue.glb" id="71_7r41f"]
 [ext_resource type="PackedScene" uid="uid://bmvweggv8f5p1" path="res://addons/cogito/DemoScenes/DemoPrefabs/laptop.tscn" id="72_fpgjy"]
+[ext_resource type="PackedScene" uid="uid://8m1mwoi5qca0" path="res://addons/cogito/PackedScenes/Pickups/pickup_emergency_injector.tscn" id="73_jpxt7"]
 [ext_resource type="PackedScene" uid="uid://c1kdq421bm28m" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_ledge_corner_outer.tscn" id="74_2rhvg"]
 [ext_resource type="PackedScene" uid="uid://blll0724l8foj" path="res://addons/cogito/DemoScenes/DemoPrefabs/rug_rectangle.tscn" id="75_26fkw"]
 [ext_resource type="PackedScene" uid="uid://i0ybayaeafds" path="res://addons/cogito/DemoScenes/DemoPrefabs/ksi_ledge_painted.tscn" id="75_ga2h6"]
@@ -137,7 +139,7 @@ volumetric_fog_temporal_reprojection_amount = 0.85
 density = 0.04
 albedo = Color(0.694118, 0.694118, 0.694118, 1)
 
-[sub_resource type="Resource" id="Resource_md63x"]
+[sub_resource type="Resource" id="Resource_8mfm7"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -2524,7 +2526,7 @@ shadow_mesh = SubResource("ArrayMesh_3ecdw")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_upcaa"]
 data = PackedVector3Array(0.6928, 0.0903, -1.6, 0, 0.0903, -1.2, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, 0.0903, -0.88, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 1.3856, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.7728, 0.0903, -0.88, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -1.2, 0.6128, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.6128, 0.0903, -0.72, 0, 0.0903, -1.2, 0.6928, 0.0903, 0, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.72, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 0, 0.0903, -1.2, 0, 0.0903, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -0.4, 0.6928, 0.0903, 0, 1.3856, 0.0903, -0.4, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -1.2, 0.7728, 0.0903, -0.72, 1.3856, 0.0903, -0.4, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -1.2, 0.6928, 0.1935, 0, 0, 0.1935, -0.4, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.1935, -1.6, 1.3856, 0.1935, -1.2, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, -1.6, 0.6928, 0.0903, -1.6, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.1935, -1.2, 0.6928, 0.1935, -1.6, 1.3856, 0.0903, -0.8, 1.3856, 0.0903, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -0.4, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -1.2, 1.3856, 0.0903, -1.2, 1.3856, 0.0903, -0.8, 1.3856, 0.1935, -0.4, 1.3856, 0.0903, -0.4, 0.6928, 0.0903, 0, 0.6928, 0.0903, 0, 0.6928, 0.1935, 0, 1.3856, 0.1935, -0.4, 0.6928, 0.1935, 0, 0.6928, 0.0903, 0, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.1935, -0.4, 0.6928, 0.1935, 0, 0, 0.1935, -1.2, 0, 0.1935, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.4, 0, 0.0903, -0.8, 0, 0.1935, -1.2, 0, 0.0903, -0.8, 0, 0.0903, -1.2, 0, 0.1935, -1.2, 0, 0.1935, -1.2, 0, 0.0903, -1.2, 0.6928, 0.0903, -1.6, 0.6928, 0.0903, -1.6, 0.6928, 0.1935, -1.6, 0, 0.1935, -1.2, 0.7728, 0.0903, -0.72, 0.7728, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.88, 0.6128, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.6128, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.88, 0.7728, 0.0903, -0.88, 0.6128, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.7728, -0.4, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.72, 0.7728, 0.0903, -0.88, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.8128, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.68, 0.8128, -0.4, -0.92, 0.8128, -0.44, -0.92, 0.5728, -0.4, -0.68, 0.5728, -0.4, -0.92, 0.6128, -0.4, -0.72, 0.6128, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.5728, -0.4, -0.68, 0.6128, -0.4, -0.72, 0.7728, -0.4, -0.72, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.72, 0.7728, -0.4, -0.88, 0.8128, -0.4, -0.68, 0.6128, -0.4, -0.88, 0.6128, -0.4, -0.72, 0.5728, -0.4, -0.92, 0.5728, -0.4, -0.92, 0.8128, -0.4, -0.92, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.7728, -0.4, -0.88, 0.6128, -0.4, -0.88, 0.8128, -0.4, -0.92, 0.8128, -0.4, -0.68, 0.7728, -0.4, -0.88, 0.4928, -0.44, -1, 0.4928, -0.44, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -1, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.4928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.5, -1, 0.8928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.5, -1, 0.8928, -0.5, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -0.6, 0.8928, -0.44, -1, 0.8928, -0.5, -1, 0.4928, -0.44, -0.6, 0.4928, -0.44, -1, 0.5728, -0.44, -0.68, 0.5728, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.4928, -0.44, -0.6, 0.5728, -0.44, -0.68, 0.8128, -0.44, -0.68, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.68, 0.8128, -0.44, -0.92, 0.8928, -0.44, -0.6, 0.5728, -0.44, -0.92, 0.5728, -0.44, -0.68, 0.4928, -0.44, -1, 0.4928, -0.44, -1, 0.8928, -0.44, -1, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8128, -0.44, -0.92, 0.5728, -0.44, -0.92, 0.8928, -0.44, -1, 0.8928, -0.44, -0.6, 0.8128, -0.44, -0.92, 0.9128, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.9128, -0.54, -0.58, 0.9128, -0.54, -1.02, 0.4928, -0.5, -1, 0.4728, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.9128, -0.54, -1.02, 0.8928, -0.5, -1, 0.4928, -0.5, -1, 0.9128, -0.54, -1.02, 0.9128, -0.54, -0.58, 0.8928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.8928, -0.5, -1, 0.9128, -0.54, -1.02, 0.8928, -0.5, -0.6, 0.9128, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4728, -0.54, -0.58, 0.4928, -0.5, -0.6, 0.8928, -0.5, -0.6, 0.4928, -0.5, -0.6, 0.4728, -0.54, -0.58, 0.4728, -0.54, -1.02, 0.4728, -0.54, -1.02, 0.4928, -0.5, -1, 0.4928, -0.5, -0.6, 0.5728, -0.4, -0.92, 0.5728, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.44, -0.92, 0.8128, -0.4, -0.92, 0.5728, -0.4, -0.92)
 
-[sub_resource type="Resource" id="Resource_aokhm"]
+[sub_resource type="Resource" id="Resource_h5cwc"]
 resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
@@ -3270,7 +3272,7 @@ material = SubResource("FogMaterial_4avjx")
 
 [node name="Player" parent="." instance=ExtResource("3_mgle8")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
-inventory_data = SubResource("Resource_md63x")
+inventory_data = SubResource("Resource_8mfm7")
 step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
@@ -7119,7 +7121,7 @@ shape = SubResource("ConcavePolygonShape3D_upcaa")
 [node name="kitchenFridgeContainer2" parent="BREAK_ROOM" instance=ExtResource("57_fdyfl")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 3.65301, -4.84288e-08, 6.17191)
 display_name = "Fridge"
-inventory_data = SubResource("Resource_aokhm")
+inventory_data = SubResource("Resource_h5cwc")
 
 [node name="kitchenMicrowave2" parent="BREAK_ROOM" instance=ExtResource("61_1x4um")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.98491, 0.84, 6.39503)
@@ -7157,6 +7159,12 @@ cogito_name = ""
 
 [node name="VendingMachine" parent="BREAK_ROOM" instance=ExtResource("63_uchdi")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.35901, 0, 2.81656)
+
+[node name="EnergyDrink" parent="BREAK_ROOM" instance=ExtResource("68_aokhm")]
+transform = Transform3D(-0.553761, -0.0059744, -0.832654, -0.00433381, 0.999981, -0.00429277, 0.832664, 0.00123141, -0.553777, 2.40089, 0.997701, 6.12016)
+
+[node name="EnergyDrink2" parent="BREAK_ROOM" instance=ExtResource("68_aokhm")]
+transform = Transform3D(-0.53522, 0.00130662, 0.844711, -0.00433381, 0.999981, -0.00429277, -0.844701, -0.0059584, -0.535204, 2.15388, 1.01032, 6.21738)
 
 [node name="BATHROOM_STALL" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.1, 2.58, -5.9)
@@ -7237,6 +7245,9 @@ transform = Transform3D(4.37114e-08, -0.9, -1.42109e-14, 1, 3.93403e-08, 0, -1.4
 mesh = SubResource("ArrayMesh_qfoeg")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_dg8i0")
+
+[node name="EmergencyInjector" parent="BATHROOM_STALL" instance=ExtResource("73_jpxt7")]
+transform = Transform3D(0.866025, 0.5, -2.18557e-08, -8.57914e-16, -4.37114e-08, -1, -0.5, 0.866025, -3.78552e-08, 0.356646, -1.26007, 0.851995)
 
 [node name="BATHROOM_STALL2" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.1, 2.58, 5.9)
@@ -7359,6 +7370,9 @@ volume_db = -24.0
 bus = &"SFX"
 
 [node name="BasicInteraction" parent="BATHROOM_STALL2/DuctDoor" instance=ExtResource("14_qtguo")]
+
+[node name="EmergencyInjector" parent="BATHROOM_STALL2" instance=ExtResource("73_jpxt7")]
+transform = Transform3D(0.813121, -0.582094, 2.54442e-08, -3.07674e-15, -4.37114e-08, -1, 0.582094, 0.813121, -3.55427e-08, 2.61829, -1.25652, 1.0293)
 
 [node name="CUBICLE_AREA" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

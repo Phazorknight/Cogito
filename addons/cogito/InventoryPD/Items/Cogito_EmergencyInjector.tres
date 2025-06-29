@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="ConsumableItemPD" load_steps=8 format=3 uid="uid://b4jf372h4li0b"]
+
+[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_cok0t"]
+[ext_resource type="Texture2D" uid="uid://sv8b0kbpm17t" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Health.png" id="2_cok0t"]
+[ext_resource type="Texture2D" uid="uid://hg5cnvodt37n" path="res://addons/cogito/Assets/Graphics/ItemIcons/CogitoEmergencyInjector.png" id="3_qxr6y"]
+[ext_resource type="Script" uid="uid://dr5kneob1wta8" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="4_qjcpt"]
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="5_nx2qt"]
+[ext_resource type="AudioStream" uid="uid://djavjhhvvo1mw" path="res://addons/cogito/Assets/Audio/Spray.ogg" id="6_cok0t"]
+
+[sub_resource type="Resource" id="Resource_e0gov"]
+script = ExtResource("1_cok0t")
+attribute_name = ""
+attribute_change_amount = 0.0
+value_to_change = 0
+
+[resource]
+script = ExtResource("4_qjcpt")
+attribute_name = "health"
+attribute_change_amount = 10.0
+value_to_change = 0
+consumable_effects = Array[ExtResource("1_cok0t")]([SubResource("Resource_e0gov")])
+name = "Emergency Injector"
+description = "Administered automatically for your convenience."
+icon = ExtResource("3_qxr6y")
+is_stackable = true
+is_droppable = true
+is_unique = false
+stack_size = 5
+drop_scene = "uid://8m1mwoi5qca0"
+item_drop_size = 0.1
+hint_icon_on_use = ExtResource("2_cok0t")
+hint_text_on_use = "Restored 10 health."
+item_size = Vector2(1, 1)
+sound_use = ExtResource("6_cok0t")
+sound_pickup = ExtResource("5_nx2qt")
+can_auto_slot = false
+slot_number = -1

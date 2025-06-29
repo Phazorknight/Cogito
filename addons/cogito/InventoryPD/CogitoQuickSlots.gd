@@ -126,10 +126,11 @@ func _unhandled_input(event):
 			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 4...")
 			return
 	
-	if event.is_action_released("quickslot_prev_wieldable"):
-		_cycle_through_quickslotted_wieldables(false)
-	elif event.is_action_released("quickslot_next_wieldable"):
-		_cycle_through_quickslotted_wieldables(true)
+	if player_interaction_component and !player_interaction_component.is_carrying:
+		if event.is_action_released("quickslot_prev_wieldable"):
+			_cycle_through_quickslotted_wieldables(false)
+		elif event.is_action_released("quickslot_next_wieldable"):
+			_cycle_through_quickslotted_wieldables(true)
 
 
 func update_inventory_status(is_open: bool):
