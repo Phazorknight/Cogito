@@ -30,14 +30,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
-current_tab = 3
+current_tab = 0
 script = ExtResource("4_h483w")
 nodes_to_focus = [NodePath("Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("Graphics/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), NodePath("Audio/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), NodePath("Bindings")]
 tab_index_of_bindings = 3
 bindings_container_node = NodePath("Bindings/ScrollContainer/MarginContainer/BindingsContainer")
 
 [node name="Gameplay" type="MarginContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
 theme_override_constants/margin_left = 0
@@ -57,6 +56,26 @@ transition_time = 0.15
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
+
+[node name="HBoxContainer_Language" type="HBoxContainer" parent="VBoxContainer/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="LanguageLabel" type="Label" parent="VBoxContainer/TabContainer/Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Language"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Language (WIP)"
+
+[node name="LanguageOptionButton" type="OptionButton" parent="VBoxContainer/TabContainer/Gameplay/ScrollContainer/VBoxContainer/HBoxContainer_Language"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+item_count = 1
+popup/item_0/text = "English"
+popup/item_0/id = 0
 
 [node name="HBoxContainer_Headbob" type="HBoxContainer" parent="VBoxContainer/TabContainer/Gameplay/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
@@ -434,6 +453,7 @@ text = "0 %"
 horizontal_alignment = 1
 
 [node name="Bindings" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25

@@ -36,6 +36,8 @@ signal hide_inventory
 ## If you want to have the stamina bar outside of the other attributes, you can set a reference here. This will remove it from the main attribute container
 @export var fixed_stamina_bar : CogitoAttributeUi
 @export var default_crosshair : Texture2D
+## Crosshair that appears when a interactable object is detected. Leave empty if you don't want to use an interaction crosshair.
+@export var interaction_crosshair : Texture2D
 
 @export_group("Interface Screen")
 @export var ui_currency_area: Control
@@ -49,6 +51,7 @@ var hurt_tween : Tween
 var is_inventory_open : bool = false
 var device_id : int = -1
 var interaction_texture : Texture2D
+var previous_crosshair_texture : Texture
 
 @onready var damage_overlay = $DamageOverlay
 @onready var inventory_interface = $InventoryInterface
@@ -76,6 +79,7 @@ func _ready():
 	
 	# Set up for HUD elements for wieldables
 	wieldable_hud.hide()
+	previous_crosshair_texture = default_crosshair
 	crosshair_texture.texture = default_crosshair
 	
 	_setup_player.call_deferred()
@@ -210,6 +214,10 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 	if passed_interaction_nodes.size() < 1:
 		return
 	
+	if interaction_crosshair:
+		previous_crosshair_texture = crosshair_texture.get_texture()
+		crosshair_texture.texture = interaction_crosshair
+	
 	var interactive_object = passed_interaction_nodes[0].get_parent()
 	var display_name : String = interactive_object.display_name
 	if display_name:
@@ -229,6 +237,9 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 
 
 func delete_interaction_prompts() -> void:
+	if interaction_crosshair:
+		crosshair_texture.texture = previous_crosshair_texture
+	
 	for prompt in prompt_area.get_children():
 		prompt.discard_prompt()
 
@@ -286,11 +297,16 @@ func _on_update_wieldable_data(passed_wieldable_item: WieldableItemPD, passed_am
 		wieldable_hud.show()
 		wieldable_hud.update_wieldable_data(passed_wieldable_item, passed_ammo_in_inventory, passed_ammo_item)
 		if passed_wieldable_item.wieldable_crosshair:
-			crosshair_texture.texture = passed_wieldable_item.wieldable_crosshair
+			if prompt_area.get_child_count() == 0:
+				crosshair_texture.texture = passed_wieldable_item.wieldable_crosshair
+			previous_crosshair_texture = passed_wieldable_item.wieldable_crosshair
 		else:
-			crosshair_texture.texture = default_crosshair
+			if prompt_area.get_child_count() == 0:
+				crosshair_texture.texture = default_crosshair
 	else:
-		crosshair_texture.texture = default_crosshair
+		if prompt_area.get_child_count() == 0:
+			crosshair_texture.texture = default_crosshair
+		previous_crosshair_texture = default_crosshair
 		wieldable_hud.hide()
 
 

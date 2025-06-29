@@ -73,7 +73,7 @@ shadow_mesh = SubResource("ArrayMesh_dmq84")
 height = 0.8
 radius = 0.2
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l8dhs"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6ab6a"]
 resource_local_to_scene = true
 random_pitch = 1.1
 random_volume_offset_db = 3.0
@@ -81,7 +81,6 @@ streams_count = 1
 stream_0/stream = ExtResource("4_gmdvt")
 
 [node name="trashcan" type="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 mass = 5.0
 script = ExtResource("1_vhspn")
@@ -101,4 +100,4 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, -0.4,
 carry_distance_offset = -1.0
 
 [node name="ImpactSounds" parent="." instance=ExtResource("3_6ab6a")]
-impact_sounds = SubResource("AudioStreamRandomizer_l8dhs")
+impact_sounds = SubResource("AudioStreamRandomizer_6ab6a")
