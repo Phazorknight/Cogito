@@ -1,0 +1,176 @@
+# LANGUAGE translation for Cogito for the following files:
+# res://addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+# res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+# res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Cogito\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+msgid "Read"
+msgstr ""
+
+#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+msgid "This is a readable. Title can even be longer."
+msgstr ""
+
+#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+msgid ""
+"This text is a placeholder, showing how a readable object would work. It is recommended to make a copy of the readable component and then modify the copy to your liking.\n"
+"\n"
+"This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_GAMEPLAY"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_LANGUAGE"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "English"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_HEADBOB"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_MOUSE_SENS"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Inverts looking up and down direction."
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_INVERT_Y"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_TOGGLE_CROUCH"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_GAMEPAD_SETTINGS"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_LOOK_SENSITIVITY"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_GRAPHICS"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_RESOLUTION"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_WINDOW_MODE"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_2D_Anti_Aliasing"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Smooth out edges of 2D objects"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Off"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "2x"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "4x"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "8x"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_3D_Anti_Aliasing"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Smooths out edges of 3D objects"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_RENDER_SCALE"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "1"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_UI_SCALE"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Syncs Games Frame Rate with Displays Refresh Rate"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_VSYNC"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_AUDIO"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "SFX Volume"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "0 %"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Music Volume"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_BINDINGS"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Restore Defaults"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_APPLY_CHANGES"
+msgstr ""
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Battery"
+msgstr ""
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Can be combined with the Flashlight. Non-rechargeable."
+msgstr ""
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Can't use this by itself."
+msgstr ""

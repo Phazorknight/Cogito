@@ -1,0 +1,211 @@
+# LANGUAGE translation for Cogito for the following files:
+# res://addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+# res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+# res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Cogito\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+msgid "Read"
+msgstr ""
+
+#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+msgid "This is a readable. Title can even be longer."
+msgstr ""
+
+#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
+msgid ""
+"This text is a placeholder, showing how a readable object would work. It is "
+"recommended to make a copy of the readable component and then modify the "
+"copy to your liking.\n"
+"\n"
+"This UI is included and makes use of the COGITO theme. You can also make "
+"several different ReadableComponents for different document types, each with "
+"their own theme applied, for example: letters, text messages on phone "
+"displays, computer screens, tablets, signs, etc."
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_GAMEPLAY"
+msgstr "Gameplay"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_LANGUAGE"
+msgstr "Sprache"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "English"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_HEADBOB"
+msgstr "Kopfbewegung"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_MOUSE_SENS"
+msgstr "Mausempfindlichkeit"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Inverts looking up and down direction."
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_INVERT_Y"
+msgstr "Y-Achse umkehren"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_TOGGLE_CROUCH"
+msgstr "Ducken umschalten"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_GAMEPAD_SETTINGS"
+msgstr "Gamepad Einstellungen"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_LOOK_SENSITIVITY"
+msgstr "Kamerasensitivität"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_GRAPHICS"
+msgstr "Grafik"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_RESOLUTION"
+msgstr "Auflösung"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_WINDOW_MODE"
+msgstr "Bildschirmmodus"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_2D_Anti_Aliasing"
+msgstr "2D Anti Aliasing"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Smooth out edges of 2D objects"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Off"
+msgstr "Aus"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "2x"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "4x"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "8x"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_3D_Anti_Aliasing"
+msgstr "3D Anti Aliasing"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Smooths out edges of 3D objects"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_RENDER_SCALE"
+msgstr "Renderskalierung"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "1"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "LAB_UI_SCALE"
+msgstr "UI Skalierung"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Syncs Games Frame Rate with Displays Refresh Rate"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_VSYNC"
+msgstr "V-Sync"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_AUDIO"
+msgstr "Audio"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "SFX Volume"
+msgstr "SFX Lautstärke"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "0 %"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Music Volume"
+msgstr "Musik Lautstärke"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "TAB_BINDINGS"
+msgstr "Tastenbelegung"
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "Restore Defaults"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
+msgid "BTN_APPLY_CHANGES"
+msgstr "Anwenden"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Battery"
+msgstr "Batterie"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Can be combined with the Flashlight. Non-rechargeable."
+msgstr "Kann mit der Taschenlampe kombiniert werden. Nicht wieder aufladbar."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Can't use this by itself."
+msgstr "Kann nicht für sich allein benutzt werden."
+
+#~ msgid "Gameplay"
+#~ msgstr "Gameplay"
+
+#~ msgid "Invert Y Axis"
+#~ msgstr "Y Achse umkehren"
+
+#~ msgid "Gamepad Settings"
+#~ msgstr "Gamepad Einstellungen"
+
+#~ msgid "Graphics"
+#~ msgstr "Grafik"
+
+#~ msgid "Resolution"
+#~ msgstr "Auflösung"
+
+#~ msgid "Window Mode"
+#~ msgstr "Bildschirmmodus"
+
+#~ msgid "Audio"
+#~ msgstr "Audio"
+
+#~ msgid "Bindings"
+#~ msgstr "Tastenbelegung"

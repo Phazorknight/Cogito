@@ -31,7 +31,6 @@ origin_index = -1
 collision_layer = 3
 script = ExtResource("1_0tix8")
 cogito_name = ""
-show_debug_shape = null
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00476105, 0)

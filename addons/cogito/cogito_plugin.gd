@@ -5,12 +5,17 @@ const cogito_default_settings = preload("./CogitoSettings.tres")
 
 var cog_settings : CogitoSettings
 
+var parser_plugin: EditorTranslationParserPlugin
 
 func _enter_tree():
 	add_autoload_singleton("CogitoGlobals", "/cogito_globals.gd")
 	add_autoload_singleton("CogitoSceneManager", "/SceneManagement/cogito_scene_manager.gd")
 	add_autoload_singleton("CogitoQuestManager", "/QuestSystem/cogito_quest_manager.gd")
 	add_autoload_singleton("MenuTemplateManager", "/EasyMenus/Nodes/menu_template_manager.tscn")
+	
+	# Initialization of the plugin goes here.
+	parser_plugin = load("res://addons/cogito/Localization/resource_parser/loc_resource_parser.gd").new()
+	add_translation_parser_plugin(parser_plugin)
 	
 	cog_settings = cogito_default_settings
 	
@@ -20,6 +25,8 @@ func _exit_tree():
 	remove_autoload_singleton("MenuTemplateManager")
 	remove_autoload_singleton("CogitoSceneManager")
 	remove_autoload_singleton("CogitoGlobals")
+	
+	remove_translation_parser_plugin(parser_plugin)
 
 
 
