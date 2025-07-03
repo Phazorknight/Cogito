@@ -14,9 +14,9 @@ signal player_stand_up()
 ##Is this Sittable static or a Physics object?
 @export var physics_sittable: bool =  false
 ##Interaction text when Sat Down
-@export var interaction_text_when_on : String = "Stand Up"
+@export var interaction_text_when_on : String = "SEAT_Stand_Up"
 ##Interction text when not Sat Down
-@export var interaction_text_when_off : String = "Sit"
+@export var interaction_text_when_off : String = "SEAT_Sit"
 
 @export_category("Sittable Behaviour")
 ##Area in which the Sitable can be interacted with

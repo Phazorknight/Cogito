@@ -7,4 +7,4 @@
 script = ExtResource("1_pwtt8")
 sound_on_use = ExtResource("2_7ni17")
 input_map_action = "interact"
-interaction_text = "Extend inventory"
+interaction_text = "INTERACT_Extend_Inventory"

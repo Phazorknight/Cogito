@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="TranslationKeyDict" load_steps=2 format=3 uid="uid://dpi8h10hkxqx6"]
 
-[ext_resource type="Script" uid="uid://db6rvrcq4p73m" path="res://addons/cogito/Localization/translation_keys_resources/translation_key_dict.gd" id="1_x884u"]
+[ext_resource type="Script" uid="uid://db6rvrcq4p73m" path="res://addons/cogito/Localization/scripts/translation_key_dict.gd" id="1_x884u"]
 
 [resource]
 script = ExtResource("1_x884u")
-keylist = Array[String](["INPUT_move_forward", "INPUT_move_backward", "INPUT_move_left", "INPUT_move_right", "INPUT_jump", "INPUT_crouch", "INPUT_primary_action", "INPUT_secondary_action", "INPUT_interact_1", "INPUT_interact_2", "INPUT_reload", "INPUT_quickslot_1", "INPUT_quickslot_2", "INPUT_quickslot_3", "INPUT_quickslot_4", "INPUT_quickslot_prev", "INPUT_quickslot_next", "INPUT_pause", "INPUT_inventory", "INPUT_item_quick_drop", "INPUT_item_move", "INPUT_item_use"])
+keylist = Array[String](["INPUT_move_forward", "INPUT_move_backward", "INPUT_move_left", "INPUT_move_right", "INPUT_jump", "INPUT_crouch", "INPUT_primary_action", "INPUT_secondary_action", "INPUT_interact_1", "INPUT_interact_2", "INPUT_reload", "INPUT_quickslot_1", "INPUT_quickslot_2", "INPUT_quickslot_3", "INPUT_quickslot_4", "INPUT_quickslot_prev", "INPUT_quickslot_next", "INPUT_pause", "INPUT_inventory", "INPUT_item_quick_drop", "INPUT_item_move", "INPUT_item_use", "SEPARATOR_MOVEMENT", "SEPARATOR_ACTIONS", "SEPARATOR_MENUES"])
 metadata/_custom_type_script = "uid://db6rvrcq4p73m"

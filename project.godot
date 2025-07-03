@@ -232,8 +232,8 @@ quickslot_next_wieldable={
 [internationalization]
 
 locale/translation_remaps={}
-locale/translations=PackedStringArray("res://addons/cogito/Localization/cogito_en.po", "res://addons/cogito/Localization/cogito_de.po")
-locale/translations_pot_files=PackedStringArray("res://addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn", "res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn", "res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres", "res://addons/cogito/EasyMenus/Scenes/PauseMenu.tscn", "res://addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres")
+locale/translations=PackedStringArray("res://addons/cogito/Localization/po_files/cogito_en.po", "res://addons/cogito/Localization/po_files/cogito_de.po")
+locale/translations_pot_files=PackedStringArray("res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn", "res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres", "res://addons/cogito/EasyMenus/Scenes/PauseMenu.tscn", "res://addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres", "res://addons/cogito/Components/Interactions/CarryableComponent.tscn", "res://addons/cogito/Components/Interactions/PickupComponent.tscn", "res://addons/cogito/Components/Interactions/BackpackComponent.tscn", "res://addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres", "res://addons/cogito/PackedScenes/Player_HUD.tscn", "res://addons/cogito/PackedScenes/death_screen.tscn", "res://addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres", "res://addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres")
 
 [layer_names]
 

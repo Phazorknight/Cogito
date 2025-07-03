@@ -18,6 +18,8 @@ size = Vector3(1, 1.19324, 1)
 
 [node name="Seat" type="StaticBody3D" node_paths=PackedStringArray("enable_on_sit")]
 script = ExtResource("1_22lyd")
+interaction_text_when_on = "SEAT_Stand_Up"
+interaction_text_when_off = "SEAT_Sit"
 sit_sound = ExtResource("3_wmd07")
 stand_sound = ExtResource("3_wmd07")
 sit_position_node_path = NodePath("Sit Marker")

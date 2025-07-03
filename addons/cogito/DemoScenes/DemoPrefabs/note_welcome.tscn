@@ -23,6 +23,7 @@ axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_r5c6a")
+cogito_name = ""
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, -3.55271e-15, 1, 0, 0, 0)
@@ -44,7 +45,7 @@ This text is a placeholder, showing how a readable object would work. It is reco
 
 This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
 input_map_action = "interact"
-interaction_text = "Read"
+interaction_text = "INTERACT_Read"
 
 [node name="ReadableUi" type="Control" parent="ReadableComponent"]
 layout_mode = 3

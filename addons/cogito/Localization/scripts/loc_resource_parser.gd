@@ -11,7 +11,7 @@ func _parse_file(path: String) -> Array[PackedStringArray]:
 
 	if res is InventoryItemPD:
 		print("Parsing file: ", path, ": File is InventoryItem.")
-		var inventory_item: InventoryItemPD = res as InventoryItemPD
+		var inventory_item = res
 
 		var msgtxt = ""
 		var msgid_plural = ""
@@ -19,6 +19,11 @@ func _parse_file(path: String) -> Array[PackedStringArray]:
 		ret.append(PackedStringArray([inventory_item.name, msgtxt, msgid_plural, "item name"]))
 		ret.append(PackedStringArray([inventory_item.description, msgtxt, msgid_plural, "item description"]))
 		ret.append(PackedStringArray([inventory_item.hint_text_on_use, msgtxt, msgid_plural, "item hint on use"]))
+		
+		if inventory_item is WieldableItemPD:
+			ret.append(PackedStringArray([inventory_item.hint_on_empty, msgtxt, msgid_plural, "item hint on empty"]))
+			ret.append(PackedStringArray([inventory_item.ammo_item_name, msgtxt, msgid_plural, "item ammo item name"]))
+		
 		
 	if res is TranslationKeyDict:
 		print("Parsing file: ", path, ": File is TranslationKeyDict.")

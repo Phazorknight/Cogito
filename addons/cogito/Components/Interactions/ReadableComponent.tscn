@@ -13,7 +13,7 @@ This text is a placeholder, showing how a readable object would work. It is reco
 
 This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
 input_map_action = "interact"
-interaction_text = "Read"
+interaction_text = "INTERACT_Read"
 
 [node name="ReadableUi" type="Control" parent="."]
 layout_mode = 3

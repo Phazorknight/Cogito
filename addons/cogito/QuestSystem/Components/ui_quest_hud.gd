@@ -8,9 +8,9 @@ extends Node
 @onready var quest_display: PanelContainer = $QuestDisplay
 
 # Quest groups:
-@onready var active_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Active
-@onready var completed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Completed
-@onready var failed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Failed
+@onready var active_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/QUESTS_active
+@onready var completed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/QUESTS_completed
+@onready var failed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/QUESTS_failed
 
 #Reference of main Player HUD.
 @export var player_hud  : CogitoPlayerHudManager

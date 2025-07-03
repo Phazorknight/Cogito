@@ -1,9 +1,16 @@
 # LANGUAGE translation for Cogito for the following files:
-# res://addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
 # res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
 # res://addons/cogito/InventoryPD/Items/Cogito_Battery.tres
 # res://addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
 # res://addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+# res://addons/cogito/Components/Interactions/CarryableComponent.tscn
+# res://addons/cogito/Components/Interactions/PickupComponent.tscn
+# res://addons/cogito/Components/Interactions/BackpackComponent.tscn
+# res://addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres
+# res://addons/cogito/PackedScenes/Player_HUD.tscn
+# res://addons/cogito/PackedScenes/death_screen.tscn
+# res://addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+# res://addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -14,21 +21,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-
-#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
-msgid "Read"
-msgstr ""
-
-#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
-msgid "This is a readable. Title can even be longer."
-msgstr ""
-
-#: addons/cogito/DemoScenes/DemoPrefabs/note_welcome.tscn
-msgid ""
-"This text is a placeholder, showing how a readable object would work. It is recommended to make a copy of the readable component and then modify the copy to your liking.\n"
-"\n"
-"This UI is included and makes use of the COGITO theme. You can also make several different ReadableComponents for different document types, each with their own theme applied, for example: letters, text messages on phone displays, computer screens, tablets, signs, etc."
-msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
 msgid "TAB_GAMEPLAY"
@@ -163,7 +155,9 @@ msgid "BTN_APPLY_CHANGES"
 msgstr ""
 
 #. TRANSLATORS: item name
+#. item ammo item name
 #: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
 msgid "Battery"
 msgstr ""
 
@@ -178,43 +172,39 @@ msgid "Can't use this by itself."
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Pause Menu"
+msgid "LAB_PauseMenu"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Resume"
+msgid "BTN_Resume"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Current Slot: ?"
+msgid "LAB_Current Slot"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Last save:"
+msgid "LAB_Last_save"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "YYYY-MM-DD HH:MM"
+msgid "BTN_Load"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Load"
+msgid "BTN_Save"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Save"
+msgid "BTN_Options"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Options"
+msgid "BTN_Back_to_Menu"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Back to Main Menu"
-msgstr ""
-
-#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
-msgid "Quit"
+msgid "BTN_Quit"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
@@ -325,4 +315,199 @@ msgstr ""
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
 msgid "INPUT_item_use"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "SEPARATOR_MOVEMENT"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "SEPARATOR_ACTIONS"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "SEPARATOR_MENUES"
+msgstr ""
+
+#: addons/cogito/Components/Interactions/CarryableComponent.tscn
+msgid "INTERACT_Carry"
+msgstr ""
+
+#: addons/cogito/Components/Interactions/PickupComponent.tscn
+msgid "INTERACT_Pick_up"
+msgstr ""
+
+#: addons/cogito/Components/Interactions/BackpackComponent.tscn
+msgid "INTERACT_Extend_Inventory"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres
+msgid "ATTR_health"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres
+msgid "ATTR_stamina"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres
+msgid "ATTR_strength"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres
+msgid "ATTR_sanity"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_attributes.tres
+msgid "ATTR_visibility"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "00"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "TAB_player_inventory"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "TAB_quests"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "LAB_quests"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "QUESTS_active"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "QUESTS_completed"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "QUESTS_failed"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "TAB_stats"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "LAB_stats"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "Attributes"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "IGNORE_ItemName"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "IGNORE_Item description going over to lines. Testing overflow as well to make sure the panel container extends as needed."
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "INTERFACE_Use"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "INTERFACE_Move"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "INTERFACE_Drop"
+msgstr ""
+
+#: addons/cogito/PackedScenes/Player_HUD.tscn
+msgid "INTERFACE_AssignQuickslot"
+msgstr ""
+
+#: addons/cogito/PackedScenes/death_screen.tscn
+msgid "LAB_you_died"
+msgstr ""
+
+#: addons/cogito/PackedScenes/death_screen.tscn
+msgid "LAB_current_slot"
+msgstr ""
+
+#: addons/cogito/PackedScenes/death_screen.tscn
+msgid "LAB_last_save"
+msgstr ""
+
+#: addons/cogito/PackedScenes/death_screen.tscn
+msgid "BTN_load"
+msgstr ""
+
+#: addons/cogito/PackedScenes/death_screen.tscn
+msgid "BTN_back_to_menu"
+msgstr ""
+
+#: addons/cogito/PackedScenes/death_screen.tscn
+msgid "BTN_quit"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "DOOR_Unlock"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "DOOR_Lock"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "DOOR_Open"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "DOOR_Close"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "SEAT_Stand_Up"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "SEAT_Sit"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_Read"
+msgstr ""
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
+msgid "Flashlight"
+msgstr ""
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
+msgid "Eats batteries like it's its job."
+msgstr ""
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
+msgid "hint_flashlight"
+msgstr ""
+
+#. TRANSLATORS: item hint on empty
+#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
+msgid "Out of battery."
 msgstr ""

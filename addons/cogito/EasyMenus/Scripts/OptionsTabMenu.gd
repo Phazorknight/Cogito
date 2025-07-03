@@ -82,14 +82,14 @@ const RESOLUTION_DICTIONARY : Dictionary = {
 @export var rebind_dictionary : Dictionary
 
 var input_actions = {
-	"separator_movement": "MOVEMENT",
+	"separator_movement": "SEPARATOR_MOVEMENT",
 	"forward": "INPUT_move_forward",
 	"back": "INPUT_move_backward",
 	"left": "INPUT_move_left",
 	"right": "INPUT_move_right",
 	"jump": "INPUT_jump",
 	"crouch": "INPUT_crouch",
-	"separator_actions": "ACTIONS",
+	"separator_actions": "SEPARATOR_ACTIONS",
 	"action_primary": "INPUT_primary_action",
 	"action_secondary": "INPUT_secondary_action",
 	"interact": "INPUT_interact_1",
@@ -101,7 +101,7 @@ var input_actions = {
 	"quickslot_4": "INPUT_quickslot_4",
 	"quickslot_prev_wieldable": "INPUT_quickslot_prev",
 	"quickslot_next_wieldable": "INPUT_quickslot_next",
-	"separator_inventory": "MENUS",
+	"separator_inventory": "SEPARATOR_MENUES",
 	"menu": "INPUT_pause",
 	"inventory": "INPUT_inventory",
 	"inventory_drop_item": "INPUT_item_quick_drop",

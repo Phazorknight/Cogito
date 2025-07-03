@@ -31,13 +31,13 @@ enum DoorType {
 ## Start state of the door (usually closed).
 @export var is_open : bool = false
 ## Text that appears on the interaction prompt when locked.
-@export var interaction_text_when_locked : String = "Unlock"
+@export var interaction_text_when_locked : String = "DOOR_Unlock"
 ## Text that appears on the interaction prompt when locked.
-@export var interaction_text_when_unlocked : String = "Lock"
+@export var interaction_text_when_unlocked : String = "DOOR_Lock"
 ## Text that appears on the interaction prompt when closed.
-@export var interaction_text_when_closed : String = "Open"
+@export var interaction_text_when_closed : String = "DOOR_Open"
 ## Text that appears on the interaction prompt when open.
-@export var interaction_text_when_open : String = "Close"
+@export var interaction_text_when_open : String = "DOOR_Close"
 ## Use this if you don't want the door mesh to be detected by the interaction raycast. Useful if you have doors that are controlled by other interactables.
 @export var ignore_interaction_raycast: bool = false
 @export var is_locked : bool = false

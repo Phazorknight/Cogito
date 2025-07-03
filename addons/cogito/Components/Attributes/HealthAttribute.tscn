@@ -4,9 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://sv8b0kbpm17t" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_Icon_Health.png" id="2_smx1r"]
 
 [node name="HealthAttribute" type="Node"]
+auto_translate_mode = 1
 script = ExtResource("1_048fp")
 attribute_name = "health"
-attribute_display_name = "Health"
+attribute_display_name = "ATTR_health"
 attribute_color = Color(0.729412, 0, 0, 1)
 attribute_icon = ExtResource("2_smx1r")
 value_max = 100.0

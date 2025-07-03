@@ -5,5 +5,5 @@
 [node name="PickupComponent" type="Node3D"]
 script = ExtResource("1_kq08i")
 input_map_action = "interact"
-interaction_text = "Pick up"
+interaction_text = "INTERACT_Pick_up"
 ignore_open_gui = false

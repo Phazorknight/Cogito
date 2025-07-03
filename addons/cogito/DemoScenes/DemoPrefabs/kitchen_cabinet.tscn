@@ -175,7 +175,10 @@ collision_layer = 3
 script = ExtResource("1_1t6vp")
 open_sound = ExtResource("2_uqpdi")
 close_sound = ExtResource("3_rgsat")
-open_rotation_deg = -88.0
+interaction_text_when_locked = "DOOR_Unlock"
+interaction_text_when_unlocked = "DOOR_Lock"
+interaction_text_when_closed = "DOOR_Open"
+interaction_text_when_open = "DOOR_Close"
 open_rotation = Vector3(0, -88, 0)
 door_speed = 3.0
 

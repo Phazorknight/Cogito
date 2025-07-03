@@ -6176,6 +6176,10 @@ collision_layer = 3
 script = ExtResource("13_5x4ip")
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
+interaction_text_when_locked = "Unlock"
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 door_type = 1
 open_position = Vector3(0, 0, 0.28)
 door_speed = 0.1
@@ -6294,6 +6298,10 @@ shape = SubResource("BoxShape3D_ecok4")
 [node name="FrontDoor" parent="UPPER_OFFICE_CEO/WindowedDoor" index="0"]
 unlock_sound = ExtResource("18_sk7n4")
 lock_sound = ExtResource("18_sk7n4")
+interaction_text_when_locked = "Unlock"
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 is_locked = true
 key = ExtResource("19_vxibd")
 key_hint = "Key not found!"
@@ -6315,6 +6323,10 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0.0
 
 [node name="HiddenDoor" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO/SecretAreaDoor"]
 script = ExtResource("13_5x4ip")
+interaction_text_when_locked = "Unlock"
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 open_rotation = Vector3(0, 120, 0)
 door_speed = 3.0
 angle_tolerance = 4.0
@@ -6490,7 +6502,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -3.1, 
 transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332, 0, -2.53017)
 
 [node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
-interaction_text_when_locked = "Locked."
 is_locked = true
 angle_tolerance = 1.0
 
@@ -6882,6 +6893,9 @@ transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048
 
 [node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
 interaction_text_when_locked = "Locked."
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 angle_tolerance = 1.0
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="MEETING_ROOM"]
@@ -7135,23 +7149,18 @@ skeleton = NodePath("")
 shape = SubResource("ConcavePolygonShape3D_si7uc")
 
 [node name="CoffeeMug" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
-cogito_name = ""
 
 [node name="CoffeeMug2" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(0.969501, 0, 0.245088, 0, 1, 0, -0.245088, 0, 0.969501, 1.1868, 0.493418, -0.279196)
-cogito_name = ""
 
 [node name="CoffeeMug3" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.27463, 0, -0.96155, 0, 1, 0, 0.96155, 0, -0.27463, 1.37229, 0.493418, -0.350858)
-cogito_name = ""
 
 [node name="CoffeeMug4" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.787774, 0, -0.615964, 0, 1, 0, 0.615964, 0, -0.787774, 1.49399, 0.493418, -0.207627)
-cogito_name = ""
 
 [node name="CoffeeMug5" parent="BREAK_ROOM" instance=ExtResource("44_harbr")]
 transform = Transform3D(-0.927595, 0, -0.373587, 0, 1, 0, 0.373587, 0, -0.927595, 1.29253, 0.493418, -0.176573)
-cogito_name = ""
 
 [node name="rugRound" parent="BREAK_ROOM" instance=ExtResource("62_m13s3")]
 
@@ -7341,6 +7350,10 @@ shape = SubResource("ConvexPolygonShape3D_3vij5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4688, -2.57192, -1.98452)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+interaction_text_when_locked = "Unlock"
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 open_rotation = Vector3(0, 92, 0)
 door_speed = 2.0
 
@@ -7819,13 +7832,16 @@ rich_text = true
 shape = SubResource("SphereShape3D_n25yf")
 
 [node name="Note_Welcome" parent="." instance=ExtResource("80_g3r0x")]
-cogito_name = ""
 
 [node name="FrontDoor" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
 rattle_sound = ExtResource("65_cw5kp")
+interaction_text_when_locked = "Unlock"
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 is_locked = true
 key_hint = "I should look around more."
 door_speed = 0.1
@@ -7868,6 +7884,10 @@ transform = Transform3D(0.985497, 0, 0.169694, 0, 1, 0, -0.169694, 0, 0.985497, 
 [node name="Platform" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.017, 0, 7.568)
 script = ExtResource("13_5x4ip")
+interaction_text_when_locked = "Unlock"
+interaction_text_when_unlocked = "Lock"
+interaction_text_when_closed = "Open"
+interaction_text_when_open = "Close"
 ignore_interaction_raycast = true
 door_type = 1
 closed_position = Vector3(-5.017, 0, 7.568)

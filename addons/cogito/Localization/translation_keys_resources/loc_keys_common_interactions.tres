@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TranslationKeyDict" load_steps=2 format=3 uid="uid://1ruy24k3n7sr"]
+
+[ext_resource type="Script" uid="uid://db6rvrcq4p73m" path="res://addons/cogito/Localization/scripts/translation_key_dict.gd" id="1_to3fo"]
+
+[resource]
+script = ExtResource("1_to3fo")
+keylist = Array[String](["DOOR_Unlock", "DOOR_Lock", "DOOR_Open", "DOOR_Close", "SEAT_Stand_Up", "SEAT_Sit", "INTERACT_Read"])
+metadata/_custom_type_script = "uid://db6rvrcq4p73m"

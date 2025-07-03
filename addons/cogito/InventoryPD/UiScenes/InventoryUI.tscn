@@ -24,6 +24,7 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("1_1cfb6")
 theme_type_variation = &"HUDLabel"
+theme_override_font_sizes/font_size = 24
 text = "Label"
 horizontal_alignment = 1
 

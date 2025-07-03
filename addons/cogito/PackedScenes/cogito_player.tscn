@@ -74,7 +74,7 @@ STEP_MAX_SLOPE_DEGREE = 1.0
 [node name="StrengthAttribute" type="Node" parent="."]
 script = ExtResource("6_xg64i")
 attribute_name = "strength"
-attribute_display_name = "Strength"
+attribute_display_name = "ATTR_strength"
 attribute_color = Color(0.101434, 0.296537, 0.385427, 1)
 attribute_icon = ExtResource("7_ekjhh")
 value_max = 10.0
