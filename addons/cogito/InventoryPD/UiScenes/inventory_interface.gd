@@ -264,7 +264,6 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 						get_parent().player.player_interaction_component.send_hint(null, "Not enough space to drop item.")
 						CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop because there isn't enough space.")
 					else:
-						grabbed_slot_data.create_single_slot_data(grabbed_slot_data.origin_index)
 						grabbed_slot_data = null
 		
 		[null, "inventory_assign_item"]: # Pressing "Assign quickslot" on gamepad
@@ -351,7 +350,6 @@ func _on_gui_input(event):
 						CogitoGlobals.debug_log(true, "inventory_interface.gd", "This item isn't droppable.")
 						return
 					if grabbed_slot_data.inventory_item.has_method("update_wieldable_data") and grabbed_slot_data.inventory_item.is_being_wielded:
-					#if grabbed_slot_data.inventory_item.ItemType.WIELDABLE and grabbed_slot_data.inventory_item.is_being_wielded:
 						Audio.play_sound(sound_error)
 						CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop while wielding this item.")
 					else:
