@@ -27,7 +27,7 @@ theme_override_constants/separation = 5
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Button"
+text = "LAB_Button"
 vertical_alignment = 1
 
 [node name="KbmBindButton" parent="HBoxContainer" instance=ExtResource("2_lt8x0")]

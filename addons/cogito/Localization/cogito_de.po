@@ -186,6 +186,156 @@ msgstr "Kann mit der Taschenlampe kombiniert werden. Nicht wieder aufladbar."
 msgid "Can't use this by itself."
 msgstr "Kann nicht für sich allein benutzt werden."
 
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Pause Menu"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Resume"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Current Slot: ?"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Last save:"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "YYYY-MM-DD HH:MM"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Load"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Save"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Options"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Back to Main Menu"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
+msgid "Quit"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_move_forward"
+msgstr "Vorwärts gehen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_move_backward"
+msgstr "Rückwärts gehen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_move_left"
+msgstr "Links gehen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_move_right"
+msgstr "Rechts gehen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_jump"
+msgstr "Springen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_crouch"
+msgstr "Ducken"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_primary_action"
+msgstr "Primäre Aktion"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_secondary_action"
+msgstr "Sekundäre Aktion"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_interact_1"
+msgstr "Interagieren 1"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_interact_2"
+msgstr "Interagieren 2"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_reload"
+msgstr "Nachladen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_quickslot_1"
+msgstr "Schnellslot 1"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_quickslot_2"
+msgstr "Schnellslot 2"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_quickslot_3"
+msgstr "Schnellslot 3"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_quickslot_4"
+msgstr "Schnellslot 4"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_quickslot_prev"
+msgstr "Vorhergehender Schnellslot"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_quickslot_next"
+msgstr "Nächster Schnellslot"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_pause"
+msgstr "Pausenmenü"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_inventory"
+msgstr "Inventar"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_item_quick_drop"
+msgstr "Gegenstand fallen lassen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_item_move"
+msgstr "Gegenstand bewegen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_keybindings.tres
+msgid "INPUT_item_use"
+msgstr "Gegenstand benutzen"
+
 #~ msgid "Gameplay"
 #~ msgstr "Gameplay"
 
