@@ -1,0 +1,74 @@
+[gd_scene load_steps=13 format=3 uid="uid://gybj5d0rgtew"]
+
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_xypt8"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_w5iug"]
+[ext_resource type="Resource" uid="uid://cqaa81bvtre17" path="res://addons/cogito/InventoryPD/Items/Cogito_EnergyDrink.tres" id="3_xypt8"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_8qpvm"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="16_l3ffb"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tvmxx"]
+height = 0.52
+radius = 0.14
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jf5x7"]
+top_radius = 0.125
+bottom_radius = 0.125
+height = 0.4
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnne2"]
+albedo_color = Color(0.215093, 0.74, 0.1776, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x4wsa"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6k4s"]
+albedo_color = Color(0.82, 1, 1, 1)
+metallic = 0.75
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_xypt8"]
+material = SubResource("StandardMaterial3D_a6k4s")
+size = Vector3(0.06, 0.08, 0.01)
+
+[sub_resource type="Resource" id="Resource_euhqr"]
+resource_local_to_scene = true
+script = ExtResource("4_8qpvm")
+inventory_item = ExtResource("3_xypt8")
+quantity = 1
+origin_index = -1
+
+[node name="EnergyDrink" type="RigidBody3D"]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0, 0, 0)
+collision_layer = 3
+sleeping = true
+script = ExtResource("1_xypt8")
+cogito_name = ""
+custom_aabb = AABB(0, 0, 0, 0.3, 0.5, 0.3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("CylinderShape3D_tvmxx")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CollisionShape3D"]
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CollisionShape3D"]
+mesh = SubResource("CylinderMesh_x4wsa")
+material = SubResource("StandardMaterial3D_a6k4s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(1, -2.98023e-08, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0.255233, -0.0386655)
+mesh = SubResource("BoxMesh_xypt8")
+skeleton = NodePath("../..")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_w5iug")]
+slot_data = SubResource("Resource_euhqr")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("16_l3ffb")]

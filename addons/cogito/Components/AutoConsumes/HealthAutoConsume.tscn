@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnlt0es031dsf"]
+
+[ext_resource type="Script" uid="uid://78pbd317vkuu" path="res://addons/cogito/Components/AutoConsumes/health_auto_consume.gd" id="1_bmq0w"]
+[ext_resource type="Script" uid="uid://dr5kneob1wta8" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableItemPD.gd" id="2_f0tmy"]
+[ext_resource type="Resource" uid="uid://b4jf372h4li0b" path="res://addons/cogito/InventoryPD/Items/Cogito_EmergencyInjector.tres" id="3_bmq0w"]
+
+[node name="HealthAutoConsume" type="Node"]
+script = ExtResource("1_bmq0w")
+threshold_value = 1.0
+consumables = Array[ExtResource("2_f0tmy")]([ExtResource("3_bmq0w")])
