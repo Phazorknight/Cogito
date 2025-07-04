@@ -29,6 +29,9 @@ func _ready() -> void:
 	# Connecting to unbind signal to enabling clearing of inventory slot reference on unbind.
 	for quickslot in quickslot_containers:
 		quickslot.quickslot_cleared.connect(unbind_quickslot)
+	
+	await get_tree().process_frame
+	player_interaction_component = (CogitoSceneManager._current_player_node as CogitoPlayer).player_interaction_component
 
 
 # Using this to either set up new inventory or load quickslot of existing inventory
@@ -126,11 +129,10 @@ func _unhandled_input(event):
 			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 4...")
 			return
 	
-	if player_interaction_component and !player_interaction_component.is_carrying:
-		if event.is_action_released("quickslot_prev_wieldable"):
-			_cycle_through_quickslotted_wieldables(false)
-		elif event.is_action_released("quickslot_next_wieldable"):
-			_cycle_through_quickslotted_wieldables(true)
+	if event.is_action_released("quickslot_prev_wieldable"):
+		_cycle_through_quickslotted_wieldables(false)
+	elif event.is_action_released("quickslot_next_wieldable"):
+		_cycle_through_quickslotted_wieldables(true)
 
 
 func update_inventory_status(is_open: bool):
@@ -162,16 +164,14 @@ func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
 
 
 func _cycle_through_quickslotted_wieldables(cycle_up: bool) -> void:
-	if !player_interaction_component:
-		player_interaction_component = (CogitoSceneManager._current_player_node as CogitoPlayer).player_interaction_component
-
 	if player_interaction_component.is_changing_wieldables:
 		return
-
-	if player_interaction_component.interactable:
-		if player_interaction_component.is_carrying:
-			return
 		
+	if player_interaction_component.is_carrying:
+		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Can't cycle wieldables while carrying.")
+		return
+	
+	if player_interaction_component.interactable:
 		for node: InteractionComponent in player_interaction_component.interactable.interaction_nodes:
 			if node.input_map_action == "interact2" and not node.is_disabled:
 				CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Looking at an interactable that" +
