@@ -13,6 +13,8 @@ signal was_interacted_with(interaction_text,input_map_action)
 @export var is_disabled : bool = false
 ## If this is set to false, the interaction with this component will not be processed if the player has any GUI open (like the inventory, readables, keypad, etc.)
 @export var ignore_open_gui : bool = true
+## If checked, player can't interact when is in air.
+@export var disable_interaction_in_air : bool
 
 @export_category("Attribute Checks")
 #@export var apply_attribute_check : bool = false
