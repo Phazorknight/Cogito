@@ -9,7 +9,7 @@ extends Resource
 @export var child_states: Dictionary = {} 
 
 ## The path to the currently pending transition, if any
-@export var pending_transition_name: NodePath 
+@export var pending_transition_name: NodePath
 
 ## The remaining time of the active transition, if any
 @export var pending_transition_remaining_delay: float = 0

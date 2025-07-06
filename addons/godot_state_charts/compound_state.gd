@@ -70,6 +70,7 @@ func _state_init():
 
 func _state_enter(transition_target:StateChartState):
 	super._state_enter(transition_target)
+
 	# activate the initial state _unless_ one of these are true 
 	# - the transition target is a descendant of this state
 	# - we already have an active state because entering the state triggered an immediate transition to a child state
@@ -240,8 +241,6 @@ func _restore_history_state(target:HistoryState):
 		push_error("The default state '" + str(target.default_state) + "' of the history state '" + target.name + "' cannot be found.")
 		return
 
-
-			
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings = super._get_configuration_warnings()

@@ -100,7 +100,7 @@ namespace GodotStateCharts
             public static readonly StringName EventReceived = "event_received";
         }
         
-        public new class MethodName : Node.MethodName
+        public class MethodName : Node.MethodName
         {
             /// <summary>
             /// Sends an event to the state chart node.

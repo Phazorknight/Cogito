@@ -52,6 +52,7 @@ signal taken()
 var delay_seconds:float = 0.0:
 	set(value):
 		delay_in_seconds = str(value)
+		update_configuration_warnings()
 	get:
 		if delay_in_seconds.is_valid_float():
 			return float(delay_in_seconds)
@@ -88,6 +89,10 @@ func take(immediately:bool = true) -> void:
 	var parent_state:StateChartState = get_parent() as StateChartState
 	if parent_state == null:
 		push_error("Transitions must be children of states.")
+		return
+
+	if parent_state._chart._frozen:
+		push_error("The state chart is currently frozen, so transition '" + name + "' cannot be taken.")
 		return
 	
 	parent_state._run_transition(self, immediately)
@@ -145,6 +150,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	if not (get_parent() is StateChartState):
 		warnings.append("Transitions must be children of states.")
+		
+	if delay_in_seconds.strip_edges().is_empty():
+		warnings.append("Delay must be a valid expression. Use 0.0 if you want no delay.")
 	
 	return warnings
 
@@ -191,3 +199,8 @@ func _refresh_caches():
 		# Check the guard for trigger types
 		if guard != null:
 			_supported_trigger_types |= guard.get_supported_trigger_types()
+
+
+
+	
+	
