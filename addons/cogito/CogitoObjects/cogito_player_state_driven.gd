@@ -31,6 +31,9 @@ var is_showing_ui : bool
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : CogitoInventory
 
+## Player can't open the pause menu in these states.
+@export_node_path("StateChartState") var no_pause_menu_states: Array[NodePath]
+
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
 @export var jump_sound : AudioStream
@@ -165,6 +168,7 @@ var direction : Vector3 = Vector3.ZERO
 var is_free_looking : bool  = false
 var is_roll_animation_finished : bool = false
 var is_movement_paused : bool = false
+var is_player_in_unpausable_state : bool = false
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
 
@@ -250,6 +254,8 @@ func _ready():
 	else:
 		printerr("Player has no reference to pause menu.")
 	
+	_initialize_no_pause_menu_states()
+	
 	state_chart.set_expression_property("on_ladder", on_ladder)
 	state_chart.set_expression_property("is_sitting", is_sitting)
 	
@@ -324,6 +330,7 @@ func _on_death():
 func _on_pause_movement():
 	if !is_movement_paused:
 		is_movement_paused = true
+		state_chart.send_event("pause")
 		# Only show mouse cursor if input device is KBM
 		if InputHelper.device_index == -1:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -332,6 +339,7 @@ func _on_pause_movement():
 func _on_resume_movement():
 	if is_movement_paused:
 		is_movement_paused = false
+		state_chart.send_event("resume")
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
@@ -395,7 +403,7 @@ func _input(event):
 			menu_pressed.emit(player_interaction_component)
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
 				toggle_inventory_interface.emit()
-		elif !is_movement_paused and !is_dead:
+		elif !is_player_in_unpausable_state and !is_movement_paused and !is_dead:
 			if !currently_tweening:
 				_on_pause_movement()
 				get_node(pause_menu).open_pause_menu()
@@ -423,7 +431,7 @@ func test_motion(transform3d: Transform3D, motion: Vector3) -> bool:
 
 
 func _process_analog_stick_mouselook():
-	if joystick_h_event and !is_movement_paused:
+	if joystick_h_event:
 			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
 				if INVERT_Y_AXIS:
 					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
@@ -431,16 +439,13 @@ func _process_analog_stick_mouselook():
 					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
 				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 				
-	if joystick_v_event and !is_movement_paused:
+	if joystick_v_event:
 		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
 			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
 			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))	
 
 
 func _free_look(delta):
-	if is_movement_paused:
-		return
-		
 	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() or is_rolling:
 		is_free_looking = true
 		if sliding_timer.is_stopped():
@@ -646,8 +651,6 @@ func _on_player_state_loaded():
 
 
 func _physics_process(delta):
-	#if is_movement_paused:
-		#return
 	if is_sitting:
 		return
 
@@ -659,33 +662,33 @@ func _physics_process(delta):
 	if !is_movement_paused:
 		input_direction = Input.get_vector("left", "right", "forward", "back")
 	
-	_process_analog_stick_mouselook()
-	
-	_free_look(delta)
-	
-	current_speed = clamp(current_speed, 0.5, 12.0)
-	
-	if direction:
-		main_velocity.x = direction.x * current_speed
-		main_velocity.z = direction.z * current_speed
-	else:
-		main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
-		main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
-	
-	# Store current velocity for the next frame
-	last_velocity = main_velocity
-	
-	# Velocity for current frame
-	var main_velocity_before_stair_stepping : Vector3 = main_velocity + gravity_vec
-
-	_stair_handling(delta)
-	
-	# Velocity for next frame. Stair steppting can modify main_velocity and gravity_vec.
-	main_velocity += gravity_vec
+		_process_analog_stick_mouselook()
 		
-	velocity = main_velocity_before_stair_stepping
-
-	move_and_slide()
+		_free_look(delta)
+		
+		current_speed = clamp(current_speed, 0.5, 12.0)
+		
+		if direction:
+			main_velocity.x = direction.x * current_speed
+			main_velocity.z = direction.z * current_speed
+		else:
+			main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
+			main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
+			
+		# Store current velocity for the next frame
+		last_velocity = main_velocity
+		
+		# Velocity for current frame
+		var main_velocity_before_stair_stepping : Vector3 = main_velocity + gravity_vec
+		
+		_stair_handling(delta)
+		
+		# Velocity for next frame. Stair steppting can modify main_velocity and gravity_vec.
+		main_velocity += gravity_vec
+		
+		velocity = main_velocity_before_stair_stepping
+		
+		move_and_slide()
 
 
 #region State Chart
@@ -700,6 +703,7 @@ var was_sprinting : bool = false
 var is_sprinting_in_airborne : bool = false
 var was_sliding : bool = false
 var was_standing : bool = false
+var was_on_ladder : bool = false
 var jumped_from_slide : bool = false
 var jumped_from_crouch : bool = false
 var was_in_air : bool = false
@@ -707,6 +711,13 @@ var try_crouch : bool
 var wiggle_index : float = 0.0
 var wiggle_current_intensity : float = 0.0
 var bunny_hop_speed : float = SPRINTING_SPEED
+
+
+func _initialize_no_pause_menu_states():
+	for node_path in no_pause_menu_states:
+		var state = get_node(node_path)
+		state.state_entered.connect(func(): is_player_in_unpausable_state = true)
+		state.state_exited.connect(func(): is_player_in_unpausable_state = false)
 
 
 func _can_jump() -> bool:
@@ -800,7 +811,20 @@ var wiggle_vector : Vector2 = Vector2.ZERO
 var can_play_footstep : bool = true
 
 
+func _on_grounded_on_pause_taken() -> void:
+	if is_sliding:
+		was_sliding = true
+		
+	if on_ladder:
+		was_on_ladder = true
+
+
 func _on_grounded_state_entered() -> void:
+	if was_on_ladder:
+		was_on_ladder = false
+		on_ladder = true
+		state_chart.set_expression_property("on_ladder", on_ladder)
+		
 	# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
 	if was_in_air and last_velocity.y < landing_threshold:
 		# Calculate the volume and pitch based on the landing velocity
@@ -845,9 +869,8 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 			delta * LERP_SPEED
 		)
 	else:
-		if !is_movement_paused or !is_showing_ui:
-			eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
-			eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
+		eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
+		eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
 	
 	if not on_ladder:
 		## Taking fall damage
@@ -918,8 +941,8 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 		else:
 			state_chart.send_event("walk")
 			return
-
-	if Input.is_action_pressed("jump") and !is_movement_paused and jump_timer.is_stopped():
+	
+	if Input.is_action_pressed("jump") and jump_timer.is_stopped():
 		if not _can_jump():
 			return
 			
@@ -937,28 +960,27 @@ func _on_walking_state_exited() -> void:
 
 
 func _on_walking_state_physics_processing(delta: float) -> void:
-	if !is_showing_ui or !is_movement_paused:
-		if is_crouching:
-			state_chart.send_event("sneak")
-			return
+	if is_crouching:
+		state_chart.send_event("sneak")
+		return
 
-		if not on_ladder and Input.is_action_pressed("sprint") and stamina_attribute and stamina_attribute.value_current > 5:
-			state_chart.send_event("sprint")
-			return
-			
-		current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
-		wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
-		wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
+	if not on_ladder and Input.is_action_pressed("sprint") and stamina_attribute and stamina_attribute.value_current > 5:
+		state_chart.send_event("sprint")
+		return
 		
-		if main_velocity.is_equal_approx(Vector3.ZERO):
-			state_chart.send_event("idle")
+	current_speed = lerp(current_speed, WALKING_SPEED, delta * LERP_SPEED)
+	wiggle_current_intensity = WIGGLE_ON_WALKING_INTENSITY * HEADBOBBLE
+	wiggle_index += WIGGLE_ON_WALKING_SPEED * delta
+	
+	if main_velocity.is_equal_approx(Vector3.ZERO):
+		state_chart.send_event("idle")
+	
+	if Input.is_action_pressed("jump") and jump_timer.is_stopped():
+		if not _can_jump():
+			return
 
-		if Input.is_action_pressed("jump") and !is_movement_paused and jump_timer.is_stopped():
-			if not _can_jump():
-				return
-
-			#current_speed = WALKING_SPEED
-			_jump(WALKING_SPEED)
+		#current_speed = WALKING_SPEED
+		_jump(WALKING_SPEED)
 #endregion
 
 
@@ -986,10 +1008,10 @@ func _on_sprinting_state_physics_processing(delta: float) -> void:
 				current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
-
+			
 			#current_speed = SPRINTING_SPEED
-
-		if Input.is_action_pressed("jump") and !is_movement_paused and jump_timer.is_stopped():
+		
+		if Input.is_action_pressed("jump") and jump_timer.is_stopped():
 			if current_speed < bunny_hop_speed - 0.2:
 				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
 			else:
@@ -1007,8 +1029,7 @@ func _on_sprinting_state_physics_processing(delta: float) -> void:
 			_jump(bunny_hop_speed)
 	else:
 		bunny_hop_speed = SPRINTING_SPEED
-		if !is_showing_ui or !is_movement_paused:
-			state_chart.send_event("walk")
+		state_chart.send_event("walk")
 #endregion
 
 
@@ -1047,7 +1068,7 @@ func _on_sliding_state_physics_processing(delta: float) -> void:
 		direction = (body.global_transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
 		current_speed = (sliding_timer.time_left / sliding_timer.wait_time + 0.5) * SLIDING_SPEED
 		
-		if Input.is_action_pressed("jump") and !is_movement_paused and jump_timer.is_stopped():
+		if Input.is_action_pressed("jump") and jump_timer.is_stopped():
 			if not _can_jump():
 				return
 				
@@ -1065,8 +1086,8 @@ func _on_sneaking_state_physics_processing(delta: float) -> void:
 
 	if main_velocity.is_equal_approx(Vector3.ZERO):
 		state_chart.send_event("idle")
-			
-	if Input.is_action_pressed("jump") and !is_movement_paused and jump_timer.is_stopped():
+	
+	if Input.is_action_pressed("jump") and jump_timer.is_stopped():
 		if not _can_jump():
 			return
 
@@ -1379,11 +1400,7 @@ func _on_ladder_climbing_state_physics_processing(delta: float) -> void:
 
 
 func _process_on_ladder(_delta):
-	var input_dir
-	if !is_movement_paused:
-		input_dir = Input.get_vector("left", "right", "forward", "back")
-	else:
-		input_dir = Vector2.ZERO
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	
 	var ladder_speed = LADDER_SPEED
 	
@@ -1472,14 +1489,13 @@ func _on_rolling_state_exited() -> void:
 
 
 func _on_rolling_state_physics_processing(delta: float) -> void:
-	if !is_movement_paused or !is_showing_ui:
-		if is_roll_animation_finished:
-			is_roll_animation_finished = false
-			if was_standing:
-				try_crouch = false
-				state_chart.send_event("stand_up")
-			else:
-				state_chart.send_event("grounded")
+	if is_roll_animation_finished:
+		is_roll_animation_finished = false
+		if was_standing:
+			try_crouch = false
+			state_chart.send_event("stand_up")
+		else:
+			state_chart.send_event("grounded")
 #endregion
 
 #region Airborne State
@@ -1554,17 +1570,15 @@ func _on_crouching_state_exited() -> void:
 
 
 func _on_crouching_state_physics_processing(delta: float) -> void:
-	if !is_showing_ui or !is_movement_paused:
-		head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
+	head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
+	
+	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+		try_crouch = !try_crouch
+	elif !TOGGLE_CROUCH:
+		try_crouch = Input.is_action_pressed("crouch")
 		
-		if !is_movement_paused:
-			if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-				try_crouch = !try_crouch
-			elif !TOGGLE_CROUCH:
-				try_crouch = Input.is_action_pressed("crouch")
-		
-		if not try_crouch and not crouch_raycast.is_colliding():
-			state_chart.send_event("stand_up")
+	if not try_crouch and not crouch_raycast.is_colliding():
+		state_chart.send_event("stand_up")
 #endregion
 
 
@@ -1579,21 +1593,20 @@ func _on_standing_state_exited() -> void:
 	
 
 func _on_standing_state_physics_processing(delta: float) -> void:
-	if !is_showing_ui or !is_movement_paused:
-		head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
-		if head.position.y > CROUCHING_DEPTH/4:
-			if is_sitting:
-				return
-			standing_collision_shape.disabled = false
-			crouching_collision_shape.disabled = true
-			
-		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-			try_crouch = !try_crouch
-		elif !TOGGLE_CROUCH:
-			try_crouch = Input.is_action_pressed("crouch")
+	head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+	if head.position.y > CROUCHING_DEPTH/4:
+		if is_sitting:
+			return
+		standing_collision_shape.disabled = false
+		crouching_collision_shape.disabled = true
 		
-		if try_crouch or crouch_raycast.is_colliding():
-			state_chart.send_event("crouch")
+	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+		try_crouch = !try_crouch
+	elif !TOGGLE_CROUCH:
+		try_crouch = Input.is_action_pressed("crouch")
+	
+	if try_crouch or crouch_raycast.is_colliding():
+		state_chart.send_event("crouch")
 #endregion
 
 
