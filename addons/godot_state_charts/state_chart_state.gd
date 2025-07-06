@@ -50,7 +50,6 @@ var _pending_transition_initial_delay:float = 0
 ## Transitions in this state that react on events. 
 var _transitions:Array[Transition] = []
 
-
 ## The state chart that owns this state.
 var _chart:StateChart
 
@@ -60,7 +59,7 @@ func _ready() -> void:
 		return
 		
 	_chart = _find_chart(get_parent())
-		
+
 
 ## Finds the owning state chart by moving upwards.
 func _find_chart(parent:Node) -> StateChart:
@@ -68,6 +67,7 @@ func _find_chart(parent:Node) -> StateChart:
 		return parent
 	
 	return _find_chart(parent.get_parent())	
+
 
 ## Runs a transition either immediately or delayed depending on the 
 ## transition settings.
@@ -83,9 +83,8 @@ func _run_transition(transition:Transition, immediately:bool = false):
 ## Called when the state chart is built.
 func _state_init():
 	# disable state by default
-	process_mode = Node.PROCESS_MODE_DISABLED
 	_state_active = false
-	_toggle_processing(false)
+	_toggle_processing()
 	
 	# load transitions 
 	_transitions.clear()
@@ -99,13 +98,10 @@ func _state_init():
 ## initial child state should be activated. If the state entering was not caused by a transition
 ## this can be null.
 func _state_enter(_transition_target:StateChartState):
-	# print("state_enter: " + name)
 	_state_active = true
 	
-	process_mode = Node.PROCESS_MODE_INHERIT
-
 	# enable processing if someone listens to our signal
-	_toggle_processing(true)
+	_toggle_processing()
 	
 	# emit the signal
 	state_entered.emit()
@@ -122,8 +118,7 @@ func _state_exit():
 	_pending_transition_initial_delay = 0
 	_state_active = false
 	# stop processing
-	process_mode = Node.PROCESS_MODE_DISABLED
-	_toggle_processing(false)
+	_toggle_processing()
 	
 	# emit the signal
 	state_exited.emit()
@@ -216,7 +211,6 @@ func _process(delta:float) -> void:
 	# check if there is a pending transition
 	if _pending_transition != null:
 		_pending_transition_remaining_delay -= delta
-		
 		# Notify interested parties that currently a transition is pending.
 		transition_pending.emit(_pending_transition.delay_seconds, max(0, _pending_transition_remaining_delay))
 		
@@ -288,7 +282,7 @@ func _queue_transition(transition:Transition, initial_delay:float):
 	_pending_transition_remaining_delay = initial_delay
 	
 	# enable processing when we have a transition
-	set_process(true)
+	_toggle_processing()
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -307,12 +301,30 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return result		
 
+## Toggles processing of this node depending on the node's internal state.
+## The function determines if the internal state and existing signal connections
+## warrant running state processing at this time. This is to avoid running
+## scripts that don't necessarily need to run, improving performance.
+func _toggle_processing(freeze:bool = false):
+	# Whether processing should be enabled in general. We only process
+	# for active states in the first place.
+	var enable_processing = not freeze and _state_active
 
-func _toggle_processing(active:bool):
-	set_process(active and _has_connections(state_processing))
-	set_physics_process(active and _has_connections(state_physics_processing))
-	set_process_input(active and _has_connections(state_input))
-	set_process_unhandled_input(active and _has_connections(state_unhandled_input))
+	if enable_processing:
+		process_mode = PROCESS_MODE_INHERIT
+	else:
+		process_mode = PROCESS_MODE_DISABLED
+
+	# Now depending on who is listening for signals, we don't necessarily need all the
+	# processing active, so this is an optimization to avoid having to burn CPU cycles
+	# for no good reason.
+
+	# for processing we also check if a transition is pending, as in this case we need to
+	# keep processing until the delay has elapsed.
+	set_process(enable_processing and (_has_connections(state_processing) or _pending_transition != null))
+	set_physics_process(enable_processing and _has_connections(state_physics_processing))
+	set_process_input(enable_processing and _has_connections(state_input))
+	set_process_unhandled_input(enable_processing and _has_connections(state_unhandled_input))
 
 ## Checks whether the given signal has connections. 
 func _has_connections(sgnl:Signal) -> bool:

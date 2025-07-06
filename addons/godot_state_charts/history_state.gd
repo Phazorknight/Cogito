@@ -55,4 +55,3 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("History states cannot have child nodes.")
 
 	return warnings
-		

@@ -5,7 +5,9 @@ static func evaluate_expression(context:String, state_chart: StateChart, express
 	var parse_result:int = the_expression.parse(expression, input_names)
 
 	if parse_result != OK:
-		push_error("(" + context + ") Expression parse error : " + the_expression.get_error_text() + " for expression " + expression)
+		push_error("(" + context + ") Expression parse error. Tried to parse expression: '" \
+			+ expression \
+			+ "' but got error: '" + the_expression.get_error_text() + "'")
 		return default_value
 
 	# input values need to be in the same order as the input names, so we build an array
@@ -16,7 +18,9 @@ static func evaluate_expression(context:String, state_chart: StateChart, express
 
 	var result = the_expression.execute(input_values, null, false)
 	if the_expression.has_execute_failed():
-		push_error("(" + context + ") Expression execute error: " + the_expression.get_error_text() + " for expression: " + expression)
+		push_error("(" + context + ") Expression execute error. Tried to run expression: '"  \
+			+ expression \
+			+ "' but got error: '" + the_expression.get_error_text() + "'")
 		return default_value	
 
 	return result
