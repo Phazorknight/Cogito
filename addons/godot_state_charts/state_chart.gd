@@ -66,6 +66,10 @@ var _state_change_pending:bool = false
 ## be introduced from the outside.
 var _locked_down:bool = false
 
+## Flag indicating if the state chart is frozen.
+## If the state chart is frozen, new events and transitions will be discarded.
+var _frozen:bool = false
+
 var _queued_transitions:Array[Dictionary] = []
 var _transitions_processing_active:bool = false
 
@@ -157,6 +161,11 @@ func _enter_initial_state():
 ## will process the event as soon as possible but there is no guarantee that the 
 ## event will be fully processed when this method returns.
 func send_event(event:StringName) -> void:
+	if _frozen:
+		push_error("The state chart is currently frozen. Cannot set send events.")
+
+		return
+
 	if not is_node_ready():
 		push_error("State chart is not yet ready. If you call `send_event` in _ready, please call it deferred, e.g. `state_chart.send_event.call_deferred(\"my_event\").")
 		return
@@ -179,6 +188,10 @@ func send_event(event:StringName) -> void:
 ## with the same name. E.g. if you set the property "foo" to 42, you can use the expression "foo == 42" in
 ## an expression guard.
 func set_expression_property(name:StringName, value) -> void:
+	if _frozen:
+		push_error("The state chart is currently frozen. Cannot set expression properties.")
+		return
+
 	if not is_node_ready():
 		push_error("State chart is not yet ready. If you call `set_expression_property` in `_ready`, please call it deferred, e.g. `state_chart.set_expression_property.call_deferred(\"my_property\", 5).")
 		return
@@ -230,7 +243,6 @@ func _run_changes() -> void:
 ## once all currently running transitions have finished. States should call this method
 ## when they want to transition away from themselves. 
 func _run_transition(transition:Transition, source:StateChartState) -> void:
-	
 	# Queue up the transition for running
 	_queued_transitions.append({transition : source})
 	
@@ -245,9 +257,11 @@ func _run_transition(transition:Transition, source:StateChartState) -> void:
 		
 	_run_queued_transitions()
 	
+
 ## Runs all queued transitions until none are left. This also checks for infinite loops in transitions and 
 ## ensures triggering guards on state changes.
 func _run_queued_transitions() -> void:
+
 	_transitions_processing_active = true
 
 	var execution_count := 1
@@ -271,6 +285,7 @@ func _run_queued_transitions() -> void:
 	if not _locked_down:
 		_run_changes()
 
+
 ## Runs the transition. Used internally by the state chart, do not call this directly.	
 func _do_run_transition(transition:Transition, source:StateChartState):
 	if source.active:
@@ -290,6 +305,10 @@ func _warn_not_active(transition:Transition, source:StateChartState):
 ## Calls the `step` function in all active states. Used for situations where `state_processing` and 
 ## `state_physics_processing` don't make sense (e.g. turn-based games, or games with a fixed timestep).
 func step() -> void:
+	if _frozen:
+		push_error("The state chart is currently frozen. Cannot step.")
+		return
+
 	if not is_node_ready():
 		push_error("State chart is not yet ready. If you call `step` in `_ready`, please call it deferred, e.g. `state_chart.step.call_deferred()`.")
 		return
@@ -298,6 +317,7 @@ func step() -> void:
 		push_error("State chart has no root state. Ignoring call to `step`.")
 		return
 	_state._state_step()
+
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings:PackedStringArray = []
@@ -308,3 +328,27 @@ func _get_configuration_warnings() -> PackedStringArray:
 		if not child is StateChartState:
 			warnings.append("StateChart's child must be a State")
 	return warnings
+
+
+## Freezes the state chart and all states. While frozen, no changes can be made to a state chart.
+func freeze():
+	_frozen = true
+	var to_freeze:Array[StateChartState] = [_state]
+	while not to_freeze.is_empty():
+		var next := to_freeze.pop_back()
+		next._toggle_processing(true)
+		for child in next.get_children():
+			if child is StateChartState:
+				to_freeze.append(child)
+
+## Thaws the state chart and all states. After being thawed, changes can again be made to the state chart.
+func thaw():
+	var to_thaw:Array[StateChartState] = [_state]
+	while not to_thaw.is_empty():
+		var next := to_thaw.pop_back()
+		next._toggle_processing(false)
+		for child in next.get_children():
+			if child is StateChartState:
+				to_thaw.append(child)
+
+	_frozen = false

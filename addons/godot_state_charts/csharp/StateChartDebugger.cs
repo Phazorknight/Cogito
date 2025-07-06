@@ -50,7 +50,7 @@ namespace GodotStateCharts
             Call(MethodName.AddHistoryEntry, text);
         }
         
-        public new class MethodName : Node.MethodName
+        public class MethodName : Node.MethodName
         {
             /// <summary>
             /// Sets the node that the state chart debugger should debug.

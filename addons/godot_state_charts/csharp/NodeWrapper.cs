@@ -11,7 +11,7 @@ namespace GodotStateCharts
         /// <summary>
         /// The wrapped node.
         /// </summary>
-        protected readonly Node Wrapped;
+        protected internal readonly Node Wrapped;
 
         protected NodeWrapper(Node wrapped)
         {
