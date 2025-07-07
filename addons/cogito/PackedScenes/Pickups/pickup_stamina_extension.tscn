@@ -159,6 +159,7 @@ stream_9/stream = ExtResource("16_tqhen")
 [node name="Pickup_StaminaExtension" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_kx4rj")
+cogito_name = ""
 custom_aabb = AABB(0, 0, 0, 0.5, 0.7, 0.5)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -177,7 +178,6 @@ slot_data = SubResource("Resource_ustgq")
 is_disabled = true
 
 [node name="CarryableComponent" parent="." instance=ExtResource("5_j43ql")]
-input_map_action = "interact"
 is_disabled = true
 
 [node name="ImpactSounds" parent="." instance=ExtResource("6_gsyan")]

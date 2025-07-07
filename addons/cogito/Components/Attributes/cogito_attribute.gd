@@ -26,6 +26,8 @@ signal attribute_reached_zero(attribute_name:String, value_current:float, value_
 
 enum AttributeVisibility {Hud, Hud_and_Interface, Interface_Only, Hidden}
 @export var attribute_visibility : AttributeVisibility = AttributeVisibility.Hud
+## The amount attempted to be subtracted from the attribute, used for auto-consumes
+var last_passed_subtracted_amount: float # Only used when health is depleted for now
 
 
 var value_current : float:
@@ -60,7 +62,7 @@ func add(amount):
 	if is_locked:
 		attribute_changed.emit(attribute_name,value_current,value_max,true)
 		return
-		
+	
 	value_current += amount
 
 
@@ -68,5 +70,6 @@ func subtract(amount):
 	if is_locked:
 		attribute_changed.emit(attribute_name,value_current,value_max,false)
 		return
-		
+	
+	last_passed_subtracted_amount = amount
 	value_current -= amount

@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=3 uid="uid://8m1mwoi5qca0"]
+
+[ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_1y2da"]
+[ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_7s0yq"]
+[ext_resource type="Resource" uid="uid://b4jf372h4li0b" path="res://addons/cogito/InventoryPD/Items/Cogito_EmergencyInjector.tres" id="3_sap6d"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_m76o8"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="16_2cvr2"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tvmxx"]
+height = 0.49
+radius = 0.14
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jf5x7"]
+top_radius = 0.125
+bottom_radius = 0.125
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnne2"]
+albedo_color = Color(0.99, 0.2673, 0.2673, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x4wsa"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.3
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6k4s"]
+albedo_color = Color(0.75, 0.75, 0.75, 1)
+metallic = 0.5
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1y2da"]
+material = SubResource("StandardMaterial3D_a6k4s")
+top_radius = 0.0
+bottom_radius = 0.015
+height = 0.075
+radial_segments = 8
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="Resource" id="Resource_sap6d"]
+resource_local_to_scene = true
+script = ExtResource("4_m76o8")
+inventory_item = ExtResource("3_sap6d")
+quantity = 1
+origin_index = -1
+
+[node name="EmergencyInjector" type="RigidBody3D"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91068e-15, 0, 0, 0)
+collision_layer = 3
+sleeping = true
+script = ExtResource("1_1y2da")
+cogito_name = ""
+custom_aabb = AABB(0, 0, 0, 0.3, 0.5, 0.3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("CylinderShape3D_tvmxx")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.06, 0)
+visible = false
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D5" type="CSGMesh3D" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+visible = false
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="CollisionShape3D"]
+transform = Transform3D(1, -7.10543e-15, 4.23516e-22, 0, 1, -8.35187e-23, 0, -7.10543e-15, 1, 0, 0.175, 0)
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D4" type="CSGMesh3D" parent="CollisionShape3D"]
+transform = Transform3D(1, -3.55271e-15, 2.11758e-22, 0, 1, -8.35187e-23, 0, -3.55271e-15, 1, 0, -0.175, 0)
+mesh = SubResource("CylinderMesh_jf5x7")
+material = SubResource("StandardMaterial3D_hnne2")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CollisionShape3D"]
+mesh = SubResource("CylinderMesh_x4wsa")
+material = SubResource("StandardMaterial3D_a6k4s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(1, -3.55271e-15, 2.11758e-22, 0, 1, -8.35187e-23, 0, -3.55271e-15, 1, 0.05, 0.263, 0)
+mesh = SubResource("CylinderMesh_1y2da")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(1, -3.55271e-15, 2.11758e-22, 0, 1, -8.35187e-23, 0, -3.55271e-15, 1, -0.05, 0.263, 0)
+mesh = SubResource("CylinderMesh_1y2da")
+skeleton = NodePath("../..")
+
+[node name="PickupComponent" parent="." instance=ExtResource("2_7s0yq")]
+slot_data = SubResource("Resource_sap6d")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("16_2cvr2")]
