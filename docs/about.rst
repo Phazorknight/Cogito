@@ -92,6 +92,9 @@ Credits
    * `Dirt Sliding.wav by Laughingfish78 <https://freesound.org/s/537275/>`_ -- License: Creative Commons 0
    * `FIREBurn_Fireplace.Artificial.Crackling.Roar by newlocknew <https://freesound.org/s/641848/>`_ -- License: Attribution NonCommercial 4.0
    * `Water steaming on hot surface #1 by Ekrcoaster <https://freesound.org/s/666290/>`_ -- License: Creative Commons 0
+   * `Spray by RibhavAgrawal <https://pixabay.com/sound-effects/spray-185000/>`_
+   * `Energy Drink by VoiceBosch <https://pixabay.com/sound-effects/energy-drink-effect-230559/>`_
+   * `Soda Can Open by OxidVideos <https://pixabay.com/sound-effects/soda-can-open-183214/>`_
    * Cloud HDR (kloofendal_48d_partly_cloudy_puresky)2k.hdr by Greg Zaal, used under CC0.
    * All other included assets either made by `Philip Drobar <https://www.philipdrobar.com/>`_ or one of the contributors, published under MIT.
 
@@ -99,7 +102,7 @@ Credits
 MIT License
 -----------
 
-Copyright © 2024 Phazorknight + Contributors
+Copyright © 2025 Phazorknight + Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
