@@ -5,7 +5,8 @@ signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 signal interaction_complete(player_interaction_component: PlayerInteractionComponent)
 
 @export var hold_interaction_text: String = "(HOLD) Use"
-@export var separator_text: String = " | "
+## Add a linebreak here to separate the pickup interaction text from the hold interaction text
+@export_multiline var separator_text: String = " | "
 var pickup: PickupComponent
 
 

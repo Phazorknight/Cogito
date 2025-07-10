@@ -3,6 +3,7 @@ extends Control
 
 ## Buffer time until the hold is first registered, prevents showing Hold UI for presses
 @export var buffer_time : float = 0.1  
+@export var prompt_area: VBoxContainer
 
 @onready var progress_wheel: CogitoProgressWheel = $ProgressWheel
 @onready var hold_timer: Timer = $HoldTimer
@@ -61,6 +62,18 @@ func _on_hold_complete():
 
 func start_holding(_hold_interaction: HoldInteraction) -> void:
 	if !is_holding:
+		
+		# Aligns the progress wheel with the prompt, for feedback on which prompt is being interacted with
+		var pixel_y_offset: float = 0
+		for node in prompt_area.get_children(false):
+			if node is UiPromptComponent and (node as UiPromptComponent).interaction_text.text == _hold_interaction.interaction_text:
+				var x_offset: float = progress_wheel.radius * -2.0
+				var y_offset: float = (node.size.y * 0.5) + pixel_y_offset
+				position = Vector2(x_offset, y_offset)
+				break
+			else:
+				pixel_y_offset += node.size.y
+		
 		is_holding = true
 		hold_interaction = _hold_interaction
 		hold_timer.wait_time = hold_interaction.hold_time

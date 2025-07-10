@@ -56,12 +56,12 @@ var previous_crosshair_texture : Texture
 @onready var damage_overlay = $DamageOverlay
 @onready var inventory_interface = $InventoryInterface
 @onready var wieldable_hud: PanelContainer = $MarginContainer_BottomUI/WieldableHud # Displays wieldable icons and data. Hides when no wieldable equipped.
-@onready var prompt_area: Control = $PromptArea
+@onready var prompt_area: Control = $PromptUI/PromptArea
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : BoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
 @onready var crosshair: Control = $Crosshair
 @onready var crosshair_texture: TextureRect = crosshair.get_child(0)
-@onready var hold_ui: UiHoldComponent = $HoldUI # Displays DualInteraction progress wheel when holding input action.
+@onready var hold_ui: UiHoldComponent = $PromptUI/HoldUI # Displays DualInteraction progress wheel when holding input action.
 
 #endregion
 
