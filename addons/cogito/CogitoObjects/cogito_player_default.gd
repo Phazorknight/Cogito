@@ -23,6 +23,9 @@ var is_showing_ui : bool
 ## Toggle printing debug messages or not. Works with the CogitoSceneManager
 @export var is_logging : bool
 
+## Item Drop Shapecast
+@export var item_drop_shapecast : ShapeCast3D
+
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
@@ -172,6 +175,7 @@ var stand_after_roll : bool = false
 var is_movement_paused : bool = false
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
+var radius : float
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -214,6 +218,8 @@ func _ready():
 	player_interaction_component.exclude_player(get_rid())
 	
 	randomize() 
+	
+	radius = _calculate_player_radius()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -1272,6 +1278,27 @@ func apply_external_force(force_vector: Vector3):
 		CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
 		velocity += force_vector
 		move_and_slide()
+
+
+func _calculate_player_radius():
+	var radius : float = 0.0
+	for child in find_children("*", "CollisionShape3D", false, false):
+		if child.shape is BoxShape3D:
+			var edge = max(child.shape.size.x, child.shape.size.z)
+			var r = sqrt(2 * pow(edge / 2, 2))
+			radius = max(r, radius)
+		elif child.shape is CylinderShape3D or child.shape is CapsuleShape3D:
+			radius = max(child.shape.radius, radius)
+	
+	return radius
+
+
+func is_in_crouching_state():
+	return is_crouching
+
+
+func is_in_sprinting_state():
+	return is_sprinting
 
 
 class StepResult:

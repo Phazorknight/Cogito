@@ -87,8 +87,6 @@ func _on_save_slot_button_pressed() -> void:
 		CogitoSceneManager.copy_slot_saves_to_temp(CogitoSceneManager._active_slot)
 
 
-
-
 func _on_delete_slot_pressed():
 	CogitoSceneManager.switch_active_slot_to(manual_save_slot_name)
 	if CogitoSceneManager._player_state != null:

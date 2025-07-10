@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://d2tmdt5iguspq"]
+[gd_scene load_steps=134 format=4 uid="uid://bdvf6j1o1xtfk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_0bsih"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_vc1h6"]
@@ -904,7 +904,7 @@ data = PackedVector3Array(0.894, 0.4168, -0.6972, 0.6618, 0.4168, -0.6972, 0.661
 [sub_resource type="BoxShape3D" id="BoxShape3D_6s5b0"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="Cogito04LaboratoryTestStateDrivenPlayer" type="Node3D" node_paths=PackedStringArray("connectors")]
+[node name="COGITO4LaboratoryTestStateDrivenPlayer" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_0bsih")
 connectors = [NodePath("CONNECTOR_TO_LOBBY/ConnectorFromLobby")]
 
@@ -1216,7 +1216,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.1, -3.8)
 [node name="TransitionZone_LOBBY" type="Area3D" parent="CONNECTOR_TO_LOBBY"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 1.5, -1.2)
 script = ExtResource("8_y00bd")
-target_scene_path = "uid://beqam1aw1ledx"
+target_scene_path = "uid://wcnfnvnjm0c8"
 target_connector = "ConnectorFromLab"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CONNECTOR_TO_LOBBY/TransitionZone_LOBBY"]
@@ -1891,12 +1891,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 15)
 [node name="kitchenFridgeContainer" parent="NavigationRegion3D/BASE_FLOOR" instance=ExtResource("11_sylfv")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.13229, 2.09151e-18, -13.2764)
 inventory_respawning_logic = 0
+time_passes_when_unloaded = null
+respawn_timer_days = null
+respawn_timer_hours = null
+respawn_timer_minutes = null
+respawn_timer_seconds = null
 display_name = "Non Respawning Lootable Container"
+text_when_closed = null
+text_when_open = null
+close_animation = null
 
 [node name="kitchenFridgeContainer2" parent="NavigationRegion3D/BASE_FLOOR" instance=ExtResource("11_sylfv")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.08228, 4.76837e-07, -13.2787)
+time_passes_when_unloaded = null
+respawn_timer_days = null
+respawn_timer_hours = null
+respawn_timer_minutes = null
+respawn_timer_seconds = null
 display_name = "Respawning Lootable Container"
 inventory_data = SubResource("Resource_srp2h")
+text_when_closed = null
+text_when_open = null
+close_animation = null
 
 [node name="CEILING" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 2)
@@ -4016,30 +4032,39 @@ line_spacing = -5.0
 
 [node name="TargetDestructable" parent="NavigationRegion3D/SHOOTING_RANGE/TARGETS" instance=ExtResource("24_wjraq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -22)
+cogito_name = ""
 
 [node name="TargetDestructable2" parent="NavigationRegion3D/SHOOTING_RANGE/TARGETS" instance=ExtResource("24_wjraq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -22)
+cogito_name = ""
 
 [node name="TargetDestructable3" parent="NavigationRegion3D/SHOOTING_RANGE/TARGETS" instance=ExtResource("24_wjraq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -22)
+cogito_name = ""
 
 [node name="TargetDestructable4" parent="NavigationRegion3D/SHOOTING_RANGE/TARGETS" instance=ExtResource("24_wjraq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, -27)
+cogito_name = ""
 
 [node name="TargetDestructable5" parent="NavigationRegion3D/SHOOTING_RANGE/TARGETS" instance=ExtResource("24_wjraq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2, -27)
+cogito_name = ""
 
 [node name="pickup_pistol" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("25_d20mt")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.52303, 0.813927, -15.3253)
+cogito_name = ""
 
 [node name="pickup_laser_ammo" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("26_ulpul")]
 transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 2.60574, 0.821979, -15.3026)
+cogito_name = ""
 
 [node name="Pickup_LaserRifle" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("27_c0ipt")]
 transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 3.22065, 0.821979, -15.3026)
+cogito_name = ""
 
 [node name="Pickup_Pickaxe" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("28_6aivd")]
 transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
+cogito_name = ""
 
 [node name="HealthPotion" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("29_i8ofs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0588015, 1.21509, -11.2257)
@@ -4220,6 +4245,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0,
 
 [node name="CarriableBox" parent="NavigationRegion3D/MOVEMENT" instance=ExtResource("42_ofggq")]
 transform = Transform3D(0.952555, 0, 0.304366, 0, 1, 0, -0.304366, 0, 0.952555, -6.66945, 1, 4.34045)
+cogito_name = ""
 
 [node name="KSI_wall_doorway_wide_painted5" parent="NavigationRegion3D/MOVEMENT" instance=ExtResource("21_lanca")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 2)
@@ -4234,33 +4260,43 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1, 0, 
 
 [node name="Pickup_Dart_Water" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("44_ulubx")]
 transform = Transform3D(0.754801, 6.99125e-15, -0.655954, 0, 1, 1.06581e-14, 0.655954, -8.04478e-15, 0.754801, -11.0006, 0.76828, -30.2038)
+cogito_name = ""
 
 [node name="Pickup_Dart_Water2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("44_ulubx")]
 transform = Transform3D(0.864836, 5.35097e-15, -0.502054, 0, 1, 1.06581e-14, 0.502054, -9.21755e-15, 0.864836, -11.192, 0.76828, -30.2038)
+cogito_name = ""
 
 [node name="Pickup_Dart_Water3" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("44_ulubx")]
 transform = Transform3D(0.133813, 1.05623e-14, -0.991007, 0, 1, 1.06581e-14, 0.991007, -1.4262e-15, 0.133813, -11.3976, 0.76828, -30.2038)
+cogito_name = ""
 
 [node name="Pickup_Dart_Water5" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("44_ulubx")]
 transform = Transform3D(0.399549, 9.77044e-15, -0.916712, 1.04927e-22, 1, 1.06581e-14, 0.916712, -4.25845e-15, 0.399549, -11.6311, 0.76828, -30.2038)
+cogito_name = ""
 
 [node name="Pickup_Dart_Water4" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("44_ulubx")]
 transform = Transform3D(0.27364, 1.02513e-14, -0.961832, 1.04927e-22, 1, 1.06581e-14, 0.961832, -2.9165e-15, 0.27364, -10.7698, 0.76828, -30.2038)
+cogito_name = ""
 
 [node name="Pickup_Dart_Fire" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("45_i6ef2")]
 transform = Transform3D(0.670944, 0, -0.741508, 7.90309e-15, 1, 7.15102e-15, 0.741508, -1.06581e-14, 0.670944, -12.7269, 0.750406, -30.2153)
+cogito_name = ""
 
 [node name="Pickup_Dart_Fire2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("45_i6ef2")]
 transform = Transform3D(0.237499, 0, -0.971388, 1.03532e-14, 1, 2.5313e-15, 0.971388, -1.06581e-14, 0.237499, -12.9278, 0.750406, -30.2086)
+cogito_name = ""
 
 [node name="Pickup_Dart_Fire3" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("45_i6ef2")]
 transform = Transform3D(-0.404535, 0, -0.914522, 9.74711e-15, 1, -4.31159e-15, 0.914522, -1.06581e-14, -0.404535, -13.1656, 0.750406, -30.2269)
+cogito_name = ""
 
 [node name="Pickup_Dart_Fire4" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("45_i6ef2")]
 transform = Transform3D(-0.118803, -3.12308e-15, -0.992918, 9.74711e-15, 1, -4.31159e-15, 0.992918, -1.01903e-14, -0.118803, -13.3797, 0.750406, -30.2269)
+cogito_name = ""
 
 [node name="Pickup_Dart_Fire5" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("45_i6ef2")]
 transform = Transform3D(-0.888953, 1.06394e-14, 0.457998, 9.74711e-15, 1, -4.31159e-15, -0.457998, 6.31354e-16, -0.888953, -13.6313, 0.750406, -30.2269)
+cogito_name = ""
 
 [node name="SnapSlotMetalbar" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("46_fr0ew")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.071, 0.613, -25.1811)
@@ -4523,6 +4559,7 @@ transform = Transform3D(-1, -6.18173e-08, 6.18173e-08, 0, 0.707107, 0.707107, -8
 
 [node name="HealthExtension" parent="." instance=ExtResource("61_n5gmh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.663539, 1.20757, -11.0947)
+cogito_name = ""
 
 [node name="SanityDrainAttributeZone" parent="." instance=ExtResource("62_i2erg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3874, 0.0438593, 0.461824)
@@ -4532,6 +4569,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54745, 0.0438593, -2.19753)
 
 [node name="StrengthPotion" parent="." instance=ExtResource("64_4g3bg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99269, 0.532, 6.01611)
+cogito_name = ""
 
 [node name="CogitoNPC" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("65_okhio")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)

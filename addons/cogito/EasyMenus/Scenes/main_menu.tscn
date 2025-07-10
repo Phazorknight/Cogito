@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://k0i6k7mcajfm" path="res://addons/cogito/EasyMenus/Components/SaveSlotButton.tscn" id="6_s811w"]
 [ext_resource type="PackedScene" uid="uid://bly6wti1q8bsu" path="res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn" id="8_ig87r"]
 [ext_resource type="Script" uid="uid://dyiaeif1d4pmo" path="res://addons/cogito/Scripts/menu_scene_switcher.gd" id="9_kfsif"]
-[ext_resource type="PackedScene" uid="uid://beqam1aw1ledx" path="res://addons/cogito/DemoScenes/COGITO_3_LobbyTestStateDrivenPlayer.tscn" id="10_rrgt0"]
+[ext_resource type="PackedScene" uid="uid://wcnfnvnjm0c8" path="res://addons/cogito/DemoScenes/COGITO_3_LobbyTestStateDrivenPlayer.tscn" id="10_rrgt0"]
 [ext_resource type="Script" uid="uid://c024i2xgr6uib" path="res://addons/cogito/EasyMenus/Scripts/main_menu_saveslot_manager.gd" id="13_4uenq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n66hi"]
