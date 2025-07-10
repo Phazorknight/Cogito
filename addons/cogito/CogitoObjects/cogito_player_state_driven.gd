@@ -23,16 +23,21 @@ var is_showing_ui : bool
 ## Toggle printing debug messages or not. Works with the CogitoSceneManager
 @export var is_logging : bool
 
+## Item Drop Shapecast
+@export var item_drop_shapecast : ShapeCast3D
+
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
-@export var fall_damage_threshold : float = -5
+@export var fall_damage_threshold : float = -6
 
 ## Inventory resource that stores the player inventory.
 @export var inventory_data : CogitoInventory
 
 ## Player can't open the pause menu in these states.
 @export_node_path("StateChartState") var no_pause_menu_states: Array[NodePath]
+## Player can't interact in these states.
+@export_node_path("StateChartState") var no_interaction_states: Array[NodePath]
 
 @export_group("Audio")
 ## AudioStream that gets played when the player jumps.
@@ -91,8 +96,8 @@ var LandingVolume: float = 0.8
 @export var TOGGLE_CROUCH : bool = false
 ## How much strength the player has to push RigidBody3D objects.
 @export var PLAYER_PUSH_FORCE : float = 1.3
-@export var LANDING_MIN_VELOCITY : float = -5.0
-@export var LANDING_MIN_ROLL_VELOCITY : float = -7.5
+@export var LANDING_MIN_VELOCITY : float = -6.0
+@export var LANDING_MIN_ROLL_VELOCITY : float = -8.5
 @export var FREE_FALL_MIN_VELOCITY : float = -15
 @export var FREE_FALL_MIN_DIE_VELOCITY : float = -40
 
@@ -168,9 +173,11 @@ var direction : Vector3 = Vector3.ZERO
 var is_free_looking : bool  = false
 var is_roll_animation_finished : bool = false
 var is_movement_paused : bool = false
-var is_player_in_unpausable_state : bool = false
+var is_in_unpausable_state : bool = false
+var is_in_interaction_state : bool = true
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
+var radius : float
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -217,6 +224,8 @@ func _ready():
 	
 	randomize() 
 	
+	radius = _calculate_player_radius()
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
@@ -254,10 +263,7 @@ func _ready():
 	else:
 		printerr("Player has no reference to pause menu.")
 	
-	_initialize_no_pause_menu_states()
-	
-	state_chart.set_expression_property("on_ladder", on_ladder)
-	state_chart.set_expression_property("is_sitting", is_sitting)
+	_initialize_state_chart()
 	
 	#Sittable Signals setup
 	CogitoSceneManager.connect("sit_requested", Callable(self, "_on_sit_requested"))
@@ -403,7 +409,7 @@ func _input(event):
 			menu_pressed.emit(player_interaction_component)
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open
 				toggle_inventory_interface.emit()
-		elif !is_player_in_unpausable_state and !is_movement_paused and !is_dead:
+		elif !is_in_unpausable_state and !is_movement_paused and !is_dead:
 			if !currently_tweening:
 				_on_pause_movement()
 				get_node(pause_menu).open_pause_menu()
@@ -446,7 +452,7 @@ func _process_analog_stick_mouselook():
 
 
 func _free_look(delta):
-	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() or is_rolling:
+	if Input.is_action_pressed("free_look") or !sliding_timer.is_stopped() or current_moving_state == MovingState.Rolling:
 		is_free_looking = true
 		if sliding_timer.is_stopped():
 			eyes.rotation.z = -deg_to_rad(
@@ -643,6 +649,19 @@ func apply_external_force(force_vector: Vector3):
 		move_and_slide()
 
 
+func _calculate_player_radius():
+	var radius : float = 0.0
+	for child in find_children("*", "CollisionShape3D", false, false):
+		if child.shape is BoxShape3D:
+			var edge = max(child.shape.size.x, child.shape.size.z)
+			var r = sqrt(2 * pow(edge / 2, 2))
+			radius = max(r, radius)
+		elif child.shape is CylinderShape3D or child.shape is CapsuleShape3D:
+			radius = max(child.shape.radius, radius)
+	
+	return radius
+
+
 func _on_player_state_loaded():
 	#TODO - reset look on load if needed
 	#self.global_transform.basis = Basis()
@@ -692,13 +711,34 @@ func _physics_process(delta):
 
 
 #region State Chart
+enum MovingState {
+	Undefined,
+	Grounded,
+	Idle,
+	Walking,
+	Sprinting,
+	Sliding,
+	Sneaking,
+	Sitting,
+	LadderClimbing,
+	Rolling,
+	Airborne,
+	AirControl,
+	Jumping,
+	FreeFall
+}
+	
+enum BodyPostureState {
+	Undefined,
+	Crouching,
+	Standing,
+	Sitting
+}
+
+var current_moving_state : MovingState
+var current_body_posture_state : BodyPostureState
+
 var jump_target_speed : float = 0.0
-var is_walking : bool = false
-var is_sprinting : bool = false
-var is_sliding : bool = false
-var is_crouching : bool = false
-var is_standing : bool = false
-var is_rolling : bool = false
 var was_sprinting : bool = false
 var is_sprinting_in_airborne : bool = false
 var was_sliding : bool = false
@@ -713,11 +753,27 @@ var wiggle_current_intensity : float = 0.0
 var bunny_hop_speed : float = SPRINTING_SPEED
 
 
-func _initialize_no_pause_menu_states():
+func _initialize_state_chart():
+	state_chart.set_expression_property("on_ladder", on_ladder)
+	state_chart.set_expression_property("is_sitting", is_sitting)
+	
 	for node_path in no_pause_menu_states:
 		var state = get_node(node_path)
-		state.state_entered.connect(func(): is_player_in_unpausable_state = true)
-		state.state_exited.connect(func(): is_player_in_unpausable_state = false)
+		state.state_entered.connect(func(): is_in_unpausable_state = true)
+		state.state_exited.connect(func(): is_in_unpausable_state = false)
+	
+	for node_path in no_interaction_states:
+		var state = get_node(node_path)
+		state.state_entered.connect(func(): is_in_interaction_state = false)
+		state.state_exited.connect(func(): is_in_interaction_state = true)
+
+
+func is_in_crouching_state():
+	return current_body_posture_state == BodyPostureState.Crouching
+
+
+func is_in_sprinting_state():
+	return current_moving_state == MovingState.Sprinting
 
 
 func _can_jump() -> bool:
@@ -725,7 +781,7 @@ func _can_jump() -> bool:
 		return false
 		
 	var doesnt_need_stamina = not stamina_attribute or stamina_attribute.value_current >= stamina_attribute.jump_exhaustion
-	var crouch_jump = not is_crouching or CAN_CROUCH_JUMP
+	var crouch_jump = current_body_posture_state != BodyPostureState.Crouching or CAN_CROUCH_JUMP
 
 	if not doesnt_need_stamina:
 		CogitoGlobals.debug_log(is_logging, "cogito_player.gd","Not enough stamina to jump.")
@@ -758,9 +814,9 @@ func _jump(_jump_target_speed) -> void:
 	jump_timer.start() # prevent spam
 	is_jumping_started = true
 	is_in_air = false
-	jumped_from_crouch = is_crouching
+	jumped_from_crouch = current_body_posture_state == BodyPostureState.Crouching
 	
-	var jump_vel = CROUCH_JUMP_VELOCITY if is_crouching else JUMP_VELOCITY
+	var jump_vel = CROUCH_JUMP_VELOCITY if current_body_posture_state == BodyPostureState.Crouching else JUMP_VELOCITY
 	
 	# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
 	if stamina_attribute:
@@ -784,7 +840,7 @@ func _sliding_jump(_jump_target_speed) -> void:
 	jump_timer.start() # prevent spam
 	is_jumping_started = true
 	is_in_air = false
-	jumped_from_crouch = is_crouching
+	jumped_from_crouch = current_body_posture_state == BodyPostureState.Crouching
 	
 	# If Stamina Component is used, this checks if there's enough stamina to jump and denies it if not.
 	if stamina_attribute:
@@ -812,11 +868,14 @@ var can_play_footstep : bool = true
 
 
 func _on_grounded_on_pause_taken() -> void:
-	if is_sliding:
-		was_sliding = true
-		
-	if on_ladder:
-		was_on_ladder = true
+	if not is_dead:
+		if current_moving_state == MovingState.Sliding:
+			was_sliding = true
+			
+		if on_ladder:
+			was_on_ladder = true
+	else:
+		was_sliding = false
 
 
 func _on_grounded_state_entered() -> void:
@@ -839,23 +898,40 @@ func _on_grounded_state_entered() -> void:
 
 func _on_grounded_state_physics_processing(delta: float) -> void:
 	if not is_on_floor() and not on_ladder:
-		if is_sliding:
+		if current_moving_state == MovingState.Sliding:
 			was_sliding = true
 		state_chart.send_event("airborne")
 		return
-
-	if is_rolling:
+		
+	if current_moving_state == MovingState.Rolling:
 		return
 		
 	if not is_jumping_started:
 		main_velocity.y = 0
 		gravity_vec = Vector3.ZERO
 	
+	if not on_ladder:
+		## Taking fall damage
+		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
+			var damage_ratio : float = last_velocity.y / fall_damage_threshold
+			decrease_attribute("health", int(fall_damage * damage_ratio))
+	else:
+		last_velocity = Vector3.ZERO
+		
+	if last_velocity.y <= LANDING_MIN_ROLL_VELOCITY:
+		if !disable_roll_anim:
+			was_standing = current_body_posture_state == BodyPostureState.Standing
+			is_sprinting_in_airborne = false
+			state_chart.send_event("roll")
+			return
+	elif last_velocity.y <= LANDING_MIN_VELOCITY:
+		animationPlayer.play("landing")
+		
 	if was_sliding:
 		state_chart.send_event("slide")
 		return
 		
-	if not is_sliding and input_direction != Vector2.ZERO:
+	if current_moving_state != MovingState.Sliding and input_direction != Vector2.ZERO:
 		wiggle_vector.y = sin(wiggle_index)
 		wiggle_vector.x = sin(wiggle_index / 2) + 0.5
 		eyes.position.y = lerp(
@@ -871,23 +947,6 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	else:
 		eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
 		eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
-	
-	if not on_ladder:
-		## Taking fall damage
-		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
-			var damage_ratio : float = last_velocity.y / fall_damage_threshold
-			decrease_attribute("health", fall_damage * damage_ratio)
-	else:
-		last_velocity = Vector3.ZERO
-		
-	if last_velocity.y <= LANDING_MIN_ROLL_VELOCITY:
-		if !disable_roll_anim:
-			was_standing = is_standing
-			is_sprinting_in_airborne = false
-			state_chart.send_event("roll")
-			return
-	elif last_velocity.y <= LANDING_MIN_VELOCITY:
-		animationPlayer.play("landing")
 		
 	direction = lerp(
 		direction,
@@ -898,7 +957,7 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	_footstep_sounds_system()
 	
 	if not jumped_from_slide and Input.is_action_pressed("sprint") and is_sprinting_in_airborne:
-		if is_crouching and not jumped_from_crouch:
+		if current_body_posture_state == BodyPostureState.Crouching and not jumped_from_crouch:
 			was_sprinting = false
 			state_chart.send_event("slide")
 			
@@ -908,7 +967,7 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 func _footstep_sounds_system():
 	# FOOTSTEP SOUNDS SYSTEM = CHECK IF ON GROUND AND MOVING
 	if main_velocity.length() >= 0.2:
-		if is_sliding:
+		if current_moving_state == MovingState.Sliding:
 			if !slide_audio_player.playing:
 				slide_audio_player.play()
 		else:
@@ -917,11 +976,11 @@ func _footstep_sounds_system():
 			
 			if can_play_footstep && wiggle_vector.y > 0.9:
 				#dynamic volume for footsteps
-				if is_walking:
+				if current_moving_state == MovingState.Walking:
 					footstep_player.volume_db = walk_volume_db
-				elif is_crouching:
+				elif current_body_posture_state == BodyPostureState.Crouching:
 					footstep_player.volume_db = crouch_volume_db
-				elif is_sprinting:
+				elif current_moving_state == MovingState.Sprinting:
 					footstep_player.volume_db = sprint_volume_db
 				footstep_player._play_interaction("footstep")
 					
@@ -935,7 +994,7 @@ func _footstep_sounds_system():
 #region Idle State
 func _on_idle_state_physics_processing(delta: float) -> void:
 	if not main_velocity.is_equal_approx(Vector3.ZERO):
-		if is_crouching:
+		if current_body_posture_state == BodyPostureState.Crouching:
 			state_chart.send_event("sneak")
 			return
 		else:
@@ -952,15 +1011,15 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 
 #region Walking State
 func _on_walking_state_entered() -> void:
-	is_walking = true
+	current_moving_state = MovingState.Walking
 
 
 func _on_walking_state_exited() -> void:
-	is_walking = false
+	current_moving_state = MovingState.Undefined
 
 
 func _on_walking_state_physics_processing(delta: float) -> void:
-	if is_crouching:
+	if current_body_posture_state == BodyPostureState.Crouching:
 		state_chart.send_event("sneak")
 		return
 
@@ -986,11 +1045,11 @@ func _on_walking_state_physics_processing(delta: float) -> void:
 
 #region Sprinting State
 func _on_sprinting_state_entered() -> void:
-	is_sprinting = true
+	current_moving_state = MovingState.Sprinting
 
 
 func _on_sprinting_state_exited() -> void:
-	is_sprinting = false
+	current_moving_state = MovingState.Undefined
 
 
 func _on_sprinting_state_physics_processing(delta: float) -> void:
@@ -1038,29 +1097,38 @@ var slide_vector : Vector2 = Vector2.ZERO
 
 
 func _on_sliding_state_entered() -> void:
-	if input_direction != Vector2.ZERO:
-		if not was_sliding:
-			sliding_timer.start()
-			slide_vector = input_direction
-		is_sliding = true
-		was_sliding = false
+	current_moving_state = MovingState.Sliding
+	
+	if not was_sliding:
+		sliding_timer.start()
+		slide_vector = input_direction
+		
+	was_sliding = false
 
 
 func _on_sliding_state_exited() -> void:
-	is_sliding = false
+	current_moving_state = MovingState.Undefined
+	
+	if slide_audio_player:
+		slide_audio_player.stop()
 
 
 func _on_sliding_state_physics_processing(delta: float) -> void:
+	if input_direction == Vector2.ZERO:
+		sliding_timer.stop()
+		state_chart.send_event("idle")
+		return
+		
 	if !Input.is_action_pressed("sprint"):
 		sliding_timer.stop()
-		if is_standing:
+		if current_body_posture_state == BodyPostureState.Standing:
 			state_chart.send_event("walk")
 		else:
 			state_chart.send_event("sneak")
 		return
 		
 	if sliding_timer.is_stopped():
-		if is_standing:
+		if current_body_posture_state == BodyPostureState.Standing:
 			state_chart.send_event("walk")
 		else:
 			state_chart.send_event("sneak")
@@ -1111,10 +1179,12 @@ var currently_tweening: bool = false
 
 func _on_sitting_state_entered() -> void:
 	state_chart.set_expression_property("is_sitting", is_sitting)
+	current_moving_state = MovingState.Sitting
 
 
 func _on_sitting_state_exited() -> void:
 	state_chart.set_expression_property("is_sitting", is_sitting)
+	current_moving_state = MovingState.Undefined
 
 
 func _on_sitting_state_physics_processing(delta: float) -> void:
@@ -1393,6 +1463,7 @@ func _stand_up_finished():
 func _on_ladder_climbing_state_exited() -> void:
 	on_ladder = false
 	state_chart.set_expression_property("on_ladder", on_ladder)
+	current_moving_state = MovingState.Undefined
 
 
 func _on_ladder_climbing_state_physics_processing(delta: float) -> void:
@@ -1405,11 +1476,11 @@ func _process_on_ladder(_delta):
 	var ladder_speed = LADDER_SPEED
 	
 	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
-		is_sprinting = true
+		#is_sprinting = true
 		if stamina_attribute.value_current > 0:
 			ladder_speed = LADDER_SPRINT_SPEED
-	else:
-		is_sprinting = false
+	#else:
+		#is_sprinting = false
 		
 	var jump = Input.is_action_pressed("jump")
 
@@ -1465,9 +1536,10 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 		var ladder_timer = get_tree().create_timer(LADDER_COOLDOWN)
 		ladder_timer.timeout.connect(ladder_buffer_finished)
 		ladder_on_cooldown = true
-		on_ladder = true
-		state_chart.send_event("climb_ladder")
-		state_chart.set_expression_property("on_ladder", on_ladder)
+		if not on_ladder:
+			on_ladder = true
+			state_chart.send_event("climb_ladder")
+			state_chart.set_expression_property("on_ladder", on_ladder)
 
 
 func exit_ladder():
@@ -1478,14 +1550,14 @@ func exit_ladder():
 
 #region Rolling state
 func _on_rolling_state_entered() -> void:
-	is_rolling = true
+	current_moving_state = MovingState.Rolling
 	animationPlayer.play("roll")
 	try_crouch = true
 	state_chart.send_event("crouch")
 
 
 func _on_rolling_state_exited() -> void:
-	is_rolling = false
+	current_moving_state = MovingState.Undefined
 
 
 func _on_rolling_state_physics_processing(delta: float) -> void:
@@ -1501,6 +1573,7 @@ func _on_rolling_state_physics_processing(delta: float) -> void:
 #region Airborne State
 func _on_airborne_state_entered() -> void:
 	was_in_air = true  # Set airborne state
+	current_moving_state = MovingState.Airborne
 
 
 func _on_airborne_state_physics_processing(delta: float) -> void:
@@ -1559,14 +1632,14 @@ func _on_free_fall_state_physics_processing(delta: float) -> void:
 
 #region Crouching State
 func _on_crouching_state_entered() -> void:
+	current_body_posture_state = BodyPostureState.Crouching
 	standing_collision_shape.disabled = true
 	crouching_collision_shape.disabled = false
 	wiggle_current_intensity = WIGGLE_ON_CROUCHING_INTENSITY
-	is_crouching = true
 
 
 func _on_crouching_state_exited() -> void:
-	is_crouching = false
+	current_body_posture_state = BodyPostureState.Undefined
 
 
 func _on_crouching_state_physics_processing(delta: float) -> void:
@@ -1584,12 +1657,12 @@ func _on_crouching_state_physics_processing(delta: float) -> void:
 
 #region Standing State
 func _on_standing_state_entered() -> void:
+	current_body_posture_state = BodyPostureState.Standing
 	sliding_timer.stop()
-	is_standing = true
 
 
 func _on_standing_state_exited() -> void:
-	is_standing = false
+	current_body_posture_state = BodyPostureState.Undefined
 	
 
 func _on_standing_state_physics_processing(delta: float) -> void:

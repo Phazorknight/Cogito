@@ -4076,7 +4076,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
 
 [node name="Pickup_StaminaExtension" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("38_ayqrv")]
 transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, -1.38741, 0.92349, -11.344)
-cogito_name = ""
 
 [node name="Pickup_Dart" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0614817, 1.00006, -11.7358)
