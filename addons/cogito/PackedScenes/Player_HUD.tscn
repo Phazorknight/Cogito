@@ -192,6 +192,7 @@ layout_mode = 0
 radius = 12.0
 
 [node name="HoldTimer" type="Timer" parent="PromptUI/HoldUI"]
+one_shot = true
 
 [node name="MarginContainer_BottomUI" type="MarginContainer" parent="."]
 layout_mode = 1
