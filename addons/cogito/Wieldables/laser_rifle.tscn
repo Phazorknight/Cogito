@@ -302,6 +302,52 @@ tracks/4/keys = {
 "points": PackedFloat32Array(0, -0.095, 0, 0.095, 0),
 "times": PackedFloat32Array(0)
 }
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LaserRifleMesh:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.0639572, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LaserRifleMesh:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LaserRifleMesh:rotation:x")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("LaserRifleMesh:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1, 0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cc27k"]
 _data = {
@@ -341,7 +387,8 @@ process_material = SubResource("ParticleProcessMaterial_d1eos")
 draw_pass_1 = SubResource("BoxMesh_rxstj")
 
 [node name="LaserRifleMesh" type="Node3D" parent="." node_paths=PackedStringArray("tracked_nodes")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0180441, 0)
+transform = Transform3D(1, 0, 0, 0, 0.540302, 0.841471, 0, -0.841471, 0.540302, 0, 0, 0)
+visible = false
 script = ExtResource("5_fa3wp")
 tracked_nodes = [NodePath("blasterA"), NodePath("clipA")]
 

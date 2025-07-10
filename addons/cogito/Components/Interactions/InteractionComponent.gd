@@ -56,3 +56,7 @@ func check_attribute(player_interaction_component: PlayerInteractionComponent) -
 		if message_on_pass and attribute_check == AttributeCheck.FAIL_MESSAGE:
 			player_interaction_component.send_hint(fetched_attribute.attribute_icon, message_on_fail)
 		return false
+
+
+func set_disabled(_player: CogitoPlayer) -> bool:
+	return is_disabled
