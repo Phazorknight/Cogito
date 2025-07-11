@@ -21,6 +21,8 @@ func update_wheel():
 	
 	queue_redraw()
 
+
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, radius, bg_color, false, width, true)
-	draw_arc(Vector2.ZERO, radius, 0, current_angle_rad, 64, fg_color, width, true)
+	if current_angle_rad > 0.0: # Don't draw the wheel or background when empty
+		draw_circle(Vector2.ZERO, radius, bg_color, false, width, true)
+		draw_arc(Vector2.ZERO, radius, 0, current_angle_rad, 64, fg_color, width, true)

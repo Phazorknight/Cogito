@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://0fj068bj0csc"]
+[gd_scene load_steps=25 format=3 uid="uid://0fj068bj0csc"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_bh0fn"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_4pii1"]
+[ext_resource type="PackedScene" uid="uid://hb6a2o6ljd5q" path="res://addons/cogito/Components/Interactions/ExtendedPickupInteraction.tscn" id="2_g1tlq"]
 [ext_resource type="Resource" uid="uid://cpqxudfjtjw66" path="res://addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres" id="2_j2eoi"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_u4d3q"]
 [ext_resource type="PackedScene" uid="uid://m82ivreg3ugd" path="res://addons/cogito/Components/ImpactSounds.tscn" id="5_r4r7l"]
@@ -44,7 +45,7 @@ albedo_color = Color(0.815686, 1, 1, 0.196078)
 height = 0.4
 radius = 0.15
 
-[sub_resource type="Resource" id="Resource_dcgvr"]
+[sub_resource type="Resource" id="Resource_g1tlq"]
 resource_local_to_scene = true
 script = ExtResource("2_4pii1")
 inventory_item = ExtResource("2_j2eoi")
@@ -88,8 +89,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0656812, 0)
 visible = false
 shape = SubResource("CylinderShape3D_tvmxx")
 
+[node name="ExtendedPickupInteraction" parent="." instance=ExtResource("2_g1tlq")]
+hold_interaction_text = "(HOLD) Drink"
+interaction_text = "Pick up | (HOLD) Drink"
+
 [node name="PickupComponent" parent="." instance=ExtResource("2_u4d3q")]
-slot_data = SubResource("Resource_dcgvr")
+slot_data = SubResource("Resource_g1tlq")
+is_disabled = true
 
 [node name="ImpactSounds" parent="." instance=ExtResource("5_r4r7l")]
 impact_sounds = SubResource("AudioStreamRandomizer_qu2a1")

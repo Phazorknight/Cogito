@@ -19,7 +19,8 @@ var player_interaction_component: PlayerInteractionComponent
 		# Connecting unbind signal from inventory
 		inventory_reference.unbind_quickslot_by_index.connect(on_unbind_quickslot_by_index)
 		inventory_reference.picked_up_new_inventory_item.connect(on_auto_quickslot_new_item)
-
+		
+		
 		set_inventory_quickslots(inventory_reference)
 		
 var inventory_is_open : bool
@@ -92,7 +93,7 @@ func unbind_itemslot_from_quickslots(itemslot_to_unbind: InventorySlotPD):
 func _unhandled_input(event):
 	if !self.visible:
 		return
-		
+	
 	if inventory_is_open:
 		CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Inventory is open, no item used.")
 		return
@@ -129,10 +130,12 @@ func _unhandled_input(event):
 			CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Nothing assigned in quickslot 4...")
 			return
 	
-	if event.is_action_released("quickslot_prev_wieldable"):
-		_cycle_through_quickslotted_wieldables(false)
-	elif event.is_action_released("quickslot_next_wieldable"):
-		_cycle_through_quickslotted_wieldables(true)
+	# This can get called before assigning the reference, such as when loading, so check if player_interaction_component is null first
+	if player_interaction_component and player_interaction_component.can_cycle_quickslots:
+		if event.is_action_released("quickslot_prev_wieldable"):
+			_cycle_through_quickslotted_wieldables(false)
+		elif event.is_action_released("quickslot_next_wieldable"):
+			_cycle_through_quickslotted_wieldables(true)
 
 
 func update_inventory_status(is_open: bool):

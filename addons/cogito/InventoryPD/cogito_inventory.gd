@@ -305,3 +305,14 @@ func get_item_to_swap(grabbed_slot_data: InventorySlotPD, to_place_index: int):
 				continue
 			if adj_item.origin_index != -1:
 				return adj_item
+
+
+## Returns whether the given item fits in inventory
+func can_pick_up_slot_data(slot_data: InventorySlotPD) -> bool:
+	for index in inventory_slots.size():
+		if inventory_slots[index] and inventory_slots[index].can_fully_merge_with(slot_data):
+			return true
+	for index in inventory_slots.size():
+		if not inventory_slots[index] and is_enough_space(slot_data, index, true):
+			return true
+	return false

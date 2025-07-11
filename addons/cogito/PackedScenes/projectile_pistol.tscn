@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1umit2vtv22v"]
+[gd_scene load_steps=11 format=3 uid="uid://c1umit2vtv22v"]
 
 [ext_resource type="Script" uid="uid://fo2f3fr8frg4" path="res://addons/cogito/CogitoObjects/cogito_projectile.gd" id="1_6pqxf"]
+[ext_resource type="PackedScene" uid="uid://hb6a2o6ljd5q" path="res://addons/cogito/Components/Interactions/ExtendedPickupInteraction.tscn" id="2_pd6a6"]
 [ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres" id="3_7etap"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="4_acy7b"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_tbkmk"]
@@ -23,7 +24,7 @@ rings = 1
 height = 0.25
 radius = 0.05
 
-[sub_resource type="Resource" id="Resource_i4rbf"]
+[sub_resource type="Resource" id="Resource_075is"]
 resource_local_to_scene = true
 script = ExtResource("4_tbkmk")
 inventory_item = ExtResource("3_7etap")
@@ -40,6 +41,7 @@ continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_6pqxf")
+cogito_name = ""
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.91069e-15, 4.37114e-08, -1, 1, -4.37114e-08, 0, -4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
@@ -61,8 +63,12 @@ shape = SubResource("CylinderShape3D_wm252")
 wait_time = 30.0
 autostart = true
 
+[node name="ExtendedPickupInteraction" parent="." instance=ExtResource("2_pd6a6")]
+hold_interaction_text = "(HOLD) Reload"
+interaction_text = "Pick up | (HOLD) Reload"
+
 [node name="PickupComponent" parent="." instance=ExtResource("4_acy7b")]
-slot_data = SubResource("Resource_i4rbf")
+slot_data = SubResource("Resource_075is")
 
 [node name="CogitoProperties" parent="." instance=ExtResource("5_6jfy1")]
 material_properties = 1

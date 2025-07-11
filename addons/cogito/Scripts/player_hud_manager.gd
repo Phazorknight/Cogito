@@ -56,11 +56,12 @@ var previous_crosshair_texture : Texture
 @onready var damage_overlay = $DamageOverlay
 @onready var inventory_interface = $InventoryInterface
 @onready var wieldable_hud: PanelContainer = $MarginContainer_BottomUI/WieldableHud # Displays wieldable icons and data. Hides when no wieldable equipped.
-@onready var prompt_area: Control = $PromptArea
+@onready var prompt_area: Control = $PromptUI/PromptArea
 @onready var hint_area: Control = $HintArea
 @onready var ui_attribute_area : BoxContainer = $MarginContainer_BottomUI/PlayerAttributes/MarginContainer/VBoxContainer
 @onready var crosshair: Control = $Crosshair
 @onready var crosshair_texture: TextureRect = crosshair.get_child(0)
+@onready var hold_ui: UiHoldComponent = $PromptUI/HoldUI # Displays DualInteraction progress wheel when holding input action.
 
 #endregion
 
@@ -226,7 +227,9 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 		prompt_area.add_child(instanced_object_name)
 		instanced_object_name.set_object_name(display_name)
 	
-	for node in passed_interaction_nodes:
+	for node: InteractionComponent in passed_interaction_nodes:
+		if node.set_disabled(player): # Call first
+			continue
 		if node.is_disabled:
 			continue
 		if node.attribute_check == 2 and !node.check_attribute(player.player_interaction_component):  # Hide if attribute check is set to Hide Interaction and the check doesn't pass
@@ -248,17 +251,20 @@ func delete_interaction_prompts() -> void:
 func set_drop_prompt(_carrying_node):
 	delete_interaction_prompts()
 	
-	# Create an input prompt if a PickupComponent or BackpackComponent exists
+	# Create input prompts for interactions you want to maintain while carrying
 	# This approach isn't great, but doesn't affect the passed argument or connected signals
 	# Build this input prompt first to maintain the same prompt layout
 	var carry_parent: CogitoObject = _carrying_node.get_parent() as CogitoObject
 	if carry_parent:
 		for node: InteractionComponent in carry_parent.interaction_nodes:
-			if node is PickupComponent or node is BackpackComponent:
+			if node.set_disabled(player): # Call first
+				continue
+			if node.is_disabled:
+				continue
+			if node is PickupComponent or node is BackpackComponent or node is ExtendedPickupInteraction:
 				var instanced_take_prompt: UiPromptComponent = prompt_component.instantiate()
 				prompt_area.add_child(instanced_take_prompt)
 				instanced_take_prompt.set_prompt(node.interaction_text, node.input_map_action)
-				break # Break out of the loop as no object should have both
 	
 	var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)

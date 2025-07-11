@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=39 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" uid="uid://dc3bukoacyq60" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://cd3f50eloxr7h" path="res://addons/cogito/InventoryPD/UiScenes/CogitoQuickslotContainer.tscn" id="21_q2hxa"]
 [ext_resource type="PackedScene" uid="uid://dygtu0wos4337" path="res://addons/cogito/PackedScenes/death_screen.tscn" id="23_4avie"]
 [ext_resource type="Script" uid="uid://c656a651xkd0c" path="res://addons/cogito/EasyMenus/Scripts/tab_menu.gd" id="24_3jei3"]
+[ext_resource type="Script" uid="uid://ckkoyeqge566i" path="res://addons/cogito/Components/UI/UI_HoldComponent.gd" id="29_j4em4"]
+[ext_resource type="PackedScene" uid="uid://c62m84iy6lkk5" path="res://addons/cogito/Components/UI/UI_ProgressWheel.tscn" id="30_bdq5t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
 resource_local_to_scene = true
@@ -153,7 +155,15 @@ expand_mode = 1
 [node name="HintTimer" type="Timer" parent="."]
 wait_time = 3.5
 
-[node name="PromptArea" type="VBoxContainer" parent="."]
+[node name="PromptUI" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 1110.0
+offset_top = 540.0
+offset_right = 1110.0
+offset_bottom = 540.0
+
+[node name="PromptArea" type="VBoxContainer" parent="PromptUI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.578125
@@ -162,6 +172,27 @@ anchor_right = 0.578125
 anchor_bottom = 0.5
 theme_override_constants/separation = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="HoldUI" type="Control" parent="PromptUI" node_paths=PackedStringArray("prompt_area")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("29_j4em4")
+buffer_time = 0.13
+prompt_area = NodePath("../PromptArea")
+
+[node name="ProgressWheel" parent="PromptUI/HoldUI" instance=ExtResource("30_bdq5t")]
+layout_mode = 0
+radius = 12.0
+
+[node name="HoldTimer" type="Timer" parent="PromptUI/HoldUI"]
+one_shot = true
 
 [node name="MarginContainer_BottomUI" type="MarginContainer" parent="."]
 layout_mode = 1

@@ -54,8 +54,8 @@ func _ready() -> void:
 
 # Used when loading/setting an attribute
 func set_attribute(_value_current:float, _value_max:float):
-	value_current = _value_current
-	value_max = _value_max
+	value_max = _value_max # Set max before current, as current is based on it
+	value_current = clamp(_value_current, 0.0, _value_max)
 
 
 func add(amount):

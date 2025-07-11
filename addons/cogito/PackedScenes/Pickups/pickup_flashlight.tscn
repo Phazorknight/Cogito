@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwd3g16ep0idw"]
+[gd_scene load_steps=11 format=3 uid="uid://cwd3g16ep0idw"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_p4i4k"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="2_n5am4"]
 [ext_resource type="Resource" uid="uid://ckvdkigvwowm5" path="res://addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres" id="2_sm7gp"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_0bl2i"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="5_fvuvi"]
+[ext_resource type="PackedScene" uid="uid://hb6a2o6ljd5q" path="res://addons/cogito/Components/Interactions/ExtendedPickupInteraction.tscn" id="6_flfho"]
 
 [sub_resource type="Resource" id="Resource_frpox"]
 script = ExtResource("3_0bl2i")
@@ -32,7 +33,11 @@ radius = 0.06
 collision_layer = 3
 mass = 2.0
 script = ExtResource("1_p4i4k")
+cogito_name = ""
 custom_aabb = AABB(0, 0, 0, 0.4, 0.12, 0.12)
+
+[node name="ExtendedPickupInteraction" parent="." instance=ExtResource("6_flfho")]
+hold_interaction_text = "(HOLD) Wield"
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_n5am4")]
 slot_data = SubResource("Resource_frpox")

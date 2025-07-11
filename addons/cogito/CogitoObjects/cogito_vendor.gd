@@ -35,6 +35,8 @@ func _ready():
 		spawn_delay = cogito_button.press_cooldown_time - 0.1
 		printerr("spawn_delay exceeded button press cooldown time. It has been set to " + str(spawn_delay))
 	currency_check.connect("transaction_success", Callable(self, "_on_transaction_success"))
+	
+	await get_tree().process_frame
 	var player_node = CogitoSceneManager._current_player_node
 	player_interaction_component = (player_node as CogitoPlayer).player_interaction_component
 	for attribute in player_node.find_children("", "CogitoCurrency", false):

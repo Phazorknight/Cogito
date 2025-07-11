@@ -2,7 +2,7 @@ extends Area3D
 
 @export var spawn_area : CollisionShape3D
 
-@export_range(1,100) var spawn_amount : int
+@export_range(1,100) var spawn_amount : int = 1
 
 @export var object_to_spawn : PackedScene
 

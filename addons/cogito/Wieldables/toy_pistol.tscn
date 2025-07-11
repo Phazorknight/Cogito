@@ -58,13 +58,10 @@ projectile_velocity = 50.0
 default_position = Vector3(0.329, -0.264, -0.535)
 sound_primary_use = ExtResource("3_vdfq8")
 wieldable_mesh = NodePath("ToyPistol_mesh")
-anim_equip = "ToyPistol/equip"
-anim_unequip = "ToyPistol/unequip"
-anim_action_primary = "ToyPistol/shoot"
-anim_action_secondary = "ToyPistol/action_secondary"
-anim_reload = "ToyPistol/reload"
+anim_action_primary = "shoot"
 
 [node name="ToyPistol_mesh" type="Node3D" parent="."]
+visible = false
 script = ExtResource("5_1h55s")
 
 [node name="pistol_mesh" type="MeshInstance3D" parent="ToyPistol_mesh"]
@@ -81,5 +78,5 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.2773
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"ToyPistol": ExtResource("5_fkf6b")
+&"": ExtResource("5_fkf6b")
 }
