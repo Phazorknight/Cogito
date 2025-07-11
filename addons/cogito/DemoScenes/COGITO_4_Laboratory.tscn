@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=134 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_kxi7f"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_akrjl"]
@@ -54,8 +54,6 @@
 [ext_resource type="PackedScene" uid="uid://cd2fwmwe8n1no" path="res://addons/cogito/PackedScenes/snap_slot_battery.tscn" id="52_lpold"]
 [ext_resource type="PackedScene" uid="uid://bab56bf0vqfss" path="res://addons/cogito/PackedScenes/Pickups/pickup_battery.tscn" id="53_kfuqt"]
 [ext_resource type="PackedScene" uid="uid://c1umit2vtv22v" path="res://addons/cogito/PackedScenes/projectile_pistol.tscn" id="54_yvysd"]
-[ext_resource type="Texture2D" uid="uid://uj2uowrvb2ni" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_LaserAmmo.png" id="55_p17ng"]
-[ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="56_lchrk"]
 [ext_resource type="PackedScene" uid="uid://nqyrraqwixxy" path="res://addons/cogito/DemoScenes/DemoPrefabs/sliding_door.tscn" id="57_0ie8b"]
 [ext_resource type="PackedScene" uid="uid://co1opmwyvl27" path="res://addons/cogito/DemoScenes/DemoPrefabs/barrel.tscn" id="58_y0y8e"]
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://addons/cogito/PackedScenes/hazard_zone.tscn" id="59_0q6qq"]
@@ -94,7 +92,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_kxi7f"]
+[sub_resource type="Resource" id="Resource_ovhpt"]
 resource_local_to_scene = true
 script = ExtResource("5_fhmwi")
 grid = true
@@ -920,7 +918,7 @@ environment = SubResource("Environment_bftoa")
 
 [node name="Player" parent="." instance=ExtResource("3_ea58p")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_kxi7f")
+inventory_data = SubResource("Resource_ovhpt")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -4495,14 +4493,6 @@ object_to_spawn = ExtResource("54_yvysd")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VendingMachine/Spawnzone_VendingMachine2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0635595, 0.0773926, 0.0280352)
 shape = SubResource("BoxShape3D_6s5b0")
-
-[node name="laser_ammo_sprite" type="Sprite3D" parent="VendingMachine"]
-transform = Transform3D(-3.49691e-09, -0.0104421, 0.0793156, 0, 0.0793156, 0.0104421, -0.08, 4.56438e-10, -3.46699e-09, 0.487518, 1.22724, -0.219645)
-texture = ExtResource("55_p17ng")
-
-[node name="foam_bullet_sprite" type="Sprite3D" parent="VendingMachine"]
-transform = Transform3D(-3.49691e-09, -0.0104421, 0.0793156, 0, 0.0793156, 0.0104421, -0.08, 4.56438e-10, -3.46699e-09, 0.487519, 1.22724, -0.469384)
-texture = ExtResource("56_lchrk")
 
 [node name="SlidingDoor" parent="." instance=ExtResource("57_0ie8b")]
 
