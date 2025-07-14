@@ -64,7 +64,7 @@ func get_pickup_from_queue() -> CogitoObject:
 
 func _update_shape() -> void:
 	# Uses a shorter collision cylinder when crouching
-	if player.is_crouching:
+	if player.is_in_crouching_state():
 		if !standing_collider.disabled:
 			standing_collider.disabled = true
 		if crouching_collider.disabled:

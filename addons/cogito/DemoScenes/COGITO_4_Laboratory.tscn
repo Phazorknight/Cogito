@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="2_7qwrr"]
+[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player_default.tscn" id="2_7qwrr"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_6y43x"]
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="5_ihscj"]
@@ -4076,7 +4076,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
 
 [node name="Pickup_StaminaExtension" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("38_ayqrv")]
 transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, -1.38741, 0.92349, -11.344)
-cogito_name = ""
 
 [node name="Pickup_Dart" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0614817, 1.00006, -11.7358)

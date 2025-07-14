@@ -66,6 +66,23 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var eyes_transform: Transform3D
 @export var camera_transform: Transform3D
 
+@export var state_chart: SerializedStateChart = null
+@export var was_on_ladder: bool
+
+
+func save_state_chart(player):
+	if player is not CogitoPlayerStateDriven:
+		return
+		
+	state_chart = StateChartSerializer.serialize(player.state_chart)
+
+
+func load_state_chart(player):
+	if player is not CogitoPlayerStateDriven:
+		return
+		
+	StateChartSerializer.deserialize(state_chart, player.state_chart)
+
 
 func save_node_transforms(player):
 	body_transform = player.get_node("Body").transform
