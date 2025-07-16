@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=4 uid="uid://b5ukfmvoxa33e"]
+[gd_scene load_steps=15 format=4 uid="uid://b5ukfmvoxa33e"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_cysft"]
 [ext_resource type="PackedScene" uid="uid://1xq4y42qkcur" path="res://addons/cogito/Components/Interactions/PickupComponent.tscn" id="1_prphd"]
 [ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres" id="2_g3bxg"]
+[ext_resource type="PackedScene" uid="uid://hb6a2o6ljd5q" path="res://addons/cogito/Components/Interactions/ExtendedPickupInteraction.tscn" id="2_jd2qi"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_tljcd"]
+[ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="6_jatv8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_biddi"]
 resource_name = "metal"
@@ -105,7 +107,7 @@ emission_energy_multiplier = 2.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_2t3bq"]
 size = Vector3(0.0606506, 0.234888, 0.148291)
 
-[sub_resource type="Resource" id="Resource_v26fh"]
+[sub_resource type="Resource" id="Resource_jatv8"]
 resource_local_to_scene = true
 script = ExtResource("3_tljcd")
 inventory_item = ExtResource("2_g3bxg")
@@ -115,6 +117,7 @@ origin_index = -1
 [node name="pickup_laser_ammo" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_cysft")
+cogito_name = ""
 
 [node name="clipA" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_mvtnv")
@@ -125,5 +128,11 @@ surface_material_override/2 = SubResource("StandardMaterial3D_cklr6")
 transform = Transform3D(1, 0, -8.35187e-23, 0, 1, 0, -8.35187e-23, 0, 1, -0.000118852, -0.00277138, -0.000561476)
 shape = SubResource("BoxShape3D_2t3bq")
 
+[node name="ExtendedPickupInteraction" parent="." instance=ExtResource("2_jd2qi")]
+hold_interaction_text = "(HOLD) Reload"
+interaction_text = "Pick up | (HOLD) Reload"
+
 [node name="PickupComponent" parent="." instance=ExtResource("1_prphd")]
-slot_data = SubResource("Resource_v26fh")
+slot_data = SubResource("Resource_jatv8")
+
+[node name="CarryableComponent" parent="." instance=ExtResource("6_jatv8")]

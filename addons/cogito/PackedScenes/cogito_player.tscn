@@ -63,7 +63,6 @@ fall_damage = 10
 inventory_data = ExtResource("2_iyhv4")
 jump_sound = ExtResource("3_7ds3n")
 slide_sound = ExtResource("4_1i2kv")
-JUMP_VELOCITY = 4.0
 WALKING_SPEED = 4.0
 SPRINTING_SPEED = 7.0
 SLIDE_JUMP_MOD = 1.3
@@ -169,7 +168,14 @@ one_shot = true
 [node name="PlayerInteractionComponent" parent="." node_paths=PackedStringArray("interaction_raycast", "carryable_position", "stamina_attribute", "wieldable_container") instance=ExtResource("20_4f25o")]
 interaction_raycast = NodePath("../Body/Neck/Head/Eyes/Camera/InteractionRaycast")
 carryable_position = NodePath("../Body/Neck/Head/Eyes/Camera/CarryablePosition")
+max_throw_power = 25.0
+throw_power_mass_multiplier = 10.0
+throw_stamina_threshold = 20.0
+throw_stamina_drain = 5.0
+drop_when_cant_throw = true
 stamina_attribute = NodePath("../StaminaAttribute")
+max_drop_power = 1.0
+drop_power_mass_multiplier = 1.0
 wieldable_container = NodePath("../Body/Neck/Head/Wieldables")
 
 [node name="GUI" type="Control" parent="."]

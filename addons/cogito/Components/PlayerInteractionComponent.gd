@@ -61,10 +61,14 @@ var is_wielding: bool:
 	get: return equipped_wieldable_item != null
 	
 var player_rid
+# Briefly interrupt quickslot cycling after an interactable is unseen
+var can_cycle_quickslots: bool = true
+@onready var cycle_quickslots_interrupt_timer: Timer = $Timer
+
 
 func _ready():
 	player = get_parent() as CogitoPlayer
-	#pass
+	cycle_quickslots_interrupt_timer.connect("timeout", Callable(self, "_on_can_cycle_quickslots_timeout"))
 
 
 func exclude_player(rid: RID):
@@ -81,13 +85,14 @@ func _input(event: InputEvent) -> void:
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
 		# if carrying an object, drop it.
 		_handle_interaction(action)
-		
+	
+	
 	if is_carrying and !get_parent().is_movement_paused and is_instance_valid(carried_object):
 		if Input.is_action_just_pressed("action_primary"):
 			_attempt_throw()
 			#carried_object.throw(throw_power)
-		
-
+	
+	
 	# Wieldable primary Action Input
 	if is_wielding and !get_parent().is_movement_paused:
 		if Input.is_action_just_pressed("action_primary"):
@@ -104,7 +109,6 @@ func _input(event: InputEvent) -> void:
 			attempt_reload()
 			return
 
-
 func _handle_interaction(action: String) -> void:
 	# if carrying an object, drop it.
 	if is_carrying:
@@ -118,10 +122,20 @@ func _handle_interaction(action: String) -> void:
 				var carry_parent: CogitoObject = carried_object.get_parent() as CogitoObject
 				if carry_parent:
 					for node: InteractionComponent in carry_parent.interaction_nodes:
-						if node is PickupComponent or node is BackpackComponent:
-							if node.input_map_action == action:
+						if node.input_map_action == action and not node.is_disabled:
+							if node is PickupComponent or node is BackpackComponent or node is ExtendedPickupInteraction:
+								if !node.ignore_open_gui and get_parent().is_showing_ui:
+									return
 								node.interact(self)
-								return
+								
+								#Dual interaction components need to await signal to update correctly
+								if node is DualInteraction or node is ExtendedPickupInteraction:
+									await node.interaction_complete  # Wait until the interaction_complete signal is recieved
+									_rebuild_interaction_prompts()  # rebuild prompt after signal is received
+								else:
+									# Update the prompts after an interaction. This is especially crucial for doors and switches.
+									_rebuild_interaction_prompts()
+								break
 		else:
 			stop_carrying()
 			return
@@ -135,7 +149,8 @@ func _handle_interaction(action: String) -> void:
 				node.interact(self)
 				
 				#Dual interaction components need to await signal to update correctly
-				if node is DualInteraction:
+				if node is DualInteraction or node is ExtendedPickupInteraction:
+					#(player.player_hud as CogitoPlayerHudManager).hold_ui.
 					await node.interaction_complete  # Wait until the interaction_complete signal is recieved
 					_rebuild_interaction_prompts()  # rebuild prompt after signal is received
 				else:
@@ -382,6 +397,8 @@ func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
 
 func _on_interaction_raycast_interactable_unseen() -> void:
 	interactable = null
+	can_cycle_quickslots = false
+	cycle_quickslots_interrupt_timer.start()
 
 
 func _set_interactable(new_interactable) -> void:
@@ -435,3 +452,9 @@ func _drop_carried_object() -> void:
 	var drop_force: float = carried_object_mass * drop_power_mass_multiplier
 	drop_force = clamp(drop_force, 0, max_drop_power)
 	carried_object.throw(drop_force)
+
+
+## Briefly interrupt quickslot cycling after an interactable is unseen
+## This prevents incidental quickslot cycling when only attempting to interact with an item in the world that uses the same input action
+func _on_can_cycle_quickslots_timeout() -> void:
+	can_cycle_quickslots = true
