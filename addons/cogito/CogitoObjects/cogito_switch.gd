@@ -15,8 +15,8 @@ signal damage_received(damage_value:float)
 @export var allows_repeated_interaction : bool = true
 ## Hint that displays after this has been used.
 @export var has_been_used_hint : String
-@export var interaction_text_when_on : String = "Switch off"
-@export var interaction_text_when_off : String = "Switch on"
+@export var interaction_text_when_on : String = "SWITCH_off"
+@export var interaction_text_when_off : String = "SWITCH_on"
 ## Sound that plays when switched.
 @export var switch_sound : AudioStream
 ## Check this if player needs to have an item in the inventory to switch.

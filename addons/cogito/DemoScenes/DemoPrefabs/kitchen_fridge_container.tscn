@@ -234,7 +234,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.6530
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_n63mt")
-inventory_name = "Fridge"
+display_name = "CONTAINER_fridge"
 inventory_data = ExtResource("2_27aia")
 uses_animation = true
 open_animation = "open"
@@ -296,7 +296,7 @@ interaction_text = "Interact"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_qj67x")
+&"": SubResource("AnimationLibrary_qj67x")
 }
 
 [node name="InventoryCheckerWIN" type="Node" parent="." node_paths=PackedStringArray("container_to_check")]

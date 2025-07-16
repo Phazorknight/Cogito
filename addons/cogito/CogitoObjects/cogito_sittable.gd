@@ -127,6 +127,8 @@ func _ready():
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
 	interaction_component_state = false # set interaction component to disabled on startup
+	interaction_text = tr(interaction_text_when_off) # Inital set of interaction text to make sure its localized
+	
 	#find sit position node
 	sit_position_node = get_node_or_null(sit_position_node_path)
 	if not sit_position_node:
@@ -188,7 +190,7 @@ func _sit_down():
 	audio_stream_player_3d.play()
 	
 	#update interaction text
-	interaction_text = interaction_text_when_on
+	interaction_text = tr(interaction_text_when_on)
 	object_state_updated.emit(interaction_text)
 	
 	#enable any enable on sit node
@@ -220,7 +222,7 @@ func _stand_up():
 	audio_stream_player_3d.play()
 	
 	#update interaction text
-	interaction_text = interaction_text_when_off
+	interaction_text = tr(interaction_text_when_off)
 	object_state_updated.emit(interaction_text)
 	
 	#disable any enable_on_sit node

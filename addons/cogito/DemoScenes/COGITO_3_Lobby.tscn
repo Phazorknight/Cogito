@@ -6892,10 +6892,6 @@ transform = Transform3D(-0.607514, 0, 0.794309, 0, 1, 0, -0.794309, 0, -0.607514
 transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048, 0, -20.9787)
 
 [node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
-interaction_text_when_locked = "Locked."
-interaction_text_when_unlocked = "Lock"
-interaction_text_when_closed = "Open"
-interaction_text_when_open = "Close"
 angle_tolerance = 1.0
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="MEETING_ROOM"]
@@ -7575,7 +7571,6 @@ elemental_properties = 4
 
 [node name="pottedPlant" parent="ENTRANCE_AREA" instance=ExtResource("56_hferh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.02877, 0.475497, -13.8082)
-cogito_name = ""
 
 [node name="rugRectangle" parent="ENTRANCE_AREA" instance=ExtResource("75_26fkw")]
 
@@ -7597,7 +7592,6 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 6.394, 0
 
 [node name="pottedPlant2" parent="ENTRANCE_AREA" instance=ExtResource("56_hferh")]
 transform = Transform3D(0.374526, 0, -0.927217, 0, 1, 0, 0.927217, 0, 0.374526, 7.02877, 0.408329, 11.3186)
-cogito_name = ""
 
 [node name="lampRoundFloor" parent="ENTRANCE_AREA" instance=ExtResource("25_ohpwf")]
 
@@ -7944,7 +7938,6 @@ shape = SubResource("ConvexPolygonShape3D_n4app")
 
 [node name="Pickup_Flashlight" parent="." instance=ExtResource("91_fk2yu")]
 transform = Transform3D(-0.379472, 0, -0.925203, 0, 1, 0, 0.925203, 0, -0.379472, 4.70889, 1.33737, -0.00629956)
-cogito_name = ""
 
 [node name="RippedPageA_pickup" parent="." instance=ExtResource("91_qq2p0")]
 transform = Transform3D(-2.63806e-09, 0.998177, -0.0603517, 4.36317e-08, 0.0603517, 0.998177, 1, 0, -4.37114e-08, 5.13684, 0.51698, -11.7774)

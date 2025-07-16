@@ -115,6 +115,7 @@ mass = 5.0
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_mafrf")
+cogito_name = ""
 metadata/_edit_group_ = true
 
 [node name="pottedPlant(Clone)" type="MeshInstance3D" parent="."]

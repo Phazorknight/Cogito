@@ -261,13 +261,13 @@ func set_drop_prompt(_carrying_node):
 	
 	var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
-	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
+	instanced_prompt.set_prompt( tr("INTERACT_drop"), _carrying_node.input_map_action)
 	
 	# Create the rotation input prompt
 	if _carrying_node.enable_manual_rotating:
 		var instanced_secondary_prompt: UiPromptComponent = prompt_component.instantiate()
 		prompt_area.add_child(instanced_secondary_prompt)
-		instanced_secondary_prompt.set_prompt("Rotate", "action_secondary")
+		instanced_secondary_prompt.set_prompt( tr("INTERACT_rotate"), "action_secondary")
 
 
 #What happens when an external UI is shown (like inventory, readbale document, keypad, external inventory)

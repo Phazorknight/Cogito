@@ -79,13 +79,13 @@ func _on_set_quest_notification(passed_quest_icon, passed_quest_text):
 
 
 func _on_quest_activated(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest started: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("quest_START") + ": " + tr(_passed_quest.quest_title) ))
 
 func _on_quest_completed(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest completed: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("quest_COMPLETE") + ": " + tr(_passed_quest.quest_title) ))
 
 func _on_quest_failed(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest failed: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("quest_FAIL") + ": " + tr(_passed_quest.quest_title) ))
 
 func _on_quest_updated(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest udpated: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("quest_UPDATE") + ": " + tr(_passed_quest.quest_title) ))

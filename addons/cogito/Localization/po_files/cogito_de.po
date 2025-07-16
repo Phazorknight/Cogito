@@ -151,23 +151,6 @@ msgstr ""
 msgid "BTN_APPLY_CHANGES"
 msgstr "Anwenden"
 
-#. TRANSLATORS: item name
-#. item ammo item name
-#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
-#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
-msgid "Battery"
-msgstr "Batterie"
-
-#. TRANSLATORS: item description
-#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
-msgid "Can be combined with the Flashlight. Non-rechargeable."
-msgstr "Kann mit der Taschenlampe kombiniert werden. Nicht wieder aufladbar."
-
-#. TRANSLATORS: item hint on use
-#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
-msgid "Can't use this by itself."
-msgstr "Kann nicht für sich allein benutzt werden."
-
 #: addons/cogito/EasyMenus/Scenes/PauseMenu.tscn
 msgid "LAB_PauseMenu"
 msgstr "Pausenmenü"
@@ -329,8 +312,10 @@ msgstr "AKTIONEN"
 msgid "SEPARATOR_MENUES"
 msgstr "MENÜS"
 
+#. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Components/Interactions/CarryableComponent.tscn
-msgid "INTERACT_Carry"
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_carry"
 msgstr "Tragen"
 
 #: addons/cogito/Components/Interactions/PickupComponent.tscn
@@ -404,7 +389,7 @@ msgstr "Statistiken"
 
 #: addons/cogito/PackedScenes/Player_HUD.tscn
 msgid "Attributes"
-msgstr ""
+msgstr "Attribute"
 
 #: addons/cogito/PackedScenes/Player_HUD.tscn
 msgid "IGNORE_ItemName"
@@ -491,6 +476,145 @@ msgstr "Setzen"
 msgid "INTERACT_Read"
 msgstr "Lesen"
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "SWITCH_off"
+msgstr "ausschalten"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "SWITCH_on"
+msgstr "einschalten"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_drop"
+msgstr "Fallen lassen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_rotate"
+msgstr "Drehen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INVENTORY_add_item"
+msgstr "eingesteckt."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INVENTORY_cant_pick_up"
+msgstr "konnte nicht aufgenommen werden."
+
+#. TRANSLATORS: item name
+#. item ammo item name
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+#: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
+msgid "Battery"
+msgstr "Batterie"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Can be combined with the Flashlight. Non-rechargeable."
+msgstr "Kann mit der Taschenlampe kombiniert werden. Nicht wieder aufladbar."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
+msgid "Can't use this by itself."
+msgstr "Kann nicht für sich allein benutzt werden."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Coins.tres
+msgid "Coins (5)"
+msgstr "Münzen (5)"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Coins.tres
+msgid "It's spare change but can add up."
+msgstr "Kleingeld macht auch Mist."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Coins.tres
+msgid "Added 5 credits to wallet."
+msgstr "5 credits zur Geldbörse hinzugefügt."
+
+#. TRANSLATORS: item name
+#. item ammo item name
+#: addons/cogito/InventoryPD/Items/Cogito_Dart.tres
+msgid "Dart"
+msgstr "Pfeil"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Dart.tres
+msgid "A simple foam dart. Squishy."
+msgstr "Einfacher Schaumpfeil. Schwammig."
+
+#. TRANSLATORS: item name
+#. item ammo item name
+#: addons/cogito/InventoryPD/Items/Cogito_Dart_Fire.tres
+msgid "Fire Dart"
+msgstr "Feuerpfeil"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Dart_Fire.tres
+msgid "Who needs matches if you got these."
+msgstr "Wer braucht Streichhölzer wenn es diese hier gibt."
+
+#. TRANSLATORS: item name
+#. item ammo item name
+#: addons/cogito/InventoryPD/Items/Cogito_Dart_Water.tres
+msgid "Water Dart"
+msgstr "Wasserpfeil"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Dart_Water.tres
+msgid "Perpetually dripping water."
+msgstr "Tropft beständig."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_A.tres
+msgid "Diamond Half A"
+msgstr "Diamantenhälfte A"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_A.tres
+msgid "Looks like it's only half of some kind of shape."
+msgstr "Scheint nur eine Hälfte von einer größeren Form zu sein."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_A.tres
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_B.tres
+#: addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres
+#, fuzzy
+#| msgid "Can't use this by itself."
+msgid "Can't be used by itself."
+msgstr "Kann nicht für sich allein benutzt werden."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_B.tres
+msgid "Diamond Half B"
+msgstr "Diamantenhälfte B"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_B.tres
+msgid "Looks incomplete. Maybe I can find the rest of it?"
+msgstr "Scheint als ob ein Teil fehlt. Vielleicht kann ich den Rest finden?"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_Combine.tres
+msgid "Diamond Key"
+msgstr "Diamantenschlüssel"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_Combine.tres
+msgid "This looks like it could fit into something."
+msgstr "Scheint als ob es wo eingesetzt werden könnte."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_Combine.tres
+msgid "Now where does this fit?"
+msgstr "Wo könnte es eingesetzt werden?"
+
 #. TRANSLATORS: item name
 #: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
 msgid "Flashlight"
@@ -510,6 +634,313 @@ msgstr ""
 #: addons/cogito/InventoryPD/Items/Cogito_Flashlight.tres
 msgid "Out of battery."
 msgstr "Die Batterien sind leer."
+
+#. TRANSLATORS: item name
+#. item ammo item name
+#: addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres
+#: addons/cogito/InventoryPD/Items/Cogito_Pistol.tres
+msgid "Foam Bullets"
+msgstr "Schaumprojektil"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres
+msgid "Very visible but not very dangerous. Have a tendency to vanish."
+msgstr "Sehr sichtbar aber nicht sehr gefährlich. Geht leicht verloren."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_HealthExtension.tres
+msgid "Health Extension"
+msgstr "Gesundheitserweiterung"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_HealthExtension.tres
+msgid "Better than red bull."
+msgstr "Besser als red bull."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres
+msgid "Health Potion"
+msgstr "Gesundheitstrank"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres
+#: addons/cogito/InventoryPD/Items/Cogito_StaminaExtPotion.tres
+msgid "Tastes better than it looks."
+msgstr "Schmeckt besser als es aussieht."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_HealthPotion.tres
+msgid "You've gained 10 health."
+msgstr "10 Gesundheitspunkte erhalten."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Key.tres
+msgid "Key"
+msgstr "Schlüssel"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Key.tres
+msgid "Opens a locked door."
+msgstr "Öffnet eine verschlossene Tür."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Key.tres
+msgid "This should fit a door around here."
+msgstr "Sollte für eine nahegelegene Tür passen."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Laptop.tres
+msgid "Laptop"
+msgstr "Laptop"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Laptop.tres
+msgid ""
+"Feels light and doesn't turn on.\n"
+"Does that matter?"
+msgstr ""
+"Wirkt sehr leicht und lässt sich nicht einschalten.\n"
+"Ist das ein Problem?"
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_Laptop.tres
+msgid "I was supposed to do something with this."
+msgstr "Sollte ich damit nicht irgendwas bestimmtes tun?"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_LaptopReal.tres
+msgid "CEOs Laptop"
+msgstr "CEOs Laptop"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_LaptopReal.tres
+msgid "The CEO's laptop. There's probably a lot of valuable data on here."
+msgstr "Laptop des Bosses. Hat vermutlich viele wichtige Daten gespeichert."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_LaptopReal.tres
+msgid "I was supposed to do somoething with this."
+msgstr "Sollte ich damit nicht irgendwas bestimmtes tun?"
+
+#. TRANSLATORS: item name
+#. item ammo item name
+#: addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres
+#: addons/cogito/InventoryPD/Items/Cogito_LaserRifle.tres
+msgid "Laser Ammo"
+msgstr "Lasermunition"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres
+msgid "Tends to get hot. One clip has a charge of 50."
+msgstr "Wird sehr heiß. Ein Clip hat eine Kapazität von 50."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_LaserRifle.tres
+msgid "Laser Rifle"
+msgstr "Lasergewehr"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_LaserRifle.tres
+msgid "Goes pew pew pew. Needs Laser Ammo to reload."
+msgstr "Peng peng peng! Kann mit Lasermunition nachgeladen werden."
+
+#. TRANSLATORS: item hint on empty
+#: addons/cogito/InventoryPD/Items/Cogito_LaserRifle.tres
+msgid "Out of ammo."
+msgstr "Keine Munition."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_PageCombined.tres
+msgid "Combined Page"
+msgstr "Zusammengefügte Seite"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_PageCombined.tres
+msgid ""
+"Reassembled page from the ripped pieces. It says \"New code is 0451\" on it."
+msgstr ""
+"Von den zerissenen Teilen zusammengesetzt. Es steht geschrieben: \"Neuer "
+"Code ist 0451\""
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_PageCombined.tres
+msgid "I should probably read this."
+msgstr "Ich sollte das besser lesen."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Pickaxe.tres
+msgid "Pickaxe"
+msgstr "Spitzhacke"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Pickaxe.tres
+msgid "Don't go digging for diamonds now."
+msgstr "Werde jetzt bloß nicht zum Goldgräber"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Pistol.tres
+msgid "Foam Pistol"
+msgstr "Schaumpistole"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Pistol.tres
+msgid "There's a reason it looks like a toy. Shoots foam bullets."
+msgstr "Sieht nicht nur aus wie ein Spielzeug. Schießt Schaumprojektile."
+
+#. TRANSLATORS: item hint on empty
+#: addons/cogito/InventoryPD/Items/Cogito_Pistol.tres
+msgid "Out of bullets."
+msgstr "Keine Munition."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_RippedPage_A.tres
+msgid "Ripped Page A"
+msgstr "Zerrissene Seite A"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_RippedPage_A.tres
+#: addons/cogito/InventoryPD/Items/Cogito_RippedPage_B.tres
+msgid ""
+"A piece of paper ripped in half. It has some numbers on it but parts are "
+"missing."
+msgstr "Eine halbe Seite. Scheint ein paar Nummern zu haben aber Teile fehlen."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_RippedPage_A.tres
+#: addons/cogito/InventoryPD/Items/Cogito_RippedPage_B.tres
+msgid "I need the other half."
+msgstr "Ich brauche die andere Hälfte."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_RippedPage_B.tres
+msgid "Ripped Page B"
+msgstr "Zerrissene Seite B"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_StaminaExtPotion.tres
+msgid "Stamina Extension"
+msgstr "Ausdauererweiterung"
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_StaminaExtPotion.tres
+msgid "Your max stamina has increased by 15."
+msgstr "Maximale Ausdauer um 15 erhöht."
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_StrengthPotion.tres
+msgid "Strength Potion"
+msgstr "Stärketrank"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_StrengthPotion.tres
+msgid "Raw eggs, protein powder, spinach and eleven herbs and spices."
+msgstr "Rohe Eier, Proteinpulver, Spinat und 11 Kräuter und Gewürze."
+
+#. TRANSLATORS: item hint on use
+#: addons/cogito/InventoryPD/Items/Cogito_StrengthPotion.tres
+msgid "Your strength improved!"
+msgstr "Du bist jetzt stärker!"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_UselessItem.tres
+msgid "Useless"
+msgstr "Nutzlos"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_UselessItem.tres
+msgid "This item has no use function."
+msgstr "Dieser Gegenstand hat keine Funktion."
+
+#. TRANSLATORS: quest title
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres
+msgid "Gain access to the archive."
+msgstr "Dringe ins Archiv ein."
+
+#. TRANSLATORS: quest description active
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres
+msgid "You won't be able to just walk in, but we're sure you'll find away."
+msgstr ""
+"Du kannst nicht einfach hineinspazieren, aber dir wird schon was einfallen."
+
+#. TRANSLATORS: quest description completed
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres
+msgid "You're in!"
+msgstr "Du bist drin!"
+
+#. TRANSLATORS: quest description failed
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres
+msgid "You should've not been able to fail this."
+msgstr "Daran hättest du nicht scheitern sollen."
+
+#. TRANSLATORS: quest title
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres
+msgid "Deliver the CEO's laptop"
+msgstr "Bring uns den Laptop des CEOs"
+
+#. TRANSLATORS: quest description active
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres
+msgid ""
+"We have a hidden compartment in the fridge, so drop the laptop in there and "
+"we can retriefe it."
+msgstr ""
+"Wir haben ein Geheimfach im Kühlschrank. Hinterlasse den Laptop dort und wir "
+"holen ihn uns."
+
+#. TRANSLATORS: quest description completed
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres
+msgid "We got the data we needed. Great work!"
+msgstr "Wir haben die gesuchten Daten bekommen. Gute Arbeit!"
+
+#. TRANSLATORS: quest description failed
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres
+msgid "The laptop you delivered was fake! Do not contact us again."
+msgstr ""
+"Du hast uns eine gefälschten Laptop gebracht! Das war dein letzter Job für "
+"uns."
+
+#. TRANSLATORS: quest title
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres
+msgid "Steal the CEO's laptop"
+msgstr "Stehle den Laptop des CEO."
+
+#. TRANSLATORS: quest description active
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres
+msgid ""
+"We need the data on that laptop. As soon as you have it in your possession, "
+"we'll let you know the next steps."
+msgstr ""
+"Wir brauchen die Daten von dem Laptop. Sobald er in deinem Besitz ist, "
+"bekommst du weitere Anleitungen."
+
+#. TRANSLATORS: quest description completed
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres
+msgid "You found the laptop."
+msgstr "Du hast den Laptop gefunden."
+
+#. TRANSLATORS: quest description failed
+#: addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres
+msgid "You failed this quest."
+msgstr "Du bist an dieser Quest gescheitert."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
+msgid "quest_START"
+msgstr "Quest begonnen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
+msgid "quest_COMPLETE"
+msgstr "Quest abgeschlossen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
+msgid "quest_FAIL"
+msgstr "Quest gescheitert"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
+msgid "quest_UPDATE"
+msgstr "Quest aktualisiert"
 
 #~ msgid "Gameplay"
 #~ msgstr "Gameplay"

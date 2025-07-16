@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TranslationKeyDict" load_steps=2 format=3 uid="uid://b55ywr1ov4pe8"]
+
+[ext_resource type="Script" uid="uid://db6rvrcq4p73m" path="res://addons/cogito/Localization/scripts/translation_key_dict.gd" id="1_x6ivr"]
+
+[resource]
+script = ExtResource("1_x6ivr")
+keylist = Array[String](["quest_START", "quest_COMPLETE", "quest_FAIL", "quest_UPDATE"])
+metadata/_custom_type_script = "uid://db6rvrcq4p73m"
