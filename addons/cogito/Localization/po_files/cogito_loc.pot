@@ -491,6 +491,11 @@ msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "DOOR_locked_hint"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "SEAT_Stand_Up"
 msgstr ""
 
@@ -532,6 +537,26 @@ msgstr ""
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INVENTORY_cant_pick_up"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "KEYPAD_enter_code"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "KEYPAD_access_granted"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "UI_BTN_take_all"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_hold_joiner"
 msgstr ""
 
 #. TRANSLATORS: item name

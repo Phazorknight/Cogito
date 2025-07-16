@@ -463,6 +463,11 @@ msgstr "Close"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "DOOR_locked_hint"
+msgstr "I can't open it."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "SEAT_Stand_Up"
 msgstr "Stand up"
 
@@ -505,6 +510,26 @@ msgstr "added to inventory."
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INVENTORY_cant_pick_up"
 msgstr "couldn't be picked up."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "KEYPAD_enter_code"
+msgstr "Enter code."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "KEYPAD_access_granted"
+msgstr "Access granted."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "UI_BTN_take_all"
+msgstr "Take all"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_hold_joiner"
+msgstr " | (HOLD) "
 
 #. TRANSLATORS: item name
 #. item ammo item name
