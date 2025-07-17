@@ -38,6 +38,7 @@
 # res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_DeliverLaptop.tres
 # res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres
 # res://addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
+# res://addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -506,11 +507,6 @@ msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
-msgid "INTERACT_Read"
-msgstr ""
-
-#. TRANSLATORS: translation_key_dict entry
-#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "SWITCH_off"
 msgstr ""
 
@@ -521,12 +517,32 @@ msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_Read"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INTERACT_drop"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INTERACT_rotate"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_hold_joiner"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_place"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_remove"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
@@ -552,11 +568,6 @@ msgstr ""
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "UI_BTN_take_all"
-msgstr ""
-
-#. TRANSLATORS: translation_key_dict entry
-#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
-msgid "INTERACT_hold_joiner"
 msgstr ""
 
 #. TRANSLATORS: item name
@@ -988,4 +999,44 @@ msgstr ""
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
 msgid "quest_UPDATE"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_cant_carry"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_cant_pick_up"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_sanity_drain"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_stamina_drain"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_heal"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_damage"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_SWITCH_item_used"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_SWITCH_battery"
 msgstr ""

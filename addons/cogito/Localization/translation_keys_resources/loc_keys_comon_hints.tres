@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TranslationKeyDict" load_steps=2 format=3 uid="uid://e6mtkpcw88xi"]
+
+[ext_resource type="Script" uid="uid://db6rvrcq4p73m" path="res://addons/cogito/Localization/scripts/translation_key_dict.gd" id="1_f3hy7"]
+
+[resource]
+script = ExtResource("1_f3hy7")
+keylist = Array[String](["HINT_cant_carry", "HINT_cant_pick_up", "HINT_ZONE_sanity_drain", "HINT_ZONE_stamina_drain", "HINT_ZONE_heal", "HINT_ZONE_damage", "HINT_SWITCH_item_used", "HINT_SWITCH_battery"])
+metadata/_custom_type_script = "uid://db6rvrcq4p73m"

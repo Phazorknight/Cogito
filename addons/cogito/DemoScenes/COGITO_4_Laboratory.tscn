@@ -4035,7 +4035,6 @@ cogito_name = ""
 
 [node name="pickup_pistol" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("19_1ce0p")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.52303, 0.813927, -15.3253)
-cogito_name = ""
 
 [node name="pickup_laser_ammo" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("17_l2vbg")]
 transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 2.60574, 0.821979, -15.3026)
@@ -4060,7 +4059,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.607045, 1.21509, -11.2257)
 
 [node name="Pickup_StaminaExtension" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("38_ayqrv")]
 transform = Transform3D(0.980989, 0, 0.194063, 0, 1, 0, -0.194063, 0, 0.980989, -1.38741, 0.92349, -11.344)
-cogito_name = ""
 
 [node name="Pickup_Dart" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("40_hi3jw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0614817, 1.00006, -11.7358)
@@ -4411,6 +4409,8 @@ mesh = SubResource("BoxMesh_w38aj")
 
 [node name="SnapSlotBattery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("47_71h2t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.77805, 0.958914, -21)
+interaction_text_when_on = "INTERACT_remove"
+interaction_text_when_off = "INTERACT_place"
 objects_call_interact = Array[NodePath]([NodePath("../Lamp_ElectricWire2")])
 
 [node name="Lamp_ElectricWire2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("42_3rq3h")]

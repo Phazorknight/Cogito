@@ -25,7 +25,7 @@ player_attribute = "sanity"
 effect_amount = 1.0
 effect_delay = 0.0
 hint_icon = ExtResource("2_cjlfs")
-hint_message = "You're going insane!"
+hint_message = "HINT_ZONE_sanity_drain"
 hint_rate = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

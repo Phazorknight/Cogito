@@ -24,7 +24,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2487, 1.505, 1.5451)
 script = ExtResource("1_vwqvk")
 player_attribute = "health"
 hint_icon = ExtResource("2_ut4mo")
-hint_message = "You're taking damage!"
+hint_message = "HINT_ZONE_damage"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_in244")

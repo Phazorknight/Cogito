@@ -478,11 +478,6 @@ msgstr "Setzen"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
-msgid "INTERACT_Read"
-msgstr "Lesen"
-
-#. TRANSLATORS: translation_key_dict entry
-#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "SWITCH_off"
 msgstr "ausschalten"
 
@@ -493,6 +488,11 @@ msgstr "einschalten"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_Read"
+msgstr "Lesen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INTERACT_drop"
 msgstr "Fallen lassen"
 
@@ -500,6 +500,21 @@ msgstr "Fallen lassen"
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INTERACT_rotate"
 msgstr "Drehen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_hold_joiner"
+msgstr " | (GEDRÜCKT) "
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_place"
+msgstr "Einsetzen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_remove"
+msgstr "Entfernen"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
@@ -525,11 +540,6 @@ msgstr "Zugang gewährt."
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "UI_BTN_take_all"
 msgstr "Alles nehmen"
-
-#. TRANSLATORS: translation_key_dict entry
-#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
-msgid "INTERACT_hold_joiner"
-msgstr " | (GEDRÜCKT) "
 
 #. TRANSLATORS: item name
 #. item ammo item name
@@ -610,8 +620,6 @@ msgstr "Scheint nur eine Hälfte von einer größeren Form zu sein."
 #: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_A.tres
 #: addons/cogito/InventoryPD/Items/Cogito_DiamondKey_B.tres
 #: addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres
-#, fuzzy
-#| msgid "Can't use this by itself."
 msgid "Can't be used by itself."
 msgstr "Kann nicht für sich allein benutzt werden."
 
@@ -966,6 +974,50 @@ msgstr "Quest gescheitert"
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
 msgid "quest_UPDATE"
 msgstr "Quest aktualisiert"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+#, fuzzy
+#| msgid "INTERACT_cant_carry"
+msgid "HINT_cant_carry"
+msgstr "Kann nicht getragen werden wenn ich die Hände voll habe."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+#, fuzzy
+#| msgid "INVENTORY_cant_pick_up"
+msgid "HINT_cant_pick_up"
+msgstr "konnte nicht aufgenommen werden."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_sanity_drain"
+msgstr "Du verlierst deinen Verstand!"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_stamina_drain"
+msgstr "Dir geht die Puste aus!"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_heal"
+msgstr "Deine Wunden heilen."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_ZONE_damage"
+msgstr "Du nimmst Schaden!"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_SWITCH_item_used"
+msgstr "verwendet."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_SWITCH_battery"
+msgstr "Scheint eine Batterie zu brauchen."
 
 #~ msgid "Gameplay"
 #~ msgstr "Gameplay"

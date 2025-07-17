@@ -69,12 +69,12 @@ metallic_specular = 0.2
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_0xura")
-interaction_text_when_on = "Remove"
-interaction_text_when_off = "Place"
+interaction_text_when_on = "INTERACT_place"
+interaction_text_when_off = "INTERACT_remove"
 switch_sound = ExtResource("3_k5b51")
 needs_item_to_operate = true
 required_item_slot = SubResource("Resource_7jg67")
-item_hint = "Looks like a battery would fit."
+item_hint = "HINT_SWITCH_battery"
 nodes_to_show_when_on = [NodePath("BatteryMesh")]
 nodes_to_hide_when_on = [NodePath("SnapShape")]
 

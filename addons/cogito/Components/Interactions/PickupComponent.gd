@@ -28,7 +28,7 @@ func pick_up(_player_interaction_component: PlayerInteractionComponent):
 			self.get_parent().queue_free()
 			return
 		else:
-			_player_interaction_component.send_hint(slot_data.inventory_item.icon, tr(slot_data.inventory_item.name) + " " +tr("INVENTORY_cant_pick_up") )
+			_player_interaction_component.send_hint(slot_data.inventory_item.icon, tr(slot_data.inventory_item.name) + " " +tr("HINT_cant_pick_up") )
 			return
 	
 	if not _player_interaction_component.get_parent().inventory_data.pick_up_slot_data(slot_data):

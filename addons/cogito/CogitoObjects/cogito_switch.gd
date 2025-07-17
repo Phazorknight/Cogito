@@ -149,7 +149,7 @@ func check_for_item() -> bool:
 	var inventory = player_interaction_component.get_parent().inventory_data
 	for slot_data in inventory.inventory_slots:
 		if slot_data != null and slot_data.inventory_item == required_item_slot.inventory_item:
-			player_interaction_component.send_hint(null, required_item_slot.inventory_item.name + " used.") # Sends a hint with the key item name.
+			player_interaction_component.send_hint(null, tr(required_item_slot.inventory_item.name) + " " + tr("HINT_SWITCH_item_used") ) # Sends a hint with the key item name.
 			inventory.remove_item_from_stack(slot_data)
 			return true
 	

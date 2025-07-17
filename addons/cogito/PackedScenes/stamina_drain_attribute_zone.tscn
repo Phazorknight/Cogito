@@ -23,7 +23,7 @@ disable_receive_shadows = true
 script = ExtResource("1_720gr")
 player_attribute = "stamina"
 hint_icon = ExtResource("2_8mk41")
-hint_message = "You're losing energy!"
+hint_message = "HINT_ZONE_stamina_drain"
 hint_rate = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
