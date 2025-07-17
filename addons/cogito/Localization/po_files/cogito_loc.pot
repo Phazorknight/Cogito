@@ -983,22 +983,22 @@ msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_START"
+msgid "QUEST_start"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_COMPLETE"
+msgid "QUEST_complete"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_FAIL"
+msgid "QUEST_fail"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_UPDATE"
+msgid "QUEST_update"
 msgstr ""
 
 #. TRANSLATORS: translation_key_dict entry

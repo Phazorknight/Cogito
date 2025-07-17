@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_x6ivr")
-keylist = Array[String](["quest_START", "quest_COMPLETE", "quest_FAIL", "quest_UPDATE"])
+keylist = Array[String](["QUEST_start", "QUEST_complete", "QUEST_fail", "QUEST_update"])
 metadata/_custom_type_script = "uid://db6rvrcq4p73m"

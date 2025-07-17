@@ -955,22 +955,22 @@ msgstr "You failed this quest."
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_START"
+msgid "QUEST_start"
 msgstr "Quest started"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_COMPLETE"
+msgid "QUEST_complete"
 msgstr "Quest completed"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_FAIL"
+msgid "QUEST_fail"
 msgstr "Quest failed"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_UPDATE"
+msgid "QUEST_update"
 msgstr "Quest updated"
 
 #. TRANSLATORS: translation_key_dict entry
@@ -1012,6 +1012,18 @@ msgstr " used."
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
 msgid "HINT_SWITCH_battery"
 msgstr "Looks like it needs a battery."
+
+#~ msgid "quest_START"
+#~ msgstr "Quest started"
+
+#~ msgid "quest_COMPLETE"
+#~ msgstr "Quest completed"
+
+#~ msgid "quest_FAIL"
+#~ msgstr "Quest failed"
+
+#~ msgid "quest_UPDATE"
+#~ msgstr "Quest updated"
 
 #, fuzzy
 #~| msgid "INPUT_inventory"

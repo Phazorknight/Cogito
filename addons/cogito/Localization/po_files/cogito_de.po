@@ -957,22 +957,22 @@ msgstr "Du bist an dieser Quest gescheitert."
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_START"
+msgid "QUEST_start"
 msgstr "Quest begonnen"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_COMPLETE"
+msgid "QUEST_complete"
 msgstr "Quest abgeschlossen"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_FAIL"
+msgid "QUEST_fail"
 msgstr "Quest gescheitert"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
-msgid "quest_UPDATE"
+msgid "QUEST_update"
 msgstr "Quest aktualisiert"
 
 #. TRANSLATORS: translation_key_dict entry
@@ -984,8 +984,6 @@ msgstr "Kann nicht getragen werden wenn ich die Hände voll habe."
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
-#, fuzzy
-#| msgid "INVENTORY_cant_pick_up"
 msgid "HINT_cant_pick_up"
 msgstr "konnte nicht aufgenommen werden."
 
@@ -1018,6 +1016,18 @@ msgstr "verwendet."
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
 msgid "HINT_SWITCH_battery"
 msgstr "Scheint eine Batterie zu brauchen."
+
+#~ msgid "quest_START"
+#~ msgstr "Quest begonnen"
+
+#~ msgid "quest_COMPLETE"
+#~ msgstr "Quest abgeschlossen"
+
+#~ msgid "quest_FAIL"
+#~ msgstr "Quest gescheitert"
+
+#~ msgid "quest_UPDATE"
+#~ msgstr "Quest aktualisiert"
 
 #~ msgid "Gameplay"
 #~ msgstr "Gameplay"
