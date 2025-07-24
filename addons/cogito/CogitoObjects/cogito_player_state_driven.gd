@@ -26,6 +26,9 @@ var is_showing_ui : bool
 ## Item Drop Shapecast
 @export var item_drop_shapecast : ShapeCast3D
 
+## Ledge Climbing Shapecast
+@export var ledge_climbing_shapecast : ShapeCast3D
+
 ## Damage the player takes if falling from great height. Leave at 0 if you don't want to use this.
 @export var fall_damage : int
 ## Fall velocity at which fall damage is triggered. This is negative y-Axis. -5 is a good starting point but might be a bit too sensitive.
@@ -128,6 +131,14 @@ var on_ladder : bool = false
 const LADDER_JUMP_SCALE : float = 0.5
 var ladder_on_cooldown : bool = false
 
+@export_group("Ledge Handling")
+@export var CAN_CLIMB_LEDGE : bool = true
+@export var AUTO_STAND_AFTER_CLIMB : bool = false
+@export var CLIMBING_SPEED : float = 2.5
+@export var ARM_LENGTH : float = 0.7
+@export var MIN_FREE_SPACE_ABOVE_HEAD : float = 0.1
+@export var MIN_CLIMB_HEIGHT : float = 1.3
+
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
 @export var JOY_V_SENS : float = 2
@@ -178,6 +189,8 @@ var is_in_interaction_state : bool = true
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
 var radius : float
+var standing_height : float
+var crouching_height : float
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -226,6 +239,16 @@ func _ready():
 	
 	radius = _calculate_player_radius()
 	
+	if standing_collision_shape.shape is BoxShape3D:
+		standing_height = standing_collision_shape.shape.size.y
+	elif standing_collision_shape.shape is CylinderShape3D or standing_collision_shape.shape is CapsuleShape3D:
+		standing_height = standing_collision_shape.shape.height
+		
+	if crouching_collision_shape.shape is BoxShape3D:
+		crouching_height = crouching_collision_shape.shape.size.y
+	elif crouching_collision_shape.shape is CylinderShape3D or crouching_collision_shape.shape is CapsuleShape3D:
+		crouching_height = crouching_collision_shape.shape.height
+		
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
@@ -676,6 +699,9 @@ func _physics_process(delta):
 	if on_ladder:
 		return
 	
+	if current_moving_state == MovingState.LedgeClimbing:
+		return
+	
 	# Getting input direction
 	input_direction = Vector2.ZERO
 	if !is_movement_paused:
@@ -722,6 +748,7 @@ enum MovingState {
 	Sitting,
 	LadderClimbing,
 	Rolling,
+	LedgeClimbing,
 	Airborne,
 	AirControl,
 	Jumping,
@@ -751,6 +778,9 @@ var try_crouch : bool
 var wiggle_index : float = 0.0
 var wiggle_current_intensity : float = 0.0
 var bunny_hop_speed : float = SPRINTING_SPEED
+var ledge_position : Vector3
+var was_ledge_climbing : bool = false
+var is_in_ledge_climbing_final_stage : bool = false
 
 
 func _initialize_state_chart():
@@ -774,6 +804,61 @@ func is_in_crouching_state():
 
 func is_in_sprinting_state():
 	return current_moving_state == MovingState.Sprinting
+
+
+func _is_ledge_climbable() -> bool:
+	if not CAN_CLIMB_LEDGE:
+		return false
+		
+	ledge_climbing_shapecast.add_exception(self)
+
+	var previous_position = ledge_climbing_shapecast.position
+	
+	ledge_climbing_shapecast.target_position = Vector3.ZERO
+	
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if ledge_climbing_shapecast.is_colliding():
+		return false
+	
+	ledge_climbing_shapecast.target_position = Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
+	
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if ledge_climbing_shapecast.is_colliding():
+		return false
+	
+	ledge_climbing_shapecast.global_position += Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
+	ledge_climbing_shapecast.target_position = -body.global_basis.z * radius
+	
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if ledge_climbing_shapecast.is_colliding():
+		ledge_climbing_shapecast.position = previous_position
+		return false
+	
+	ledge_climbing_shapecast.global_position += -body.global_basis.z * radius
+	ledge_climbing_shapecast.target_position = Vector3(0, -(ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD) - (standing_height - MIN_CLIMB_HEIGHT), 0)
+	
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if not ledge_climbing_shapecast.is_colliding():
+		ledge_climbing_shapecast.position = previous_position
+		return false
+	
+	var collision_normal : Vector3 = ledge_climbing_shapecast.get_collision_normal(0)
+	
+	if not collision_normal.is_equal_approx(Vector3.UP):
+		ledge_climbing_shapecast.position = previous_position
+		return false
+	
+	var collision_point = ledge_climbing_shapecast.get_collision_point(0)
+	
+	ledge_position = collision_point
+	
+	ledge_climbing_shapecast.position = previous_position
+		
+	return true
 
 
 func _can_jump() -> bool:
@@ -897,6 +982,9 @@ func _on_grounded_state_entered() -> void:
 
 
 func _on_grounded_state_physics_processing(delta: float) -> void:
+	if was_ledge_climbing:
+		return
+		
 	if not is_on_floor() and not on_ladder:
 		if current_moving_state == MovingState.Sliding:
 			was_sliding = true
@@ -1450,6 +1538,7 @@ func _stand_up_finished():
 	crouch_raycast.enabled = true
 	set_physics_process(true)
 	state_chart.send_event("grounded")
+	try_crouch = false
 	state_chart.send_event("stand_up")
 	standing_collision_shape.disabled = false
 	#crouching_collision_shape.disabled = false
@@ -1570,6 +1659,62 @@ func _on_rolling_state_physics_processing(delta: float) -> void:
 			state_chart.send_event("grounded")
 #endregion
 
+
+#region LedgeClimbing State
+func _on_ledge_climbing_state_entered() -> void:
+	current_moving_state == MovingState.LedgeClimbing
+	was_ledge_climbing = true
+
+
+func _on_ledge_climbing_state_exited() -> void:
+	current_moving_state == MovingState.Undefined
+	is_in_ledge_climbing_final_stage = false
+
+
+func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
+	if not Input.is_action_pressed("jump") and not is_in_ledge_climbing_final_stage:
+		was_ledge_climbing = false
+		state_chart.send_event("idle")
+		try_crouch = false
+		state_chart.send_event("stand_up")
+		return
+		
+	main_velocity = Vector3.ZERO
+	last_velocity = Vector3.ZERO
+	gravity_vec = Vector3.ZERO
+	direction = Vector3.ZERO
+	
+	var move_direction = Vector3.UP
+	velocity = move_direction * CLIMBING_SPEED
+	
+	if global_position.y + standing_height / 2 < ledge_position.y + ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD:
+		move_and_slide()
+		return
+	
+	if current_body_posture_state != BodyPostureState.Crouching:
+		is_in_ledge_climbing_final_stage = true
+		try_crouch = true
+		state_chart.send_event("crouch")
+		return
+	
+	if global_position.y - (standing_height / 2 - crouching_height) < ledge_position.y:
+		move_and_slide()
+		return
+		
+	move_direction = global_position.direction_to(ledge_position + Vector3(0, standing_height / 2, 0))
+	velocity = move_direction * CLIMBING_SPEED
+	
+	move_and_slide()
+	
+	if (ledge_position + Vector3(0, standing_height / 2, 0)).distance_to(global_position) < 0.1:
+		was_ledge_climbing = false
+		state_chart.send_event("idle")
+		if AUTO_STAND_AFTER_CLIMB:
+			try_crouch = false
+			state_chart.send_event("stand_up")
+#endregion
+
+
 #region Airborne State
 func _on_airborne_state_entered() -> void:
 	was_in_air = true  # Set airborne state
@@ -1593,6 +1738,7 @@ func _on_airborne_state_physics_processing(delta: float) -> void:
 		state_chart.send_event("grounded")
 #endregion
 
+
 #region AirControl State
 func _on_air_control_state_physics_processing(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
@@ -1608,6 +1754,14 @@ func _on_air_control_state_physics_processing(delta: float) -> void:
 
 
 #region Jumping State
+func _on_jumping_state_entered() -> void:
+	current_moving_state = MovingState.Jumping
+
+
+func _on_jumping_state_exited() -> void:
+	current_moving_state = MovingState.Undefined
+
+
 func _on_jumping_state_physics_processing(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
 		direction = lerp(
@@ -1618,6 +1772,11 @@ func _on_jumping_state_physics_processing(delta: float) -> void:
 		
 	current_speed = lerp(current_speed, jump_target_speed, delta * LERP_SPEED)
 	
+	if current_body_posture_state != BodyPostureState.Crouching:
+		if _is_ledge_climbable():
+			state_chart.send_event("ledge_climb")
+			return
+		
 	if main_velocity.y <= FREE_FALL_MIN_VELOCITY:
 		state_chart.send_event("fall")
 #endregion
@@ -1672,14 +1831,15 @@ func _on_standing_state_physics_processing(delta: float) -> void:
 			return
 		standing_collision_shape.disabled = false
 		crouching_collision_shape.disabled = true
-		
-	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-		try_crouch = !try_crouch
-	elif !TOGGLE_CROUCH:
-		try_crouch = Input.is_action_pressed("crouch")
 	
-	if try_crouch or crouch_raycast.is_colliding():
-		state_chart.send_event("crouch")
+	if not was_ledge_climbing:
+		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+			try_crouch = !try_crouch
+		elif !TOGGLE_CROUCH:
+			try_crouch = Input.is_action_pressed("crouch")
+		
+		if try_crouch or crouch_raycast.is_colliding():
+			state_chart.send_event("crouch")
 #endregion
 
 
