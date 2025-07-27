@@ -158,7 +158,7 @@ shape = SubResource("BoxShape3D_eedpt")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_ag03y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.543261, 0.168468)
-interaction_text = "Sit"
+interaction_text = "SEAT_Sit"
 
 [node name="Sit Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0202361, 0.991896, 0.168468)

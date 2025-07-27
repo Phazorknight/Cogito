@@ -18,8 +18,6 @@ size = Vector3(1, 1.19324, 1)
 
 [node name="Seat" type="StaticBody3D" node_paths=PackedStringArray("enable_on_sit")]
 script = ExtResource("1_22lyd")
-interaction_text_when_on = "SEAT_Stand_Up"
-interaction_text_when_off = "SEAT_Sit"
 sit_sound = ExtResource("3_wmd07")
 stand_sound = ExtResource("3_wmd07")
 sit_position_node_path = NodePath("Sit Marker")
@@ -38,7 +36,7 @@ skeleton = NodePath("../..")
 shape = SubResource("BoxShape3D_5cwmc")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
-interaction_text = "Sit"
+interaction_text = "SEAT_Sit"
 
 [node name="Sit Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
