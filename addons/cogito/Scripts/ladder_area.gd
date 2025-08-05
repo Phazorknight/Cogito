@@ -1,4 +1,5 @@
 extends Area3D
+class_name Ladder
 
 @export var ladder_collision : CollisionObject3D
 var original_process_mode : ProcessMode

@@ -139,6 +139,9 @@ var ladder_on_cooldown : bool = false
 @export var MIN_FREE_SPACE_ABOVE_HEAD : float = 0.1
 @export var MIN_CLIMB_HEIGHT : float = 1.3
 
+@export_group("Swim Handling")
+@export var SWIMMING_SPEED : float = 3.0
+
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
 @export var JOY_V_SENS : float = 2
@@ -200,6 +203,8 @@ var crouching_height : float
 @onready var eyes: Node3D = $Body/Neck/Head/Eyes
 @onready var camera: Camera3D = $Body/Neck/Head/Eyes/Camera
 @onready var animationPlayer: AnimationPlayer = $Body/Neck/Head/Eyes/AnimationPlayer
+@onready var swimming_head_shapecast: ShapeCast3D = $Body/Neck/Head/Eyes/Camera/SwimmingHeadShapeCast
+@onready var under_water_effect: ColorRect = $GUI/Panel/AspectRatioContainer/UnderWaterEffect
 
 @onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
@@ -248,7 +253,9 @@ func _ready():
 		crouching_height = crouching_collision_shape.shape.size.y
 	elif crouching_collision_shape.shape is CylinderShape3D or crouching_collision_shape.shape is CapsuleShape3D:
 		crouching_height = crouching_collision_shape.shape.height
-		
+	
+	ledge_climbing_shapecast.add_exception(self)
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 	### NEW PLAYER ATTRIBUTE SETUP:
@@ -693,24 +700,27 @@ func _on_player_state_loaded():
 
 
 func _physics_process(delta):
-	if is_sitting:
-		return
-
-	if on_ladder:
-		return
-	
-	if current_moving_state == MovingState.LedgeClimbing:
-		return
-	
 	# Getting input direction
 	input_direction = Vector2.ZERO
 	if !is_movement_paused:
-		input_direction = Input.get_vector("left", "right", "forward", "back")
-	
 		_process_analog_stick_mouselook()
 		
 		_free_look(delta)
+	
+		if is_sitting:
+			return
+
+		if on_ladder:
+			return
 		
+		if current_moving_state == MovingState.LedgeClimbing:
+			return
+		
+		if current_moving_state == MovingState.Swimming:
+			return
+		
+		input_direction = Input.get_vector("left", "right", "forward", "back")
+
 		current_speed = clamp(current_speed, 0.5, 12.0)
 		
 		if direction:
@@ -752,7 +762,8 @@ enum MovingState {
 	Airborne,
 	AirControl,
 	Jumping,
-	FreeFall
+	FreeFall,
+	Swimming
 }
 	
 enum BodyPostureState {
@@ -807,18 +818,20 @@ func is_in_sprinting_state():
 
 
 func _is_ledge_climbable() -> bool:
-	if not CAN_CLIMB_LEDGE:
+	if current_moving_state != MovingState.Swimming and not CAN_CLIMB_LEDGE:
 		return false
 		
-	ledge_climbing_shapecast.add_exception(self)
-
 	var previous_position = ledge_climbing_shapecast.position
 	
+	if current_moving_state == MovingState.Swimming:
+		ledge_climbing_shapecast.global_position -= Vector3(0, standing_height - crouching_height, 0)
+		
 	ledge_climbing_shapecast.target_position = Vector3.ZERO
 	
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
+		ledge_climbing_shapecast.position = previous_position
 		return false
 	
 	ledge_climbing_shapecast.target_position = Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
@@ -826,6 +839,7 @@ func _is_ledge_climbable() -> bool:
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
+		ledge_climbing_shapecast.position = previous_position
 		return false
 	
 	ledge_climbing_shapecast.global_position += Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
@@ -982,7 +996,16 @@ func _on_grounded_state_entered() -> void:
 
 
 func _on_grounded_state_physics_processing(delta: float) -> void:
+	if not is_head_in_water():
+		under_water_effect.visible = false
+	else:
+		under_water_effect.visible = true
+	
 	if was_ledge_climbing:
+		return
+	
+	if not on_ladder and is_head_in_water():
+		state_chart.send_event("swim")
 		return
 		
 	if not is_on_floor() and not on_ladder:
@@ -1016,8 +1039,9 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 		animationPlayer.play("landing")
 		
 	if was_sliding:
-		state_chart.send_event("slide")
-		return
+		if is_on_floor():
+			state_chart.send_event("slide")
+			return
 		
 	if current_moving_state != MovingState.Sliding and input_direction != Vector2.ZERO:
 		wiggle_vector.y = sin(wiggle_index)
@@ -1080,6 +1104,14 @@ func _footstep_sounds_system():
 
 
 #region Idle State
+func _on_idle_state_entered() -> void:
+	current_moving_state = MovingState.Idle
+
+
+func _on_idle_state_exited() -> void:
+	current_moving_state = MovingState.Undefined
+
+
 func _on_idle_state_physics_processing(delta: float) -> void:
 	if not main_velocity.is_equal_approx(Vector3.ZERO):
 		if current_body_posture_state == BodyPostureState.Crouching:
@@ -1233,6 +1265,14 @@ func _on_sliding_state_physics_processing(delta: float) -> void:
 
 
 #region Sneaking State
+func _on_sneaking_state_entered() -> void:
+	current_moving_state = MovingState.Sneaking
+
+
+func _on_sneaking_state_exited() -> void:
+	current_moving_state = MovingState.Undefined
+
+
 func _on_sneaking_state_physics_processing(delta: float) -> void:
 	wiggle_index += WIGGLE_ON_CROUCHING_SPEED * delta
 	eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
@@ -1549,6 +1589,11 @@ func _stand_up_finished():
 
 
 #region LadderClimbing State
+func _on_ladder_climbing_state_entered() -> void:
+	current_moving_state = MovingState.LadderClimbing
+	was_ledge_climbing = false
+
+
 func _on_ladder_climbing_state_exited() -> void:
 	on_ladder = false
 	state_chart.set_expression_property("on_ladder", on_ladder)
@@ -1632,9 +1677,38 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 
 
 func exit_ladder():
+	var is_still_on_ladder = false
+	
+	var ladder_check_shapecast : ShapeCast3D = ShapeCast3D.new()
+	add_child(ladder_check_shapecast)
+	ladder_check_shapecast.add_exception(self)
+	ladder_check_shapecast.collision_mask = 3
+	ladder_check_shapecast.collide_with_areas = true
+	ladder_check_shapecast.position = crouching_collision_shape.position
+	ladder_check_shapecast.target_position = Vector3.ZERO
+	ladder_check_shapecast.shape = crouching_collision_shape.shape
+	ladder_check_shapecast.force_shapecast_update()
+	if ladder_check_shapecast.is_colliding():
+		for i in ladder_check_shapecast.get_collision_count():
+			var collider = ladder_check_shapecast.get_collider(i)
+			if collider is Ladder:
+				is_still_on_ladder = true
+				break
+	
+	remove_child(ladder_check_shapecast)
+	
+	if is_still_on_ladder:
+		on_ladder = true
+		return
+		
 	on_ladder = false
 	state_chart.set_expression_property("on_ladder", on_ladder)
-	state_chart.send_event("airborne")
+	
+	if not is_body_in_water():
+		state_chart.send_event("airborne")
+	else:
+		if is_head_in_water():
+			state_chart.send_event("swim")
 #endregion
 
 #region Rolling state
@@ -1662,12 +1736,16 @@ func _on_rolling_state_physics_processing(delta: float) -> void:
 
 #region LedgeClimbing State
 func _on_ledge_climbing_state_entered() -> void:
-	current_moving_state == MovingState.LedgeClimbing
+	current_moving_state = MovingState.LedgeClimbing
 	was_ledge_climbing = true
+	main_velocity = Vector3.ZERO
+	last_velocity = Vector3.ZERO
+	gravity_vec = Vector3.ZERO
+	direction = Vector3.ZERO
 
 
 func _on_ledge_climbing_state_exited() -> void:
-	current_moving_state == MovingState.Undefined
+	current_moving_state = MovingState.Undefined
 	is_in_ledge_climbing_final_stage = false
 
 
@@ -1678,11 +1756,6 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 		try_crouch = false
 		state_chart.send_event("stand_up")
 		return
-		
-	main_velocity = Vector3.ZERO
-	last_velocity = Vector3.ZERO
-	gravity_vec = Vector3.ZERO
-	direction = Vector3.ZERO
 	
 	var move_direction = Vector3.UP
 	velocity = move_direction * CLIMBING_SPEED
@@ -1700,13 +1773,17 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 	if global_position.y - (standing_height / 2 - crouching_height) < ledge_position.y:
 		move_and_slide()
 		return
-		
+	
+	is_in_ledge_climbing_final_stage = true
+	
 	move_direction = global_position.direction_to(ledge_position + Vector3(0, standing_height / 2, 0))
+	if move_direction.y <= 0.01:
+		global_position.y += 0.02
 	velocity = move_direction * CLIMBING_SPEED
 	
 	move_and_slide()
 	
-	if (ledge_position + Vector3(0, standing_height / 2, 0)).distance_to(global_position) < 0.1:
+	if (ledge_position + Vector3(0, standing_height / 2, 0)).distance_to(global_position) < 0.2:
 		was_ledge_climbing = false
 		state_chart.send_event("idle")
 		if AUTO_STAND_AFTER_CLIMB:
@@ -1722,6 +1799,10 @@ func _on_airborne_state_entered() -> void:
 
 
 func _on_airborne_state_physics_processing(delta: float) -> void:
+	if is_head_in_water():
+		state_chart.send_event("swim")
+		return
+		
 	gravity_vec = Vector3.DOWN * gravity * delta
 
 	if was_sprinting and Input.is_action_pressed("sprint"):
@@ -1740,6 +1821,14 @@ func _on_airborne_state_physics_processing(delta: float) -> void:
 
 
 #region AirControl State
+func _on_air_control_state_entered() -> void:
+	current_moving_state = MovingState.AirControl
+
+
+func _on_air_control_state_exited() -> void:
+	current_moving_state = MovingState.Undefined
+
+
 func _on_air_control_state_physics_processing(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
 		direction = lerp(
@@ -1783,9 +1872,99 @@ func _on_jumping_state_physics_processing(delta: float) -> void:
 
 
 #region FreeFall State
+func _on_free_fall_state_entered() -> void:
+	current_moving_state = MovingState.FreeFall
+
+
+func _on_free_fall_state_exited() -> void:
+	current_moving_state = MovingState.Undefined
+
+
 func _on_free_fall_state_physics_processing(delta: float) -> void:
 	if main_velocity.y <= FREE_FALL_MIN_DIE_VELOCITY:
 		decrease_attribute("health", $HealthAttribute.value_max)
+#endregion
+
+
+#region Swimming State
+func is_body_in_water() -> bool:
+	if get_tree().get_nodes_in_group("water_area").all(func(area): return !area.overlaps_body(self)):
+		return false
+	else:
+		return true
+
+
+func is_head_in_water() -> bool:
+	swimming_head_shapecast.force_shapecast_update()
+	
+	if not swimming_head_shapecast.is_colliding():
+		return false
+		
+	return true
+
+
+func _handle_water_physics(delta) -> void:
+	var input_dir: Vector2
+	if !is_movement_paused:
+		input_dir = Input.get_vector("left", "right", "forward", "back")
+	else:
+		input_dir = Vector2.ZERO
+	input_dir = -input_dir
+	
+	var look_vector = camera.get_camera_transform().basis
+	var direction = -(look_vector * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if not is_head_in_water() and direction.dot(Vector3.UP) > 0:
+		direction = direction.slide(Vector3.UP)
+	
+	current_speed = lerp(current_speed, SWIMMING_SPEED, delta * LERP_SPEED)
+	
+	if input_dir:
+		main_velocity = lerp(main_velocity, direction * SWIMMING_SPEED, delta * LERP_SPEED)
+	else:
+		main_velocity = lerp(main_velocity, Vector3.ZERO, delta * LERP_SPEED)
+		
+		if Input.is_action_pressed("jump"):
+			if is_head_in_water():
+				main_velocity.y = lerp(main_velocity.y, SWIMMING_SPEED, delta * LERP_SPEED)
+		else:
+			if not is_on_floor():
+				main_velocity.y -= gravity * 0.25 * delta
+	
+	velocity = main_velocity
+	
+	move_and_slide()
+
+
+func _on_swimming_state_entered() -> void:
+	current_moving_state = MovingState.Swimming
+	
+	last_velocity = Vector3.ZERO
+	gravity_vec = Vector3.ZERO
+	direction = Vector3.ZERO
+	
+	try_crouch = true
+	state_chart.send_event("crouch")
+
+
+func _on_swimming_state_exited() -> void:
+	current_moving_state = MovingState.Undefined
+
+
+func _on_swimming_state_physics_processing(delta: float) -> void:
+	if Input.is_action_pressed("jump") and _is_ledge_climbable():
+		state_chart.send_event("ledge_climb")
+		return
+		
+	if not is_head_in_water():
+		under_water_effect.visible = false
+		if is_on_floor():
+			state_chart.send_event("grounded")
+			return
+	else:
+		under_water_effect.visible = true
+		
+	_handle_water_physics(delta)
 #endregion
 
 
@@ -1804,13 +1983,22 @@ func _on_crouching_state_exited() -> void:
 func _on_crouching_state_physics_processing(delta: float) -> void:
 	head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 	
-	if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-		try_crouch = !try_crouch
-	elif !TOGGLE_CROUCH:
-		try_crouch = Input.is_action_pressed("crouch")
-		
-	if not try_crouch and not crouch_raycast.is_colliding():
-		state_chart.send_event("stand_up")
+	if is_body_in_water():
+		if is_head_in_water():
+			eyes.position.y = lerp(eyes.position.y, -0.05, delta * LERP_SPEED * 1.5)
+		else:
+			eyes.position.y = lerp(eyes.position.y, 0.05, delta * LERP_SPEED * 1.5)
+	
+	swimming_head_shapecast.global_position = head.global_position
+	
+	if current_moving_state != MovingState.Swimming:
+		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+			try_crouch = !try_crouch
+		elif !TOGGLE_CROUCH:
+			try_crouch = Input.is_action_pressed("crouch")
+			
+		if not try_crouch and not crouch_raycast.is_colliding():
+			state_chart.send_event("stand_up")
 #endregion
 
 
@@ -1826,6 +2014,9 @@ func _on_standing_state_exited() -> void:
 
 func _on_standing_state_physics_processing(delta: float) -> void:
 	head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+	
+	swimming_head_shapecast.global_position = head.global_position
+	
 	if head.position.y > CROUCHING_DEPTH/4:
 		if is_sitting:
 			return
