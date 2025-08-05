@@ -781,7 +781,6 @@ var was_sprinting : bool = false
 var is_sprinting_in_airborne : bool = false
 var was_sliding : bool = false
 var was_standing : bool = false
-var was_on_ladder : bool = false
 var jumped_from_slide : bool = false
 var jumped_from_crouch : bool = false
 var was_in_air : bool = false
@@ -970,19 +969,11 @@ func _on_grounded_on_pause_taken() -> void:
 	if not is_dead:
 		if current_moving_state == MovingState.Sliding:
 			was_sliding = true
-			
-		if on_ladder:
-			was_on_ladder = true
 	else:
 		was_sliding = false
 
 
 func _on_grounded_state_entered() -> void:
-	if was_on_ladder:
-		was_on_ladder = false
-		on_ladder = true
-		state_chart.set_expression_property("on_ladder", on_ladder)
-		
 	# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
 	if was_in_air and last_velocity.y < landing_threshold:
 		# Calculate the volume and pitch based on the landing velocity
@@ -1004,11 +995,11 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	if was_ledge_climbing:
 		return
 	
-	if not on_ladder and is_head_in_water():
+	if is_head_in_water():
 		state_chart.send_event("swim")
 		return
 		
-	if not is_on_floor() and not on_ladder:
+	if not is_on_floor():
 		if current_moving_state == MovingState.Sliding:
 			was_sliding = true
 		state_chart.send_event("airborne")
@@ -1021,13 +1012,10 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 		main_velocity.y = 0
 		gravity_vec = Vector3.ZERO
 	
-	if not on_ladder:
-		## Taking fall damage
-		if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
-			var damage_ratio : float = last_velocity.y / fall_damage_threshold
-			decrease_attribute("health", int(fall_damage * damage_ratio))
-	else:
-		last_velocity = Vector3.ZERO
+	## Taking fall damage
+	if fall_damage > 0 and last_velocity.y <= fall_damage_threshold:
+		var damage_ratio : float = last_velocity.y / fall_damage_threshold
+		decrease_attribute("health", int(fall_damage * damage_ratio))
 		
 	if last_velocity.y <= LANDING_MIN_ROLL_VELOCITY:
 		if !disable_roll_anim:
@@ -1588,129 +1576,6 @@ func _stand_up_finished():
 #endregion
 
 
-#region LadderClimbing State
-func _on_ladder_climbing_state_entered() -> void:
-	current_moving_state = MovingState.LadderClimbing
-	was_ledge_climbing = false
-
-
-func _on_ladder_climbing_state_exited() -> void:
-	on_ladder = false
-	state_chart.set_expression_property("on_ladder", on_ladder)
-	current_moving_state = MovingState.Undefined
-
-
-func _on_ladder_climbing_state_physics_processing(delta: float) -> void:
-	_process_on_ladder(delta)
-
-
-func _process_on_ladder(_delta):
-	var input_dir = Input.get_vector("left", "right", "forward", "back")
-	
-	var ladder_speed = LADDER_SPEED
-	
-	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
-		#is_sprinting = true
-		if stamina_attribute.value_current > 0:
-			ladder_speed = LADDER_SPRINT_SPEED
-	#else:
-		#is_sprinting = false
-		
-	var jump = Input.is_action_pressed("jump")
-
-	# Processing analog stick mouselook
-	if joystick_h_event:
-			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
-				if INVERT_Y_AXIS:
-					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
-				else:
-					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
-				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-				
-	if joystick_v_event:
-		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
-			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
-			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
-
-	var look_vector = camera.get_camera_transform().basis
-	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
-
-	# Applying ladder input_dir to direction
-	var y_dir = 1 if looking_down else -1
-	direction = (body.global_transform.basis * Vector3(input_dir.x,input_dir.y * y_dir,0)).normalized()
-	main_velocity = direction * ladder_speed
-	
-	if jump:
-		main_velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
-	
-	velocity = main_velocity
-	move_and_slide()
-	
-	#Step off ladder when on ground
-	if is_on_floor() and not ladder_on_cooldown:
-		on_ladder = false
-		state_chart.send_event("grounded")
-
-
-func ladder_buffer_finished():
-	ladder_on_cooldown = false
-
-
-func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
-	# called by ladder_area.gd
-	
-	# try and capture player's intent based on where they're looking
-	var look_vector = camera.get_camera_transform().basis
-	var looking_away = look_vector.z.dot(ladderDir) < 0.33
-	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
-	if looking_down or not looking_away:
-		var offset = (global_position - ladder.global_position)
-		if offset.dot(ladderDir) < -0.1:
-			global_translate(ladderDir*offset.length()/4.0)
-		var ladder_timer = get_tree().create_timer(LADDER_COOLDOWN)
-		ladder_timer.timeout.connect(ladder_buffer_finished)
-		ladder_on_cooldown = true
-		if not on_ladder:
-			on_ladder = true
-			state_chart.send_event("climb_ladder")
-			state_chart.set_expression_property("on_ladder", on_ladder)
-
-
-func exit_ladder():
-	var is_still_on_ladder = false
-	
-	var ladder_check_shapecast : ShapeCast3D = ShapeCast3D.new()
-	add_child(ladder_check_shapecast)
-	ladder_check_shapecast.add_exception(self)
-	ladder_check_shapecast.collision_mask = 3
-	ladder_check_shapecast.collide_with_areas = true
-	ladder_check_shapecast.position = crouching_collision_shape.position
-	ladder_check_shapecast.target_position = Vector3.ZERO
-	ladder_check_shapecast.shape = crouching_collision_shape.shape
-	ladder_check_shapecast.force_shapecast_update()
-	if ladder_check_shapecast.is_colliding():
-		for i in ladder_check_shapecast.get_collision_count():
-			var collider = ladder_check_shapecast.get_collider(i)
-			if collider is Ladder:
-				is_still_on_ladder = true
-				break
-	
-	remove_child(ladder_check_shapecast)
-	
-	if is_still_on_ladder:
-		on_ladder = true
-		return
-		
-	on_ladder = false
-	state_chart.set_expression_property("on_ladder", on_ladder)
-	
-	if not is_body_in_water():
-		state_chart.send_event("airborne")
-	else:
-		if is_head_in_water():
-			state_chart.send_event("swim")
-#endregion
-
 #region Rolling state
 func _on_rolling_state_entered() -> void:
 	current_moving_state = MovingState.Rolling
@@ -1883,6 +1748,132 @@ func _on_free_fall_state_exited() -> void:
 func _on_free_fall_state_physics_processing(delta: float) -> void:
 	if main_velocity.y <= FREE_FALL_MIN_DIE_VELOCITY:
 		decrease_attribute("health", $HealthAttribute.value_max)
+#endregion
+
+
+#region LadderClimbing State
+func _on_ladder_climbing_state_entered() -> void:
+	current_moving_state = MovingState.LadderClimbing
+	last_velocity = Vector3.ZERO
+	was_ledge_climbing = false
+
+
+func _on_ladder_climbing_state_exited() -> void:
+	on_ladder = false
+	state_chart.set_expression_property("on_ladder", on_ladder)
+	current_moving_state = MovingState.Undefined
+
+
+func _on_ladder_climbing_state_physics_processing(delta: float) -> void:
+	if not is_head_in_water():
+		under_water_effect.visible = false
+	else:
+		under_water_effect.visible = true
+		
+	_process_on_ladder(delta)
+
+
+func _process_on_ladder(_delta):
+	var input_dir = Input.get_vector("left", "right", "forward", "back")
+	
+	var ladder_speed = LADDER_SPEED
+	
+	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
+		#is_sprinting = true
+		if stamina_attribute.value_current > 0:
+			ladder_speed = LADDER_SPRINT_SPEED
+	#else:
+		#is_sprinting = false
+		
+	var jump = Input.is_action_pressed("jump")
+
+	# Processing analog stick mouselook
+	if joystick_h_event:
+			if abs(joystick_h_event.get_axis_value()) > JOY_DEADZONE:
+				if INVERT_Y_AXIS:
+					head.rotate_x(deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				else:
+					head.rotate_x(-deg_to_rad(joystick_h_event.get_axis_value() * JOY_H_SENS))
+				head.rotation.x = clamp(head.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+				
+	if joystick_v_event:
+		if abs(joystick_v_event.get_axis_value()) > JOY_DEADZONE:
+			neck.rotate_y(deg_to_rad(-joystick_v_event.get_axis_value() * JOY_V_SENS))
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120), deg_to_rad(120))
+
+	var look_vector = camera.get_camera_transform().basis
+	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
+
+	# Applying ladder input_dir to direction
+	var y_dir = 1 if looking_down else -1
+	direction = (body.global_transform.basis * Vector3(input_dir.x,input_dir.y * y_dir,0)).normalized()
+	main_velocity = direction * ladder_speed
+	
+	if jump:
+		main_velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
+	
+	velocity = main_velocity
+	move_and_slide()
+	
+	#Step off ladder when on ground
+	if is_on_floor() and not ladder_on_cooldown:
+		on_ladder = false
+		state_chart.send_event("grounded")
+
+
+func ladder_buffer_finished():
+	ladder_on_cooldown = false
+
+
+func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
+	# called by ladder_area.gd
+	
+	# try and capture player's intent based on where they're looking
+	var look_vector = camera.get_camera_transform().basis
+	var looking_away = look_vector.z.dot(ladderDir) < 0.33
+	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
+	if looking_down or not looking_away:
+		var offset = (global_position - ladder.global_position)
+		if offset.dot(ladderDir) < -0.1:
+			global_translate(ladderDir*offset.length()/4.0)
+		var ladder_timer = get_tree().create_timer(LADDER_COOLDOWN)
+		ladder_timer.timeout.connect(ladder_buffer_finished)
+		ladder_on_cooldown = true
+		if not on_ladder:
+			on_ladder = true
+			state_chart.send_event("climb_ladder")
+			state_chart.set_expression_property("on_ladder", on_ladder)
+
+
+func exit_ladder():
+	var is_still_on_ladder = false
+	
+	var ladder_check_shapecast : ShapeCast3D = ShapeCast3D.new()
+	add_child(ladder_check_shapecast)
+	ladder_check_shapecast.add_exception(self)
+	ladder_check_shapecast.collision_mask = 3
+	ladder_check_shapecast.collide_with_areas = true
+	ladder_check_shapecast.position = crouching_collision_shape.position
+	ladder_check_shapecast.target_position = Vector3.ZERO
+	ladder_check_shapecast.shape = crouching_collision_shape.shape
+	ladder_check_shapecast.force_shapecast_update()
+	if ladder_check_shapecast.is_colliding():
+		for i in ladder_check_shapecast.get_collision_count():
+			var collider = ladder_check_shapecast.get_collider(i)
+			if collider is Ladder:
+				is_still_on_ladder = true
+				break
+	
+	remove_child(ladder_check_shapecast)
+	
+	if is_still_on_ladder:
+		on_ladder = true
+		return
+		
+	on_ladder = false
+	state_chart.set_expression_property("on_ladder", on_ladder)
+	
+	state_chart.send_event("airborne")
 #endregion
 
 

@@ -67,7 +67,6 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var camera_transform: Transform3D
 
 @export var state_chart: SerializedStateChart = null
-@export var was_on_ladder: bool
 
 
 func save_state_chart(player):
