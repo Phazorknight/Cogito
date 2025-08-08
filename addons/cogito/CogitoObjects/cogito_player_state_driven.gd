@@ -700,50 +700,12 @@ func _on_player_state_loaded():
 
 
 func _physics_process(delta):
-	# Getting input direction
-	input_direction = Vector2.ZERO
-	if !is_movement_paused:
-		_process_analog_stick_mouselook()
-		
-		_free_look(delta)
+	if is_movement_paused:
+		return
 	
-		if is_sitting:
-			return
-
-		if on_ladder:
-			return
-		
-		if current_moving_state == MovingState.LedgeClimbing:
-			return
-		
-		if current_moving_state == MovingState.Swimming:
-			return
-		
-		input_direction = Input.get_vector("left", "right", "forward", "back")
-
-		current_speed = clamp(current_speed, 0.5, 12.0)
-		
-		if direction:
-			main_velocity.x = direction.x * current_speed
-			main_velocity.z = direction.z * current_speed
-		else:
-			main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
-			main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
-			
-		# Store current velocity for the next frame
-		last_velocity = main_velocity
-		
-		# Velocity for current frame
-		var main_velocity_before_stair_stepping : Vector3 = main_velocity + gravity_vec
-		
-		_stair_handling(delta)
-		
-		# Velocity for next frame. Stair steppting can modify main_velocity and gravity_vec.
-		main_velocity += gravity_vec
-		
-		velocity = main_velocity_before_stair_stepping
-		
-		move_and_slide()
+	_process_analog_stick_mouselook()
+	
+	_free_look(delta)
 
 
 #region State Chart
@@ -959,6 +921,34 @@ func _sliding_jump(_jump_target_speed) -> void:
 	state_chart.send_event("jump")
 
 
+func _input_handling_and_movement(delta):
+	input_direction = Input.get_vector("left", "right", "forward", "back")
+
+	current_speed = clamp(current_speed, 0.5, 12.0)
+	
+	if direction:
+		main_velocity.x = direction.x * current_speed
+		main_velocity.z = direction.z * current_speed
+	else:
+		main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
+		main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
+		
+	# Store current velocity for the next frame
+	last_velocity = main_velocity
+	
+	# Velocity for current frame
+	var main_velocity_before_stair_stepping : Vector3 = main_velocity + gravity_vec
+	
+	_stair_handling(delta)
+	
+	# Velocity for next frame. Stair steppting can modify main_velocity and gravity_vec.
+	main_velocity += gravity_vec
+	
+	velocity = main_velocity_before_stair_stepping
+	
+	move_and_slide()
+
+
 #region Grounded State
 var wiggle_vector : Vector2 = Vector2.ZERO
 var can_play_footstep : bool = true
@@ -986,6 +976,8 @@ func _on_grounded_state_entered() -> void:
 
 
 func _on_grounded_state_physics_processing(delta: float) -> void:
+	_input_handling_and_movement(delta)
+	
 	if not is_head_in_water():
 		under_water_effect.visible = false
 	else:
@@ -1602,6 +1594,8 @@ func _on_airborne_state_entered() -> void:
 
 
 func _on_airborne_state_physics_processing(delta: float) -> void:
+	_input_handling_and_movement(delta)
+	
 	if is_head_in_water():
 		state_chart.send_event("swim")
 		return
