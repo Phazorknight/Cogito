@@ -743,6 +743,7 @@ var was_sprinting : bool = false
 var is_sprinting_in_airborne : bool = false
 var was_sliding : bool = false
 var was_standing : bool = false
+var was_jumping : bool = false
 var jumped_from_slide : bool = false
 var jumped_from_crouch : bool = false
 var was_in_air : bool = false
@@ -886,6 +887,7 @@ func _jump(_jump_target_speed) -> void:
 	
 	main_velocity.y = jump_vel
 	
+	was_jumping = true
 	jumped_from_slide = false
 	
 	_handle_jump_on_platform()
@@ -910,6 +912,7 @@ func _sliding_jump(_jump_target_speed) -> void:
 
 	main_velocity.y = JUMP_VELOCITY * SLIDE_JUMP_MOD
 	
+	was_jumping = true
 	jumped_from_slide = true
 	
 	sliding_timer.stop()
@@ -1044,7 +1047,7 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	
 	_footstep_sounds_system()
 	
-	if not jumped_from_slide and Input.is_action_pressed("sprint") and is_sprinting_in_airborne:
+	if was_jumping and not jumped_from_slide and Input.is_action_pressed("sprint") and is_sprinting_in_airborne:
 		if current_body_posture_state == BodyPostureState.Crouching and not jumped_from_crouch:
 			was_sprinting = false
 			state_chart.send_event("slide")
@@ -1688,6 +1691,8 @@ func _on_ladder_climbing_state_entered() -> void:
 	current_moving_state = MovingState.LadderClimbing
 	
 	last_velocity = Vector3.ZERO
+	
+	was_jumping = false
 
 
 func _on_ladder_climbing_state_exited() -> void:
@@ -1899,6 +1904,8 @@ func _on_ledge_climbing_state_entered() -> void:
 	last_velocity = Vector3.ZERO
 	gravity_vec = Vector3.ZERO
 	direction = Vector3.ZERO
+	
+	was_jumping = false
 
 
 func _on_ledge_climbing_state_exited() -> void:
