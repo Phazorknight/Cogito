@@ -66,6 +66,7 @@ collision_layer = 3
 contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_s8epx")
+cogito_name = ""
 
 [node name="mug" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_hinl8")
@@ -79,7 +80,6 @@ shape = SubResource("CylinderShape3D_qkgo7")
 carry_distance_offset = -0.7
 carrying_velocity_multiplier = 12.0
 drop_distance = 1.0
-interaction_text = "Hold"
 
 [node name="ImpactSounds" parent="." instance=ExtResource("3_0m5f4")]
 impact_sounds = SubResource("AudioStreamRandomizer_sbrbp")

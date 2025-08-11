@@ -93,7 +93,7 @@ func subtract(amount):
 
 func send_empty_hint():
 	if hint_on_empty:
-		player_interaction_component.send_hint(null, name + ": "+ hint_on_empty)
+		player_interaction_component.send_hint(null, tr(name) + ": "+ tr(hint_on_empty) )
 
 
 func add(amount):

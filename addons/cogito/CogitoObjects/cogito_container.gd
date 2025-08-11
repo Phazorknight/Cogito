@@ -4,10 +4,10 @@ class_name CogitoContainer
 
 @export_group("Container Settings")
 ## Name that will displayed when interacting. Leave blank to hide
-@export var display_name : String = "Container"
+@export var display_name : String = "CONTAINER"
 @export var inventory_data : CogitoInventory
-@export var text_when_closed : String = "Open"
-@export var text_when_open : String = "Close"
+@export var text_when_closed : String = "DOOR_Open"
+@export var text_when_open : String = "DOOR_Close"
 
 @export_group("Animation Settings")
 @export var uses_animation : bool = false
@@ -31,7 +31,7 @@ func _ready():
 	add_to_group("interactable")
 	add_to_group("save_object_state")
 	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
-	interaction_text = text_when_closed
+	interaction_text = tr(text_when_closed)
 	object_state_updated.emit(interaction_text)
 	inventory_data.apply_initial_inventory()
 
@@ -42,7 +42,7 @@ func interact(_player_interaction_component: PlayerInteractionComponent):
 func open():
 	if uses_animation:
 		animation_player.play(open_animation)
-	interaction_text = text_when_open
+	interaction_text = tr(text_when_open)
 	object_state_updated.emit(interaction_text)
 
 
@@ -52,13 +52,13 @@ func close():
 			animation_player.play_backwards(open_animation)
 		else:
 			animation_player.play(close_animation)
-	interaction_text = text_when_closed
+	interaction_text = tr(text_when_closed)
 	object_state_updated.emit(interaction_text)
 	container_closed.emit()
 
 
 func set_state():
-	interaction_text = text_when_closed
+	interaction_text = tr(text_when_closed)
 	animation_player = $AnimationPlayer
 	object_state_updated.emit(interaction_text)
 

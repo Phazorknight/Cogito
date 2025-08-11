@@ -21,9 +21,9 @@ signal object_state_updated(interaction_text:String)
 ## If on, code will be checked immediately once the right amount of digits is entered. if OFF, the player needs to press the E button first.
 @export var check_when_entered : bool
 ## This prompt appears when the keypad is still locked.
-@export var interaction_text_when_locked : String = "Enter Code"
+@export var interaction_text_when_locked : String = "KEYPAD_enter_code"
 ## This prompt appears when the keypad has been unlocked.
-@export var interaction_text_when_unlocked : String = "Access granted."
+@export var interaction_text_when_unlocked : String = "KEYPAD_access_granted"
 
 ## For UI purposes
 @export var wrong_code_color : Color = Color.RED

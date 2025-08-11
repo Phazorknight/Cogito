@@ -6,7 +6,7 @@
 [node name="VisibilityAttribute" type="Node"]
 script = ExtResource("1_yrrgw")
 attribute_name = "visibility"
-attribute_display_name = "Visibility"
+attribute_display_name = "ATTR_visibility"
 attribute_color = Color(0, 1, 1, 1)
 attribute_icon = ExtResource("2_f82e1")
 value_max = 5.0

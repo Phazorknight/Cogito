@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TranslationKeyDict" load_steps=2 format=3 uid="uid://cwhxvahknlmtg"]
+
+[ext_resource type="Script" uid="uid://db6rvrcq4p73m" path="res://addons/cogito/Localization/scripts/translation_key_dict.gd" id="1_7dtdc"]
+
+[resource]
+script = ExtResource("1_7dtdc")
+keylist = Array[String](["ATTR_health", "ATTR_stamina", "ATTR_strength", "ATTR_sanity", "ATTR_visibility"])
+metadata/_custom_type_script = "uid://db6rvrcq4p73m"

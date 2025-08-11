@@ -45,7 +45,7 @@ theme_override_constants/separation = 15
 [node name="DeathScreenLabel" type="Label" parent="PanelContainer/Content"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
-text = "You died."
+text = "LAB_you_died"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/Content"]
@@ -72,7 +72,7 @@ theme_override_constants/separation = 10
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "Current Slot: ?"
+text = "LAB_current_slot"
 horizontal_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
@@ -104,11 +104,12 @@ stretch_mode = 5
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
-text = "Last save:"
+text = "LAB_last_save"
 horizontal_alignment = 1
 
 [node name="Label_SaveTime" type="Label" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+auto_translate_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "YYYY-MM-DD HH:MM"
@@ -123,7 +124,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 30
-text = "Load"
+text = "BTN_load"
 script = ExtResource("6_wjvf8")
 
 [node name="Separator_PanelContainer2" type="PanelContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
@@ -135,14 +136,14 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_vmpwe")
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 30
-text = "Back to Main Menu"
+text = "BTN_back_to_menu"
 script = ExtResource("6_wjvf8")
 
 [node name="QuitButton" type="Button" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 30
-text = "Quit"
+text = "BTN_quit"
 script = ExtResource("6_wjvf8")
 
 [node name="MenuSceneSwitcher" type="Node" parent="."]

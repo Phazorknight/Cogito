@@ -6,7 +6,7 @@ signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 signal interaction_complete(player_interaction_component: PlayerInteractionComponent)
 
 ##Text that joins Press and Hold interaction text, for example:   " | (HOLD) " in  "Open | (HOLD) Unlock"
-@export var interaction_text_joiner: String = " | (HOLD) "
+@export var interaction_text_joiner: String = "INTERACT_hold_joiner"
 ##Hold node location, used for "start_hold_check" function which must return true if a hold can start. Used to prevent hold interaction without Key
 @export var hold_node : Node
 
@@ -50,5 +50,5 @@ func _lock_state_updated(lock_interaction_text: String):
 	update_interaction_text()
 
 func update_interaction_text():
-	interaction_text = press_interaction_text + interaction_text_joiner + hold_interaction_text
+	interaction_text = tr(press_interaction_text) + tr(interaction_text_joiner) + tr(hold_interaction_text)
 	interaction_complete.emit(player_interaction_component) #Signal to rebuild interaction prompt after text updated

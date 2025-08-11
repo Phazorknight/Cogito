@@ -186,7 +186,6 @@ impact_sounds = SubResource("AudioStreamRandomizer_d8v56")
 [node name="DualInteraction" parent="." instance=ExtResource("17_shih7")]
 hold_time = 1.0
 input_map_action = "interact"
-interaction_text = "Carry | (HOLD) Pickup"
 
 [connection signal="on_hold_complete" from="DualInteraction" to="PickupComponent" method="pick_up"]
 [connection signal="on_quick_press" from="DualInteraction" to="CarryableComponent" method="carry"]

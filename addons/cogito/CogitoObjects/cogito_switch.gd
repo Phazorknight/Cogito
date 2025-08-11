@@ -15,8 +15,8 @@ signal damage_received(damage_value:float)
 @export var allows_repeated_interaction : bool = true
 ## Hint that displays after this has been used.
 @export var has_been_used_hint : String
-@export var interaction_text_when_on : String = "Switch off"
-@export var interaction_text_when_off : String = "Switch on"
+@export var interaction_text_when_on : String = "SWITCH_off"
+@export var interaction_text_when_off : String = "SWITCH_on"
 ## Sound that plays when switched.
 @export var switch_sound : AudioStream
 ## Check this if player needs to have an item in the inventory to switch.
@@ -149,7 +149,7 @@ func check_for_item() -> bool:
 	var inventory = player_interaction_component.get_parent().inventory_data
 	for slot_data in inventory.inventory_slots:
 		if slot_data != null and slot_data.inventory_item == required_item_slot.inventory_item:
-			player_interaction_component.send_hint(null, required_item_slot.inventory_item.name + " used.") # Sends a hint with the key item name.
+			player_interaction_component.send_hint(null, tr(required_item_slot.inventory_item.name) + " " + tr("HINT_SWITCH_item_used") ) # Sends a hint with the key item name.
 			inventory.remove_item_from_stack(slot_data)
 			return true
 	

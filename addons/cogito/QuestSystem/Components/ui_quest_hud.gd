@@ -8,9 +8,9 @@ extends Node
 @onready var quest_display: PanelContainer = $QuestDisplay
 
 # Quest groups:
-@onready var active_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Active
-@onready var completed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Completed
-@onready var failed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/Failed
+@onready var active_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/QUESTS_active
+@onready var completed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/QUESTS_completed
+@onready var failed_group: VBoxContainer = $QuestDisplay/VBoxContainer/TabContainer/QUESTS_failed
 
 #Reference of main Player HUD.
 @export var player_hud  : CogitoPlayerHudManager
@@ -79,13 +79,13 @@ func _on_set_quest_notification(passed_quest_icon, passed_quest_text):
 
 
 func _on_quest_activated(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest started: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("QUEST_start") + ": " + tr(_passed_quest.quest_title) ))
 
 func _on_quest_completed(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest completed: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("QUEST_complete") + ": " + tr(_passed_quest.quest_title) ))
 
 func _on_quest_failed(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest failed: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("QUEST_fail") + ": " + tr(_passed_quest.quest_title) ))
 
 func _on_quest_updated(_passed_quest:CogitoQuest):
-	_on_set_quest_notification(null, str("Quest udpated: " + _passed_quest.quest_title))
+	_on_set_quest_notification(null, str( tr("QUEST_update") + ": " + tr(_passed_quest.quest_title) ))

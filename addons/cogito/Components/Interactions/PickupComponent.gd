@@ -28,7 +28,7 @@ func pick_up(_player_interaction_component: PlayerInteractionComponent):
 			self.get_parent().queue_free()
 			return
 		else:
-			_player_interaction_component.send_hint(slot_data.inventory_item.icon, slot_data.inventory_item.name + " couldn't be picked up.")
+			_player_interaction_component.send_hint(slot_data.inventory_item.icon, tr(slot_data.inventory_item.name) + " " +tr("HINT_cant_pick_up") )
 			return
 	
 	if not _player_interaction_component.get_parent().inventory_data.pick_up_slot_data(slot_data):
@@ -45,7 +45,7 @@ func pick_up(_player_interaction_component: PlayerInteractionComponent):
 			if equipped_wieldable.charge_current < equipped_wieldable.charge_max:
 				_player_interaction_component.equipped_wieldable_item.update_wieldable_data(_player_interaction_component)
 
-	_player_interaction_component.send_hint(slot_data.inventory_item.icon, slot_data.inventory_item.name + " added to inventory.")
+	_player_interaction_component.send_hint(slot_data.inventory_item.icon, tr(slot_data.inventory_item.name) + " " + tr("INVENTORY_add_item") )
 	was_interacted_with.emit(interaction_text, input_map_action)
 	Audio.play_sound(slot_data.inventory_item.sound_pickup)
 	self.get_parent().queue_free()

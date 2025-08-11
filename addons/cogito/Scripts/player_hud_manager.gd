@@ -112,6 +112,7 @@ func connect_to_player_signals():
 	player.player_interaction_component.started_carrying.connect(set_drop_prompt)
 	player.player_interaction_component.hint_prompt.connect(_on_set_hint_prompt)
 	player.player_interaction_component.updated_wieldable_data.connect(_on_update_wieldable_data)
+	player.player_interaction_component.update_crosshair.connect(_on_update_crosshair)
 	player.toggled_interface.connect(_on_external_ui_toggle)
 	player.toggle_inventory_interface.connect(toggle_inventory_interface)
 	player.player_state_loaded.connect(_on_player_state_load)
@@ -240,6 +241,13 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 		instanced_prompt.set_prompt(node.interaction_text, node.input_map_action)
 
 
+func _on_update_crosshair(is_visible: bool):
+	if is_visible:
+		crosshair.show()
+	else:
+		crosshair.hide()
+
+
 func delete_interaction_prompts() -> void:
 	if interaction_crosshair:
 		crosshair_texture.texture = previous_crosshair_texture
@@ -268,13 +276,13 @@ func set_drop_prompt(_carrying_node):
 	
 	var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 	prompt_area.add_child(instanced_prompt)
-	instanced_prompt.set_prompt("Drop", _carrying_node.input_map_action)
+	instanced_prompt.set_prompt( tr("INTERACT_drop"), _carrying_node.input_map_action)
 	
 	# Create the rotation input prompt
 	if _carrying_node.enable_manual_rotating:
 		var instanced_secondary_prompt: UiPromptComponent = prompt_component.instantiate()
 		prompt_area.add_child(instanced_secondary_prompt)
-		instanced_secondary_prompt.set_prompt("Rotate", "action_secondary")
+		instanced_secondary_prompt.set_prompt( tr("INTERACT_rotate"), "action_secondary")
 
 
 #What happens when an external UI is shown (like inventory, readbale document, keypad, external inventory)

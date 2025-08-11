@@ -1890,28 +1890,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, -3, 15)
 [node name="kitchenFridgeContainer" parent="NavigationRegion3D/BASE_FLOOR" instance=ExtResource("11_y54r8")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3.13229, 2.09151e-18, -13.2764)
 inventory_respawning_logic = 0
-time_passes_when_unloaded = null
-respawn_timer_days = null
-respawn_timer_hours = null
-respawn_timer_minutes = null
-respawn_timer_seconds = null
 display_name = "Non Respawning Lootable Container"
-text_when_closed = null
-text_when_open = null
-close_animation = null
 
 [node name="kitchenFridgeContainer2" parent="NavigationRegion3D/BASE_FLOOR" instance=ExtResource("11_y54r8")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2.08228, 4.76837e-07, -13.2787)
-time_passes_when_unloaded = null
-respawn_timer_days = null
-respawn_timer_hours = null
-respawn_timer_minutes = null
-respawn_timer_seconds = null
 display_name = "Respawning Lootable Container"
 inventory_data = SubResource("Resource_srp2h")
-text_when_closed = null
-text_when_open = null
-close_animation = null
 
 [node name="CEILING" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 2)
@@ -4422,6 +4406,8 @@ mesh = SubResource("BoxMesh_w38aj")
 
 [node name="SnapSlotBattery" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("52_lpold")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.77805, 0.958914, -21)
+interaction_text_when_on = "INTERACT_remove"
+interaction_text_when_off = "INTERACT_place"
 objects_call_interact = Array[NodePath]([NodePath("../Lamp_ElectricWire2")])
 
 [node name="Lamp_ElectricWire2" parent="NavigationRegion3D/SYSTEMIC_PROPERTIES" instance=ExtResource("51_wj70q")]

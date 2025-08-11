@@ -25,7 +25,7 @@ script = ExtResource("1_38o7t")
 player_attribute = "health"
 is_recovery_zone = true
 hint_icon = ExtResource("2_el00j")
-hint_message = "Your health is regenerating."
+hint_message = "HINT_ZONE_heal"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_in244")

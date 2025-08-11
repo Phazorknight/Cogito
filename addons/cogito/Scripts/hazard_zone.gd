@@ -22,7 +22,7 @@ func _on_body_entered(body):
 	if body.is_in_group("Player") :
 		player = body
 		if hint_message != "":
-			body.player_interaction_component.send_hint(hint_icon, hint_message)
+			body.player_interaction_component.send_hint(hint_icon, tr(hint_message) )
 		is_within_zone = true
 
 func _on_body_exited(body):

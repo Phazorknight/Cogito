@@ -21,7 +21,7 @@ func interact(_player_interaction_component):
 		_player_interaction_component.send_hint(null, parent_node.key_hint)
 		
 func _lock_state_updated(lock_interaction_text: String):
-	interaction_text = lock_interaction_text
+	interaction_text = tr(lock_interaction_text)
 
 func check_for_item(interactor, item) -> bool:
 	var inventory = interactor.get_parent().inventory_data

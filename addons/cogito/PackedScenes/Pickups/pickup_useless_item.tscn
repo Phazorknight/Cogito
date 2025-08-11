@@ -24,7 +24,6 @@ metadata/_custom_type_script = "uid://di15gqemrkk0x"
 collision_layer = 3
 script = ExtResource("1_7bqcr")
 cogito_name = ""
-show_debug_shape = null
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152508, -0.124055, 0.00963968)
@@ -44,5 +43,5 @@ script = ExtResource("3_5d1o6")
 slot_data = SubResource("Resource_yw4ox")
 display_item_name = true
 input_map_action = "interact"
-interaction_text = "Pick up"
+interaction_text = "INTERACT_Pick_up"
 metadata/_custom_type_script = "uid://b0a3vpjf8hylo"

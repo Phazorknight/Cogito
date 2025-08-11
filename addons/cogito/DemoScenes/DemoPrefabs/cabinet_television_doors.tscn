@@ -180,7 +180,6 @@ collision_layer = 3
 script = ExtResource("1_oc7nd")
 open_sound = ExtResource("2_f5idq")
 close_sound = ExtResource("3_01v55")
-open_rotation_deg = -85.0
 open_rotation = Vector3(0, -85, 0)
 door_speed = 3.0
 
@@ -204,7 +203,6 @@ collision_layer = 3
 script = ExtResource("1_oc7nd")
 open_sound = ExtResource("2_f5idq")
 close_sound = ExtResource("3_01v55")
-open_rotation_deg = 85.0
 open_rotation = Vector3(0, 85, 0)
 door_speed = 3.0
 

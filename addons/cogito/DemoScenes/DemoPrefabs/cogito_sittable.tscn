@@ -36,7 +36,7 @@ skeleton = NodePath("../..")
 shape = SubResource("BoxShape3D_5cwmc")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("2_76fng")]
-interaction_text = "Sit"
+interaction_text = "SEAT_Sit"
 
 [node name="Sit Marker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.448635, 0)
