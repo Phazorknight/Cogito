@@ -9,6 +9,7 @@ signal updated_wieldable_data(wielded_item: WieldableItemPD, ammo_in_inventory: 
 signal interactive_object_detected(interaction_nodes: Array[Node])
 signal nothing_detected()
 signal started_carrying(interaction_node: Node)
+signal update_crosshair(is_visible: bool)
 
 var look_vector: Vector3
 var device_id: int = -1  # Used for displaying correct input prompts depending on input device.

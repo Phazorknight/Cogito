@@ -81,12 +81,18 @@ func action_secondary(is_released:bool):
 		tween_cam.tween_property(camera,"fov", 75, .2)
 		var tween_pistol = get_tree().create_tween()
 		tween_pistol.tween_property(self,"position", default_position, .2)
+		
+		# Re-activating crosshair
+		player_interaction_component.update_crosshair.emit(true)
 	else:
 		# ADS Camera Zoom IN
 		var tween_cam = get_tree().create_tween()
 		tween_cam.tween_property(camera,"fov", ads_fov, .2)
 		var tween_pistol = get_tree().create_tween()
 		tween_pistol.tween_property(self,"position", Vector3(0,default_position.y,default_position.z), .2)
+		
+		# Deactivating crosshair
+		player_interaction_component.update_crosshair.emit(false)
 
 
 # Function called when wieldable reload is attempted
