@@ -39,6 +39,8 @@
 # res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_StealLaptop.tres
 # res://addons/cogito/Localization/translation_keys_resources/loc_keys_quest_system.tres
 # res://addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+# res://addons/cogito/EasyMenus/Scenes/main_menu.tscn
+# res://addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -1039,4 +1041,26 @@ msgstr ""
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
 msgid "HINT_SWITCH_battery"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Legacy Demo Scene"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Options"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Quit"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+msgid "TXT_NEW_GAME"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+msgid "TXT_SLOT"
 msgstr ""

@@ -977,8 +977,6 @@ msgstr "Quest aktualisiert"
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
-#, fuzzy
-#| msgid "INTERACT_cant_carry"
 msgid "HINT_cant_carry"
 msgstr "Kann nicht getragen werden wenn ich die Hände voll habe."
 
@@ -1016,6 +1014,28 @@ msgstr "verwendet."
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
 msgid "HINT_SWITCH_battery"
 msgstr "Scheint eine Batterie zu brauchen."
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Legacy Demo Scene"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Options"
+msgstr "Optionen"
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Quit"
+msgstr "Beenden"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+msgid "TXT_NEW_GAME"
+msgstr "NEUES SPIEL"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+msgid "TXT_SLOT"
+msgstr "SLOT"
 
 #~ msgid "quest_START"
 #~ msgstr "Quest begonnen"

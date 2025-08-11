@@ -1013,6 +1013,28 @@ msgstr " used."
 msgid "HINT_SWITCH_battery"
 msgstr "Looks like it needs a battery."
 
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Legacy Demo Scene"
+msgstr ""
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Options"
+msgstr "Options"
+
+#: addons/cogito/EasyMenus/Scenes/main_menu.tscn
+msgid "Quit"
+msgstr "Quit"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+msgid "TXT_NEW_GAME"
+msgstr "NEW GAME"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+msgid "TXT_SLOT"
+msgstr "SLOT"
+
 #~ msgid "quest_START"
 #~ msgstr "Quest started"
 

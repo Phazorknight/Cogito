@@ -38,7 +38,7 @@ func _ready() -> void:
 
 func set_data_from_state(_player_state:CogitoPlayerState):
 	if _player_state == null:
-		slot_name_label.text = "NEW GAME"
+		slot_name_label.text = tr("TXT_NEW_GAME")
 		save_time_label.text = ""
 		screenshot_spot.texture = empty_slot_screenshot
 		player_state = null
@@ -47,9 +47,9 @@ func set_data_from_state(_player_state:CogitoPlayerState):
 		player_state = _player_state
 	
 	if player_state.player_state_slot_name:
-		slot_name_label.text = "SLOT " + player_state.player_state_slot_name
+		slot_name_label.text = tr("TXT_SLOT") + player_state.player_state_slot_name
 	else:
-		slot_name_label.text = "NEW GAME"
+		slot_name_label.text = tr("TXT_NEW_GAME")
 
 	var savetime : int
 	if player_state:

@@ -22,6 +22,16 @@ Mini Explainer on Pickups, Items and wieldables
 
 
 
+Localization Walkthrough
+------------------------
+
+.. image:: https://img.youtube.com/vi/MOUirXlXAfA/maxresdefault.jpg
+    :alt: COGITO Localization Walkthrough
+    :target: https://www.youtube.com/watch?v=MOUirXlXAfA
+
+
+
+
 Tutorial Series
 ---------------
 

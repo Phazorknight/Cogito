@@ -38,15 +38,17 @@ grow_vertical = 2
 theme_override_constants/separation = 15
 
 [node name="TitleLabel" type="Label" parent="ContentMain"]
+auto_translate_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "COGITO"
 horizontal_alignment = 1
 
-[node name="TitleLabel2" type="Label" parent="ContentMain"]
+[node name="SubTitleLabel" type="Label" parent="ContentMain"]
+auto_translate_mode = 2
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "Template Project 2024"
+text = "Template Project"
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="ContentMain"]

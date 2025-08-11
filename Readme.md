@@ -37,6 +37,7 @@ In short, with COGITO you get a quick start for a fully-featured first person ga
 - Rebindable controls
 - Full game pad support!
 - Save and Load System as well as scene persistency
+- Localization!
 - Support for other plugins:
   - Works with Dialogic
   - Works with Dialgue Manager
