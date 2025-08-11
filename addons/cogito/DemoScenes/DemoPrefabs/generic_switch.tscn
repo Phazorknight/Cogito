@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://6k5rvlwcpys1"]
+[gd_scene load_steps=14 format=3 uid="uid://6k5rvlwcpys1"]
 
 [ext_resource type="Script" uid="uid://b4cfmnk8b7nru" path="res://addons/cogito/CogitoObjects/cogito_switch.gd" id="1_8r8fc"]
 [ext_resource type="AudioStream" uid="uid://0himm415mqex" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/switch29.ogg" id="2_m3jxc"]
@@ -27,13 +27,50 @@ size = Vector3(0.2, 0.05, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nti18"]
 size = Vector3(0.150977, 0.069043, 0.147333)
 
-[node name="GenericSwitch" type="AnimatableBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on")]
+[sub_resource type="Animation" id="Animation_u1w74"]
+resource_name = "switch_on"
+length = 0.2
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonMesh_on")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, -0.015, 0, 0.2, 1, 0, 0, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ButtonMesh_off")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, -0.015, 0, 0.2, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_ghf2p"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonMesh_on")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wuanm"]
+_data = {
+&"RESET": SubResource("Animation_ghf2p"),
+&"switch_on": SubResource("Animation_u1w74")
+}
+
+[node name="GenericSwitch" type="AnimatableBody3D" node_paths=PackedStringArray("nodes_to_show_when_on", "nodes_to_hide_when_on", "animation_player")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 5.72934, 1.10623, -15.8447)
 collision_layer = 3
 script = ExtResource("1_8r8fc")
 switch_sound = ExtResource("2_m3jxc")
 nodes_to_show_when_on = [NodePath("ButtonMesh_on")]
 nodes_to_hide_when_on = [NodePath("ButtonMesh_off")]
+animation_player = NodePath("AnimationPlayer")
+anim_when_switched_on = "switch_on"
+anim_when_switched_off = "switch_on"
 
 [node name="ButtonMesh_off" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_clo4d")
@@ -61,5 +98,10 @@ shape = SubResource("BoxShape3D_nti18")
 [node name="CogitoProperties" parent="." instance=ExtResource("5_mihmv")]
 material_properties = 1
 burn_damage_amount = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wuanm")
+}
 
 [connection signal="damage_received" from="." to="." method="_on_damage_received"]

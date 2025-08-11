@@ -33,6 +33,16 @@ signal damage_received(damage_value:float)
 @export var objects_call_interact : Array[NodePath]
 @export var objects_call_delay : float = 0.0
 
+
+@export_group("Animation Settings")
+## Node reference to the animation player. If no reference has been set, animations will be ignored.
+@export var animation_player : AnimationPlayer
+@export var anim_when_switched_on : String
+@export var anim_when_switched_off : String
+## You can use this to play a reverse animation (setting it to -1.0)
+@export var animation_speed : float = 1.0
+
+
 var interaction_text : String 
 var player_interaction_component : PlayerInteractionComponent
 var interaction_nodes : Array[Node]
@@ -125,7 +135,10 @@ func switch_on():
 		
 	for node in nodes_to_hide_when_on:
 		node.hide()
-			
+	
+	if animation_player:
+		animation_player.play(anim_when_switched_on,-1,animation_speed)
+	
 	is_on = true
 	interaction_text = interaction_text_when_on
 	object_state_updated.emit(interaction_text)
@@ -138,6 +151,9 @@ func switch_off():
 		
 	for node in nodes_to_hide_when_on:
 		node.show()
+		
+	if animation_player:
+		animation_player.play(anim_when_switched_on,-1,animation_speed)
 	
 	is_on = false
 	interaction_text = interaction_text_when_off
