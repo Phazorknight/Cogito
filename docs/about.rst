@@ -95,6 +95,8 @@ Credits
    * `Spray by RibhavAgrawal <https://pixabay.com/sound-effects/spray-185000/>`_
    * `Energy Drink by VoiceBosch <https://pixabay.com/sound-effects/energy-drink-effect-230559/>`_
    * `Soda Can Open by OxidVideos <https://pixabay.com/sound-effects/soda-can-open-183214/>`_
+   * `Underwater Deep Water Loop by Department64 <https://freesound.org/s/651743/>`_ License: Attribution 4.0
+   * `Footsteps_02.wav by RomanKolachnik <https://freesound.org/s/672201/>`_ -- License: Creative Commons 0`
    * Cloud HDR (kloofendal_48d_partly_cloudy_puresky)2k.hdr by Greg Zaal, used under CC0.
    * All other included assets either made by `Philip Drobar <https://www.philipdrobar.com/>`_ or one of the contributors, published under MIT.
 
