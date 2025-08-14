@@ -144,6 +144,7 @@ var ladder_on_cooldown : bool = false
 
 @export_group("Swim Handling")
 @export var SWIMMING_SPEED : float = 3.0
+@export var WATER_GRAVITY_COEFFICIENT = 0.25
 
 @export_group("Gamepad Properties")
 @export var JOY_DEADZONE : float = 0.25
@@ -1850,10 +1851,9 @@ func _handle_water_physics(delta) -> void:
 		input_dir = Input.get_vector("left", "right", "forward", "back")
 	else:
 		input_dir = Vector2.ZERO
-	input_dir = -input_dir
 	
 	var look_vector = camera.get_camera_transform().basis
-	var direction = -(look_vector * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction = look_vector * Vector3(input_dir.x, 0, input_dir.y).normalized()
 	
 	if not is_head_in_water() and direction.dot(Vector3.UP) > 0:
 		direction = direction.slide(Vector3.UP)
@@ -1870,7 +1870,7 @@ func _handle_water_physics(delta) -> void:
 				main_velocity.y = lerp(main_velocity.y, SWIMMING_SPEED, delta * LERP_SPEED)
 		else:
 			if not is_on_floor():
-				main_velocity.y -= gravity * 0.25 * delta
+				main_velocity.y -= gravity * WATER_GRAVITY_COEFFICIENT * delta
 	
 	velocity = main_velocity
 	
