@@ -78,6 +78,8 @@ var LandingPitch: float = 1.0
 var LandingVolume: float = 0.8
 
 @export_group("Movement Properties")
+@export var MIN_SPEED : float= 0.5
+@export var MAX_SPEED : float= 12.0
 @export var JUMP_VELOCITY : float= 4.5
 @export var CROUCH_JUMP_VELOCITY : float = 3.0
 @export var WALKING_SPEED : float = 5.0
@@ -94,6 +96,7 @@ var LandingVolume: float = 0.8
 @export var disable_roll_anim : bool = false
 @export var CAN_BUNNYHOP : bool = true
 @export var BUNNY_HOP_ACCELERATION : float = 0.1
+@export var BUNNY_HOP_WALL_SLIDE_ANGLE : int = 120
 @export var INVERT_Y_AXIS : bool = true
 ## Controled by the game config. If false, player has to hold the crouch key to stay crouched.
 @export var TOGGLE_CROUCH : bool = false
@@ -727,7 +730,7 @@ enum MovingState {
 	FreeFall,
 	Swimming
 }
-	
+
 enum BodyPostureState {
 	Undefined,
 	Crouching,
@@ -927,7 +930,7 @@ func _sliding_jump(_jump_target_speed) -> void:
 func _input_handling_and_movement(delta):
 	input_direction = Input.get_vector("left", "right", "forward", "back")
 
-	current_speed = clamp(current_speed, 0.5, 12.0)
+	current_speed = clamp(current_speed, MIN_SPEED, MAX_SPEED)
 	
 	if direction:
 		main_velocity.x = direction.x * current_speed
@@ -1158,16 +1161,16 @@ func _on_sprinting_state_physics_processing(delta: float) -> void:
 				bunny_hop_speed = SPRINTING_SPEED
 				state_chart.send_event("walk")
 				return
+			
+			if !Input.is_action_pressed("jump"):
+				if CAN_BUNNYHOP:
+					bunny_hop_speed = SPRINTING_SPEED
+					current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
+				else:
+					current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
 				
-			if !Input.is_action_pressed("jump") and CAN_BUNNYHOP:
-				bunny_hop_speed = SPRINTING_SPEED
-				current_speed = lerp(current_speed, bunny_hop_speed, delta * LERP_SPEED)
-			elif !Input.is_action_pressed("jump") and !CAN_BUNNYHOP:
-				current_speed = lerp(current_speed, SPRINTING_SPEED, delta * LERP_SPEED)
 			wiggle_current_intensity = WIGGLE_ON_SPRINTING_INTENSITY * HEADBOBBLE
 			wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
-			
-			#current_speed = SPRINTING_SPEED
 		
 		if Input.is_action_pressed("jump") and jump_timer.is_stopped():
 			if current_speed < bunny_hop_speed - 0.2:
@@ -1175,7 +1178,7 @@ func _on_sprinting_state_physics_processing(delta: float) -> void:
 			else:
 				if CAN_BUNNYHOP:
 					bunny_hop_speed += BUNNY_HOP_ACCELERATION
-					bunny_hop_speed = clamp(bunny_hop_speed, SPRINTING_SPEED, 12.0)
+					bunny_hop_speed = clamp(bunny_hop_speed, SPRINTING_SPEED, MAX_SPEED)
 					current_speed = bunny_hop_speed
 				else:
 					current_speed = SPRINTING_SPEED
@@ -1602,7 +1605,10 @@ func _on_airborne_state_physics_processing(delta: float) -> void:
 	if is_head_in_water():
 		state_chart.send_event("swim")
 		return
-		
+	
+	if is_on_ceiling():
+		main_velocity.y = 0
+	
 	gravity_vec = Vector3.DOWN * gravity * delta
 
 	if was_sprinting and Input.is_action_pressed("sprint"):
@@ -1661,11 +1667,18 @@ func _on_jumping_state_physics_processing(delta: float) -> void:
 		
 	current_speed = lerp(current_speed, jump_target_speed, delta * LERP_SPEED)
 	
+	if is_on_wall():
+		var normal = get_wall_normal()
+		var angle = rad_to_deg(direction.angle_to(normal))
+		if angle > BUNNY_HOP_WALL_SLIDE_ANGLE:
+			bunny_hop_speed = SPRINTING_SPEED
+	
 	if current_body_posture_state != BodyPostureState.Crouching:
 		if _is_ledge_climbable():
+			bunny_hop_speed = SPRINTING_SPEED
 			state_chart.send_event("ledge_climb")
 			return
-		
+	
 	if main_velocity.y <= FREE_FALL_MIN_VELOCITY:
 		state_chart.send_event("fall")
 #endregion
