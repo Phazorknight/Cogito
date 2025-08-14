@@ -1,4 +1,4 @@
-[gd_scene load_steps=151 format=4 uid="uid://bdvf6j1o1xtfk"]
+[gd_scene load_steps=152 format=4 uid="uid://bdvf6j1o1xtfk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_0bsih"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_vc1h6"]
@@ -67,6 +67,7 @@
 [ext_resource type="PackedScene" uid="uid://d2lnk6ecthmvd" path="res://addons/cogito/PackedScenes/Pickups/pickup_strength_potion.tscn" id="64_4g3bg"]
 [ext_resource type="PackedScene" uid="uid://b2cccsfb5tikx" path="res://addons/cogito/CogitoNPC/cogito_npc.tscn" id="65_okhio"]
 [ext_resource type="Shader" uid="uid://bqurxcbvm4a7a" path="res://addons/cogito/Assets/Shader/water_and_under.gdshader" id="67_u2k3u"]
+[ext_resource type="Script" uid="uid://cf14qv41gf7ll" path="res://addons/cogito/Scripts/water_area.gd" id="68_7jdnx"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("2_vc1h6")
@@ -5564,10 +5565,11 @@ font_size = 64
 outline_size = 10
 horizontal_alignment = 0
 
-[node name="WaterPool" type="Area3D" parent="TestSwimming" groups=["water_area"]]
+[node name="WaterPool" type="Area3D" parent="TestSwimming"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 19.0067)
 collision_layer = 5
 collision_mask = 5
+script = ExtResource("68_7jdnx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestSwimming/WaterPool"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00518799, -1.61624, -0.700624)
