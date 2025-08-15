@@ -198,6 +198,7 @@ var slide_audio_player : AudioStreamPlayer3D
 var radius : float
 var standing_height : float
 var crouching_height : float
+var ledge_climbing_shapecast_height : float
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -259,6 +260,11 @@ func _ready():
 		crouching_height = crouching_collision_shape.shape.height
 	
 	ledge_climbing_shapecast.add_exception(self)
+	
+	if ledge_climbing_shapecast.shape is BoxShape3D:
+		ledge_climbing_shapecast_height = ledge_climbing_shapecast.shape.size.y
+	elif ledge_climbing_shapecast.shape is CylinderShape3D or ledge_climbing_shapecast.shape is CapsuleShape3D:
+		ledge_climbing_shapecast_height = ledge_climbing_shapecast.shape.height
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -783,10 +789,37 @@ func is_in_sprinting_state():
 
 
 func _is_ledge_climbable() -> bool:
+	if not input_direction:
+		return false
+	
+	direction = (body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+
+	if direction.dot(-body.global_basis.z) < 0.5:
+		return false
+	
 	if current_moving_state != MovingState.Swimming and not CAN_CLIMB_LEDGE:
 		return false
 		
-	var previous_position = ledge_climbing_shapecast.position
+	var initial_position = ledge_climbing_shapecast.position
+	
+	# Check ladder first because its priority is higher
+	ledge_climbing_shapecast.global_position -= Vector3(0, ledge_climbing_shapecast_height, 0)
+	ledge_climbing_shapecast.global_position += -body.global_basis.z * radius
+	
+	ledge_climbing_shapecast.target_position = Vector3.ZERO
+	
+	ledge_climbing_shapecast.collide_with_areas = true
+	
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if ledge_climbing_shapecast.is_colliding():
+		if ledge_climbing_shapecast.get_collider(0) is Ladder:
+			ledge_climbing_shapecast.position = initial_position
+			return false
+	
+	ledge_climbing_shapecast.collide_with_areas = false
+	
+	ledge_climbing_shapecast.position = initial_position
 	
 	if current_moving_state == MovingState.Swimming:
 		ledge_climbing_shapecast.global_position -= Vector3(0, standing_height - crouching_height, 0)
@@ -796,7 +829,7 @@ func _is_ledge_climbable() -> bool:
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
-		ledge_climbing_shapecast.position = previous_position
+		ledge_climbing_shapecast.position = initial_position
 		return false
 	
 	ledge_climbing_shapecast.target_position = Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
@@ -804,7 +837,7 @@ func _is_ledge_climbable() -> bool:
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
-		ledge_climbing_shapecast.position = previous_position
+		ledge_climbing_shapecast.position = initial_position
 		return false
 	
 	ledge_climbing_shapecast.global_position += Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
@@ -813,7 +846,7 @@ func _is_ledge_climbable() -> bool:
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
-		ledge_climbing_shapecast.position = previous_position
+		ledge_climbing_shapecast.position = initial_position
 		return false
 	
 	ledge_climbing_shapecast.global_position += -body.global_basis.z * radius
@@ -822,26 +855,26 @@ func _is_ledge_climbable() -> bool:
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if not ledge_climbing_shapecast.is_colliding():
-		ledge_climbing_shapecast.position = previous_position
+		ledge_climbing_shapecast.position = initial_position
 		return false
 	
 	var collision_normal : Vector3 = ledge_climbing_shapecast.get_collision_normal(0)
 	
 	if not collision_normal.is_equal_approx(Vector3.UP):
-		ledge_climbing_shapecast.position = previous_position
+		ledge_climbing_shapecast.position = initial_position
 		return false
 	
 	var collision_point = ledge_climbing_shapecast.get_collision_point(0)
 	
 	ledge_position = collision_point
 	
-	ledge_climbing_shapecast.position = previous_position
+	ledge_climbing_shapecast.position = initial_position
 		
 	return true
 
 
 func _can_jump() -> bool:
-	if is_sitting or on_ladder:
+	if is_sitting:
 		return false
 		
 	var doesnt_need_stamina = not stamina_attribute or stamina_attribute.value_current >= stamina_attribute.jump_exhaustion
@@ -889,7 +922,10 @@ func _jump(_jump_target_speed) -> void:
 	animationPlayer.play("jump")
 	Audio.play_sound(jump_sound)
 	
-	main_velocity.y = jump_vel
+	if current_moving_state != MovingState.LadderClimbing:
+		main_velocity.y = jump_vel
+	else:
+		main_velocity.y = jump_vel * LADDER_JUMP_SCALE
 	
 	was_jumping = true
 	jumped_from_slide = false
@@ -1701,6 +1737,8 @@ func _on_free_fall_state_physics_processing(delta: float) -> void:
 
 
 #region LadderClimbing State
+var ladder_direction : Vector3
+
 func _on_ladder_climbing_state_entered() -> void:
 	current_moving_state = MovingState.LadderClimbing
 	
@@ -1761,7 +1799,15 @@ func _process_on_ladder(_delta):
 	main_velocity = direction * ladder_speed
 	
 	if jump:
-		main_velocity += look_vector * Vector3(JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE, JUMP_VELOCITY * LADDER_JUMP_SCALE)
+		var jump_direction = (body.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+		if jump_direction and not jump_direction.dot(ladder_direction) < 0:
+			if not _can_jump():
+				return
+			
+			_jump(WALKING_SPEED)
+			
+			return
 	
 	velocity = main_velocity
 	move_and_slide()
@@ -1778,7 +1824,7 @@ func ladder_buffer_finished():
 
 func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	# called by ladder_area.gd
-	
+	ladder_direction = ladderDir
 	# try and capture player's intent based on where they're looking
 	var look_vector = camera.get_camera_transform().basis
 	var looking_away = look_vector.z.dot(ladderDir) < 0.33
@@ -1846,21 +1892,20 @@ func is_head_in_water() -> bool:
 
 
 func _handle_water_physics(delta) -> void:
-	var input_dir: Vector2
 	if !is_movement_paused:
-		input_dir = Input.get_vector("left", "right", "forward", "back")
+		input_direction = Input.get_vector("left", "right", "forward", "back")
 	else:
-		input_dir = Vector2.ZERO
+		input_direction = Vector2.ZERO
 	
 	var look_vector = camera.get_camera_transform().basis
-	var direction = look_vector * Vector3(input_dir.x, 0, input_dir.y).normalized()
+	var direction = look_vector * Vector3(input_direction.x, 0, input_direction.y).normalized()
 	
 	if not is_head_in_water() and direction.dot(Vector3.UP) > 0:
 		direction = direction.slide(Vector3.UP)
 	
 	current_speed = lerp(current_speed, SWIMMING_SPEED, delta * LERP_SPEED)
 	
-	if input_dir:
+	if input_direction:
 		main_velocity = lerp(main_velocity, direction * SWIMMING_SPEED, delta * LERP_SPEED)
 	else:
 		main_velocity = lerp(main_velocity, Vector3.ZERO, delta * LERP_SPEED)
@@ -1893,10 +1938,6 @@ func _on_swimming_state_exited() -> void:
 
 
 func _on_swimming_state_physics_processing(delta: float) -> void:
-	if Input.is_action_pressed("jump") and _is_ledge_climbable():
-		state_chart.send_event("ledge_climb")
-		return
-		
 	if not is_head_in_water():
 		under_water_effect.visible = false
 		if is_on_floor():
@@ -1906,6 +1947,10 @@ func _on_swimming_state_physics_processing(delta: float) -> void:
 		under_water_effect.visible = true
 		
 	_handle_water_physics(delta)
+	if Input.is_action_pressed("jump") and _is_ledge_climbable():
+		state_chart.send_event("ledge_climb")
+		return
+		
 #endregion
 
 
