@@ -5567,8 +5567,8 @@ horizontal_alignment = 0
 
 [node name="WaterPool" type="Area3D" parent="TestSwimming"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 19.0067)
-collision_layer = 5
-collision_mask = 5
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("68_7jdnx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestSwimming/WaterPool"]

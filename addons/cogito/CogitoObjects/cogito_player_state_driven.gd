@@ -1887,7 +1887,7 @@ func is_head_in_water() -> bool:
 	
 	if not swimming_head_shapecast.is_colliding():
 		return false
-		
+	
 	return true
 
 
@@ -2032,11 +2032,10 @@ func _on_crouching_state_exited() -> void:
 func _on_crouching_state_physics_processing(delta: float) -> void:
 	head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 	
-	if is_body_in_water():
-		if is_head_in_water():
-			eyes.position.y = lerp(eyes.position.y, -0.05, delta * LERP_SPEED * 1.5)
-		else:
-			eyes.position.y = lerp(eyes.position.y, 0.05, delta * LERP_SPEED * 1.5)
+	if is_head_in_water():
+		eyes.position.y = lerp(eyes.position.y, -0.05, delta * LERP_SPEED * 1.5)
+	else:
+		eyes.position.y = lerp(eyes.position.y, 0.05, delta * LERP_SPEED * 1.5)
 	
 	swimming_head_shapecast.global_position = head.global_position
 	
@@ -2063,6 +2062,11 @@ func _on_standing_state_exited() -> void:
 
 func _on_standing_state_physics_processing(delta: float) -> void:
 	head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
+	
+	if is_head_in_water():
+		eyes.position.y = lerp(eyes.position.y, -0.05, delta * LERP_SPEED * 1.5)
+	else:
+		eyes.position.y = lerp(eyes.position.y, 0.05, delta * LERP_SPEED * 1.5)
 	
 	swimming_head_shapecast.global_position = head.global_position
 	
