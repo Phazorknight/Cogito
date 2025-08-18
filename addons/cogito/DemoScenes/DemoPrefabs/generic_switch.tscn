@@ -27,6 +27,16 @@ size = Vector3(0.2, 0.05, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nti18"]
 size = Vector3(0.150977, 0.069043, 0.147333)
 
+[sub_resource type="Animation" id="Animation_ghf2p"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonMesh_on")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
 [sub_resource type="Animation" id="Animation_u1w74"]
 resource_name = "switch_on"
 length = 0.2
@@ -44,16 +54,6 @@ tracks/1/path = NodePath("ButtonMesh_off")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, -0.015, 0, 0.2, 1, 0, 0, 0)
-
-[sub_resource type="Animation" id="Animation_ghf2p"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ButtonMesh_on")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wuanm"]
 _data = {

@@ -38,6 +38,7 @@ origin_index = -1
 [node name="Pickup_Key" type="RigidBody3D"]
 collision_layer = 3
 script = ExtResource("1_ocu5l")
+cogito_name = ""
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.700584, 0, 0, 0, 0.698465, 0, 0, 0, 0.700054, 0.0106895, 0, 0.0846713)

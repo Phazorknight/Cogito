@@ -18,7 +18,10 @@ func interact(_player_interaction_component):
 			was_interacted_with.emit(interaction_text, input_map_action)
 			#start_lockpick(_player_interaction_component)
 	else:
-		_player_interaction_component.send_hint(null, parent_node.key_hint)
+		if parent_node.is_locked:
+			_player_interaction_component.send_hint(null, parent_node.key_hint)
+		else:
+			pass
 		
 func _lock_state_updated(lock_interaction_text: String):
 	interaction_text = tr(lock_interaction_text)

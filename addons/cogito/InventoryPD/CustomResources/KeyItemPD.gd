@@ -2,7 +2,7 @@ extends InventoryItemPD
 class_name KeyItemPD
 
 @export_group("Key settings")
-# If this is checked, the key item will be removed from the inventory after it's been used on the target object.
+## If this is checked, the key item will be removed from the inventory after it's been used on the target object. CAUTION: If you set this to true, make sure there are enough keys in your game to open all doors that require them. Otherwise you might softlock your player.
 @export var discard_after_use : bool = false
 
 

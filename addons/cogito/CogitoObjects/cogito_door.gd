@@ -42,7 +42,7 @@ enum DoorType {
 @export var ignore_interaction_raycast: bool = false
 @export var is_locked : bool = false
 ## Item resources that is needed to unlock the door.
-@export var key : InventoryItemPD
+@export var key : KeyItemPD
 ## Hint that is displayed if the player attempts to open the door but doesn't have the key item.
 @export var key_hint : String
 ##Alternate item resource that can unlock this door
@@ -218,6 +218,15 @@ func unlock_door():
 	audio_stream_player_3d.stream = unlock_sound
 	audio_stream_player_3d.play()
 	is_locked = false
+	
+#	Key Discard Logic
+	if key.discard_after_use:
+		var inventory = player_interaction_component.get_parent().inventory_data
+		for slot_data in inventory.inventory_slots:
+			if slot_data != null and slot_data.inventory_item == key:
+				player_interaction_component.send_hint(null, tr(key.name) + " " + tr("HINT_SWITCH_item_used") ) # Sends a hint with the key item name.
+				inventory.remove_item_from_stack(slot_data)
+	
 	lock_interaction_text = interaction_text_when_unlocked	
 	lock_state_updated.emit(lock_interaction_text)
 	lock_state_changed.emit(is_locked)
