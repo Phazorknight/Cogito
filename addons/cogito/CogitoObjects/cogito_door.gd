@@ -340,6 +340,7 @@ func set_to_closed_position():
 
 #alternate interaction for locking/unlocking
 func interact2(interactor: Node3D):
+	player_interaction_component = interactor
 	if not is_open:
 		lock_unlock_switch()
 	else:
