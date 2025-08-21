@@ -762,6 +762,7 @@ var wiggle_index : float = 0.0
 var wiggle_current_intensity : float = 0.0
 var bunny_hop_speed : float = SPRINTING_SPEED
 var ledge_position : Vector3
+var is_in_ledge_climbing_middle_stage : bool = false
 var is_in_ledge_climbing_final_stage : bool = false
 
 
@@ -799,7 +800,7 @@ func _is_ledge_climbable() -> bool:
 	
 	if current_moving_state != MovingState.Swimming and not CAN_CLIMB_LEDGE:
 		return false
-		
+	
 	var initial_position = ledge_climbing_shapecast.position
 	
 	# Check ladder first because its priority is higher
@@ -823,8 +824,6 @@ func _is_ledge_climbable() -> bool:
 	
 	if current_moving_state == MovingState.Swimming:
 		ledge_climbing_shapecast.global_position -= Vector3(0, standing_height - crouching_height, 0)
-		
-	ledge_climbing_shapecast.target_position = Vector3.ZERO
 	
 	ledge_climbing_shapecast.force_shapecast_update()
 	
@@ -836,18 +835,25 @@ func _is_ledge_climbable() -> bool:
 	
 	ledge_climbing_shapecast.force_shapecast_update()
 	
+	var collision_safe_fraction : float = 1.0
+	
 	if ledge_climbing_shapecast.is_colliding():
 		ledge_climbing_shapecast.position = initial_position
-		return false
+		collision_safe_fraction = ledge_climbing_shapecast.get_closest_collision_safe_fraction()
 	
-	ledge_climbing_shapecast.global_position += Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0)
-	ledge_climbing_shapecast.target_position = -body.global_basis.z * radius
-	
+	ledge_climbing_shapecast.global_position += Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0) * collision_safe_fraction
+	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis * body.global_basis.z * radius
+
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
 		ledge_climbing_shapecast.position = initial_position
-		return false
+		
+		ledge_climbing_shapecast.force_shapecast_update()
+		
+		if ledge_climbing_shapecast.is_colliding():
+			ledge_climbing_shapecast.position = initial_position
+			return false
 	
 	ledge_climbing_shapecast.global_position += -body.global_basis.z * radius
 	ledge_climbing_shapecast.target_position = Vector3(0, -(ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD) - (standing_height - MIN_CLIMB_HEIGHT), 0)
@@ -866,10 +872,28 @@ func _is_ledge_climbable() -> bool:
 	
 	var collision_point = ledge_climbing_shapecast.get_collision_point(0)
 	
+	ledge_climbing_shapecast.global_position.y = collision_point.y + (ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD) / 2
+	ledge_climbing_shapecast.target_position = Vector3.ZERO
+	
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if ledge_climbing_shapecast.is_colliding():
+		ledge_climbing_shapecast.position = initial_position
+		return false
+	
+	ledge_climbing_shapecast.global_position.y = collision_point.y + (ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD) / 2
+	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis * body.global_basis.z * radius
+
+	ledge_climbing_shapecast.force_shapecast_update()
+	
+	if ledge_climbing_shapecast.is_colliding():
+		ledge_climbing_shapecast.position = initial_position
+		return false
+	
 	ledge_position = collision_point
 	
 	ledge_climbing_shapecast.position = initial_position
-		
+	
 	return true
 
 
@@ -1143,7 +1167,7 @@ func _on_idle_state_physics_processing(delta: float) -> void:
 	if Input.is_action_pressed("jump") and jump_timer.is_stopped():
 		if not _can_jump():
 			return
-			
+		
 		_jump(WALKING_SPEED)
 #endregion
 
@@ -1945,8 +1969,9 @@ func _on_swimming_state_physics_processing(delta: float) -> void:
 			return
 	else:
 		under_water_effect.visible = true
-		
+	
 	_handle_water_physics(delta)
+	
 	if Input.is_action_pressed("jump") and _is_ledge_climbable():
 		state_chart.send_event("ledge_climb")
 		return
@@ -1969,6 +1994,7 @@ func _on_ledge_climbing_state_entered() -> void:
 func _on_ledge_climbing_state_exited() -> void:
 	current_moving_state = MovingState.Undefined
 	is_in_ledge_climbing_final_stage = false
+	is_in_ledge_climbing_middle_stage = false
 
 
 func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
@@ -1976,8 +2002,8 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 		under_water_effect.visible = false
 	else:
 		under_water_effect.visible = true
-		
-	if not Input.is_action_pressed("jump") and not is_in_ledge_climbing_final_stage:
+	
+	if not Input.is_action_pressed("jump") and not is_in_ledge_climbing_middle_stage:
 		state_chart.send_event("idle")
 		try_crouch = false
 		state_chart.send_event("stand_up")
@@ -1986,30 +2012,31 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 	var move_direction = Vector3.UP
 	velocity = move_direction * CLIMBING_SPEED
 	
-	if global_position.y + standing_height / 2 < ledge_position.y + ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD:
+	if crouching_collision_shape.global_position.y + ((standing_height - (2 * crouching_height)) + crouching_height / 2) < ledge_position.y:
 		move_and_slide()
 		return
 	
 	if current_body_posture_state != BodyPostureState.Crouching:
-		is_in_ledge_climbing_final_stage = true
+		is_in_ledge_climbing_middle_stage = true
 		try_crouch = true
 		state_chart.send_event("crouch")
 		return
 	
-	if global_position.y - (standing_height / 2 - crouching_height) < ledge_position.y:
+	is_in_ledge_climbing_middle_stage = true
+	
+	if not is_in_ledge_climbing_final_stage and crouching_collision_shape.global_position.y - (crouching_height / 2 + MIN_FREE_SPACE_ABOVE_HEAD) < ledge_position.y:
 		move_and_slide()
 		return
 	
 	is_in_ledge_climbing_final_stage = true
-	
-	move_direction = global_position.direction_to(ledge_position + Vector3(0, standing_height / 2, 0))
-	if move_direction.y <= 0.01:
-		global_position.y += 0.02
+
+	move_direction = crouching_collision_shape.global_position.direction_to(ledge_position + Vector3(0, crouching_height / 2, 0))
+
 	velocity = move_direction * CLIMBING_SPEED
 	
 	move_and_slide()
 	
-	if (ledge_position + Vector3(0, standing_height / 2, 0)).distance_to(global_position) < 0.2:
+	if (ledge_position + Vector3(0, crouching_height / 2, 0)).distance_to(crouching_collision_shape.global_position) < 0.1:
 		state_chart.send_event("idle")
 		if AUTO_STAND_AFTER_CLIMB:
 			try_crouch = false

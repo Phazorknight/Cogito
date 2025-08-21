@@ -906,11 +906,6 @@ data = PackedVector3Array(0.894, 0.4168, -0.6972, 0.6618, 0.4168, -0.6972, 0.661
 [sub_resource type="BoxShape3D" id="BoxShape3D_6s5b0"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_ie4up"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0nh4u"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
-
 [sub_resource type="BoxMesh" id="BoxMesh_0nh4u"]
 size = Vector3(1, 0.05, 1)
 
@@ -990,6 +985,11 @@ material = SubResource("ShaderMaterial_u2k3u")
 size = Vector2(17, 14)
 subdivide_width = 128
 subdivide_depth = 128
+
+[sub_resource type="BoxMesh" id="BoxMesh_7jdnx"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_u2k3u"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="COGITO4LaboratoryTestStateDrivenPlayer" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_0bsih")
@@ -4077,6 +4077,16 @@ outline_size = 10
 horizontal_alignment = 0
 line_spacing = -20.0
 
+[node name="Label_LEDGE_CLIMBING" type="Label3D" parent="NavigationRegion3D/SHOOTING_RANGE"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -26.2487, 2.82194, -10.6248)
+text = "Ledge Climbing
+"
+font = ExtResource("7_wn16c")
+font_size = 64
+outline_size = 10
+horizontal_alignment = 0
+line_spacing = -20.0
+
 [node name="Label_WetDarts" type="Label3D" parent="NavigationRegion3D/SHOOTING_RANGE"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, -11.8239, 1.5, -30.8235)
 text = "WATER DARTS
@@ -4662,17 +4672,8 @@ cogito_name = ""
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)
 patrol_path = NodePath("../EnemyPatrolpath2")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87825, 4.72494, -9.75096)
-mesh = SubResource("BoxMesh_ie4up")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_0nh4u")
-
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64681, 2.83584, -9.05905)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.7455, 2.975, 1)
 mesh = SubResource("BoxMesh_0nh4u")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
@@ -5580,6 +5581,222 @@ debug_color = Color(0.941176, 0.235294, 0.737255, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.962, -0.205, 18.346)
 mesh = SubResource("PlaneMesh_7he8q")
 skeleton = NodePath("../..")
+
+[node name="ClimbingTest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -13)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -9)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -9)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest8" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0, -11)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest8"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest8/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest17" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1, -11)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest17"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest17/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -7)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -7)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, -7)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest18" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, 1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest18"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest18/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest19" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, 1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest19"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest19/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest20" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, 1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest20"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest20/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest21" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, 5)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest21"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest21/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest22" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, 5)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest22"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest22/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest23" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, 5)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest23"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest23/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest24" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.9629, 3.5, 5)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest24"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest24/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -5)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest7"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest7/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest9" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, -5)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest9"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest9/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest10" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -3)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest10"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest10/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest11" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -3)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest11"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest11/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest12" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 3.5, -3)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest12"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest12/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest13" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest13"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest13/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest14" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest14"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest14/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest15" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 3.5, -1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest15"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest15/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
+
+[node name="ClimbingTest16" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.745, 3.5, -1)
+mesh = SubResource("BoxMesh_7jdnx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ClimbingTest16"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ClimbingTest16/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_u2k3u")
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]
