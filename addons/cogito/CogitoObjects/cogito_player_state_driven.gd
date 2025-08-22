@@ -210,10 +210,11 @@ var ledge_climbing_shapecast_height : float
 @onready var animationPlayer: AnimationPlayer = $Body/Neck/Head/Eyes/AnimationPlayer
 @onready var swimming_head_shapecast: ShapeCast3D = $Body/Neck/Head/Eyes/Camera/SwimmingHeadShapeCast
 @onready var under_water_effect: ColorRect = $GUI/Panel/AspectRatioContainer/UnderWaterEffect
+@onready var crouch_shapecast: ShapeCast3D = $CrouchShapeCast
 
 @onready var standing_collision_shape: CollisionShape3D = $StandingCollisionShape
 @onready var crouching_collision_shape: CollisionShape3D = $CrouchingCollisionShape
-@onready var crouch_raycast: RayCast3D = $CrouchRayCast
+
 @onready var sliding_timer: Timer = $SlidingTimer
 @onready var jump_timer: Timer = $JumpCooldownTimer
 
@@ -265,6 +266,8 @@ func _ready():
 		ledge_climbing_shapecast_height = ledge_climbing_shapecast.shape.size.y
 	elif ledge_climbing_shapecast.shape is CylinderShape3D or ledge_climbing_shapecast.shape is CapsuleShape3D:
 		ledge_climbing_shapecast_height = ledge_climbing_shapecast.shape.height
+	
+	crouch_shapecast.add_exception(self)
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -1043,6 +1046,9 @@ func _on_grounded_state_entered() -> void:
 
 
 func _on_grounded_state_physics_processing(delta: float) -> void:
+	if is_sitting:
+		return
+		
 	_input_handling_and_movement(delta)
 	
 	if not is_head_in_water():
@@ -1498,7 +1504,7 @@ func _sit_down():
 
 func _sit_down_finished():
 	is_sitting = true
-	crouch_raycast.enabled = false
+	crouch_shapecast.enabled = false
 	set_physics_process(true)
 	var sittable = CogitoSceneManager._current_sittable_node
 	standing_collision_shape.disabled = true
@@ -1618,7 +1624,7 @@ func _move_to_displacement_position(sittable):
 
 func _stand_up_finished():
 	is_sitting = false
-	crouch_raycast.enabled = true
+	crouch_shapecast.enabled = true
 	set_physics_process(true)
 	state_chart.send_event("grounded")
 	try_crouch = false
@@ -2071,8 +2077,8 @@ func _on_crouching_state_physics_processing(delta: float) -> void:
 			try_crouch = !try_crouch
 		elif !TOGGLE_CROUCH:
 			try_crouch = Input.is_action_pressed("crouch")
-			
-		if not try_crouch and not crouch_raycast.is_colliding():
+		
+		if not try_crouch and not crouch_shapecast.is_colliding():
 			state_chart.send_event("stand_up")
 #endregion
 
@@ -2088,6 +2094,16 @@ func _on_standing_state_exited() -> void:
 	
 
 func _on_standing_state_physics_processing(delta: float) -> void:
+	if current_moving_state != MovingState.LedgeClimbing:
+		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
+			try_crouch = !try_crouch
+		elif !TOGGLE_CROUCH:
+			try_crouch = Input.is_action_pressed("crouch")
+		
+		if try_crouch or crouch_shapecast.is_colliding():
+			state_chart.send_event("crouch")
+			return
+	
 	head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 	
 	if is_head_in_water():
@@ -2102,15 +2118,6 @@ func _on_standing_state_physics_processing(delta: float) -> void:
 			return
 		standing_collision_shape.disabled = false
 		crouching_collision_shape.disabled = true
-	
-	if current_moving_state != MovingState.LedgeClimbing:
-		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
-			try_crouch = !try_crouch
-		elif !TOGGLE_CROUCH:
-			try_crouch = Input.is_action_pressed("crouch")
-		
-		if try_crouch or crouch_raycast.is_colliding():
-			state_chart.send_event("crouch")
 #endregion
 
 
