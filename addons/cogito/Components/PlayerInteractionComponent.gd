@@ -145,7 +145,7 @@ func _handle_interaction(action: String) -> void:
 	if interactable != null and not is_carrying:
 		for node: InteractionComponent in interactable.interaction_nodes:
 			if node.input_map_action == action and not node.is_disabled:
-				if !player.is_in_interaction_state or (!player.is_on_floor() and node.disable_interaction_in_air):
+				if player.get("is_in_interaction_state") and !player.is_in_interaction_state or (!player.is_on_floor() and node.disable_interaction_in_air):
 					return
 					
 				if !node.ignore_open_gui and get_parent().is_showing_ui:
