@@ -47,6 +47,8 @@ var is_showing_ui : bool
 @export var jump_sound : AudioStream
 ## AudioStream that gets played when the player slides (sprint + crouch).
 @export var slide_sound : AudioStream
+@export var swim_movement_sound : AudioStream
+@export var swim_under_water_sound : AudioStream
 @export_subgroup ("Footstep Audio")
 @export var walk_volume_db : float = -38.0
 @export var sprint_volume_db : float = -30.0
@@ -116,6 +118,8 @@ var LandingVolume: float = 0.8
 @export var WIGGLE_ON_SPRINTING_SPEED : float = 16.0
 @export var WIGGLE_ON_CROUCHING_INTENSITY : float = 0.08
 @export var WIGGLE_ON_CROUCHING_SPEED : float = 8.0
+@export var WIGGLE_ON_SWIMMING_INTENSITY : float = 0.08
+@export var WIGGLE_ON_SWIMMING_SPEED : float = 6.0
 
 @export_group("Stair Handling")
 ## This sets the camera smoothing when going up/down stairs as the player snaps to each stair step.
@@ -195,6 +199,7 @@ var is_in_unpausable_state : bool = false
 var is_in_interaction_state : bool = true
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
+var swim_under_water_audio_player : AudioStreamPlayer3D
 var radius : float
 var standing_height : float
 var crouching_height : float
@@ -316,12 +321,19 @@ func _ready():
 	CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Player has no reference to pause menu.")
 
 	call_deferred("slide_audio_init")
+	call_deferred("swim_audio_init")
 
 
 func slide_audio_init():
 	#setup sound effect for sliding
 	slide_audio_player = Audio.play_sound_3d(slide_sound, false)
 	slide_audio_player.reparent(self, false)
+
+
+func swim_audio_init():
+	#setup sound effect for swimming
+	swim_under_water_audio_player = Audio.play_sound_3d(swim_under_water_sound, false)
+	swim_under_water_audio_player.reparent(self, false)
 
 
 # Use these functions to manipulate player attributes.
@@ -1019,6 +1031,16 @@ func _input_handling_and_movement(delta):
 	move_and_slide()
 
 
+func _handle_swim_under_water_sounds():
+	if is_head_in_water():
+		if !swim_under_water_audio_player.playing:
+			var audio_length : float = swim_under_water_audio_player.stream.get_length()
+			swim_under_water_audio_player.play(randf_range(0, audio_length))
+	else:
+		if swim_under_water_audio_player:
+			swim_under_water_audio_player.stop()
+
+
 #region Grounded State
 var wiggle_vector : Vector2 = Vector2.ZERO
 var can_play_footstep : bool = true
@@ -1055,6 +1077,8 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 		under_water_effect.visible = false
 	else:
 		under_water_effect.visible = true
+	
+	_handle_swim_under_water_sounds()
 	
 	if is_head_in_water():
 		state_chart.send_event("swim")
@@ -1795,6 +1819,8 @@ func _on_ladder_climbing_state_physics_processing(delta: float) -> void:
 func _process_on_ladder(_delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "back")
 	
+	_handle_swim_under_water_sounds()
+	
 	var ladder_speed = LADDER_SPEED
 	
 	if CAN_SPRINT_ON_LADDER and Input.is_action_pressed("sprint") and input_dir.length_squared() > 0.1:
@@ -1905,6 +1931,9 @@ func exit_ladder():
 
 
 #region Swimming State
+var can_play_swim_movement : bool = true
+
+
 func is_body_in_water() -> bool:
 	if get_tree().get_nodes_in_group("water_area").all(func(area): return !area.overlaps_body(self)):
 		return false
@@ -1947,6 +1976,16 @@ func _handle_water_physics(delta) -> void:
 			if not is_on_floor():
 				main_velocity.y -= gravity * WATER_GRAVITY_COEFFICIENT * delta
 	
+	_handle_swim_under_water_sounds()
+	
+	if input_direction and main_velocity.length() >= 0.2:
+		if can_play_swim_movement && wiggle_vector.y > 0.9:
+			Audio.play_sound_3d(swim_movement_sound)
+			can_play_swim_movement = false
+		
+		if !can_play_swim_movement && wiggle_vector.y < 0.9:
+			can_play_swim_movement = true
+	
 	velocity = main_velocity
 	
 	move_and_slide()
@@ -1968,6 +2007,10 @@ func _on_swimming_state_exited() -> void:
 
 
 func _on_swimming_state_physics_processing(delta: float) -> void:
+	wiggle_index += WIGGLE_ON_SWIMMING_SPEED * delta
+	wiggle_vector.y = sin(wiggle_index)
+	wiggle_vector.x = sin(wiggle_index / 2) + 0.5
+	
 	if not is_head_in_water():
 		under_water_effect.visible = false
 		if is_on_floor():
@@ -2008,6 +2051,8 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 		under_water_effect.visible = false
 	else:
 		under_water_effect.visible = true
+	
+	_handle_swim_under_water_sounds()
 	
 	if not Input.is_action_pressed("jump") and not is_in_ledge_climbing_middle_stage:
 		state_chart.send_event("idle")
