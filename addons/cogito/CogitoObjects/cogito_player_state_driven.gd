@@ -1033,6 +1033,9 @@ func _input_handling_and_movement(delta):
 
 func _handle_swim_under_water_sounds():
 	if is_head_in_water():
+		if not swim_under_water_audio_player:
+			swim_audio_init()
+		
 		if !swim_under_water_audio_player.playing:
 			var audio_length : float = swim_under_water_audio_player.stream.get_length()
 			swim_under_water_audio_player.play(randf_range(0, audio_length))
