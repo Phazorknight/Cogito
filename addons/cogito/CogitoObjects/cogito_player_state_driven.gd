@@ -251,6 +251,8 @@ func _ready():
 	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
 	player_interaction_component.exclude_player(get_rid())
 	
+	$GUI/Panel/AspectRatioContainer/StateChartDebugger.enabled = CogitoGlobals.cogito_settings.is_state_chart_debugger_enabled
+	
 	randomize() 
 	
 	radius = _calculate_player_radius()
