@@ -1,8 +1,8 @@
-[gd_scene load_steps=134 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=148 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_4dqq6"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_ponqc"]
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player_default.tscn" id="2_7qwrr"]
+[ext_resource type="PackedScene" uid="uid://otv80grtivvc" path="res://addons/cogito/PackedScenes/cogito_player_state_driven.tscn" id="3_kt1ow"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_6y43x"]
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_hlewe"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="5_ihscj"]
@@ -66,6 +66,8 @@
 [ext_resource type="PackedScene" uid="uid://ks0xcampuu3h" path="res://addons/cogito/PackedScenes/stamina_drain_attribute_zone.tscn" id="61_grgat"]
 [ext_resource type="PackedScene" uid="uid://d2lnk6ecthmvd" path="res://addons/cogito/PackedScenes/Pickups/pickup_strength_potion.tscn" id="62_bftoa"]
 [ext_resource type="PackedScene" uid="uid://b2cccsfb5tikx" path="res://addons/cogito/CogitoNPC/cogito_npc.tscn" id="63_t2hdn"]
+[ext_resource type="Script" uid="uid://cf14qv41gf7ll" path="res://addons/cogito/Scripts/water_area.gd" id="67_kt1ow"]
+[ext_resource type="Shader" uid="uid://bqurxcbvm4a7a" path="res://addons/cogito/Assets/Shader/water_and_under.gdshader" id="68_r8380"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
 panorama = ExtResource("1_ponqc")
@@ -92,13 +94,14 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_ovhpt"]
+[sub_resource type="Resource" id="Resource_kt1ow"]
 resource_local_to_scene = true
 script = ExtResource("4_hlewe")
 grid = true
 starter_inventory = Array[ExtResource("4_6y43x")]([])
 inventory_size = Vector2i(5, 3)
 inventory_slots = Array[ExtResource("4_6y43x")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://btnha2whsheir"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6kc6"]
 size = Vector3(10, 0.1, 6)
@@ -903,6 +906,61 @@ data = PackedVector3Array(0.894, 0.4168, -0.6972, 0.6618, 0.4168, -0.6972, 0.661
 [sub_resource type="BoxShape3D" id="BoxShape3D_6s5b0"]
 size = Vector3(0.1, 0.1, 0.1)
 
+[sub_resource type="PrismMesh" id="PrismMesh_gshxf"]
+material = ExtResource("7_f43ap")
+left_to_right = 1.0
+size = Vector3(5, 3, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4a2ug"]
+size = Vector3(17.2845, 2.82366, 14.5231)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7jdnx"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ucks7"]
+seamless = true
+as_normal_map = true
+bump_strength = 1.5
+noise = SubResource("FastNoiseLite_7jdnx")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7he8q"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w80am"]
+seamless = true
+as_normal_map = true
+bump_strength = 1.5
+noise = SubResource("FastNoiseLite_7he8q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u2k3u"]
+render_priority = 0
+shader = ExtResource("68_r8380")
+shader_parameter/albedo = Color(0.0509804, 0.196078, 0.243137, 1)
+shader_parameter/albedo_fresnel = Color(0.407843, 0.772549, 0.898039, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/transparency = 0.9
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_ucks7")
+shader_parameter/texture_normal2 = SubResource("NoiseTexture2D_w80am")
+shader_parameter/wave_direction = Vector2(2, 0)
+shader_parameter/wave_direction2 = Vector2(0, 1)
+shader_parameter/time_scale = 0.025
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_8nvk0"]
+material = SubResource("ShaderMaterial_u2k3u")
+size = Vector2(17, 14)
+subdivide_width = 128
+subdivide_depth = 128
+
+[sub_resource type="BoxMesh" id="BoxMesh_7u7hp"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q0htc"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kt1ow"]
+size = Vector3(1, 0.05, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r8380"]
+data = PackedVector3Array(-0.5, 0.025, 0.5, 0.5, 0.025, 0.5, -0.5, -0.025, 0.5, 0.5, 0.025, 0.5, 0.5, -0.025, 0.5, -0.5, -0.025, 0.5, 0.5, 0.025, -0.5, -0.5, 0.025, -0.5, 0.5, -0.025, -0.5, -0.5, 0.025, -0.5, -0.5, -0.025, -0.5, 0.5, -0.025, -0.5, 0.5, 0.025, 0.5, 0.5, 0.025, -0.5, 0.5, -0.025, 0.5, 0.5, 0.025, -0.5, 0.5, -0.025, -0.5, 0.5, -0.025, 0.5, -0.5, 0.025, -0.5, -0.5, 0.025, 0.5, -0.5, -0.025, -0.5, -0.5, 0.025, 0.5, -0.5, -0.025, 0.5, -0.5, -0.025, -0.5, 0.5, 0.025, 0.5, -0.5, 0.025, 0.5, 0.5, 0.025, -0.5, -0.5, 0.025, 0.5, -0.5, 0.025, -0.5, 0.5, 0.025, -0.5, -0.5, -0.025, 0.5, 0.5, -0.025, 0.5, -0.5, -0.025, -0.5, 0.5, -0.025, 0.5, 0.5, -0.025, -0.5, -0.5, -0.025, -0.5)
+
 [node name="Cogito04Laboratory" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_4dqq6")
 connectors = [NodePath("CONNECTOR_TO_LOBBY/ConnectorFromLobby")]
@@ -916,9 +974,9 @@ shadow_opacity = 0.8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bftoa")
 
-[node name="Player" parent="." instance=ExtResource("2_7qwrr")]
+[node name="CogitoPlayer" parent="." instance=ExtResource("3_kt1ow")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_ovhpt")
+inventory_data = SubResource("Resource_kt1ow")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -3005,7 +3063,7 @@ transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -26.5, 3
 transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -26.5, 3, 5)
 
 [node name="KSI_wall_ridges_half152" parent="NavigationRegion3D/ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
-transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -26.5, 3, 3.5)
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -26.5, 4.125, 3.5)
 
 [node name="KSI_wall_ridges_half153" parent="NavigationRegion3D/ROOM_SYSTEMIC_PROPERTIES" instance=ExtResource("9_gy8kl")]
 transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -26.5, 3, 2)
@@ -4051,15 +4109,12 @@ cogito_name = ""
 
 [node name="pickup_pistol" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("19_1ce0p")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 4.52303, 0.813927, -15.3253)
-cogito_name = ""
 
 [node name="pickup_laser_ammo" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("17_l2vbg")]
 transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 2.60574, 0.821979, -15.3026)
-cogito_name = ""
 
 [node name="Pickup_LaserRifle" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("23_ex3ej")]
 transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -1, 1.91069e-15, 3.22065, 0.821979, -15.3026)
-cogito_name = ""
 
 [node name="Pickup_Pickaxe" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("29_ai41f")]
 transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
@@ -4244,7 +4299,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9, 0,
 
 [node name="CarriableBox" parent="NavigationRegion3D/MOVEMENT" instance=ExtResource("35_hegwd")]
 transform = Transform3D(0.952555, 0, 0.304366, 0, 1, 0, -0.304366, 0, 0.952555, -6.66945, 1, 4.34045)
-cogito_name = ""
 
 [node name="KSI_wall_doorway_wide_painted5" parent="NavigationRegion3D/MOVEMENT" instance=ExtResource("15_mnt7d")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 2)
@@ -4482,7 +4536,6 @@ transform = Transform3D(-6.55671e-08, 1, -2.98023e-07, -3.78552e-08, -2.98023e-0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.756995, 1.26997, -0.363863)
 script = ExtResource("28_5k0xi")
 spawn_area = NodePath("CollisionShape3D")
-spawn_amount = 1
 object_to_spawn = ExtResource("17_l2vbg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VendingMachine/Spawnzone_VendingMachine"]
@@ -4493,7 +4546,6 @@ shape = SubResource("BoxShape3D_6s5b0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.756995, 1.26997, -0.363863)
 script = ExtResource("28_5k0xi")
 spawn_area = NodePath("../Spawnzone_VendingMachine/CollisionShape3D")
-spawn_amount = 1
 object_to_spawn = ExtResource("28_fsk2l")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="VendingMachine/Spawnzone_VendingMachine2"]
@@ -4574,6 +4626,1151 @@ cogito_name = ""
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)
 patrol_path = NodePath("../EnemyPatrolpath2")
 
+[node name="SwimmingTest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Ladder2" parent="SwimmingTest" instance=ExtResource("27_1lvv6")]
+transform = Transform3D(-5.76205e-08, 0, 1, 0, 1, 0, -1, 0, -5.76205e-08, -34.9617, -1.4, 19.4748)
+
+[node name="ladderArea" parent="SwimmingTest/Ladder2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 0.0460688, 0)
+
+[node name="Floor_3x3_07" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, 2)
+
+[node name="Floor_3x3_14" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, 5)
+
+[node name="Floor_3x3_21" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, 8)
+
+[node name="Floor_3x3_28" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 2)
+
+[node name="Floor_3x3_35" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 5)
+
+[node name="Floor_3x3_42" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 8)
+
+[node name="Floor_3x3_43" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 2)
+
+[node name="Floor_3x3_44" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 5)
+
+[node name="Floor_3x3_45" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 8)
+
+[node name="Floor_3x3_46" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 2)
+
+[node name="Floor_3x3_49" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 5)
+
+[node name="Floor_3x3_50" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 8)
+
+[node name="Floor_3x3_51" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 0, 2)
+
+[node name="Floor_3x3_56" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 2)
+
+[node name="Floor_3x3_52" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 0, 5)
+
+[node name="Floor_3x3_53" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 0, 8)
+
+[node name="Floor_3x3_84" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -36.4925, 0.2, 22.528)
+
+[node name="Floor_3x3_57" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 5)
+
+[node name="Floor_3x3_58" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 8)
+
+[node name="Floor_3x3_59" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -3, 26)
+
+[node name="Floor_3x3_60" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, 26)
+
+[node name="Floor_3x3_63" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -3, 26)
+
+[node name="Floor_3x3_64" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 0, 26)
+
+[node name="Floor_3x3_65" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, -3, 26)
+
+[node name="Floor_3x3_66" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 26)
+
+[node name="Floor_3x3_70" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -3, 26)
+
+[node name="Floor_3x3_71" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 26)
+
+[node name="Floor_3x3_77" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, -3, 26)
+
+[node name="Floor_3x3_78" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 0, 26)
+
+[node name="Floor_3x3_85" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 26)
+
+[node name="Floor_3x3_136" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 26)
+
+[node name="Floor_3x3_137" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 0, 26)
+
+[node name="FloorDirt_3x3_31" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -3, 14)
+
+[node name="FloorDirt_3x3_32" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -3, 11)
+
+[node name="FloorDirt_3x3_33" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -3, 14)
+
+[node name="FloorDirt_3x3_34" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -3, 11)
+
+[node name="FloorDirt_3x3_35" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, -3, 14)
+
+[node name="FloorDirt_3x3_36" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, -3, 11)
+
+[node name="FloorDirt_3x3_37" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -3, 14)
+
+[node name="FloorDirt_3x3_38" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -3, 11)
+
+[node name="FloorDirt_3x3_39" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, -3, 14)
+
+[node name="FloorDirt_3x3_40" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, -3, 11)
+
+[node name="FloorDirt_3x3_41" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 14)
+
+[node name="FloorDirt_3x3_42" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 11)
+
+[node name="FloorDirt_3x3_43" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -3, 20)
+
+[node name="FloorDirt_3x3_44" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -3, 23)
+
+[node name="FloorDirt_3x3_45" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, -3, 17)
+
+[node name="FloorDirt_3x3_46" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -3, 20)
+
+[node name="FloorDirt_3x3_47" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -3, 17)
+
+[node name="FloorDirt_3x3_48" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, -3, 20)
+
+[node name="FloorDirt_3x3_49" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, -3, 17)
+
+[node name="FloorDirt_3x3_50" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -3, 20)
+
+[node name="FloorDirt_3x3_51" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -3, 17)
+
+[node name="FloorDirt_3x3_52" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, -3, 20)
+
+[node name="FloorDirt_3x3_53" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, -3, 17)
+
+[node name="FloorDirt_3x3_54" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 20)
+
+[node name="FloorDirt_3x3_55" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, -3, 23)
+
+[node name="FloorDirt_3x3_56" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, -3, 23)
+
+[node name="FloorDirt_3x3_57" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -3, 23)
+
+[node name="FloorDirt_3x3_58" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, -3, 23)
+
+[node name="FloorDirt_3x3_59" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 23)
+
+[node name="FloorDirt_3x3_60" parent="SwimmingTest" instance=ExtResource("9_btwfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, -3, 17)
+
+[node name="Glass_3x3_122" parent="SwimmingTest" instance=ExtResource("10_8403t")]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -34, 5.5, 11)
+
+[node name="Glass_3x3_123" parent="SwimmingTest" instance=ExtResource("10_8403t")]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -43, 5.5, 11)
+
+[node name="Glass_3x3_124" parent="SwimmingTest" instance=ExtResource("10_8403t")]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -34, 5.5, 20)
+
+[node name="Glass_3x3_125" parent="SwimmingTest" instance=ExtResource("10_8403t")]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, -43, 5.5, 20)
+
+[node name="Floor_3x3_08" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 2)
+
+[node name="Floor_3x3_09" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 2)
+
+[node name="Floor_3x3_11" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 5)
+
+[node name="Floor_3x3_29" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 8)
+
+[node name="Floor_3x3_32" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 5)
+
+[node name="Floor_3x3_47" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 8)
+
+[node name="Floor_3x3_54" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 2)
+
+[node name="Floor_3x3_55" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 5)
+
+[node name="Floor_3x3_61" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 8)
+
+[node name="Floor_3x3_62" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 2)
+
+[node name="Floor_3x3_74" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 2)
+
+[node name="Floor_3x3_67" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 5)
+
+[node name="Floor_3x3_68" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 8)
+
+[node name="Floor_3x3_69" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 5)
+
+[node name="Floor_3x3_72" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 8)
+
+[node name="Floor_3x3_73" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 2)
+
+[node name="Floor_3x3_10" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.498, 4.5, 0.525059)
+
+[node name="Floor_3x3_12" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.498, 4.5, 0.525059)
+
+[node name="Floor_3x3_80" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.498, 4.5, 0.525059)
+
+[node name="Floor_3x3_82" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.498, 4.5, 0.525059)
+
+[node name="Floor_3x3_83" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.498, 4.5, 0.525059)
+
+[node name="Floor_3x3_86" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.498, 4.5, 0.525059)
+
+[node name="Floor_3x3_75" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 5)
+
+[node name="Floor_3x3_76" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 8)
+
+[node name="Floor_3x3_79" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 14)
+
+[node name="Floor_3x3_81" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 11)
+
+[node name="Floor_3x3_88" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 17)
+
+[node name="Floor_3x3_89" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 20)
+
+[node name="Floor_3x3_250" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 23)
+
+[node name="Floor_3x3_251" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 14)
+
+[node name="Floor_3x3_252" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 17)
+
+[node name="Floor_3x3_253" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 23)
+
+[node name="Floor_3x3_254" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 14)
+
+[node name="Floor_3x3_255" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 11)
+
+[node name="Floor_3x3_256" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 17)
+
+[node name="Floor_3x3_257" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 20)
+
+[node name="Floor_3x3_258" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 23)
+
+[node name="Floor_3x3_259" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 5.5, 26)
+
+[node name="Floor_3x3_260" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 14)
+
+[node name="Floor_3x3_261" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 11)
+
+[node name="Floor_3x3_262" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 17)
+
+[node name="Floor_3x3_263" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 20)
+
+[node name="Floor_3x3_264" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 23)
+
+[node name="Floor_3x3_265" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 14)
+
+[node name="Floor_3x3_266" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 17)
+
+[node name="Floor_3x3_267" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 23)
+
+[node name="Floor_3x3_268" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43, 5.5, 26)
+
+[node name="Floor_3x3_269" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 14)
+
+[node name="Floor_3x3_270" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 11)
+
+[node name="Floor_3x3_271" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 17)
+
+[node name="Floor_3x3_272" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 20)
+
+[node name="Floor_3x3_273" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 23)
+
+[node name="Floor_3x3_274" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 26)
+
+[node name="Floor_3x3_275" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 5.5, 26)
+
+[node name="Floor_3x3_276" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34, 5.5, 26)
+
+[node name="Floor_3x3_277" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 5.5, 26)
+
+[node name="Floor_3x3_278" parent="SwimmingTest" instance=ExtResource("6_bedlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46, 5.5, 26)
+
+[node name="CeilingFan_Lab11" parent="SwimmingTest" instance=ExtResource("32_j2alh")]
+transform = Transform3D(-0.612604, 0, -0.79039, 0, 1, 0, 0.79039, 0, -0.612604, -37, 4.5, 8)
+
+[node name="CeilingFan_Lab12" parent="SwimmingTest" instance=ExtResource("32_j2alh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 4.5, 17)
+
+[node name="KSI_wall_painted29" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 2)
+
+[node name="KSI_wall_painted32" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 5)
+
+[node name="KSI_wall_painted33" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 8)
+
+[node name="KSI_wall_painted34" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 11)
+
+[node name="KSI_wall_painted35" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 14)
+
+[node name="KSI_wall_painted36" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 17)
+
+[node name="KSI_wall_painted37" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 20)
+
+[node name="KSI_wall_painted38" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 23)
+
+[node name="KSI_wall_painted39" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 0, 26)
+
+[node name="KSI_wall_painted63" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -34, 0, 29)
+
+[node name="KSI_wall_painted64" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -31, 0, 29)
+
+[node name="KSI_wall_painted65" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -28, 0, 29)
+
+[node name="KSI_wall_painted66" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -37, 0, 29)
+
+[node name="KSI_wall_painted67" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40, 0, 29)
+
+[node name="KSI_wall_painted68" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -43, 0, 29)
+
+[node name="KSI_wall_painted40" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 11)
+
+[node name="KSI_wall_painted41" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 8)
+
+[node name="KSI_wall_painted69" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 5)
+
+[node name="KSI_wall_painted70" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 20)
+
+[node name="KSI_wall_painted71" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 17)
+
+[node name="KSI_wall_painted72" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 14)
+
+[node name="KSI_wall_painted73" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 29)
+
+[node name="KSI_wall_painted74" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 26)
+
+[node name="KSI_wall_painted75" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -46, 0, 23)
+
+[node name="KSI_wall_ridges_half167" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -43, 3, 28.5)
+
+[node name="KSI_wall_ridges_half168" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -44.5, 3, 28.5)
+
+[node name="KSI_wall_ridges_half169" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -40, 3, 28.5)
+
+[node name="KSI_wall_ridges_half170" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -41.5, 3, 28.5)
+
+[node name="KSI_wall_ridges_half171" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -37, 3, 28.5)
+
+[node name="KSI_wall_ridges_half172" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -38.5, 3, 28.5)
+
+[node name="KSI_wall_ridges_half173" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -34, 3, 28.5)
+
+[node name="KSI_wall_ridges_half174" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -35.5, 3, 28.5)
+
+[node name="KSI_wall_ridges_half175" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -31, 3, 28.5)
+
+[node name="KSI_wall_ridges_half176" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -32.5, 3, 28.5)
+
+[node name="KSI_wall_ridges_half177" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -28, 3, 28.5)
+
+[node name="KSI_wall_ridges_half178" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, -29.5, 3, 28.5)
+
+[node name="KSI_wall_ridges_half179" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -30.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half215" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -29, 3, 3.5)
+
+[node name="KSI_wall_ridges_half216" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -33.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half217" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -32, 3, 3.5)
+
+[node name="KSI_wall_ridges_half218" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -36.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half219" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -35, 3, 3.5)
+
+[node name="KSI_wall_ridges_half220" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -39.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half221" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -38, 4.12463, 3.5)
+
+[node name="KSI_wall_ridges_half222" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -42.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half223" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -41, 3, 3.5)
+
+[node name="KSI_wall_ridges_half224" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -45.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half225" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37112e-08, 0, -1, 0, 1, 0, 1, 0, -4.37112e-08, -44, 3, 3.5)
+
+[node name="KSI_wall_ridges_half226" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -42.4798, 3, 2)
+
+[node name="KSI_wall_ridges_half227" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -43.9798, 3, 2)
+
+[node name="KSI_wall_ridges_half228" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -39.4798, 3, 2)
+
+[node name="KSI_wall_ridges_half229" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -40.9798, 3, 2)
+
+[node name="KSI_wall_ridges_half230" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -36.4798, 3, 2)
+
+[node name="KSI_wall_ridges_half231" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -37.9798, 3, 2)
+
+[node name="KSI_wall_ridges_half232" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -33.4798, 3, 2)
+
+[node name="KSI_wall_ridges_half233" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -34.9798, 3, 2)
+
+[node name="KSI_wall_ridges_half234" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -30.4798, 3, 2)
+
+[node name="KSI_wall_ridges_half235" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -31.9798, 3, 2)
+
+[node name="KSI_wall_ridges_half236" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -27.4798, 3, 2)
+
+[node name="KSI_wall_ridges_half237" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-4.37116e-08, 0, 1, 0, 1, 0, -1, 0, -4.37116e-08, -28.9798, 3, 2)
+
+[node name="KSI_wall_ridges_half180" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 3.5)
+
+[node name="KSI_wall_ridges_half181" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 5)
+
+[node name="KSI_wall_ridges_half182" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 6.5)
+
+[node name="KSI_wall_ridges_half183" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 8)
+
+[node name="KSI_wall_ridges_half184" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 9.5)
+
+[node name="KSI_wall_ridges_half185" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 11)
+
+[node name="KSI_wall_ridges_half186" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 12.5)
+
+[node name="KSI_wall_ridges_half187" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 14)
+
+[node name="KSI_wall_ridges_half188" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 15.5)
+
+[node name="KSI_wall_ridges_half189" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 17)
+
+[node name="KSI_wall_ridges_half190" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 18.5)
+
+[node name="KSI_wall_ridges_half191" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 20)
+
+[node name="KSI_wall_ridges_half192" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 21.5)
+
+[node name="KSI_wall_ridges_half193" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 23)
+
+[node name="KSI_wall_ridges_half194" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 24.5)
+
+[node name="KSI_wall_ridges_half195" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 26)
+
+[node name="KSI_wall_ridges_half196" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -28.5, 3, 27.5)
+
+[node name="KSI_wall_ridges_half197" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 29)
+
+[node name="KSI_wall_ridges_half198" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 27.5)
+
+[node name="KSI_wall_ridges_half199" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 26)
+
+[node name="KSI_wall_ridges_half200" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 24.5)
+
+[node name="KSI_wall_ridges_half201" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 23)
+
+[node name="KSI_wall_ridges_half202" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 21.5)
+
+[node name="KSI_wall_ridges_half203" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 20)
+
+[node name="KSI_wall_ridges_half204" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 18.5)
+
+[node name="KSI_wall_ridges_half205" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 17)
+
+[node name="KSI_wall_ridges_half206" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 15.5)
+
+[node name="KSI_wall_ridges_half207" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 14)
+
+[node name="KSI_wall_ridges_half208" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 12.5)
+
+[node name="KSI_wall_ridges_half209" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 11)
+
+[node name="KSI_wall_ridges_half210" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 9.5)
+
+[node name="KSI_wall_ridges_half211" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 8)
+
+[node name="KSI_wall_ridges_half212" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 6.5)
+
+[node name="KSI_wall_ridges_half213" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 5)
+
+[node name="KSI_wall_ridges_half214" parent="SwimmingTest" instance=ExtResource("9_gy8kl")]
+transform = Transform3D(1, 0, -2.13163e-14, 0, 1, 0, 2.13163e-14, 0, 1, -45.5, 3, 3.5)
+
+[node name="KSI_wall32" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -31, -3, 11)
+
+[node name="KSI_wall33" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -34, -3, 11)
+
+[node name="KSI_wall34" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -37, -3, 11)
+
+[node name="KSI_wall35" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -40, -3, 11)
+
+[node name="KSI_wall36" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -43, -3, 11)
+
+[node name="KSI_wall37" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46, -3, 11)
+
+[node name="KSI_wall38" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -46, -3, 11)
+
+[node name="KSI_wall39" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-1, 0, -1.31134e-07, 0, 1, 0, 1.31134e-07, 0, -1, -28, -3, 26)
+
+[node name="KSI_wall40" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-1, 0, -1.31134e-07, 0, 1, 0, 1.31134e-07, 0, -1, -28, -3, 23)
+
+[node name="KSI_wall41" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-1, 0, -1.31134e-07, 0, 1, 0, 1.31134e-07, 0, -1, -28, -3, 20)
+
+[node name="KSI_wall42" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-1, 0, -1.31134e-07, 0, 1, 0, 1.31134e-07, 0, -1, -28, -3, 17)
+
+[node name="KSI_wall43" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-1, 0, -1.31134e-07, 0, 1, 0, 1.31134e-07, 0, -1, -28, -3, 14)
+
+[node name="KSI_wall44" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-1, 0, -1.31134e-07, 0, 1, 0, 1.31134e-07, 0, -1, -28, -3, 11)
+
+[node name="KSI_wall45" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -1, 0, -8.74228e-08, -43, -3, 26)
+
+[node name="KSI_wall46" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -1, 0, -8.74228e-08, -40, -3, 26)
+
+[node name="KSI_wall47" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -1, 0, -8.74228e-08, -37, -3, 26)
+
+[node name="KSI_wall48" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -1, 0, -8.74228e-08, -34, -3, 26)
+
+[node name="KSI_wall49" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -1, 0, -8.74228e-08, -31, -3, 26)
+
+[node name="KSI_wall50" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(-8.74228e-08, 0, 1, 0, 1, 0, -1, 0, -8.74228e-08, -28, -3, 26)
+
+[node name="KSI_wall51" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 14)
+
+[node name="KSI_wall52" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 17)
+
+[node name="KSI_wall53" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 20)
+
+[node name="KSI_wall54" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 23)
+
+[node name="KSI_wall55" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 26)
+
+[node name="KSI_wall56" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 29)
+
+[node name="KSI_wall57" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 14)
+
+[node name="KSI_wall58" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 17)
+
+[node name="KSI_wall59" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 20)
+
+[node name="KSI_wall60" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 23)
+
+[node name="KSI_wall61" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 26)
+
+[node name="KSI_wall62" parent="SwimmingTest" instance=ExtResource("8_mnu4d")]
+transform = Transform3D(1, 0, 2.18557e-07, 0, 1, 0, -2.18557e-07, 0, 1, -46, -3, 29)
+
+[node name="KSI_wall_painted42" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -37, 0, 2.75)
+
+[node name="KSI_wall_painted48" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -34, 0, 2.75)
+
+[node name="KSI_wall_painted43" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -34, 0, 2.75)
+
+[node name="KSI_wall_painted49" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -31, 0, 2.75)
+
+[node name="KSI_wall_painted44" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -31, 0, 2.75)
+
+[node name="KSI_wall_painted45" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -28, 0, 2.75)
+
+[node name="KSI_wall_painted46" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -46, 0, 2.75)
+
+[node name="KSI_wall_painted47" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -43, 0, 2.75)
+
+[node name="KSI_wall_painted76" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -43, 0, 2.75)
+
+[node name="KSI_wall_painted78" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -40, 0, 2.75)
+
+[node name="KSI_wall_painted77" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40, 0, 2.75)
+
+[node name="KSI_wall_painted79" parent="SwimmingTest" instance=ExtResource("6_yj0h7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -37, 0, 2.75)
+
+[node name="KSI_scaffolding_detailed2" parent="SwimmingTest" instance=ExtResource("7_ipjeq")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -36.4925, -3, 19.528)
+
+[node name="Ramp2" type="CSGMesh3D" parent="SwimmingTest"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -42, -1.5, 22.8)
+use_collision = true
+mesh = SubResource("PrismMesh_gshxf")
+
+[node name="Stairs2" type="Node3D" parent="SwimmingTest"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -33, -2.9, 14.7)
+metadata/_edit_group_ = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+use_collision = true
+size = Vector3(2, 0.3, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0.5)
+use_collision = true
+size = Vector3(2, 0.6, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1)
+use_collision = true
+size = Vector3(2, 0.9, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 1.5)
+use_collision = true
+size = Vector3(2, 1.2, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 2)
+use_collision = true
+size = Vector3(2, 1.5, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.5, 3.25)
+use_collision = true
+size = Vector3(2, 0.3, 2)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.25, 1.8, 3.25)
+use_collision = true
+size = Vector3(2, 0.3, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D15" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.75, 2.1, 3.25)
+use_collision = true
+size = Vector3(2, 0.3, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.25, 2.4, 3.25)
+use_collision = true
+size = Vector3(2, 0.3, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="SwimmingTest/Stairs2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.75, 2.7, 3.25)
+use_collision = true
+size = Vector3(2, 0.3, 0.5)
+material = ExtResource("11_vcl5j")
+
+[node name="Label_MOVEMENT2" type="Label3D" parent="SwimmingTest"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -35.7978, 1.5, 28.6227)
+text = "SWIMMING"
+font = ExtResource("12_mbvqw")
+font_size = 64
+outline_size = 10
+horizontal_alignment = 0
+
+[node name="WaterPool" type="Area3D" parent="SwimmingTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 19.0067)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("67_kt1ow")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SwimmingTest/WaterPool"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00518799, -1.61624, -0.700624)
+shape = SubResource("BoxShape3D_4a2ug")
+debug_color = Color(0.941176, 0.235294, 0.737255, 1)
+
+[node name="WaterPlane" type="MeshInstance3D" parent="SwimmingTest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.962, -0.205, 18.346)
+mesh = SubResource("PlaneMesh_8nvk0")
+skeleton = NodePath("../..")
+
+[node name="LedgeClimbingTests" type="Node3D" parent="."]
+
+[node name="ClimbingTest" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -13)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest2" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -9)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest3" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -9)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest8" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0, -11)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest8"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest8/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest17" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1, -11)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest17"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest17/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest4" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -7)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest4/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest5" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -7)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest6" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, -7)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest18" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, 1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest18"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest18/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest19" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, 1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest19"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest19/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest20" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, 1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest20"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest20/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest21" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, 5)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest21"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest21/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest22" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, 5)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest22"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest22/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest23" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, 5)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest23"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest23/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest24" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.9629, 3.5, 5)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest24"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest24/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest7" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -5)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest7"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest7/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest9" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 2.5, -5)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest9"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest9/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest10" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -3)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest10"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest10/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest11" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -3)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest11"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest11/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest12" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 3.5, -3)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest12"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest12/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest13" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 0.5, -1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest13"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest13/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest14" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 1.5, -1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest14"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest14/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest15" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.745, 3.5, -1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest15"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest15/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="ClimbingTest16" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.745, 3.5, -1)
+mesh = SubResource("BoxMesh_7u7hp")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/ClimbingTest16"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/ClimbingTest16/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_q0htc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="LedgeClimbingTests"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.7455, 2.975, 1)
+mesh = SubResource("BoxMesh_kt1ow")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="LedgeClimbingTests/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LedgeClimbingTests/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_r8380")
+
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]
 [connection signal="object_removed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="loose_electricity"]
@@ -4591,3 +5788,4 @@ patrol_path = NodePath("../EnemyPatrolpath2")
 [connection signal="plate_deactivated" from="Cogito_Pressureplate" to="CeilingLamp" method="switch_off"]
 
 [editable path="NavigationRegion3D/MOVEMENT/Ladder"]
+[editable path="SwimmingTest/Ladder2"]

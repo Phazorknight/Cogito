@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://dty7vjg3hp68b"]
 
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player_default.tscn" id="1_8f7tt"]
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_8th5t"]
+[ext_resource type="PackedScene" uid="uid://otv80grtivvc" path="res://addons/cogito/PackedScenes/cogito_player_state_driven.tscn" id="2_bwit1"]
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_w4txe"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="3_bwit1"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="5_5tohn"]
@@ -33,10 +33,11 @@ glow_enabled = true
 [sub_resource type="Resource" id="Resource_bwit1"]
 resource_local_to_scene = true
 script = ExtResource("2_w4txe")
-grid = false
+grid = true
 starter_inventory = Array[ExtResource("3_bwit1")]([])
-inventory_size = Vector2i(4, 1)
-inventory_slots = Array[ExtResource("3_bwit1")]([null, null, null, null, null, null, null, null])
+inventory_size = Vector2i(5, 3)
+inventory_slots = Array[ExtResource("3_bwit1")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://btnha2whsheir"
 
 [sub_resource type="BoxMesh" id="BoxMesh_ntr4m"]
 size = Vector3(3, 3, 2)
@@ -62,10 +63,10 @@ shadow_opacity = 0.8
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ai7l5")
 
-[node name="Player" parent="." instance=ExtResource("1_8f7tt")]
+[node name="CogitoPlayer" parent="." instance=ExtResource("2_bwit1")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.63987, 1.19987, 3.00969)
 inventory_data = SubResource("Resource_bwit1")
-step_height_camera_lerp = 1.5
+CAN_CLIMB_LEDGE = false
 
 [node name="STATIC ENVIRONMENT" type="Node3D" parent="."]
 

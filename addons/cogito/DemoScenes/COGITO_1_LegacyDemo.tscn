@@ -1,11 +1,11 @@
 [gd_scene load_steps=151 format=3 uid="uid://cud7jwvomj24d"]
 
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player_default.tscn" id="1_7d2n7"]
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_b15oo"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_lsda4"]
 [ext_resource type="PackedScene" uid="uid://cwd3g16ep0idw" path="res://addons/cogito/PackedScenes/Pickups/pickup_flashlight.tscn" id="1_oweej"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="2_4ig6i"]
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_chxar"]
+[ext_resource type="PackedScene" uid="uid://otv80grtivvc" path="res://addons/cogito/PackedScenes/cogito_player_state_driven.tscn" id="2_tmpl4"]
 [ext_resource type="PackedScene" uid="uid://d3m4ni301eso7" path="res://addons/cogito/PackedScenes/carriable_box.tscn" id="6_cy1m6"]
 [ext_resource type="PackedScene" uid="uid://lsun1f1wjfxl" path="res://addons/cogito/PackedScenes/ceiling_lamp.tscn" id="7_3y6g2"]
 [ext_resource type="PackedScene" uid="uid://bho0nwh5rlnua" path="res://addons/cogito/PackedScenes/target_destructable.tscn" id="8_tk621"]
@@ -74,6 +74,15 @@ ambient_light_energy = 0.2
 tonemap_mode = 2
 ssao_enabled = true
 glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_tmpl4"]
+resource_local_to_scene = true
+script = ExtResource("2_chxar")
+grid = true
+starter_inventory = Array[ExtResource("16_fg1wi")]([])
+inventory_size = Vector2i(5, 3)
+inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://btnha2whsheir"
 
 [sub_resource type="BoxMesh" id="BoxMesh_thwr4"]
 material = ExtResource("1_lsda4")
@@ -370,14 +379,6 @@ size = Vector3(1.5, 0.01, 1.5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ht4uj"]
 size = Vector3(100, 3, 100)
 
-[sub_resource type="Resource" id="Resource_dnqh5"]
-resource_local_to_scene = true
-script = ExtResource("2_chxar")
-grid = true
-starter_inventory = Array[ExtResource("16_fg1wi")]([])
-inventory_size = Vector2i(5, 3)
-inventory_slots = Array[ExtResource("16_fg1wi")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
-
 [sub_resource type="BoxMesh" id="BoxMesh_fj0b6"]
 size = Vector3(3, 2.5, 2)
 
@@ -439,6 +440,11 @@ shadow_opacity = 0.8
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_11v21")
+
+[node name="CogitoPlayer" parent="." instance=ExtResource("2_tmpl4")]
+transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -10.4148, 0.905039, -4.11386)
+inventory_data = SubResource("Resource_tmpl4")
+CAN_CLIMB_LEDGE = false
 
 [node name="STATIC_ENVIRONMENT" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
@@ -1571,7 +1577,6 @@ transform = Transform3D(0.999712, 0, 0.0240134, 0, 1, 0, -0.0240134, 0, 0.999712
 
 [node name="Pickup_Key" parent="ITEM_PICKUPS" instance=ExtResource("9_qv8nx")]
 transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, -20.3141, 1.15447, 14.2689)
-cogito_name = ""
 
 [node name="Pickup_Battery" parent="ITEM_PICKUPS" instance=ExtResource("13_6m0er")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.8169, 0.119063, 2.84064)
@@ -1723,11 +1728,6 @@ cogito_name = ""
 
 [node name="HealthAttribute" parent="TargetDestructable3" index="0"]
 spawn_on_death = Array[PackedScene]([])
-
-[node name="Player" parent="." instance=ExtResource("1_7d2n7")]
-transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, -10.4148, 0.905039, -4.11386)
-inventory_data = SubResource("Resource_dnqh5")
-step_height_camera_lerp = 1.5
 
 [node name="Ladder" parent="." instance=ExtResource("41_q27ev")]
 
