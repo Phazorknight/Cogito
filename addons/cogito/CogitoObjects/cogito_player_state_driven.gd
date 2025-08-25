@@ -1891,9 +1891,6 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 	var looking_away = look_vector.z.dot(ladderDir) < 0.33
 	var looking_down = look_vector.z.dot(Vector3.UP) > 0.5
 	if looking_down or not looking_away:
-		var offset = (global_position - ladder.global_position)
-		if offset.dot(ladderDir) < -0.1:
-			global_translate(ladderDir*offset.length()/4.0)
 		var ladder_timer = get_tree().create_timer(LADDER_COOLDOWN)
 		ladder_timer.timeout.connect(ladder_buffer_finished)
 		ladder_on_cooldown = true
