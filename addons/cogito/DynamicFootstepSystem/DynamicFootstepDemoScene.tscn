@@ -1,9 +1,7 @@
-[gd_scene load_steps=37 format=3 uid="uid://dsy656cbv0ceu"]
+[gd_scene load_steps=34 format=3 uid="uid://dsy656cbv0ceu"]
 
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player_default.tscn" id="1_0sk3n"]
 [ext_resource type="Material" uid="uid://dkbgl3p3ffd1" path="res://addons/cogito/Assets/Materials/Prototype_DarkGrey.tres" id="1_xlgi6"]
-[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="2_dscd4"]
-[ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="2_ivcyr"]
+[ext_resource type="PackedScene" uid="uid://otv80grtivvc" path="res://addons/cogito/PackedScenes/cogito_player_state_driven.tscn" id="1_ywbwp"]
 [ext_resource type="Material" uid="uid://dhg1uhiq7ywn2" path="res://addons/cogito/Assets/Materials/Prototype_Green.tres" id="2_pwdxr"]
 [ext_resource type="Script" uid="uid://be6kbvjw1rm7x" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface.gd" id="3_f002f"]
 [ext_resource type="Material" uid="uid://hhhudvarh7gk" path="res://addons/cogito/Assets/Materials/Prototype_Orange.tres" id="3_m4tao"]
@@ -21,14 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="20_5hoci"]
 [ext_resource type="AudioStream" uid="uid://cqgsihtcw0gl4" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/rollover1.ogg" id="21_0438d"]
 [ext_resource type="AudioStream" uid="uid://1w0db1u6lv7t" path="res://addons/cogito/Assets/Audio/Kenney/UiAudio/rollover6.ogg" id="22_stsjx"]
-
-[sub_resource type="Resource" id="Resource_06861"]
-resource_local_to_scene = true
-script = ExtResource("2_ivcyr")
-grid = true
-starter_inventory = Array[ExtResource("2_dscd4")]([])
-inventory_size = Vector2i(5, 3)
-inventory_slots = Array[ExtResource("2_dscd4")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxMesh" id="BoxMesh_4k1rk"]
 material = ExtResource("1_xlgi6")
@@ -81,9 +71,9 @@ subdivide_width = 9
 
 [node name="DemoScene" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_0sk3n")]
+[node name="CogitoPlayer" parent="." instance=ExtResource("1_ywbwp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.69453, 0.8, 0)
-inventory_data = SubResource("Resource_06861")
+CAN_CLIMB_LEDGE = false
 
 [node name="Floor4" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -176,9 +166,10 @@ text = "CSG Shape Sample"
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -13.2265, 0.051631, -7.43552)
 collision_layer = 3
 mass = 4.0
-max_contacts_reported = 8
 contact_monitor = true
+max_contacts_reported = 8
 script = ExtResource("19_j6bha")
+cogito_name = ""
 
 [node name="FootstepSurface" type="Node3D" parent="By FootstepSurface Samples/CarriableBox"]
 script = ExtResource("3_f002f")
@@ -330,9 +321,10 @@ text = "CSG Shape Sample"
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12.4789, 0.0101173, 12.0365)
 collision_layer = 3
 mass = 4.0
-max_contacts_reported = 8
 contact_monitor = true
+max_contacts_reported = 8
 script = ExtResource("19_j6bha")
+cogito_name = ""
 
 [node name="CarryableComponent" parent="By Material Samples/CarriableBox" instance=ExtResource("20_5hoci")]
 pick_up_sound = ExtResource("21_0438d")
