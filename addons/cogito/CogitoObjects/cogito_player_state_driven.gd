@@ -406,6 +406,16 @@ func _on_resume_movement():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
+func pause_before_interaction():
+	is_movement_paused = true
+	state_chart.send_event("pause")
+
+
+func resume_after_interaction():
+	is_movement_paused = false
+	state_chart.send_event("resume")
+
+
 # reload options user may have changed while paused.
 func _reload_options():
 	var err = config.load(OptionsConstants.config_file_name)
