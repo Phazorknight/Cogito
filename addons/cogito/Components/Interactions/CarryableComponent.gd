@@ -23,8 +23,8 @@ signal thrown(impulse)
 @export var rotation_speed : float = 2.0
 
 @onready var audio_stream_player_3d = $AudioStreamPlayer3D
-@onready var camera : Camera3D = get_viewport().get_camera_3d()
 
+var camera : Camera3D
 var parent_object
 var is_being_carried : bool
 var is_being_rotated : bool = false
@@ -88,6 +88,9 @@ func rotate_object(_delta):
 	input_dir = Input.get_vector("left", "right", "forward", "back")
 	
 	if input_dir.length() > 0:
+		if not camera:
+			camera = get_viewport().get_camera_3d()
+		
 		var rotation_basis: Basis = camera.global_basis.rotated(camera.global_basis.x, -camera.global_rotation.x)
 		var rotation_vector: Vector3 = rotation_basis * Vector3(input_dir.y, input_dir.x, 0).normalized()
 		parent_object.global_rotate(rotation_vector, deg_to_rad(rotation_speed) )
