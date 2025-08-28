@@ -1965,10 +1965,7 @@ func is_head_in_water() -> bool:
 
 
 func _handle_water_physics(delta) -> void:
-	if !is_movement_paused:
-		input_direction = Input.get_vector("left", "right", "forward", "back")
-	else:
-		input_direction = Vector2.ZERO
+	input_direction = Input.get_vector("left", "right", "forward", "back")
 	
 	var look_vector = camera.get_camera_transform().basis
 	var direction = look_vector * Vector3(input_direction.x, 0, input_direction.y).normalized()
