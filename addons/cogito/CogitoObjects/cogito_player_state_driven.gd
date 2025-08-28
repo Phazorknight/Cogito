@@ -917,7 +917,9 @@ func _is_ledge_climbable() -> bool:
 		ledge_climbing_shapecast.position = initial_position
 		return false
 	
-	ledge_position = collision_point
+	ledge_position = ledge_climbing_shapecast.global_position
+	ledge_position.y = collision_point.y
+	ledge_position += -body.global_basis.z * radius / 2
 	
 	ledge_climbing_shapecast.position = initial_position
 	
