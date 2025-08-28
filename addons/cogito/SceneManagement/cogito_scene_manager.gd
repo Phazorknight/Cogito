@@ -195,12 +195,19 @@ func load_player_state(player, passed_slot:String):
 				player.player_interaction_component.set(data, state_data[data])
 			player.player_interaction_component.set_state.call_deferred() #Calling this deferred as some state calls need to make sure the scene is finished loading.
 		
-		_player_state.load_state_chart(player)
-		
 		player.is_dead = false
-		player.direction = Vector3.ZERO
-		player.main_velocity = Vector3.ZERO
-		player.last_velocity = Vector3.ZERO
+		
+		player.main_velocity = _player_state.main_velocity
+		player.last_velocity = _player_state.last_velocity
+		player.direction = _player_state.direction
+		
+		player.current_speed = _player_state.current_speed
+		player.jump_target_speed = _player_state.jump_target_speed
+		
+		player.swimming_head_shapecast.global_position = _player_state.swimming_head_shapecast_position
+		player.under_water_effect.visible = _player_state.is_under_water_effect_visible
+		
+		_player_state.load_state_chart(player)
 		
 		if player is CogitoPlayerStateDriven:
 			player.is_movement_paused = true
@@ -301,6 +308,16 @@ func save_player_state(player, slot:String):
 	var current_player_interaction_component = player.player_interaction_component
 	_player_state.clear_saved_interaction_component_state()
 	_player_state.add_interaction_component_state_data_to_array(current_player_interaction_component.save())
+	
+	_player_state.main_velocity = player.main_velocity
+	_player_state.last_velocity = player.last_velocity
+	_player_state.direction = player.direction
+	
+	_player_state.current_speed = player.current_speed
+	_player_state.jump_target_speed = player.jump_target_speed
+	
+	_player_state.swimming_head_shapecast_position = player.swimming_head_shapecast.global_position
+	_player_state.is_under_water_effect_visible = player.under_water_effect.visible
 	
 	_player_state.save_state_chart(player)
 	
