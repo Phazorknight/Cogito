@@ -212,7 +212,7 @@ func _process(delta:float) -> void:
 	if _pending_transition != null:
 		_pending_transition_remaining_delay -= delta
 		# Notify interested parties that currently a transition is pending.
-		transition_pending.emit(_pending_transition.delay_seconds, max(0, _pending_transition_remaining_delay))
+		transition_pending.emit(_pending_transition_initial_delay, max(0, _pending_transition_remaining_delay))
 		
 		# if the transition is ready, trigger it
 		# and clear it.
