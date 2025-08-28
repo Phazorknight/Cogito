@@ -1913,6 +1913,7 @@ func enter_ladder(ladder: CollisionShape3D, ladderDir: Vector3):
 
 
 func exit_ladder():
+	# Prevent falling of player when collision shape toggled between crouching and standing
 	var is_still_on_ladder = false
 	
 	var ladder_check_shapecast : ShapeCast3D = ShapeCast3D.new()
