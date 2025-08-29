@@ -870,8 +870,8 @@ func _is_ledge_climbable() -> bool:
 		collision_safe_fraction = ledge_climbing_shapecast.get_closest_collision_safe_fraction()
 	
 	ledge_climbing_shapecast.global_position += Vector3(0, ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD, 0) * collision_safe_fraction
-	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis * body.global_basis.z * radius
-
+	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis.inverse() * (-body.global_basis.z * radius)
+	
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
@@ -912,8 +912,8 @@ func _is_ledge_climbable() -> bool:
 		return false
 	
 	ledge_climbing_shapecast.global_position.y = collision_point.y + (ARM_LENGTH + MIN_FREE_SPACE_ABOVE_HEAD) / 2
-	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis * body.global_basis.z * radius
-
+	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis.inverse() * (-body.global_basis.z * radius)
+	
 	ledge_climbing_shapecast.force_shapecast_update()
 	
 	if ledge_climbing_shapecast.is_colliding():
