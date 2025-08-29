@@ -789,6 +789,7 @@ var wiggle_index : float = 0.0
 var wiggle_current_intensity : float = 0.0
 var bunny_hop_speed : float = SPRINTING_SPEED
 var ledge_position : Vector3
+var ledge_collider : CollisionObject3D
 var is_in_ledge_climbing_middle_stage : bool = false
 var is_in_ledge_climbing_final_stage : bool = false
 
@@ -890,6 +891,8 @@ func _is_ledge_climbable() -> bool:
 	if not ledge_climbing_shapecast.is_colliding():
 		ledge_climbing_shapecast.position = initial_position
 		return false
+	
+	ledge_collider = ledge_climbing_shapecast.get_collider(0)
 	
 	var collision_normal : Vector3 = ledge_climbing_shapecast.get_collision_normal(0)
 	
@@ -2072,8 +2075,11 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 		state_chart.send_event("stand_up")
 		return
 	
+	var platfrom_linear_velocity : Vector3 = PhysicsServer3D.body_get_state(ledge_collider.get_rid(), PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY)
+	ledge_position += platfrom_linear_velocity * delta
+	
 	var move_direction = Vector3.UP
-	velocity = move_direction * CLIMBING_SPEED
+	velocity = move_direction * CLIMBING_SPEED + platfrom_linear_velocity
 	
 	if crouching_collision_shape.global_position.y + ((standing_height - (2 * crouching_height)) + crouching_height / 2) < ledge_position.y:
 		move_and_slide()
@@ -2095,7 +2101,7 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 
 	move_direction = crouching_collision_shape.global_position.direction_to(ledge_position + Vector3(0, crouching_height / 2, 0))
 
-	velocity = move_direction * CLIMBING_SPEED
+	velocity = move_direction * CLIMBING_SPEED + platfrom_linear_velocity
 	
 	move_and_slide()
 	
