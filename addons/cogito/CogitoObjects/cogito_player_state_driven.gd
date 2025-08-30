@@ -1061,6 +1061,14 @@ func _handle_swim_under_water_sounds():
 			swim_under_water_audio_player.stop()
 
 
+# To reduce artifacts when the camera moves in and out of the water
+func _handle_eyes_position_in_water(delta):
+	if is_head_in_water():
+		eyes.position.y = lerp(eyes.position.y, -0.01, delta * LERP_SPEED * 1.5)
+	else:
+		eyes.position.y = lerp(eyes.position.y, 0.01, delta * LERP_SPEED * 1.5)
+
+
 #region Grounded State
 var wiggle_vector : Vector2 = Vector2.ZERO
 var can_play_footstep : bool = true
@@ -2128,10 +2136,7 @@ func _on_crouching_state_exited() -> void:
 func _on_crouching_state_physics_processing(delta: float) -> void:
 	head.position.y = lerp(head.position.y, CROUCHING_DEPTH, delta * LERP_SPEED)
 	
-	if is_head_in_water():
-		eyes.position.y = lerp(eyes.position.y, -0.05, delta * LERP_SPEED * 1.5)
-	else:
-		eyes.position.y = lerp(eyes.position.y, 0.05, delta * LERP_SPEED * 1.5)
+	_handle_eyes_position_in_water(delta)
 	
 	swimming_head_shapecast.global_position = head.global_position
 	
@@ -2169,10 +2174,7 @@ func _on_standing_state_physics_processing(delta: float) -> void:
 	
 	head.position.y = lerp(head.position.y, 0.0, delta * LERP_SPEED)
 	
-	if is_head_in_water():
-		eyes.position.y = lerp(eyes.position.y, -0.05, delta * LERP_SPEED * 1.5)
-	else:
-		eyes.position.y = lerp(eyes.position.y, 0.05, delta * LERP_SPEED * 1.5)
+	_handle_eyes_position_in_water(delta)
 	
 	swimming_head_shapecast.global_position = head.global_position
 	
