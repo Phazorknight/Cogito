@@ -128,6 +128,7 @@ libraries = {
 [node name="Camera" type="Camera3D" parent="Body/Neck/Head/Eyes"]
 
 [node name="InteractionRaycast" parent="Body/Neck/Head/Eyes/Camera" instance=ExtResource("10_2dndr")]
+collision_mask = 11
 
 [node name="CarryablePosition" type="Marker3D" parent="Body/Neck/Head/Eyes/Camera"]
 unique_name_in_owner = true
