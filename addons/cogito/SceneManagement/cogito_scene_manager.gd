@@ -202,14 +202,15 @@ func load_player_state(player, passed_slot:String):
 		player.direction = _player_state.direction
 		
 		player.current_speed = _player_state.current_speed
-		player.jump_target_speed = _player_state.jump_target_speed
-		
-		player.swimming_head_shapecast.global_position = _player_state.swimming_head_shapecast_position
-		player.under_water_effect.visible = _player_state.is_under_water_effect_visible
-		
+
 		_player_state.load_state_chart(player)
 		
 		if player is CogitoPlayerStateDriven:
+			player.jump_target_speed = _player_state.jump_target_speed
+			
+			player.swimming_head_shapecast.global_position = _player_state.swimming_head_shapecast_position
+			player.under_water_effect.visible = _player_state.is_under_water_effect_visible
+			
 			player.is_movement_paused = true
 			player._on_resume_movement()
 		
@@ -314,10 +315,12 @@ func save_player_state(player, slot:String):
 	_player_state.direction = player.direction
 	
 	_player_state.current_speed = player.current_speed
-	_player_state.jump_target_speed = player.jump_target_speed
 	
-	_player_state.swimming_head_shapecast_position = player.swimming_head_shapecast.global_position
-	_player_state.is_under_water_effect_visible = player.under_water_effect.visible
+	if player is CogitoPlayerStateDriven:
+		_player_state.jump_target_speed = player.jump_target_speed
+		
+		_player_state.swimming_head_shapecast_position = player.swimming_head_shapecast.global_position
+		_player_state.is_under_water_effect_visible = player.under_water_effect.visible
 	
 	_player_state.save_state_chart(player)
 	
