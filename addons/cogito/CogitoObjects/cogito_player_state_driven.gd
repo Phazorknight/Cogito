@@ -836,9 +836,7 @@ func _is_ledge_climbable() -> bool:
 	
 	# Check ladder first because its priority is higher
 	ledge_climbing_shapecast.global_position -= Vector3(0, ledge_climbing_shapecast_height, 0)
-	ledge_climbing_shapecast.global_position += -body.global_basis.z * radius
-	
-	ledge_climbing_shapecast.target_position = Vector3.ZERO
+	ledge_climbing_shapecast.target_position = ledge_climbing_shapecast.global_basis.inverse() * (-body.global_basis.z * radius)
 	
 	ledge_climbing_shapecast.collide_with_areas = true
 	
@@ -851,6 +849,8 @@ func _is_ledge_climbable() -> bool:
 	ledge_climbing_shapecast.collide_with_areas = false
 	
 	ledge_climbing_shapecast.position = ledge_climbing_shapecast_initial_position
+	
+	ledge_climbing_shapecast.target_position = Vector3.ZERO
 	
 	if current_moving_state == MovingState.Swimming:
 		ledge_climbing_shapecast.global_position -= Vector3(0, standing_height - crouching_height, 0)
