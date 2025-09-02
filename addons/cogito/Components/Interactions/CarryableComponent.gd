@@ -71,13 +71,13 @@ func _physics_process(_delta):
 		
 		if enable_manual_rotating:
 			if enable_manual_rotating and Input.is_action_pressed("action_secondary"):
-				player_interaction_component.player.is_movement_paused = true
+				player_interaction_component.player.pause_before_interaction()
 				is_being_rotated = true
 				rotate_object(_delta)
 		
 		# Resume player movement when input action is released
 		if is_being_rotated and Input.is_action_just_released("action_secondary"):
-			player_interaction_component.player.is_movement_paused = false
+			player_interaction_component.player.resume_after_interaction()
 		
 		if(carry_position-parent_object.global_position).length() >= drop_distance:
 			leave()
@@ -125,7 +125,7 @@ func hold():
 func leave():
 	# Making sure the player movement resumes when object is dropped while being rotated
 	if is_being_rotated:
-		player_interaction_component.player.is_movement_paused = false
+		player_interaction_component.player.resume_after_interaction()
 		
 	if lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(false)

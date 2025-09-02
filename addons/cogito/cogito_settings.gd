@@ -6,6 +6,8 @@ const settings_filename := "CogitoSettings"
 
 ## When this is checked, most Cogito scripts and objects will print messages in the output. Turn this on if you want to track and understand certain behaviors or have issues.
 @export var is_logging: bool = false
+## When this is checked, StateChartDebugger UI will be enabled in player HUD.
+@export var is_state_chart_debugger_enabled: bool = false
 
 ## The prefix used in scene state save files, followed by the save slot name. Be aware that changing this will impact if/how Cogito detects existing save files.
 @export var scene_state_prefix : String = "COGITO_scene_state_"

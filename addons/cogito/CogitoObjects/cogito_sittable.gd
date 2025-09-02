@@ -329,7 +329,7 @@ func interact(player_interaction_component):
 	interact_cooldown = current_time + interact_cooldown_duration
 	
 	if disable_on_crouch == true:
-		if player_node.is_crouching:
+		if player_node.is_in_crouching_state():
 			player_interaction_component.send_hint(null, "I should stand up first")
 			return
 	

@@ -1,4 +1,5 @@
 extends Area3D
+class_name Ladder
 
 @export var ladder_collision : CollisionObject3D
 var original_process_mode : ProcessMode
@@ -15,7 +16,9 @@ func _on_body_shape_entered(_body_rid,body,_body_shape_idx,local_shape_idx):
 		var local_shape_owner = shape_find_owner(local_shape_idx)
 		var local_shape_node = shape_owner_get_owner(local_shape_owner) as CollisionShape3D
 		
-		var ladderDir = (local_shape_node.global_position - global_position).normalized()
+		var ladderDir = (Vector3(local_shape_node.global_position.x, 0, local_shape_node.global_position.z)
+							- Vector3(global_position.x, 0, global_position.z)
+						).normalized()
 		
 		body.enter_ladder(local_shape_node,ladderDir)
 		if body.on_ladder and ladder_collision:
@@ -27,5 +30,7 @@ func _on_body_exited(body):
 	if body.is_in_group("Player"):
 		#print("Exited ladder")
 		body.on_ladder = false
+		if body.has_method("exit_ladder"):
+			body.exit_ladder()
 		if ladder_collision:
 			ladder_collision.process_mode = original_process_mode

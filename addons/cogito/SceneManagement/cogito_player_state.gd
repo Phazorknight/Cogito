@@ -66,6 +66,32 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 @export var eyes_transform: Transform3D
 @export var camera_transform: Transform3D
 
+@export var main_velocity: Vector3
+@export var last_velocity: Vector3
+@export var direction: Vector3
+
+@export var current_speed: float
+@export var jump_target_speed: float
+
+@export var swimming_head_shapecast_position: Vector3
+@export var is_under_water_effect_visible: bool
+
+@export var state_chart: SerializedStateChart = null
+
+
+func save_state_chart(player):
+	if player is not CogitoPlayerStateDriven:
+		return
+		
+	state_chart = StateChartSerializer.serialize(player.state_chart)
+
+
+func load_state_chart(player):
+	if player is not CogitoPlayerStateDriven:
+		return
+		
+	StateChartSerializer.deserialize(state_chart, player.state_chart)
+
 
 func save_node_transforms(player):
 	body_transform = player.get_node("Body").transform

@@ -41,7 +41,7 @@ export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/cogito/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
+enabled=PackedStringArray("res://addons/cogito/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/quick_audio/plugin.cfg")
 
 [file_customization]
 
@@ -240,6 +240,8 @@ locale/translations_pot_files=PackedStringArray("res://addons/cogito/EasyMenus/S
 
 3d_physics/layer_1="Environment"
 3d_physics/layer_2="Interactables"
+3d_physics/layer_3="Water"
+3d_physics/layer_4="NonPhysicalInteractables"
 
 [physics]
 

@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_a8imk"]
 [ext_resource type="AudioStream" uid="uid://lr1efmq0q16k" path="res://addons/cogito/Assets/Audio/Phazorknight/CogitoAmbience_v02.ogg" id="2_hd73s"]
 [ext_resource type="AudioStream" uid="uid://08bonhm3y2ju" path="res://addons/cogito/Assets/Audio/Phazorknight/CogitoAmbience_v01.ogg" id="2_jeioi"]
-[ext_resource type="PackedScene" uid="uid://kicjwmh02uwf" path="res://addons/cogito/PackedScenes/cogito_player.tscn" id="3_mgle8"]
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="4_0kggm"]
 [ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="4_g5h7u"]
+[ext_resource type="PackedScene" uid="uid://otv80grtivvc" path="res://addons/cogito/PackedScenes/cogito_player_state_driven.tscn" id="5_jpxt7"]
 [ext_resource type="Script" uid="uid://d2jjqadlnhp6x" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="7_a40bd"]
 [ext_resource type="Resource" uid="uid://drmtc0tqmwquk" path="res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_AccessArchive.tres" id="8_5xvfv"]
 [ext_resource type="PackedScene" uid="uid://p3f16jxrcxdt" path="res://addons/cogito/Assets/Models/Kenney/Furniture/GLTF format/floorFull.glb" id="9_ec70c"]
@@ -146,6 +146,7 @@ grid = true
 starter_inventory = Array[ExtResource("4_g5h7u")]([])
 inventory_size = Vector2i(5, 3)
 inventory_slots = Array[ExtResource("4_g5h7u")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+metadata/_custom_type_script = "uid://btnha2whsheir"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_68nml"]
 size = Vector3(5, 3.3, 4)
@@ -3270,10 +3271,9 @@ transform = Transform3D(0.957077, -0.289834, 0, 0.289834, 0.957077, 0, 0, 0, 1, 
 size = Vector3(9.25883, 4.5626, 14.1115)
 material = SubResource("FogMaterial_4avjx")
 
-[node name="Player" parent="." instance=ExtResource("3_mgle8")]
+[node name="CogitoPlayer" parent="." instance=ExtResource("5_jpxt7")]
 transform = Transform3D(-1, 0, 7.45058e-07, 0, 1, 0, -7.45058e-07, 0, -1, 3.03073, 0.905039, -17.9321)
 inventory_data = SubResource("Resource_jpxt7")
-step_height_camera_lerp = 1.5
 
 [node name="QUESTS" type="Node3D" parent="."]
 

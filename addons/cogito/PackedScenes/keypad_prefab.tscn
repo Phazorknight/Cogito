@@ -250,6 +250,7 @@ shape = SubResource("BoxShape3D_vcta0")
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_aoa7n")]
 interaction_text = "Enter Code"
+disable_interaction_in_air = true
 
 [node name="KeypadUi" type="Control" parent="."]
 layout_mode = 3

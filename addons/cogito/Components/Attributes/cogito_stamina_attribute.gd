@@ -40,14 +40,14 @@ func _process(delta):
 			is_regenerating = false
 	
 	# Decreases stamina during sprinting
-	if player.is_sprinting and player.current_speed > player.WALKING_SPEED and player.velocity.length() > 0.1:
+	if player.is_in_sprinting_state() and player.current_speed > player.WALKING_SPEED and player.velocity.length() > 0.1:
 		regen_timer.stop()
 		is_regenerating = false
 		var exhaustion: float = _run_exhaustion()
 		subtract(exhaustion * delta)
 	last_y = player.global_position.y
 	
-	if !is_regenerating and regen_timer.is_stopped() and value_current < value_max and !player.is_sprinting:
+	if !is_regenerating and regen_timer.is_stopped() and value_current < value_max and !player.is_in_sprinting_state():
 		regen_timer.start()
 
 
