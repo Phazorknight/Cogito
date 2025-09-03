@@ -214,7 +214,6 @@ var radius : float
 func _ready():
 	#Some Setup steps
 	CogitoSceneManager._current_player_node = self
-	player_interaction_component.interaction_raycast = $Body/Neck/Head/Eyes/Camera/InteractionRaycast
 	player_interaction_component.exclude_player(get_rid())
 	
 	randomize() 
