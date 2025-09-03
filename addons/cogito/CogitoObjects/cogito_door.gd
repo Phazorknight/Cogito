@@ -220,7 +220,7 @@ func unlock_door():
 	is_locked = false
 	
 #	Key Discard Logic
-	if key.discard_after_use:
+	if key && key.discard_after_use:
 		var inventory = player_interaction_component.get_parent().inventory_data
 		for slot_data in inventory.inventory_slots:
 			if slot_data != null and slot_data.inventory_item == key:
