@@ -182,17 +182,14 @@ func _roll_for_randomized_items(_items: Array[LootDropEntry], _amount: int) -> A
 					_result.append(_winner) 
 		
 		# Handle Quest Items			
-		elif _winner.quest_id > -1: # If winner is a quest item
+		elif _winner.quest_id > -1 and _winner.droptype == 4: # If winner is a quest item
 			CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Quest ID: " + str(_winner.quest_id) + " Quest Item Total Count: " + str(_winner.quest_item_total_count) )
 			if _count_quest_items(_winner.inventory_item) >= _winner.quest_item_total_count: # Check inventory and already spawned loot bags for a count and compare to maximum allowed count
 				CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "Maximum amount of quest items reached. Moving on.")
-				continue
 			else: # If quest item count did not reach the maximum amount
 				if CogitoQuestManager.active.get_ids_from_quests().has(_winner.quest_id):
-					if _result.has(_winner): # Check if the final array has already this quest item waiting for drop
-						if _result.count(_winner) + _count_quest_items(_winner.inventory_item) >= _winner.quest_item_total_count: # Check if new copy would go over the maximum limit
-							continue
-						else: # If it wouldn't go over the limit, create a new copy
+					if _result.has(_winner): # Check if the final array already has this quest item waiting for drop
+						if not _result.count(_winner) + _count_quest_items(_winner.inventory_item) >= _winner.quest_item_total_count: # Check if new copy wouldn't go over the maximum limit 
 							_result.append(_winner)
 						CogitoGlobals.debug_log(debug_prints, "Loot Component/Loot Generator", "You've got a quest item in loot generator.")
 					else: # Final array does not have a copy of this quest item awating drop
@@ -205,7 +202,7 @@ func _roll_for_randomized_items(_items: Array[LootDropEntry], _amount: int) -> A
 		
 		_failsafe += 1
 		
-		if _failsafe > 1000: # Just in case there is a problem with the variables, we don't fall into infinite loop.
+		if _failsafe > 32: # Just in case there is a problem with the variables, we don't fall into infinite loop.
 			break
 			
 	if debug_prints:		
