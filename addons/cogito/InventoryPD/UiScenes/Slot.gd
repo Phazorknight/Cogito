@@ -82,12 +82,7 @@ func _on_charge_changed():
 		charge_label.text = str(int(item_data.charge_current)) 
 
 
-func _on_gui_input(event):
-	if event is InputEventMouseButton \
-			and (event.button_index == MOUSE_BUTTON_LEFT \
-			or event.button_index == MOUSE_BUTTON_RIGHT) \
-			and event.is_pressed():
-		slot_clicked.emit(get_index(), event.button_index)
+func _on_gui_input(event: InputEvent):
 	
 	# Setting SLOT GAMPEAD INTERACTIONS HERE
 	if event.is_action_pressed("inventory_move_item"):
