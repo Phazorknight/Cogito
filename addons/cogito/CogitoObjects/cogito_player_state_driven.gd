@@ -188,6 +188,7 @@ var initial_carryable_height #DEPRECATED Used to change carryable position based
 var config = ConfigFile.new()
 
 var current_speed : float = 5.0
+var current_lerp_speed : float = LERP_SPEED
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var main_velocity : Vector3 = Vector3.ZERO
 var last_velocity : Vector3= Vector3.ZERO
@@ -1022,12 +1023,12 @@ func _input_handling_and_movement(delta):
 	current_speed = clamp(current_speed, MIN_SPEED, MAX_SPEED)
 	
 	if direction:
-		main_velocity.x = direction.x * current_speed
-		main_velocity.z = direction.z * current_speed
+		main_velocity.x = lerp(main_velocity.x, direction.x * current_speed, delta * current_lerp_speed)
+		main_velocity.z = lerp(main_velocity.z, direction.z * current_speed, delta * current_lerp_speed)
 	else:
-		main_velocity.x = move_toward(main_velocity.x, 0, current_speed)
-		main_velocity.z = move_toward(main_velocity.z, 0, current_speed)
-		
+		main_velocity.x = lerp(main_velocity.x, 0.0, delta * current_lerp_speed)
+		main_velocity.z = lerp(main_velocity.z, 0.0, delta * current_lerp_speed)
+	
 	# Store current velocity for the next frame
 	last_velocity = main_velocity
 	
@@ -1079,6 +1080,7 @@ func _on_grounded_on_pause_taken() -> void:
 
 
 func _on_grounded_state_entered() -> void:
+	current_lerp_speed = LERP_SPEED
 	# Only trigger landing sound if the player was airborne and the velocity exceeds the threshold
 	if was_in_air and last_velocity.y < landing_threshold:
 		# Calculate the volume and pitch based on the landing velocity
@@ -1156,12 +1158,8 @@ func _on_grounded_state_physics_processing(delta: float) -> void:
 	else:
 		eyes.position.y = lerp(eyes.position.y, 0.0, delta * LERP_SPEED)
 		eyes.position.x = lerp(eyes.position.x, 0.0, delta * LERP_SPEED)
-		
-	direction = lerp(
-		direction,
-		(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
-		delta * LERP_SPEED
-	)
+	
+	direction = (body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
 	
 	_footstep_sounds_system()
 	
@@ -1712,6 +1710,7 @@ func _on_rolling_state_physics_processing(delta: float) -> void:
 func _on_airborne_state_entered() -> void:
 	was_in_air = true  # Set airborne state
 	current_moving_state = MovingState.Airborne
+	current_lerp_speed = AIR_LERP_SPEED
 
 
 func _on_airborne_state_physics_processing(delta: float) -> void:
@@ -1752,12 +1751,8 @@ func _on_air_control_state_exited() -> void:
 
 func _on_air_control_state_physics_processing(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
-		direction = lerp(
-			direction,
-			(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
-			delta * AIR_LERP_SPEED
-		)
-		
+		direction = (body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+	
 	if main_velocity.y <= FREE_FALL_MIN_VELOCITY:
 		state_chart.send_event("fall")
 #endregion
@@ -1774,12 +1769,8 @@ func _on_jumping_state_exited() -> void:
 
 func _on_jumping_state_physics_processing(delta: float) -> void:
 	if input_direction != Vector2.ZERO:
-		direction = lerp(
-			direction,
-			(body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized(),
-			delta * AIR_LERP_SPEED
-		)
-		
+		direction = (body.global_transform.basis * Vector3(input_direction.x, 0, input_direction.y)).normalized()
+	
 	current_speed = lerp(current_speed, jump_target_speed, delta * LERP_SPEED)
 	
 	if is_on_wall():
