@@ -288,7 +288,6 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 	else:
 		element = amount_of_inventory_slots-1
 	# Should fix issues where an external inventory is bigger than the players
-	inventory_ui.slot_array[element].grab_focus()
 	update_grabbed_slot()
 
 
