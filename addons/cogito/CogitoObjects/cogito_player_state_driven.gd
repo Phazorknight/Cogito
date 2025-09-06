@@ -1969,22 +1969,26 @@ func _handle_water_physics(delta) -> void:
 	var look_vector = camera.get_camera_transform().basis
 	var direction = look_vector * Vector3(input_direction.x, 0, input_direction.y).normalized()
 	
+	if Input.is_action_pressed("jump"):
+		direction.y = 1
+	elif Input.is_action_pressed("crouch"):
+		if not is_on_floor():
+			direction.y = -1
+	
 	if not is_head_in_water() and direction.dot(Vector3.UP) > 0:
 		direction = direction.slide(Vector3.UP)
 	
+	direction = direction.normalized()
+	
 	current_speed = lerp(current_speed, SWIMMING_SPEED, delta * LERP_SPEED)
 	
-	if input_direction:
-		main_velocity = lerp(main_velocity, direction * SWIMMING_SPEED, delta * LERP_SPEED)
+	if input_direction or Input.is_action_pressed("jump") or Input.is_action_pressed("crouch"):
+		main_velocity = lerp(main_velocity, direction * current_speed, delta * LERP_SPEED)
 	else:
 		main_velocity = lerp(main_velocity, Vector3.ZERO, delta * LERP_SPEED)
 		
-		if Input.is_action_pressed("jump"):
-			if is_head_in_water():
-				main_velocity.y = lerp(main_velocity.y, SWIMMING_SPEED, delta * LERP_SPEED)
-		else:
-			if not is_on_floor():
-				main_velocity.y -= gravity * WATER_GRAVITY_COEFFICIENT * delta
+		if not is_on_floor():
+			main_velocity.y -= gravity * WATER_GRAVITY_COEFFICIENT * delta
 	
 	_handle_swim_under_water_sounds()
 	
@@ -2033,8 +2037,6 @@ func _on_swimming_state_physics_processing(delta: float) -> void:
 	
 	if Input.is_action_pressed("jump") and _is_ledge_climbable():
 		state_chart.send_event("ledge_climb")
-		return
-		
 #endregion
 
 
