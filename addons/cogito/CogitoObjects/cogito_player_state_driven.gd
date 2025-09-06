@@ -894,7 +894,10 @@ func _is_ledge_climbable() -> bool:
 	if not ledge_climbing_shapecast.is_colliding():
 		return false
 	
-	ledge_collider = ledge_climbing_shapecast.get_collider(0)
+	var collider = ledge_climbing_shapecast.get_collider(0)
+	ledge_collider = null
+	if collider is not CSGPrimitive3D: # Warning: Don't use CSGs as moving platforms. It seems there is a bug in getting CSGs as collider
+		ledge_collider = collider
 	
 	var collision_normal : Vector3 = ledge_climbing_shapecast.get_collision_normal(0)
 	
@@ -2072,8 +2075,11 @@ func _on_ledge_climbing_state_physics_processing(delta: float) -> void:
 		state_chart.send_event("stand_up")
 		return
 	
-	var platfrom_linear_velocity : Vector3 = PhysicsServer3D.body_get_state(ledge_collider.get_rid(), PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY)
-	ledge_position += platfrom_linear_velocity * delta
+	var platfrom_linear_velocity : Vector3 = Vector3.ZERO
+	
+	if ledge_collider:
+		platfrom_linear_velocity = PhysicsServer3D.body_get_state(ledge_collider.get_rid(), PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY)
+		ledge_position += platfrom_linear_velocity * delta
 	
 	var move_direction = Vector3.UP
 	velocity = move_direction * CLIMBING_SPEED + platfrom_linear_velocity
