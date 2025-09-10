@@ -5506,8 +5506,9 @@ horizontal_alignment = 0
 [node name="WaterPool" type="Area3D" parent="SwimmingTest"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 19.0067)
 collision_layer = 4
-collision_mask = 4
+collision_mask = 15
 script = ExtResource("67_kt1ow")
+density = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwimmingTest/WaterPool"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00518799, -1.61624, -0.700624)
@@ -5518,6 +5519,9 @@ debug_color = Color(0.941176, 0.235294, 0.737255, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.962, -0.205, 18.346)
 mesh = SubResource("PlaneMesh_8nvk0")
 skeleton = NodePath("../..")
+
+[node name="CarriableBox" parent="." instance=ExtResource("35_hegwd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.9981, 0.505509, 10.6001)
 
 [node name="LedgeClimbingTests" type="Node3D" parent="."]
 

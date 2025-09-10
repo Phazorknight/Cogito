@@ -176,6 +176,7 @@ origin_index = -1
 
 [node name="Pickup_LaserRifle" type="RigidBody3D"]
 collision_layer = 3
+mass = 3.5
 script = ExtResource("1_u4ubh")
 cogito_name = ""
 

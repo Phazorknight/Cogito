@@ -24,6 +24,7 @@ var can_pick_up: bool = false
 var Direction
 
 func _ready():
+	super()
 	add_to_group("interactable")
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_interaction_nodes()

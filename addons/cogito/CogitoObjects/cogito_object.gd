@@ -6,6 +6,9 @@ class_name CogitoObject
 signal damage_received(damage_value:float)
 signal object_exits_tree()
 
+signal entered_to_fluid(Vector3)
+signal exited_to_fluid(Vector3)
+
 @export var cogito_name : String = self.name
 ## Name that will displayed when interacting. Leave blank to hide
 @export var display_name : String
@@ -27,6 +30,14 @@ signal object_exits_tree()
 		else:
 			CogitoGlobals.clear_debug_shape()
 
+@export_group("Fluid Floating Parameters")
+@export var fluid_influence_enabled := true
+@export var use_collision_shapes := true
+@export var fluid_damp := 4.0
+@onready var fluid_interactor := FluidInteractor3D.new()
+
+var rigid_body : RigidBody3D
+
 var interaction_nodes : Array[Node]
 var cogito_properties : CogitoProperties = null
 var properties : int
@@ -38,6 +49,19 @@ func _ready():
 	self.add_to_group("Persist") #Adding object to group for persistence
 	find_interaction_nodes()
 	find_cogito_properties()
+
+	if not fluid_influence_enabled:
+		return
+	
+	rigid_body = find_rigid_body()
+	if not rigid_body:
+		return
+	
+	if use_collision_shapes:
+		for owner_id in rigid_body.get_shape_owners():
+			var collision = rigid_body.shape_owner_get_owner(owner_id)
+			if collision is CollisionShape3D:
+				fluid_interactor.add_collision_shape(collision)
 
 
 func get_aabb():
@@ -113,6 +137,35 @@ func find_rigid_body() -> RigidBody3D:
 			return current as RigidBody3D
 		current = current.get_parent()
 	return null
+
+
+func _physics_process(delta: float) -> void:
+	if fluid_influence_enabled and rigid_body:
+		fluid_interactor.process(rigid_body.global_transform, rigid_body.mass, rigid_body.gravity_scale)
+		
+		for floater in fluid_interactor.get_floaters():
+			if floater.is_just_entered_to_fluid():
+				entered_to_fluid.emit(floater.position)
+			if floater.is_just_exited_from_fluid():
+				exited_to_fluid.emit(floater.position)
+
+		if not fluid_interactor.float_force.is_zero_approx():
+			# Bouyancy
+			rigid_body.apply_force(fluid_interactor.float_force * delta, fluid_interactor.float_position)
+			# Damping
+			rigid_body.linear_damp = fluid_damp
+			rigid_body.angular_damp = fluid_damp
+		else:
+			rigid_body.linear_damp = 0.0
+			rigid_body.angular_damp = 0.0
+
+
+func fluid_area_enter(area: FluidArea3D) -> void:
+	fluid_interactor.fluid_area_enter(area)
+
+
+func fluid_area_exit(area: FluidArea3D) -> void:
+	fluid_interactor.fluid_area_exit(area)
 
 
 func _on_body_entered(body: Node) -> void:
