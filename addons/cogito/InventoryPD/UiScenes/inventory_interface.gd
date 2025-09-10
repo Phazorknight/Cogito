@@ -157,7 +157,7 @@ func _slot_on_mouse_exit():
 
 
 func update_grabbed_slot_position():
-	#print("Inventory interface: update grabbed slot position to ", control_in_focus, " at ", control_in_focus.global_position)
+	# print("Inventory interface: update grabbed slot position to ", control_in_focus, " at ", control_in_focus.global_position)
 	grabbed_slot_node.global_position = control_in_focus.global_position + (control_in_focus.size / 2)
 
 
@@ -177,7 +177,7 @@ func set_external_inventory(_external_inventory_owner):
 	
 	inventory_data.owner = external_inventory_owner # Setting reference to external inventory owner node
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
-	inventory_data.inventory_button_press.connect(on_inventory_button_press)
+	inventory_data.inventory_button_press.connect(on_inventory_button_press.bind(external_inventory_ui))
 	external_inventory_ui.inventory_name = external_inventory_owner.display_name
 	external_inventory_ui.set_inventory_data(inventory_data)
 	
@@ -212,7 +212,7 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
-		inventory_data.inventory_button_press.connect(on_inventory_button_press)
+		inventory_data.inventory_button_press.connect(on_inventory_button_press.bind(inventory_ui))
 	inventory_ui.set_inventory_data(inventory_data)
 	if !is_using_hotbar:
 		quick_slots.show()
@@ -226,7 +226,7 @@ func set_player_inventory_data(inventory_data : CogitoInventory):
 
 
 # Inventory handling on gamepad buttons
-func on_inventory_button_press(inventory_data: CogitoInventory, index: int, action: String):
+func on_inventory_button_press(inventory_data: CogitoInventory, index: int, action: String, local_inventory_ui):
 	match [grabbed_slot_data, action]:
 		[null, "inventory_move_item"]:
 			# Check if item is being wielded before grabbing it.
@@ -280,15 +280,8 @@ func on_inventory_button_press(inventory_data: CogitoInventory, index: int, acti
 			Audio.play_sound(sound_error)
 			CogitoGlobals.debug_log(true, "inventory_interface.gd", "Can't drop while moving an item.")
 
-
-	var amount_of_inventory_slots = inventory_ui.slot_array.size()
-	var element : int
-	if index < amount_of_inventory_slots:
-		element = index
-	else:
-		element = amount_of_inventory_slots-1
-	# Should fix issues where an external inventory is bigger than the players
-	inventory_ui.slot_array[element].grab_focus()
+	# When connecting to the signal, we have bind the inventory_ui so we can use that to set focus.
+	local_inventory_ui.slot_array[index].grab_focus()
 	update_grabbed_slot()
 
 
