@@ -4,8 +4,7 @@
 
 [node name="ExtendedPickupInteraction" type="Node3D"]
 script = ExtResource("1_rllpg")
-separator_text = "
-"
+separator_text = "INTERACT_hold_joiner"
 hold_time = 0.7
 input_map_action = "interact"
-interaction_text = "Use"
+interaction_text = "INTERACT_Pick_up"

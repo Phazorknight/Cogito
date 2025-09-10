@@ -90,8 +90,6 @@ visible = false
 shape = SubResource("CylinderShape3D_tvmxx")
 
 [node name="ExtendedPickupInteraction" parent="." instance=ExtResource("2_g1tlq")]
-hold_interaction_text = "(HOLD) Drink"
-interaction_text = "Pick up | (HOLD) Drink"
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_u4d3q")]
 slot_data = SubResource("Resource_g1tlq")

@@ -4,7 +4,7 @@ extends HoldInteraction
 signal on_hold_complete(player_interaction_component:PlayerInteractionComponent)
 signal interaction_complete(player_interaction_component: PlayerInteractionComponent)
 
-@export var hold_interaction_text: String = "(HOLD) Use"
+@export var hold_interaction_text: String = "INTERFACE_Use"
 ## Add a linebreak here to separate the pickup interaction text from the hold interaction text
 @export_multiline var separator_text: String = " | "
 var pickup: PickupComponent
@@ -20,7 +20,7 @@ func _ready() -> void:
 		is_disabled = true
 		return
 	
-	interaction_text = pickup.interaction_text + separator_text + hold_interaction_text
+	interaction_text = tr(pickup.interaction_text) + tr(separator_text) + tr(hold_interaction_text)
 	
 	pickup.is_disabled = true
 	
