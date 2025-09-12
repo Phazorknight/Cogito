@@ -1985,7 +1985,10 @@ func _handle_water_physics(delta) -> void:
 	
 	current_speed = lerp(current_speed, SWIMMING_SPEED, delta * LERP_SPEED)
 	
+	var is_moving: bool = false
+	
 	if input_direction or Input.is_action_pressed("jump") or Input.is_action_pressed("crouch"):
+		is_moving = true
 		main_velocity = lerp(main_velocity, direction * current_speed, delta * LERP_SPEED)
 	else:
 		main_velocity = lerp(main_velocity, Vector3.ZERO, delta * LERP_SPEED)
@@ -1995,7 +1998,7 @@ func _handle_water_physics(delta) -> void:
 	
 	_handle_swim_under_water_sounds()
 	
-	if input_direction and main_velocity.length() >= 0.2:
+	if is_moving and main_velocity.length() >= 0.2:
 		if can_play_swim_movement && wiggle_vector.y > 0.9:
 			Audio.play_sound_3d(swim_movement_sound)
 			can_play_swim_movement = false
