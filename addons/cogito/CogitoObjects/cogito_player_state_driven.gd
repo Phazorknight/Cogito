@@ -2139,6 +2139,8 @@ func _on_crouching_state_physics_processing(delta: float) -> void:
 	swimming_head_shapecast.global_position = head.global_position
 	
 	if current_moving_state != MovingState.Swimming:
+		state_chart.set_expression_property("is_crouch_shapecast_colliding", crouch_shapecast.is_colliding())
+		
 		if TOGGLE_CROUCH and Input.is_action_just_pressed("crouch"):
 			try_crouch = !try_crouch
 		elif !TOGGLE_CROUCH:
@@ -2153,10 +2155,12 @@ func _on_crouching_state_physics_processing(delta: float) -> void:
 func _on_standing_state_entered() -> void:
 	current_body_posture_state = BodyPostureState.Standing
 	sliding_timer.stop()
+	crouch_shapecast.enabled = false
 
 
 func _on_standing_state_exited() -> void:
 	current_body_posture_state = BodyPostureState.Undefined
+	crouch_shapecast.enabled = true
 	
 
 func _on_standing_state_physics_processing(delta: float) -> void:

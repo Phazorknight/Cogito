@@ -1,4 +1,4 @@
-[gd_scene load_steps=130 format=4 uid="uid://otv80grtivvc"]
+[gd_scene load_steps=131 format=4 uid="uid://otv80grtivvc"]
 
 [ext_resource type="Script" uid="uid://5genc2h8jull" path="res://addons/cogito/CogitoObjects/cogito_player_state_driven.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ll11y3yjbqt" path="res://addons/cogito/InventoryPD/Inventories/PlayerInventory_FIXED.tres" id="2_0xklh"]
@@ -76,6 +76,11 @@ size = Vector3(0.6, 0.7, 0.6)
 [sub_resource type="Resource" id="Resource_4ijqs"]
 script = ExtResource("32_2k5k8")
 expression = "not is_sitting and not on_ladder"
+
+[sub_resource type="Resource" id="Resource_0xklh"]
+script = ExtResource("32_2k5k8")
+expression = "not is_crouch_shapecast_colliding"
+metadata/_custom_type_script = "uid://le5w1cm0ul8p"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g5iju"]
 animation = &"Crouch_Idle"
@@ -18384,6 +18389,7 @@ script = ExtResource("31_74178")
 script = ExtResource("32_cqpng")
 to = NodePath("../../Standing")
 event = &"stand_up"
+guard = SubResource("Resource_0xklh")
 delay_in_seconds = "0.0"
 
 [node name="Standing" type="Node" parent="StateChart/Root/BodyPosture/IsActive"]
