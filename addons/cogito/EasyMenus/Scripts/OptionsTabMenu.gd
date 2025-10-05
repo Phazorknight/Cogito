@@ -187,11 +187,13 @@ func on_window_mode_selected(index: int) -> void:
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 		3: #Borderless windowed
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 
 
 func refresh_render():
-	get_window().size = render_resolution
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
+			DisplayServer.window_set_size(render_resolution)
+
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
 	
