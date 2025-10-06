@@ -328,7 +328,9 @@ func load_options(skip_applying:bool = false):
 	window_mode_option_button.selected = window_mode
 	resolution_option_button.selected = resolution_index
 	
-	if !skip_applying:
+	# Only apply window mode + resolution + refresh when a config actually exists,
+	# and when we're not skipping applying.
+	if !skip_applying and have_cfg:
 		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
 		window_mode_option_button.item_selected.emit(window_mode)
