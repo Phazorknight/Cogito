@@ -32,6 +32,8 @@ func transition_to_next_scene():
 	CogitoSceneManager.save_scene_state(current_scene_statename,"temp")
 	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node, "temp")
 	
+	CogitoSceneManager.is_currently_loading = true
+	
 	CogitoSceneManager.fade_out()
 	await CogitoSceneManager.fade_finished
 	

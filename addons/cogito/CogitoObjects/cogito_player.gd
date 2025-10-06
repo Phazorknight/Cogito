@@ -395,6 +395,8 @@ func _input(event):
 	
 	# Opens Pause Menu if Menu button is proessed.
 	if event.is_action_pressed("menu"):
+		if CogitoSceneManager.is_currently_loading:
+			return
 		if is_showing_ui: #Behaviour when pressing ESC/menu while external UI is open (Readables, Keypad, etc)
 			menu_pressed.emit(player_interaction_component)
 			if get_node(player_hud).inventory_interface.is_inventory_open: #Behaviour when pressing ESC/menu while Inventory is open

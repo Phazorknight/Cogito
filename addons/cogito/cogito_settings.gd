@@ -56,6 +56,43 @@ func _on_btn_reset_input_map_pressed() -> void:
 	var gamepad_button = InputEventJoypadButton.new()
 	var gamepad_motion = InputEventJoypadMotion.new()
 	
+	# MOUSE BUTTON MAPPING
+	
+	mouse_button.button_index = MOUSE_BUTTON_LEFT
+	gamepad_motion = InputEventJoypadMotion.new()
+	gamepad_motion.device = -1
+	gamepad_motion.axis = JOY_AXIS_TRIGGER_RIGHT
+	save_input_action_to_settings("action_primary",mouse_button,gamepad_motion)
+	
+	mouse_button.button_index = MOUSE_BUTTON_RIGHT
+	gamepad_motion = InputEventJoypadMotion.new()
+	gamepad_motion.device = -1
+	gamepad_motion.axis = JOY_AXIS_TRIGGER_LEFT
+	save_input_action_to_settings("action_secondary",mouse_button,gamepad_motion)
+	
+	mouse_button.button_index = MOUSE_BUTTON_LEFT
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_X
+	save_input_action_to_settings("inventory_move_item",mouse_button,gamepad_button)
+	
+	mouse_button.button_index = MOUSE_BUTTON_RIGHT
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_A
+	save_input_action_to_settings("inventory_use_item",mouse_button,gamepad_button)
+	
+	mouse_button.button_index = MOUSE_BUTTON_WHEEL_UP
+	save_input_action_to_settings("quickslot_prev_wieldable",mouse_button,null)
+	
+	mouse_button.button_index = MOUSE_BUTTON_WHEEL_DOWN
+	gamepad_button = InputEventJoypadButton.new()
+	gamepad_button.device = -1
+	gamepad_button.button_index = JOY_BUTTON_Y
+	save_input_action_to_settings("quickslot_next_wieldable",mouse_button,null)
+	
+	# KEYBOARD BUTTON MAPPING
+	
 	keyboard_key = InputEventKey.new()
 	keyboard_key.physical_keycode = KEY_W
 	gamepad_motion = InputEventJoypadMotion.new()
@@ -136,30 +173,6 @@ func _on_btn_reset_input_map_pressed() -> void:
 	gamepad_button.device = -1
 	gamepad_button.button_index = JOY_BUTTON_BACK
 	save_input_action_to_settings("inventory",keyboard_key,gamepad_button)
-	
-	mouse_button.button_index = MOUSE_BUTTON_LEFT
-	gamepad_motion = InputEventJoypadMotion.new()
-	gamepad_motion.device = -1
-	gamepad_motion.axis = JOY_AXIS_TRIGGER_RIGHT
-	save_input_action_to_settings("action_primary",mouse_button,gamepad_motion)
-	
-	mouse_button.button_index = MOUSE_BUTTON_RIGHT
-	gamepad_motion = InputEventJoypadMotion.new()
-	gamepad_motion.device = -1
-	gamepad_motion.axis = JOY_AXIS_TRIGGER_LEFT
-	save_input_action_to_settings("action_secondary",mouse_button,gamepad_motion)
-	
-	mouse_button.button_index = MOUSE_BUTTON_LEFT
-	gamepad_button = InputEventJoypadButton.new()
-	gamepad_button.device = -1
-	gamepad_button.button_index = JOY_BUTTON_X
-	save_input_action_to_settings("inventory_move_item",mouse_button,gamepad_button)
-	
-	mouse_button.button_index = MOUSE_BUTTON_RIGHT
-	gamepad_button = InputEventJoypadButton.new()
-	gamepad_button.device = -1
-	gamepad_button.button_index = JOY_BUTTON_A
-	save_input_action_to_settings("inventory_use_item",mouse_button,gamepad_button)
 	
 	keyboard_key = InputEventKey.new()
 	keyboard_key.physical_keycode = KEY_G

@@ -42,6 +42,8 @@ enum CogitoSceneLoadMode {TEMP, LOAD_SAVE, RESET}
 @onready var default_fade_duration : float = CogitoGlobals.default_transition_duration
 @export var fade_panel : Panel = null
 
+var is_currently_loading : bool = false
+
 
 func _ready() -> void:
 	_player_state = get_existing_player_state(_active_slot) #Setting active slot (per default it's A)

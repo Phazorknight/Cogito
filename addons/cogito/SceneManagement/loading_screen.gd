@@ -49,7 +49,8 @@ func _process(_delta):
 		
 		if connector_name != "": #If a connector name has been passed, move the player to it. This requires the target scene to have a cogito scene script attached to it's root scene node.
 			new_scene_node.move_player_to_connector(connector_name)
-			
+		
+		CogitoSceneManager.is_currently_loading = false
 		current_scene.queue_free() # Removing previous scene.
 		
 	else:
