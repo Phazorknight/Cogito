@@ -254,6 +254,7 @@ func save_options():
 
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
 func load_options(skip_applying:bool = false):
+	var err = config.load(OptionsConstants.config_file_name)
 	# If the config file does not yet exist, we will NOT immediately
 	# apply (emit) resolution/window size changes. This prevents the first launch
 	# from overriding the ProjectSettings default resolution (e.g. 1920x1080) with
@@ -327,9 +328,7 @@ func load_options(skip_applying:bool = false):
 	window_mode_option_button.selected = window_mode
 	resolution_option_button.selected = resolution_index
 	
-	# Only apply window mode + resolution + refresh when a config actually exists,
-	# and when we're not skipping applying.
-	if !skip_applying and have_cfg:
+	if !skip_applying:
 		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
 		window_mode_option_button.item_selected.emit(window_mode)
