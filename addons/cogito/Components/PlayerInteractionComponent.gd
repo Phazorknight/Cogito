@@ -393,7 +393,7 @@ func set_state():
 
 func _on_interaction_raycast_interactable_seen(new_interactable) -> void:
 	interactable = new_interactable
-
+	
 
 func _on_interaction_raycast_interactable_unseen() -> void:
 	interactable = null
