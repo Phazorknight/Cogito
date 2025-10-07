@@ -187,11 +187,13 @@ func on_window_mode_selected(index: int) -> void:
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 		3: #Borderless windowed
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 
 
 func refresh_render():
-	get_window().size = render_resolution
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
+			DisplayServer.window_set_size(render_resolution)
+
 	get_window().content_scale_size = render_resolution
 	get_window().scaling_3d_scale = render_scale_val
 	
@@ -253,8 +255,16 @@ func save_options():
 # Loads options and sets the controls values to loaded values. Uses default values if config file does not exist
 func load_options(skip_applying:bool = false):
 	var err = config.load(OptionsConstants.config_file_name)
-	if err != 0:
-		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd","Loading options config failed. Assuming and saving defaults.")
+	# If the config file does not yet exist, we will NOT immediately
+	# apply (emit) resolution/window size changes. This prevents the first launch
+	# from overriding the ProjectSettings default resolution (e.g. 1920x1080) with
+	# our menu's first resolution entry. We still populate UI controls so the user
+	# can see/change them, but we only perform window/content_scale modifications
+	# once a valid config exists (subsequent launches) or when the user explicitly
+	# applies changes.
+	var have_cfg = (err == OK)
+	if !have_cfg:
+		CogitoGlobals.debug_log(true, "OptionsTabMenu.gd","Loading options config failed (likely first run). Using project defaults until user applies settings.")
 	
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
 	var toggle_crouching = config.get_value(OptionsConstants.section_name, OptionsConstants.toggle_crouching_key, true)
@@ -318,7 +328,9 @@ func load_options(skip_applying:bool = false):
 	window_mode_option_button.selected = window_mode
 	resolution_option_button.selected = resolution_index
 	
-	if !skip_applying:
+	# Only apply window mode + resolution + refresh when a config actually exists,
+	# and when we're not skipping applying.
+	if !skip_applying and have_cfg:
 		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
 		window_mode_option_button.item_selected.emit(window_mode)
