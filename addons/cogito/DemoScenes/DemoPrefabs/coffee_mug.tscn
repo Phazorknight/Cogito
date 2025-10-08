@@ -67,6 +67,7 @@ contact_monitor = true
 max_contacts_reported = 4
 script = ExtResource("1_s8epx")
 cogito_name = ""
+display_name = "Mug"
 
 [node name="mug" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_hinl8")
