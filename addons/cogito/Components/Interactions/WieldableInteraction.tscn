@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dofn6kyp8l0fl"]
+
+[ext_resource type="Script" uid="uid://gv52m67hgcjd" path="res://addons/cogito/Components/Interactions/wieldable_interaction.gd" id="1_e528x"]
+
+[node name="WieldableInteraction" type="Node3D"]
+script = ExtResource("1_e528x")
+wieldable_action = 2
+custom_method = "change_content_to"
+custom_parameter = 2
+input_map_action = "interact"
+interaction_text = "Wieldable interaction"

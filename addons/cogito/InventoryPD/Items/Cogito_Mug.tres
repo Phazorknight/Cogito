@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ContainerItemPD" load_steps=5 format=3 uid="uid://pfv77oxxq8c5"]
+
+[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_eas36"]
+[ext_resource type="Texture2D" uid="uid://cyhbal2jut4y1" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Mug.png" id="1_u2ve2"]
+[ext_resource type="Script" uid="uid://bvemvme4ev661" path="res://addons/cogito/InventoryPD/CustomResources/ContainerItemPD.gd" id="2_u2ve2"]
+[ext_resource type="PackedScene" uid="uid://2uwqt6x30e7n" path="res://addons/cogito/Wieldables/wieldable_mug.tscn" id="3_ffmr3"]
+
+[resource]
+script = ExtResource("2_u2ve2")
+current_content_index = 0
+consumable_effects = Array[ExtResource("1_eas36")]([])
+wieldable_scene = ExtResource("3_ffmr3")
+no_reload = true
+hint_on_empty = "Empty!"
+charge_max = 5.0
+ammo_item_name = ""
+charge_current = 0.0
+wieldable_range = 0.0
+wieldable_damage = 0.0
+name = "Mug"
+description = "Can hold a variety of liquids."
+icon = ExtResource("1_u2ve2")
+is_stackable = false
+is_droppable = true
+is_unique = false
+stack_size = 0
+drop_scene = "uid://u2b6ss4xaxp8"
+item_drop_size = 0.5
+hint_text_on_use = ""
+item_size = Vector2(1, 1)
+can_auto_slot = false
+slot_number = -1
+metadata/_custom_type_script = "uid://bvemvme4ev661"

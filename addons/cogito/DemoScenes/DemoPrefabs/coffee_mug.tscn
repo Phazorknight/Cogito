@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://u2b6ss4xaxp8"]
+[gd_scene load_steps=18 format=4 uid="uid://u2b6ss4xaxp8"]
 
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_s8epx"]
 [ext_resource type="PackedScene" uid="uid://cio4x05ipvslu" path="res://addons/cogito/Components/Interactions/CarryableComponent.tscn" id="2_gdrhw"]
@@ -8,6 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://bmy2fw6y1gc42" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactGlass_light_002.ogg" id="6_aigvj"]
 [ext_resource type="AudioStream" uid="uid://d31gb8y6dvco0" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactGlass_light_003.ogg" id="7_id6of"]
 [ext_resource type="AudioStream" uid="uid://c0ds3w6ienyuh" path="res://addons/cogito/Assets/Audio/Kenney/Impacts/impactGlass_light_004.ogg" id="8_wslkh"]
+[ext_resource type="Script" uid="uid://b0a3vpjf8hylo" path="res://addons/cogito/Components/Interactions/PickupComponent.gd" id="9_1hdxu"]
+[ext_resource type="Resource" uid="uid://pfv77oxxq8c5" path="res://addons/cogito/InventoryPD/Items/Cogito_Mug.tres" id="10_t1ing"]
+[ext_resource type="Script" uid="uid://di15gqemrkk0x" path="res://addons/cogito/InventoryPD/CustomResources/InventorySlotPD.gd" id="11_8gicw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_af7i7"]
 resource_name = "carpetWhite"
@@ -60,6 +63,14 @@ stream_2/stream = ExtResource("6_aigvj")
 stream_3/stream = ExtResource("7_id6of")
 stream_4/stream = ExtResource("8_wslkh")
 
+[sub_resource type="Resource" id="Resource_va73r"]
+resource_local_to_scene = true
+script = ExtResource("11_8gicw")
+inventory_item = ExtResource("10_t1ing")
+quantity = 1
+origin_index = -1
+metadata/_custom_type_script = "uid://di15gqemrkk0x"
+
 [node name="CoffeeMug" type="RigidBody3D"]
 transform = Transform3D(0.969501, 0, 0.245088, 0, 1, 0, -0.245088, 0, 0.969501, 0.885151, 0.851885, -0.218148)
 collision_layer = 3
@@ -83,5 +94,13 @@ drop_distance = 1.0
 
 [node name="ImpactSounds" parent="." instance=ExtResource("3_0m5f4")]
 impact_sounds = SubResource("AudioStreamRandomizer_sbrbp")
+
+[node name="PickupComponent" type="Node3D" parent="."]
+script = ExtResource("9_1hdxu")
+slot_data = SubResource("Resource_va73r")
+display_item_name = true
+input_map_action = "interact"
+interaction_text = "INTERACT_pickup"
+metadata/_custom_type_script = "uid://b0a3vpjf8hylo"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
