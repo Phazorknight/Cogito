@@ -4,23 +4,38 @@ extends Control
 const MARGIN = 8
 
 @export var use_spatial_prompt : bool = false
+@export var centered_prompt : bool = false
 
 @onready var camera := get_viewport().get_camera_3d()
 @onready var parent := get_parent()
 
 
 func _process(_delta: float) -> void:
+	#region CANCEL CONDITIONS
 	if !use_spatial_prompt:
 		return
 	
-	if parent.player.player_interaction_component.interactable == null:
+	var interactable = parent.player.player_interaction_component.interactable
+	
+	if interactable == null:
+		visible = false
 		return
-		
-	if not camera.current:
-		# If the camera we have isn't the current one, get the current camera.
+	else:
+		visible = true
+	
+	if not camera or not camera.current:
 		camera = get_viewport().get_camera_3d()
+		if not camera:
+			visible = false
+			return
+	#endregion
+	
+	var parent_position: Vector3
+	if centered_prompt:
+		parent_position = _get_interactable_center(interactable)
+	else:
+		parent_position = interactable.global_transform.origin
 		
-	var parent_position: Vector3 = parent.player.player_interaction_component.interactable.global_transform.origin
 	var camera_transform := camera.global_transform
 	var camera_position := camera_transform.origin
 
@@ -88,3 +103,36 @@ func _process(_delta: float) -> void:
 		# Bottom overflow.
 		#label.visible = false
 		rotation = -overflow
+
+
+func _get_interactable_center(node: Node) -> Vector3:
+	var aabb: AABB = _get_node_aabb(node)
+	if aabb != AABB():
+		return aabb.get_center()
+	else:
+		# Fallback: usa a origem se não houver geometria visual
+		return node.global_transform.origin
+
+
+func _get_node_aabb(node: Node) -> AABB:
+
+	if node is VisualInstance3D:
+		var local_aabb: AABB = node.get_aabb()
+		if local_aabb.size != Vector3.ZERO:
+
+			var transform: Transform3D = node.global_transform
+			var global_aabb: AABB = transform * local_aabb
+			return global_aabb
+
+	if node is Node3D:
+		var combined_aabb := AABB()
+		for child in node.get_children():
+			var child_aabb = _get_node_aabb(child)
+			if child_aabb != AABB():
+				if combined_aabb == AABB():
+					combined_aabb = child_aabb
+				else:
+					combined_aabb = combined_aabb.merge(child_aabb)
+		return combined_aabb
+
+	return AABB()
