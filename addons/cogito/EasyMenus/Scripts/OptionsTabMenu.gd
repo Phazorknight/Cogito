@@ -121,8 +121,7 @@ func _ready() -> void:
 	
 	# GRAPHICS
 	add_window_mode_items()
-	add_resolution_items()
-	preselect_resolution()
+	init_resolution()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
 	resolution_option_button.item_selected.connect(on_resolution_selected)
 	render_scale_slider.value_changed.connect(_on_render_scale_slider_value_changed)
@@ -168,12 +167,6 @@ func add_window_mode_items() -> void:
 	for mode in WINDOW_MODE_ARRAY:
 		window_mode_option_button.add_item(mode)
 
-
-# Adding resolutions to the resolution button.
-func add_resolution_items() -> void:
-	for resolution_text in RESOLUTION_DICTIONARY:
-		resolution_option_button.add_item(resolution_text)
-
 func get_resolution_index_for_window_size(size: Vector2i) -> int:
 	var resolution_values = RESOLUTION_DICTIONARY.values();
 	for i in resolution_values.size():
@@ -182,11 +175,14 @@ func get_resolution_index_for_window_size(size: Vector2i) -> int:
 			return i
 	return -1
 
-# Get the current resolution and select it in the resolution dropdown
-func preselect_resolution() -> void:
+# Initialize all resolutions and set the current resolution on the button
+func init_resolution() -> void:
+	for resolution_text in RESOLUTION_DICTIONARY:
+		resolution_option_button.add_item(resolution_text)
+
 	var idx := get_resolution_index_for_window_size(get_window().size)
 	if idx != -1:
-		window_mode_option_button.selected = idx
+		resolution_option_button.selected = idx
 
 # Function to change window modes. Hooked up to the window_mode_option_button.
 func on_window_mode_selected(index: int) -> void:
@@ -287,7 +283,8 @@ func load_options(skip_applying: bool = false):
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
 	
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
-	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
+	var current_resolution_index := resolution_option_button.selected
+	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
 	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
