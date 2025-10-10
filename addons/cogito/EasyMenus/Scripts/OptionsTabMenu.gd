@@ -186,16 +186,6 @@ func init_window_mode() -> void:
 	var idx := get_current_window_mode_index()
 	window_mode_option_button.selected = idx
 
-func get_current_logical_resolution() -> Vector2i:
-	# Prefer the window's content scale size if set
-	var cs := get_window().content_scale_size
-	if cs.x > 0 and cs.y > 0:
-			return cs
-	var screen := DisplayServer.window_get_current_screen()
-	var physical := DisplayServer.screen_get_size(screen)
-	var scale := DisplayServer.screen_get_scale(screen)
-	return physical / scale
-
 func get_resolution_index_for_window_size(size: Vector2i) -> int:
 	var resolution_values = RESOLUTION_DICTIONARY.values();
 	for i in resolution_values.size():
@@ -209,7 +199,7 @@ func init_resolution() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
 		resolution_option_button.add_item(resolution_text)
 
-	var idx := get_resolution_index_for_window_size(get_current_logical_resolution())
+	var idx := get_resolution_index_for_window_size(get_window().size)
 	if idx != -1:
 		resolution_option_button.selected = idx
 
