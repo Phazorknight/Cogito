@@ -121,6 +121,7 @@ func _ready() -> void:
 	
 	# GRAPHICS
 	add_window_mode_items()
+	init_window_mode()
 	init_resolution()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
 	resolution_option_button.item_selected.connect(on_resolution_selected)
@@ -166,6 +167,24 @@ func _on_gp_looksens_slider_value_changed(value):
 func add_window_mode_items() -> void:
 	for mode in WINDOW_MODE_ARRAY:
 		window_mode_option_button.add_item(mode)
+
+func get_current_window_mode_index() -> int:
+	var mode := DisplayServer.window_get_mode()
+	var is_borderless := DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_BORDERLESS)
+	match mode:
+		DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
+			return 0 # Exclusive full screen
+		DisplayServer.WINDOW_MODE_FULLSCREEN:
+			return 1 # Full screen (non-exclusive)
+		DisplayServer.WINDOW_MODE_WINDOWED:
+			return 3 if is_borderless else 2 # Borderless windowed vs Windowed
+		_:
+			return 2 # Fallback to Windowed
+
+# Initialize the window mode selection to reflect current state.
+func init_window_mode() -> void:
+	var idx := get_current_window_mode_index()
+	window_mode_option_button.selected = idx
 
 func get_resolution_index_for_window_size(size: Vector2i) -> int:
 	var resolution_values = RESOLUTION_DICTIONARY.values();
@@ -281,8 +300,8 @@ func load_options(skip_applying: bool = false):
 	mouse_sens = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 	gp_looksens = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
-	
-	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
+	var current_window_mode_index = window_mode_option_button.selected
+	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, current_window_mode_index)
 	var current_resolution_index := resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
