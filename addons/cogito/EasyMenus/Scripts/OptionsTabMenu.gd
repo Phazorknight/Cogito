@@ -424,11 +424,13 @@ func center_window() -> void:
 	window.position = center_of_screen - window_size / 2
 
 func _on_gui_scale_slider_value_changed(value):
-	apply_gui_scale_value()
+	gui_scale_current_value_label.text = "%d%%" % int(value * 100)
+	have_options_changed = true
 
 	
 func _on_gui_scale_slider_drag_ended(_value_changed):
-	apply_gui_scale_value()
+	gui_scale_current_value_label.text = "%d%%" % int(gui_scale_slider.value * 100)
+	have_options_changed = true
 
 
 func apply_gui_scale_value():
@@ -507,6 +509,8 @@ func _on_apply_changes_pressed() -> void:
 		get_viewport().scaling_3d_scale = fullscreen_resolution_scale_val
 
 	save_options()
+	apply_gui_scale_value()
+
 	if have_options_changed:
 		refresh_render()
 
