@@ -258,9 +258,7 @@ func on_resolution_selected(index: int) -> void:
 func _on_fullscreen_resolution_slider_value_changed(value: float) -> void:
 	var scale = value / 100.00
 	# Only update display; actual application + save occurs when Apply is pressed.
-	var window_size = get_window().size
-	var resolution_text = str(roundi(window_size.x * scale)) + "x" + str(roundi(window_size.y * scale))
-	fullscreen_resolution_current_value_label.text = str(value) + "% - " + resolution_text
+	update_fullscreen_resolution_label(scale)
 	have_options_changed = true
 	fullscreen_resolution_scale_val = scale
 
@@ -369,10 +367,8 @@ func load_options(skip_applying: bool = false):
 
 	# LOADING GRAPHICS CFG
 	fullscreen_resolution_scale_val = fullscreen_resolution_scale
-	fullscreen_resolution_slider.value = fullscreen_resolution_scale * 100.0
-	var window_size_fs = get_window().size
-	var fs_res_text = "%d%% - %dx%d" % [roundi(fullscreen_resolution_scale * 100.0), roundi(window_size_fs.x * fullscreen_resolution_scale), roundi(window_size_fs.y * fullscreen_resolution_scale)]
-	fullscreen_resolution_current_value_label.text = fs_res_text
+	fullscreen_resolution_slider.value = fullscreen_resolution_scale_val * 100.0
+	update_fullscreen_resolution_label(fullscreen_resolution_scale_val)
 	
 	gui_scale_slider.value = gui_scale
 	gui_scale_current_value_label.text = "%d%%" % (gui_scale * 100)
@@ -410,6 +406,13 @@ func update_resolution_controls_visibility():
 	# Show windowed resolution selector only in windowed / borderless
 	var is_windowed := (mode_index == 2 or mode_index == 3)
 	windowed_resolution_option_button.visible = is_windowed
+
+func update_fullscreen_resolution_label(scale: float) -> void:
+	var window_size = get_window().size
+	var pct = roundi(scale * 100.0)
+	var res_x = roundi(window_size.x * scale)
+	var res_y = roundi(window_size.y * scale)
+	fullscreen_resolution_current_value_label.text = "%d%% - %dx%d" % [pct, res_x, res_y]
 
 
 func _on_gui_scale_slider_value_changed(value):
