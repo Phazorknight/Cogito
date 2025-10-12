@@ -265,7 +265,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "100% - 1920x1080"
+text = "LAB_FULLSCREEN_RESOLUTION_SCALE"
 
 [node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
