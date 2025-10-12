@@ -8,7 +8,8 @@ signal options_updated
 const HSliderWLabel = preload("res://addons/cogito/EasyMenus/Scripts/slider_w_labels.gd")
 var config = ConfigFile.new()
 
-var have_options_changed: bool = false
+var have_options_changed := false
+var has_windowed_resolution_changed := false
 
 # GAMEPLAY
 @onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
@@ -254,6 +255,7 @@ func on_resolution_selected(index: int) -> void:
 	render_resolution = RESOLUTION_DICTIONARY.values()[index]
 	if prev_resolution != render_resolution:
 		have_options_changed = true
+		has_windowed_resolution_changed = true
 
 func _on_fullscreen_resolution_slider_value_changed(value: float) -> void:
 	var scale = value / 100.00
@@ -414,6 +416,12 @@ func update_fullscreen_resolution_label(scale: float) -> void:
 	var res_y = roundi(window_size.y * scale)
 	fullscreen_resolution_current_value_label.text = "%d%% - %dx%d" % [pct, res_x, res_y]
 
+# Centers the window in the middle of the user's current screen
+func center_window() -> void:
+	var window = get_window()
+	var center_of_screen = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
+	var window_size = window.get_size_with_decorations()
+	window.position = center_of_screen - window_size / 2
 
 func _on_gui_scale_slider_value_changed(value):
 	apply_gui_scale_value()
@@ -501,8 +509,17 @@ func _on_apply_changes_pressed() -> void:
 	save_options()
 	if have_options_changed:
 		refresh_render()
+
+	if has_windowed_resolution_changed:
+		center_window()
 	
+	reset()
 	options_updated.emit()
+
+
+func reset():
+	have_options_changed = false
+	has_windowed_resolution_changed = false
 
 func _on_tab_menu_resume():
 	# reload options
