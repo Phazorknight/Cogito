@@ -34,8 +34,6 @@ var music_bus_index
 # GRAPHICS
 @onready var fullscreen_resolution_slider: Slider = %FullscreenResolutionSlider
 @onready var fullscreen_resolution_current_value_label: Label = %FullscreenResolutionCurrentValueLabel
-@onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
-@onready var render_scale_slider: HSlider = %RenderScaleSlider
 @onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
 @onready var gui_scale_slider: HSlider = %GUIScaleSlider
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
@@ -46,7 +44,6 @@ var music_bus_index
 
 var render_resolution: Vector2i
 var prev_resolution: Vector2i
-var render_scale_val: float
 var fullscreen_resolution_scale_val := 1.0
 
 const HEADBOB_DICTIONARY: Dictionary = {
@@ -136,7 +133,6 @@ func _ready() -> void:
 	init_resolution()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
 	resolution_option_button.item_selected.connect(on_resolution_selected)
-	render_scale_slider.value_changed.connect(_on_render_scale_slider_value_changed)
 	gui_scale_slider.value_changed.connect(_on_gui_scale_slider_value_changed)
 	
 	# AUDIO
@@ -240,7 +236,7 @@ func refresh_render():
 	if mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
-		window.scaling_3d_scale = render_scale_val
+		window.scaling_3d_scale = 1.0
 	
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
 	var msaa_3d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_3d_key, 0)
@@ -286,13 +282,16 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, gp_looksens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, fullscreen_resolution_slider.value / 100.0)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, anti_aliasing_2d_option_button.get_selected_id())
 	config.set_value(OptionsConstants.section_name, OptionsConstants.msaa_3d_key, anti_aliasing_3d_option_button.get_selected_id())
-	
+
+	# We previously removed the legacy `render_scale` key – clean it if present
+	if config.has_section_key(OptionsConstants.section_name, "render_scale"):
+		config.erase_section_key(OptionsConstants.section_name, "render_scale")
+
 	config.set_value(OptionsConstants.section_name, OptionsConstants.sfx_volume_key_name, sfx_volume_slider.hslider.value)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.music_volume_key_name, music_volume_slider.hslider.value)
 	
@@ -329,7 +328,6 @@ func load_options(skip_applying: bool = false):
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, current_window_mode_index)
 	var current_resolution_index := resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
-	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
 	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)
 	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
@@ -364,12 +362,8 @@ func load_options(skip_applying: bool = false):
 	# LOADING AUDIO CFG
 	sfx_volume_slider.hslider.value = sfx_volume
 	music_volume_slider.hslider.value = music_volume
-	
-	# LOADING GRAPHICS CFG
-	render_scale_slider.value = render_scale
-	render_scale_val = render_scale
 
-	# Fullscreen resolution percentage slider
+	# LOADING GRAPHICS CFG
 	fullscreen_resolution_scale_val = fullscreen_resolution_scale
 	fullscreen_resolution_slider.value = fullscreen_resolution_scale * 100.0
 	var window_size_fs = get_window().size
@@ -400,12 +394,6 @@ func load_options(skip_applying: bool = false):
 		resolution_option_button.item_selected.emit(resolution_index)
 		refresh_render()
 		window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
-
-
-func _on_render_scale_slider_value_changed(value):
-	render_scale_val = value
-	render_scale_current_value_label.text = str(value)
-	have_options_changed = true
 
 
 func _on_gui_scale_slider_value_changed(value):

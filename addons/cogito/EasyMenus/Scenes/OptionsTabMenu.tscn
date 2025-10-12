@@ -342,35 +342,6 @@ script = ExtResource("8_7fii0")
 
 [node name="GamepadClosable" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
 
-[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="RenderScaleLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "LAB_RENDER_SCALE"
-
-[node name="RenderScaleSlider" type="HSlider" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_force_pass_scroll_events = false
-min_value = 0.25
-max_value = 2.0
-step = 0.05
-value = 1.0
-
-[node name="RenderScaleCurrentValueLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1"
-horizontal_alignment = 1
-
 [node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
