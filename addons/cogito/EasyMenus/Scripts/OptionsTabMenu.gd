@@ -34,13 +34,14 @@ var music_bus_index
 # GRAPHICS
 @onready var fullscreen_resolution_slider: Slider = %FullscreenResolutionSlider
 @onready var fullscreen_resolution_current_value_label: Label = %FullscreenResolutionCurrentValueLabel
+@onready var h_box_container_fullscreen_resolution: HBoxContainer = %HBoxContainer_FullscreenResolution
+@onready var windowed_resolution_option_button: OptionButton = %WindowedResolutionOptionButton
 @onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
 @onready var gui_scale_slider: HSlider = %GUIScaleSlider
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
 @onready var window_mode_option_button: OptionButton = %WindowModeOptionButton
-@onready var resolution_option_button: OptionButton = %ResolutionOptionButton
 
 var render_resolution: Vector2i
 var prev_resolution: Vector2i
@@ -132,8 +133,9 @@ func _ready() -> void:
 	init_window_mode()
 	init_resolution()
 	window_mode_option_button.item_selected.connect(on_window_mode_selected)
-	resolution_option_button.item_selected.connect(on_resolution_selected)
+	windowed_resolution_option_button.item_selected.connect(on_resolution_selected)
 	gui_scale_slider.value_changed.connect(_on_gui_scale_slider_value_changed)
+	update_resolution_controls_visibility()
 	
 	# AUDIO
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
@@ -201,14 +203,14 @@ func get_resolution_index_for_window_size(size: Vector2i) -> int:
 			return i
 	return -1
 
-# Initialize all resolutions and set the current resolution on the button
+# Initialize all windowed resolutions and set the current resolution on the button
 func init_resolution() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
-		resolution_option_button.add_item(resolution_text)
+		windowed_resolution_option_button.add_item(resolution_text)
 
 	var idx := get_resolution_index_for_window_size(get_window().size)
 	if idx != -1:
-		resolution_option_button.selected = idx
+		windowed_resolution_option_button.selected = idx
 
 # Function to change window modes. Hooked up to the window_mode_option_button.
 func on_window_mode_selected(index: int) -> void:
@@ -224,6 +226,8 @@ func on_window_mode_selected(index: int) -> void:
 		3: # Borderless windowed
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+
+	update_resolution_controls_visibility()
 
 
 func refresh_render():
@@ -244,7 +248,7 @@ func refresh_render():
 	set_msaa("msaa_3d", msaa_3d)
 
 
-# Function to change resolution. Hooked up to the resolution_option_button.
+# Function to change resolution. Hooked up to the windowed_resolution_option_button.
 func on_resolution_selected(index: int) -> void:
 	prev_resolution = render_resolution
 	render_resolution = RESOLUTION_DICTIONARY.values()[index]
@@ -281,7 +285,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, mouse_sens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, gp_looksens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, windowed_resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, fullscreen_resolution_slider.value / 100.0)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
@@ -326,7 +330,7 @@ func load_options(skip_applying: bool = false):
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
 	var current_window_mode_index = window_mode_option_button.selected
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, current_window_mode_index)
-	var current_resolution_index := resolution_option_button.selected
+	var current_resolution_index := windowed_resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)
 	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
@@ -383,7 +387,7 @@ func load_options(skip_applying: bool = false):
 	anti_aliasing_3d_option_button.selected = msaa_3d
 	
 	window_mode_option_button.selected = window_mode
-	resolution_option_button.selected = resolution_index
+	windowed_resolution_option_button.selected = resolution_index
 	
 	# Only apply window mode + resolution + refresh when a config actually exists,
 	# and when we're not skipping applying.
@@ -391,9 +395,21 @@ func load_options(skip_applying: bool = false):
 		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
 		window_mode_option_button.item_selected.emit(window_mode)
-		resolution_option_button.item_selected.emit(resolution_index)
+		windowed_resolution_option_button.item_selected.emit(resolution_index)
 		refresh_render()
 		window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
+
+	update_resolution_controls_visibility()
+
+func update_resolution_controls_visibility():
+	# Show fullscreen resolution slider only in fullscreen / exclusive fullscreen
+	var mode_index := window_mode_option_button.selected
+	var is_fullscreen := (mode_index == 0 or mode_index == 1)
+	fullscreen_resolution_slider.visible = is_fullscreen
+	h_box_container_fullscreen_resolution.visible = is_fullscreen
+	# Show windowed resolution selector only in windowed / borderless
+	var is_windowed := (mode_index == 2 or mode_index == 3)
+	windowed_resolution_option_button.visible = is_windowed
 
 
 func _on_gui_scale_slider_value_changed(value):
