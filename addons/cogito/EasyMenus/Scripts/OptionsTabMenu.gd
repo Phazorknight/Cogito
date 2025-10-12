@@ -32,6 +32,8 @@ var sfx_bus_index
 var music_bus_index
 
 # GRAPHICS
+@onready var fullscreen_resolution_slider: Slider = %FullscreenResolutionSlider
+@onready var fullscreen_resolution_current_value_label: Label = %FullscreenResolutionCurrentValueLabel
 @onready var render_scale_current_value_label: Label = %RenderScaleCurrentValueLabel
 @onready var render_scale_slider: HSlider = %RenderScaleSlider
 @onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
@@ -45,6 +47,7 @@ var music_bus_index
 var render_resolution: Vector2i
 var prev_resolution: Vector2i
 var render_scale_val: float
+var fullscreen_resolution_scale_val := 1.0
 
 const HEADBOB_DICTIONARY: Dictionary = {
 	"Minimal": 1,
@@ -231,8 +234,13 @@ func refresh_render():
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
 			DisplayServer.window_set_size(render_resolution)
 
-	get_window().content_scale_size = render_resolution
-	get_window().scaling_3d_scale = render_scale_val
+	var window = get_window()
+	window.content_scale_size = render_resolution
+	var mode := DisplayServer.window_get_mode()
+	if mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		window.scaling_3d_scale = fullscreen_resolution_scale_val
+	else:
+		window.scaling_3d_scale = render_scale_val
 	
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
 	var msaa_3d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_3d_key, 0)
@@ -247,6 +255,14 @@ func on_resolution_selected(index: int) -> void:
 	if prev_resolution != render_resolution:
 		have_options_changed = true
 
+func _on_fullscreen_resolution_slider_value_changed(value: float) -> void:
+	var scale = value / 100.00
+	# Only update display; actual application + save occurs when Apply is pressed.
+	var window_size = get_window().size
+	var resolution_text = str(roundi(window_size.x * scale)) + "x" + str(roundi(window_size.y * scale))
+	fullscreen_resolution_current_value_label.text = str(value) + "% - " + resolution_text
+	have_options_changed = true
+	fullscreen_resolution_scale_val = scale
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
@@ -271,6 +287,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, render_scale_slider.value);
+	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, fullscreen_resolution_slider.value / 100.0)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
 	config.set_value(OptionsConstants.section_name, OptionsConstants.vsync_key, vsync_check_button.button_pressed)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, anti_aliasing_2d_option_button.get_selected_id())
@@ -313,6 +330,7 @@ func load_options(skip_applying: bool = false):
 	var current_resolution_index := resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
+	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)
 	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 
@@ -350,6 +368,13 @@ func load_options(skip_applying: bool = false):
 	# LOADING GRAPHICS CFG
 	render_scale_slider.value = render_scale
 	render_scale_val = render_scale
+
+	# Fullscreen resolution percentage slider
+	fullscreen_resolution_scale_val = fullscreen_resolution_scale
+	fullscreen_resolution_slider.value = fullscreen_resolution_scale * 100.0
+	var window_size_fs = get_window().size
+	var fs_res_text = "%d%% - %dx%d" % [roundi(fullscreen_resolution_scale * 100.0), roundi(window_size_fs.x * fullscreen_resolution_scale), roundi(window_size_fs.y * fullscreen_resolution_scale)]
+	fullscreen_resolution_current_value_label.text = fs_res_text
 	
 	gui_scale_slider.value = gui_scale
 	gui_scale_current_value_label.text = "%d%%" % (gui_scale * 100)
@@ -461,6 +486,11 @@ func create_action_remap_items() -> void:
 
 func _on_apply_changes_pressed() -> void:
 	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
+	# Apply fullscreen resolution scaling if in fullscreen mode
+	var mode := DisplayServer.window_get_mode()
+	if mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		get_viewport().scaling_3d_scale = fullscreen_resolution_scale_val
+
 	save_options()
 	if have_options_changed:
 		refresh_render()

@@ -19,6 +19,7 @@ func load_settings():
 	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, 0)
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, 0)
 	var render_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.render_scale_key, 1)
+	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)
 	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 	var invert_y = config.get_value(OptionsConstants.section_name, OptionsConstants.invert_vertical_axis_key, true)
@@ -42,7 +43,12 @@ func load_settings():
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 
 	
-	get_viewport().scaling_3d_scale = render_scale
+	# Apply appropriate 3D scaling based on window mode (fullscreen vs windowed)
+	match window_mode:
+		0, 1: # Exclusive fullscreen or fullscreen
+			get_viewport().scaling_3d_scale = fullscreen_resolution_scale
+		_:
+			get_viewport().scaling_3d_scale = render_scale
 	
 	if vsync:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)

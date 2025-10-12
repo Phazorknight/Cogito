@@ -12,6 +12,7 @@ const music_volume_key_name = "music_volume"
 # Graphics options
 const windowmode_key_name = "window_mode"
 const resolution_index_key_name = "resolution_index"
+const fullscreen_resolution_scale_key = "fullscreen_resolution_scale"
 const render_scale_key = "render_scale"
 const gui_scale_key = "gui_scale"
 const vsync_key = "vsync"
