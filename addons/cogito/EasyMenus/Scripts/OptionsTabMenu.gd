@@ -42,7 +42,7 @@ var music_bus_index
 @onready var vsync_check_button: CheckButton = %VSyncCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
-@onready var window_mode_option_button: OptionButton = %WindowModeOptionButton
+@onready var fullscreen_mode_check_button: CheckButton = %FullscreenModeCheckButton
 
 var render_resolution: Vector2i
 var prev_resolution: Vector2i
@@ -131,10 +131,9 @@ func _ready() -> void:
 	gp_look_sens_slider.value_changed.connect(_on_gp_looksens_slider_value_changed)
 	
 	# GRAPHICS
-	add_window_mode_items()
-	init_window_mode()
+	init_fullscreen_mode()
 	init_resolution()
-	window_mode_option_button.item_selected.connect(on_window_mode_selected)
+	fullscreen_mode_check_button.toggled.connect(on_fullscreen_mode_toggled)
 	windowed_resolution_option_button.item_selected.connect(on_resolution_selected)
 	gui_scale_slider.value_changed.connect(_on_gui_scale_slider_value_changed)
 	update_resolution_controls_visibility()
@@ -174,28 +173,12 @@ func _on_gp_looksens_slider_value_changed(value):
 	gp_look_sens_value_label.text = str(value)
 
 
-# Adding window modes to the window mode button.
-func add_window_mode_items() -> void:
-	for mode in WINDOW_MODE_ARRAY:
-		window_mode_option_button.add_item(mode)
+func is_fullscreen() -> bool:
+	return DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 
-func get_current_window_mode_index() -> int:
-	var mode := DisplayServer.window_get_mode()
-	var is_borderless := DisplayServer.window_get_flag(DisplayServer.WINDOW_FLAG_BORDERLESS)
-	match mode:
-		DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-			return 0 # Exclusive full screen
-		DisplayServer.WINDOW_MODE_FULLSCREEN:
-			return 1 # Full screen (non-exclusive)
-		DisplayServer.WINDOW_MODE_WINDOWED:
-			return 3 if is_borderless else 2 # Borderless windowed vs Windowed
-		_:
-			return 2 # Fallback to Windowed
-
-# Initialize the window mode selection to reflect current state.
-func init_window_mode() -> void:
-	var idx := get_current_window_mode_index()
-	window_mode_option_button.selected = idx
+# Initialize the fullscreen mode check button to reflect current state.
+func init_fullscreen_mode() -> void:
+	fullscreen_mode_check_button.set_pressed_no_signal(is_fullscreen())
 
 func get_resolution_index_for_window_size(size: Vector2i) -> int:
 	var resolution_values = RESOLUTION_DICTIONARY.values();
@@ -214,21 +197,13 @@ func init_resolution() -> void:
 	if idx != -1:
 		windowed_resolution_option_button.selected = idx
 
-# Function to change window modes. Hooked up to the window_mode_option_button.
-func on_window_mode_selected(index: int) -> void:
-	match index:
-		0: # Exclusive full screen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-		1: # Full screen
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		2: # Windowed
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-		3: # Borderless windowed
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
-
+func on_fullscreen_mode_toggled(button_pressed: bool) -> void:
+	if button_pressed:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+	
 	update_resolution_controls_visibility()
 
 
@@ -285,7 +260,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, headbob_strength)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, mouse_sens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, gp_looksens)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, window_mode_option_button.selected)
+	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, is_fullscreen())
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, windowed_resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, fullscreen_resolution_slider.value / 100.0)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
@@ -329,8 +304,7 @@ func load_options(skip_applying: bool = false):
 	mouse_sens = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 	gp_looksens = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
-	var current_window_mode_index = window_mode_option_button.selected
-	var window_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, current_window_mode_index)
+	var fullscreen_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, is_fullscreen())
 	var current_resolution_index := windowed_resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)
@@ -385,7 +359,7 @@ func load_options(skip_applying: bool = false):
 	anti_aliasing_2d_option_button.selected = msaa_2d
 	anti_aliasing_3d_option_button.selected = msaa_3d
 	
-	window_mode_option_button.selected = window_mode
+	fullscreen_mode_check_button.set_pressed_no_signal(fullscreen_mode)
 	windowed_resolution_option_button.selected = resolution_index
 	
 	# Only apply window mode + resolution + refresh when a config actually exists,
@@ -393,22 +367,20 @@ func load_options(skip_applying: bool = false):
 	if !skip_applying and have_cfg:
 		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
-		window_mode_option_button.item_selected.emit(window_mode)
+		fullscreen_mode_check_button.toggled.emit(fullscreen_mode)
 		windowed_resolution_option_button.item_selected.emit(resolution_index)
 		refresh_render()
-		window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
 
 	update_resolution_controls_visibility()
 
 func update_resolution_controls_visibility():
-	# Show fullscreen resolution slider only in fullscreen / exclusive fullscreen
-	var mode_index := window_mode_option_button.selected
-	var is_fullscreen := (mode_index == 0 or mode_index == 1)
-	fullscreen_resolution_slider.visible = is_fullscreen
-	h_box_container_fullscreen_resolution.visible = is_fullscreen
-	# Show windowed resolution selector only in windowed / borderless
-	var is_windowed := (mode_index == 2 or mode_index == 3)
-	windowed_resolution_option_button.visible = is_windowed
+	var fullscreen := is_fullscreen()
+	fullscreen_resolution_slider.visible = fullscreen
+	# Show fullscreen resolution slider only in fullscreen mode
+	h_box_container_fullscreen_resolution.visible = fullscreen
+
+	# Show windowed resolution selector only in windowed mode
+	windowed_resolution_option_button.visible = !fullscreen
 
 func update_fullscreen_resolution_label(scale: float) -> void:
 	var window_size = get_window().size
@@ -503,10 +475,9 @@ func create_action_remap_items() -> void:
 
 
 func _on_apply_changes_pressed() -> void:
-	window_mode_option_button.item_selected.emit(window_mode_option_button.selected)
+	fullscreen_mode_check_button.toggled.emit(fullscreen_mode_check_button.button_pressed)
 	# Apply fullscreen resolution scaling if in fullscreen mode
-	var mode := DisplayServer.window_get_mode()
-	if mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+	if is_fullscreen():
 		get_viewport().scaling_3d_scale = fullscreen_resolution_scale_val
 
 	save_options()
