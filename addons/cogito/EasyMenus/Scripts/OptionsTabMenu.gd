@@ -412,7 +412,6 @@ func _on_gui_scale_slider_drag_ended(_value_changed):
 func apply_gui_scale_value():
 	get_viewport().content_scale_factor = gui_scale_slider.value
 	gui_scale_current_value_label.text = "%d%%" % (gui_scale_slider.value * 100)
-	have_options_changed = true
 
 
 func _on_v_sync_check_button_toggled(button_pressed):
@@ -479,9 +478,6 @@ func create_action_remap_items() -> void:
 
 func _on_apply_changes_pressed() -> void:
 	fullscreen_mode_check_button.toggled.emit(fullscreen_mode_check_button.button_pressed)
-	# Apply fullscreen resolution scaling if in fullscreen mode
-	if is_fullscreen():
-		get_viewport().scaling_3d_scale = fullscreen_resolution_scale_val
 
 	save_options()
 	apply_gui_scale_value()
