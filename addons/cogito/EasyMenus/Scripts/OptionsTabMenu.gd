@@ -193,6 +193,9 @@ func init_resolution() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
 		windowed_resolution_option_button.add_item(resolution_text)
 
+	render_resolution = get_window().size
+	prev_resolution = render_resolution
+
 	var idx := get_resolution_index_for_window_size(get_window().size)
 	if idx != -1:
 		windowed_resolution_option_button.selected = idx
