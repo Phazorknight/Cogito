@@ -208,8 +208,7 @@ func refresh_render():
 
 	var window = get_window()
 	window.content_scale_size = render_resolution
-	var mode := DisplayServer.window_get_mode()
-	if mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_FULLSCREEN:
+	if is_fullscreen():
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
 		window.scaling_3d_scale = 1.0
