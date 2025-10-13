@@ -54,14 +54,6 @@ const HEADBOB_DICTIONARY: Dictionary = {
 	"Full": 7,
 }
 
-# Array to set window modes.
-const WINDOW_MODE_ARRAY: Array[String] = [
-	"Exclusive full screen",
-	"Full screen",
-	"Windowed",
-	"Borderless windowed",
-]
-
 const RESOLUTION_DICTIONARY: Dictionary = {
 	"800x600 (4:3)": Vector2i(800, 600),
 	"960x540 (16:9)": Vector2i(960, 540),
@@ -263,7 +255,7 @@ func save_options():
 	config.set_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, headbob_strength)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, mouse_sens)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, gp_looksens)
-	config.set_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, is_fullscreen())
+	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_mode_key_name, is_fullscreen())
 	config.set_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, windowed_resolution_option_button.selected)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, fullscreen_resolution_slider.value / 100.0)
 	config.set_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, gui_scale_slider.value);
@@ -307,7 +299,7 @@ func load_options(skip_applying: bool = false):
 	mouse_sens = config.get_value(OptionsConstants.section_name, OptionsConstants.mouse_sens_key, 0.25)
 	gp_looksens = config.get_value(OptionsConstants.section_name, OptionsConstants.gp_looksens_key, 2)
 	headbob_strength = config.get_value(OptionsConstants.section_name, OptionsConstants.head_bobble_key, 2)
-	var fullscreen_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.windowmode_key_name, is_fullscreen())
+	var fullscreen_mode = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_mode_key_name, is_fullscreen())
 	var current_resolution_index := windowed_resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)

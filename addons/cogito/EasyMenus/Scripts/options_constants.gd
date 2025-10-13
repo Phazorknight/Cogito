@@ -10,7 +10,7 @@ const section_name = "Options"
 const sfx_volume_key_name = "sfx_volume"
 const music_volume_key_name = "music_volume" 
 # Graphics options
-const windowmode_key_name = "window_mode"
+const fullscreen_mode_key_name = "fullscreen_mode"
 const resolution_index_key_name = "resolution_index"
 const fullscreen_resolution_scale_key = "fullscreen_resolution_scale"
 const gui_scale_key = "gui_scale"
