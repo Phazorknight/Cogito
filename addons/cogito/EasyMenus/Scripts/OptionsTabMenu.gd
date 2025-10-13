@@ -124,9 +124,9 @@ func _ready() -> void:
 	
 	# GRAPHICS
 	init_fullscreen_mode()
-	init_resolution()
-	fullscreen_mode_check_button.toggled.connect(on_fullscreen_mode_toggled)
-	windowed_resolution_option_button.item_selected.connect(on_resolution_selected)
+	init_windowed_resolution()
+	fullscreen_mode_check_button.toggled.connect(_on_fullscreen_mode_toggled)
+	windowed_resolution_option_button.item_selected.connect(_on_resolution_selected)
 	gui_scale_slider.value_changed.connect(_on_gui_scale_slider_value_changed)
 	update_resolution_controls_visibility()
 	
@@ -180,8 +180,8 @@ func get_resolution_index_for_window_size(size: Vector2i) -> int:
 			return i
 	return -1
 
-# Initialize all windowed resolutions and set the current resolution on the button
-func init_resolution() -> void:
+# Initialize all windowed resolutions and set the current windowed resolution on the button
+func init_windowed_resolution() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
 		windowed_resolution_option_button.add_item(resolution_text)
 
@@ -192,7 +192,7 @@ func init_resolution() -> void:
 	if idx != -1:
 		windowed_resolution_option_button.selected = idx
 
-func on_fullscreen_mode_toggled(button_pressed: bool) -> void:
+func _on_fullscreen_mode_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	else:
@@ -220,7 +220,7 @@ func refresh_render():
 
 
 # Function to change resolution. Hooked up to the windowed_resolution_option_button.
-func on_resolution_selected(index: int) -> void:
+func _on_resolution_selected(index: int) -> void:
 	prev_resolution = render_resolution
 	render_resolution = RESOLUTION_DICTIONARY.values()[index]
 	if prev_resolution != render_resolution:
