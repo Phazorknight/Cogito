@@ -68,8 +68,8 @@ msgid "LAB_RESOLUTION"
 msgstr "Resolution"
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
-msgid "LAB_WINDOW_MODE"
-msgstr "Window Mode"
+msgid "LAB_FULLSCREEN_MODE"
+msgstr "Fullscreen"
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
 msgid "LAB_2D_Anti_Aliasing"
