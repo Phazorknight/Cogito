@@ -44,8 +44,8 @@ var music_bus_index
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
 @onready var fullscreen_mode_check_button: CheckButton = %FullscreenModeCheckButton
 
-var render_resolution: Vector2i
-var prev_resolution: Vector2i
+var windowed_resolution: Vector2i
+var prev_windowed_resolution: Vector2i
 var fullscreen_resolution_scale_val := 1.0
 
 const HEADBOB_DICTIONARY: Dictionary = {
@@ -185,8 +185,8 @@ func init_windowed_resolution() -> void:
 	for resolution_text in RESOLUTION_DICTIONARY:
 		windowed_resolution_option_button.add_item(resolution_text)
 
-	render_resolution = get_window().size
-	prev_resolution = render_resolution
+	windowed_resolution = get_window().size
+	prev_windowed_resolution = windowed_resolution
 
 	var idx := get_resolution_index_for_window_size(get_window().size)
 	if idx != -1:
@@ -204,10 +204,10 @@ func _on_fullscreen_mode_toggled(button_pressed: bool) -> void:
 
 func refresh_render():
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
-			DisplayServer.window_set_size(render_resolution)
+			DisplayServer.window_set_size(windowed_resolution)
 
 	var window = get_window()
-	window.content_scale_size = render_resolution
+	window.content_scale_size = windowed_resolution
 	if is_fullscreen():
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
@@ -221,9 +221,9 @@ func refresh_render():
 
 # Function to change resolution. Hooked up to the windowed_resolution_option_button.
 func _on_resolution_selected(index: int) -> void:
-	prev_resolution = render_resolution
-	render_resolution = RESOLUTION_DICTIONARY.values()[index]
-	if prev_resolution != render_resolution:
+	prev_windowed_resolution = windowed_resolution
+	windowed_resolution = RESOLUTION_DICTIONARY.values()[index]
+	if prev_windowed_resolution != windowed_resolution:
 		have_options_changed = true
 		has_windowed_resolution_changed = true
 
