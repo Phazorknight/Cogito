@@ -82,7 +82,6 @@ mass = 50.0
 freeze = true
 script = ExtResource("1_h5ueg")
 cogito_name = ""
-display_name = "Coffee Machine"
 
 [node name="kitchenCoffeeMachine(Clone)" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_y6m1y")
@@ -102,5 +101,6 @@ shape = SubResource("BoxShape3D_vt7u4")
 
 [node name="WieldableInteraction" parent="." instance=ExtResource("2_f3xuy")]
 required_wieldable = ExtResource("3_8agp6")
+require_wieldable_to_show = true
 interaction_text = "Fill with coffee"
 ignore_open_gui = false

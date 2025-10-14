@@ -11,6 +11,9 @@ enum WieldableAction {CHARGE, RELOAD, CUSTOM}
 @export var custom_method : String
 @export var custom_parameter : int
 
+## Only show this interaction prompt if the player is wielding
+@export var require_wieldable_to_show : bool = false
+
 
 func interact(_player_interaction_component:PlayerInteractionComponent):
 	if !is_disabled:

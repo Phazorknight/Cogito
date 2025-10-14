@@ -235,6 +235,8 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 			continue
 		if node.attribute_check == 2 and !node.check_attribute(player.player_interaction_component):  # Hide if attribute check is set to Hide Interaction and the check doesn't pass
 			continue
+		if node is CogitoWieldableInteractionComponent and node.require_wieldable_to_show and player.player_interaction_component.equipped_wieldable_item != node.required_wieldable: # Checking if player holds required wieldable
+			continue
 		
 		var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 		prompt_area.add_child(instanced_prompt)
