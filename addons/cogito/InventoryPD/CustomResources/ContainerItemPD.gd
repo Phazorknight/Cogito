@@ -67,11 +67,11 @@ func update_wieldable_data(_player_interaction_component : PlayerInteractionComp
 
 func change_content_to(_content_index: int):
 	if current_content_index == _content_index:
-		player_interaction_component.send_hint(null, "Contents are already index " + str(current_content_index) )
+		#player_interaction_component.send_hint(null, "Contents are already index " + str(current_content_index) )
 		return
 	else:
 		current_content_index = _content_index
-		player_interaction_component.send_hint(null, "Contents changed to index " + str(current_content_index) )
+		#player_interaction_component.send_hint(null, "Contents changed to index " + str(current_content_index) )
 		contents_changed.emit(current_content_index)
 
 

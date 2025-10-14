@@ -30,7 +30,12 @@ func action_primary(_passed_item_reference: InventoryItemPD, is_released: bool):
 	if is_released:
 		is_action_pressed = false
 		return
-#	Play drinking animtion.
+		
+	if _passed_item_reference.current_content_index != 0:
+		animation_player.play(anim_action_primary)
+	else:
+		_passed_item_reference.send_empty_hint()
+
 
 
 func set_content_meshes(_passed_content: int):
