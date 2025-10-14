@@ -37,9 +37,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
-current_tab = 3
+current_tab = 1
 script = ExtResource("4_h483w")
-nodes_to_focus = [NodePath("TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_Resolution/ResolutionOptionButton"), NodePath("TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), NodePath("TAB_BINDINGS")]
+nodes_to_focus = [NodePath("TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution/WindowedResolutionOptionButton"), NodePath("TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), NodePath("TAB_BINDINGS")]
 tab_index_of_bindings = 4
 bindings_container_node = NodePath("TAB_BINDINGS/ScrollContainer/MarginContainer/BindingsContainer")
 
@@ -202,7 +202,6 @@ horizontal_alignment = 1
 
 [node name="TAB_GRAPHICS" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -222,37 +221,65 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="HBoxContainer_Resolution" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer_Resolution" type="VBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer_Resolution" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
 theme = ExtResource("1_6plem")
 
-[node name="ResolutionLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
-custom_minimum_size = Vector2(180, 0)
+[node name="ResolutionLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 text = "LAB_RESOLUTION"
 
-[node name="ResolutionOptionButton" type="OptionButton" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_Resolution"]
+[node name="WindowedResolutionOptionButton" type="OptionButton" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="HBoxContainer_WindowMode" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
+[node name="FullscreenResolutionSlider" type="HSlider" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_force_pass_scroll_events = false
+min_value = 25.0
+max_value = 200.0
+step = 5.0
+value = 100.0
+ticks_on_borders = true
+
+[node name="HBoxContainer_FullscreenResolution" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_direction = 3
+layout_mode = 2
+
+[node name="FullscreenResolutionCurrentValueLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_FullscreenResolution"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "100% - 1920x1080"
+
+[node name="HBoxContainer_FullscreenMode" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
 theme = ExtResource("1_6plem")
 
-[node name="WindowMode" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+[node name="FullscreenModeLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_FullscreenMode"]
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-size_flags_horizontal = 0
-text = "LAB_WINDOW_MODE"
+text = "LAB_FULLSCREEN_MODE"
 
-[node name="WindowModeOptionButton" type="OptionButton" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_WindowMode"]
+[node name="FullscreenModeCheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_FullscreenMode"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
@@ -313,35 +340,6 @@ popup/item_3/id = 3
 script = ExtResource("8_7fii0")
 
 [node name="GamepadClosable" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_AA3D/AntiAliasing3DOptionButton" instance=ExtResource("9_wft0n")]
-
-[node name="HBoxContainer_RenderScale" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-
-[node name="RenderScaleLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "LAB_RENDER_SCALE"
-
-[node name="RenderScaleSlider" type="HSlider" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_force_pass_scroll_events = false
-min_value = 0.25
-max_value = 2.0
-step = 0.05
-value = 1.0
-
-[node name="RenderScaleCurrentValueLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_RenderScale"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "1"
-horizontal_alignment = 1
 
 [node name="HBoxContainer_GUIScale" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 40)
@@ -466,6 +464,7 @@ text = "0 %"
 horizontal_alignment = 1
 
 [node name="TAB_BINDINGS" type="MarginContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
@@ -522,6 +521,7 @@ theme_override_font_sizes/font_size = 25
 text = "BTN_APPLY_CHANGES"
 script = ExtResource("6_rlben")
 
+[connection signal="value_changed" from="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution/FullscreenResolutionSlider" to="." method="_on_fullscreen_resolution_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/TabContainer/TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider" to="VBoxContainer/TabContainer/TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider" method="_on_h_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/TabContainer/TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider/HSlider" to="VBoxContainer/TabContainer/TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_MusicVolumeSlider" method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/ApplyChanges" to="." method="_on_apply_changes_pressed"]
