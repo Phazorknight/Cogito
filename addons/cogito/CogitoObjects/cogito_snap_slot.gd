@@ -13,6 +13,12 @@ signal object_state_updated(interaction_text:String)
 ## PackedScene of the carryable object that this snapslot is expecting.
 @export var expected_object : PackedScene
 
+enum PromptPositionMode{
+	ORIGIN, MARKER, AABB_CENTER, 
+}
+## This sets where interaction prompt gets displayed on the object. ORIGIN = at the objects origin point. Recommended for smaller objects. MARKER = at the position of an assigned Marker3D node. Recommended for big objects/doors. AABB_CENTER = at the center of the calculated AABoundingBox. Works well but has a slight performance impact. 
+@export var prompt_pos_mode : PromptPositionMode = PromptPositionMode.ORIGIN
+@export var prompt_marker : Marker3D
 
 @export_group("Audio")
 ## Plays when object is snapped into place.

@@ -123,6 +123,7 @@ move_speed = 10.0
 rotation_speed = 0.2
 momentum_damping = 0.9
 vehicle_node = NodePath(".")
+prompt_pos_mode = 2
 sit_area_behaviour = 2
 placement_on_leave = 2
 eject_on_fall = true

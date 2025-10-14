@@ -4,7 +4,6 @@ extends Control
 const MARGIN = 8
 
 @export var use_spatial_prompt : bool = false
-@export var centered_prompt : bool = false
 
 @onready var camera := get_viewport().get_camera_3d()
 @onready var parent := get_parent()
@@ -31,10 +30,13 @@ func _process(_delta: float) -> void:
 	#endregion
 	
 	var parent_position: Vector3
-	if centered_prompt:
-		parent_position = _get_interactable_center(interactable)
-	else:
-		parent_position = interactable.global_transform.origin
+	match interactable.prompt_pos_mode:
+		0: # Matching PromptPositionMode.ORIGIN
+			parent_position = interactable.global_transform.origin
+		1: # Matching PromptPositionMode.MARKER
+			parent_position = interactable.prompt_marker.global_transform.origin
+		2: # Matching PromptPositionMode.AABB
+			parent_position = _get_interactable_center(interactable)
 		
 	var camera_transform := camera.global_transform
 	var camera_position := camera_transform.origin

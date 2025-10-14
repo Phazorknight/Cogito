@@ -19,6 +19,15 @@ enum DoorType {
 ## Name that will displayed when interacting. Leave blank to hide
 @export var display_name : String
 
+enum PromptPositionMode{
+	ORIGIN, ## at the objects origin point. Recommended for smaller objects.
+	MARKER, ## at the position of an assigned Marker3D node. Will throw an error if no marker is assigned. Recommended for big objects/doors.
+	AABB_CENTER, ## at the center of the calculated AABoundingBox. Works well but has a slight performance impact. 
+}
+## This sets where interaction prompt gets displayed on the object.
+@export var prompt_pos_mode : PromptPositionMode = PromptPositionMode.ORIGIN
+@export var prompt_marker : Marker3D
+
 @export_group("Audio")
 @export var open_sound : AudioStream
 @export var close_sound : AudioStream
@@ -140,7 +149,7 @@ func _ready():
 		lock_interaction_text = interaction_text_when_locked
 	else:
 		lock_interaction_text = interaction_text_when_unlocked
-		
+	
 	object_state_updated.emit(interaction_text)
 	lock_state_updated.emit(lock_interaction_text)
 
@@ -170,6 +179,13 @@ func door_rattle(interactor):
 	audio_stream_player_3d.stream = rattle_sound
 	audio_stream_player_3d.play()
 	interactor.send_hint(null, tr("DOOR_locked_hint") )
+
+
+func get_prompt_marker_pos() -> Vector3:
+	if prompt_marker:
+		return prompt_marker.transform.origin
+	else:
+		return self.transform.origin
 
 
 func _physics_process(_delta):
