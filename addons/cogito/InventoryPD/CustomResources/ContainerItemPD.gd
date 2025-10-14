@@ -43,7 +43,6 @@ func take_out():
 		return
 	
 	is_being_wielded = true
-	change_content_to(current_content_index)
 	update_wieldable_data(player_interaction_component)
 	player_interaction_component.change_wieldable_to(self)
 
@@ -72,7 +71,10 @@ func update_wieldable_data(_player_interaction_component : PlayerInteractionComp
 
 func change_content_to(_content_index: int):
 	if current_content_index == _content_index:
-		add(charge_max) # Top up charge
+		if current_content_index == 0:
+			subtract(charge_max) # Empty charge
+		else:
+			add(charge_max) # Top up charge
 		return
 	else:
 		current_content_index = _content_index

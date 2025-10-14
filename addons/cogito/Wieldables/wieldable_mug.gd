@@ -56,7 +56,6 @@ func set_content_meshes(_passed_content: int):
 			water_mesh.set_visible(false)
 
 
-
 # Function called when wieldable is unequipped
 func equip(_player_interaction_component: PlayerInteractionComponent):
 	animation_player.play(anim_equip)
