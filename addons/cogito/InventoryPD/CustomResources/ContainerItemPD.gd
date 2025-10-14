@@ -57,6 +57,11 @@ func put_away():
 	player_interaction_component.change_wieldable_to(null)
 
 
+func apply_effect_of_content_index(_content_index: int):
+	consumable_effects[_content_index].use(player_interaction_component.get_parent())
+	subtract(1)
+
+
 func update_wieldable_data(_player_interaction_component : PlayerInteractionComponent):
 	if _player_interaction_component: #Only update if something get's passed
 		if is_being_wielded:
@@ -67,18 +72,21 @@ func update_wieldable_data(_player_interaction_component : PlayerInteractionComp
 
 func change_content_to(_content_index: int):
 	if current_content_index == _content_index:
-		#player_interaction_component.send_hint(null, "Contents are already index " + str(current_content_index) )
+		add(charge_max) # Top up charge
 		return
 	else:
 		current_content_index = _content_index
-		#player_interaction_component.send_hint(null, "Contents changed to index " + str(current_content_index) )
 		contents_changed.emit(current_content_index)
+		add(charge_max) # Top up charge
 
 
 func subtract(amount):
 	charge_current -= amount
-	if charge_current < 0:
+	if charge_current <= 0:
 		charge_current = 0
+		if current_content_index != 0:
+			current_content_index = 0
+			contents_changed.emit(current_content_index)
 	
 	if is_being_wielded:
 		update_wieldable_data(player_interaction_component)
