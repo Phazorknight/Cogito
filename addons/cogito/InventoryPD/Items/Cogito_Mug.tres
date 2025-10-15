@@ -2,27 +2,20 @@
 
 [ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_eas36"]
 [ext_resource type="Texture2D" uid="uid://cyhbal2jut4y1" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Mug.png" id="1_u2ve2"]
+[ext_resource type="Script" uid="uid://biw34hspf8iaf" path="res://addons/cogito/InventoryPD/CustomResources/ContainerItemContent.gd" id="2_lkjur"]
 [ext_resource type="Script" uid="uid://bvemvme4ev661" path="res://addons/cogito/InventoryPD/CustomResources/ContainerItemPD.gd" id="2_u2ve2"]
 [ext_resource type="PackedScene" uid="uid://2uwqt6x30e7n" path="res://addons/cogito/Wieldables/wieldable_mug.tscn" id="3_ffmr3"]
 
-[sub_resource type="Resource" id="Resource_ffmr3"]
-script = ExtResource("1_eas36")
-attribute_name = "stamina"
-attribute_change_amount = 5.0
-value_to_change = 0
-metadata/_custom_type_script = "uid://dd216g7cnupju"
-
-[sub_resource type="Resource" id="Resource_lkjur"]
-script = ExtResource("1_eas36")
-attribute_name = "health"
-attribute_change_amount = 5.0
-value_to_change = 0
-metadata/_custom_type_script = "uid://dd216g7cnupju"
+[sub_resource type="Resource" id="Resource_tbsgp"]
+script = ExtResource("2_lkjur")
+content_name = "coffee"
+consumable_effects = Array[ExtResource("1_eas36")]([])
+metadata/_custom_type_script = "uid://biw34hspf8iaf"
 
 [resource]
 script = ExtResource("2_u2ve2")
 current_content_index = 0
-consumable_effects = Array[ExtResource("1_eas36")]([null, SubResource("Resource_ffmr3"), SubResource("Resource_lkjur")])
+current_content = SubResource("Resource_tbsgp")
 wieldable_scene = ExtResource("3_ffmr3")
 no_reload = false
 hint_on_empty = "Empty!"

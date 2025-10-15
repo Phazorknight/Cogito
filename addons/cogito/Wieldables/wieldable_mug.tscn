@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://2uwqt6x30e7n"]
+[gd_scene load_steps=17 format=4 uid="uid://2uwqt6x30e7n"]
 
 [ext_resource type="Script" uid="uid://dr2xk6ltallxi" path="res://addons/cogito/Wieldables/wieldable_mug.gd" id="1_g7o57"]
-[ext_resource type="AudioStream" uid="uid://cpm6aqee0t4je" path="res://addons/cogito/Assets/Audio/672201__romankolachnik__water_footsteps_02.wav" id="2_13v34"]
-[ext_resource type="AudioStream" uid="uid://wfjccrp1mkra" path="res://addons/cogito/Assets/Audio/squidge316_sliding-door_01.ogg" id="2_qhneq"]
+[ext_resource type="Resource" uid="uid://bnxx0liv2gn8w" path="res://addons/cogito/InventoryPD/ContainerItemContents/containeritem_coffee.tres" id="2_667dx"]
+[ext_resource type="Resource" uid="uid://dgsu46atpeh0x" path="res://addons/cogito/InventoryPD/ContainerItemContents/containeritem_water.tres" id="3_ngkre"]
+[ext_resource type="AudioStream" uid="uid://2cltbam8bp6m" path="res://addons/cogito/Assets/Audio/Phazorknight/WaterSlurp.ogg" id="4_w3ne0"]
 
 [sub_resource type="Animation" id="Animation_qhneq"]
 length = 0.001
@@ -74,6 +75,21 @@ tracks/2/keys = {
 "method": &"on_drinking"
 }]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer3D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_w3ne0")
+}],
+"times": PackedFloat32Array(0.0666667)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_13v34"]
 resource_name = "equip"
@@ -190,10 +206,10 @@ rings = 1
 
 [node name="WieldableMug" type="Node3D" node_paths=PackedStringArray("coffee_mesh", "water_mesh", "wieldable_mesh")]
 script = ExtResource("1_g7o57")
+coffee_content = ExtResource("2_667dx")
+water_content = ExtResource("3_ngkre")
 coffee_mesh = NodePath("MugMesh/mug/mug_coffee_content")
 water_mesh = NodePath("MugMesh/mug/mug_water_content")
-drink_sound = ExtResource("2_qhneq")
-refill_sound = ExtResource("2_13v34")
 wieldable_mesh = NodePath("MugMesh")
 anim_action_primary = "drink"
 

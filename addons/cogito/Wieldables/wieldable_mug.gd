@@ -2,14 +2,10 @@ extends CogitoWieldable
 
 # Export variables for easy configuration in the Godot editor
 @export_group("Mug Settings")
+@export var coffee_content : ContainerItemContent
+@export var water_content : ContainerItemContent
 @export var coffee_mesh : Node3D
 @export var water_mesh : Node3D
-
-@export_group("Audio")
-## Sound played when toggling the flashlight
-@export var drink_sound: AudioStream
-## Sound played when reloading
-@export var refill_sound: AudioStream
 
 ### Every wieldable needs the following functions:
 ### equip(_player_interaction_component), unequip(), action_primary(), action_secondary(), reload()
@@ -31,7 +27,7 @@ func action_primary(_passed_item_reference: InventoryItemPD, is_released: bool):
 		is_action_pressed = false
 		return
 		
-	if _passed_item_reference.current_content_index != 0:
+	if _passed_item_reference.current_content != null:
 		animation_player.play(anim_action_primary)
 		
 	else:
@@ -39,19 +35,19 @@ func action_primary(_passed_item_reference: InventoryItemPD, is_released: bool):
 
 
 func on_drinking():
-	item_reference.apply_effect_of_content_index(item_reference.current_content_index)
+	item_reference.apply_effect_of_content()
 
 
-
-func set_content_meshes(_passed_content: int):
+func set_content_meshes(_passed_content: ContainerItemContent):
+	print("Wieldable Mug: attempting to change content meshes to ", _passed_content)
 	match _passed_content:
-		0: # EMPTY
+		null: # EMPTY
 			coffee_mesh.set_visible(false)
 			water_mesh.set_visible(false)
-		1: # WATER
+		water_content:
 			coffee_mesh.set_visible(false)
 			water_mesh.set_visible(true)
-		2: # COFFEE
+		coffee_content:
 			coffee_mesh.set_visible(true)
 			water_mesh.set_visible(false)
 
@@ -62,7 +58,7 @@ func equip(_player_interaction_component: PlayerInteractionComponent):
 	player_interaction_component = _player_interaction_component
 	if item_reference.has_signal("contents_changed"):
 		item_reference.contents_changed.connect(set_content_meshes)
-		set_content_meshes(item_reference.current_content_index)
+		set_content_meshes(item_reference.current_content)
 
 # Function called when wieldable is equipped
 func unequip():

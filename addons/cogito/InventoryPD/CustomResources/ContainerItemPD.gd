@@ -2,14 +2,13 @@ extends WieldableItemPD
 class_name ContainerItemPD
 
 # Signal that gets sent when the wiedlable charge changes. Currently used to update Slot UI
-signal contents_changed(index: int)
+signal contents_changed(current_content)
 
 @export_group("Container Item settings")
 ## Current index of content type. This defines the type of content, index will match which consumable effect will be applied. 0 == empty.
-@export var current_content_index : int = 0
+#@export var current_content_index : int = 0
 ## Array of consumable effects, only the effect at the same index of the content will be applied.
-@export var consumable_effects : Array[ConsumableEffect]
-
+@export var current_content : ContainerItemContent
 
 
 func use(target) -> bool:
@@ -56,9 +55,12 @@ func put_away():
 	player_interaction_component.change_wieldable_to(null)
 
 
-func apply_effect_of_content_index(_content_index: int):
-	consumable_effects[_content_index].use(player_interaction_component.get_parent())
-	subtract(1)
+func apply_effect_of_content():
+	if current_content != null:
+		current_content.use(player_interaction_component.get_parent())
+		subtract(1)
+	else:
+		send_empty_hint()
 
 
 func update_wieldable_data(_player_interaction_component : PlayerInteractionComponent):
@@ -69,26 +71,29 @@ func update_wieldable_data(_player_interaction_component : PlayerInteractionComp
 			_player_interaction_component.updated_wieldable_data.emit(null, 0, null)
 
 
-func change_content_to(_content_index: int):
-	if current_content_index == _content_index:
-		if current_content_index == 0:
-			subtract(charge_max) # Empty charge
-		else:
-			add(charge_max) # Top up charge
+func change_content_to(_new_content: ContainerItemContent):
+	if _new_content == null: # Emptying out contents.
+		current_content == null
+		subtract(charge_max) # Empty charge
+		send_empty_hint()
+	elif current_content == _new_content: # Contents don't hcange but get refilled.
+		add(charge_max) # Top up charge
+		player_interaction_component.send_hint(current_content.content_icon, tr(name) + " topped up with "+ tr(current_content.content_name) )
 		return
 	else:
-		current_content_index = _content_index
-		contents_changed.emit(current_content_index)
+		current_content = _new_content
+		contents_changed.emit(current_content)
 		add(charge_max) # Top up charge
+		player_interaction_component.send_hint(current_content.content_icon, tr(name) + " filled with "+ tr(current_content.content_name) )
 
 
 func subtract(amount):
 	charge_current -= amount
 	if charge_current <= 0:
 		charge_current = 0
-		if current_content_index != 0:
-			current_content_index = 0
-			contents_changed.emit(current_content_index)
+		if current_content != null:
+			current_content = null
+			contents_changed.emit(current_content)
 	
 	if is_being_wielded:
 		update_wieldable_data(player_interaction_component)
@@ -138,7 +143,7 @@ func save():
 	var saved_item_data = {
 		"resource" : self,
 		"charge_current" : charge_current,
-		"current_content_index" : current_content_index
+		"current_content" : current_content
 	}
 	return saved_item_data
 
