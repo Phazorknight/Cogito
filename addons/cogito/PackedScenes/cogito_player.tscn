@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=44 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" uid="uid://dyitnpyhwiqx7" path="res://addons/cogito/CogitoObjects/cogito_player.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ll11y3yjbqt" path="res://addons/cogito/InventoryPD/Inventories/PlayerInventory_FIXED.tres" id="2_iyhv4"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="13_fyfhw"]
 [ext_resource type="Script" uid="uid://ua63m2y35w46" path="res://addons/cogito/Scripts/item_drop_shape_cast.gd" id="14_bpb0d"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="14_opnk5"]
+[ext_resource type="Script" uid="uid://cl5u6xgxpt3mb" path="res://addons/cogito/Scripts/AimingSystem.gd" id="15_m05wr"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="15_wtp0a"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="16_buq0c"]
 [ext_resource type="Script" uid="uid://b1qja1tbw5e1j" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="17_t5305"]
@@ -52,6 +53,22 @@ stream_3/stream = ExtResource("15_wtp0a")
 stream_4/stream = ExtResource("16_buq0c")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bpb0d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jei3"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eu3l5"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmpwe"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
 
 [node name="CogitoPlayer" type="CharacterBody3D" node_paths=PackedStringArray("item_drop_shapecast") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -141,6 +158,10 @@ collision_mask = 3
 debug_shape_custom_color = Color(1, 0.368977, 0.687569, 1)
 script = ExtResource("14_bpb0d")
 
+[node name="AimingSystem" type="Node3D" parent="Body/Neck/Head/Eyes/Camera"]
+script = ExtResource("15_m05wr")
+hud_crosshair_path = NodePath("../../../../../../GUI/Panel/AspectRatioContainer/Player_HUD/Crosshair")
+
 [node name="Wieldables" type="Node3D" parent="Body/Neck/Head"]
 unique_name_in_owner = true
 script = ExtResource("12_lr21i")
@@ -202,6 +223,25 @@ layout_mode = 2
 player = NodePath("../../../..")
 item_drop_distance_offset = 0.0
 
+[node name="FixedStaminaBar" parent="GUI/Panel/AspectRatioContainer/Player_HUD" index="0"]
+bar_stylebox = SubResource("StyleBoxFlat_8x37p")
+
+[node name="PromptUI" parent="GUI/Panel/AspectRatioContainer/Player_HUD" index="4"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="UiAttributeDisplay" parent="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/CogitoTabMenu/TAB_stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" index="0"]
+bar_stylebox = SubResource("StyleBoxFlat_3jei3")
+
+[node name="UiAttributeDisplay2" parent="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/CogitoTabMenu/TAB_stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" index="1"]
+bar_stylebox = SubResource("StyleBoxFlat_eu3l5")
+
+[node name="UiAttributeDisplay3" parent="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/CogitoTabMenu/TAB_stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" index="2"]
+bar_stylebox = SubResource("StyleBoxFlat_vmpwe")
+
 [node name="PauseMenu" parent="GUI/Panel/AspectRatioContainer" instance=ExtResource("22_haksr")]
 layout_mode = 2
 
@@ -221,3 +261,9 @@ _player_interaction_component = NodePath("../PlayerInteractionComponent")
 [connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
 [connection signal="interactable_unseen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]
+
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/FixedStaminaBar"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/QuickSlots/CogitoQuickslotContainer1"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/QuickSlots/CogitoQuickslotContainer3"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/QuickSlots/CogitoQuickslotContainer4"]
