@@ -229,12 +229,14 @@ _data = {
 &"open": SubResource("Animation_pl7ih")
 }
 
-[node name="kitchenFridgeContainer" type="StaticBody3D"]
+[node name="kitchenFridgeContainer" type="StaticBody3D" node_paths=PackedStringArray("prompt_marker")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.65301, -4.84288e-08, 6.17191)
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_n63mt")
 display_name = "CONTAINER_fridge"
+prompt_pos_mode = 1
+prompt_marker = NodePath("PromptMarker")
 inventory_data = ExtResource("2_27aia")
 uses_animation = true
 open_animation = "open"
@@ -256,6 +258,9 @@ shape = SubResource("BoxShape3D_djxtd")
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.324466, 0.967389, 0.0629997)
 shape = SubResource("BoxShape3D_xudah")
+
+[node name="PromptMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.438628, 0.976594, 0.0757475)
 
 [node name="FridgeDoorLeft" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0536883, 0.97998, 0.04)

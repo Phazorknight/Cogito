@@ -169,16 +169,14 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_tth07")
 
-[node name="CabinetDoor" type="AnimatableBody3D" parent="."]
+[node name="CabinetDoor" type="AnimatableBody3D" parent="." node_paths=PackedStringArray("prompt_marker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.054, 0.17, -0.06)
 collision_layer = 3
 script = ExtResource("1_1t6vp")
+prompt_pos_mode = 1
+prompt_marker = NodePath("PromptMarker")
 open_sound = ExtResource("2_uqpdi")
 close_sound = ExtResource("3_rgsat")
-interaction_text_when_locked = "DOOR_Unlock"
-interaction_text_when_unlocked = "DOOR_Lock"
-interaction_text_when_closed = "DOOR_Open"
-interaction_text_when_open = "DOOR_Close"
 open_rotation = Vector3(0, -88, 0)
 door_speed = 3.0
 
@@ -195,3 +193,6 @@ volume_db = -26.0
 bus = &"SFX"
 
 [node name="BasicInteraction" parent="CabinetDoor" instance=ExtResource("2_hrf4i")]
+
+[node name="PromptMarker" type="Marker3D" parent="CabinetDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.577348, 0.439955, 0.0284619)

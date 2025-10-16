@@ -219,12 +219,13 @@ shape = SubResource("BoxShape3D_5ujpy")
 mesh = SubResource("ArrayMesh_nd3dp")
 skeleton = NodePath("")
 
-[node name="AnimatableBody3D" type="AnimatableBody3D" parent="kitchenMicrowave(Clone)"]
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="kitchenMicrowave(Clone)" node_paths=PackedStringArray("prompt_marker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0399451, 0.0399451, -1.80478e-16)
 script = ExtResource("1_ncels")
+prompt_pos_mode = 1
+prompt_marker = NodePath("PromptMarker")
 open_sound = ExtResource("2_0ao51")
 close_sound = ExtResource("3_lt4en")
-open_rotation_deg = -90.0
 open_rotation = Vector3(0, -90, 0)
 door_speed = 3.0
 angle_tolerance = 2.0
@@ -240,3 +241,6 @@ shape = SubResource("BoxShape3D_xy8kc")
 [node name="MicrowaveDoor" type="MeshInstance3D" parent="kitchenMicrowave(Clone)/AnimatableBody3D"]
 mesh = SubResource("ArrayMesh_1oatr")
 skeleton = NodePath("")
+
+[node name="PromptMarker" type="Marker3D" parent="kitchenMicrowave(Clone)/AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37208, 0.133871, 0.00926621)
