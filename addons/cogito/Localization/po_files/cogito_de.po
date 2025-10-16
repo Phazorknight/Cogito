@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
 msgid "TAB_GAMEPLAY"
@@ -41,7 +41,7 @@ msgstr "Mausempfindlichkeit"
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
 msgid "Inverts looking up and down direction."
-msgstr ""
+msgstr "Kehrt vertikale Kopfbewegung um."
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
 msgid "BTN_INVERT_Y"
@@ -504,7 +504,7 @@ msgstr "Drehen"
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "INTERACT_hold_joiner"
-msgstr " | (GEDRÜCKT) "
+msgstr " | "
 
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
@@ -540,6 +540,11 @@ msgstr "Zugang gewährt."
 #: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
 msgid "UI_BTN_take_all"
 msgstr "Alles nehmen"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_fill_with"
+msgstr "Anfüllen mit"
 
 #. TRANSLATORS: item name
 #. item ammo item name
@@ -1015,6 +1020,21 @@ msgstr "verwendet."
 msgid "HINT_SWITCH_battery"
 msgstr "Scheint eine Batterie zu brauchen."
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_is_empty"
+msgstr "ist leer!"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_filled_with"
+msgstr "aufgefüllt mit"
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_topped_up_with"
+msgstr "nachgefüllt mit"
+
 #: addons/cogito/EasyMenus/Scenes/main_menu.tscn
 msgid "Legacy Demo Scene"
 msgstr ""
@@ -1036,6 +1056,34 @@ msgstr "NEUES SPIEL"
 #: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
 msgid "TXT_SLOT"
 msgstr "SLOT"
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+msgid "Mug"
+msgstr "Tasse"
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+msgid "Can hold a variety of liquids."
+msgstr "Kann mit Flüssigkeiten gefüllt werden."
+
+#. TRANSLATORS: item hint on empty
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+msgid "HINT_empty"
+msgstr "ist leer!"
+
+#. TRANSLATORS: container_item_content name
+#: addons/cogito/InventoryPD/ContainerItemContents/containeritem_coffee.tres
+msgid "Coffee"
+msgstr "Kaffee"
+
+#. TRANSLATORS: container_item_content name
+#: addons/cogito/InventoryPD/ContainerItemContents/containeritem_water.tres
+msgid "Water"
+msgstr "Wasser"
+
+#~ msgid "Empty!"
+#~ msgstr "Leer!"
 
 #~ msgid "quest_START"
 #~ msgstr "Quest begonnen"

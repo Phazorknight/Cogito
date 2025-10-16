@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_to3fo")
-keylist = Array[String](["DOOR_Unlock", "DOOR_Lock", "DOOR_Open", "DOOR_Close", "DOOR_locked_hint", "SEAT_Stand_Up", "SEAT_Sit", "SWITCH_off", "SWITCH_on", "INTERACT_Read", "INTERACT_drop", "INTERACT_carry", "INTERACT_rotate", "INTERACT_hold_joiner", "INTERACT_place", "INTERACT_remove", "INVENTORY_add_item", "INVENTORY_cant_pick_up", "KEYPAD_enter_code", "KEYPAD_access_granted", "UI_BTN_take_all"])
+keylist = Array[String](["DOOR_Unlock", "DOOR_Lock", "DOOR_Open", "DOOR_Close", "DOOR_locked_hint", "SEAT_Stand_Up", "SEAT_Sit", "SWITCH_off", "SWITCH_on", "INTERACT_Read", "INTERACT_drop", "INTERACT_carry", "INTERACT_rotate", "INTERACT_hold_joiner", "INTERACT_place", "INTERACT_remove", "INVENTORY_add_item", "INVENTORY_cant_pick_up", "KEYPAD_enter_code", "KEYPAD_access_granted", "UI_BTN_take_all", "INTERACT_fill_with"])
 metadata/_custom_type_script = "uid://db6rvrcq4p73m"

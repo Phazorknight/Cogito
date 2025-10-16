@@ -78,13 +78,13 @@ func change_content_to(_new_content: ContainerItemContent):
 		send_empty_hint()
 	elif current_content == _new_content: # Contents don't hcange but get refilled.
 		add(charge_max) # Top up charge
-		player_interaction_component.send_hint(current_content.content_icon, tr(name) + " topped up with "+ tr(current_content.content_name) )
+		player_interaction_component.send_hint(current_content.content_icon, tr(name) + " " + tr("HINT_topped_up_with") + " " + tr(current_content.content_name) )
 		return
 	else:
 		current_content = _new_content
 		contents_changed.emit(current_content)
 		add(charge_max) # Top up charge
-		player_interaction_component.send_hint(current_content.content_icon, tr(name) + " filled with "+ tr(current_content.content_name) )
+		player_interaction_component.send_hint(current_content.content_icon, tr(name) + " " + tr("HINT_filled_with")+ " " + tr(current_content.content_name) )
 
 
 func subtract(amount):

@@ -14,11 +14,10 @@ metadata/_custom_type_script = "uid://biw34hspf8iaf"
 
 [resource]
 script = ExtResource("2_u2ve2")
-current_content_index = 0
 current_content = SubResource("Resource_tbsgp")
 wieldable_scene = ExtResource("3_ffmr3")
 no_reload = false
-hint_on_empty = "Empty!"
+hint_on_empty = "HINT_empty"
 charge_max = 5.0
 ammo_item_name = ""
 charge_current = 0.0
