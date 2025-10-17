@@ -238,7 +238,7 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 		if node is CogitoWieldableInteractionComponent and node.require_wieldable_to_show and player.player_interaction_component.equipped_wieldable_item != node.required_wieldable: # Checking if player holds required wieldable
 			continue
 		elif node is CogitoWieldableInteractionComponent and node.require_wieldable_to_show and player.player_interaction_component.equipped_wieldable_item == node.required_wieldable:
-			if node.wieldable_action == 2: # Checking if it's WieldableAction.CONTAINER_ITEM
+			if node.wieldable_action == 1: # Checking if it's WieldableAction.CONTAINER_ITEM
 				node.interaction_text = tr("INTERACT_fill_with") + " " + tr(node.container_item_to_dispense.content_name)
 			
 		

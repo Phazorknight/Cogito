@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=135 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_kxi7f"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_akrjl"]
@@ -65,6 +65,7 @@
 [ext_resource type="PackedScene" uid="uid://d2vpt8d74j5u" path="res://addons/cogito/PackedScenes/sanity_drain_attribute_zone.tscn" id="65_owla0"]
 [ext_resource type="PackedScene" uid="uid://ks0xcampuu3h" path="res://addons/cogito/PackedScenes/stamina_drain_attribute_zone.tscn" id="66_go053"]
 [ext_resource type="PackedScene" uid="uid://d2lnk6ecthmvd" path="res://addons/cogito/PackedScenes/Pickups/pickup_strength_potion.tscn" id="67_17g06"]
+[ext_resource type="PackedScene" uid="uid://4wqqceumjcot" path="res://addons/cogito/PackedScenes/laser_charger.tscn" id="67_ovhpt"]
 [ext_resource type="PackedScene" uid="uid://b2cccsfb5tikx" path="res://addons/cogito/CogitoNPC/cogito_npc.tscn" id="68_wxy0x"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
@@ -4553,6 +4554,9 @@ cogito_name = ""
 [node name="CogitoNPC" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("68_wxy0x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)
 patrol_path = NodePath("../EnemyPatrolpath2")
+
+[node name="LaserCharger" parent="." instance=ExtResource("67_ovhpt")]
+transform = Transform3D(4.37114e-08, 1, 1.50996e-07, 1, -4.37114e-08, 0, 6.60024e-15, 1.50996e-07, -1, 8.28828, 0.623202, -12.0581)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]

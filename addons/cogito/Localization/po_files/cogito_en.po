@@ -1033,6 +1033,16 @@ msgstr "filled with"
 msgid "HINT_topped_up_with"
 msgstr "topped up with"
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_is_full"
+msgstr "Already full."
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_wrong_wieldable"
+msgstr "Can't use it with this."
+
 #: addons/cogito/EasyMenus/Scenes/main_menu.tscn
 msgid "Legacy Demo Scene"
 msgstr "Legacy Demo Scene"

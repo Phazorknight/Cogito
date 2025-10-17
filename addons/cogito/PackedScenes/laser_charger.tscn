@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://4wqqceumjcot"]
+
+[ext_resource type="FontFile" uid="uid://1pab23fuoi6p" path="res://addons/cogito/Assets/Fonts/Montserrat/Montserrat-SemiBold.ttf" id="1_0ktva"]
+[ext_resource type="PackedScene" uid="uid://cpb8jxuefax2y" path="res://addons/cogito/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_crate_painted_open.glb" id="2_l88h4"]
+[ext_resource type="PackedScene" uid="uid://dhpq4vvtn6876" path="res://addons/cogito/Assets/Models/Kenney/SpaceInterior/GLTF format/KSI_container.glb" id="3_mjqes"]
+[ext_resource type="Script" uid="uid://d041v6palciio" path="res://addons/cogito/CogitoObjects/cogito_static_interactable.gd" id="4_7u435"]
+[ext_resource type="PackedScene" uid="uid://dofn6kyp8l0fl" path="res://addons/cogito/Components/Interactions/WieldableInteraction.tscn" id="5_psky3"]
+[ext_resource type="Resource" uid="uid://txiu5yxexevm" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserRifle.tres" id="6_qnb50"]
+[ext_resource type="AudioStream" uid="uid://tgfmiixge4x4" path="res://addons/cogito/Assets/Audio/Phazorknight/cogito_electring_ping_A.wav" id="7_7u435"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r8380"]
+size = Vector3(0.835144, 0.339844, 0.459442)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hwjxv"]
+height = 0.118628
+radius = 0.162109
+
+[node name="LaserCharger" type="StaticBody3D"]
+transform = Transform3D(4.37114e-08, 1, 8.74228e-08, 1, -4.37114e-08, 0, 3.82137e-15, 8.74228e-08, -1, 0, 0, 0)
+
+[node name="Label3D_charger" type="Label3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, -1.74846e-07, -1.52855e-14, -1.74846e-07, 1, 0.363746, 0.22573, 0.00152588)
+pixel_size = 0.002
+text = "CHARGER"
+font = ExtResource("1_0ktva")
+font_size = 64
+outline_size = 0
+
+[node name="Label3D_charger3" type="Label3D" parent="."]
+transform = Transform3D(1.74846e-07, 1, 4.37114e-08, 1.31134e-07, 4.37114e-08, -1, -1, 1.74846e-07, -1.31134e-07, 0.656897, -0.000617027, -0.236494)
+pixel_size = 0.001
+text = "CHARGER"
+font = ExtResource("1_0ktva")
+font_size = 64
+outline_size = 0
+
+[node name="Label3D_charger2" type="Label3D" parent="."]
+transform = Transform3D(1, -1.74846e-07, -8.74228e-08, -1.74846e-07, -1, 7.10543e-15, -8.74228e-08, 7.10543e-15, -1, 0.363746, 0.229442, -0.457166)
+pixel_size = 0.002
+text = "CHARGER"
+font = ExtResource("1_0ktva")
+font_size = 64
+outline_size = 0
+
+[node name="KSI_crate_painted_open" parent="." instance=ExtResource("2_l88h4")]
+transform = Transform3D(0.6, -2.00445e-22, 0, 2.00445e-22, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="KSI_container" parent="." instance=ExtResource("3_mjqes")]
+transform = Transform3D(1.31134e-08, 0.6, -9.05975e-08, 0.3, -2.62268e-08, 5.24537e-08, 2.62268e-08, -9.05975e-08, -0.6, 0.0703016, -0.0596476, -0.382281)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 3.34075e-22, 0, 3.34075e-22, 1, 0, 0, 0, 1, 0.417694, 0.167969, -0.226852)
+shape = SubResource("BoxShape3D_r8380")
+
+[node name="ChargingInteraction" type="StaticBody3D" parent="."]
+collision_layer = 3
+script = ExtResource("4_7u435")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ChargingInteraction"]
+transform = Transform3D(1, 3.34075e-22, 0, 3.34075e-22, 1, 0, 0, 0, 1, 0.221746, -0.000803706, -0.234052)
+shape = SubResource("CylinderShape3D_hwjxv")
+
+[node name="WieldableInteraction" parent="ChargingInteraction" instance=ExtResource("5_psky3")]
+transform = Transform3D(1, 3.34075e-22, 0, 3.34075e-22, 1, 0, 0, 0, 1, 0, 0, 0)
+required_wieldable = ExtResource("6_qnb50")
+interaction_sound = ExtResource("7_7u435")
+wieldable_action = 0
+interaction_text = "Charge Laser Rifle"

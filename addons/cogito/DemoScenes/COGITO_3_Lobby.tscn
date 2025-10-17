@@ -7465,10 +7465,10 @@ shape = SubResource("BoxShape3D_gxiae")
 [node name="WieldableInteraction" parent="CUBICLE_AREA/WaterFeature/WaterRefill" instance=ExtResource("90_tm0wg")]
 required_wieldable = ExtResource("91_meobw")
 interaction_sound = ExtResource("93_fay3r")
+require_wieldable_to_show = true
 container_item_to_dispense = ExtResource("94_gxiae")
 custom_method = ""
 custom_parameter = 0
-require_wieldable_to_show = true
 interaction_text = "Fill with water"
 
 [node name="WaterFeature2" type="Node3D" parent="CUBICLE_AREA"]

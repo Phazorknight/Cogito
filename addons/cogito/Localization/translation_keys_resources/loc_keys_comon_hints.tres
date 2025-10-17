@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_f3hy7")
-keylist = Array[String](["HINT_cant_carry", "HINT_cant_pick_up", "HINT_ZONE_sanity_drain", "HINT_ZONE_stamina_drain", "HINT_ZONE_heal", "HINT_ZONE_damage", "HINT_SWITCH_item_used", "HINT_SWITCH_battery", "HINT_is_empty", "HINT_filled_with", "HINT_topped_up_with"])
+keylist = Array[String](["HINT_cant_carry", "HINT_cant_pick_up", "HINT_ZONE_sanity_drain", "HINT_ZONE_stamina_drain", "HINT_ZONE_heal", "HINT_ZONE_damage", "HINT_SWITCH_item_used", "HINT_SWITCH_battery", "HINT_is_empty", "HINT_filled_with", "HINT_topped_up_with", "HINT_is_full", "HINT_wrong_wieldable"])
 metadata/_custom_type_script = "uid://db6rvrcq4p73m"

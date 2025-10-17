@@ -1,24 +1,61 @@
+@tool
 extends InteractionComponent
 class_name CogitoWieldableInteractionComponent
 
-### interaction to check for wieldables.
+## Player is required to hold this wiedlable to perform the interaction.
 @export var required_wieldable : WieldableItemPD
 ## Sound that plays when interacted.
 @export var interaction_sound : AudioStream
+## If true, only show this interaction prompt if the player is wielding.
+@export var require_wieldable_to_show : bool = false
 
 ## Action to perform
-enum WieldableAction {CHARGE, RELOAD, CONTAINER_ITEM, CUSTOM}
-@export var wieldable_action : WieldableAction
+enum WieldableAction {
+	CHARGE, ## Charges the equipped wieldable with a steady rate
+	CONTAINER_ITEM, ## Dispenses container_item_contents to a wieldable container item
+	CUSTOM, ## Calls a custom method and passes a custom parameter on the wieldable inventory item (not the wieldable node)
+	}
+@export var wieldable_action : WieldableAction:
+	set(value):
+		wieldable_action = value
+		notify_property_list_changed()
+
+# Wieldable Action Charge
+## How much charge gets added to the wieldable per second.
+@export var charge_rate : float = 5.0
+var is_charging : bool = false
+var player_interaction_component : PlayerInteractionComponent
+var audio_stream_player : AudioStreamPlayer
+
+# Wieldable Action Container Item
 @export var container_item_to_dispense : ContainerItemContent
-### If above is set to custom, method to call on Wieldable
+
+## If above is set to custom, method to call on Wieldable
 @export var custom_method : String
 @export var custom_parameter : int
 
-## Only show this interaction prompt if the player is wielding
-@export var require_wieldable_to_show : bool = false
+@onready var parent_node = get_parent()
+
+func _validate_property(property: Dictionary):
+	if property.name in ["custom_method", "custom_parameter"] and wieldable_action != WieldableAction.CUSTOM:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	elif property.name in ["container_item_to_dispense"] and wieldable_action != WieldableAction.CONTAINER_ITEM:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+	elif property.name in ["charge_rate"] and wieldable_action != WieldableAction.CHARGE:
+		property.usage = PROPERTY_USAGE_NO_EDITOR
+
+
+func _ready() -> void:
+	if parent_node.has_signal("object_state_updated"):
+		parent_node.object_state_updated.connect(_on_object_state_change)
+
+
+func _on_object_state_change(_interaction_text: String):
+	interaction_text = _interaction_text
 
 
 func interact(_player_interaction_component:PlayerInteractionComponent):
+	player_interaction_component = _player_interaction_component
 	if !is_disabled:
 		if attribute_check == AttributeCheck.NONE:
 			if check_for_wieldable(_player_interaction_component):
@@ -33,33 +70,63 @@ func interact(_player_interaction_component:PlayerInteractionComponent):
 
 func check_for_wieldable(_player_interaction_component: PlayerInteractionComponent) -> bool:
 	if !_player_interaction_component.is_wielding:
-		_player_interaction_component.send_hint(null, "You aren't holding anything!")
 		return false
-	if _player_interaction_component.equipped_wieldable_item == required_wieldable:
+	if _player_interaction_component.equipped_wieldable_item.name == required_wieldable.name:
 		return true
 	else:
-		_player_interaction_component.send_hint(null, "You are holding the wrong thing!")
+		_player_interaction_component.send_hint(null, tr("HINT_wrong_wieldable"))
+		print("Expected: ", required_wieldable.name, ". Detected: ", _player_interaction_component.equipped_wieldable_item.name )
 		return false
 
 
 func perform_wieldable_interaction(_player_interaction_component: PlayerInteractionComponent):
-	print("WieldableInteraction: Wieldable found. Attempting action...")
 	match wieldable_action:
-		WieldableAction.RELOAD:
-			pass
 		WieldableAction.CHARGE:
-			pass
+			if charge_wieldable(_player_interaction_component):
+				pass
+			else:
+				_player_interaction_component.send_hint(_player_interaction_component.equipped_wieldable_item.icon, tr("HINT_is_full") )
 		WieldableAction.CONTAINER_ITEM:
-			print("WieldableInteraction: Attempting to change content to ", container_item_to_dispense.content_name)
 			_player_interaction_component.equipped_wieldable_item.change_content_to(container_item_to_dispense)
+			if interaction_sound:
+				Audio.play_sound_2d(interaction_sound)
 		WieldableAction.CUSTOM:
 			print("Attempting to use custom method ", custom_method, " with parameter ", custom_parameter)
 			var custom_callable = Callable(_player_interaction_component.equipped_wieldable_item, custom_method)
 			custom_callable.call(custom_parameter)
-	
-	if interaction_sound:
-		Audio.play_sound_2d(interaction_sound)
+			if interaction_sound:
+				Audio.play_sound_2d(interaction_sound)
 
 
-func _on_object_state_change(_interaction_text: String):
-	interaction_text = _interaction_text
+func _unhandled_input(event: InputEvent) -> void:
+	if self.is_visible_in_tree() and event.is_action_released(input_map_action):
+		stop_charging()
+
+
+func _physics_process(delta: float) -> void:
+	if !is_charging:
+		return
+	else:
+		player_interaction_component.equipped_wieldable_item.add(charge_rate * delta)
+		if audio_stream_player and !audio_stream_player.playing:
+			audio_stream_player.play()
+		
+		if player_interaction_component.equipped_wieldable_item.charge_current >= player_interaction_component.equipped_wieldable_item.charge_max:
+			stop_charging()
+
+
+func stop_charging():
+	is_charging = false
+	if audio_stream_player and audio_stream_player.playing:
+		audio_stream_player.stop()
+
+
+func charge_wieldable(_player_interaction_component: PlayerInteractionComponent) -> bool:
+	## Check if wieldable is fully charged.
+	if _player_interaction_component.equipped_wieldable_item.charge_current == _player_interaction_component.equipped_wieldable_item.charge_max:
+		return false
+	else:
+		is_charging = true
+		if interaction_sound:
+			audio_stream_player = Audio.play_sound(interaction_sound)
+		return true

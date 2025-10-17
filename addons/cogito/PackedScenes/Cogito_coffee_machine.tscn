@@ -104,9 +104,10 @@ shape = SubResource("BoxShape3D_vt7u4")
 [node name="WieldableInteraction" parent="." instance=ExtResource("2_f3xuy")]
 required_wieldable = ExtResource("3_8agp6")
 interaction_sound = ExtResource("4_3xr1n")
+require_wieldable_to_show = true
+wieldable_action = 1
 container_item_to_dispense = ExtResource("4_8agp6")
 custom_method = ""
 custom_parameter = 0
-require_wieldable_to_show = true
 interaction_text = "Fill with coffee"
 ignore_open_gui = false
