@@ -60,14 +60,14 @@ const RESOLUTION_DICTIONARY: Dictionary = {
 	"1024x576 (16:9)": Vector2i(1024, 576),
 	"1024x640 (16:10)": Vector2i(1024, 640),
 	"1024x768 (4:3)": Vector2i(1024, 768),
-	"1152x648 (16:9)": Vector2(1152, 648),
+	"1152x648 (16:9)": Vector2i(1152, 648),
 	"1280x720 (16:9)": Vector2i(1280, 720),
 	"1280x800 (16:10)": Vector2i(1280, 800),
 	"1366x768 (16:9)": Vector2i(1366, 768),
 	"1440x900 (16:10)": Vector2i(1440, 900),
 	"1600x1200 (4:3)": Vector2i(1600, 1200),
 	"1600x900 (16:9)": Vector2i(1600, 900),
-	"1680x720 (21:9)": Vector2(1680, 720),
+	"1680x720 (21:9)": Vector2i(1680, 720),
 	"1920x1080 (16:9)": Vector2i(1920, 1080),
 	"1920x1200 (16:10)": Vector2i(1920, 1200),
 	"2560x1080 (21:9)": Vector2i(2560, 1080),
@@ -211,7 +211,7 @@ func refresh_render():
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
 		DisplayServer.window_set_size(windowed_resolution)
-		window.content_scale_size = Vector2i(0, 0)
+		window.content_scale_size = Vector2i.ZERO
 		window.scaling_3d_scale = 1.0
 	
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -485,7 +485,7 @@ func _on_apply_changes_pressed() -> void:
 
 
 func reset():
-	get_window().content_scale_size = Vector2i(0, 0)
+	get_window().content_scale_size = Vector2i.ZERO
 	have_options_changed = false
 	has_windowed_resolution_changed = false
 
