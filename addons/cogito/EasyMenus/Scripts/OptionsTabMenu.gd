@@ -116,6 +116,8 @@ const serialized_default_inputs: String = "{\"action_primary\":{\"joypad\":[\"5|
 
 
 func _ready() -> void:
+	reset()
+
 	# GAMEPLAY
 	add_headbob_items()
 	headbob_option_button.item_selected.connect(on_headbob_selected)
@@ -203,14 +205,13 @@ func _on_fullscreen_mode_toggled(button_pressed: bool) -> void:
 
 
 func refresh_render():
-	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
-			DisplayServer.window_set_size(windowed_resolution)
-
 	var window = get_window()
-	window.content_scale_size = windowed_resolution
+	
 	if is_fullscreen():
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
+		DisplayServer.window_set_size(windowed_resolution)
+		window.content_scale_size = Vector2i(0, 0)
 		window.scaling_3d_scale = 1.0
 	
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -484,6 +485,7 @@ func _on_apply_changes_pressed() -> void:
 
 
 func reset():
+	get_window().content_scale_size = Vector2i(0, 0)
 	have_options_changed = false
 	has_windowed_resolution_changed = false
 
