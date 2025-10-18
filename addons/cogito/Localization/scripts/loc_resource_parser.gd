@@ -9,6 +9,16 @@ func _parse_file(path: String) -> Array[PackedStringArray]:
 		print("Parsing file: ", path, ": File is not res.")
 		return ret
 
+	if res is ContainerItemContent:
+		print("Parsing file: ", path, ": File is ContainerItemContent.")
+		var container_item_content = res
+
+		var msgtxt = ""
+		var msgid_plural = ""
+		
+		ret.append(PackedStringArray([container_item_content.content_name, msgtxt, msgid_plural, "container_item_content name"]))
+
+
 #	Processing Inventory Items for Localization
 	if res is InventoryItemPD:
 		print("Parsing file: ", path, ": File is InventoryItem.")

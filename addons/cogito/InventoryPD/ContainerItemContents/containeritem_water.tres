@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ContainerItemContent" load_steps=5 format=3 uid="uid://dgsu46atpeh0x"]
+
+[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_e5td4"]
+[ext_resource type="Texture2D" uid="uid://betr5ip8hwbhx" path="res://addons/cogito/Assets/Graphics/UiIcons/Ui_icon_water.png" id="2_45k7y"]
+[ext_resource type="Script" uid="uid://biw34hspf8iaf" path="res://addons/cogito/InventoryPD/CustomResources/ContainerItemContent.gd" id="2_gbm07"]
+
+[sub_resource type="Resource" id="Resource_ebct7"]
+script = ExtResource("1_e5td4")
+attribute_name = "stamina"
+attribute_change_amount = 5.0
+value_to_change = 0
+metadata/_custom_type_script = "uid://dd216g7cnupju"
+
+[resource]
+script = ExtResource("2_gbm07")
+content_name = "Water"
+content_icon = ExtResource("2_45k7y")
+consumable_effects = Array[ExtResource("1_e5td4")]([SubResource("Resource_ebct7")])
+metadata/_custom_type_script = "uid://biw34hspf8iaf"

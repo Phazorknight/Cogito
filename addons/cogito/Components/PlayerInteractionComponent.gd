@@ -207,7 +207,7 @@ func stop_carrying():
 
 
 ### Wieldable Management
-func equip_wieldable(wieldable_item: WieldableItemPD):
+func equip_wieldable(wieldable_item: WieldableItemPD ):
 	if wieldable_item != null:
 		equipped_wieldable_item = wieldable_item #Set Inventory Item reference
 		# Set Wieldable node reference

@@ -41,6 +41,9 @@
 # res://addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
 # res://addons/cogito/EasyMenus/Scenes/main_menu.tscn
 # res://addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
+# res://addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+# res://addons/cogito/InventoryPD/ContainerItemContents/containeritem_coffee.tres
+# res://addons/cogito/InventoryPD/ContainerItemContents/containeritem_water.tres
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -572,6 +575,16 @@ msgstr ""
 msgid "UI_BTN_take_all"
 msgstr ""
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_fill_with"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_charge"
+msgstr ""
+
 #. TRANSLATORS: item name
 #. item ammo item name
 #: addons/cogito/InventoryPD/Items/Cogito_Battery.tres
@@ -627,6 +640,7 @@ msgstr ""
 #: addons/cogito/InventoryPD/Items/Cogito_Pickaxe.tres
 #: addons/cogito/InventoryPD/Items/Cogito_Pistol.tres
 #: addons/cogito/InventoryPD/Items/Cogito_UselessItem.tres
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
 msgid ""
 msgstr ""
 
@@ -1043,6 +1057,31 @@ msgstr ""
 msgid "HINT_SWITCH_battery"
 msgstr ""
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_is_empty"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_filled_with"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_topped_up_with"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_is_full"
+msgstr ""
+
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_comon_hints.tres
+msgid "HINT_wrong_wieldable"
+msgstr ""
+
 #: addons/cogito/EasyMenus/Scenes/main_menu.tscn
 msgid "Legacy Demo Scene"
 msgstr ""
@@ -1063,4 +1102,29 @@ msgstr ""
 #. TRANSLATORS: translation_key_dict entry
 #: addons/cogito/Localization/translation_keys_resources/loc_menus_and_options.tres
 msgid "TXT_SLOT"
+msgstr ""
+
+#. TRANSLATORS: item name
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+msgid "Mug"
+msgstr ""
+
+#. TRANSLATORS: item description
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+msgid "Can hold a variety of liquids."
+msgstr ""
+
+#. TRANSLATORS: item hint on empty
+#: addons/cogito/InventoryPD/Items/Cogito_Mug.tres
+msgid "HINT_empty"
+msgstr ""
+
+#. TRANSLATORS: container_item_content name
+#: addons/cogito/InventoryPD/ContainerItemContents/containeritem_coffee.tres
+msgid "Coffee"
+msgstr ""
+
+#. TRANSLATORS: container_item_content name
+#: addons/cogito/InventoryPD/ContainerItemContents/containeritem_water.tres
+msgid "Water"
 msgstr ""

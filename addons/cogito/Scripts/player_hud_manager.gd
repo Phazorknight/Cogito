@@ -235,6 +235,17 @@ func set_interaction_prompts(passed_interaction_nodes : Array[Node]):
 			continue
 		if node.attribute_check == 2 and !node.check_attribute(player.player_interaction_component):  # Hide if attribute check is set to Hide Interaction and the check doesn't pass
 			continue
+		if node is CogitoWieldableInteractionComponent:
+			if  node.wieldable_action == 1: # Check if WieldableAction.CONTAINER_ITEM to update the interaction text
+					node.interaction_text = tr("INTERACT_fill_with") + " " + tr(node.container_item_to_dispense.content_name)
+	
+			if node.require_wieldable_to_show and !player.player_interaction_component.equipped_wieldable_item: # SKIP if player is not wielding anything
+				continue
+			if node.require_wieldable_to_show and player.player_interaction_component.equipped_wieldable_item.name != node.required_wieldable.name: # Checking if player holds required wieldable
+				print("PLAYER HUD: Wieldable name mismatch")
+				continue
+			#if node.require_wieldable_to_show and player.player_interaction_component.equipped_wieldable_item.name == node.required_wieldable.name:
+				#print("PLAYER HUD: Wieldable name match")
 		
 		var instanced_prompt: UiPromptComponent = prompt_component.instantiate()
 		prompt_area.add_child(instanced_prompt)

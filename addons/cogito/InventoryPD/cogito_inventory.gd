@@ -251,7 +251,7 @@ func take_all_items(target_inventory: CogitoInventory):
 	for slot in inventory_slots:
 		if slot != null:
 			#grab item in slot and add it to target inventory
-			if target_inventory.pick_up_slot_data(slot.duplicate()):
+			if target_inventory.pick_up_slot_data(slot.duplicate(true)):
 				print("Grabbed ", slot.inventory_item.name)
 				remove_slot_data(slot) #Empty the slot
 				force_inventory_update()
