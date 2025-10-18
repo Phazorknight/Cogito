@@ -94,21 +94,3 @@ func _attempt_pick_up(body: Node3D) -> void:
 			auto_picked_up_item.emit()
 		# Exit loop after detecting a pick up component (should only be one)
 		break
-
-
-# TODO: may require save functionality to properly implement altering the item list
-#func new_item_list(new_items: Array[InventoryItemPD]) -> void:
-	#auto_pick_up_items = new_items.duplicate()
-	#CogitoGlobals.debug_log(true,"AutoPickUpZone.gd", "Created a new auto pick up list")
-#
-#
-#func add_item_to_list(item: InventoryItemPD) -> void:
-	#if !auto_pick_up_items.has(item):
-		#auto_pick_up_items.append(item)
-		#CogitoGlobals.debug_log(true,"AutoPickUpZone.gd", "Added %s to auto pick up list" % item.name)
-#
-#
-#func remove_item_from_list(item: InventoryItemPD) -> void:
-	#if auto_pick_up_items.has(item):
-		#auto_pick_up_items.erase(item)
-		#CogitoGlobals.debug_log(true,"AutoPickUpZone.gd", "Removed %s from auto pick up list" % item.name)

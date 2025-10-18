@@ -27,7 +27,7 @@ func action_primary(_passed_item_reference: InventoryItemPD, is_released: bool):
 		is_action_pressed = false
 		return
 		
-	if _passed_item_reference.current_content != null:
+	if _passed_item_reference.current_content != null and _passed_item_reference.charge_current > 0:
 		animation_player.play(anim_action_primary)
 		
 	else:

@@ -1,20 +1,12 @@
-[gd_resource type="Resource" script_class="ContainerItemPD" load_steps=7 format=3 uid="uid://pfv77oxxq8c5"]
+[gd_resource type="Resource" script_class="ContainerItemPD" load_steps=5 format=3 uid="uid://pfv77oxxq8c5"]
 
-[ext_resource type="Script" uid="uid://dd216g7cnupju" path="res://addons/cogito/InventoryPD/CustomResources/ConsumableEffect.gd" id="1_eas36"]
 [ext_resource type="Texture2D" uid="uid://cyhbal2jut4y1" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Mug.png" id="1_u2ve2"]
-[ext_resource type="Script" uid="uid://biw34hspf8iaf" path="res://addons/cogito/InventoryPD/CustomResources/ContainerItemContent.gd" id="2_lkjur"]
 [ext_resource type="Script" uid="uid://bvemvme4ev661" path="res://addons/cogito/InventoryPD/CustomResources/ContainerItemPD.gd" id="2_u2ve2"]
 [ext_resource type="PackedScene" uid="uid://2uwqt6x30e7n" path="res://addons/cogito/Wieldables/wieldable_mug.tscn" id="3_ffmr3"]
-
-[sub_resource type="Resource" id="Resource_tbsgp"]
-script = ExtResource("2_lkjur")
-content_name = "coffee"
-consumable_effects = Array[ExtResource("1_eas36")]([])
-metadata/_custom_type_script = "uid://biw34hspf8iaf"
+[ext_resource type="AudioStream" uid="uid://npav2p2tk10i" path="res://addons/cogito/Assets/Audio/Kenney/handleSmallLeather.ogg" id="3_lkjur"]
 
 [resource]
 script = ExtResource("2_u2ve2")
-current_content = SubResource("Resource_tbsgp")
 wieldable_scene = ExtResource("3_ffmr3")
 no_reload = false
 hint_on_empty = "HINT_empty"
@@ -34,6 +26,7 @@ drop_scene = "uid://u2b6ss4xaxp8"
 item_drop_size = 0.5
 hint_text_on_use = ""
 item_size = Vector2(1, 1)
-can_auto_slot = false
-slot_number = -1
+sound_pickup = ExtResource("3_lkjur")
+can_auto_slot = true
+slot_number = 4
 metadata/_custom_type_script = "uid://bvemvme4ev661"

@@ -546,6 +546,11 @@ msgstr "Take all"
 msgid "INTERACT_fill_with"
 msgstr "Fill with"
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_charge"
+msgstr "Charge"
+
 #. TRANSLATORS: item name
 #. item ammo item name
 #: addons/cogito/InventoryPD/Items/Cogito_Battery.tres

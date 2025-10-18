@@ -35,6 +35,8 @@ var audio_stream_player : AudioStreamPlayer
 @export var custom_parameter : int
 
 @onready var parent_node = get_parent()
+@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
+
 
 func _validate_property(property: Dictionary):
 	if property.name in ["custom_method", "custom_parameter"] and wieldable_action != WieldableAction.CUSTOM:
@@ -46,12 +48,15 @@ func _validate_property(property: Dictionary):
 
 
 func _ready() -> void:
-	if parent_node.has_signal("object_state_updated"):
-		parent_node.object_state_updated.connect(_on_object_state_change)
+	#if parent_node.has_signal("object_state_updated"):
+		#parent_node.object_state_updated.connect(_on_object_state_change)
+	
+	if interaction_sound:
+		audio_stream_player_3d.set_stream(interaction_sound)
 
 
-func _on_object_state_change(_interaction_text: String):
-	interaction_text = _interaction_text
+#func _on_object_state_change(_interaction_text: String):
+	#interaction_text = _interaction_text
 
 
 func interact(_player_interaction_component:PlayerInteractionComponent):
@@ -89,13 +94,13 @@ func perform_wieldable_interaction(_player_interaction_component: PlayerInteract
 		WieldableAction.CONTAINER_ITEM:
 			_player_interaction_component.equipped_wieldable_item.change_content_to(container_item_to_dispense)
 			if interaction_sound:
-				Audio.play_sound_2d(interaction_sound)
+				audio_stream_player_3d.play()
 		WieldableAction.CUSTOM:
 			print("Attempting to use custom method ", custom_method, " with parameter ", custom_parameter)
 			var custom_callable = Callable(_player_interaction_component.equipped_wieldable_item, custom_method)
 			custom_callable.call(custom_parameter)
 			if interaction_sound:
-				Audio.play_sound_2d(interaction_sound)
+				audio_stream_player_3d.play()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -108,8 +113,8 @@ func _physics_process(delta: float) -> void:
 		return
 	else:
 		player_interaction_component.equipped_wieldable_item.add(charge_rate * delta)
-		if audio_stream_player and !audio_stream_player.playing:
-			audio_stream_player.play()
+		if !audio_stream_player_3d.playing:
+			audio_stream_player_3d.play()
 		
 		if player_interaction_component.equipped_wieldable_item.charge_current >= player_interaction_component.equipped_wieldable_item.charge_max:
 			stop_charging()
@@ -117,8 +122,8 @@ func _physics_process(delta: float) -> void:
 
 func stop_charging():
 	is_charging = false
-	if audio_stream_player and audio_stream_player.playing:
-		audio_stream_player.stop()
+	if audio_stream_player_3d.playing:
+		audio_stream_player_3d.stop()
 
 
 func charge_wieldable(_player_interaction_component: PlayerInteractionComponent) -> bool:
@@ -127,6 +132,5 @@ func charge_wieldable(_player_interaction_component: PlayerInteractionComponent)
 		return false
 	else:
 		is_charging = true
-		if interaction_sound:
-			audio_stream_player = Audio.play_sound(interaction_sound)
+		audio_stream_player_3d.play()
 		return true

@@ -580,6 +580,11 @@ msgstr ""
 msgid "INTERACT_fill_with"
 msgstr ""
 
+#. TRANSLATORS: translation_key_dict entry
+#: addons/cogito/Localization/translation_keys_resources/loc_keys_common_interactions.tres
+msgid "INTERACT_charge"
+msgstr ""
+
 #. TRANSLATORS: item name
 #. item ammo item name
 #: addons/cogito/InventoryPD/Items/Cogito_Battery.tres

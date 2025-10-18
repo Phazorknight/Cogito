@@ -9,3 +9,7 @@ custom_method = "change_content_to"
 custom_parameter = 2
 input_map_action = "interact"
 interaction_text = "Wieldable interaction"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 3.34075e-22, -2.5411e-21, 3.34075e-22, 1, 0, 0, 0, 1, 0, 0, 0)
+bus = &"SFX"
