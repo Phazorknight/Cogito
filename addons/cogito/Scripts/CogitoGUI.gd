@@ -1,16 +1,5 @@
 extends Control
 
-var base_window_size = Vector2(
-		ProjectSettings.get_setting("display/window/size/viewport_width"),
-		ProjectSettings.get_setting("display/window/size/viewport_height")
-)
-
-# These defaults match this demo's project settings. Adjust as needed if adapting this
-# in your own project.
-var stretch_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-var stretch_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
-
-var scale_factor = 1.0
 var gui_aspect_ratio = -1.0
 var gui_margin = 0.0
 
@@ -54,81 +43,9 @@ func update_container():
 		panel.offset_right = -gui_margin
 
 
-func _on_gui_aspect_ratio_item_selected(index):
-	match index:
-		0:  # Fit to Window
-			gui_aspect_ratio = -1.0
-		1:  # 5:4
-			gui_aspect_ratio = 5.0 / 4.0
-		2:  # 4:3
-			gui_aspect_ratio = 4.0 / 3.0
-		3:  # 3:2
-			gui_aspect_ratio = 3.0 / 2.0
-		4:  # 16:10
-			gui_aspect_ratio = 16.0 / 10.0
-		5:  # 16:9
-			gui_aspect_ratio = 16.0 / 9.0
-		6:  # 21:9
-			gui_aspect_ratio = 21.0 / 9.0
-
-	update_container.call_deferred()
-
-
 func _on_resized():
 	update_container.call_deferred()
 
+
 func _on_gui_options_changed():
 	update_container.call_deferred()
-
-
-func _on_gui_margin_drag_ended(_value_changed):
-	gui_margin = $"Panel/AspectRatioContainer/Panel/CenterContainer/Options/GUIMargin/HSlider".value
-	$"Panel/AspectRatioContainer/Panel/CenterContainer/Options/GUIMargin/Value".text = str(gui_margin)
-	update_container.call_deferred()
-
-
-func _on_window_base_size_item_selected(index):
-	match index:
-		0:  # 648×648 (1:1)
-			base_window_size = Vector2(648, 648)
-		1:  # 640×480 (4:3)
-			base_window_size = Vector2(640, 480)
-		2:  # 720×480 (3:2)
-			base_window_size = Vector2(720, 480)
-		3:  # 800×600 (4:3)
-			base_window_size = Vector2(800, 600)
-		4:  # 1152×648 (16:9)
-			base_window_size = Vector2(1152, 648)
-		5:  # 1280×720 (16:9)
-			base_window_size = Vector2(1280, 720)
-		6:  # 1280×800 (16:10)
-			base_window_size = Vector2(1280, 800)
-		7:  # 1680×720 (21:9)
-			base_window_size = Vector2(1680, 720)
-
-	get_viewport().content_scale_size = base_window_size
-	update_container.call_deferred()
-
-
-func _on_window_stretch_mode_item_selected(index):
-	stretch_mode = index
-	get_viewport().content_scale_mode = stretch_mode
-
-	# Disable irrelevant options when the stretch mode is Disabled.
-	$"Panel/AspectRatioContainer/Panel/CenterContainer/Options/WindowBaseSize/OptionButton".disabled = stretch_mode == Window.CONTENT_SCALE_MODE_DISABLED
-	$"Panel/AspectRatioContainer/Panel/CenterContainer/Options/WindowStretchAspect/OptionButton".disabled = stretch_mode == Window.CONTENT_SCALE_MODE_DISABLED
-
-
-func _on_window_stretch_aspect_item_selected(index):
-	stretch_aspect = index
-	get_viewport().content_scale_aspect = stretch_aspect
-
-
-func _on_window_scale_factor_drag_ended(_value_changed):
-	scale_factor = $"Panel/AspectRatioContainer/Panel/CenterContainer/Options/WindowScaleFactor/HSlider".value
-	$"Panel/AspectRatioContainer/Panel/CenterContainer/Options/WindowScaleFactor/Value".text = "%d%%" % (scale_factor * 100)
-	get_viewport().content_scale_factor = scale_factor
-
-
-func _on_window_stretch_scale_mode_item_selected(index: int) -> void:
-	get_viewport().content_scale_stretch = index
