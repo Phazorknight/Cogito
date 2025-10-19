@@ -23,8 +23,15 @@ extends Node3D
 @export_category("Visual Effects")
 @export var enable_visual_effects: bool = true           ## Enable/disable visual effects
 @export var highlight_enabled: bool = true              ## Enable/disable enemy highlight effect
-@export var highlight_emission_energy: float = 0.8      ## Intensity of the highlight emission
-@export var highlight_emission_multiplier: float = 0.4  ## Multiplier for emission color intensity
+@export var use_shader: bool = true                     ## Enable/disable shader-based highlight
+@export var highlight_shader: Shader                    ## Shader for highlight effect
+@export var highlight_color: Color = Color.RED          ## Shader highlight color
+@export var outline_thickness: float = 0.01             ## Shader outline thickness
+@export var highlight_intensity: float = 1.0            ## Shader highlight intensity
+@export var pulse_speed: float = 1.0                    ## Speed of the pulsing effect in the shader
+@export var dissolve_amount: float = 0.0                ## Amount of dissolve effect in the shader (0.0 = fully visible, 1.0 = fully dissolved)
+@export var highlight_emission_energy: float = 0.8      ## Intensity of the highlight emission (fallback)
+@export var highlight_emission_multiplier: float = 0.4  ## Multiplier for emission color intensity (fallback)
 
 # Region: Debug Settings
 @export_category("Debug")
@@ -78,7 +85,6 @@ func _setup_distance_label():
 	if distance_label and is_instance_valid(distance_label):
 		distance_label.text = ""  # Initialize empty
 		distance_label.visible = enable_distance_label  # Set visibility based on enable_distance_label
-		# Apply font settings
 		if distance_label_font:
 			distance_label.add_theme_font_override("font", distance_label_font)
 		distance_label.add_theme_font_size_override("font_size", distance_label_font_size)
@@ -121,12 +127,9 @@ func _physics_process(_delta):
 		elif not _is_valid_enemy(collider) and current_target:
 			_clear_target()
 		elif current_target and _is_valid_enemy(collider):
-			# Update distance in real-time
 			var distance = camera.global_position.distance_to(raycast.get_collision_point())
 			if distance_label and enable_distance_label:
 				distance_label.text = "%.1f m" % distance
-			# Optional: re-emit signal if needed
-			# enemy_detected.emit(current_target, distance)
 	elif current_target:
 		_clear_target()
 
@@ -179,10 +182,20 @@ func _apply_highlight_effect(target: Node3D):
 	for mesh in mesh_instances:
 		if not is_instance_valid(mesh) or mesh.material_override:
 			continue
-		var highlight_mat = StandardMaterial3D.new()
-		highlight_mat.emission_enabled = true
-		highlight_mat.emission = crosshair_enemy_color * highlight_emission_multiplier
-		highlight_mat.emission_energy = highlight_emission_energy
+		var highlight_mat
+		if use_shader and highlight_shader:
+			highlight_mat = ShaderMaterial.new()
+			highlight_mat.shader = highlight_shader
+			highlight_mat.set_shader_parameter("highlight_color", highlight_color)
+			highlight_mat.set_shader_parameter("outline_thickness", outline_thickness)
+			highlight_mat.set_shader_parameter("highlight_intensity", highlight_intensity)
+			highlight_mat.set_shader_parameter("pulse_speed", pulse_speed)  # New parameter
+			highlight_mat.set_shader_parameter("dissolve_amount", dissolve_amount)  # New parameter
+		else:
+			highlight_mat = StandardMaterial3D.new()
+			highlight_mat.emission_enabled = true
+			highlight_mat.emission = crosshair_enemy_color * highlight_emission_multiplier
+			highlight_mat.emission_energy = highlight_emission_energy
 		mesh.material_override = highlight_mat
 		materials_applied.append({"mesh": mesh, "material": highlight_mat})
 	
@@ -272,6 +285,41 @@ func set_highlight_intensity(energy: float, multiplier: float):
 	highlight_emission_multiplier = multiplier
 	_log("🔆 Highlight intensity updated: Energy=" + str(energy) + ", Multiplier=" + str(multiplier))
 
+func set_shader_parameters(color: Color, thickness: float, intensity: float, pulse: float = pulse_speed, dissolve: float = dissolve_amount):
+	highlight_color = color
+	outline_thickness = thickness
+	highlight_intensity = intensity
+	pulse_speed = pulse  # Update pulse_speed
+	dissolve_amount = dissolve  # Update dissolve_amount
+	for target in highlighted_meshes:
+		for applied in highlighted_meshes[target]:
+			var mat = applied["material"]
+			if mat is ShaderMaterial:
+				mat.set_shader_parameter("highlight_color", highlight_color)
+				mat.set_shader_parameter("outline_thickness", outline_thickness)
+				mat.set_shader_parameter("highlight_intensity", highlight_intensity)
+				mat.set_shader_parameter("pulse_speed", pulse_speed)
+				mat.set_shader_parameter("dissolve_amount", dissolve_amount)
+	_log("🖌️ Shader parameters updated: Color=" + str(color) + ", Thickness=" + str(thickness) + ", Intensity=" + str(intensity) + ", PulseSpeed=" + str(pulse_speed) + ", DissolveAmount=" + str(dissolve_amount))
+
+func set_pulse_speed(speed: float):
+	pulse_speed = speed
+	for target in highlighted_meshes:
+		for applied in highlighted_meshes[target]:
+			var mat = applied["material"]
+			if mat is ShaderMaterial:
+				mat.set_shader_parameter("pulse_speed", pulse_speed)
+	_log("🔄 Pulse speed updated: " + str(pulse_speed))
+
+func set_dissolve_amount(amount: float):
+	dissolve_amount = clamp(amount, 0.0, 1.0) # Ensure dissolve_amount is between 0 and 1
+	for target in highlighted_meshes:
+		for applied in highlighted_meshes[target]:
+			var mat = applied["material"]
+			if mat is ShaderMaterial:
+				mat.set_shader_parameter("dissolve_amount", dissolve_amount)
+	_log("🧪 Dissolve amount updated: " + str(dissolve_amount))
+
 func is_system_ready() -> bool:
 	return _is_system_ready()
 
@@ -292,16 +340,14 @@ func set_enemy_groups(groups: Array[String]):
 	enemy_groups = groups.duplicate()
 	_log("🔄 Enemy groups updated: " + str(enemy_groups))
 
-# Toggle DistanceLabel visibility and functionality
 func toggle_distance_label(enabled: bool):
 	enable_distance_label = enabled
 	if distance_label:
 		distance_label.visible = enabled
 		if not enabled:
-			distance_label.text = ""  # Clear text when disabled
+			distance_label.text = ""
 		_log("📏 DistanceLabel " + ("enabled" if enabled else "disabled"))
 
-# Update DistanceLabel font and color settings
 func update_distance_label_style(font: Font, font_size: int, color: Color):
 	distance_label_font = font
 	distance_label_font_size = font_size
