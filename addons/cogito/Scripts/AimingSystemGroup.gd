@@ -1,4 +1,4 @@
-class_name AimingSystem
+class_name AimingSystemGroup
 extends Node3D
 
 # Region: Detection Settings
