@@ -81,32 +81,29 @@ func _process(_delta: float) -> void:
 	#)
 	position = _convert_3d_pos_to_2d_pos(parent_position)
 	
-
-	#label.visible = true
-	rotation = 0
-	# Used to display a diagonal arrow when the waypoint is displayed in
-	# one of the screen corners.
-	var overflow := 0
-
-	if position.x <= MARGIN:
-		# Left overflow.
-		overflow = int(-TAU / 8.0)
-		#label.visible = false
-		rotation = TAU / 4.0
-	elif position.x >= viewport_base_size.x - MARGIN:
-		# Right overflow.
-		overflow = int(TAU / 8.0)
-		#label.visible = false
-		rotation = TAU * 3.0 / 4.0
-
-	if position.y <= MARGIN:
-		# Top overflow.
-		#label.visible = false
-		rotation = TAU / 2.0 + overflow
-	elif position.y >= viewport_base_size.y - MARGIN:
-		# Bottom overflow.
-		#label.visible = false
-		rotation = -overflow
+	##region overflow handling if prompt is outside of view
+	#rotation = 0
+	#var overflow := 0
+	#if position.x <= MARGIN:
+		## Left overflow.
+		#overflow = int(-TAU / 8.0)
+		##label.visible = false
+		##rotation = TAU / 4.0
+	#elif position.x >= viewport_base_size.x - MARGIN:
+		## Right overflow.
+		#overflow = int(TAU / 8.0)
+		##label.visible = false
+		#rotation = TAU * 3.0 / 4.0
+#
+	#if position.y <= MARGIN:
+		## Top overflow.
+		##label.visible = false
+		#rotation = TAU / 2.0 + overflow
+	#elif position.y >= viewport_base_size.y - MARGIN:
+		## Bottom overflow.
+		##label.visible = false
+		#rotation = -overflow
+	##endregion
 
 
 func _convert_3d_pos_to_2d_pos(parent_position: Vector3) -> Vector2:
