@@ -13,6 +13,8 @@ var playback : AudioStreamPlaybackPolyphonic
 var temp_screenshot : Image
 
 @onready var label_active_slot: Label = %Label_ActiveSlot
+@onready var load_button := %LoadButton
+
 #endregion
 
 
@@ -55,15 +57,31 @@ func open_death_screen():
 	label_active_slot.text = "Current Slot: " + CogitoSceneManager._active_slot
 	temp_screenshot = grab_temp_screenshot()
 	show()
-	load_current_slot_data()
+	if !load_current_slot_data():
+		load_button.disabled = true
+		hide_saved_slot_display()
+	else:
+		show_saved_slot_display()
+		
 	nodes_to_focus[0].grab_focus.call_deferred()
+
+
+func hide_saved_slot_display():
+	%Screenshot_Spot.visible = false
+	%Label_SaveTime2.visible = false
+	%Label_SaveTime.visible = false
+
+func show_saved_slot_display():
+	%Screenshot_Spot.visible = true
+	%Label_SaveTime2.visible = true
+	%Label_SaveTime.visible = true
 
 
 func grab_temp_screenshot() -> Image:
 	return get_viewport().get_texture().get_image()
 
 
-func load_current_slot_data():
+func load_current_slot_data() -> bool:
 	# Load screenshot
 	var image_path : String = CogitoSceneManager.get_active_slot_player_state_screenshot_path()
 	if image_path != "":
@@ -72,7 +90,8 @@ func load_current_slot_data():
 		%Screenshot_Spot.texture = texture
 	else:
 		%Screenshot_Spot.texture = empty_slot_texture
-		print("No screenshot for slot ", CogitoSceneManager._active_slot, " found.")
+		CogitoGlobals.debug_log(true,"cogito_death_screen.gd", "No screenshot for slot " + CogitoSceneManager._active_slot + " found.")
+		return false
 		
 	# Load save state time
 	var savetime : int
@@ -80,10 +99,12 @@ func load_current_slot_data():
 		savetime = CogitoSceneManager._player_state.player_state_savetime
 	if savetime == null or typeof(savetime) != TYPE_INT or savetime == 0:
 		%Label_SaveTime.text = ""
+		return false
 	else:
 		var timeoffset = Time.get_time_zone_from_system().bias*60
 		var save_time_string = Time.get_datetime_string_from_unix_time(savetime+timeoffset,true)
 		%Label_SaveTime.text = save_time_string
+		return true
 
 
 func _on_quit_button_pressed():

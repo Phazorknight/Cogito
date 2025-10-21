@@ -65,6 +65,7 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 5
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
@@ -75,24 +76,24 @@ theme_override_font_sizes/font_size = 25
 text = "LAB_current_slot"
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
+[node name="PanelContainer_SlotScreenshot" type="PanelContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
 custom_minimum_size = Vector2(130, 160)
 layout_mode = 2
 theme = ExtResource("1_t83el")
 theme_type_variation = &"HUDPanel"
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer_SlotScreenshot"]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer_SlotScreenshot/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Screenshot_Spot" type="TextureRect" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Screenshot_Spot" type="TextureRect" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer_SlotScreenshot/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -100,14 +101,14 @@ texture = ExtResource("5_0gwvb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label_SaveTime2" type="Label" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label_SaveTime2" type="Label" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer_SlotScreenshot/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "LAB_last_save"
 horizontal_alignment = 1
 
-[node name="Label_SaveTime" type="Label" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Label_SaveTime" type="Label" parent="PanelContainer/Content/GameMenu/VBoxContainer/PanelContainer_SlotScreenshot/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 auto_translate_mode = 2
 layout_mode = 2
@@ -115,10 +116,10 @@ theme_override_font_sizes/font_size = 16
 text = "YYYY-MM-DD HH:MM"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
+[node name="HBoxContainer_LoadBtn" type="HBoxContainer" parent="PanelContainer/Content/GameMenu/VBoxContainer"]
 layout_mode = 2
 
-[node name="LoadButton" type="Button" parent="PanelContainer/Content/GameMenu/VBoxContainer/HBoxContainer"]
+[node name="LoadButton" type="Button" parent="PanelContainer/Content/GameMenu/VBoxContainer/HBoxContainer_LoadBtn"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -151,6 +152,6 @@ script = ExtResource("7_rf8vv")
 main_menu_scene = "uid://c4arko3ktkygh"
 
 [connection signal="back_to_main_pressed" from="." to="MenuSceneSwitcher" method="_on_pause_menu_back_to_main_pressed"]
-[connection signal="pressed" from="PanelContainer/Content/GameMenu/VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="PanelContainer/Content/GameMenu/VBoxContainer/HBoxContainer_LoadBtn/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="PanelContainer/Content/GameMenu/VBoxContainer/BackToMenuButton" to="." method="_on_back_to_menu_button_pressed"]
 [connection signal="pressed" from="PanelContainer/Content/GameMenu/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
