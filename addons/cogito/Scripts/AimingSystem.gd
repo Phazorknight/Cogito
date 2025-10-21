@@ -52,15 +52,15 @@ func _ready():
 	_setup_distance_label()  # Validate and configure the distance label
 	_setup_raycast()    # Initialize the raycast
 	_setup_shader()     # Validate the exported shader
-	_log("🎯 AimingSystem initialized - Range: " + str(detection_range) + " - Detection Groups: " + str(detection_groups))
+	_log("AimingSystem initialized - Range: " + str(detection_range) + " - Detection Groups: " + str(detection_groups))
 
 # Validates the exported Camera3D
 func _setup_camera():
 	if not camera or not (camera is Camera3D) or not is_instance_valid(camera):
-		_log("❌ No valid Camera3D assigned")
+		_log("No valid Camera3D assigned")
 		set_physics_process(false)
 		return
-	_log("✅ Camera3D assigned: " + camera.name)
+	_log("Camera3D assigned: " + camera.name)
 
 # Validates the exported crosshair and its TextureRect child
 func _setup_crosshair():
@@ -68,12 +68,12 @@ func _setup_crosshair():
 		crosshair_texture = crosshair.get_child(0) as TextureRect
 		if crosshair_texture and is_instance_valid(crosshair_texture):
 			crosshair_texture.modulate = crosshair_neutral_color
-			_log("✅ Crosshair configured")
+			_log("Crosshair configured")
 		else:
-			_log("❌ Crosshair TextureRect invalid")
+			_log("Crosshair TextureRect invalid")
 			set_physics_process(false)
 	else:
-		_log("❌ No valid Crosshair assigned")
+		_log("No valid Crosshair assigned")
 		set_physics_process(false)
 
 # Validates and configures the exported DistanceLabel
@@ -87,9 +87,9 @@ func _setup_distance_label():
 		distance_label.add_theme_font_size_override("font_size", distance_label_font_size)
 		distance_label.add_theme_color_override("font_color", distance_label_color)
 		distance_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_log("✅ DistanceLabel configured with font size: " + str(distance_label_font_size) + ", color: " + str(distance_label_color))
+		_log("DistanceLabel configured with font size: " + str(distance_label_font_size) + ", color: " + str(distance_label_color))
 	else:
-		_log("⚠️ DistanceLabel not assigned or invalid")
+		_log("DistanceLabel not assigned or invalid")
 
 # Configures the RayCast3D node
 func _setup_raycast():
@@ -103,14 +103,14 @@ func _setup_raycast():
 	raycast.collide_with_areas = false
 	raycast.collision_mask = layers_to_check
 	raycast.target_position = Vector3(0, 0, -detection_range)
-	_log("✅ RayCast3D configured")
+	_log("RayCast3D configured")
 
 # Validates the exported outline shader
 func _setup_shader():
 	if not outline_shader or not (outline_shader is Shader) or not is_instance_valid(outline_shader):
-		_log("⚠️ No valid outline shader assigned. Highlight effects may not work.")
+		_log("No valid outline shader assigned. Highlight effects may not work.")
 	else:
-		_log("✅ Outline shader assigned")
+		_log("Outline shader assigned")
 
 # Region: Main Processing
 func _physics_process(_delta):
@@ -120,7 +120,7 @@ func _physics_process(_delta):
 	raycast.global_transform = camera.global_transform
 
 	if current_target and not _is_valid_target(current_target):
-		_log("⚠️ Current target is invalid")
+		_log("Current target is invalid")
 		_clear_target()
 		return
 
@@ -159,7 +159,7 @@ func _set_new_target(target: Node3D):
 	if enable_visual_effects and highlight_enabled and outline_shader:
 		_apply_highlight_effect(target)
 	
-	_log("🎯 Target detected: " + target.name + " at " + "%.1f" % distance + "m")
+	_log("Target detected: " + target.name + " at " + "%.1f" % distance + "m")
 
 func _clear_target():
 	if current_target:
@@ -173,7 +173,7 @@ func _clear_target():
 	enemy_lost.emit()
 
 func _on_target_exited():
-	_log("⚠️ Target destroyed")
+	_log("Target destroyed")
 	_clear_target()
 
 # Region: Highlight System
@@ -214,7 +214,7 @@ func _apply_highlight_effect(target: Node3D):
 	if materials_applied:
 		highlighted_meshes[target] = materials_applied
 		highlight_applied.emit(target)
-		_log("✨ Outline highlight applied to: " + target.name)
+		_log("Outline highlight applied to: " + target.name)
 
 func _remove_highlight_effect(target: Node3D):
 	if not target or not highlighted_meshes.has(target):
@@ -228,7 +228,7 @@ func _remove_highlight_effect(target: Node3D):
 	highlighted_meshes.erase(target)
 	enemy_meshes.erase(target)
 	highlight_removed.emit(target)
-	_log("🧹 Outline highlight removed from: " + (target.name if is_instance_valid(target) else "Unknown"))
+	_log("Outline highlight removed from: " + (target.name if is_instance_valid(target) else "Unknown"))
 
 # Region: Utilities
 func _is_valid_target(node) -> bool:
@@ -245,7 +245,7 @@ func _is_system_ready() -> bool:
 func _update_crosshair_color(is_target: bool):
 	if crosshair_texture:
 		crosshair_texture.modulate = crosshair_groups_color if is_target else crosshair_neutral_color
-		_log("🔴 Crosshair set to groups color: target detected" if is_target else "⚪ Crosshair restored to neutral")
+		_log("Crosshair set to groups color: target detected" if is_target else "⚪ Crosshair restored to neutral")
 
 func _find_mesh_instances(node: Node3D) -> Array:
 	var meshes = []
@@ -272,30 +272,30 @@ func set_aiming_mode(aiming: bool):
 		crosshair.visible = aiming
 		if aiming and not current_target and crosshair_texture:
 			crosshair_texture.modulate = crosshair_neutral_color
-			_log("⚪ Crosshair set to neutral when enabling aiming mode")
+			_log("Crosshair set to neutral when enabling aiming mode")
 
 func update_crosshair_colors(neutral: Color, groups_color: Color):
 	crosshair_neutral_color = neutral
 	crosshair_groups_color = groups_color
 	if crosshair_texture:
 		crosshair_texture.modulate = crosshair_neutral_color if not current_target else crosshair_groups_color
-		_log("⚪/🔴 Crosshair colors updated")
+		_log("Crosshair colors updated")
 
 func clear_all_highlights():
 	for target in highlighted_meshes.keys().duplicate():
 		_remove_highlight_effect(target)
-	_log("🧹 All highlights removed")
+	_log("All highlights removed")
 
 func toggle_highlights(enabled: bool):
 	highlight_enabled = enabled
 	if not enabled:
 		clear_all_highlights()
-	_log("✨ Highlights " + ("enabled" if enabled else "disabled"))
+	_log("Highlights " + ("enabled" if enabled else "disabled"))
 
 func set_highlight_intensity(energy: float, multiplier: float):
 	highlight_emission_energy = energy
 	highlight_emission_multiplier = multiplier
-	_log("🔆 Highlight intensity updated: Energy=" + str(energy) + ", Multiplier=" + str(multiplier))
+	_log("Highlight intensity updated: Energy=" + str(energy) + ", Multiplier=" + str(multiplier))
 
 func is_system_ready() -> bool:
 	return _is_system_ready()
@@ -306,7 +306,7 @@ func get_detection_groups() -> Array[String]:
 func add_detection_group(group_name: String):
 	if not detection_groups.has(group_name):
 		detection_groups.append(group_name)
-		_log("➕ Added detection group: " + group_name)
+		_log("Added detection group: " + group_name)
 
 func remove_detection_group(group_name: String):
 	if detection_groups.has(group_name):
@@ -315,7 +315,7 @@ func remove_detection_group(group_name: String):
 
 func set_detection_groups(groups: Array[String]):
 	detection_groups = groups.duplicate()
-	_log("🔄 Detection groups updated: " + str(detection_groups))
+	_log("Detection groups updated: " + str(detection_groups))
 
 # Toggle DistanceLabel visibility and functionality
 func toggle_distance_label(enabled: bool):
@@ -324,7 +324,7 @@ func toggle_distance_label(enabled: bool):
 		distance_label.visible = enabled
 		if not enabled:
 			distance_label.text = ""  # Clear text when disabled
-		_log("📏 DistanceLabel " + ("enabled" if enabled else "disabled"))
+		_log("DistanceLabel " + ("enabled" if enabled else "disabled"))
 
 # Update DistanceLabel font and color settings
 func update_distance_label_style(font: Font, font_size: int, color: Color):
@@ -336,7 +336,7 @@ func update_distance_label_style(font: Font, font_size: int, color: Color):
 			distance_label.add_theme_font_override("font", distance_label_font)
 		distance_label.add_theme_font_size_override("font_size", distance_label_font_size)
 		distance_label.add_theme_color_override("font_color", distance_label_color)
-		_log("🖌️ DistanceLabel style updated: font_size=" + str(font_size) + ", color=" + str(color))
+		_log("DistanceLabel style updated: font_size=" + str(font_size) + ", color=" + str(color))
 
 func _exit_tree():
 	_clear_target()
