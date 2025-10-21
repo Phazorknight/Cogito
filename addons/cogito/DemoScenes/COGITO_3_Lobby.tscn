@@ -6176,6 +6176,7 @@ shape = SubResource("ConcavePolygonShape3D_wj1ho")
 [node name="Drawer" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO/deskCorner"]
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+prompt_pos_mode = 2
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
 interaction_text_when_locked = "Unlock"
@@ -6887,9 +6888,6 @@ transform = Transform3D(-0.607514, 0, 0.794309, 0, 1, 0, -0.794309, 0, -0.607514
 
 [node name="ConferenceDoor" parent="MEETING_ROOM" instance=ExtResource("17_2lcsn")]
 transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048, 0, -20.9787)
-
-[node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
-is_locked = true
 
 [node name="LockInteraction" parent="MEETING_ROOM/ConferenceDoor/FrontDoor" index="4" instance=ExtResource("22_2fd6x")]
 
