@@ -21,6 +21,11 @@ class_name CogitoLightmeter
 
 
 func _ready() -> void:
+	# Skip initialization in headless mode
+	if DisplayServer.get_name() == "headless":
+		set_process(false)
+		return
+	
 	if update_frequency > 0:
 		timer.wait_time = update_frequency
 		timer.timeout.connect(on_timeout)

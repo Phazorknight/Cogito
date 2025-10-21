@@ -101,7 +101,7 @@ msgid "LAB_RESOLUTION"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn
-msgid "LAB_WINDOW_MODE"
+msgid "LAB_FULLSCREEN_MODE"
 msgstr ""
 
 #: addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn

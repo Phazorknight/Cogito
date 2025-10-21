@@ -8,4 +8,8 @@ const OptionsConstants = preload("./options_constants.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	InputMapUpdater.new()._ready()
+	#InputMapUpdater.new()._ready()
+
+	var updater = InputMapUpdater.new()
+	add_child(updater)  # Let scene tree manage lifecycle
+	updater._ready()
