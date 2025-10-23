@@ -49,7 +49,7 @@ stream_2/stream = ExtResource("10_ab7fy")
 stream_3/stream = ExtResource("11_jlhg4")
 stream_4/stream = ExtResource("12_3m7c4")
 
-[node name="CogitoEnemy" type="CharacterBody3D"]
+[node name="CogitoEnemy" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_0lcvu")
 attack_stagger = 20.0
 attack_sound = ExtResource("2_q5685")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://kicjwmh02uwf"]
+[gd_scene load_steps=45 format=3 uid="uid://kicjwmh02uwf"]
 
 [ext_resource type="Script" uid="uid://dyitnpyhwiqx7" path="res://addons/cogito/CogitoObjects/cogito_player.gd" id="1_87we8"]
 [ext_resource type="Resource" uid="uid://ll11y3yjbqt" path="res://addons/cogito/InventoryPD/Inventories/PlayerInventory_FIXED.tres" id="2_iyhv4"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://crj07wq4oocwi" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep01.ogg" id="13_fyfhw"]
 [ext_resource type="Script" uid="uid://ua63m2y35w46" path="res://addons/cogito/Scripts/item_drop_shape_cast.gd" id="14_bpb0d"]
 [ext_resource type="AudioStream" uid="uid://dewyukd562k37" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep02.ogg" id="14_opnk5"]
+[ext_resource type="Script" uid="uid://cl5u6xgxpt3mb" path="res://addons/cogito/Scripts/AimingSystem.gd" id="15_m05wr"]
 [ext_resource type="AudioStream" uid="uid://c5kfw4o57foju" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep03.ogg" id="15_wtp0a"]
 [ext_resource type="AudioStream" uid="uid://b4mt1tuxo2144" path="res://addons/cogito/Assets/Audio/Kenney/Footsteps/footstep04.ogg" id="16_buq0c"]
 [ext_resource type="Script" uid="uid://b1qja1tbw5e1j" path="res://addons/cogito/DynamicFootstepSystem/Scripts/footstep_surface_detector.gd" id="17_t5305"]
@@ -32,6 +33,7 @@
 [ext_resource type="Resource" uid="uid://bqhbrpnp2tt08" path="res://addons/cogito/InventoryPD/Items/Cogito_FoamBullets.tres" id="26_tndpm"]
 [ext_resource type="Resource" uid="uid://cvupo3p844nh2" path="res://addons/cogito/InventoryPD/Items/Cogito_LaserAmmo.tres" id="27_8coi0"]
 [ext_resource type="PackedScene" uid="uid://bnlt0es031dsf" path="res://addons/cogito/Components/AutoConsumes/HealthAutoConsume.tscn" id="32_s725a"]
+[ext_resource type="FontFile" uid="uid://djyifbris3jll" path="res://docs/_build/html/_static/css/fonts/Roboto-Slab-Bold.woff" id="35_gieh4"]
 [ext_resource type="PackedScene" uid="uid://txkg0abvpsj7" path="res://addons/cogito/Components/AutoConsumes/StaminaAutoConsume.tscn" id="35_wx2rv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
@@ -52,6 +54,22 @@ stream_3/stream = ExtResource("15_wtp0a")
 stream_4/stream = ExtResource("16_buq0c")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bpb0d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8x37p"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jei3"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eu3l5"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmpwe"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 1)
 
 [node name="CogitoPlayer" type="CharacterBody3D" node_paths=PackedStringArray("item_drop_shapecast") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -202,6 +220,38 @@ layout_mode = 2
 player = NodePath("../../../..")
 item_drop_distance_offset = 0.0
 
+[node name="FixedStaminaBar" parent="GUI/Panel/AspectRatioContainer/Player_HUD" index="0"]
+bar_stylebox = SubResource("StyleBoxFlat_8x37p")
+
+[node name="DistanceLabel" type="Label" parent="GUI/Panel/AspectRatioContainer/Player_HUD/Crosshair" index="1"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_right = 44.0
+offset_bottom = 45.0
+grow_horizontal = 2
+text = "\"-- m\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PromptUI" parent="GUI/Panel/AspectRatioContainer/Player_HUD" index="4"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="UiAttributeDisplay" parent="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/CogitoTabMenu/TAB_stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" index="0"]
+bar_stylebox = SubResource("StyleBoxFlat_3jei3")
+
+[node name="UiAttributeDisplay2" parent="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/CogitoTabMenu/TAB_stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" index="1"]
+bar_stylebox = SubResource("StyleBoxFlat_eu3l5")
+
+[node name="UiAttributeDisplay3" parent="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/CogitoTabMenu/TAB_stats/QuestDisplay/VBoxContainer/TabContainer/Attributes" index="2"]
+bar_stylebox = SubResource("StyleBoxFlat_vmpwe")
+
 [node name="PauseMenu" parent="GUI/Panel/AspectRatioContainer" instance=ExtResource("22_haksr")]
 layout_mode = 2
 
@@ -215,9 +265,23 @@ _player_interaction_component = NodePath("../PlayerInteractionComponent")
 
 [node name="StaminaAutoConsume" parent="." instance=ExtResource("35_wx2rv")]
 
+[node name="AimingSystem" type="Node3D" parent="." node_paths=PackedStringArray("camera", "crosshair", "distance_label")]
+script = ExtResource("15_m05wr")
+camera = NodePath("../Body/Neck/Head/Eyes/Camera")
+crosshair = NodePath("../GUI/Panel/AspectRatioContainer/Player_HUD/Crosshair")
+distance_label = NodePath("../GUI/Panel/AspectRatioContainer/Player_HUD/Crosshair/DistanceLabel")
+distance_label_font = ExtResource("35_gieh4")
+metadata/_custom_type_script = "uid://cl5u6xgxpt3mb"
+
 [connection signal="mouse_movement" from="." to="Body/Neck/Head/Wieldables" method="sway"]
 [connection signal="player_state_loaded" from="." to="." method="_on_player_state_loaded"]
 [connection signal="animation_finished" from="Body/Neck/Head/Eyes/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="interactable_seen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_seen"]
 [connection signal="interactable_unseen" from="Body/Neck/Head/Eyes/Camera/InteractionRaycast" to="PlayerInteractionComponent" method="_on_interaction_raycast_interactable_unseen"]
 [connection signal="timeout" from="SlidingTimer" to="." method="_on_sliding_timer_timeout"]
+
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/FixedStaminaBar"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/QuickSlots/CogitoQuickslotContainer1"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/QuickSlots/CogitoQuickslotContainer3"]
+[editable path="GUI/Panel/AspectRatioContainer/Player_HUD/InventoryInterface/QuickSlots/CogitoQuickslotContainer4"]

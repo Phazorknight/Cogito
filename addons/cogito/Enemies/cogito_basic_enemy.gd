@@ -174,8 +174,8 @@ func handle_patrolling(_delta: float):
 			is_waiting = false
 		
 		else:
-			var look_ahead := Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z)
-			_look_at_target_interpolated(look_ahead)
+			# Look at the current patrol point instead of velocity-based look_ahead
+			_look_at_target_interpolated(patrol_path.patrol_points[patrol_point_index].global_position)
 			
 			# Move towards patrol point
 			move_toward_target(patrol_path.patrol_points[patrol_point_index],patrol_speed)
@@ -193,8 +193,14 @@ func move_toward_target(target: Node3D, passed_speed:float):
 func _look_at_target_interpolated(look_direction: Vector3) -> void:
 	var look_at_target = global_position.direction_to(look_direction)
 	var look_at_target_xz := Vector3(look_at_target.x, 0, look_at_target.z)
-	var target_basis= Basis.looking_at(look_at_target_xz)
-	basis = basis.slerp(target_basis, 0.2)
+	
+	# Check if the look_at_target_xz is non-zero
+	if not look_at_target_xz.is_zero_approx():
+		var target_basis= Basis.looking_at(look_at_target_xz)
+		basis = basis.slerp(target_basis, 0.2)
+	else:
+		# Optionally, log a debug message or handle the case (e.g., do nothing or use a fallback direction)
+		CogitoGlobals.debug_log(true, "cogito_basic_enemy.gd", "Cannot look at zero vector, skipping rotation update.")
 
 
 func _target_in_range() -> bool:
