@@ -37,7 +37,6 @@ func use(target) -> bool:
 		
 
 
-
 # Function to check for consumables and reducing quantity.
 func is_consumable():
 	pass

@@ -51,7 +51,7 @@ bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": ExtResource("3_ls8cp")
+&"": ExtResource("3_ls8cp")
 }
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]

@@ -45,7 +45,7 @@ func fully_merge_with(other_slot_data: InventorySlotPD):
 
 
 func create_single_slot_data(index: int) -> InventorySlotPD:
-	var new_slot_data = duplicate()
+	var new_slot_data = duplicate(true)
 	new_slot_data.origin_index = index
 	new_slot_data.quantity = 1
 	quantity -= 1
@@ -53,7 +53,7 @@ func create_single_slot_data(index: int) -> InventorySlotPD:
 	
 	
 func create_single_slot_data_gamepad_drop(index: int) -> InventorySlotPD:
-	var new_slot_data = duplicate()
+	var new_slot_data = duplicate(true)
 	new_slot_data.origin_index = index
 	new_slot_data.quantity = 1
 	return new_slot_data
