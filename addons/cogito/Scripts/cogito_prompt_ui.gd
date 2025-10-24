@@ -9,8 +9,8 @@ const MARGIN = 8
 @onready var parent := get_parent()
 
 
-func _process(_delta: float) -> void:
-	#region CANCEL CONDITIONS
+func _physics_process(delta: float) -> void:
+	#region CANCEL CONDITIONS	
 	if !use_spatial_prompt:
 		return
 	
@@ -21,6 +21,8 @@ func _process(_delta: float) -> void:
 		return
 	else:
 		visible = true
+	if not "prompt_pos_mode" in interactable:
+		return
 	
 	if not camera or not camera.current:
 		camera = get_viewport().get_camera_3d()

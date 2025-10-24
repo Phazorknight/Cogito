@@ -157,6 +157,7 @@ expand_mode = 1
 wait_time = 3.5
 
 [node name="PromptUI" type="Control" parent="."]
+physics_interpolation_mode = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -171,6 +172,7 @@ script = ExtResource("13_bdq5t")
 use_spatial_prompt = true
 
 [node name="PromptArea" type="VBoxContainer" parent="PromptUI"]
+physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.578125
@@ -181,6 +183,7 @@ theme_override_constants/separation = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="HoldUI" type="Control" parent="PromptUI" node_paths=PackedStringArray("prompt_area")]
+physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -195,6 +198,7 @@ buffer_time = 0.13
 prompt_area = NodePath("../PromptArea")
 
 [node name="ProgressWheel" parent="PromptUI/HoldUI" instance=ExtResource("30_bdq5t")]
+physics_interpolation_mode = 0
 layout_mode = 0
 radius = 12.0
 
