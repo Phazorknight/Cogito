@@ -157,7 +157,6 @@ expand_mode = 1
 wait_time = 3.5
 
 [node name="PromptUI" type="Control" parent="."]
-physics_interpolation_mode = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

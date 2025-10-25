@@ -7,6 +7,14 @@ const MARGIN = 8
 
 @onready var camera := get_viewport().get_camera_3d()
 @onready var parent := get_parent()
+@onready var is_physics_interpolation_enabled := ProjectSettings.get_setting("physics/common/physics_interpolation")
+
+var previous_interactable = null
+
+
+func _ready() -> void:
+	if is_physics_interpolation_enabled:
+		physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
 
 
 func _physics_process(delta: float) -> void:
@@ -21,6 +29,7 @@ func _physics_process(delta: float) -> void:
 		return
 	else:
 		visible = true
+	
 	if not "prompt_pos_mode" in interactable:
 		return
 	
@@ -82,6 +91,10 @@ func _physics_process(delta: float) -> void:
 			#clamp(unprojected_position.y, MARGIN, viewport_base_size.y - MARGIN)
 	#)
 	position = _convert_3d_pos_to_2d_pos(parent_position)
+	
+	if is_physics_interpolation_enabled and interactable != previous_interactable:
+		previous_interactable = interactable
+		reset_physics_interpolation()
 	
 	##region overflow handling if prompt is outside of view
 	#rotation = 0
