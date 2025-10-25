@@ -58,8 +58,9 @@ func open_death_screen():
 	temp_screenshot = grab_temp_screenshot()
 	show()
 	if !load_current_slot_data():
-		load_button.disabled = true
+		#load_button.disabled = true
 		hide_saved_slot_display()
+		change_load_btn_to_new_game_btn()
 	else:
 		show_saved_slot_display()
 		
@@ -105,6 +106,28 @@ func load_current_slot_data() -> bool:
 		var save_time_string = Time.get_datetime_string_from_unix_time(savetime+timeoffset,true)
 		%Label_SaveTime.text = save_time_string
 		return true
+
+
+func change_load_btn_to_new_game_btn() -> void:
+	print("Death Screen: chaning load button to new game button.")
+	load_button.pressed.disconnect(_on_load_button_pressed)
+	load_button.text = tr("TXT_NEW_GAME")
+	load_button.pressed.connect(_on_new_game_button_pressed)
+
+
+func _on_new_game_button_pressed() -> void:
+	CogitoSceneManager.delete_temp_saves()
+	start_new_game()
+
+
+func start_new_game():
+	if CogitoGlobals.cogito_settings.new_game_start_scene:
+		var path_to_scene = CogitoGlobals.cogito_settings.new_game_start_scene.resource_path
+		CogitoSceneManager.load_next_scene(path_to_scene, "", "temp", CogitoSceneManager.CogitoSceneLoadMode.RESET) #Load_mode 2 means there's no attempt to load a state.
+		#Setting new game world state:
+		CogitoSceneManager._current_world_dict = CogitoGlobals.cogito_settings.new_game_world_state.get_world_dict()
+	else:
+		print("ISSUE: No start game scene set.")
 
 
 func _on_quit_button_pressed():

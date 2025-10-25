@@ -7,6 +7,11 @@ const settings_filename := "CogitoSettings"
 ## When this is checked, most Cogito scripts and objects will print messages in the output. Turn this on if you want to track and understand certain behaviors or have issues.
 @export var is_logging: bool = false
 
+@export_group("Game Settings")
+## The scene that gets loaded when player starts a new game
+@export var new_game_start_scene : PackedScene
+## The world state that sets world state variables on a new game
+@export var new_game_world_state : CogitoWorldState
 ## The prefix used in scene state save files, followed by the save slot name. Be aware that changing this will impact if/how Cogito detects existing save files.
 @export var scene_state_prefix : String = "COGITO_scene_state_"
 ## The prefix used in player state save files, followed by the save slot name. Be aware that changing this will impact if/how Cogito detects existing save files.

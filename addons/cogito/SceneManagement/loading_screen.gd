@@ -32,7 +32,6 @@ func _process(_delta):
 		
 		#If load_mode asks for it, scene state will be loaded.
 		if load_mode != 2: #Checking that load_mode is not set to 2 which would ignore scene states.
-			
 			next_scene_state_filename = new_scene_node.get_name()
 			
 			# This flag is used if the scene transition was called from loading a save
@@ -44,6 +43,8 @@ func _process(_delta):
 				CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load scene state: " + next_scene_state_filename)
 				CogitoSceneManager.load_scene_state(next_scene_state_filename,"temp") # Loading temp scene state
 				CogitoSceneManager.load_player_state(CogitoSceneManager._current_player_node,"temp") # Loading temp player state.
+		else:
+			CogitoGlobals.debug_log(true, "loading_screen.gd", "Load mode 2 (RESET), ignoring scene and player states.")
 		
 		get_tree().current_scene = new_scene_node # Assigns new scene as current scene
 		
