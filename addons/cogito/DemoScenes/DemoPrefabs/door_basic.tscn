@@ -78,12 +78,9 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.44, 
 [node name="Door" type="AnimatableBody3D" parent="."]
 collision_layer = 3
 script = ExtResource("1_h01uk")
+prompt_pos_mode = 2
 open_sound = ExtResource("2_6abqm")
 close_sound = ExtResource("3_v470v")
-interaction_text_when_locked = "DOOR_Unlock"
-interaction_text_when_unlocked = "DOOR_Lock"
-interaction_text_when_closed = "DOOR_Open"
-interaction_text_when_open = "DOOR_Close"
 open_rotation = Vector3(0, -95, 0)
 door_speed = 3.0
 

@@ -5,6 +5,16 @@ class_name CogitoContainer
 @export_group("Container Settings")
 ## Name that will displayed when interacting. Leave blank to hide
 @export var display_name : String = "CONTAINER"
+
+enum PromptPositionMode{
+	ORIGIN, ## at the objects origin point. Recommended for smaller objects.
+	MARKER, ## at the position of an assigned Marker3D node. Will throw an error if no marker is assigned. Recommended for big objects/doors.
+	AABB_CENTER, ## at the center of the calculated AABoundingBox. Works well but has a slight performance impact. 
+}
+## This sets where interaction prompt gets displayed on the object.
+@export var prompt_pos_mode : PromptPositionMode = PromptPositionMode.ORIGIN
+@export var prompt_marker : Marker3D
+
 @export var inventory_data : CogitoInventory
 @export var text_when_closed : String = "DOOR_Open"
 @export var text_when_open : String = "DOOR_Close"

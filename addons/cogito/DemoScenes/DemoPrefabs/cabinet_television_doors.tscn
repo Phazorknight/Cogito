@@ -174,10 +174,12 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_k4xiu")
 
-[node name="LeftDoor" type="AnimatableBody3D" parent="."]
+[node name="LeftDoor" type="AnimatableBody3D" parent="." node_paths=PackedStringArray("prompt_marker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0799999, 0.16, -0.04)
 collision_layer = 3
 script = ExtResource("1_oc7nd")
+prompt_pos_mode = 1
+prompt_marker = NodePath("PromptMarker")
 open_sound = ExtResource("2_f5idq")
 close_sound = ExtResource("3_01v55")
 open_rotation = Vector3(0, -85, 0)
@@ -197,10 +199,15 @@ bus = &"SFX"
 
 [node name="BasicInteraction" parent="LeftDoor" instance=ExtResource("2_pg8bu")]
 
-[node name="RightDoor" type="AnimatableBody3D" parent="."]
+[node name="PromptMarker" type="Marker3D" parent="LeftDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.667885, 0.17316, 0.0179253)
+
+[node name="RightDoor" type="AnimatableBody3D" parent="." node_paths=PackedStringArray("prompt_marker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51822, 0.161296, -0.0388184)
 collision_layer = 3
 script = ExtResource("1_oc7nd")
+prompt_pos_mode = 1
+prompt_marker = NodePath("PromptMarker")
 open_sound = ExtResource("2_f5idq")
 close_sound = ExtResource("3_01v55")
 open_rotation = Vector3(0, 85, 0)
@@ -219,3 +226,6 @@ volume_db = -26.0
 bus = &"SFX"
 
 [node name="BasicInteraction" parent="RightDoor" instance=ExtResource("2_pg8bu")]
+
+[node name="PromptMarker" type="Marker3D" parent="RightDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.670838, 0.171864, 0.0167437)

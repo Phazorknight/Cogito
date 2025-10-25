@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://0c32kepv0ahx"]
+[gd_scene load_steps=40 format=3 uid="uid://0c32kepv0ahx"]
 
 [ext_resource type="Script" uid="uid://dc3bukoacyq60" path="res://addons/cogito/Scripts/player_hud_manager.gd" id="1_0wdkf"]
 [ext_resource type="PackedScene" uid="uid://dhlrhobg5d4dj" path="res://addons/cogito/Components/UI/UI_PromptComponent.tscn" id="3_06ipe"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://78js4558o61m" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_Pistol.png" id="9_1l2nt"]
 [ext_resource type="Texture2D" uid="uid://cxvxq8hy53ih5" path="res://addons/cogito/Assets/Graphics/ItemIcons/Cogito_FoamBullets.png" id="10_bnneb"]
 [ext_resource type="PackedScene" uid="uid://btf6bmlgtfk1b" path="res://addons/cogito/Components/DynamicInputIcon.tscn" id="12_jgxar"]
+[ext_resource type="Script" uid="uid://cub4sxinq8g1" path="res://addons/cogito/Scripts/cogito_prompt_ui.gd" id="13_bdq5t"]
 [ext_resource type="Script" uid="uid://by3n6q1edxunf" path="res://addons/cogito/QuestSystem/Components/ui_quest_hud.gd" id="15_kn51k"]
 [ext_resource type="PackedScene" uid="uid://dh4yhqd73trwx" path="res://addons/cogito/QuestSystem/Components/QuestEntry.tscn" id="16_qsjbq"]
 [ext_resource type="PackedScene" uid="uid://0j3gwj62g2eb" path="res://addons/cogito/Components/UI/UI_HintComponent.tscn" id="17_bidre"]
@@ -166,8 +167,11 @@ offset_left = 60.0
 offset_right = 60.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("13_bdq5t")
+use_spatial_prompt = true
 
 [node name="PromptArea" type="VBoxContainer" parent="PromptUI"]
+physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.578125
@@ -178,6 +182,7 @@ theme_override_constants/separation = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="HoldUI" type="Control" parent="PromptUI" node_paths=PackedStringArray("prompt_area")]
+physics_interpolation_mode = 0
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -192,6 +197,7 @@ buffer_time = 0.13
 prompt_area = NodePath("../PromptArea")
 
 [node name="ProgressWheel" parent="PromptUI/HoldUI" instance=ExtResource("30_bdq5t")]
+physics_interpolation_mode = 0
 layout_mode = 0
 radius = 12.0
 

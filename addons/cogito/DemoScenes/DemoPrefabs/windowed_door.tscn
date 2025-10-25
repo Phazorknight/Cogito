@@ -104,18 +104,18 @@ size = Vector3(0.85, 2, 0.1)
 [node name="WindowedDoor" type="Node3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.02995, 0.0352557, -2.58097)
 
-[node name="FrontDoor" type="AnimatableBody3D" parent="."]
+[node name="FrontDoor" type="AnimatableBody3D" parent="." node_paths=PackedStringArray("prompt_marker")]
 collision_layer = 3
 script = ExtResource("1_hkp8l")
+prompt_pos_mode = 1
+prompt_marker = NodePath("PromptMarker")
 open_sound = ExtResource("2_8yoe5")
 close_sound = ExtResource("3_o7kbh")
 rattle_sound = ExtResource("2_d6xs5")
 key_hint = "Locked."
-open_rotation_deg = 95.0
 open_rotation = Vector3(0, 95, 0)
 open_position = Vector3(0, 95, 0)
 door_speed = 3.0
-angle_tolerance = null
 
 [node name="door" type="MeshInstance3D" parent="FrontDoor"]
 mesh = SubResource("ArrayMesh_lwlr7")
@@ -130,3 +130,6 @@ shape = SubResource("BoxShape3D_3nuis")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="FrontDoor"]
 volume_db = -26.0
 bus = &"SFX"
+
+[node name="PromptMarker" type="Marker3D" parent="FrontDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.771128, 0.928083, 0)
