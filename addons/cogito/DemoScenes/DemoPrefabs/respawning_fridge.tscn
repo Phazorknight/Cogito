@@ -242,6 +242,7 @@ loot_table = ExtResource("5_6mhn0")
 amount_of_items_to_drop = 5
 inventory_respawning_logic = 1
 display_name = "Respawning Container"
+prompt_pos_mode = 2
 inventory_data = SubResource("Resource_qpcha")
 uses_animation = true
 open_animation = "open"

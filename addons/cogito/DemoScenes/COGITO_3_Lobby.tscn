@@ -6176,6 +6176,7 @@ shape = SubResource("ConcavePolygonShape3D_wj1ho")
 [node name="Drawer" type="AnimatableBody3D" parent="UPPER_OFFICE_CEO/deskCorner"]
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+prompt_pos_mode = 2
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
 interaction_text_when_locked = "Unlock"
@@ -6226,6 +6227,7 @@ shape = SubResource("ConcavePolygonShape3D_jq13r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.625, 0.785, -0.03)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+prompt_pos_mode = 2
 open_sound = ExtResource("15_078vp")
 close_sound = ExtResource("16_py2k0")
 door_type = 1
@@ -6303,7 +6305,6 @@ lock_sound = ExtResource("18_sk7n4")
 is_locked = true
 key = ExtResource("19_vxibd")
 key_hint = "Key not found!"
-angle_tolerance = 1.0
 
 [node name="BasicInteraction" parent="UPPER_OFFICE_CEO/WindowedDoor/FrontDoor" index="2"]
 is_disabled = true
@@ -6501,7 +6502,6 @@ transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.04332
 
 [node name="FrontDoor" parent="ARCHIVE/ArchiveDoor" index="0"]
 is_locked = true
-angle_tolerance = 1.0
 
 [node name="Wall81" type="StaticBody3D" parent="ARCHIVE"]
 metadata/_edit_group_ = true
@@ -6888,10 +6888,6 @@ transform = Transform3D(-0.607514, 0, 0.794309, 0, 1, 0, -0.794309, 0, -0.607514
 
 [node name="ConferenceDoor" parent="MEETING_ROOM" instance=ExtResource("17_2lcsn")]
 transform = Transform3D(1, 0, 1.19209e-07, 0, 1, 0, -1.19209e-07, 0, 1, -5.92048, 0, -20.9787)
-
-[node name="FrontDoor" parent="MEETING_ROOM/ConferenceDoor" index="0"]
-is_locked = true
-angle_tolerance = 1.0
 
 [node name="LockInteraction" parent="MEETING_ROOM/ConferenceDoor/FrontDoor" index="4" instance=ExtResource("22_2fd6x")]
 
@@ -7286,6 +7282,7 @@ transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 0.471676
 [node name="Door" type="AnimatableBody3D" parent="BATHROOM_STALL2/wallDoorway2/DoorBasic"]
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+prompt_pos_mode = 2
 open_sound = ExtResource("49_uekwd")
 close_sound = ExtResource("50_air2v")
 open_rotation = Vector3(0, 95, 0)

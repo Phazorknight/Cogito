@@ -4044,7 +4044,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, -1, -4.37114e-08, -4.37114e-08, 4.37
 
 [node name="Pickup_Pickaxe" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("29_3vl4d")]
 transform = Transform3D(0.995536, -0.0938573, -0.0099791, 0, 0.105726, -0.994395, 0.0943863, 0.989956, 0.105254, 1.44729, 0.86964, -11.7382)
-cogito_name = ""
 
 [node name="HealthPotion" parent="NavigationRegion3D/SHOOTING_RANGE" instance=ExtResource("30_gnpoe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0588015, 1.21509, -11.2257)
