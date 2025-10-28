@@ -1,10 +1,14 @@
-[gd_resource type="Resource" script_class="CogitoSettings" load_steps=2 format=3 uid="uid://ds73ojp51jrk0"]
+[gd_resource type="Resource" script_class="CogitoSettings" load_steps=4 format=3 uid="uid://ds73ojp51jrk0"]
 
 [ext_resource type="Script" uid="uid://o06hnwjtbmie" path="res://addons/cogito/cogito_settings.gd" id="1_usejk"]
+[ext_resource type="PackedScene" uid="uid://e31n36p8i6an" path="res://addons/cogito/DemoScenes/COGITO_3_Lobby.tscn" id="1_xsjm0"]
+[ext_resource type="Resource" uid="uid://bgm0r2pp8mwmp" path="res://addons/cogito/DemoScenes/DemoWorldState.tres" id="2_d7g0j"]
 
 [resource]
 script = ExtResource("1_usejk")
-is_logging = false
+is_logging = true
+new_game_start_scene = ExtResource("1_xsjm0")
+new_game_world_state = ExtResource("2_d7g0j")
 scene_state_prefix = "COGITO_scene_state_"
 player_state_prefix = "COGITO_player_state_"
 auto_save_name = "autosave"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CogitoWorldState" load_steps=2 format=3 uid="uid://bgm0r2pp8mwmp"]
+
+[ext_resource type="Script" uid="uid://ige5tj6m7h8m" path="res://addons/cogito/Scripts/cogito_world_state.gd" id="1_gwu3c"]
+
+[resource]
+script = ExtResource("1_gwu3c")
+world_dict = {
+"lab_power": true
+}
+metadata/_custom_type_script = "uid://ige5tj6m7h8m"
