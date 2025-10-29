@@ -3,22 +3,22 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5ild"]
 resource_name = "carpetDarker"
 albedo_color = Color(0.802457, 0.581887, 0.570462, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t3cqg"]
 resource_name = "carpetWhite"
 albedo_color = Color(0.987835, 1, 1, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlt2o"]
 resource_name = "plant"
 albedo_color = Color(0.463691, 0.916646, 0.783252, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgql0"]
 resource_name = "metal"
 albedo_color = Color(0.875925, 0.917687, 0.925891, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_pshnx"]
 _surfaces = [{

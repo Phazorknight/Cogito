@@ -15,7 +15,7 @@ size = Vector3(0.2, 0.02, 0.3)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lguga"]
 resource_name = "metalDark"
 albedo_color = Color(0.297, 0.33, 0.33, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="BoxMesh" id="BoxMesh_ojq3g"]
 size = Vector3(0.14, 0.02, 0.04)
@@ -24,7 +24,7 @@ size = Vector3(0.14, 0.02, 0.04)
 resource_name = "glass"
 transparency = 4
 albedo_color = Color(0.853244, 0.919941, 0.89044, 0.5)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="BoxMesh" id="BoxMesh_fd71c"]
 material = ExtResource("3_u3a7f")
@@ -33,12 +33,12 @@ size = Vector3(0.05, 0.01, 0.04)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n16tc"]
 resource_name = "metalDark"
 albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m341j"]
 resource_name = "metalDark"
 albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vcta0"]
 margin = 0.01

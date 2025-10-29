@@ -5,12 +5,12 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qse4n"]
 resource_name = "carpet"
 albedo_color = Color(0.974694, 0.639944, 0.620211, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bgdvt"]
 resource_name = "wood"
 albedo_color = Color(0.952921, 0.798667, 0.660025, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_clxbc"]
 _surfaces = [{

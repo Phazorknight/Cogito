@@ -3,7 +3,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hp71a"]
 resource_name = "metalLight"
 albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_p2vuo"]
 _surfaces = [{

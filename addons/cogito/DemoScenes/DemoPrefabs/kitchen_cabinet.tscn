@@ -8,12 +8,12 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcwsm"]
 resource_name = "metal"
 albedo_color = Color(0.875925, 0.917687, 0.925891, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jp4bn"]
 resource_name = "wood"
 albedo_color = Color(0.952921, 0.798667, 0.660025, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_p683m"]
 _surfaces = [{
@@ -75,7 +75,7 @@ data = PackedVector3Array(0.86, 0.9, -0.84, 0, 0.9, -0.84, 0, 0.9, -0.9, 0, 0.9,
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuctb"]
 resource_name = "woodDark"
 albedo_color = Color(0.842287, 0.70556, 0.58297, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_oq3xn"]
 _surfaces = [{

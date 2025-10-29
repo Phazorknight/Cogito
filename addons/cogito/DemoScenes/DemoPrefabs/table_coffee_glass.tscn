@@ -3,13 +3,13 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_83283"]
 resource_name = "metal"
 albedo_color = Color(0.875925, 0.917687, 0.925891, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtejt"]
 resource_name = "glass"
 transparency = 4
 albedo_color = Color(0.853244, 0.919941, 0.89044, 0.5)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_1cg23"]
 _surfaces = [{

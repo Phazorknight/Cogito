@@ -12,7 +12,7 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_af7i7"]
 resource_name = "carpetWhite"
 albedo_color = Color(0.987835, 1, 1, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_46pyy"]
 _surfaces = [{

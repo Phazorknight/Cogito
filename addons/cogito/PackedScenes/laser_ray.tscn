@@ -6,7 +6,7 @@
 transparency = 1
 blend_mode = 1
 albedo_color = Color(1, 0.329412, 0.627451, 0.968627)
-emission_enabled = true
+emission_enabled = false
 emission = Color(0.792157, 0.792157, 0.792157, 1)
 rim_enabled = true
 

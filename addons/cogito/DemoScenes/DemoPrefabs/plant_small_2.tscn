@@ -7,12 +7,12 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e0uw8"]
 resource_name = "wood"
 albedo_color = Color(0.952921, 0.798667, 0.660025, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sihrn"]
 resource_name = "plant"
 albedo_color = Color(0.463691, 0.916646, 0.783252, 1)
-emission_enabled = true
+emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_c5gp6"]
 _surfaces = [{
