@@ -3,12 +3,10 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vfm3"]
 resource_name = "carpet"
 albedo_color = Color(0.974694, 0.639944, 0.620211, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ol6x"]
 resource_name = "carpetDarker"
 albedo_color = Color(0.802457, 0.581887, 0.570462, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_rq5is"]
 _surfaces = [{

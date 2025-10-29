@@ -17,7 +17,6 @@ metadata/_custom_type_script = "uid://btnha2whsheir"
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmsn7"]
 resource_name = "metalLight"
 albedo_color = Color(0.971896, 0.991331, 0.980793, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_w4joa"]
 _surfaces = [{
@@ -63,7 +62,6 @@ size = Vector3(0.542285, 1.63044, 0.0466675)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58s57"]
 resource_name = "metalMedium"
 albedo_color = Color(0.641088, 0.71296, 0.71296, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_phl2j"]
 _surfaces = [{

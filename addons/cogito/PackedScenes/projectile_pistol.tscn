@@ -9,7 +9,6 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sn251"]
 albedo_color = Color(1, 0, 0, 1)
-emission_enabled = false
 emission = Color(1, 0, 0, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_f0413"]

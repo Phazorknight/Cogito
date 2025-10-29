@@ -3,12 +3,10 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x2y8a"]
 resource_name = "metal"
 albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s6yql"]
 resource_name = "metalLight"
 albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_wom2r"]
 _surfaces = [{
@@ -67,12 +65,10 @@ shadow_mesh = SubResource("ArrayMesh_wom2r")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubesa"]
 resource_name = "metalLight"
 albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fj51m"]
 resource_name = "metal"
 albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
-emission_enabled = false
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cbkwa"]
 data = PackedVector3Array(0, 0, -3, 0, 0, 0, 3, 0, 0, 3, 0, 0, 3, 0, -3, 0, 0, -3, 0, 0.1875, -0.3759, 0, 0.1875, 0, 0, 0, 0, 0, 0, 0, 0, 0.1275, -0.4883, 0, 0.1875, -0.3759, 0, 0, 0, 0, 0, -3, 0, 0.1275, -0.4883, 0, 0, -3, 0, 0.1275, -2.5117, 0, 0.1275, -0.4883, 0, 0, -3, 0, 0.1875, -2.6242, 0, 0.1275, -2.5117, 0, 0, -3, 0, 0.1875, -3, 0, 0.1875, -2.6242, 0, 0.1875, -3, 0, 0, -3, 3, 0, -3, 3, 0, -3, 3, 0.1875, -3, 0, 0.1875, -3, 3, 0.1875, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1875, 0, 3, 0.1875, 0, 3, 0.1875, 0, 0, 0.1875, 0, 0, 0.1875, -0.3759, 0, 0.1875, -0.3759, 3, 0.1875, -0.3759, 3, 0.1875, 0, 3, 0.1875, -2.6242, 0, 0.1875, -2.6242, 0, 0.1875, -3, 0, 0.1875, -3, 3, 0.1875, -3, 3, 0.1875, -2.6242, 3, 0, 0, 3, 0.1875, 0, 3, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0, -3, 3, 0, 0, 3, 0.1875, 0, 3, 0.1875, -0.3759, 3, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0.1275, -2.5117, 3, 0, -3, 3, 0.1275, -2.5117, 3, 0.1875, -2.6242, 3, 0, -3, 3, 0.1875, -2.6242, 3, 0.1875, -3, 3, 0, -3, 0, 0.1875, -0.3759, 0, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0.1275, -0.4883, 3, 0.1875, -0.3759, 0, 0.1875, -0.3759, 0, 0.1275, -2.5117, 0, 0.1875, -2.6242, 3, 0.1875, -2.6242, 3, 0.1875, -2.6242, 3, 0.1275, -2.5117, 0, 0.1275, -2.5117, 3, 0.1275, -0.4883, 0, 0.1275, -0.4883, 0, 0.1275, -2.5117, 0, 0.1275, -2.5117, 3, 0.1275, -2.5117, 3, 0.1275, -0.4883)

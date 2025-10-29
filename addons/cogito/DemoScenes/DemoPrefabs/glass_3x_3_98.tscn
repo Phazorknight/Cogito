@@ -7,7 +7,6 @@ size = Vector3(3, 0.2, 3)
 resource_name = "glass"
 transparency = 4
 albedo_color = Color(0.853244, 0.919941, 0.89044, 0.5)
-emission_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v4mur"]
 size = Vector3(3, 0.2, 3)

@@ -318,7 +318,6 @@ origin_index = -1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r708p"]
 albedo_texture = ExtResource("27_0a6c2")
-emission_enabled = false
 emission = Color(0.12549, 0.690196, 0.384314, 1)
 emission_energy_multiplier = 0.8
 emission_operator = 1

@@ -20,17 +20,14 @@ size = Vector3(0.0495076, 0.385036, 0.358521)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ml5gp"]
 resource_name = "metalMedium"
 albedo_color = Color(0.641088, 0.71296, 0.71296, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emgg4"]
 resource_name = "carpetWhite"
 albedo_color = Color(0.987835, 1, 1, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ix08r"]
 resource_name = "metalDark"
 albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_fmpl3"]
 _surfaces = [{
@@ -115,7 +112,6 @@ size = Vector3(0.395462, 0.281464, 0.0380859)
 resource_name = "glass"
 transparency = 4
 albedo_color = Color(0.853244, 0.919941, 0.89044, 0.5)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_w7ibk"]
 _surfaces = [{

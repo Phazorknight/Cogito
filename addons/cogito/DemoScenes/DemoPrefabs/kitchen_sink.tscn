@@ -8,26 +8,21 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q6icp"]
 resource_name = "wood"
 albedo_color = Color(0.952921, 0.798667, 0.660025, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfhpb"]
 resource_name = "metal"
 albedo_color = Color(0.875925, 0.917687, 0.925891, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jnlhu"]
 resource_name = "metalDark"
 albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0i4xu"]
 resource_name = "metalLight"
 albedo_color = Color(0.971896, 0.991331, 0.980793, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_50ucs"]
 resource_name = "_defaultMat"
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ak6uy"]
 _surfaces = [{
@@ -155,17 +150,14 @@ data = PackedVector3Array(0.8063, 0.7263, -0.04, 0.8063, 0.1702, -0.04, 0.8063, 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jp4bn"]
 resource_name = "wood"
 albedo_color = Color(0.952921, 0.798667, 0.660025, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuctb"]
 resource_name = "woodDark"
 albedo_color = Color(0.842287, 0.70556, 0.58297, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcwsm"]
 resource_name = "metal"
 albedo_color = Color(0.875925, 0.917687, 0.925891, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_phvm3"]
 _surfaces = [{

@@ -3,17 +3,14 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwiaa"]
 resource_name = "metalLight"
 albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mjjnj"]
 resource_name = "metal"
 albedo_color = Color(0.774056, 0.778868, 0.797738, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sqmv7"]
 resource_name = "metalRed"
 albedo_color = Color(0.874166, 0.585568, 0.688203, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_yvbj8"]
 _surfaces = [{
@@ -94,7 +91,6 @@ shadow_mesh = SubResource("ArrayMesh_yvbj8")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uwaxy"]
 resource_name = "metalDark"
 albedo_color = Color(0.588235, 0.423529, 0.654902, 1)
-emission_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gdsoc"]
 size = Vector3(0.56, 3, 3)

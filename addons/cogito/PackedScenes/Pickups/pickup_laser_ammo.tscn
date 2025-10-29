@@ -100,7 +100,6 @@ shadow_mesh = SubResource("ArrayMesh_47rka")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cklr6"]
 albedo_color = Color(1, 0.266667, 1, 1)
-emission_enabled = false
 emission = Color(1, 0.384314, 1, 1)
 emission_energy_multiplier = 2.0
 

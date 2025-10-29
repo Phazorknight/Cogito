@@ -6,17 +6,14 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_203cy"]
 resource_name = "carpetWhite"
 albedo_color = Color(0.987835, 1, 1, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3wwx0"]
 resource_name = "metalLight"
 albedo_color = Color(0.971896, 0.991331, 0.980793, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfw4c"]
 resource_name = "metalDark"
 albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_g521s"]
 _surfaces = [{
@@ -99,7 +96,6 @@ data = PackedVector3Array(1.2114, 0.1504, -0.141, 0.4525, 0.1504, -0.3757, 0.563
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pn6ev"]
 resource_name = "_defaultMat"
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2642w"]
 _surfaces = [{

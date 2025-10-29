@@ -9,7 +9,6 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmjq1"]
 resource_name = "metalMedium"
 albedo_color = Color(0.641088, 0.71296, 0.71296, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_xpd7v"]
 _surfaces = [{
@@ -46,7 +45,6 @@ shadow_mesh = SubResource("ArrayMesh_xpd7v")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_daisn"]
 resource_name = "carpet"
 albedo_color = Color(0.974694, 0.639944, 0.620211, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_4r1vv"]
 _surfaces = [{

@@ -3,12 +3,10 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvfhg"]
 resource_name = "metalDark"
 albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
-emission_enabled = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hc5gi"]
 resource_name = "metalMedium"
 albedo_color = Color(0.641088, 0.71296, 0.71296, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_e3ah2"]
 _surfaces = [{

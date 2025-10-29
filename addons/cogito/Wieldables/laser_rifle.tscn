@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://b361n7ae3ixmn" path="res://addons/cogito/Assets/Shader/ViewmodelSpace.gd" id="5_fa3wp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk8qb"]
-emission_enabled = false
 emission = Color(1, 0.699167, 0.05, 1)
 emission_energy_multiplier = 3.0
 
@@ -241,7 +240,6 @@ shadow_mesh = SubResource("ArrayMesh_k03ik")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lb5c8"]
 albedo_color = Color(1, 0.266667, 1, 1)
-emission_enabled = false
 emission = Color(1, 0.384314, 1, 1)
 emission_energy_multiplier = 2.0
 

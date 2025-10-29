@@ -6,7 +6,6 @@ size = Vector3(3, 0.2, 3)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2kmc"]
 resource_name = "metalLight"
 albedo_color = Color(0.918013, 0.929502, 0.9647, 1)
-emission_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v4mur"]
 size = Vector3(3, 0.2, 3)

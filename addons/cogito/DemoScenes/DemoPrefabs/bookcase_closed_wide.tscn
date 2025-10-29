@@ -3,7 +3,6 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rd26b"]
 resource_name = "wood"
 albedo_color = Color(0.952921, 0.798667, 0.660025, 1)
-emission_enabled = false
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_8jtjk"]
 _surfaces = [{
@@ -40,7 +39,6 @@ shadow_mesh = SubResource("ArrayMesh_8jtjk")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_027k0"]
 resource_name = "wood"
 albedo_color = Color(0.631373, 0.631373, 0.631373, 1)
-emission_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_erb8n"]
 size = Vector3(1.60211, 1.57758, 0.0845215)
