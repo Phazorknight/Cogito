@@ -23,9 +23,11 @@ func _process(_delta):
 		CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load " + next_scene_path)
 		set_process(false)
 		await get_tree().create_timer(forced_delay).timeout
+		var current_scene = get_tree().current_scene # Stores currently active scene so it can be set later
+		var current_scene_name = current_scene.get_name()
+		current_scene.free() # Removing previous scene.
 		var new_scene_packed: PackedScene = ResourceLoader.load_threaded_get(next_scene_path)
 		var new_scene_node = new_scene_packed.instantiate()
-		var current_scene = get_tree().current_scene # Stores currently active scene so it can be set later
 		get_tree().get_root().add_child(new_scene_node) # Adds the instatiated new scene as a node.
 		
 		CogitoGlobals.debug_log(true, "loading_screen.gd", "Load_mode is " + str(load_mode) )
@@ -38,7 +40,7 @@ func _process(_delta):
 			if load_mode == 1: #Load_Mode one is attempting to load a save
 				CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load a save for passsed_slot " + passed_slot)
 				CogitoSceneManager._current_scene_name = new_scene_node.name #Manually setting new scene name
-				CogitoSceneManager.loading_saved_game(passed_slot)
+				CogitoSceneManager.loading_saved_game(passed_slot, current_scene_name)
 			else:
 				CogitoGlobals.debug_log(true, "loading_screen.gd", "Attempting to load scene state: " + next_scene_state_filename)
 				CogitoSceneManager.load_scene_state(next_scene_state_filename,"temp") # Loading temp scene state
@@ -52,8 +54,7 @@ func _process(_delta):
 			new_scene_node.move_player_to_connector(connector_name)
 		
 		CogitoSceneManager.is_currently_loading = false
-		current_scene.queue_free() # Removing previous scene.
-		
+		queue_free()
 	else:
 		# Getting progress value and displaying it
 		ResourceLoader.load_threaded_get_status(next_scene_path, progress_array) 
