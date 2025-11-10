@@ -95,6 +95,9 @@ func loading_saved_game(passed_slot: String, current_scene_name: String = ""):
 		
 	_player_state = _player_state.load_state(_active_slot) as CogitoPlayerState
 	
+	if current_scene_name == "":
+		current_scene_name = get_tree().get_current_scene().get_name()
+	
 	CogitoGlobals.debug_log(true,"CSM","Current scene detected as "+ current_scene_name)
 	# Check if player is currently in the same scene as in the game that is being attempted to load:
 	if _current_scene_name == _player_state.player_current_scene:
