@@ -87,7 +87,7 @@ func get_existing_scene_state(passed_slot) -> CogitoSceneState:
 		return null
 
 
-func loading_saved_game(passed_slot: String):
+func loading_saved_game(passed_slot: String, current_scene_name: String = ""):
 	CogitoGlobals.debug_log(true,"CSM","CSM: Loading saved game from slot "+ passed_slot)
 	if !_player_state or !_player_state.state_exists(passed_slot):
 		CogitoGlobals.debug_log(true,"CSM","CSM: Player state of passed slot doesn't exist.")
@@ -95,7 +95,10 @@ func loading_saved_game(passed_slot: String):
 		
 	_player_state = _player_state.load_state(_active_slot) as CogitoPlayerState
 	
-	CogitoGlobals.debug_log(true,"CSM","Current scene detected as "+ get_tree().current_scene.get_name())
+	if current_scene_name == "":
+		current_scene_name = get_tree().get_current_scene().get_name()
+	
+	CogitoGlobals.debug_log(true,"CSM","Current scene detected as "+ current_scene_name)
 	# Check if player is currently in the same scene as in the game that is being attempted to load:
 	if _current_scene_name == _player_state.player_current_scene:
 		# ABOVE used to be: get_tree().current_scene.get_name() == 
@@ -423,7 +426,7 @@ func load_next_scene(target : String, connector_name: String, passed_slot: Strin
 	#loading_screen.attempt_to_load_save = loading_a_save
 	loading_screen.load_mode = load_mode
 	CogitoGlobals.debug_log(true, "CSM", "Loading screen initiated with: next_scene_path=" + target + " | connector = " + connector_name + " | passed_slot = " + passed_slot + " | load_mode = " + str(load_mode) )
-	get_tree().current_scene.add_child(loading_screen)
+	get_tree().get_root().add_child(loading_screen)
 
 
 func delete_save(passed_slot: String) -> void:
@@ -517,6 +520,45 @@ func delete_temp_saves():
 			file_name = dir2.get_next()
 			
 	CogitoGlobals.debug_log(true,"CSM","Ddelete temp saves complete!")
+
+
+func delete_redundant_scene_states(passed_slot:String):
+	CogitoGlobals.debug_log(true,"CSM","Attempting to delete old scene states...")
+	
+	var temp_dir = DirAccess.open(cogito_state_dir + "temp/")
+	
+	if temp_dir:
+		temp_dir.list_dir_begin()
+		var file_name = temp_dir.get_next()
+		
+		while file_name != "":
+			if not file_name.begins_with(CogitoGlobals.cogito_settings.scene_state_prefix) \
+				or file_name.ends_with(CogitoSceneManager._current_scene_name  + ".res"):
+				file_name = temp_dir.get_next()
+				continue
+			
+			CogitoGlobals.debug_log(true,"CSM","Deleting file: " + file_name)
+			if temp_dir.remove(file_name) != OK:
+				CogitoGlobals.debug_log(true,"CSM","Deleting file " + file_name + " failed.")
+			# iterate to next file
+			file_name = temp_dir.get_next()
+	
+	var slot_dir = DirAccess.open(cogito_state_dir + passed_slot)
+
+	if slot_dir:
+		slot_dir.list_dir_begin()
+		var file_name = slot_dir.get_next()
+		
+		while file_name != "":
+			if not file_name.begins_with(CogitoGlobals.cogito_settings.scene_state_prefix):
+				file_name = slot_dir.get_next()
+				continue
+			
+			CogitoGlobals.debug_log(true,"CSM","Deleting file: " + file_name)
+			if slot_dir.remove(file_name) != OK:
+				CogitoGlobals.debug_log(true,"CSM","Deleting file " + file_name + " failed.")
+			# iterate to next file
+			file_name = slot_dir.get_next()
 
 
 func reset_scene_states():
