@@ -110,9 +110,11 @@ func load_current_slot_data() -> bool:
 
 func change_load_btn_to_new_game_btn() -> void:
 	print("Death Screen: chaning load button to new game button.")
-	load_button.pressed.disconnect(_on_load_button_pressed)
+	if load_button.pressed.is_connected(_on_load_button_pressed):
+		load_button.pressed.disconnect(_on_load_button_pressed)
 	load_button.text = tr("TXT_NEW_GAME")
-	load_button.pressed.connect(_on_new_game_button_pressed)
+	if !load_button.pressed.is_connected(_on_new_game_button_pressed):
+		load_button.pressed.connect(_on_new_game_button_pressed)
 
 
 func _on_new_game_button_pressed() -> void:
