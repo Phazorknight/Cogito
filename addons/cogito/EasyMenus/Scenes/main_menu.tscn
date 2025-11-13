@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dq6tvhqcy2aps"]
+[gd_scene load_steps=14 format=3 uid="uid://dq6tvhqcy2aps"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_74dia"]
 [ext_resource type="Script" uid="uid://mp64lt5trfar" path="res://addons/cogito/EasyMenus/Scripts/main_menu_controller.gd" id="1_lbw7r"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bly6wti1q8bsu" path="res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn" id="8_ig87r"]
 [ext_resource type="Script" uid="uid://dyiaeif1d4pmo" path="res://addons/cogito/Scripts/menu_scene_switcher.gd" id="9_kfsif"]
 [ext_resource type="PackedScene" uid="uid://e31n36p8i6an" path="res://addons/cogito/DemoScenes/COGITO_3_Lobby.tscn" id="10_hdl4c"]
+[ext_resource type="PackedScene" uid="uid://cykvjhejssw0m" path="res://addons/cogito/EasyMenus/Scenes/credits_screen.tscn" id="12_72g5g"]
 [ext_resource type="Script" uid="uid://c024i2xgr6uib" path="res://addons/cogito/EasyMenus/Scripts/main_menu_saveslot_manager.gd" id="13_4uenq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n66hi"]
@@ -28,14 +29,20 @@ sound_hover = ExtResource("3_cfl52")
 sound_click = ExtResource("4_mhv4c")
 
 [node name="ContentMain" type="VBoxContainer" parent="."]
-layout_mode = 2
-offset_left = 100.0
-offset_top = 50.0
-offset_right = 600.0
-offset_bottom = 671.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -289.5
+offset_right = 192.0
+offset_bottom = 289.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
 
 [node name="TitleLabel" type="Label" parent="ContentMain"]
 auto_translate_mode = 2
@@ -137,6 +144,13 @@ theme_override_font_sizes/font_size = 30
 text = "Options"
 script = ExtResource("4_ufukr")
 
+[node name="CreditsButton" type="Button" parent="ContentMain/GameMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = "Credits"
+script = ExtResource("4_ufukr")
+
 [node name="QuitButton" type="Button" parent="ContentMain/GameMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
@@ -165,9 +179,14 @@ new_game_world_dict = {
 script = ExtResource("9_kfsif")
 start_game_scene = "uid://cud7jwvomj24d"
 
+[node name="CreditsScreen" parent="." instance=ExtResource("12_72g5g")]
+unique_name_in_owner = true
+layout_mode = 1
+
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainerA/DeleteSlot_A" to="ContentMain/GameMenu/VBoxContainer/HBoxContainerA/SaveSlot_A" method="_on_delete_slot_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainerB/DeleteSlot_B" to="ContentMain/GameMenu/VBoxContainer/HBoxContainerB/SaveSlot_B" method="_on_delete_slot_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainer/DeleteSlot_C" to="ContentMain/GameMenu/VBoxContainer/HBoxContainer/SaveSlot_C" method="_on_delete_slot_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/LegacyDemoSceneButton" to="LegacyDemoSceneSwitcher" method="_on_main_menu_start_game_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/OptionsButton" to="." method="open_options_menu"]
+[connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/CreditsButton" to="." method="play_credits"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/QuitButton" to="." method="quit"]

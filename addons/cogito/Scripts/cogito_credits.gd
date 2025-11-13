@@ -12,8 +12,9 @@ var endpoint : int = 0
 var is_scrolling : bool = false
 
 
-@onready var scroll_container: ScrollContainer = $ScrollContainer
 @onready var credits_rich_text_label: RichTextLabel = %CreditsRichTextLabel
+@onready var scroll_container: ScrollContainer = %ScrollContainer
+
 
 func _ready() -> void:
 	var file = FileAccess.open(credits_text_resource, FileAccess.READ)
@@ -25,7 +26,11 @@ func _ready() -> void:
 	# Finding the proper endpoint should probably be refined a bit.
 	endpoint = credits_rich_text_label.size.y - (credits_rich_text_label.size.y/3)
 	print("Cogito Credits: endpoint = ", endpoint)
-	start_credits()
+	#start_credits()
+
+
+func reset_credits() -> void:
+	scroll_container.scroll_vertical = 0
 
 
 func start_credits() -> void:

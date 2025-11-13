@@ -1,32 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://chuvh28f228tw"]
+[gd_scene load_steps=4 format=3 uid="uid://cykvjhejssw0m"]
 
-[ext_resource type="Script" uid="uid://broxrvinmcgep" path="res://addons/cogito/Scripts/cogito_credits.gd" id="1_6vaer"]
+[ext_resource type="Script" uid="uid://broxrvinmcgep" path="res://addons/cogito/Scripts/cogito_credits.gd" id="1_pkism"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pkism"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6vaer"]
 
-[node name="Cogito5Credits" type="Node3D"]
-
-[node name="Control_FullRect" type="Control" parent="."]
+[node name="CogitoCredits" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_pkism")
+credits_text_resource = "res://addons/cogito/cogito_credits.txt"
 
-[node name="CogitoCredits" type="Control" parent="Control_FullRect"]
+[node name="Mask" type="Panel" parent="."]
+clip_children = 1
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pkism")
+
+[node name="CreditsContents" type="Control" parent="Mask"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -360.0
+offset_right = 250.0
+offset_bottom = -59.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_6vaer")
-credits_text_resource = "res://addons/cogito/cogito_credits.txt"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Control_FullRect/CogitoCredits"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Mask/CreditsContents"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,16 +53,17 @@ grow_vertical = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control_FullRect/CogitoCredits/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Mask/CreditsContents/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 6
 
-[node name="PanelEmptyScreenStart" type="Panel" parent="Control_FullRect/CogitoCredits/ScrollContainer/VBoxContainer"]
+[node name="PanelEmptyScreenStart" type="Panel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 1100)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_6vaer")
 
-[node name="CreditsRichTextLabel" type="RichTextLabel" parent="Control_FullRect/CogitoCredits/ScrollContainer/VBoxContainer"]
+[node name="CreditsRichTextLabel" type="RichTextLabel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
@@ -167,7 +185,7 @@ horizontal_alignment = 1
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="PanelEmptyScreenEnd" type="Panel" parent="Control_FullRect/CogitoCredits/ScrollContainer/VBoxContainer"]
+[node name="PanelEmptyScreenEnd" type="Panel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 1100)
 layout_mode = 2
 size_flags_horizontal = 3

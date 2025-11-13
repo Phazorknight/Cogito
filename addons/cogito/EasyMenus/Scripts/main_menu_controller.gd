@@ -5,6 +5,9 @@ signal start_game_pressed
 @onready var game_menu: MarginContainer = $ContentMain/GameMenu
 @onready var options_tab_menu: OptionsTabMenu = $ContentMain/OptionsTabMenu
 @onready var options_button: CogitoUiButton = $ContentMain/GameMenu/VBoxContainer/OptionsButton
+@onready var credits_button: CogitoUiButton = $ContentMain/GameMenu/VBoxContainer/CreditsButton
+@onready var credits_screen = %CreditsScreen
+
 
 #region UI AUDIO
 @export var sound_hover : AudioStream
@@ -46,6 +49,7 @@ func _play_pressed() -> void:
 
 
 func _ready():
+	%CreditsScreen.hide()
 	first_focus_button.grab_focus()
 
 
@@ -57,6 +61,8 @@ func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and !game_menu.visible:
 		accept_event()
 		options_tab_menu.hide()
+		credits_screen.reset_credits()
+		credits_screen.hide()
 		game_menu.show()
 		options_button.grab_focus.call_deferred()
 
@@ -65,6 +71,20 @@ func open_options_menu():
 	options_tab_menu.show()
 	options_tab_menu.tab_container.nodes_to_focus[0].grab_focus.call_deferred()
 	game_menu.hide()
+	
+
+func play_credits():
+	credits_screen.show()
+	game_menu.hide()
+	credits_screen.start_credits()
+	
+	await credits_screen.credits_finished 
+	
+	credits_screen.reset_credits()
+	credits_screen.hide()
+	game_menu.show()
+	credits_button.grab_focus.call_deferred()
+
 
 
 func _on_start_game_button_pressed():
