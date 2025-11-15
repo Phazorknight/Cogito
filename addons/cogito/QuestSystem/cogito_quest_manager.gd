@@ -5,10 +5,10 @@ signal quest_updated(quest: CogitoQuest) #Emitted when a quests gets updated (us
 signal quest_completed(quest: CogitoQuest) #Emitted when a quest gets completed / moved to the completed quests group.
 signal quest_failed(quest: CogitoQuest) #Emitted when a quest gets moved to the failed quests group.
 
-const AvailableQuests = preload("./QuestGroups/available_quests_group.gd")
-const ActiveQuests = preload("./QuestGroups/active_quests_group.gd")
-const CompletedQuests = preload("./QuestGroups/completed_quests_group.gd")
-const FailedQuests = preload("./QuestGroups/failed_quests_group.gd")
+const AvailableQuests = preload("res://addons/cogito/QuestSystem/QuestGroups/available_quests_group.gd")
+const ActiveQuests = preload("res://addons/cogito/QuestSystem/QuestGroups/active_quests_group.gd")
+const CompletedQuests = preload("res://addons/cogito/QuestSystem/QuestGroups/completed_quests_group.gd")
+const FailedQuests = preload("res://addons/cogito/QuestSystem/QuestGroups/failed_quests_group.gd")
 
 # AUDIO REFERENCES
 const COGITO_QUEST_COMPLETE = preload("../Assets/Audio/Phazorknight/Cogito_QuestComplete.wav")

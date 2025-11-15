@@ -11,7 +11,7 @@ var connector_name : String
 var next_scene_state_filename : String
 var passed_slot : String
 var load_mode
-var progress_array : Array[float]
+var progress_array : Array[float] = []
 
 func _ready():
 	progress_array.clear()

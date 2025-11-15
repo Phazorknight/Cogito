@@ -19,6 +19,7 @@ var inventory_slot_reference : InventorySlotPD
 
 
 func _ready() -> void:
+	focus_mode = FOCUS_ALL
 	item_texture.hide()
 	label_stack_amount.hide()
 	dynamic_input_icon.action_name = input_action

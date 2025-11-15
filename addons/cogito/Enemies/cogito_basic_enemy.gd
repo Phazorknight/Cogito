@@ -193,6 +193,8 @@ func move_toward_target(target: Node3D, passed_speed:float):
 func _look_at_target_interpolated(look_direction: Vector3) -> void:
 	var look_at_target = global_position.direction_to(look_direction)
 	var look_at_target_xz := Vector3(look_at_target.x, 0, look_at_target.z)
+	if look_at_target_xz.is_zero_approx():
+		return
 	var target_basis= Basis.looking_at(look_at_target_xz)
 	basis = basis.slerp(target_basis, 0.2)
 

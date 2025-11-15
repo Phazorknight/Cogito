@@ -12,20 +12,20 @@ config_version=5
 
 config/name="Cogito"
 run/main_scene="res://addons/cogito/DemoScenes/COGITO_0_MainMenu.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 run/max_fps=120
-boot_splash/fullsize=false
+boot_splash/stretch_mode=0
 boot_splash/image="res://addons/cogito/COGITO_Card_2025.png"
 config/icon="res://addons/cogito/COGITO_icon.png"
 
 [autoload]
 
-Audio="*res://addons/quick_audio/./Audio.gd"
-InputHelper="*res://addons/input_helper/input_helper.gd"
-CogitoGlobals="*res://addons/cogito/cogito_globals.gd"
-CogitoSceneManager="*res://addons/cogito/SceneManagement/cogito_scene_manager.gd"
-CogitoQuestManager="*res://addons/cogito/QuestSystem/cogito_quest_manager.gd"
-MenuTemplateManager="*res://addons/cogito/EasyMenus/Nodes/menu_template_manager.tscn"
+Audio="*uid://cujwm7u5pvogl"
+InputHelper="*uid://cholww48njaeh"
+CogitoQuestManager="*uid://c33l80dv3c6c5"
+CogitoGlobals="*uid://d0q71mnw6am11"
+MenuTemplateManager="*uid://dru131jwwih1y"
+CogitoSceneManager="*uid://dwd61hyssfy55"
 
 [display]
 
@@ -53,12 +53,43 @@ folder_colors={
 "res://addons/cogito/Scripts/": "gray"
 }
 
+[godot_uid]
+
+uid://c33l80dv3c6c5={
+"id": "c33l80dv3c6c5",
+"path": "res://addons/cogito/QuestSystem/cogito_quest_manager.gd"
+}
+uid://cholww48njaeh={
+"id": "cholww48njaeh",
+"path": "res://addons/input_helper/input_helper.gd"
+}
+uid://cujwm7u5pvogl={
+"id": "cujwm7u5pvogl",
+"path": "res://addons/quick_audio/quick_audio.gd"
+}
+uid://d0q71mnw6am11={
+"id": "d0q71mnw6am11",
+"path": "res://addons/cogito/Scripts/cogito_globals.gd"
+}
+uid://dru131jwwih1y={
+"id": "dru131jwwih1y",
+"path": "res://addons/cogito/EasyMenus/Scripts/menu_template_manager.gd"
+}
+uid://dwd61hyssfy55={
+"id": "dwd61hyssfy55",
+"path": "res://addons/cogito/SceneManagement/cogito_scene_manager.gd"
+}
+uid://by44nnjeu6u4n={
+"id": "by44nnjeu6u4n",
+"path": "res://addons/cogito/Theme/cogito_theme.tres"
+}
+
 [gui]
 
-theme/default_theme_scale=2.0
-theme/custom="uid://by44nnjeu6u4n"
 theme/default_font_multichannel_signed_distance_field=true
 theme/default_font_generate_mipmaps=true
+theme/default_theme_scale=2.0
+theme/custom="uid://by44nnjeu6u4n"
 
 [importer_defaults]
 
