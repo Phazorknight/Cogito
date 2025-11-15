@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dq6tvhqcy2aps" path="res://addons/cogito/EasyMenus/Scenes/main_menu.tscn" id="1_jlj1d"]
 
-[node name="01_MainMenu" type="Control"]
+[node name="01_MainMenu" type="Control" unique_id=380300235]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,7 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MainMenu" parent="." instance=ExtResource("1_jlj1d")]
+[node name="MainMenu" parent="." unique_id=856476102 instance=ExtResource("1_jlj1d")]
 layout_mode = 1
 
 [connection signal="start_game_pressed" from="MainMenu" to="." method="_on_main_menu_start_game_pressed"]

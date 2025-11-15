@@ -124,10 +124,7 @@ func update_animations(_delta: float):
 	velocity_debug_shape.position = relative_velocity
 	
 	#print("NPC : update_animations: velocity=", velocity, ". relative_velocity=", relative_velocity, ". rel_velocity_xz=",rel_velocity_xz)
-	if rel_velocity_xz.length_squared() > 0:
-		animation_tree.set("parameters/Movement/blend_position", rel_velocity_xz)
-	else:
-		animation_tree.set("parameters/Movement/blend_position", 0)
+	animation_tree.set("parameters/Movement/blend_position", rel_velocity_xz)
 	
 
 func set_upper_body_state(state_name: String):
