@@ -130,7 +130,7 @@ func _ready() -> void:
 	fullscreen_mode_check_button.toggled.connect(_on_fullscreen_mode_toggled)
 	windowed_resolution_option_button.item_selected.connect(_on_resolution_selected)
 	gui_scale_slider.value_changed.connect(_on_gui_scale_slider_value_changed)
-	update_resolution_controls_visibility()
+	refresh_resolution_controls()
 	
 	# AUDIO
 	sfx_bus_index = AudioServer.get_bus_index(OptionsConstants.sfx_bus_name)
@@ -201,7 +201,7 @@ func _on_fullscreen_mode_toggled(button_pressed: bool) -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 	
-	update_resolution_controls_visibility()
+	refresh_resolution_controls()
 
 
 func refresh_render():
@@ -230,10 +230,9 @@ func _on_resolution_selected(index: int) -> void:
 
 func _on_fullscreen_resolution_slider_value_changed(value: float) -> void:
 	var scale = value / 100.00
-	# Only update display; actual application + save occurs when Apply is pressed.
-	update_fullscreen_resolution_label(scale)
-	have_options_changed = true
 	fullscreen_resolution_scale_val = scale
+	update_fullscreen_resolution_slider_label()
+	have_options_changed = true
 
 func _on_sfx_volume_slider_value_changed(value):
 	set_volume(sfx_bus_index, value)
@@ -339,8 +338,8 @@ func load_options(skip_applying: bool = false):
 
 	# LOADING GRAPHICS CFG
 	fullscreen_resolution_scale_val = fullscreen_resolution_scale
-	fullscreen_resolution_slider.value = fullscreen_resolution_scale_val * 100.0
-	update_fullscreen_resolution_label(fullscreen_resolution_scale_val)
+	update_fullscreen_resolution_slider_value()
+	update_fullscreen_resolution_slider_label()
 	
 	gui_scale_slider.value = gui_scale
 	gui_scale_current_value_label.text = "%d%%" % (gui_scale * 100)
@@ -366,9 +365,9 @@ func load_options(skip_applying: bool = false):
 		windowed_resolution_option_button.item_selected.emit(resolution_index)
 		refresh_render()
 
-	update_resolution_controls_visibility()
+	refresh_resolution_controls()
 
-func update_resolution_controls_visibility():
+func refresh_resolution_controls():
 	var fullscreen := is_fullscreen()
 	fullscreen_resolution_slider.visible = fullscreen
 	# Show fullscreen resolution slider only in fullscreen mode
@@ -377,7 +376,15 @@ func update_resolution_controls_visibility():
 	# Show windowed resolution selector only in windowed mode
 	windowed_resolution_option_button.visible = !fullscreen
 
-func update_fullscreen_resolution_label(scale: float) -> void:
+	if fullscreen:
+		update_fullscreen_resolution_slider_value()
+		update_fullscreen_resolution_slider_label()
+
+func update_fullscreen_resolution_slider_value() -> void:
+	fullscreen_resolution_slider.value = fullscreen_resolution_scale_val * 100.0
+
+func update_fullscreen_resolution_slider_label() -> void:
+	var scale = fullscreen_resolution_scale_val
 	var window_size = get_window().size
 	var pct = roundi(scale * 100.0)
 	var res_x = roundi(window_size.x * scale)
