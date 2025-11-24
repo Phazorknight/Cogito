@@ -14,7 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pkism")
-credits_text_resource = "res://addons/cogito/cogito_credits.txt"
+credits_text_file = "res://addons/cogito/cogito_credits.txt"
 
 [node name="Mask" type="Panel" parent="."]
 clip_children = 1
@@ -55,9 +55,10 @@ vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Mask/CreditsContents/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 3
 
-[node name="PanelEmptyScreenStart" type="Panel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
+[node name="PanelEmptyHeader" type="Panel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 1100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -180,12 +181,12 @@ Set credits file in the CreditsTextAnchor node.
 Set credits file in the CreditsTextAnchor node.
 "
 fit_content = true
-autowrap_mode = 0
 horizontal_alignment = 1
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="PanelEmptyScreenEnd" type="Panel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
+[node name="PanelEmptyFooter" type="Panel" parent="Mask/CreditsContents/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 1100)
 layout_mode = 2
 size_flags_horizontal = 3
