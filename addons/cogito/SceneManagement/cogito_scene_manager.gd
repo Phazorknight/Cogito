@@ -522,45 +522,6 @@ func delete_temp_saves():
 	CogitoGlobals.debug_log(true,"CSM","Ddelete temp saves complete!")
 
 
-func delete_redundant_scene_states(passed_slot:String):
-	CogitoGlobals.debug_log(true,"CSM","Attempting to delete old scene states...")
-	
-	var temp_dir = DirAccess.open(cogito_state_dir + "temp/")
-	
-	if temp_dir:
-		temp_dir.list_dir_begin()
-		var file_name = temp_dir.get_next()
-		
-		while file_name != "":
-			if not file_name.begins_with(CogitoGlobals.cogito_settings.scene_state_prefix) \
-				or file_name.ends_with(CogitoSceneManager._current_scene_name  + ".res"):
-				file_name = temp_dir.get_next()
-				continue
-			
-			CogitoGlobals.debug_log(true,"CSM","Deleting file: " + file_name)
-			if temp_dir.remove(file_name) != OK:
-				CogitoGlobals.debug_log(true,"CSM","Deleting file " + file_name + " failed.")
-			# iterate to next file
-			file_name = temp_dir.get_next()
-	
-	var slot_dir = DirAccess.open(cogito_state_dir + passed_slot)
-
-	if slot_dir:
-		slot_dir.list_dir_begin()
-		var file_name = slot_dir.get_next()
-		
-		while file_name != "":
-			if not file_name.begins_with(CogitoGlobals.cogito_settings.scene_state_prefix):
-				file_name = slot_dir.get_next()
-				continue
-			
-			CogitoGlobals.debug_log(true,"CSM","Deleting file: " + file_name)
-			if slot_dir.remove(file_name) != OK:
-				CogitoGlobals.debug_log(true,"CSM","Deleting file " + file_name + " failed.")
-			# iterate to next file
-			file_name = slot_dir.get_next()
-
-
 func reset_scene_states():
 	# TODO: CREATE FUNCTION THAT DELETES SCENE STATE FILES.
 	var scene_state_files : Dictionary

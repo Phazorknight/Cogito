@@ -155,7 +155,6 @@ func _on_save_button_pressed() -> void:
 	CogitoSceneManager.save_player_state(CogitoSceneManager._current_player_node,CogitoSceneManager._active_slot)
 	#CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,CogitoSceneManager._active_slot)
 	CogitoSceneManager.save_scene_state(CogitoSceneManager._current_scene_name,"temp")
-	CogitoSceneManager.delete_redundant_scene_states(CogitoSceneManager._active_slot)
 	CogitoSceneManager.copy_temp_saves_to_slot(CogitoSceneManager._active_slot)
 	
 	_on_resume_game_button_pressed()
