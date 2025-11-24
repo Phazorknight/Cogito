@@ -385,7 +385,7 @@ func update_fullscreen_resolution_slider_value() -> void:
 
 func update_fullscreen_resolution_slider_label() -> void:
 	var scale = fullscreen_resolution_scale_val
-	var window_size = get_window().size
+	var window_size = DisplayServer.screen_get_size()
 	var pct = roundi(scale * 100.0)
 	var res_x = roundi(window_size.x * scale)
 	var res_y = roundi(window_size.y * scale)
