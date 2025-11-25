@@ -11,7 +11,7 @@ enum TravelStatus{ SUCCESS, FAILURE, RUNNING, WAITING = 3 }
 var current_travel_status : TravelStatus
 
 func _state_enter():
-	print(name, " state entered")
+	CogitoGlobals.debug_log(true, "npc_state_move_to_random_pos.gd", name + " state entered")
 	Host.navigation_agent_3d.target_position = pick_destination()
 	current_travel_status = TravelStatus.RUNNING
 

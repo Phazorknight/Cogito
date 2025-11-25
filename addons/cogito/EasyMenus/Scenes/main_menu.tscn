@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dq6tvhqcy2aps"]
+[gd_scene load_steps=11 format=3 uid="uid://dq6tvhqcy2aps"]
 
 [ext_resource type="Theme" uid="uid://by44nnjeu6u4n" path="res://addons/cogito/Theme/Cogito_Theme_A.tres" id="1_74dia"]
 [ext_resource type="Script" uid="uid://mp64lt5trfar" path="res://addons/cogito/EasyMenus/Scripts/main_menu_controller.gd" id="1_lbw7r"]
@@ -8,8 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://xvn0elatew0k" path="res://addons/cogito/Assets/Graphics/Trash.png" id="6_l0dou"]
 [ext_resource type="PackedScene" uid="uid://k0i6k7mcajfm" path="res://addons/cogito/EasyMenus/Components/SaveSlotButton.tscn" id="6_s811w"]
 [ext_resource type="PackedScene" uid="uid://bly6wti1q8bsu" path="res://addons/cogito/EasyMenus/Scenes/OptionsTabMenu.tscn" id="8_ig87r"]
-[ext_resource type="Script" uid="uid://dyiaeif1d4pmo" path="res://addons/cogito/Scripts/menu_scene_switcher.gd" id="9_kfsif"]
-[ext_resource type="PackedScene" uid="uid://e31n36p8i6an" path="res://addons/cogito/DemoScenes/COGITO_3_Lobby.tscn" id="10_hdl4c"]
 [ext_resource type="Script" uid="uid://c024i2xgr6uib" path="res://addons/cogito/EasyMenus/Scripts/main_menu_saveslot_manager.gd" id="13_4uenq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n66hi"]
@@ -123,13 +121,6 @@ custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_n66hi")
 
-[node name="LegacyDemoSceneButton" type="Button" parent="ContentMain/GameMenu/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 30
-text = "Legacy Demo Scene"
-script = ExtResource("4_ufukr")
-
 [node name="OptionsButton" type="Button" parent="ContentMain/GameMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
@@ -156,18 +147,9 @@ offset_top = 603.0
 offset_right = 600.0
 offset_bottom = 603.0
 script = ExtResource("13_4uenq")
-new_game_start_scene = ExtResource("10_hdl4c")
-new_game_world_dict = {
-"lab_power": true
-}
-
-[node name="LegacyDemoSceneSwitcher" type="Node" parent="."]
-script = ExtResource("9_kfsif")
-start_game_scene = "uid://cud7jwvomj24d"
 
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainerA/DeleteSlot_A" to="ContentMain/GameMenu/VBoxContainer/HBoxContainerA/SaveSlot_A" method="_on_delete_slot_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainerB/DeleteSlot_B" to="ContentMain/GameMenu/VBoxContainer/HBoxContainerB/SaveSlot_B" method="_on_delete_slot_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/HBoxContainer/DeleteSlot_C" to="ContentMain/GameMenu/VBoxContainer/HBoxContainer/SaveSlot_C" method="_on_delete_slot_pressed"]
-[connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/LegacyDemoSceneButton" to="LegacyDemoSceneSwitcher" method="_on_main_menu_start_game_pressed"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/OptionsButton" to="." method="open_options_menu"]
 [connection signal="pressed" from="ContentMain/GameMenu/VBoxContainer/QuitButton" to="." method="quit"]

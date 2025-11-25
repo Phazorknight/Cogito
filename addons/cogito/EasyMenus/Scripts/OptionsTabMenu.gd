@@ -12,8 +12,8 @@ var have_options_changed := false
 var has_windowed_resolution_changed := false
 
 # GAMEPLAY
-@onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
-@onready var toggle_crouching_check_button: CheckButton = %ToggleCrouchingCheckButton
+@onready var invert_y_check_button: CheckBox = %InvertYAxisCheckButton
+@onready var toggle_crouching_check_button: CheckBox = %ToggleCrouchingCheckButton
 @onready var headbob_option_button: OptionButton = %HeadbobOptionButton
 @onready var mouse_sens_slider: HSlider = %MouseSensSlider
 @onready var mouse_sens_value_label: Label = %MouseSensValueLabel
@@ -39,10 +39,10 @@ var music_bus_index
 @onready var windowed_resolution_option_button: OptionButton = %WindowedResolutionOptionButton
 @onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
 @onready var gui_scale_slider: HSlider = %GUIScaleSlider
-@onready var vsync_check_button: CheckButton = %VSyncCheckButton
+@onready var vsync_check_button: CheckBox = %VSyncCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
-@onready var fullscreen_mode_check_button: CheckButton = %FullscreenModeCheckButton
+@onready var fullscreen_mode_check_button: CheckBox = %FullscreenModeCheckButton
 
 var windowed_resolution: Vector2i
 var prev_windowed_resolution: Vector2i
@@ -137,6 +137,7 @@ func _ready() -> void:
 	music_bus_index = AudioServer.get_bus_index(OptionsConstants.music_bus_name)
 	sfx_volume_slider.hslider.value_changed.connect(_on_sfx_volume_slider_value_changed)
 	music_volume_slider.hslider.value_changed.connect(_on_music_volume_slider_value_changed)
+
 	
 	load_options()
 	load_keybindings_from_config()
