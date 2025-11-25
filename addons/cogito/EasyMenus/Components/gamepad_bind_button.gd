@@ -35,28 +35,44 @@ func _input(event):
 	if !is_remapping:
 		return
 	
+	# Allow cancelling remapping with the Escape key
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			end_remapping()
+			accept_event()
+			return
+	
+	# Allow cancelling remapping with a mouse click
+	if event is InputEventMouseButton:
+		if event.pressed:
+			end_remapping()
+			accept_event()
+			return
+	
 	if event is InputEventJoypadMotion:
 		if abs(event.axis_value) > .1: # Adding threshold for joystick axis input mapping
-			InputHelper.set_joypad_input_for_action(action,event,false)
-			text = ""
-			gamepad_input_icon.visible = true
-			update_icon()
-			is_remapping = false
-			button_pressed = false
+			InputHelper.set_joypad_input_for_action(action, event, false)
+			end_remapping()
+			accept_event()
+			return
 	
 	if event is InputEventJoypadButton:
 		if event.pressed:
-			InputHelper.set_joypad_input_for_action(action,event,false)
-			text = ""
-			gamepad_input_icon.visible = true
-			update_icon()
-			is_remapping = false
-			button_pressed = false
-		
+			InputHelper.set_joypad_input_for_action(action, event, false)
+			end_remapping()
+
 	accept_event()
 
 
+# End the remapping process, resetting the binding process for the future.
+func end_remapping():
+	is_remapping = false
+	button_pressed = false
+	text = ""
+	gamepad_input_icon.visible = true
+	update_icon()
+
+
 func update_icon():
-	#text = "%s" % InputMap.action_get_events(action)[0].as_text()
 	gamepad_input_icon.action_name = action
 	gamepad_input_icon.update_input_icon()

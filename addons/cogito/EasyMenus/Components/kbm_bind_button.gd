@@ -36,21 +36,26 @@ func _input(event):
 		return
 	
 	if event is InputEventJoypadMotion:
+		end_remapping()
+		accept_event()
 		return
 	
-	if event is InputEventKey || ( event is InputEventMouseButton && event.pressed):
-		InputHelper.set_keyboard_input_for_action(action,event,false)
-		text = ""
-		kbm_input_icon.visible = true
-		update_icon()
-		
-		is_remapping = false
-		button_pressed = false
+	if event is InputEventKey || (event is InputEventMouseButton && event.pressed):
+		InputHelper.set_keyboard_input_for_action(action, event, false)
+		end_remapping()
 		
 	accept_event()
 
 
+# End the remapping process, resetting the binding process for the future.
+func end_remapping():
+	is_remapping = false
+	button_pressed = false
+	text = ""
+	kbm_input_icon.visible = true
+	update_icon()
+
+
 func update_icon():
-	#text = "%s" % InputMap.action_get_events(action)[0].as_text()
 	kbm_input_icon.action_name = action
 	kbm_input_icon.update_input_icon()
