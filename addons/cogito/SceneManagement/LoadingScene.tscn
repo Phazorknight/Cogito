@@ -11,6 +11,7 @@ gradient = SubResource("Gradient_mxr7g")
 fill_from = Vector2(0.495726, 0.598291)
 
 [node name="LoadingScene" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_eqjm8")
 
 [node name="Control" type="Control" parent="."]

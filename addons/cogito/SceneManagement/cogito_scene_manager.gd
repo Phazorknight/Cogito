@@ -87,7 +87,7 @@ func get_existing_scene_state(passed_slot) -> CogitoSceneState:
 		return null
 
 
-func loading_saved_game(passed_slot: String):
+func loading_saved_game(passed_slot: String, current_scene_name: String = ""):
 	CogitoGlobals.debug_log(true,"CSM","CSM: Loading saved game from slot "+ passed_slot)
 	if !_player_state or !_player_state.state_exists(passed_slot):
 		CogitoGlobals.debug_log(true,"CSM","CSM: Player state of passed slot doesn't exist.")
@@ -95,7 +95,10 @@ func loading_saved_game(passed_slot: String):
 		
 	_player_state = _player_state.load_state(_active_slot) as CogitoPlayerState
 	
-	CogitoGlobals.debug_log(true,"CSM","Current scene detected as "+ get_tree().current_scene.get_name())
+	if current_scene_name == "":
+		current_scene_name = get_tree().get_current_scene().get_name()
+	
+	CogitoGlobals.debug_log(true,"CSM","Current scene detected as "+ current_scene_name)
 	# Check if player is currently in the same scene as in the game that is being attempted to load:
 	if _current_scene_name == _player_state.player_current_scene:
 		# ABOVE used to be: get_tree().current_scene.get_name() == 
@@ -423,7 +426,7 @@ func load_next_scene(target : String, connector_name: String, passed_slot: Strin
 	#loading_screen.attempt_to_load_save = loading_a_save
 	loading_screen.load_mode = load_mode
 	CogitoGlobals.debug_log(true, "CSM", "Loading screen initiated with: next_scene_path=" + target + " | connector = " + connector_name + " | passed_slot = " + passed_slot + " | load_mode = " + str(load_mode) )
-	get_tree().current_scene.add_child(loading_screen)
+	get_tree().get_root().add_child(loading_screen)
 
 
 func delete_save(passed_slot: String) -> void:
