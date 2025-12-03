@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=136 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_kxi7f"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_akrjl"]
@@ -64,7 +64,9 @@
 [ext_resource type="PackedScene" uid="uid://b60auyyy0apwb" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_extension.tscn" id="64_uw0my"]
 [ext_resource type="PackedScene" uid="uid://d2vpt8d74j5u" path="res://addons/cogito/PackedScenes/sanity_drain_attribute_zone.tscn" id="65_owla0"]
 [ext_resource type="PackedScene" uid="uid://ks0xcampuu3h" path="res://addons/cogito/PackedScenes/stamina_drain_attribute_zone.tscn" id="66_go053"]
+[ext_resource type="PackedScene" uid="uid://buythf18ywmy5" path="res://addons/cogito/CogitoNPC/mannequin_ragdoll.tscn" id="66_ovhpt"]
 [ext_resource type="PackedScene" uid="uid://d2lnk6ecthmvd" path="res://addons/cogito/PackedScenes/Pickups/pickup_strength_potion.tscn" id="67_17g06"]
+[ext_resource type="PackedScene" uid="uid://byb1y44thne6i" path="res://addons/cogito/PackedScenes/gravity_zone.tscn" id="68_kt1ow"]
 [ext_resource type="PackedScene" uid="uid://b2cccsfb5tikx" path="res://addons/cogito/CogitoNPC/cogito_npc.tscn" id="68_wxy0x"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wjbty"]
@@ -92,7 +94,7 @@ volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
 
-[sub_resource type="Resource" id="Resource_ovhpt"]
+[sub_resource type="Resource" id="Resource_kt1ow"]
 resource_local_to_scene = true
 script = ExtResource("5_fhmwi")
 grid = true
@@ -918,7 +920,7 @@ environment = SubResource("Environment_bftoa")
 
 [node name="Player" parent="." instance=ExtResource("3_ea58p")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_ovhpt")
+inventory_data = SubResource("Resource_kt1ow")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
@@ -4549,9 +4551,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.54745, 0.0438593, -2.19753)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.99269, 0.532, 6.01611)
 cogito_name = ""
 
+[node name="MannequinRagdoll" parent="." instance=ExtResource("66_ovhpt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.968672, 3.07015, -4.42904)
+
 [node name="CogitoNPC" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("68_wxy0x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)
 patrol_path = NodePath("../EnemyPatrolpath2")
+
+[node name="GravityZone" parent="." instance=ExtResource("68_kt1ow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.9735, 1.7, -7.71015)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]
