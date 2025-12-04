@@ -430,7 +430,8 @@ func _rebuild_interaction_prompts() -> void:
 func _attempt_throw() -> void:
 	if !is_carrying:
 		return
-	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
+
+	var carried_object_mass: float = get_carried_object_mass(carried_object)
 	var throw_force: float = carried_object_mass * throw_power_mass_multiplier
 	throw_force = clamp(throw_force, 0, max_throw_power)
 	
@@ -448,10 +449,20 @@ func _attempt_throw() -> void:
 func _drop_carried_object() -> void:
 	if !is_carrying:
 		return
-	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
+	var carried_object_mass: float = get_carried_object_mass(carried_object)
 	var drop_force: float = carried_object_mass * drop_power_mass_multiplier
 	drop_force = clamp(drop_force, 0, max_drop_power)
 	carried_object.throw(drop_force)
+
+
+func get_carried_object_mass(carried_object) -> float:
+	var carried_object_mass: float
+	var carried_object_parent = carried_object.get_parent()
+	if carried_object_parent is RigidBody3D:
+		carried_object_mass = (carried_object_parent as RigidBody3D).mass
+	elif carried_object_parent is PhysicalBone3D:
+		carried_object_mass = (carried_object_parent as PhysicalBone3D).mass
+	return carried_object_mass
 
 
 ## Briefly interrupt quickslot cycling after an interactable is unseen

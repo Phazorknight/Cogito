@@ -3965,14 +3965,13 @@ outline_size = 10
 horizontal_alignment = 2
 
 [node name="Label_SYSTEMICPROPS" type="Label3D" parent="NavigationRegion3D/SHOOTING_RANGE"]
-transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -17.1099, 1.43134, -14.6248)
-text = "SYSTEMIC
-PROPERTIES
-(very WIP)"
-font = ExtResource("7_y2art")
+transform = Transform3D(1, 0, 1.06581e-14, 0, 1, 0, -1.06581e-14, 0, 1, -14.9099, 1.29132, -14.6248)
+text = "WIP AREA
+(unfinished systems)"
+font = ExtResource("24_u2ls4")
 font_size = 64
 outline_size = 10
-horizontal_alignment = 0
+horizontal_alignment = 2
 line_spacing = -20.0
 
 [node name="Label_WetDarts" type="Label3D" parent="NavigationRegion3D/SHOOTING_RANGE"]
@@ -4559,7 +4558,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9769, 3.07015, 19.6502)
 patrol_path = NodePath("../EnemyPatrolpath2")
 
 [node name="GravityZone" parent="." instance=ExtResource("68_kt1ow")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.9735, 1.7, -7.71015)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -24.1735, 1.7, -19.6101)
 
 [connection signal="pressed" from="NavigationRegion3D/SHOOTING_RANGE/KSI_console_spawn/GenericButton" to="NavigationRegion3D/SHOOTING_RANGE/Spawnzone_Targets" method="_on_generic_button_pressed"]
 [connection signal="object_placed" from="NavigationRegion3D/SYSTEMIC_PROPERTIES/SnapSlotMetalbar" to="NavigationRegion3D/SYSTEMIC_PROPERTIES/Cathode_B/CogitoProperties" method="make_electric"]

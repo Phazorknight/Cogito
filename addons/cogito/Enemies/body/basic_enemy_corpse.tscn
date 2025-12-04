@@ -27,9 +27,10 @@ transform = Transform3D(-4.37114e-08, -0.231748, -0.972776, 0, 0.972776, -0.2317
 collision_layer = 3
 mass = 65.0
 continuous_cd = true
-max_contacts_reported = 10
 contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_gqmaj")
+cogito_name = ""
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.255643, 0)
