@@ -1285,7 +1285,7 @@ func apply_external_force(force_vector: Vector3):
 
 
 func override_gravity(_external_gravity_force : float, _external_gravity_vector: Vector3):
-	print("cogito_player.gd: override gravity with ", _external_gravity_force, ", ", _external_gravity_vector)
+	CogitoGlobals.debug_log(true, "cogito_player.gd", "override gravity with " + str(_external_gravity_force) + ", " + str(_external_gravity_vector))
 	gravity = _external_gravity_force
 	gravity_vector = _external_gravity_vector
 	
@@ -1293,7 +1293,6 @@ func override_gravity(_external_gravity_force : float, _external_gravity_vector:
 	gravity_vec = gravity_vector * gravity
 	velocity += gravity_vec
 	move_and_slide()
-
 
 
 func _calculate_player_radius():

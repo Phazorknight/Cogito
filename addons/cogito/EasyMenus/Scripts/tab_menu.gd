@@ -58,11 +58,11 @@ func _input(event):
 		if InputHelper.device_index != -1 and bindings_container_node != null and current_tab == tab_index_of_bindings:
 			var temp_button = find_input_bind_focus_node()
 			if temp_button:
-				print("tab_menu.gd: Grabbing focus on ", temp_button, " with action ", temp_button.action )
+				CogitoGlobals.debug_log(true, "tab_menu.gd", "Grabbing focus on " + str(temp_button) + " with action " + temp_button.action)
 				temp_button.grab_focus()
 				return
 			else: 
-				print("tab_menu.gd: first_input_bind_button was null.")
+				CogitoGlobals.debug_log(true, "tab_menu.gd", "first_input_bind_button was null.")
 				return
 
 		# If no special case is found, grab focus on whats set in the nodes_to_focus Control array:
@@ -75,12 +75,11 @@ func find_input_bind_focus_node() -> Button:
 	
 	for child in bindings_container_children:
 		if child is RemapEntry:
-			print("tab_menu: find_input_bind_focus_node(): Remap entry found, returning ", child)
+			CogitoGlobals.debug_log(true, "tab_menu.gd", "find_input_bind_focus_node(): Remap entry found, returning " + str(child))
 			return child.kbm_bind_button
 	
-	print("tab_menu: find_input_bind_focus_node(): No remap entry found.")
+	CogitoGlobals.debug_log(true,"tab_menu.gd", "find_input_bind_focus_node(): No remap entry found.")
 	return null
-
 
 
 # Processing gamepad inputo to switch back and forth between player inventory and external inventory focus

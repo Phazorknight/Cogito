@@ -3,13 +3,13 @@ extends Area3D
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is CogitoPlayer:
-		print("Player entered gravity zone.")
+		CogitoGlobals.debug_log(true, "gravity_zone.gd", "Player entered gravity zone.")
 		set_gravity_on_player(body)
 
 
 func _on_body_exited(body: Node3D) -> void:
 	if body is CogitoPlayer:
-		print("Player left gravity zone.")
+		CogitoGlobals.debug_log(true, "gravity_zone.gd", "Player left gravity zone.")
 		reset_gravity_on_player(body)
 
 
