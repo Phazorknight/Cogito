@@ -24,9 +24,15 @@ var scroll_paused : bool = false
 
 
 func set_header_and_footer() -> void:
+	print("cogito_credits: setting header/footer size. size.x x size.y =", size.x, "x", size.y)
+	scroll_container.custom_minimum_size.x = size.x
+	scroll_container.custom_minimum_size.y = size.y
+	header_space.custom_minimum_size.x = size.x
 	header_space.custom_minimum_size.y = size.y
+	footer_space.custom_minimum_size.x = size.x
 	footer_space.custom_minimum_size.y = size.y
 	credits_label.custom_minimum_size.x = size.x
+
 
 func load_file(file_path) -> String:
 	var file = FileAccess.open(credits_text_file, FileAccess.READ)

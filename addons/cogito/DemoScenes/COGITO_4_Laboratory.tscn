@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=134 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_kxi7f"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_akrjl"]
@@ -59,7 +59,6 @@
 [ext_resource type="PackedScene" uid="uid://8h462cd7whew" path="res://addons/cogito/PackedScenes/hazard_zone.tscn" id="59_0q6qq"]
 [ext_resource type="PackedScene" uid="uid://cjs44e1ow53rv" path="res://addons/cogito/PackedScenes/heal_zone.tscn" id="60_af53j"]
 [ext_resource type="PackedScene" uid="uid://611llvxrvq88" path="res://addons/cogito/PackedScenes/cogito_pressure_plate.tscn" id="61_2ommw"]
-[ext_resource type="PackedScene" uid="uid://cai4gvj15g2lm" path="res://assets/Girl_CogitoNPC/cogito_npc.tscn" id="61_r8380"]
 [ext_resource type="Script" uid="uid://cabgyitb3d8cj" path="res://addons/cogito/CogitoNPC/cogito_patrol_path.gd" id="62_u5q7m"]
 [ext_resource type="PackedScene" uid="uid://b60auyyy0apwb" path="res://addons/cogito/PackedScenes/Pickups/pickup_health_extension.tscn" id="64_uw0my"]
 [ext_resource type="PackedScene" uid="uid://d2vpt8d74j5u" path="res://addons/cogito/PackedScenes/sanity_drain_attribute_zone.tscn" id="65_owla0"]
@@ -4503,8 +4502,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.249
 [node name="Cogito_Pressureplate" parent="." instance=ExtResource("61_2ommw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0454833, 0)
 
-[node name="CogitoNPC2" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("61_r8380")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23556, -2.66908, 14.5179)
+[node name="CogitoNPC2" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("68_wxy0x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.23556, -2.66908, 15.0687)
 patrol_path = NodePath("../EnemyPatrolpath")
 
 [node name="EnemyPatrolpath" type="Node3D" parent="." node_paths=PackedStringArray("patrol_points")]
