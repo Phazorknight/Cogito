@@ -211,7 +211,7 @@ func refresh_render():
 	if is_fullscreen():
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
-		DisplayServer.window_set_size(windowed_resolution)
+		window.size = windowed_resolution
 		window.content_scale_size = Vector2i.ZERO
 		window.scaling_3d_scale = 1.0
 	
