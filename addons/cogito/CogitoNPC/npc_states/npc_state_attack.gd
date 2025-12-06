@@ -71,7 +71,7 @@ func attack(target: Node3D):
 		target.decrease_attribute("health", attack_damage)
 	if target.has_signal("damage_received"):
 		var damage_direction = (self.global_position + target.global_position).abs()
-		print(self.name, ": dealing damage amount ", attack_damage, " on target ", target.name, " in direction ", damage_direction )
+		CogitoGlobals.debug_log(true, "npc_state_attack.gd", self.name + ": dealing damage amount " + str(attack_damage) + " on target " + target.name + " in direction " + str(damage_direction) )
 		target.damage_received.emit(attack_damage,damage_direction)
 		return
 	else:

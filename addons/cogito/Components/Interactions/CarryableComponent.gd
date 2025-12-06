@@ -107,9 +107,10 @@ func _exit_tree():
 
 
 func hold():
-	if lock_rotation_when_carried:
-		parent_object.set_lock_rotation_enabled(true)
-	parent_object.freeze = false
+	if parent_object is RigidBody3D:
+		if lock_rotation_when_carried:
+			parent_object.set_lock_rotation_enabled(true)
+		parent_object.freeze = false
 	player_interaction_component.start_carrying(self)
 	player_interaction_component.interaction_raycast.add_exception(parent_object)
 	
@@ -127,7 +128,7 @@ func leave():
 	if is_being_rotated:
 		player_interaction_component.player.is_movement_paused = false
 		
-	if lock_rotation_when_carried:
+	if parent_object is RigidBody3D and lock_rotation_when_carried:
 		parent_object.set_lock_rotation_enabled(false)
 	if player_interaction_component and is_instance_valid(player_interaction_component):
 		player_interaction_component.stop_carrying()

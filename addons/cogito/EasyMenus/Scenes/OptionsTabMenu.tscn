@@ -40,13 +40,13 @@ theme_override_fonts/font = ExtResource("5_23wn5")
 current_tab = 1
 script = ExtResource("4_h483w")
 nodes_to_focus = [NodePath("TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution/WindowedResolutionOptionButton"), NodePath("TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), NodePath("TAB_BINDINGS")]
-tab_index_of_bindings = 4
+tab_index_of_bindings = 3
 bindings_container_node = NodePath("TAB_BINDINGS/ScrollContainer/MarginContainer/BindingsContainer")
 
 [node name="TAB_GAMEPLAY" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
-focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/InvertYAxisCheckButton")
+focus_neighbor_bottom = NodePath("ScrollContainer/VBoxContainer/HBoxContainer_InvertY/InvertYAxisCheckButton")
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 0
@@ -135,23 +135,38 @@ theme_override_font_sizes/font_size = 20
 text = "0.25"
 horizontal_alignment = 1
 
-[node name="InvertYAxisCheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
+[node name="HBoxContainer_InvertY" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
-size_flags_horizontal = 4
-tooltip_text = "Inverts looking up and down direction."
-theme_override_font_sizes/font_size = 25
+theme = ExtResource("1_6plem")
+
+[node name="InvertYModeLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_InvertY"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
 text = "BTN_INVERT_Y"
 
-[node name="ToggleCrouchingCheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer"]
+[node name="InvertYAxisCheckButton" type="CheckBox" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_InvertY"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 10
 tooltip_text = "Inverts looking up and down direction."
-theme_override_font_sizes/font_size = 25
+
+[node name="HBoxContainer_ToggleCrouch" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = ExtResource("1_6plem")
+
+[node name="ToggleCrouchModeLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_ToggleCrouch"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
 text = "BTN_TOGGLE_CROUCH"
+
+[node name="ToggleCrouchingCheckButton" type="CheckBox" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_ToggleCrouch"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 10
 
 [node name="HBoxContainer_Group" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GAMEPLAY/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -278,8 +293,9 @@ custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "LAB_FULLSCREEN_MODE"
 
-[node name="FullscreenModeCheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_FullscreenMode"]
+[node name="FullscreenModeCheckButton" type="CheckBox" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_FullscreenMode"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 
@@ -370,14 +386,22 @@ theme_override_font_sizes/font_size = 20
 text = "1"
 horizontal_alignment = 1
 
-[node name="VSyncCheckButton" type="CheckButton" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
+[node name="HBoxContainer_VSyncMode" type="HBoxContainer" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 40)
 layout_mode = 2
-size_flags_horizontal = 4
-tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
-theme_override_font_sizes/font_size = 25
+theme = ExtResource("1_6plem")
+
+[node name="VSyncModeLabel" type="Label" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_VSyncMode"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
 text = "BTN_VSYNC"
+
+[node name="VSyncCheckButton" type="CheckBox" parent="VBoxContainer/TabContainer/TAB_GRAPHICS/ScrollContainer/VBoxContainer/HBoxContainer_VSyncMode"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Syncs Games Frame Rate with Displays Refresh Rate"
 
 [node name="TAB_AUDIO" type="MarginContainer" parent="VBoxContainer/TabContainer"]
 visible = false

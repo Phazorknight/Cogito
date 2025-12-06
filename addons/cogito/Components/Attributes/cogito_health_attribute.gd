@@ -20,6 +20,7 @@ signal death()
 @export var spawn_on_death : Array[PackedScene] = []
 
 var parent_position : Vector3
+var parent_rotation : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,6 +42,8 @@ func on_health_change(_health_name:String, _health_current:float, _health_max:fl
 func on_death(_attribute_name:String, _value_current:float, _value_max:float):
 	death.emit()
 	parent_position = get_parent().global_position
+	parent_rotation = get_parent().global_rotation
+	
 	
 	if sound_on_death:
 		Audio.play_sound_3d(sound_on_death).position = parent_position
@@ -49,6 +52,7 @@ func on_death(_attribute_name:String, _value_current:float, _value_max:float):
 		if scene:
 			var spawned_object = scene.instantiate()
 			spawned_object.position = parent_position
+			spawned_object.rotation = parent_rotation
 			get_tree().current_scene.add_child(spawned_object)
 	
 	for nodepath in destroy_on_death:

@@ -157,6 +157,7 @@ var config = ConfigFile.new()
 
 var current_speed : float = 5.0
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity_vector = ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 var main_velocity : Vector3 = Vector3.ZERO
 var direction : Vector3 = Vector3.ZERO
 var is_walking : bool = false
@@ -176,6 +177,8 @@ var is_movement_paused : bool = false
 var is_dead : bool = false
 var slide_audio_player : AudioStreamPlayer3D
 var radius : float
+
+#var external_gravity_force : Vector3 = Vector3.ZERO
 
 # Node caching
 @onready var player_interaction_component: PlayerInteractionComponent = $PlayerInteractionComponent
@@ -960,7 +963,7 @@ func _physics_process(delta):
 		gravity_vec = Vector3.ZERO
 	else:
 		is_in_air = true
-		gravity_vec = Vector3.DOWN * gravity * delta
+		gravity_vec = gravity_vector * gravity * delta
 	###
 	
 	
@@ -1279,6 +1282,17 @@ func apply_external_force(force_vector: Vector3):
 		CogitoGlobals.debug_log(is_logging, "cogito_player.gd", "Applying external force " + str(force_vector))
 		velocity += force_vector
 		move_and_slide()
+
+
+func override_gravity(_external_gravity_force : float, _external_gravity_vector: Vector3):
+	CogitoGlobals.debug_log(true, "cogito_player.gd", "override gravity with " + str(_external_gravity_force) + ", " + str(_external_gravity_vector))
+	gravity = _external_gravity_force
+	gravity_vector = _external_gravity_vector
+	
+#	Forcing a move and slide with new gravity
+	gravity_vec = gravity_vector * gravity
+	velocity += gravity_vec
+	move_and_slide()
 
 
 func _calculate_player_radius():
