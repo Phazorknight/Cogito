@@ -104,6 +104,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.7, 0, -4.75)
 [node name="KSI_door_half" type="AnimatableBody3D" parent="."]
 collision_layer = 3
 script = ExtResource("1_fged4")
+prompt_pos_mode = 2
 open_sound = ExtResource("2_n3bjk")
 close_sound = ExtResource("3_bh3rj")
 auto_close_time = 2.0

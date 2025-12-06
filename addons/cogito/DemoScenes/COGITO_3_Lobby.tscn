@@ -7837,6 +7837,7 @@ shape = SubResource("SphereShape3D_n25yf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+prompt_pos_mode = 2
 rattle_sound = ExtResource("65_cw5kp")
 interaction_text_when_locked = "Unlock"
 interaction_text_when_unlocked = "Lock"
