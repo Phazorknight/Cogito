@@ -24,7 +24,7 @@ var scroll_paused : bool = false
 
 
 func set_header_and_footer() -> void:
-	print("cogito_credits: setting header/footer size. size.x x size.y =", size.x, "x", size.y)
+	CogitoGlobals.debug_log(true, "cogito_credits", "setting header/footer size. size.x x size.y =" + str(size.x) + "x" + str(size.y))
 	scroll_container.custom_minimum_size.x = size.x
 	scroll_container.custom_minimum_size.y = size.y
 	header_space.custom_minimum_size.x = size.x
