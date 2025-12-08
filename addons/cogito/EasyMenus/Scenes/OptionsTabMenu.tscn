@@ -39,7 +39,7 @@ theme = ExtResource("1_6plem")
 theme_override_fonts/font = ExtResource("5_23wn5")
 current_tab = 1
 script = ExtResource("4_h483w")
-nodes_to_focus = [NodePath("TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution/WindowedResolutionOptionButton"), NodePath("TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), NodePath("TAB_BINDINGS")]
+nodes_to_focus = [NodePath("TAB_GAMEPLAY/ScrollContainer/VBoxContainer/HBoxContainer_Headbob/HeadbobOptionButton"), NodePath("TAB_GRAPHICS/ScrollContainer/VBoxContainer/VBoxContainer_Resolution/HBoxContainer_Resolution/WindowedResolutionOptionButton"), NodePath("TAB_AUDIO/ScrollContainer/VBoxContainer/HBoxContainer_SFXVolumeSlider/HSlider"), null]
 tab_index_of_bindings = 3
 bindings_container_node = NodePath("TAB_BINDINGS/ScrollContainer/MarginContainer/BindingsContainer")
 

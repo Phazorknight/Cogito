@@ -21,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scroll_vertical = 1515
+scroll_vertical = 147
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 
@@ -39,6 +39,15 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(1920, 0)
 layout_mode = 2
 bbcode_enabled = true
+text = "TEXT TEXT TEXT
+TEXT TEXT TEXT
+TEXT TEXT TEXT
+TEXT TEXT TEXT
+TEXT TEXT TEXT
+TEXT TEXT TEXT
+TEXT TEXT TEXT
+TEXT TEXT TEXT
+"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
