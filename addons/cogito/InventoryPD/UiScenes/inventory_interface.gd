@@ -14,6 +14,7 @@ signal inventory_open(is_true: bool)
 @onready var drop_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxDrop
 @onready var assign_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxAssign
 @onready var use_prompt: Control = $InfoPanel/MarginContainer/VBoxContainer/HBoxUse
+@onready var cogito_tab_menu: CogitoTabMenu = $CogitoTabMenu
 
 
 ## Sound that plays as a generic error.
@@ -41,6 +42,7 @@ func _ready():
 	
 	is_inventory_open = false
 	info_panel.hide()
+	cogito_tab_menu.hide()
 	
 	grabbed_slot_node.set_mouse_filter(2) # Setting mouse filter to ignore.
 	grabbed_slot_node.set_focus_mode(0) # Setting focus mode to none.
@@ -66,6 +68,9 @@ func open_inventory():
 		
 		for node in nodes_to_show:
 			node.show()
+		
+		# Setting tab menu to the first tab (inventory)
+		cogito_tab_menu.current_tab = 0
 		
 		if InputHelper.device_index != -1: # Check if gamepad is used
 			inventory_ui.slot_array[0].grab_focus() # Grab focus of inventory slot for gamepad users.

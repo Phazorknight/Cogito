@@ -7,5 +7,5 @@
 script = ExtResource("1_sud3s")
 grid = true
 starter_inventory = Array[ExtResource("1_ps87y")]([])
-inventory_size = Vector2i(5, 3)
-inventory_slots = Array[ExtResource("1_ps87y")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+inventory_size = Vector2i(6, 3)
+inventory_slots = Array[ExtResource("1_ps87y")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

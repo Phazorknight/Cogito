@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://6hh7o77unixk"]
+[gd_scene load_steps=133 format=4 uid="uid://6hh7o77unixk"]
 
 [ext_resource type="Script" uid="uid://c2kkj7vhsd1oi" path="res://addons/cogito/SceneManagement/cogito_scene.gd" id="1_kxi7f"]
 [ext_resource type="Texture2D" uid="uid://sdcljx8f5dhj" path="res://addons/cogito/Assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="2_akrjl"]
@@ -91,14 +91,6 @@ volumetric_fog_density = 0.0
 volumetric_fog_ambient_inject = 0.1
 volumetric_fog_sky_affect = 0.1
 volumetric_fog_temporal_reprojection_amount = 0.85
-
-[sub_resource type="Resource" id="Resource_ovhpt"]
-resource_local_to_scene = true
-script = ExtResource("5_fhmwi")
-grid = true
-starter_inventory = Array[ExtResource("4_dnxke")]([])
-inventory_size = Vector2i(5, 3)
-inventory_slots = Array[ExtResource("4_dnxke")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w6kc6"]
 size = Vector3(10, 0.1, 6)
@@ -919,7 +911,6 @@ environment = SubResource("Environment_bftoa")
 
 [node name="Player" parent="." instance=ExtResource("3_ea58p")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.13854, 0.8, -5.43073)
-inventory_data = SubResource("Resource_ovhpt")
 
 [node name="CONNECTOR_TO_LOBBY" type="Node3D" parent="."]
 
