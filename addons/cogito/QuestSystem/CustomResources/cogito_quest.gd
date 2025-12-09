@@ -22,7 +22,8 @@ class_name CogitoQuest
 @export var audio_on_complete: AudioStream
 @export var audio_on_fail: AudioStream
 
-var quest_description : String
+## Leave blank, gets overwritten by the descriptions above depending on quest state.
+@export var quest_description : String
 
 var quest_completed : bool = false:
 	set(value):
@@ -38,8 +39,8 @@ var quest_counter : int:
 		return quest_counter
 
 
-func start():
-	if audio_on_start:
+func start(_mute : bool = false):
+	if audio_on_start and !_mute:
 		Audio.play_sound(audio_on_start)
 	quest_description = quest_description_active
 
@@ -48,13 +49,13 @@ func update() -> void:
 	quest_completed = true
 
 
-func complete():
-	if audio_on_complete:
+func complete(_mute : bool = false):
+	if audio_on_complete and !_mute:
 		Audio.play_sound(audio_on_complete)
 	quest_description = quest_description_completed
 	
 
-func failed():
-	if audio_on_fail:
+func failed(_mute : bool = false):
+	if audio_on_fail and !_mute:
 		Audio.play_sound(audio_on_fail)
 	quest_description = quest_description_failed

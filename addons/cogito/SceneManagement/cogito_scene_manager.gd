@@ -128,14 +128,17 @@ func load_player_state(player, passed_slot:String):
 		# Loading quests from player state:
 		CogitoQuestManager.active.clear_group()
 		for quest in _player_state.player_active_quests:
+			quest.start(true)
 			CogitoQuestManager.active.add_quest(quest)
 		
 		CogitoQuestManager.completed.clear_group()
 		for quest in _player_state.player_completed_quests:
+			quest.complete(true)
 			CogitoQuestManager.completed.add_quest(quest)
 		
 		CogitoQuestManager.failed.clear_group()
 		for quest in _player_state.player_failed_quests:
+			quest.failed(true)
 			CogitoQuestManager.failed.add_quest(quest)
 		
 		
