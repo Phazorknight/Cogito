@@ -10,6 +10,7 @@ signal start_game_pressed
 
 
 var sub_menu : Node
+var is_sub_menu_open : bool = false
 
 #region UI AUDIO
 @export var sound_hover : AudioStream
@@ -61,6 +62,9 @@ func quit():
 func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and !game_menu.visible:
 		accept_event()
+		if is_sub_menu_open:
+			return
+		
 		options_tab_menu.hide()
 		v_box_container_title.show()
 		game_menu.show()
@@ -73,8 +77,8 @@ func open_options_menu():
 	game_menu.hide()
 
 
-
 func _open_sub_menu(credits_scene : PackedScene) -> Node:
+	is_sub_menu_open = true
 	sub_menu = credits_scene.instantiate()
 	add_child(sub_menu)
 	v_box_container_title.hide()
@@ -89,10 +93,12 @@ func _open_sub_menu(credits_scene : PackedScene) -> Node:
 
 
 func _close_sub_menu() -> void:
+	is_sub_menu_open = false
 	if sub_menu == null:
 		return
 	sub_menu.queue_free()
 	sub_menu = null
+	await get_tree().create_timer(0.25).timeout
 	v_box_container_title.show()
 	game_menu.show()
 
