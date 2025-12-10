@@ -1,61 +1,58 @@
 extends Resource
 class_name CogitoQuest
 
-## ID number. Should be unique for each quest.
 @export var id: int
-## String name. Should have no spaces or special characters something like "level_quest01_a")
 @export var quest_name: String
-## Quest title as it will be displayed in game.
-@export var quest_title : String
-## Quest description when this quest is active.
+@export var quest_title: String
 @export_multiline var quest_description_active: String
-## Quest description when this quest was completed successfully.
 @export_multiline var quest_description_completed: String = "You completed this quest."
-## Quest description when this quest was failed.
 @export_multiline var quest_description_failed: String = "You failed this quest."
-@export var quest_counter_current : int = 0
-@export var quest_counter_goal : int
 
+@export var quest_counter_current: int = 0
+@export var quest_counter_goal: int
 
 @export_group("Quest Audio")
 @export var audio_on_start: AudioStream
 @export var audio_on_complete: AudioStream
 @export var audio_on_fail: AudioStream
 
-## Leave blank, gets overwritten by the descriptions above depending on quest state.
-@export var quest_description : String
+@export var quest_description: String
 
-var quest_completed : bool = false:
-	set(value):
-		quest_completed = value
+
+@export var quest_completed: bool = false
+@export var quest_failed: bool = false
+
+# Getter/Setter correto para quest_counter
+var quest_counter: int:
 	get:
-		return quest_completed
-
-
-var quest_counter : int:
+		return quest_counter_current
 	set(value):
-		quest_counter = value
-	get:
-		return quest_counter
+		quest_counter_current = value
+		
+		if quest_counter_current >= quest_counter_goal:
+			complete()
 
-
-func start(_mute : bool = false):
-	if audio_on_start and !_mute:
+func start(_mute: bool = false) -> void:
+	if audio_on_start and not _mute:
 		Audio.play_sound(audio_on_start)
 	quest_description = quest_description_active
-
+	quest_completed = false
+	quest_failed = false
 
 func update() -> void:
-	quest_completed = true
+	quest_completed = true 
+	pass
 
-
-func complete(_mute : bool = false):
-	if audio_on_complete and !_mute:
+func complete(_mute: bool = false) -> void:
+	if audio_on_complete and not _mute:
 		Audio.play_sound(audio_on_complete)
 	quest_description = quest_description_completed
-	
+	quest_completed = true
+	quest_failed = false
 
-func failed(_mute : bool = false):
-	if audio_on_fail and !_mute:
+func failed(_mute: bool = false) -> void:
+	if audio_on_fail and not _mute:
 		Audio.play_sound(audio_on_fail)
 	quest_description = quest_description_failed
+	quest_failed = true
+	quest_completed = false
