@@ -4,7 +4,7 @@ extends Resource
 class_name CogitoQuest
 
 # Unique quest identifier (for internal reference)
-@export var id: int
+#@export var id: int
 
 # Internal quest name (used for game logic)
 @export var quest_name: String
@@ -57,7 +57,7 @@ var quest_counter: int:
 		quest_counter_current = value
 		
 		# Check if goal has been reached or exceeded
-		if quest_counter_current >= quest_counter_goal:
+		if quest_counter_current >= quest_counter_goal and !quest_completed:
 			complete()
 
 # Starts the quest
@@ -90,6 +90,9 @@ func complete(_mute: bool = false) -> void:
 	
 	# Update description to completed state
 	quest_description = quest_description_completed
+	
+	# If progression quest, make sure the counter is set to goal.
+	quest_counter_current = quest_counter_goal
 	
 	# Set state flags
 	quest_completed = true

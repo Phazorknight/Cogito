@@ -131,6 +131,14 @@ func load_player_state(player, passed_slot:String) -> void:
 			quest.start(true)  # Initialize active quests (mute audio)
 			CogitoQuestManager.active.add_quest(quest)
 		
+		var _temp_active_quest_dir = _player_state.player_active_quest_progression
+		for entry in _temp_active_quest_dir:
+			for quest in CogitoQuestManager.active.quests:
+				if quest.quest_name == entry:
+					quest.quest_counter = _temp_active_quest_dir[entry]
+					CogitoGlobals.debug_log(true,"CSM", "Loading active quests. Quest " + quest.quest_name + " found. Setting progression to " + str(_temp_active_quest_dir[entry]) )
+
+		
 		CogitoQuestManager.completed.clear_group()
 		for quest in _player_state.player_completed_quests:
 			quest.complete(true)  # Initialize completed quests (mute audio)
@@ -225,6 +233,11 @@ func save_player_state(player, slot:String) -> void:
 	_player_state.player_failed_quests.clear()
 	for quest in CogitoQuestManager.failed.quests:
 		_player_state.player_failed_quests.append(quest)  # FIXED: Save failed quests to correct list
+	
+	# Saving active quests with progression counter
+	_player_state.player_active_quest_progression.clear()
+	for quest in CogitoQuestManager.active.quests:
+		_player_state.add_to_active_quest_dictionary(quest.quest_name, quest.quest_counter_current)
 	
 	
 	_player_state.clear_saved_wieldable_charges()

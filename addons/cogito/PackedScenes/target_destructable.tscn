@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://bho0nwh5rlnua"]
+[gd_scene load_steps=17 format=4 uid="uid://bho0nwh5rlnua"]
 
 [ext_resource type="PackedScene" uid="uid://cqgg1nng0vvbh" path="res://addons/cogito/Components/Attributes/HealthAttribute.tscn" id="1_c1b02"]
 [ext_resource type="Script" uid="uid://dmeh01c5ccjqc" path="res://addons/cogito/CogitoObjects/cogito_object.gd" id="1_e8c88"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://d2dr6c2kvr57f" path="res://addons/cogito/Components/LootComponent.gd" id="7_s82pn"]
 [ext_resource type="Resource" uid="uid://cng2vry7x3qg4" path="res://addons/cogito/Components/LootTables/LootTableGeneric.tres" id="8_ywkh5"]
 [ext_resource type="PackedScene" uid="uid://eq5tc21gdk8" path="res://addons/cogito/PackedScenes/loot_chest.tscn" id="9_dtbx4"]
+[ext_resource type="Script" uid="uid://d2jjqadlnhp6x" path="res://addons/cogito/QuestSystem/Components/cogito_quest_updater.gd" id="10_dtbx4"]
+[ext_resource type="Resource" uid="uid://c2goscdbbyawd" path="res://addons/cogito/QuestSystem/Quests/DemoSceneQuests/Demo_TargetPractice.tres" id="11_csi42"]
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_gi6as"]
 _data = PackedByteArray("AgAAAAUAAAAEAAAACAAAAAgAAAACAAAAc0ITAE0ASHPMAAAA0eIEAAABAAABFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABNAAAAAAAAAAAAAAAAAAAAAQgACAACAAIAqQAAAEAAAAA4tQAAAAEBBAAEAAEAAQDpAAAAEAAAAMjWAAAAAgECAAIAAQABAPkAAAAQAAAArG4AAAADAQEAAQABAAEACQEAABAAAAAGiLe5ubkZXWsBAAAAAAAAAAC3ubm5GV1rAQAAAAAAAAAACF2B4AQdnVVIREREN94W9whskWOUnJ5VAAAAABoPjauwFKFRHJ6eXgAAAAAAAPPmUMGIQd7eX98AAH93f3d/d3f3tlY7trUCAAAAAAAAAAA=")
@@ -60,6 +62,7 @@ height = 0.1
 [node name="TargetDestructable" type="RigidBody3D"]
 gravity_scale = 0.0
 script = ExtResource("1_e8c88")
+cogito_name = ""
 
 [node name="HealthAttribute" parent="." instance=ExtResource("1_c1b02")]
 sound_on_death = ExtResource("4_k2oo6")
@@ -91,3 +94,11 @@ amount_of_items_to_drop = 5
 loot_bag_scene = ExtResource("9_dtbx4")
 health_component_to_monitor = NodePath("../HealthAttribute")
 metadata/_custom_type_script = "uid://d2dr6c2kvr57f"
+
+[node name="QuestUpdater" type="Node3D" parent="."]
+script = ExtResource("10_dtbx4")
+quest_to_update = ExtResource("11_csi42")
+update_type = 3
+counter_change = 1
+
+[connection signal="death" from="HealthAttribute" to="QuestUpdater" method="update_quest"]

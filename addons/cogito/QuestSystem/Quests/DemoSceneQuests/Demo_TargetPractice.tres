@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CogitoQuest" load_steps=2 format=3 uid="uid://c2goscdbbyawd"]
+
+[ext_resource type="Script" uid="uid://bb3ww0nivppeq" path="res://addons/cogito/QuestSystem/CustomResources/cogito_quest.gd" id="1_bjfge"]
+
+[resource]
+script = ExtResource("1_bjfge")
+id = 774
+quest_name = "demo_target_practice"
+quest_title = "Target Practice"
+quest_description_active = "Destroy 5 targets."
+quest_description_completed = "You showed those targets who's boss."
+quest_description_failed = "You should not be able to fail this."
+quest_description = ""
+quest_counter_current = 0
+quest_counter_goal = 5
+quest_completed = false
+quest_failed = false
+metadata/_custom_type_script = "uid://bb3ww0nivppeq"
