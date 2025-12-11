@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_bjfge")
-id = 774
 quest_name = "demo_target_practice"
 quest_title = "Target Practice"
 quest_description_active = "Destroy 5 targets."
