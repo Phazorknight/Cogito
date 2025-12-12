@@ -126,7 +126,7 @@ func update_animations(_delta: float):
 	if rel_velocity_xz.length_squared() > 0:
 		animation_tree.set("parameters/Movement/blend_position", rel_velocity_xz)
 	else:
-		animation_tree.set("parameters/Movement/blend_position", 0)
+		animation_tree.set("parameters/Movement/blend_position", Vector2.ZERO)
 	
 
 func set_upper_body_state(state_name: String):
