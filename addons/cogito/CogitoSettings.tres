@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_usejk")
-is_logging = true
+is_logging = false
 new_game_start_scene = ExtResource("1_xsjm0")
 new_game_world_state = ExtResource("2_d7g0j")
 scene_state_prefix = "COGITO_scene_state_"

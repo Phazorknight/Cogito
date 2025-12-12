@@ -13,7 +13,6 @@ export_presets.cfg
 .godot/
 data_*/
 
-/addons/fp_controller
 /assets
 /ref
 /testing

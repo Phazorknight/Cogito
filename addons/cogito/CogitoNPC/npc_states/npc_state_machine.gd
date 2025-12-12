@@ -18,8 +18,7 @@ func get_host() -> Node:
 
 
 func logger(to_log: String) -> void:
-	if not logging: return
-	print("[SimpleState]: <%s>, <%s>" % [get_host().name, to_log])
+	CogitoGlobals.debug_log(logging, "NPC State Machine", get_host().name + to_log )
 
 
 func _enter_tree() -> void:

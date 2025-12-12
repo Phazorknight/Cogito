@@ -121,7 +121,6 @@ transitions = ["Start", "Neutral", SubResource("AnimationNodeStateMachineTransit
 graph_offset = Vector2(-437, 56)
 
 [resource]
-graph_offset = Vector2(-1077.09, 135.23)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_duam4")
 nodes/Animation/position = Vector2(-461.97, 626.522)
 nodes/Movement/node = SubResource("AnimationNodeBlendSpace2D_a5a6b")

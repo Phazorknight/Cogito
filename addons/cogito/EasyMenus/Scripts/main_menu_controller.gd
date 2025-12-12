@@ -2,9 +2,15 @@ extends Control
 signal start_game_pressed
 
 @export var first_focus_button: Button
+@export var credits_packed_scene : PackedScene
+@onready var v_box_container_title: VBoxContainer = %VBoxContainerTitle
 @onready var game_menu: MarginContainer = $ContentMain/GameMenu
 @onready var options_tab_menu: OptionsTabMenu = $ContentMain/OptionsTabMenu
 @onready var options_button: CogitoUiButton = $ContentMain/GameMenu/VBoxContainer/OptionsButton
+
+
+var sub_menu : Node
+var is_sub_menu_open : bool = false
 
 #region UI AUDIO
 @export var sound_hover : AudioStream
@@ -56,7 +62,11 @@ func quit():
 func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and !game_menu.visible:
 		accept_event()
+		if is_sub_menu_open:
+			return
+		
 		options_tab_menu.hide()
+		v_box_container_title.show()
 		game_menu.show()
 		options_button.grab_focus.call_deferred()
 
@@ -67,5 +77,35 @@ func open_options_menu():
 	game_menu.hide()
 
 
+func _open_sub_menu(credits_scene : PackedScene) -> Node:
+	is_sub_menu_open = true
+	sub_menu = credits_scene.instantiate()
+	add_child(sub_menu)
+	v_box_container_title.hide()
+	game_menu.hide()
+	
+	if sub_menu and sub_menu.has_signal("closed"):
+		sub_menu.closed.connect(_close_sub_menu)
+	
+	sub_menu.hidden.connect(_close_sub_menu, CONNECT_ONE_SHOT)
+	sub_menu.tree_exiting.connect(_close_sub_menu, CONNECT_ONE_SHOT)
+	return sub_menu
+
+
+func _close_sub_menu() -> void:
+	is_sub_menu_open = false
+	if sub_menu == null:
+		return
+	sub_menu.queue_free()
+	sub_menu = null
+	await get_tree().create_timer(0.25).timeout
+	v_box_container_title.show()
+	game_menu.show()
+
+
 func _on_start_game_button_pressed():
 	emit_signal("start_game_pressed")
+
+
+func _on_credits_button_pressed() -> void:
+	_open_sub_menu(credits_packed_scene)

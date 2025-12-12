@@ -25,7 +25,7 @@ func _enter_tree() -> void:
 
 
 func _state_enter():
-	print(name, " state entered")
+	CogitoGlobals.debug_log(true, "npc_state_patrol_on_path.gd", name + " state entered")
 	Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
 	current_travel_status = TravelStatus.RUNNING
 

@@ -13,7 +13,6 @@ script = ExtResource("1_qgor6")
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
@@ -23,7 +22,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("1_1cfb6")
-theme_type_variation = &"HUDLabel"
+theme_type_variation = &"PromptLabel"
 theme_override_font_sizes/font_size = 24
 text = "Label"
 horizontal_alignment = 1

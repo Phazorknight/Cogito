@@ -4,11 +4,13 @@
 
 [resource]
 script = ExtResource("1_53ru2")
-id = 771
 quest_name = "demo_access_archive"
 quest_title = "Gain access to the archive."
 quest_description_active = "You won't be able to just walk in, but we're sure you'll find away."
 quest_description_completed = "You're in!"
 quest_description_failed = "You should've not been able to fail this."
+quest_description = ""
 quest_counter_current = 0
 quest_counter_goal = 0
+quest_completed = false
+quest_failed = false

@@ -58,6 +58,7 @@ func _process(_delta):
 	else:
 		# Getting progress value and displaying it
 		ResourceLoader.load_threaded_get_status(next_scene_path, progress_array) 
-		var progress_percentage := remap(progress_array[0], 0.4, 1.0, 0, 100)
+		var progress_value = progress_array[0] if typeof(progress_array[0]) == TYPE_FLOAT else 0.0
+		var progress_percentage := remap(progress_value, 0.4, 1.0, 0, 99)
 		progress_percentage = snapped(progress_percentage, 0.1)
 		label_progress.text = str(progress_percentage) + "%"

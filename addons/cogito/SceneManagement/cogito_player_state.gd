@@ -35,6 +35,7 @@ var player_state_dir : String = CogitoSceneManager.cogito_state_dir + CogitoScen
 
 #Saving quests:
 @export var player_active_quests : Array[CogitoQuest]
+@export var player_active_quest_progression : Dictionary
 @export var player_completed_quests : Array[CogitoQuest]
 @export var player_failed_quests : Array[CogitoQuest]
 
@@ -150,6 +151,12 @@ func add_to_world_dictionary(world_property_name: String, world_property_data):
 		world_dictionary.get_or_add(world_property_name)
 		world_dictionary[world_property_name] = world_property_data
 		CogitoGlobals.debug_log(true, "CogitoPlayerState", "world dict key not found. Added and value saved: " + str(world_property_name) + " " + str(world_property_data) )
+
+
+func add_to_active_quest_dictionary(quest_name: String, current_quest_counter: int):
+	player_active_quest_progression.get_or_add(quest_name)
+	player_active_quest_progression[quest_name] = current_quest_counter
+	CogitoGlobals.debug_log(true, "CogitoPlayerState", "Acitve quest added and counter value saved: " + str(quest_name) + " " + str(current_quest_counter) )
 
 
 func clear_world_dictionary():
