@@ -80,7 +80,16 @@ func open_options_menu():
 	options_tab_menu.show()
 	options_tab_menu.load_options(true)
 	options_tab_menu.have_options_changed = false
-	options_tab_menu.tab_container.nodes_to_focus[0].grab_focus.call_deferred()
+	
+	var current_tab: int = options_tab_menu.tab_container.current_tab
+	if current_tab != options_tab_menu.tab_container.tab_index_of_bindings:
+		options_tab_menu.tab_container.nodes_to_focus[current_tab].grab_focus.call_deferred()
+	else:
+		var temp_button = options_tab_menu.tab_container.find_input_bind_focus_node()
+		if temp_button:
+			CogitoGlobals.debug_log(true, "pause_menu_controller.gd", "Grabbing focus on " + str(temp_button) + " with action " + temp_button.action)
+			temp_button.grab_focus.call_deferred()
+	
 	game_menu.hide()
 
 

@@ -59,7 +59,7 @@ func _input(event):
 			var temp_button = find_input_bind_focus_node()
 			if temp_button:
 				CogitoGlobals.debug_log(true, "tab_menu.gd", "Grabbing focus on " + str(temp_button) + " with action " + temp_button.action)
-				temp_button.grab_focus()
+				temp_button.grab_focus.call_deferred()
 				return
 			else: 
 				CogitoGlobals.debug_log(true, "tab_menu.gd", "first_input_bind_button was null.")
