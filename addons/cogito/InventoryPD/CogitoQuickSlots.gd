@@ -31,6 +31,8 @@ func _ready() -> void:
 	for quickslot in quickslot_containers:
 		quickslot.quickslot_cleared.connect(unbind_quickslot)
 	
+	set_quickslot_focus(false) # Setting focus mode on quickslots to NONE on ready.
+	
 	await get_tree().process_frame
 	player_interaction_component = (CogitoSceneManager._current_player_node as CogitoPlayer).player_interaction_component
 
@@ -142,6 +144,7 @@ func update_inventory_status(is_open: bool):
 	inventory_is_open = is_open
 	# Sets unhandled key input to the opposite of what is_open is.
 	set_process_unhandled_input(!is_open)
+	set_quickslot_focus(is_open)
 
 
 func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
@@ -164,6 +167,16 @@ func on_auto_quickslot_new_item(slot_data: InventorySlotPD) -> void:
 				bind_to_quickslot(slot_data, quickslot_containers[i])
 				CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Auto-quickslotted " + slot_data.inventory_item.name)
 				return
+
+
+func set_quickslot_focus(enabled:bool) -> void:
+	if enabled:
+		for i in range(quickslot_containers.size()):
+			quickslot_containers[i].focus_mode = Control.FOCUS_ALL
+	else:
+		for i in range(quickslot_containers.size()):
+			quickslot_containers[i].focus_mode = Control.FOCUS_NONE
+	print("CogitoQuickSlots.gd: Set quickslot containers focus_all to ", enabled)
 
 
 func _cycle_through_quickslotted_wieldables(cycle_up: bool) -> void:
