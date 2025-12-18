@@ -73,7 +73,7 @@ func open_inventory():
 		cogito_tab_menu.current_tab = 0
 		
 		if InputHelper.device_index != -1: # Check if gamepad is used
-			inventory_ui.slot_array[0].grab_focus() # Grab focus of inventory slot for gamepad users.
+			inventory_ui.slot_array[0].grab_focus.call_deferred() # Grab focus of inventory slot for gamepad users.
 #		inventory_interface.grabbed_slot_node.show()
 #		inventory_interface.external_inventory_ui.show()
 
