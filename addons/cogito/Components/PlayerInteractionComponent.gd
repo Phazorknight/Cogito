@@ -81,7 +81,8 @@ func _process(_delta):
 	pass
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
+#func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
 		# if carrying an object, drop it.
@@ -109,6 +110,9 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("reload"):
 			attempt_reload()
 			return
+	
+	get_viewport().set_input_as_handled()
+
 
 func _handle_interaction(action: String) -> void:
 	# if carrying an object, drop it.
