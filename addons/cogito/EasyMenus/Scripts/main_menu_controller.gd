@@ -66,6 +66,7 @@ func _input(event):
 			return
 		
 		options_tab_menu.hide()
+		options_tab_menu.load_options()
 		v_box_container_title.show()
 		game_menu.show()
 		options_button.grab_focus.call_deferred()
