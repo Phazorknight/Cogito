@@ -28,6 +28,7 @@ signal inventory_open(is_true: bool)
 var is_inventory_open : bool:
 	set(value):
 		is_inventory_open = value
+		set_process_input(is_inventory_open)
 		inventory_open.emit(is_inventory_open)
 var grabbed_slot_data: InventorySlotPD
 var external_inventory_owner : Node

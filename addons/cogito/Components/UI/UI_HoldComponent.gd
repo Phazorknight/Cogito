@@ -35,7 +35,7 @@ func _process(_delta: float) -> void:
 		stop_holding()
 
 
-func _input(event):
+func _unhandled_input(event: InputEvent) -> void:
 	if is_holding and event.is_action_released(hold_interaction.input_map_action):
 		if hold_interaction is DualInteraction:
 			hold_interaction.on_quick_press.emit(player_interaction_component)

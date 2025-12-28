@@ -17,6 +17,11 @@ signal back_to_main_pressed
 var playback : AudioStreamPlaybackPolyphonic
 var temp_screenshot : Image
 
+var is_pausemenu_open : bool:
+	set(value):
+		is_pausemenu_open = value
+		set_process_input(is_pausemenu_open)
+
 @onready var resume_game_button: Button = %ResumeGameButton
 @onready var save_button: CogitoUiButton = %SaveButton
 @onready var load_button: CogitoUiButton = %LoadButton
@@ -27,6 +32,8 @@ var temp_screenshot : Image
 
 
 func _enter_tree() -> void:
+	is_pausemenu_open = false
+	
 	# Create an audio player
 	var player = AudioStreamPlayer.new()
 	add_child(player)
@@ -62,6 +69,9 @@ func _play_pressed() -> void:
 func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true
+	
+	is_pausemenu_open = true
+	
 	label_active_slot.text = "Current Slot: " + CogitoSceneManager._active_slot
 	temp_screenshot = grab_temp_screenshot()
 	show()
@@ -125,6 +135,7 @@ func load_current_slot_data() -> bool:
 
 func close_pause_menu():
 	get_tree().paused = false
+	is_pausemenu_open = false
 	hide()
 	emit_signal("resume")
 
