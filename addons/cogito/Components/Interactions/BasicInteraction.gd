@@ -1,6 +1,9 @@
 extends InteractionComponent
+class_name BasicInteractionComponent
 
 signal basic_signal
+
+@export var allowed_interaction_type : AllowedInteractionType = AllowedInteractionType.INVENTORY_IS_CLOSED
 
 @onready var parent_node = get_parent() #Grabbing reference to parent
 

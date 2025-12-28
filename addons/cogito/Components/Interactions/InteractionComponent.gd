@@ -5,6 +5,11 @@ class_name InteractionComponent
 
 signal was_interacted_with(interaction_text,input_map_action)
 
+enum AllowedInteractionType {
+	ALWAYS,
+	INVENTORY_IS_CLOSED,
+}
+
 ## The input map action string as defined in the Godot Project settings input map.
 @export var input_map_action : String
 ## The text that gets displayed in the HUD interaction prompt.

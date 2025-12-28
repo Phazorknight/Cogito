@@ -176,7 +176,7 @@ func set_quickslot_focus(enabled:bool) -> void:
 	else:
 		for i in range(quickslot_containers.size()):
 			quickslot_containers[i].focus_mode = Control.FOCUS_NONE
-	print("CogitoQuickSlots.gd: Set quickslot containers focus_all to ", enabled)
+	CogitoGlobals.debug_log(true, "CogitoQuickSlots.gd", "Set quickslot containers focus_all to " + str(enabled))
 
 
 func _cycle_through_quickslotted_wieldables(cycle_up: bool) -> void:

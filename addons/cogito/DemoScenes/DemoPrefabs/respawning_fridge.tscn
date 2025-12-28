@@ -300,6 +300,7 @@ volume_db = -26.0
 bus = &"SFX"
 
 [node name="BasicInteraction" parent="." instance=ExtResource("3_esjkp")]
+allowed_interaction_type = 0
 interaction_text = "Interact"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

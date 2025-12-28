@@ -99,10 +99,6 @@ func _on_gui_input(event: InputEvent):
 		slot_pressed.emit(get_index(), "inventory_assign_item")
 		get_viewport().set_input_as_handled()
 
-	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
-		get_viewport().set_input_as_handled()
-
-
 
 func set_grabbed_dimensions():
 	var item_size = item_data.item_size if grid else Vector2i(1,1)

@@ -62,6 +62,7 @@ var is_wielding: bool:
 	get: return equipped_wieldable_item != null
 	
 var player_rid
+var _player_hud: CogitoPlayerHudManager
 # Briefly interrupt quickslot cycling after an interactable is unseen
 var can_cycle_quickslots: bool = true
 @onready var cycle_quickslots_interrupt_timer: Timer = $Timer
@@ -69,6 +70,7 @@ var can_cycle_quickslots: bool = true
 
 func _ready():
 	player = get_parent() as CogitoPlayer
+	_player_hud = player.find_child("Player_HUD", true, true)
 	cycle_quickslots_interrupt_timer.connect("timeout", Callable(self, "_on_can_cycle_quickslots_timeout"))
 
 
@@ -80,36 +82,50 @@ func exclude_player(rid: RID):
 func _process(_delta):
 	pass
 
-
-func _unhandled_input(event: InputEvent) -> void:
-#func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
-		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
-		# if carrying an object, drop it.
-		_handle_interaction(action)
-	
-	
+func _input(event):
 	if is_carrying and !get_parent().is_movement_paused and is_instance_valid(carried_object):
 		if Input.is_action_just_pressed("action_primary"):
 			_attempt_throw()
 			#carried_object.throw(throw_power)
-	
+			get_viewport().set_input_as_handled()
 	
 	# Wieldable primary Action Input
 	if is_wielding and !get_parent().is_movement_paused:
 		if Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary(false)
+			get_viewport().set_input_as_handled()
 		if Input.is_action_just_released("action_primary"):
 			attempt_action_primary(true)
+			get_viewport().set_input_as_handled()
 		
 		if Input.is_action_just_pressed("action_secondary"):
 			attempt_action_secondary(false)
+			get_viewport().set_input_as_handled()
 		if Input.is_action_just_released("action_secondary"):
 			attempt_action_secondary(true)
-		
+			get_viewport().set_input_as_handled()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
+		if interactable:
+			var allowed_interaction_type = null
+			for child in interactable.get_children():
+				if child is BasicInteractionComponent:
+					allowed_interaction_type = child.allowed_interaction_type
+					break
+			
+			if (allowed_interaction_type != null and allowed_interaction_type == InteractionComponent.AllowedInteractionType.ALWAYS
+						or (allowed_interaction_type == InteractionComponent.AllowedInteractionType.INVENTORY_IS_CLOSED
+							and not _player_hud.inventory_interface.is_inventory_open)) \
+					or allowed_interaction_type == null and not _player_hud.inventory_interface.is_inventory_open:
+				var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
+				# if carrying an object, drop it.
+				_handle_interaction(action)
+	
+	if is_wielding and !get_parent().is_movement_paused and not interactable:
 		if event.is_action_pressed("reload"):
 			attempt_reload()
-			return
 	
 	get_viewport().set_input_as_handled()
 
