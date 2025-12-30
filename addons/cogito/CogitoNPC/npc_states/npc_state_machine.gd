@@ -89,10 +89,10 @@ func setup() -> void:
 
 
 func save_state_as_previous(state: String, args = null) -> void:
-	print("NPC State machine. Saved state as previous state = ", state)
 	previous_state = state #Saves the state so it can be called later
 	if args:
 		previous_args = args #Saves the args the state was called with
+
 
 func load_previous_state(_fallback_state: String = ""):
 	if !previous_state:

@@ -44,13 +44,9 @@ var knockback_timer: float = 0.0
 var last_direction
 
 @export_group("Head LookAt")
-@export var neck : Node3D
-@export var look_object : Node3D
-@export var look_at_offset : Vector3 = Vector3.ZERO
-@export var skeleton : Skeleton3D
-@export var skeleton_neck_bone: String
-var new_rotation
-var bone_smooth_rotation = 0.0
+@onready var look_at_area: Area3D = $LookAtArea
+@onready var look_at_modifier_3d: LookAtModifier3D = $Rig/Skeleton3D/LookAtModifier3D
+
 
 #FootstepPlayer variables
 @export_group ("Footstep Player")
@@ -98,9 +94,10 @@ func find_cogito_properties():
 		cogito_properties = property_nodes[0]
 
 
-func _process(delta: float) -> void:
-	if look_object:
-		head_lock_at(delta)
+#func _process(delta: float) -> void:
+	#if look_object:
+		#head_lock_at(delta)
+
 
 
 func _physics_process(delta: float) -> void:
@@ -140,21 +137,6 @@ func face_direction(face_direction: Vector3) -> void:
 	if face_at_target_xz != Vector3.ZERO:
 		var target_basis = Basis.looking_at(face_at_target_xz, Vector3.UP, false)
 		basis = basis.slerp(target_basis, rotation_speed)
-
-
-func head_lock_at(_delta:float) -> void:
-	var neck_bone = skeleton.find_bone(skeleton_neck_bone)
-	neck.look_at(look_object.global_position + look_at_offset, Vector3.UP, true)
-	
-	var marker_rotation_deg = neck.rotation_degrees
-	marker_rotation_deg.x = clamp(marker_rotation_deg.x, -90, 90)
-	marker_rotation_deg.y = clamp(marker_rotation_deg.y, -45, 45)
-	
-	bone_smooth_rotation = lerp_angle(bone_smooth_rotation, deg_to_rad(marker_rotation_deg.y), 3 * _delta)
-	
-	new_rotation = Quaternion.from_euler(Vector3(deg_to_rad(marker_rotation_deg.x), deg_to_rad(marker_rotation_deg.y), 0))
-	skeleton.set_bone_pose_rotation(neck_bone, new_rotation)
-
 
 
 # NPC Footstep system, adapted from players
@@ -237,3 +219,13 @@ func _on_hitbox_component_got_hit() -> void:
 
 func _on_security_camera_object_detected(object: Node3D) -> void:
 	attention_target = object
+
+
+func _on_check_player_timer_timeout() -> void:
+	var player_to_look_at = get_tree().get_first_node_in_group("Player")
+	var bodies = look_at_area.get_overlapping_bodies()
+	
+	if player_to_look_at in bodies:
+		look_at_modifier_3d.target_node = player_to_look_at.head.get_path()
+	else:
+		look_at_modifier_3d.target_node = ""
