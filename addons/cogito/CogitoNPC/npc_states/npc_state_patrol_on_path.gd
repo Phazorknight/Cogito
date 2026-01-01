@@ -26,8 +26,11 @@ func _enter_tree() -> void:
 
 func _state_enter():
 	CogitoGlobals.debug_log(true, "npc_state_patrol_on_path.gd", name + " state entered")
-	Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
-	current_travel_status = TravelStatus.RUNNING
+	if Host.patrol_path:
+		Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
+		current_travel_status = TravelStatus.RUNNING
+	else:
+		CogitoGlobals.debug_log(true, "npc_state_patrol_on_path.gd", "No patrol path assigned to NPC")
 
 
 func _state_exit():
@@ -52,8 +55,9 @@ func _physics_process(_delta):
 			pass
 		TravelStatus.FAILURE:
 			iterate_patrol_point_index() #Switches to the next patrol point if current one is not reachable.
-			Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
-			current_travel_status = TravelStatus.RUNNING
+			if Host.patrol_path:
+				Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
+				current_travel_status = TravelStatus.RUNNING
 
 
 	var look_ahead := Vector3(Host.global_position.x + Host.velocity.x, Host.global_position.y, Host.global_position.z + Host.velocity.z)
@@ -87,8 +91,9 @@ func wait_at_patrol_point(_delta: float):
 
 func resume_patrolling() -> void:
 	iterate_patrol_point_index()
-	Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
-	current_travel_status = TravelStatus.RUNNING
+	if Host.patrol_path:
+		Host.navigation_agent_3d.target_position = set_next_patrol_point_destination()
+		current_travel_status = TravelStatus.RUNNING
 
 
 func iterate_patrol_point_index():
