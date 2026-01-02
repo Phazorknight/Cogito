@@ -35,15 +35,13 @@ func pick_up(_player_interaction_component: PlayerInteractionComponent):
 		return
 
 	# Update wieldable UI if we have picked up ammo for current wieldable
-	# TODO: Possibly replace with a better solution, maybe by signaling the change
-	# to the UI instead of having the PlayerInteractionComponent doing it.
 	if _player_interaction_component.is_wielding:
-		var is_ammo: bool = "reload_amount" in slot_data.inventory_item
+		var is_ammo: bool = slot_data.inventory_item.has_method("is_ammo_item")
 		var is_current_ammo: bool = _player_interaction_component.equipped_wieldable_item.ammo_item_name == slot_data.inventory_item.name
 		if is_ammo and is_current_ammo:
 			var equipped_wieldable = _player_interaction_component.equipped_wieldable_item
-			if equipped_wieldable.charge_current < equipped_wieldable.charge_max:
-				_player_interaction_component.equipped_wieldable_item.update_wieldable_data(_player_interaction_component)
+			_player_interaction_component.equipped_wieldable_item.update_wieldable_data(_player_interaction_component)
+
 
 	_player_interaction_component.send_hint(slot_data.inventory_item.icon, tr(slot_data.inventory_item.name) + " " + tr("INVENTORY_add_item") )
 	was_interacted_with.emit(interaction_text, input_map_action)
