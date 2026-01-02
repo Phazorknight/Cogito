@@ -159,6 +159,7 @@ func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and !game_menu.visible:
 		accept_event()
 		options_tab_menu.hide()
+		options_tab_menu.load_options()
 		game_menu.show()
 		resume_game_button.grab_focus.call_deferred()
 		return
