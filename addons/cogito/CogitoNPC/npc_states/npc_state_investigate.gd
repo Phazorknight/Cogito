@@ -1,12 +1,34 @@
 extends Node
 
+# Investigate State
+#
+# This state lets an NPC investigate a world position (sound/event) in a
+# cooperative and time-limited manner. Behavior phases:
+#  - OBSERVING: NPC stays in place and looks at the investigation point for
+#    `observe_duration` seconds (default 2s).
+#  - MOVING_TO_LOCATION: NPC sets its NavigationAgent3D target to the
+#    investigation point and moves there at `move_speed_multiplier` × normal
+#    move speed (default 0.8).
+#  - INVESTIGATING: Once at the point, NPC stays and continues observing until
+#    `investigation_timeout` elapses (default 15s).
+#  - COMPLETE: Returns to the previous state.
+#
+# Cooperation: when this state is entered it calls `_call_nearby_npcs()` which
+# finds NPCs in the "npc" group within `npc_group_distance` (default 8m) and
+# sets their `investigate_location` meta or triggers their investigate state.
+#
+# Usage notes:
+#  - The investigate target is read from `Host.get_meta("investigate_location")`.
+#  - The state is designed to integrate with the project's StateMachine where
+#    `Host` and `States` are injected.
+
 # These will be autofilled by the StateMachine
 var Host # is our Character node (parent of StateMachine)
 var States # is the StateMachine itself
 
 signal investigation_complete
 
-enum InvestigateStatus{ OBSERVING, MOVING_TO_LOCATION, INVESTIGATING, COMPLETE = 3 }
+enum InvestigateStatus{ OBSERVING, MOVING_TO_LOCATION, INVESTIGATING, COMPLETE }
 var current_investigate_status : InvestigateStatus = InvestigateStatus.OBSERVING
 
 @export var investigate_animation : String = "alert"
@@ -29,7 +51,7 @@ func _enter_tree() -> void:
 	observe_timer.one_shot = true
 	observe_timer.timeout.connect(_on_observe_timer_timeout)
 	add_child(observe_timer)
-	
+    
 	investigation_timer = Timer.new()
 	investigation_timer.wait_time = investigation_timeout
 	investigation_timer.one_shot = true
