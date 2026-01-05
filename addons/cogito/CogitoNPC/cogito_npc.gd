@@ -2,39 +2,39 @@ extends CharacterBody3D
 class_name CogitoNPC
 
 ## Emitted when received damage. Used with the HitboxComponent
-signal damage_received(damage_value:float)
+signal damage_received(damage_value: float)
 signal object_exits_tree()
 
 #region Cogito Interaction variables needed
-@export var cogito_name : String = self.name
+@export var cogito_name: String = self.name
 ## Name that will displayed when interacting. Leave blank to hide
-@export var display_name : String
+@export var display_name: String
 
-enum PromptPositionMode{
+enum PromptPositionMode {
 	ORIGIN, ## at the objects origin point. Recommended for smaller objects.
 	MARKER, ## at the position of an assigned Marker3D node. Will throw an error if no marker is assigned. Recommended for big objects/doors.
-	AABB_CENTER, ## at the center of the calculated AABoundingBox. Works well but has a slight performance impact. 
+	AABB_CENTER, ## at the center of the calculated AABoundingBox. Works well but has a slight performance impact.
 }
 ## This sets where interaction prompt gets displayed on the object.
-@export var prompt_pos_mode : PromptPositionMode = PromptPositionMode.ORIGIN
-@export var prompt_marker : Marker3D
+@export var prompt_pos_mode: PromptPositionMode = PromptPositionMode.ORIGIN
+@export var prompt_marker: Marker3D
 
 
-var interaction_nodes : Array[Node]
-var cogito_properties : CogitoProperties = null
-var properties : int
+var interaction_nodes: Array[Node]
+var cogito_properties: CogitoProperties = null
+var properties: int
 #endregion
 
-@export var patrol_path : CogitoPatrolPath
+@export var patrol_path: CogitoPatrolPath
 
-var attention_target : Node3D
+var attention_target: Node3D
 
 @export_group("Movement")
-var move_speed : float = 2
-@export var walk_speed : float = 2
-@export var sprint_speed : float = 4
-@export var acceleration : float = 10.0
-@export var rotation_speed : float = 0.2
+var move_speed: float = 2
+@export var walk_speed: float = 2
+@export var sprint_speed: float = 4
+@export var acceleration: float = 10.0
+@export var rotation_speed: float = 0.2
 
 var knockback_force: Vector3 = Vector3.ZERO
 var knockback_timer: float = 0.0
@@ -49,7 +49,7 @@ var last_direction
 
 
 #FootstepPlayer variables
-@export_group ("Footstep Player")
+@export_group("Footstep Player")
 ##Determines if Footsteps are enabled for NPC
 @export var footsteps_enabled: bool = true
 ##Sets Walk volume in dB
@@ -62,8 +62,8 @@ var last_direction
 @export var WIGGLE_ON_SPRINTING_SPEED: float = 16.0
 
 var can_play_footstep: bool = true
-var wiggle_vector : Vector2 = Vector2.ZERO
-var wiggle_index : float = 0.0
+var wiggle_vector: Vector2 = Vector2.ZERO
+var wiggle_index: float = 0.0
 
 @onready var footstep_player = $FootstepPlayer
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
@@ -73,23 +73,24 @@ var wiggle_index : float = 0.0
 
 # NPC State related vars
 @onready var npc_state_machine: Node = $NPC_State_Machine
-var patrol_path_nodepath : NodePath
-var saved_enemy_state : String
+var patrol_path_nodepath: NodePath
+var saved_enemy_state: String
 
 
 func _ready():
 	self.add_to_group("interactable")
-	self.add_to_group("Persist") #Adding object to group for persistence
+	self.add_to_group("Persist") # Adding object to group for persistence
+	self.add_to_group("NPC")
 	find_interaction_nodes()
 	find_cogito_properties()
 
 
 func find_interaction_nodes():
-	interaction_nodes = find_children("","InteractionComponent",true) #Grabs all attached interaction components
+	interaction_nodes = find_children("", "InteractionComponent", true) # Grabs all attached interaction components
 
 
 func find_cogito_properties():
-	var property_nodes = find_children("","CogitoProperties",true) #Grabs all attached property components
+	var property_nodes = find_children("", "CogitoProperties", true) # Grabs all attached property components
 	if property_nodes:
 		cogito_properties = property_nodes[0]
 
@@ -97,7 +98,6 @@ func find_cogito_properties():
 #func _process(delta: float) -> void:
 	#if look_object:
 		#head_lock_at(delta)
-
 
 
 func _physics_process(delta: float) -> void:
@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
 
 func update_animations(_delta: float):
-	var relative_velocity = self.global_basis.inverse() * ((self.velocity * Vector3(1,0,1)) / sprint_speed)
+	var relative_velocity = self.global_basis.inverse() * ((self.velocity * Vector3(1, 0, 1)) / sprint_speed)
 	var rel_velocity_xz = Vector2(relative_velocity.x, -relative_velocity.z)
 	
 	velocity_debug_shape.position = relative_velocity
@@ -143,7 +143,6 @@ func face_direction(face_direction: Vector3) -> void:
 func npc_footsteps(delta):
 	# Sprinting Case, so using defined number from Chase speed.
 	# rounded velocity.length used due to tiny speed fluctuations
-	
 	if round(velocity.length()) >= sprint_speed:
 		wiggle_vector.y = sin(wiggle_index)
 		wiggle_index += WIGGLE_ON_SPRINTING_SPEED * delta
@@ -176,7 +175,7 @@ func apply_knockback(direction: Vector3):
 
 
 # Method to set object state when a scene state file is loaded.
-func set_state():	
+func set_state():
 	#TODO: Find a way to possibly save health of health attribute.
 	find_cogito_properties()
 	load_patrol_points()
@@ -191,16 +190,16 @@ func save():
 	saved_enemy_state = npc_state_machine.current
 	
 	var node_data = {
-		"filename" : get_scene_file_path(),
-		"parent" : get_parent().get_path(),
-		"pos_x" : position.x,
-		"pos_y" : position.y,
-		"pos_z" : position.z,
-		"rot_x" : rotation.x,
-		"rot_y" : rotation.y,
-		"rot_z" : rotation.z,
-		"patrol_path_nodepath" : patrol_path_nodepath,
-		"saved_enemy_state" : saved_enemy_state,
+		"filename": get_scene_file_path(),
+		"parent": get_parent().get_path(),
+		"pos_x": position.x,
+		"pos_y": position.y,
+		"pos_z": position.z,
+		"rot_x": rotation.x,
+		"rot_y": rotation.y,
+		"rot_z": rotation.z,
+		"patrol_path_nodepath": patrol_path_nodepath,
+		"saved_enemy_state": saved_enemy_state,
   		
 	}
 	return node_data
@@ -208,13 +207,12 @@ func save():
 
 func load_patrol_points():
 	if patrol_path_nodepath:
-		CogitoGlobals.debug_log(true,"cogito_basic_enemy.gd","Loading patrol path: " + str(patrol_path_nodepath))
+		CogitoGlobals.debug_log(true, "cogito_basic_enemy.gd", "Loading patrol path: " + str(patrol_path_nodepath))
 		patrol_path = get_node(patrol_path_nodepath)
 
 
-
 func _on_hitbox_component_got_hit() -> void:
-	animation_tree.set("parameters/Transition/transition_request","hit")
+	animation_tree.set("parameters/Transition/transition_request", "hit")
 
 
 func _on_security_camera_object_detected(object: Node3D) -> void:
@@ -229,3 +227,10 @@ func _on_check_player_timer_timeout() -> void:
 		look_at_modifier_3d.target_node = player_to_look_at.head.get_path()
 	else:
 		look_at_modifier_3d.target_node = ""
+
+
+func hear_noise(noise_position: Vector3):
+	if npc_state_machine.has("investigate"):
+		npc_state_machine.goto("investigate", noise_position)
+	else:
+		CogitoGlobals.debug_log(true, "cogito_npc.gd", "Heard noise but 'investigate' state is missing.")
