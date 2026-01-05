@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
 
 func update_animations(_delta: float):
-	var relative_velocity = self.global_basis.inverse() * ((self.velocity * Vector3(1, 0, 1)) / sprint_speed)
+	var relative_velocity = self.global_basis.inverse() * ((self.velocity * Vector3(1, 0,1)) / sprint_speed)
 	var rel_velocity_xz = Vector2(relative_velocity.x, -relative_velocity.z)
 	
 	velocity_debug_shape.position = relative_velocity
