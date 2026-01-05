@@ -1,13 +1,13 @@
 extends Control
 
-signal drop_slot_data(slot_data : InventorySlotPD)
+signal drop_slot_data(slot_data: InventorySlotPD)
 signal inventory_open(is_true: bool)
 
-@export var inventory_ui : Control
+@export var inventory_ui: Control
 @onready var grabbed_slot_node = $GrabbedSlot
 @onready var external_inventory_ui = $ExternalInventoryUI
 @onready var hot_bar_inventory = $HotBarInventory
-@onready var quick_slots : CogitoQuickslots = $QuickSlots
+@onready var quick_slots: CogitoQuickslots = $QuickSlots
 @onready var info_panel = $InfoPanel
 @onready var item_name = $InfoPanel/MarginContainer/VBoxContainer/ItemName
 @onready var item_description: Control = $InfoPanel/MarginContainer/VBoxContainer/ItemDescription
@@ -18,20 +18,20 @@ signal inventory_open(is_true: bool)
 
 
 ## Sound that plays as a generic error.
-@export var sound_error : AudioStream
+@export var sound_error: AudioStream
 @export var is_using_hotbar: bool = true
 
 @export_group("Inventory Screen")
-@export var nodes_to_show : Array[Node]
-@export var nodes_to_hide : Array[Node]
+@export var nodes_to_show: Array[Node]
+@export var nodes_to_hide: Array[Node]
 
-var is_inventory_open : bool:
+var is_inventory_open: bool:
 	set(value):
 		is_inventory_open = value
 		set_process_input(is_inventory_open)
 		inventory_open.emit(is_inventory_open)
 var grabbed_slot_data: InventorySlotPD
-var external_inventory_owner : Node
+var external_inventory_owner: Node
 var control_in_focus
 
 
@@ -39,7 +39,7 @@ func _ready():
 	# Connect to signal that detects change of input device
 	InputHelper.device_changed.connect(_on_input_device_change)
 	# Calling this function once to set proper input icons
-	_on_input_device_change(InputHelper.device,InputHelper.device_index)
+	_on_input_device_change(InputHelper.device, InputHelper.device_index)
 	
 	is_inventory_open = false
 	info_panel.hide()
@@ -116,7 +116,7 @@ func close_inventory():
 
 func _on_focus_changed(control: Control):
 	if !control.has_method("set_slot_data"):
-		CogitoGlobals.debug_log(true,"inventory_interface.gd", "_on_focus_changed: Not a slot. returning.")
+		CogitoGlobals.debug_log(true, "inventory_interface.gd", "_on_focus_changed: Not a slot. returning.")
 		return
 	
 	if control != null:
@@ -129,7 +129,7 @@ func _on_focus_changed(control: Control):
 	if control_in_focus.item_data and !grabbed_slot_node.visible:
 		item_name.text = control_in_focus.item_data.name
 		item_description.text = control_in_focus.item_data.description
-		info_panel.global_position = control_in_focus.global_position + Vector2(0,control_in_focus.size.y)
+		info_panel.global_position = control_in_focus.global_position + Vector2(0, control_in_focus.size.y)
 		
 		if control_in_focus.item_data.is_droppable:
 			drop_prompt.show()
@@ -168,7 +168,7 @@ func update_grabbed_slot_position():
 
 
 func _physics_process(_delta):
-	if InputHelper.device_index == -1: #Checking for keyboard/mouse control.
+	if InputHelper.device_index == -1: # Checking for keyboard/mouse control.
 		if grabbed_slot_node.visible:
 			grabbed_slot_node.global_position = get_global_mouse_position() + Vector2(5, 5)
 			return
@@ -213,8 +213,8 @@ func clear_external_inventory():
 		external_inventory_owner = null
 
 
-func set_player_inventory_data(inventory_data : CogitoInventory):
-	inventory_data.owner = CogitoSceneManager._current_player_node  # Setting player inventory owner reference to player node
+func set_player_inventory_data(inventory_data: CogitoInventory):
+	inventory_data.owner = CogitoSceneManager._current_player_node # Setting player inventory owner reference to player node
 	
 #	inventory_data.inventory_interact.connect(on_inventory_interact)
 	if !inventory_data.inventory_button_press.is_connected(on_inventory_button_press):
@@ -307,7 +307,7 @@ func update_grabbed_slot():
 
 func _on_bind_grabbed_slot_to_quickslot(quickslotcontainer: CogitoQuickslotContainer):
 	if grabbed_slot_data:
-		CogitoGlobals.debug_log(true, "inventory_interface.gd", "Binding to quickslot container: " + str(grabbed_slot_data) + " -> " + str(quickslotcontainer) )
+		CogitoGlobals.debug_log(true, "inventory_interface.gd", "Binding to quickslot container: " + str(grabbed_slot_data) + " -> " + str(quickslotcontainer))
 		#get_parent().player.inventory_data.pick_up_slot_data(grabbed_slot_data) #Swapped with line below
 		quick_slots.bind_to_quickslot(grabbed_slot_data, quickslotcontainer)
 		
@@ -323,7 +323,6 @@ func _on_gui_input(event):
 	if event is InputEventMouseButton \
 		and event.is_pressed() \
 		and grabbed_slot_data:
-			
 			match event.button_index:
 				MOUSE_BUTTON_LEFT:
 					if !grabbed_slot_data.inventory_item.is_droppable:
@@ -436,5 +435,8 @@ func _drop_item(slot_data: InventorySlotPD) -> bool:
 	for node in dropped_item.interaction_nodes:
 		if node.has_method("get_item_type"):
 			node.slot_data = slot_data
+
+	# Make noise that NPCs can hear
+	get_tree().call_group("NPC", "hear_noise", dropped_item.global_position)
 
 	return true
