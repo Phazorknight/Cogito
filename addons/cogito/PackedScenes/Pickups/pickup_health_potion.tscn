@@ -95,7 +95,7 @@ shape = SubResource("CylinderShape3D_tvmxx")
 slot_data = SubResource("Resource_g1tlq")
 is_disabled = true
 
+[node name="CarryableComponent" parent="." instance=ExtResource("6_o5nsr")]
+
 [node name="ImpactSounds" parent="." instance=ExtResource("5_r4r7l")]
 impact_sounds = SubResource("AudioStreamRandomizer_qu2a1")
-
-[node name="CarryableComponent" parent="." instance=ExtResource("6_o5nsr")]

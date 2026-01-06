@@ -200,7 +200,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00152874, 0.187482, 0.03864
 shape = SubResource("BoxShape3D_5bhcv")
 
 [node name="ExtendedPickupInteraction" parent="." instance=ExtResource("9_j7a38")]
-hold_interaction_text = "(HOLD) Wield"
+hold_interaction_text = "Wield"
 
 [node name="PickupComponent" parent="." instance=ExtResource("2_3uch0")]
 slot_data = SubResource("Resource_t66im")
