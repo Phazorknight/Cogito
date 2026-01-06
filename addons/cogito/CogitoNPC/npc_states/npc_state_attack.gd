@@ -70,7 +70,7 @@ func attack(target: Node3D):
 		CogitoGlobals.debug_log(true,"NPC State Attack","Attacking player. Applying vector " + str(dir * attack_stagger) + " to target. Target.main_velocity = " + str(target.main_velocity) )
 		target.decrease_attribute("health", attack_damage)
 	if target.has_signal("damage_received"):
-		var damage_direction = (self.global_position + target.global_position).abs()
+		var damage_direction = Host.global_position.direction_to(target.global_position)
 		print(self.name, ": dealing damage amount ", attack_damage, " on target ", target.name, " in direction ", damage_direction )
 		target.damage_received.emit(attack_damage,damage_direction)
 		return
