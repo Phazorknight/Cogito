@@ -4,8 +4,9 @@
 [ext_resource type="Script" uid="uid://btnha2whsheir" path="res://addons/cogito/InventoryPD/cogito_inventory.gd" id="1_sud3s"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_sud3s")
 grid = true
 starter_inventory = Array[ExtResource("1_ps87y")]([])
-inventory_size = Vector2i(5, 3)
-inventory_slots = Array[ExtResource("1_ps87y")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+inventory_size = Vector2i(6, 3)
+inventory_slots = Array[ExtResource("1_ps87y")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

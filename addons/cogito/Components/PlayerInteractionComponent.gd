@@ -81,34 +81,38 @@ func _process(_delta):
 	pass
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
 		var action: String = "interact" if event.is_action_pressed("interact") else "interact2"
-		# if carrying an object, drop it.
 		_handle_interaction(action)
 	
-	
+	if is_wielding and !get_parent().is_movement_paused and not interactable:
+		if event.is_action_pressed("reload"):
+			attempt_reload()
+
+
+func _input(event: InputEvent) -> void:
 	if is_carrying and !get_parent().is_movement_paused and is_instance_valid(carried_object):
 		if Input.is_action_just_pressed("action_primary"):
 			_attempt_throw()
-			#carried_object.throw(throw_power)
-	
-	
+			get_viewport().set_input_as_handled()
+
 	# Wieldable primary Action Input
 	if is_wielding and !get_parent().is_movement_paused:
 		if Input.is_action_just_pressed("action_primary"):
 			attempt_action_primary(false)
+			get_viewport().set_input_as_handled()
 		if Input.is_action_just_released("action_primary"):
 			attempt_action_primary(true)
+			get_viewport().set_input_as_handled()
 		
 		if Input.is_action_just_pressed("action_secondary"):
 			attempt_action_secondary(false)
+			get_viewport().set_input_as_handled()
 		if Input.is_action_just_released("action_secondary"):
 			attempt_action_secondary(true)
-		
-		if event.is_action_pressed("reload"):
-			attempt_reload()
-			return
+			get_viewport().set_input_as_handled()
+
 
 func _handle_interaction(action: String) -> void:
 	# if carrying an object, drop it.
@@ -430,7 +434,8 @@ func _rebuild_interaction_prompts() -> void:
 func _attempt_throw() -> void:
 	if !is_carrying:
 		return
-	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
+
+	var carried_object_mass: float = get_carried_object_mass(carried_object)
 	var throw_force: float = carried_object_mass * throw_power_mass_multiplier
 	throw_force = clamp(throw_force, 0, max_throw_power)
 	
@@ -448,10 +453,20 @@ func _attempt_throw() -> void:
 func _drop_carried_object() -> void:
 	if !is_carrying:
 		return
-	var carried_object_mass: float = (carried_object.get_parent() as RigidBody3D).mass
+	var carried_object_mass: float = get_carried_object_mass(carried_object)
 	var drop_force: float = carried_object_mass * drop_power_mass_multiplier
 	drop_force = clamp(drop_force, 0, max_drop_power)
 	carried_object.throw(drop_force)
+
+
+func get_carried_object_mass(carried_object) -> float:
+	var carried_object_mass: float
+	var carried_object_parent = carried_object.get_parent()
+	if carried_object_parent is RigidBody3D:
+		carried_object_mass = (carried_object_parent as RigidBody3D).mass
+	elif carried_object_parent is PhysicalBone3D:
+		carried_object_mass = (carried_object_parent as PhysicalBone3D).mass
+	return carried_object_mass
 
 
 ## Briefly interrupt quickslot cycling after an interactable is unseen

@@ -2,6 +2,8 @@ extends InteractionComponent
 
 signal basic_signal
 
+var player_interaction_component : PlayerInteractionComponent
+
 @onready var parent_node = get_parent() #Grabbing reference to parent
 
 # Called when the node enters the scene tree for the first time.
@@ -10,6 +12,7 @@ func _ready() -> void:
 		parent_node.object_state_updated.connect(_on_object_state_change)
 
 func interact(_player_interaction_component: PlayerInteractionComponent):
+	player_interaction_component = _player_interaction_component
 	if !attribute_check != AttributeCheck.NONE:
 		if parent_node.has_method("interact"):
 			parent_node.interact(_player_interaction_component)
@@ -27,3 +30,5 @@ func interact(_player_interaction_component: PlayerInteractionComponent):
 
 func _on_object_state_change(_interaction_text: String):
 	interaction_text = _interaction_text
+	if player_interaction_component:
+		player_interaction_component._rebuild_interaction_prompts()

@@ -3,8 +3,6 @@ extends TabContainer
 ## This class can be extended to create a tab menu with controller support.
 
 ## Helper for controller input. Sets the node  to focus on for each tab.
-
-
 @export var enable_focus_on_tabs : bool = true
 ## The array index corresponds to the tabs.
 @export var nodes_to_focus: Array[Control]
@@ -19,6 +17,11 @@ extends TabContainer
 @export var bindings_container_node : Control
 
 var focus_currently_on_external_inventory : bool = false
+var first_input_bind_button : Button
+
+func _ready() -> void:
+	#first_input_bind_button = find_input_bind_focus_node()
+	pass
 
 
 func _input(event):
@@ -33,11 +36,18 @@ func _input(event):
 		return
 	
 	#Tab navigation
-	if (event.is_action_pressed("ui_next_tab")):
-		if current_tab + 1 == get_tab_count():
-			current_tab = 0
-		else:
-			current_tab += 1
+	if (event.is_action_pressed("ui_next_tab") or event.is_action_pressed("ui_prev_tab")):
+		# Logic for looping tabs
+		if event.is_action_pressed("ui_next_tab"):
+			if current_tab + 1 == get_tab_count():
+				current_tab = 0
+			else:
+				current_tab += 1
+		elif event.is_action_pressed("ui_prev_tab"):
+			if current_tab  == 0:
+				current_tab = get_tab_count()-1
+			else:
+				current_tab -= 1
 		
 		# When navigating to an inventory tab, this makes sure that the inventory slots grab focus.
 		if InputHelper.device_index != -1 and inventory_interface_reference != null and current_tab == tab_index_of_inventory:
@@ -46,31 +56,31 @@ func _input(event):
 		
 		# When navigating to an input bindings tab, this makes sure that the first remap entry grabs focus.
 		if InputHelper.device_index != -1 and bindings_container_node != null and current_tab == tab_index_of_bindings:
-			bindings_container_node.get_child(1).kbm_bind_button.grab_focus.call_deferred()
-			return
+			var temp_button = find_input_bind_focus_node()
+			if temp_button:
+				CogitoGlobals.debug_log(true, "tab_menu.gd", "Grabbing focus on " + str(temp_button) + " with action " + temp_button.action)
+				temp_button.grab_focus.call_deferred()
+				return
+			else: 
+				CogitoGlobals.debug_log(true, "tab_menu.gd", "first_input_bind_button was null.")
+				return
 
+		# If no special case is found, grab focus on whats set in the nodes_to_focus Control array:
 		if nodes_to_focus[current_tab]:
 			nodes_to_focus[current_tab].grab_focus.call_deferred()
-		
-	if (event.is_action_pressed("ui_prev_tab")):
-		if current_tab  == 0:
-			current_tab = get_tab_count()-1
-		else:
-			current_tab -= 1
-		
-		# When navigating to an inventory tab, this makes sure that the inventory slots grab focus.
-		if InputHelper.device_index != -1 and inventory_interface_reference != null and current_tab == tab_index_of_inventory:
-			inventory_interface_reference.inventory_ui.slot_array[0].grab_focus.call_deferred()
-			return
-			
-		# When navigating to an input bindings tab, this makes sure that the first remap entry grabs focus.
-		if InputHelper.device_index != -1 and bindings_container_node != null and current_tab == tab_index_of_bindings:
-			bindings_container_node.get_child(1).kbm_bind_button.grab_focus.call_deferred()
-			return
 
-		if nodes_to_focus[current_tab]:
-			nodes_to_focus[current_tab].grab_focus.call_deferred()
+
+func find_input_bind_focus_node() -> Button:
+	var bindings_container_children = bindings_container_node.get_children()
 	
+	for child in bindings_container_children:
+		if child is RemapEntry:
+			CogitoGlobals.debug_log(true, "tab_menu.gd", "find_input_bind_focus_node(): Remap entry found, returning " + str(child))
+			return child.kbm_bind_button
+	
+	CogitoGlobals.debug_log(true,"tab_menu.gd", "find_input_bind_focus_node(): No remap entry found.")
+	return null
+
 
 # Processing gamepad inputo to switch back and forth between player inventory and external inventory focus
 func process_input_for_external_inventory_screen(event: InputEvent) -> void:

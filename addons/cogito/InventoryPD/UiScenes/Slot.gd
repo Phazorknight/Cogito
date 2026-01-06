@@ -83,18 +83,25 @@ func _on_charge_changed():
 
 
 func _on_gui_input(event: InputEvent):
-	
 	# Setting SLOT GAMPEAD INTERACTIONS HERE
 	if event.is_action_pressed("inventory_move_item"):
 		slot_pressed.emit(get_index(), "inventory_move_item")
 		highlight_slot.emit(get_index(), true)
+		get_viewport().set_input_as_handled()
 	if event.is_action_pressed("inventory_use_item"):
 		print("Slot.gd: inventory_use_item pressed on slot ", get_index())
 		slot_pressed.emit(get_index(), "inventory_use_item")
+		get_viewport().set_input_as_handled()
 	if event.is_action_pressed("inventory_drop_item"):
 		slot_pressed.emit(get_index(), "inventory_drop_item")
+		get_viewport().set_input_as_handled()
 	if event.is_action_pressed("inventory_assign_item"):
 		slot_pressed.emit(get_index(), "inventory_assign_item")
+		get_viewport().set_input_as_handled()
+
+	if event.is_action_pressed("interact") or event.is_action_pressed("interact2"):
+		get_viewport().set_input_as_handled()
+
 
 
 func set_grabbed_dimensions():

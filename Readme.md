@@ -57,8 +57,9 @@ The structure of this template always tries to adhere to the following principle
 - **Versatile**: Whether your game is set in the future, the past or the present, use melee, projectile or no weapons at all, have low poly, stylized or realistic graphics, the template will have features for you.
 - **Modular**: Do not want to use a feature? You will be able to hide it, ignore it or strip it out without breaking COGITO. At the same time, COGITO is designed to be extendable with your own custom features or other add-ons.
 - **Approachable**: While there will always be a learning curve, we strive to make COGTIO approachable and intuitive to use, so it doesn't get in your way of making your game.
+- **No Generative AI**: All included code and assets are made by humans and listed in our credits and cotnributors page.
 
 > [!IMPORTANT]  
-> COGITO v1.1 is not 100% bug-free. While most features are set, be aware that this is hobbyist open source software. Use at your own risk and check Issues and Discussion pages for more information.
+> COGITO v1.1 is not 100% bug-free. While most features are set, be aware that this open source software is offered "as is". Use at your own risk and check Issues and Discussion pages for more information.
 
 [Credits, Contributors and License](https://cogito.readthedocs.io/en/latest/about.html)

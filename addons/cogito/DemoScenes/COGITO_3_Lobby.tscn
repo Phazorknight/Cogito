@@ -144,8 +144,8 @@ resource_local_to_scene = true
 script = ExtResource("4_0kggm")
 grid = true
 starter_inventory = Array[ExtResource("4_g5h7u")]([])
-inventory_size = Vector2i(5, 3)
-inventory_slots = Array[ExtResource("4_g5h7u")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+inventory_size = Vector2i(6, 3)
+inventory_slots = Array[ExtResource("4_g5h7u")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_68nml"]
 size = Vector3(5, 3.3, 4)
@@ -3243,7 +3243,7 @@ size = Vector3(3.37023, 3.70407, 8.35876)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4k13h"]
 size = Vector3(5.08541, 3.48608, 16.0137)
 
-[node name="Cogito04Lobby" type="Node3D" node_paths=PackedStringArray("connectors")]
+[node name="Cogito03Lobby" type="Node3D" node_paths=PackedStringArray("connectors")]
 script = ExtResource("1_dracg")
 connectors = [NodePath("MAIN_LOBBY/LAB_CONNECTOR/ConnectorFromLab")]
 save_temp_on_enter = true
@@ -7837,6 +7837,7 @@ shape = SubResource("SphereShape3D_n25yf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.57, 0, -20)
 collision_layer = 3
 script = ExtResource("13_5x4ip")
+prompt_pos_mode = 2
 rattle_sound = ExtResource("65_cw5kp")
 interaction_text_when_locked = "Unlock"
 interaction_text_when_unlocked = "Lock"

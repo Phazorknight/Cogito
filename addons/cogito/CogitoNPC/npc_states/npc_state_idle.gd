@@ -7,7 +7,7 @@ var States # is the StateMachine itself
 @export var idle_animation : String = ""
 
 func _state_enter():
-	print("Idle state entered")
+	CogitoGlobals.debug_log(true, "npc_state_idle.gd", "Idle state entered")
 
 	await get_tree().create_timer(3).timeout
 	
@@ -16,7 +16,7 @@ func _state_enter():
 
 func _state_exit():
 	States.save_state_as_previous(self.name,null)
-	print("Idle state exiting")
+	CogitoGlobals.debug_log(true, "npc_state_idle.gd", "Idle state exiting")
 
 
 func _physics_process(_delta):

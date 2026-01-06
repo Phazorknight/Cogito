@@ -12,8 +12,8 @@ var have_options_changed := false
 var has_windowed_resolution_changed := false
 
 # GAMEPLAY
-@onready var invert_y_check_button: CheckButton = %InvertYAxisCheckButton
-@onready var toggle_crouching_check_button: CheckButton = %ToggleCrouchingCheckButton
+@onready var invert_y_check_button: CheckBox = %InvertYAxisCheckButton
+@onready var toggle_crouching_check_button: CheckBox = %ToggleCrouchingCheckButton
 @onready var headbob_option_button: OptionButton = %HeadbobOptionButton
 @onready var mouse_sens_slider: HSlider = %MouseSensSlider
 @onready var mouse_sens_value_label: Label = %MouseSensValueLabel
@@ -39,14 +39,16 @@ var music_bus_index
 @onready var windowed_resolution_option_button: OptionButton = %WindowedResolutionOptionButton
 @onready var gui_scale_current_value_label: Label = %GUIScaleCurrentValueLabel
 @onready var gui_scale_slider: HSlider = %GUIScaleSlider
-@onready var vsync_check_button: CheckButton = %VSyncCheckButton
+@onready var vsync_check_button: CheckBox = %VSyncCheckButton
 @onready var anti_aliasing_2d_option_button: OptionButton = $%AntiAliasing2DOptionButton
 @onready var anti_aliasing_3d_option_button: OptionButton = $%AntiAliasing3DOptionButton
-@onready var fullscreen_mode_check_button: CheckButton = %FullscreenModeCheckButton
+@onready var fullscreen_mode_check_button: CheckBox = %FullscreenModeCheckButton
 
 var windowed_resolution: Vector2i
 var prev_windowed_resolution: Vector2i
 var fullscreen_resolution_scale_val := 1.0
+var gui_scale: float
+var resolutions_min_y := 540.0
 
 const HEADBOB_DICTIONARY: Dictionary = {
 	"Minimal": 1,
@@ -54,7 +56,10 @@ const HEADBOB_DICTIONARY: Dictionary = {
 	"Full": 7,
 }
 
-const RESOLUTION_DICTIONARY: Dictionary = {
+const window_operations_delay = 0.25
+const max_gui_scale_ratio = 0.75
+
+var RESOLUTION_DICTIONARY: Dictionary = {
 	"800x600 (4:3)": Vector2i(800, 600),
 	"960x540 (16:9)": Vector2i(960, 540),
 	"1024x576 (16:9)": Vector2i(1024, 576),
@@ -117,7 +122,9 @@ const serialized_default_inputs: String = "{\"action_primary\":{\"joypad\":[\"5|
 
 func _ready() -> void:
 	reset()
-
+	remove_unsupported_resolutions()
+	resolutions_min_y = get_resolutions_min_y()
+	
 	# GAMEPLAY
 	add_headbob_items()
 	headbob_option_button.item_selected.connect(on_headbob_selected)
@@ -170,9 +177,11 @@ func _on_gp_looksens_slider_value_changed(value):
 func is_fullscreen() -> bool:
 	return DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 
+
 # Initialize the fullscreen mode check button to reflect current state.
 func init_fullscreen_mode() -> void:
 	fullscreen_mode_check_button.set_pressed_no_signal(is_fullscreen())
+
 
 func get_resolution_index_for_window_size(size: Vector2i) -> int:
 	var resolution_values = RESOLUTION_DICTIONARY.values();
@@ -181,6 +190,7 @@ func get_resolution_index_for_window_size(size: Vector2i) -> int:
 		if v == size:
 			return i
 	return -1
+
 
 # Initialize all windowed resolutions and set the current windowed resolution on the button
 func init_windowed_resolution() -> void:
@@ -194,13 +204,40 @@ func init_windowed_resolution() -> void:
 	if idx != -1:
 		windowed_resolution_option_button.selected = idx
 
+
+func get_gui_scale_max_value(resolution_y):
+	var scale_max_value = (resolution_y / resolutions_min_y) * max_gui_scale_ratio
+	var remainder = fmod(scale_max_value, gui_scale_slider.step)
+	if remainder < gui_scale_slider.step - 0.0001:
+		scale_max_value -= remainder
+	
+	return scale_max_value
+
+
 func _on_fullscreen_mode_toggled(button_pressed: bool) -> void:
 	if button_pressed:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		
+		gui_scale_slider.max_value = get_gui_scale_max_value(DisplayServer.screen_get_size().y)
+		gui_scale_slider.value = gui_scale
+		apply_gui_scale_value()
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-	
+		
+		var scale_max_value = get_gui_scale_max_value(windowed_resolution.y)
+		gui_scale_slider.max_value = scale_max_value
+		if gui_scale_slider.value >= scale_max_value:
+			gui_scale_slider.value = scale_max_value
+		apply_gui_scale_value()
+		
+		var window = get_window()
+		await get_tree().create_timer(window_operations_delay).timeout
+		window.size = windowed_resolution
+		window.content_scale_size = Vector2i.ZERO
+		window.scaling_3d_scale = 1.0
+		center_window()
+		
 	refresh_resolution_controls()
 
 
@@ -210,7 +247,7 @@ func refresh_render():
 	if is_fullscreen():
 		window.scaling_3d_scale = fullscreen_resolution_scale_val
 	else:
-		DisplayServer.window_set_size(windowed_resolution)
+		window.size = windowed_resolution
 		window.content_scale_size = Vector2i.ZERO
 		window.scaling_3d_scale = 1.0
 	
@@ -224,7 +261,16 @@ func refresh_render():
 func _on_resolution_selected(index: int) -> void:
 	prev_windowed_resolution = windowed_resolution
 	windowed_resolution = RESOLUTION_DICTIONARY.values()[index]
+	
+	gui_scale_slider.max_value = get_gui_scale_max_value(windowed_resolution.y)
+	apply_gui_scale_value()
+	
 	if prev_windowed_resolution != windowed_resolution:
+		var window = get_window()
+		window.size = windowed_resolution
+		window.content_scale_size = Vector2i.ZERO
+		center_window()
+		
 		have_options_changed = true
 		has_windowed_resolution_changed = true
 
@@ -302,7 +348,7 @@ func load_options(skip_applying: bool = false):
 	var current_resolution_index := windowed_resolution_option_button.selected
 	var resolution_index = config.get_value(OptionsConstants.section_name, OptionsConstants.resolution_index_key_name, current_resolution_index)
 	var fullscreen_resolution_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.fullscreen_resolution_scale_key, 1.0)
-	var gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
+	gui_scale = config.get_value(OptionsConstants.section_name, OptionsConstants.gui_scale_key, 1)
 	var vsync = config.get_value(OptionsConstants.section_name, OptionsConstants.vsync_key, true)
 
 	var msaa_2d = config.get_value(OptionsConstants.section_name, OptionsConstants.msaa_2d_key, 0)
@@ -341,11 +387,6 @@ func load_options(skip_applying: bool = false):
 	update_fullscreen_resolution_slider_value()
 	update_fullscreen_resolution_slider_label()
 	
-	gui_scale_slider.value = gui_scale
-	gui_scale_current_value_label.text = "%d%%" % (gui_scale * 100)
-	if !skip_applying:
-		apply_gui_scale_value()
-	
 	# Need to set it like that to guarantee signal to be triggered
 	vsync_check_button.set_pressed_no_signal(vsync)
 	vsync_check_button.toggled.emit()
@@ -356,13 +397,25 @@ func load_options(skip_applying: bool = false):
 	fullscreen_mode_check_button.set_pressed_no_signal(fullscreen_mode)
 	windowed_resolution_option_button.selected = resolution_index
 	
+	if fullscreen_mode:
+		gui_scale_slider.max_value = get_gui_scale_max_value(DisplayServer.screen_get_size().y)
+	else:
+		var windowed_resolution = RESOLUTION_DICTIONARY.values()[resolution_index]
+		gui_scale_slider.max_value = get_gui_scale_max_value(windowed_resolution.y)
+	
+	gui_scale_slider.value = gui_scale
+	gui_scale_current_value_label.text = "%d%%" % (gui_scale * 100)
+	
+	if !skip_applying:
+		apply_gui_scale_value()
+	
 	# Only apply window mode + resolution + refresh when a config actually exists,
 	# and when we're not skipping applying.
 	if !skip_applying and have_cfg:
 		anti_aliasing_2d_option_button.emit_signal("item_selected", msaa_2d)
 		anti_aliasing_3d_option_button.emit_signal("item_selected", msaa_3d)
-		fullscreen_mode_check_button.toggled.emit(fullscreen_mode)
 		windowed_resolution_option_button.item_selected.emit(resolution_index)
+		fullscreen_mode_check_button.toggled.emit(fullscreen_mode)
 		refresh_render()
 
 	refresh_resolution_controls()
@@ -396,7 +449,9 @@ func center_window() -> void:
 	var window = get_window()
 	var center_of_screen = DisplayServer.screen_get_position() + DisplayServer.screen_get_size() / 2
 	var window_size = window.get_size_with_decorations()
+	await get_tree().create_timer(window_operations_delay).timeout
 	window.position = center_of_screen - window_size / 2
+
 
 func _on_gui_scale_slider_value_changed(value):
 	gui_scale_current_value_label.text = "%d%%" % int(value * 100)
@@ -476,8 +531,6 @@ func create_action_remap_items() -> void:
 
 
 func _on_apply_changes_pressed() -> void:
-	fullscreen_mode_check_button.toggled.emit(fullscreen_mode_check_button.button_pressed)
-
 	save_options()
 	apply_gui_scale_value()
 
@@ -495,6 +548,26 @@ func reset():
 	get_window().content_scale_size = Vector2i.ZERO
 	have_options_changed = false
 	has_windowed_resolution_changed = false
+
+
+func remove_unsupported_resolutions():
+	var screen_size = DisplayServer.screen_get_size()
+	for resolution_key in RESOLUTION_DICTIONARY:
+		var resolution = RESOLUTION_DICTIONARY[resolution_key]
+		if resolution.x > screen_size.x or resolution.y > screen_size.y:
+			RESOLUTION_DICTIONARY.erase(resolution_key)
+
+
+func get_resolutions_min_y():
+	var screen_size = DisplayServer.screen_get_size()
+	var min_y = screen_size.y
+	for resolution_key in RESOLUTION_DICTIONARY:
+		var resolution = RESOLUTION_DICTIONARY[resolution_key]
+		if resolution.y < min_y:
+			min_y = resolution.y
+	
+	return min_y
+
 
 func _on_tab_menu_resume():
 	# reload options

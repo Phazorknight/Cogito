@@ -17,6 +17,11 @@ signal back_to_main_pressed
 var playback : AudioStreamPlaybackPolyphonic
 var temp_screenshot : Image
 
+var is_pausemenu_open : bool:
+	set(value):
+		is_pausemenu_open = value
+		set_process_input(is_pausemenu_open)
+
 @onready var resume_game_button: Button = %ResumeGameButton
 @onready var save_button: CogitoUiButton = %SaveButton
 @onready var load_button: CogitoUiButton = %LoadButton
@@ -27,6 +32,8 @@ var temp_screenshot : Image
 
 
 func _enter_tree() -> void:
+	is_pausemenu_open = false
+	
 	# Create an audio player
 	var player = AudioStreamPlayer.new()
 	add_child(player)
@@ -62,6 +69,9 @@ func _play_pressed() -> void:
 func open_pause_menu():
 	#Stops game and shows pause menu
 	get_tree().paused = true
+	
+	is_pausemenu_open = true
+	
 	label_active_slot.text = "Current Slot: " + CogitoSceneManager._active_slot
 	temp_screenshot = grab_temp_screenshot()
 	show()
@@ -80,7 +90,16 @@ func open_options_menu():
 	options_tab_menu.show()
 	options_tab_menu.load_options(true)
 	options_tab_menu.have_options_changed = false
-	options_tab_menu.tab_container.nodes_to_focus[0].grab_focus.call_deferred()
+	
+	var current_tab: int = options_tab_menu.tab_container.current_tab
+	if current_tab != options_tab_menu.tab_container.tab_index_of_bindings:
+		options_tab_menu.tab_container.nodes_to_focus[current_tab].grab_focus.call_deferred()
+	else:
+		var temp_button = options_tab_menu.tab_container.find_input_bind_focus_node()
+		if temp_button:
+			CogitoGlobals.debug_log(true, "pause_menu_controller.gd", "Grabbing focus on " + str(temp_button) + " with action " + temp_button.action)
+			temp_button.grab_focus.call_deferred()
+	
 	game_menu.hide()
 
 
@@ -116,6 +135,7 @@ func load_current_slot_data() -> bool:
 
 func close_pause_menu():
 	get_tree().paused = false
+	is_pausemenu_open = false
 	hide()
 	emit_signal("resume")
 
@@ -139,6 +159,7 @@ func _input(event):
 	if (event.is_action_pressed("ui_cancel") or event.is_action_pressed("menu")) and !game_menu.visible:
 		accept_event()
 		options_tab_menu.hide()
+		options_tab_menu.load_options()
 		game_menu.show()
 		resume_game_button.grab_focus.call_deferred()
 		return
